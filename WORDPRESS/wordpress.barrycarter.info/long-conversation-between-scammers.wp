@@ -1,0 +1,51 @@
+
+ID: 25849
+post_name: long-conversation-between-scammers
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Fri, 22 Mar 2013 20:26:13 +0000
+post_type: post 
+post_status: publish
+post_title: Long conversation between scammers
+
+======================================================
+
+[This was originally posted at 419eater.com before I was banned there 
+(for reasons best left unexplored &lt;G&gt;). A 419 scam is when 
+someone offers to send you a lot of money [lottery, inheritance, found 
+money, etc] for a small amount of money [eg, fees, bribe costs, 
+"shipping and handling", etc]. Any such offer is a scam: you will send 
+the money, and never get anything back in return] 
+ 
+I set up a plivo.com number to forward to a known scammer while 
+recording the call, and then asked other known scammers to call that 
+number. Here is the 16m21s recording (the target scammer knows the 
+person calling is a fellow scammer): 
+ 
+http://s3.amazonaws.com/plivocloud/4c743546-7e1b-11e2-9060-002590662312.mp3 
+ 
+[let me know if you can help me transcribe this] 
+ 
+The call resulted from this letter that I'd sent to many known scammers: 
+ 
+<blockquote> 
+From: John Smith Attorney at Law <barr.jsmith4@lawyer.com> 
+To: {recipient address} 
+Subject: Please call me at home 
+ 
+I am an attorney, but I do not want to handle this through my office, 
+given the amount involved. 
+ 
+Could you call me at my home phone +1-602-354-{my plivo.com bait 
+number, which forwards to +19376198458, recording the entire 
+conversation as it does} 
+ 
+Please do not contact me at my office email again, this is not 
+something I want to share with my partners. 
+ 
+Thank you, John Smith (Atty at Law, Lices. AZ) 
+</blockquote> 
+ 
+[yes, "Lices. AZ" is a cheap shot at Arizona] 
+
+

@@ -1,0 +1,34 @@
+
+ID: 25152
+post_name: i-was-surprised-to-learn-that-perls-str2time-function-does-not-accept-the-same-arguments-as-date-d-what-perl-function-does-short-of-date-d-of-course
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 01:38:11 +0000
+post_type: post 
+post_status: publish
+post_title: I was surprised to learn that Perl's str2time function does NOT accept the same arguments as "date -d". What Perl function does (short of `date -d ...` of course)?
+
+======================================================
+
+(You): I was surprised to learn that Perl's str2time function does NOT accept the same arguments as "date -d". What Perl function does (short of `date -d ...` of course)?
+
+(Dj): Are you referring the the strftime() function in the POSIX module?  If so, the format string should be compatible with the ANSI C specification for strftime.  See perldoc POSIX for more information.
+
+(You): no I mean the str2time function in Perl which comes from Time::Local or something. Will strftime accept things like "today" "next Friday", etc?
+
+(Dj): No; strftime is a functional port of its POSIX equivalent.  If you're on a UNIX box, check out man strftime.  Otherwise, seehttp://www.manpagez.com/man/3/strftime/ [http://www.manpagez.com/man/3/strftime/].  Coming back to str2time, it does not appear to handle things like "today," etc.  It's solely for converting actual date strings into date values.  To do what you want, check out Date::Manip.
+
+(You): strftime goes the wrong way, I think. I know str2time converts things like "May 24th", but it's not as flexible as date -d.
+
+(Dj): Again, to do what you want, check out Date::Manip.
+
+(You): thanks.
+
+----------------------
+
+(Martin): Use the perl DateTime module, check cpan for details on it's operation.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

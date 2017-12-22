@@ -1,0 +1,52 @@
+
+ID: 24286
+post_name: where-can-i-find-a-free-online-whiteboard-that-accepts-drawings-and-text-thats-compatible-w-linux-or-free-whiteboard-software
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 06 Sep 2010 07:46:10 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find a free online "whiteboard" (that accepts drawings and text) that's compatible w/ Linux? Or free whiteboard software?
+
+======================================================
+
+(You): Where can I find a free online "whiteboard" (that accepts drawings and text) that's compatible w/ Linux? Or free whiteboard software?
+
+(Alexander): You can try white board from Inkscape via jabber. But Inkscape should be builded with option --enable-inkboard
+
+(You): thanks. Does jabber support whiteboarding implicitly? Or do only some clients whiteboard?
+
+(Alexander): only some clients like Inkboard: they pack frames to XMMP XML that recognized only by same or compatable software, other client ignore this unsupported frames.
+
+(You): thanks. So XMMP is the format to transfer whiteboards/images/SVG fragments?
+
+(Alexander): no, sorry no XMMP, but XMPP: http://en.wikipedia.org/wiki/Extensible_Messaging_and_Presence_Protocol, XML-based Instant Messaging protocol, but very extensible, so: GoogleTalk can transfer via XMPP video and voice, simple Jabber clients can transfer text of messaging, provide gates to other IM-systems, provide group-chating. And Inkboard can transfer SVG data :-)
+
+(You): but the encoded data doesn't have a standardized format, so the other side has to know how to decode the packets inside the XMPP?
+
+(Alexander): for common data there is some amount of standarts: XEP####, as far I known, applications can discuss about supported features and select more compatable mode for work.
+
+(You): oh, the XEPs are numbered like RFCs or something?
+
+(Alexander): yes, XEPs numbered, you can found more info (and more exactly) at the official page: http://xmpp.org/extensions/. You simple should known: XMPP is base, you can create your-own protocol based on XMPP, or create extension for protocol (like Inkboard)
+
+(You): thanks! I think that's exactly what I needed.
+
+(Alexander): :) I don't known how to translate to English our Russian phrase: "???? ???? ??????" :)
+
+(You): well, I sure don't know ;)
+
+----------------------
+
+(Christopher): Have you tried Groupboard?
+
+
+
+http://www.groupboard.com/products/
+
+(You): looks cool, but not free? And it looks like the demo is open to anyone any time, so you can't pick/choose who you want to share with?
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,18 @@
+
+ID: 27570
+post_name: when-i-run-mplayer-from-the-command-line-on-mac-os-x-it-pops-up-an-alert-that-says-ctloader-toolbar-has-not-been-tested-on-this-verion-sic-toolbar-bundle-will-not-be-loaded-i-have-to-click-o
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 02 May 2010 22:46:54 +0000
+post_type: post 
+post_status: publish
+post_title: When I run mplayer from the command line on Mac OS X, it pops up an alert that says: "CTLoader: Toolbar has not been tested on this verion [sic]. Toolbar bundle will not be loaded". I have to click "OK" on this alert before mplayer will do what I want. That's annoying, since it means I can't use mplayer in scripts, etc. How do I fix this?
+
+======================================================
+
+(You): When I run mplayer from the command line on Mac OS X, it pops up an alert that says: "CTLoader: Toolbar has not been tested on this verion [sic]. Toolbar bundle will not be loaded". I have to click "OK" on this alert before mplayer will do what I want. That's annoying, since it means I can't use mplayer in scripts, etc. How do I fix this?
+
+
+
+[Vark assigned category: <b>MPlayer</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

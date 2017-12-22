@@ -1,0 +1,52 @@
+
+ID: 25166
+post_name: once-ive-loaded-songs-into-audacity-how-do-i-make-it-play-them-in-a-loop-not-one-song-in-a-loop-but-multiple-songs
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 24 Jun 2010 21:21:30 +0000
+post_type: post 
+post_status: publish
+post_title: Once I've loaded songs into Audacity, how do I make it play them in a loop (not one song in a loop, but multiple songs)
+
+======================================================
+
+(You): Once I've loaded songs into Audacity, how do I make it play them in a loop (not one song in a loop, but multiple songs)
+
+(Matt): Urm, hold shift and then click play for the loop function, if i've understood your question correctly.
+
+(You): won't that play ONE song (file) in a loop?
+
+----------------------
+
+(Rafael): There Should be a loop button the same one that plays one song over and over and if you click it once it should play the whole list. Click It twice and it will just repeat one song
+
+(You): does that work even if the songs are opened in different windows?
+
+----------------------
+
+(Jack): Audacity is designed for editing audio, not arranging audio.
+
+
+
+By that I mean you can load a sound or a piece of music and edit that sound byte, but you cannot arrange multiple parts of music and insert loops etc.
+
+
+
+For that, you would need something like Cubase.
+
+(You): I know -- but it's the only app that recognizes my sound card.
+
+(Jack): Oh right. That shouldn't be a problem.
+
+
+
+You should install something like http://www.asio4all.com/. This may help with your issue.
+
+
+
+Audacity is just no good for putting music together.
+
+
+
+[Vark assigned category: <b>Audacity</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

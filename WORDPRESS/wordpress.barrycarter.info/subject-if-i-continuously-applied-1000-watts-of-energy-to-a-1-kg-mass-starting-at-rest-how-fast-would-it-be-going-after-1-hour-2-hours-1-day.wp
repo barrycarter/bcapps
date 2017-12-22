@@ -1,0 +1,68 @@
+
+ID: 28363
+post_name: subject-if-i-continuously-applied-1000-watts-of-energy-to-a-1-kg-mass-starting-at-rest-how-fast-would-it-be-going-after-1-hour-2-hours-1-day
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 13 Apr 2010 00:05:02 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: If I continuously applied 1000 watts of energy to a 1 kg mass starting at rest, how fast would it be going after 1 hour? 2 hours? 1 day?
+
+======================================================
+
+(You): Subject: If I continuously applied 1000 watts of energy to a 1 kg mass starting at rest, how fast would it be going after 1 hour? 2 hours? 1 day?
+
+(Conrad): the kinetic energy of the mass will just be power time the amount of time the power is applied...
+
+(Conrad): so after i hour, the KE will be 1000W*3600s = 3600000J..  Then you can use KE = 0.5 M * V^2  and solve for V...
+
+----------------------
+
+(Peter): For this, just use conservation of energy.  If you add 1000 watts, that is 1000 Joules/second.  Multiply by the number of seconds to get energy.  Then say that your kinetic energy = 1/2*m*v^2, and solve for v.  If the 1kg mass starts to get too fast (you get a v around 3*10^7 m/s or higher) then you might need to use the relativistic kinetic energy, which is a bit more difficult to solve but still doable.
+
+----------------------
+
+(Noah): This depends on several things: whether all the energy is transferred to kinetic energy, whether the object moves in a frictionless environment.
+
+(Noah): So, assuming no friction, total energy transfer to kinetic, and that you are looking for time periods that do not lead to relativistic effects. There still remains a question as to what power dissipation would occur on the mass. That is, at what rate do you apply the energy to the mass?
+
+----------------------
+
+(Brand): If all of that energy is going into kinetic energy, then:
+
+
+
+1000 watts = 1000 joules / second.
+
+
+
+kinetic energy = .5m*v^2
+
+
+
+so for one hour:
+
+
+
+.5*1kg*v^2 = 1000 joules/second * 3600 seconds
+
+
+
+or v = sqrt(1000*3600/.5) = 2683 meters/second
+
+
+
+And do the same calculation for 3600*2 seconds and 3600*24 seconds...
+
+
+
+Cheers
+
+
+
+Brand
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

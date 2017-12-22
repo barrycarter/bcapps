@@ -1,0 +1,46 @@
+
+ID: 23769
+post_name: when-a-java-applet-fails-to-load-properly-in-firefox-where-can-i-get-the-backtrace-of-what-went-wrong-instead-of-just-the-applet-not-initialized-error
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 28 Oct 2010 00:59:18 +0000
+post_type: post 
+post_status: publish
+post_title: When a Java applet fails to load properly in Firefox, where can I get the backtrace of what went wrong, instead of just the "applet not initialized" error?
+
+======================================================
+
+(You): When a Java applet fails to load properly in Firefox, where can I get the backtrace of what went wrong, instead of just the "applet not initialized" error?
+
+(Steve): Select Tools - Error Console (Ctrl + Shift + J) - I think that will show it
+
+(You): tried that first, but it only works for Javascript, not applets.
+
+(Steve): Dang. You might try installing the Firebug extension - it may have something for applets.
+
+(You): good thinking! I already have it installed, but never bothered to check its output.
+
+(You): didn't work, but did give me some useful info
+
+----------------------
+
+(Emanuel): in the java console. enable it in the java options in your control panel or with a right-click on the java system tray icon when an applet loads.
+
+(You): how do I do all that in Linux?
+
+(Emanuel): go to your java install path and open "./ControlPanel". then look for "Java Console"
+
+(You): WOW! I never knew that existed!
+
+(Emanuel): now you know ;)
+
+(You): ok, I turned on debugging and the console and stuff, but the logs were practically empty. Thoughts? [direct gchat: carter.barry@gmail.com]
+
+(Emanuel): try another browser. sometimes firefox don't pass through the console outputs.
+
+also it could be a problem with the jar-file itself. maybe the manifest file is not correct or the main class is not found.
+
+
+
+[Vark assigned category: <b>Java applet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

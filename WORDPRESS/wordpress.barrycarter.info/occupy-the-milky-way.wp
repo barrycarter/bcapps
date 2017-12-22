@@ -1,0 +1,39 @@
+
+ID: 18400
+post_name: occupy-the-milky-way
+post_category: humor-attempted
+post_author: barrycarter
+post_date_gmt: Fri, 11 Nov 2011 13:53:23 +0000
+post_type: post 
+post_status: publish
+post_title: Occupy the Milky Way?
+
+======================================================
+
+Did you know that:<ul> 
+ 
+<li>Only 3 stars (Sirius, Canopus, Arcturus) make up over 10% of the 
+night's stellar brightness? That's 0.2% of the visible stars 
+controlling 10% of the brightness!</li> 
+ 
+<li>The 18 brightest stars (1.1% of the total number of stars) make up 
+over 25% of the night's brightness!</li> 
+ 
+<li>A scant 8% of the visible stars are responsible for OVER HALF the 
+night's brightness?</li> 
+ 
+<li>The dimmest 586 visible stars collectively provide only 10% of the 
+night's brightness: the same amount of brightness shared by the 3 
+brightest stars.</li> 
+ 
+</ul> 
+ 
+Write your Congressman or something. Brightness should be divided more 
+equally among the stars! 
+ 
+Data/code used to generate statistics above: 
+ 
+https://github.com/barrycarter/bcapps/blob/master/oneliners.txt 
+https://github.com/barrycarter/bcapps/blob/master/db/radecmag.asc 
+
+

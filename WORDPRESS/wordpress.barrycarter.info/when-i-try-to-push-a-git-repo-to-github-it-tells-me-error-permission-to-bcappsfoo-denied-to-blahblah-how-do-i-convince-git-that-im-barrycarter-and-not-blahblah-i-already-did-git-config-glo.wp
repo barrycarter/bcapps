@@ -1,0 +1,20 @@
+
+ID: 23827
+post_name: when-i-try-to-push-a-git-repo-to-github-it-tells-me-error-permission-to-bcappsfoo-denied-to-blahblah-how-do-i-convince-git-that-im-barrycarter-and-not-blahblah-i-already-did-git-config-glo
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 23 Oct 2010 22:27:26 +0000
+post_type: post 
+post_status: publish
+post_title: When I try to push a git repo to github, it tells me "ERROR: Permission to bcapps/foo denied to blahblah". How do I convince git that I'm barrycarter, and not blahblah? I already did "git config --global" for both user and email
+
+======================================================
+
+(You): When I try to push a git repo to github, it tells me "ERROR: Permission to bcapps/foo denied to blahblah". How do I convince git that I'm barrycarter, and not blahblah? I already did "git config --global" for both user and email
+
+(S??bastien): Maybe you're trying to connect to Github with the wrong SSH keys? Check your .ssh/config
+
+
+
+[Vark assigned category: <b>GitHub</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

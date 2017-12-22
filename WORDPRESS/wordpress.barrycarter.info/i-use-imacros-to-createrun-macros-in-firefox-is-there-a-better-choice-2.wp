@@ -1,0 +1,30 @@
+
+ID: 23596
+post_name: i-use-imacros-to-createrun-macros-in-firefox-is-there-a-better-choice-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 10 Nov 2010 02:40:52 +0000
+post_type: post 
+post_status: publish
+post_title: I use iMacros to create/run macros in Firefox. Is there a better choice?
+
+======================================================
+
+(You): I use iMacros to create/run macros in Firefox. Is there a better choice?
+
+(Andy): Doesn't seem like it: https://addons.mozilla.org/en-US/firefox/tag/macros
+
+(You): thanks. I could've sworn someone told me about a GreaseMonkey script that does better, but I can no longer find the reference/conversation.
+
+(Andy): Are you referring to macros for a particular app like Gmail, or another tool that gives you the ability to create your own?
+
+(You): a tool that lets you create your own, not for a specific app.
+
+(Andy): It's been a while since the last update, but maybe this one? http://userscripts.org/scripts/show/25337
+
+(You): thanks, but not quite what I had in mind. I meant something that would record keystrokes, mouse clicks, etc. iMacros is pretty good, but not perfect alas.
+
+
+
+[Vark assigned category: <b>iMacros</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

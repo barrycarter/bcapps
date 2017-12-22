@@ -1,0 +1,48 @@
+
+ID: 25474
+post_name: can-i-send-keystrokes-and-text-to-a-running-instance-of-rdesktop-i-want-to-automate-tasks-on-the-remote-side
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 09:03:57 +0000
+post_type: post 
+post_status: publish
+post_title: Can I send keystrokes and text to a running instance of rdesktop? I want to automate tasks on the remote side.
+
+======================================================
+
+(You): Can I send keystrokes and text to a running instance of rdesktop? I want to automate tasks on the remote side.
+
+(Manny): yes you can... but not sure about automating...
+
+(You): how do you do it then?
+
+(Manny): you want to do it AUTOMATICALLY?
+
+(Manny): there is no automation capacity in rdesktop
+
+(Manny): only interactive
+
+(You): well, I know I can send rdesktop keystrokes and mouse movements by typing on the keyboard and moving the mouse (that's how it's supposed to work) -- my question: can I send keystrokes/mouse movements from the command line? I guess not.
+
+(You): so no "rdc --send-keystroke abc" kind of thing? vncviewer?
+
+(Manny): you may find VNC better but you would need an app that supports the automation. I use Chicken of the VNC and I do not believe it has automation either.
+
+(You): you use Chicken as your vncviewer or your vnc server? There are no command line commands to it that manipulate things on the remote server? Has anyone tried sniffing the traffic?
+
+(Manny): have you tried AUTOMATOR? http://www.apple.com/remotedesktop/newfeatures.html#automation
+
+(You): interesting... my base machine is Linux. Anything that does that for Linux?
+
+----------------------
+
+(Christoffer): You can use pywinauto. There's a demonstration of it working here. http://pywinauto.pbworks.com/ but the official site is: http://www.google.com/url?sa=t&source=web&cd=1&ved=0CBMQFjAA&url=http%3A%2F%2Fpywinauto.openqa.org%2F&ei=chsbTN6gB-OkOOGQ5doK&usg=AFQjCNEHzSNols5dNA1kyCvF22MKKjpP2g&sig2=VPAWU8Edls5Wi6kisR_mnw
+
+
+
+Use the function print_control_indentifiers() on windows or dialogs to get the identifiers used to press a button. I also created a sample application that auto-fills and send SMS through a standalone SMS sender application.
+
+
+
+[Vark assigned category: <b>rdesktop</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

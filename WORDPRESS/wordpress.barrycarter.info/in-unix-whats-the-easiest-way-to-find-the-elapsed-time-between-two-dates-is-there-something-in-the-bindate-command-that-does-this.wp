@@ -1,0 +1,42 @@
+
+ID: 27436
+post_name: in-unix-whats-the-easiest-way-to-find-the-elapsed-time-between-two-dates-is-there-something-in-the-bindate-command-that-does-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 05 May 2010 04:40:35 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, what's the easiest way to find the elapsed time between two dates? Is there something in the /bin/date command that does this?
+
+======================================================
+
+(You): In Unix, what's the easiest way to find the elapsed time between two dates? Is there something in the /bin/date command that does this?
+
+(Andy): Somebody wrote a script to compare dates: http://www.unix.com/unix-dummies-questions-answers/4870-days-elapsed-between-2-dates.html#post16559
+
+(You): thanks. Is there any way to get completely unanswered questions, ideally those that don't even have comments?
+
+(Andy): You mean Vark questions? Dunno.
+
+(You): I think I was referring to stackoverflow.com
+
+(Andy): Beats me.
+
+(You): thanks. I think I answered the wrong Andy. Vark has a little work to do in that area :(
+
+(Andy): Are you responding via email or the website? I believe it tracks email
+
+questions by the tag.
+
+(You): I'm using IM.
+
+(Andy): Yeah, that's definitely a little clunky still with follow-up questions.
+
+----------------------
+
+(Thong): Here's one approach. http://www.jumpingbean.co.za/blogs/mark/bash-date-time-calculations
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

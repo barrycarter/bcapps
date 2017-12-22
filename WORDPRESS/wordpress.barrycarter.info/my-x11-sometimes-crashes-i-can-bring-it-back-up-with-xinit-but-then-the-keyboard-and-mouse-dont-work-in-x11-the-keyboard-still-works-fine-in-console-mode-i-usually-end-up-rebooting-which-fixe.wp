@@ -1,0 +1,30 @@
+
+ID: 25145
+post_name: my-x11-sometimes-crashes-i-can-bring-it-back-up-with-xinit-but-then-the-keyboard-and-mouse-dont-work-in-x11-the-keyboard-still-works-fine-in-console-mode-i-usually-end-up-rebooting-which-fixe
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 07:26:24 +0000
+post_type: post 
+post_status: publish
+post_title: My X11 sometimes crashes. I can bring it back up with "xinit", but then the keyboard and mouse don't work in X11 (the keyboard still works fine in console mode). I usually end up rebooting, which fixes everything. What could the problem here be? How can I get the keyboard/mouse working when I restart X? I use xinit to bring it up initially, so this puzzles me.
+
+======================================================
+
+(You): My X11 sometimes crashes. I can bring it back up with "xinit", but then the keyboard and mouse don't work in X11 (the keyboard still works fine in console mode). I usually end up rebooting, which fixes everything. What could the problem here be? How can I get the keyboard/mouse working when I restart X? I use xinit to bring it up initially, so this puzzles me.
+
+(Matthieu): If it's on a Unix variant (Linux, OS X) you could look in the X11 log files after you start X11 the second time.  THere may be some messages explaining why it can get a hold of the keyboard mouse.  Look into the most recent of /var/log/Xorg*.log
+
+(You): I tried that before, but tried it again just now. It looks like restarting hald might be the answer.
+
+----------------------
+
+(TT): http://www.google.com/search?q=x11+crashes&ie=utf-8&oe=utf-8&aq=t
+
+
+
+Sorry, that's the best I can do.
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

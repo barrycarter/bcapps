@@ -1,0 +1,50 @@
+
+ID: 24340
+post_name: when-i-do-date-n-my-fedora-11-box-allegedly-returns-the-number-of-nanoseconds-since-the-last-whole-second-but-come-on-do-computers-really-keep-track-of-time-down-to-the-nano-second
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 28 Aug 2010 04:29:56 +0000
+post_type: post 
+post_status: publish
+post_title: When I do "date +%N" my Fedora 11 box allegedly returns the number of nanoseconds since the last whole second. But come on, do computers really keep track of time down to the NANO second?
+
+======================================================
+
+(You): When I do "date +%N" my Fedora 11 box allegedly returns the number of nanoseconds since the last whole second. But come on, do computers really keep track of time down to the NANO second?
+
+(Tom): They don't keep track of it all the time, they just calculate it each time you ask.
+
+(You): but still, how does it know time down to the nanosecond?
+
+(Tom): Think about your processor speed: probably measured in GHz if you bought it in the last 10 years.
+
+
+
+1Hz = 1/second
+
+1Ghz = 1000000000/second = 1.0 ?? 10-9
+
+
+
+1 nanosecond = 1.0 ?? 10-9
+
+
+
+If you have a 2 or 3 GHz processor it could do even more accurate. (It probably DOESN'T do more accurate though since your processor has to do other things than only keep track of time.)
+
+(You): yes, I do realize that my computer can do better than 10^9 operations per second, but ticking the clock that often seems excessive.
+
+(Tom): I agree it IS excessive but it looks good on paper when you try to sell a new processor, even if it doesn't really mean anything.
+
+(You): does that mean my CPU wastes 1/4th of its cycles just updating a clock?
+
+----------------------
+
+(Elanor): Why shouldn't they? They're constantly keeping track of how many seconds its been since 1970... lol
+
+(You): true, but updating a clock once a second is nothing for a computer. Updating a clock a billion times per second seems expensive even for computers that run faster than 1GHz.
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

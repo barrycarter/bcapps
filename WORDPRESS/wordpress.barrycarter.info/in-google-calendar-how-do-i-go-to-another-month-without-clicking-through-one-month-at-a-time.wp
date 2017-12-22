@@ -1,0 +1,42 @@
+
+ID: 27880
+post_name: in-google-calendar-how-do-i-go-to-another-month-without-clicking-through-one-month-at-a-time
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 26 Apr 2010 23:12:52 +0000
+post_type: post 
+post_status: publish
+post_title: In Google calendar, how do I go to another month without clicking through one month at a time?
+
+======================================================
+
+(You): In Google calendar, how do I go to another month without clicking through one month at a time?
+
+(Gabriel): There's a small trick, on the Search of the Calendar, click on the "Search Options" On the Date From ~ To, put the date of the month want, e.i 10/1/2011 to 10/31/2011 leave everything else black. Then you click "Search" and the "Month" Tab after you get results and you will be in the month you desired
+
+(You): Thanks. Only works when you have events for that month, yes?
+
+(Gabriel): You know Barry, you might be right, I have reoccurring events without end date, so there's at least 1 event in each month on my calendar. You can also try adding a reoccurring event just to get by while Google improves that feature
+
+----------------------
+
+(Kurt): See the arrow to the right of where it says "April" (on the left-hand side)? That's where ;)
+
+(You): That takes forever :)
+
+(Kurt): It's what you get from a free, web-based calendar I'm afraid :)
+
+(You): Nah, you can turn on jump-to-date in Google Labs.
+
+----------------------
+
+(Glazik): go to options ==&gt; Labs ==&gt; enable "Jump to date" options
+
+(Glazik): http://www.google.com/support/calendar/bin/answer.py?hl=en&answer=154175 - here you cal learn to use labs in google calendar
+
+(You): Thanks!
+
+
+
+[Vark assigned category: <b>Google calendar</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,42 @@
+
+ID: 27416
+post_name: in-windows-how-do-you-kill-multiple-processes-at-once-task-manager-doesnt-allow-multi-select
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 05 May 2010 21:27:47 +0000
+post_type: post 
+post_status: publish
+post_title: In Windows, how do you kill multiple processes at once? Task Manager doesn't allow multi-select?
+
+======================================================
+
+(You): In Windows, how do you kill multiple processes at once? Task Manager doesn't allow multi-select?
+
+(Martin): Check out the sysinternals package, it will provide command-line programs to kill by name
+
+(You): Just google sysinternals, download and install it?
+
+(Martin): YEP, http://technet.microsoft.com/en-us/sysinternals/default.aspx
+
+(You): Thanks! Just got it... cool! Any docs? I also have cygwin on this machine -- could that help?
+
+(Martin): folowup
+
+(Martin): pskill
+
+(Martin): not bad but not needed.
+
+(Martin): Pstools.chm is a help file
+
+(You): fantastic, thanks! I'm surprised M$ gives away something so useful.
+
+(Martin): They didnt invent it. They just bought the company..
+
+----------------------
+
+(Hogan): You can't do so with the standard windows utilities a custom or third party tool is required
+
+
+
+[Vark assigned category: <b>Task Manager</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,22 @@
+
+ID: 24051
+post_name: in-tcsh-whats-the-difference-between-set-and-printenv-they-print-different-information-oddly-enough
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 10 Oct 2010 01:13:35 +0000
+post_type: post 
+post_status: publish
+post_title: In tcsh, what's the difference between "set" and "printenv". They print different information, oddly enough.
+
+======================================================
+
+(You): In tcsh, what's the difference between "set" and "printenv". They print different information, oddly enough.
+
+(Tommy): "printenv" lists the exported shell environment variables.  "set" displays shell option settings.  These are totally separate things.
+
+(You): thanks. In my case, it looks like "set" ALSO display environment variables.
+
+
+
+[Vark assigned category: <b>printers</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

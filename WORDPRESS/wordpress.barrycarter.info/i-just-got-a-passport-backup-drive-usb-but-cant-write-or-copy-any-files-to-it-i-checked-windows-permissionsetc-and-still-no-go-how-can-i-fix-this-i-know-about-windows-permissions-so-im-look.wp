@@ -1,0 +1,28 @@
+
+ID: 22744
+post_name: i-just-got-a-passport-backup-drive-usb-but-cant-write-or-copy-any-files-to-it-i-checked-windows-permissionsetc-and-still-no-go-how-can-i-fix-this-i-know-about-windows-permissions-so-im-look
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 06 Jul 2011 21:37:48 +0000
+post_type: post 
+post_status: publish
+post_title: I just got a Passport backup drive (USB), but can't write or copy any files to it. I checked Windows permissions/etc, and still no go. How can I fix this? I know about Windows permissions, so I'm looking for a Passport-specific solution (I believe the problem is with the Passport [or the software it installs], not a general file perm problem).
+
+======================================================
+
+(You): I just got a Passport backup drive (USB), but can't write or copy any files to it. I checked Windows permissions/etc, and still no go. How can I fix this? I know about Windows permissions, so I'm looking for a Passport-specific solution (I believe the problem is with the Passport [or the software it installs], not a general file perm problem).
+
+(Christopher): You may have to format the drive before you can use it. You can right click on the drive in Windows Explorer and then click on "Format."
+
+(You): thanks. Actually, I can see the software that came with it on the drive (and even install it, but I don't want to use their software), so I think the drive is formatted properly.
+
+----------------------
+
+(Daniel): Hi, Barry. Perhaps a dumb question, but what if you formatted the drive? Is there any particular feature of the Passport you want to maintain
+
+(You): Black, thanks. I considered it, but I can see the software that came pre-installed on the drive, so I'm pretty sure that's not the issue.
+
+
+
+[Vark assigned category: <b>Perm</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

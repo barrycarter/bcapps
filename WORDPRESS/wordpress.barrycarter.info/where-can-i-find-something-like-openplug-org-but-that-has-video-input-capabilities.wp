@@ -1,0 +1,38 @@
+
+ID: 24910
+post_name: where-can-i-find-something-like-openplug-org-but-that-has-video-input-capabilities
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 18 Jul 2010 21:21:57 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find something like openplug.org, but that has video input capabilities?
+
+======================================================
+
+(You): Where can I find something like openplug.org, but that has video input capabilities?
+
+(CJ): Depends on what you are trying to do, for live streaming or trying to access your cable from anywhere, you might need multiple devices tethered to similar products like openplug. I personally use pogoplug. You should know that most video will have to be saved and compressed in a specific and acceptable format before you are able to stream view it from these types of plug solutions.
+
+(You): thanks. It looks like pogoplug is intended for something quite different? Ideally, I'd like something that lets me view shows as they're being recorded (time shifting).
+
+(CJ): again, the video still needs to be compressed for viewing remotely. You would have to build your own device similar to the SLINGBOX which does exactly what you said about viewing as they are recorded.
+
+(You): ok, that sounds too complicated. I'm talking about having everything on a LAN.
+
+(CJ): ok, then this will work too. http://www.zagg.com/zaggbox/index.php
+
+(You): thanks. I've tried the Cirago and Archos and I don't think device-based solutions are my answer.
+
+(CJ): You have to use a device in order to capture your video.  Some devices will come with all the right SW you need and cost more i.e zaggbox, others, you would have to 'hack' and piece together additional devices and customize your own SW for it to work the way you want. both cases, you need a device to do it.
+
+(You): I was thinking of getting a tuner card or something -- I want my machine to control the recording device, so I can use cron and stuff
+
+(CJ): Zaggbox has those control features you seek already and can also be controlled from iphone/mobile devices too. It's very similar to the features that were enabled  as shown on the directv commercials not too long ago, but additionally you can view media from anywhere anytime.
+
+(You): so you can tell it when to start recording, when to stop, etc. No limited number of timers?
+
+
+
+[Vark assigned category: <b>video</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

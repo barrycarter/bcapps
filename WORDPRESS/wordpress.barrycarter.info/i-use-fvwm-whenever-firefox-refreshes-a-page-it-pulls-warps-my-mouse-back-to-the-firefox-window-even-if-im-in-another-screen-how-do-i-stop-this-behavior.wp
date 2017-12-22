@@ -1,0 +1,26 @@
+
+ID: 26347
+post_name: i-use-fvwm-whenever-firefox-refreshes-a-page-it-pulls-warps-my-mouse-back-to-the-firefox-window-even-if-im-in-another-screen-how-do-i-stop-this-behavior
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 19:07:01 +0000
+post_type: post 
+post_status: publish
+post_title: I use FVWM. Whenever Firefox refreshes a page, it pulls (warps) my mouse back to the Firefox window, even if I'm in another "screen". How do I stop this behavior?
+
+======================================================
+
+(You): I use FVWM. Whenever Firefox refreshes a page, it pulls (warps) my mouse back to the Firefox window, even if I'm in another "screen". How do I stop this behavior?
+
+(Christian): Try removing all plugins and see if one is causing the problem. What is FVWM?
+
+(You): thanks. I had this problem even when there were no plugins. It only happens on the latest version of Firefox. FVWM is a "window manager" that gives me a virtual screen that's 9 times the size of my physical screen.
+
+----------------------
+
+(Fireglo): Reinstall Firefox or try a different browser.
+
+
+
+[Vark assigned category: <b>FVWM</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

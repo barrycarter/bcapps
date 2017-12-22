@@ -1,0 +1,60 @@
+
+ID: 24920
+post_name: in-financial-options-writing-a-covered-call-is-the-same-thing-as-writing-a-naked-short-put-but-what-is-the-difference-in-terms-of-margin-is-there-an-advantage-to-doing-one-vs-the-other
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 17 Jul 2010 19:23:16 +0000
+post_type: post 
+post_status: publish
+post_title: In financial options, writing a covered call is the same thing as writing a naked short put, but what is the difference in terms of margin? Is there an advantage to doing one vs the other?
+
+======================================================
+
+(You): In financial options, writing a covered call is the same thing as writing a naked short put, but what is the difference in terms of margin? Is there an advantage to doing one vs the other?
+
+(Bill): Hey Barry, 
+
+Selling an uncovered put is different than selling a covered call option.  The two are very different.  The potential for financial loss is much greater when selling naked options vs selling covered options.  The reward is potentially greater for selling a naked option though.  Correct me if I am wrong, but securities law won't allow you to trade options on margin so I am a bit confused by the question.  
+
+
+
+In equities margin is used for typically for shorting stock.  This is different than selling options.  
+
+
+
+Hope this helps, Bill
+
+(You): thanks. I'm actually talking about Forex spot options (100:1 leverage!) where trading options on margin is fine. Isn't a covered call synthetically equal to a naked short put? Why would the risk be worse with one vs the other? [direct gchat: carter.barry@gmail.com]
+
+(Bill): I am sorry. I am not very knowledgeable about forex.  I can't help you.
+
+(You): thanks.
+
+----------------------
+
+(Bojan): In theory, they are the same. 
+
+
+
+In practice, you would be doing two transactions versus one, which would probably have higher overall cost (option premium spread + broker/exchange fee against just option premium spread).
+
+(You): thanks. That was the one difference I noticed too. However, if you're 'put' on the put, you end up w/ a short position you have to liquidate, which costs commission/spread. Of course, holding a short put also means no rollover costs (but sometimes rollover is positive, and I'll bet those costs are incorporated into the put). Basically, I'm writing covered calls right now (Forex), but am thinking about switching to naked puts. The latter SEEMS more dangerous, but I'm not sure why. [direct gchat: carter.barry@gmail.com]
+
+(Bojan): If you write a covered put, you can lose as much as you paid for you position. With naked put, you can lose way more. 
+
+
+
+Say, you got long eur that you bought at 1.30.  You sell a put at 1.20, market at 1.15.  Most you can lose is .10, and that's if the market goes above 1.20. If it was a naked position, your loss would be the difference between market price and strike. 
+
+
+
+And for rolls, they are spreaded daily, you want to stay away from that (unless you find no spread broker).  Maybe use loan/deposit to carry the position forward.  
+
+
+
+Hit me up at bbaros@gmail.com.
+
+
+
+[Vark assigned category: <b>covered call</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,58 @@
+
+ID: 24330
+post_name: where-can-i-find-unix-programs-that-do-appointment-scheduling-or-generally-deal-with-digraphs-that-have-a-time-component
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 28 Aug 2010 23:07:18 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find Unix programs that do appointment scheduling or generally deal with digraphs that have a time component?
+
+======================================================
+
+(You): Where can I find Unix programs that do appointment scheduling or generally deal with digraphs that have a time component?
+
+(Ajay): There's open project that  might help but if you're looking for soemthing like outlook then there's the lightning plugin for thunderbird. Not sure if this helps ...
+
+(You): thanks. I was more looking for something like Algorithm::ScheduledPath for Perl
+
+(Ajay): I was thinking about that also but sorry don't know of anything of the top of my head, though open project sources should have something that you maybe able use.
+
+(You): thanks. I think the Perl module I pointed to may do the trick. Taking a look at it now.
+
+----------------------
+
+(Amos): linuxappfinder.com
+
+(You): I've tried appfinders before (like "yum search") and they're not always that great.
+
+(Amos): Your could try google or sourceforge.net.  A couple of applications that come to mind are Evolution Calendar (for gnome/GTK),  Mozilla Sunbird, or the KDE Personal Information Management (PIM) suite that includes a calendage
+
+(You): thanks-- I think the Perl module Algorithm::ScheduledPath does what I want.
+
+(Amos): Good, glad you found what you need
+
+----------------------
+
+(Chris): Another question with a severe constriction - namely  Unix
+
+
+
+If you found the perfect software on a PC or Mac could you justify the $100 for the hardware?
+
+(You): I suppose so, but the big problem is compatibility. I want data I can use easily, not stuff in a proprietary format. However, if you can suggest anything, I might be able to find a Unix equivalent.
+
+(Chris): As you know, Unix does not guarantee non-proprietary formats. Many Unix applications are incompatible with each other.
+
+
+
+Maybe your question needs amending slightly - if your concern is compatibility / proprietary formats
+
+
+
+Maybe add; "... and it must use a standard data format" or "... and it must be open source"
+
+
+
+[Vark assigned category: <b>find Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

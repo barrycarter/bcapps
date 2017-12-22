@@ -1,0 +1,32 @@
+
+ID: 23885
+post_name: in-php-where-can-i-find-the-entire-request-sent-by-the-client-as-a-single-string-http_get_request_headers-comes-close-but-its-not-everything-and-im-not-sure-it-guarentees-order
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 22 Oct 2010 22:50:28 +0000
+post_type: post 
+post_status: publish
+post_title: In PHP, where can I find the ENTIRE request sent by the client as a single string? http_get_request_headers() comes close, but it's not everything and I'm not sure it guarentees order.
+
+======================================================
+
+(You): In PHP, where can I find the ENTIRE request sent by the client as a single string? http_get_request_headers() comes close, but it's not everything and I'm not sure it guarentees order.
+
+(Devin): Not sure if this is what your looking for or not but check it out:  http://us.php.net/manual/en/function.http-get.php
+
+(You): thanks. That actually gets a URL from another server. I want to see the request sent to my server.
+
+(Devin): maybe your looking for this then:  http://php.net/manual/en/language.variables.external.php  also see:  http://php.net/manual/en/reserved.variables.post.php
+
+(You): thanks. That's pretty much what I'm using now, but there's no guarantee that it's complete (eg, if you have two headers with the same value, I'm pretty sure one of them gets nuked), and it doesn't contain the "GET /whatever HTTP/1.0" line. I realize I can buildup a very close approximation of the request, but I'd like to see just the 'naked' request itself.
+
+----------------------
+
+(Randen): use $_SERVER methods instead (ie. $_SERVER['REQUEST_URI'). You can append all the parameters into a single string too if you choose.
+
+(You): thanks, that's what I'm doing now, but I still think if you have "Foo: Bar1" and "Foo: Bar2" sent, PHP won't catch that.
+
+
+
+[Vark assigned category: <b>PHP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

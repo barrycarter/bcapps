@@ -1,0 +1,48 @@
+
+ID: 23010
+post_name: im-running-a-bunch-of-sites-using-lighttpd-and-have-a-different-fastcgi-server-config-for-each-one-theyre-all-php-but-with-different-php-ini-files-however-phpinfo-shows-that-each-site-uses-t
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 31 Dec 2010 03:22:39 +0000
+post_type: post 
+post_status: publish
+post_title: I'm running a bunch of sites using lighttpd, and have a different fastcgi.server config for each one (they're all php, but with different php.ini files). However, phpinfo() shows that each site uses the same php.ini file. Can I use different php.ini's for each site?
+
+======================================================
+
+(You): I'm running a bunch of sites using lighttpd, and have a different fastcgi.server config for each one (they're all php, but with different php.ini files). However, phpinfo() shows that each site uses the same php.ini file. Can I use different php.ini's for each site?
+
+(Leobardo): Hi Barry...Unless you have different php executables installed in different places, that will workrk.. Sadly, php is tied to one .ini file so you might need to make a second installation... The fastcgi is only for connecting php with lighttpd not to create differnte instances of php.. Saludos, Leo
+
+(You): thanks. I assume you meant that will *not* work, correct? I sort of figured something like that. Someone told me about PHPRC which might do what I want.
+
+(Leobardo): Not sure it will work but give it a try.. Here is some explanation about how it works
+
+PHPRC is an environment variable, means the place where the php.ini file is loaded. You can easily get the value af any php confuguration option (meaning any display in php.ini) by using "ini_get". Here is an example:
+
+
+
+&lt;?
+
+echo "PHPRC = ".ini_get("PHPRC")."
+
+";
+
+echo "display_errors = ".ini_get("display_errors");
+
+?&gt;
+
+(You): Yes, I think you can *set* PHPRC in real-time, which is what makes it exciting.
+
+----------------------
+
+(Sage): I believe it is possible you may have to name the file for instance like (filename.php)
+
+To (nameoffile.php) you can't have file names the same like NO file names can be the same
+
+(You): thanks. I was talking about different config files, I think.
+
+
+
+[Vark assigned category: <b>PHP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

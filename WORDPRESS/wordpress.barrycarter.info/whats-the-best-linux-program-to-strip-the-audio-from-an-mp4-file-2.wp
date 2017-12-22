@@ -1,0 +1,52 @@
+
+ID: 25179
+post_name: whats-the-best-linux-program-to-strip-the-audio-from-an-mp4-file-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 24 Jun 2010 20:01:52 +0000
+post_type: post 
+post_status: publish
+post_title: What's the best Linux program to strip the audio from an .mp4 file?
+
+======================================================
+
+(You): What's the best Linux program to strip the audio from an .mp4 file?
+
+(Tom): You can use Handbrake (http://handbrake.fr/) or VLC (videolan.org).  They both have tutorials on how to get audio from video.
+
+----------------------
+
+(Daniel): Hi, Barry.  I haven't read the man page, but I think ffmpeg will do this.  It's a tool that actually underlies a lot of other audio tools.  A quick Bing (trying out the Google alternative) landed me here, and the bottom post seems to get close to what you're looking for:  http://forums.applenova.com/archive/index.php/t-30285.html.  Hope that helps.
+
+(You): you rock! A trivial ffmpeg command did the job! Go Reds!
+
+(Daniel): Glad to hear it.  I've never tried it before, so now I might.  Go beautiful mountains and the world's longest tram (which freaked my wife out a bit).  +)
+
+(You): thanks :) You should move here like I did (from Dayton).
+
+(Daniel): I lived there from '95 to '97, and it's in our relatively-near-future plan to move there.  The Land of Enchantment.
+
+(You): cool! Retirement?
+
+(Daniel): Nope.  I'm a little shy o' 40, and she's younger.  We just want--forgive the clich??--a little majesty in our daily travails.  Preaching to the choir, though, I'm sure.
+
+(You): to Albuquerque or one of the smaller cities? Albuquerque is becoming more like a real city every day.
+
+(Daniel): I would choose Albuquerque or Socorro.  I have a friend who works at the NMT in Socorro, and it's sparse and close to the VLA.  But Albuquerque's a great central spot for getting up the Sandias, heading out to El Malpais (I hope to camp there a bit some day), or south.  North if I'm in the mood for spicy chocolate @ Kakawa.  Relative to Cincinnati, though, there's not a bad choice in NM.  Last June my wife and I visited, her first time west of St. Louis, and she was amazed.  Didn't get the starry night I was hoping for (overcast), but that'll come in time.  &lt;/rambling&gt;
+
+(You): fantastic -- but I don't see many starry skies from here either-- however, I do with a 10-minute drive, so you have a point.
+
+----------------------
+
+(Tom): mplayer with the dumpaudio option
+
+(You): I was actually hoping for a playable file after stripping audio, but didn't get one + man mplayer specifically states resulting file won't be playable.
+
+(Tom): folowup It should still be playable with an mp4 file, just not with others It should give you a playable file with MPEG files. Presumably it dumps the mp3 stream from the mp4 file
+
+(Tom): ah okay. Thanks for letting me know that. It might come in handy
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

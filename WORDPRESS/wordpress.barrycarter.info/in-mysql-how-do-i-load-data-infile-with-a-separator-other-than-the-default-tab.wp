@@ -1,0 +1,44 @@
+
+ID: 27494
+post_name: in-mysql-how-do-i-load-data-infile-with-a-separator-other-than-the-default-tab
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 21:19:21 +0000
+post_type: post 
+post_status: publish
+post_title: In MySQL, how do I "LOAD DATA INFILE" with a separator other than the default TAB?
+
+======================================================
+
+(You): In MySQL, how do I "LOAD DATA INFILE" with a separator other than the default TAB?
+
+(Nicolas): just check MySQL reference manual : http://dev.mysql.com/doc/refman/5.5/en/load-data.html
+
+(Nicolas): you have to write something like INTO TABLE tbl_name FIELDS TERMINATED BY 'string'
+
+(You): thanks! I just tried that, but it's not working well. Can I use space character as a terminator?
+
+(Nicolas): I think you can but it's not a usual field separator or line terminator. You should use break line -&gt; n as line terminator. In fact, if one of your field contains a space, MySQL would consider that it's the end of the line
+
+(You): I just got it to work, thanks!
+
+----------------------
+
+(Ketil): This emulates default behaviour:
+
+FIELDS TERMINATED BY 't' ENCLOSED BY '' ESCAPED BY '\'
+
+change it as you require.
+
+
+
+PS, it's on the first hit on google for "load data infile":
+
+
+
+http://dev.mysql.com/doc/refman/5.1/en/load-data.html
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

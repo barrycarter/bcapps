@@ -1,0 +1,76 @@
+
+ID: 26550
+post_name: when-two-billiard-balls-collide-one-imparts-momentum-to-the-other-in-zero-seconds-perfect-theoretical-world-does-this-mean-the-balls-apply-an-infinite-force-to-each-other-for-zero-seconds-does-th
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 31 May 2010 23:26:38 +0000
+post_type: post 
+post_status: publish
+post_title: When two billiard balls collide, one imparts momentum to the other in zero seconds (perfect theoretical world). Does this mean the balls apply an infinite force to each other for zero seconds? Does that even make sense?
+
+======================================================
+
+(You): When two billiard balls collide, one imparts momentum to the other in zero seconds (perfect theoretical world). Does this mean the balls apply an infinite force to each other for zero seconds? Does that even make sense?
+
+(Avetis): I'm not sure if this makes sense.. where did you get idea like that?
+
+(You): well, if you impart momentum to something in zero time, haven't you applied infinite force?
+
+(Avetis): well you probably did, considering that change in momentum, impulse, is equal time times force, and time is close to zero I guess you will require infinite amount of force to impart momentum, though time should be close to zero not to be zero because if it would be zero, no force will help :) though when 2 billiard balls collide, who said that balls impart momentum in zero seconds? if you are suggesting that somehow magically that happened that in time close to zero seconds one ball imparts momentum to the other then yes theoretically that magical balls were applying infinite force, alternatively, you can say that in time close to zero one ball imparts momentum close to zero to other ball with normal force applied. does this make sense?
+
+(You): I think you're saying that, in reality, billiard balls bounce off each other in a SMALL amount of time, not a ZERO amount of time?
+
+(Avetis): yes
+
+(You): the force is still quite large, right? And it's ultimately the force of electrons repelling each other in the outer shells of the outer atoms of the balls yes?
+
+(Avetis): well it's not very Large , what I see here is mass of billiard balls is not to big, and force applied is normal (the one between them when they collided surely isn't close to atomic blast) so in small but far from being zero amount of time let's say a millisecond, this force was quiet enough to produce impulse for balls to bounce. at the exact moment of impact balls were having 0 initial velocity, which changed to small velocity after bouncing, which doesn't require big impulse, so no Large force needed. Now regarding the atoms I guess there is lot's of interesting stuff going on inside ball for sure, but it has nothing to do with Newtonian physics, because standard impulse calculation formulas doesn't use subatomic data as parameters, right?
+
+(You): I don't think we're crossing the boundary into the strong and weak nuclear forces?
+
+(Avetis): I guess so
+
+(Avetis): although to be honest I don't have a great understanding of details here, regarding impulse and representation of these forces in subatomic level
+
+(You): OK. I was just wondering if it was possible to generate the same force for a longer period of time.
+
+----------------------
+
+(Jim): In the "perfect theoretical" world I guess that's what it would mean. If you zoomed in enough, you would see that there is a deformation of the balls and that the energy transfer is not instantaneous.
+
+(You): thanks. So you're saying the force applied is very high, but not infinite?
+
+(Jim): Well, yeah I would say that. The energy transferred is J=1/2*m*v^2. The energy transferred by applying a force F to an object is J'=F*d where d is the distance travelled by the object. http://en.wikipedia.org/wiki/Work_(physics)
+
+
+
+So if you consider the shock to be instantaneous, then the ball don't move during the transfer so F is infinite. If you look more closely, the ball will be slightly deformed and then go back to their previous shape (like a spring) so they will be slightly moving. Then F will be high but not infinite.
+
+(You): OK.. and that force comes ultimately from electrons repelling each other?
+
+(Jim): Atoms are more involved in this. Atoms are much bigger than electrons. You could say that atoms are doing the same as the balls (bouncing in each other) but at a much smaller scale. The electromagnetic force keeps the atoms of each ball togethers. However, the smaller the scale, the harder it is to explain things with conventional Newtonian physics.
+
+(You): are you saying the strong and weak nuclear forces are involved here?
+
+(Jim): No, I think mostly the electromagnetic force which holds the molecules together. Otherwise when the balls hit they would fall appart or even merge.
+
+(You): so if it's only the EM force, conventional physics can explain it, no?
+
+(Jim): Yes, this is a way to explain it but it is simplified. To have exact understanding on subatomic phenomenon we would need much more advanced physics like quantum physics and I can't help much here :).
+
+(You): OK. I was just wondering if it was possible to generate the same force for a longer period of time.
+
+(Jim): The key here is energy. The incoming ball has the cinetic energy 1/2*m*c^2. If you keep the same ball at the same speed, then increasing the period of time of the transfer (maybe using softer balls) would result in the same amount of energy transferred (the speeds after the shock should be the same), but the force applied will be smaller.
+
+(You): I assume you meant 1/2*m*v^2 (I'm not annihilating the balls in a nuclear sense!). I guess my question is: is there any way to sustain that large force for a longer period of time?
+
+(Jim): Yes, I meant v^2. The thing is that for applying this force for a longer period of time you need more energy, so either a heavier ball or more speed. Then you also need to use softer balls so that their are in contact for more time. In real world however, softer balls will lose more energy due to friction, and it is harder to make heavy soft balls than hard balls. I guess that's why billard balls are how they are :).
+
+(You): OK. So, ultimately, the fact that you're applying a large amount of force isn't impressive, since you're doing it for a short amount of time?
+
+(Jim): Exactly. It is the same for some powerful lasers which give a incredibly powerful beam, but only for a few nanoseconds for example.
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

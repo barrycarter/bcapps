@@ -1,0 +1,46 @@
+
+ID: 26501
+post_name: can-i-give-someone-read-only-access-to-my-gmail-malibox
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 03 Jun 2010 08:38:57 +0000
+post_type: post 
+post_status: publish
+post_title: Can I give someone read-only access to my gmail malibox?
+
+======================================================
+
+(You): Can I give someone read-only access to my gmail malibox?
+
+(Diana): No you can't
+
+----------------------
+
+(Rick): Not that I know of. You could use a Gmail filter and forward copies of your email to them, or only certain email, filtered by words in the subject line etc.
+
+(You): thanks. My goal was to subscribe one email address to a mailing list that sends images, and then let multiple view the images, instead of emailing images to everyone.
+
+----------------------
+
+('Lin): Not exactly, but you can set a forwarding address in your settings, and have your mail forwarded to that address. (If you use a filter, you can choose which mail gets forwarded.) The recipient will still be able to reply to the email under their own address.
+
+(You): Lin L, thanks. My goal was to subscribe one email address to a mailing list that sends images, and then let multiple view the images, instead of emailing images to everyone.
+
+('Lin): Have you considered using a free photo-sharing site like Photobucket or Flickr? Sending out an email with a link to the album the images are stored in would be convenient, and if you use Photobucket, you can password-protect the folder.
+
+(You): unfortunately, this isn't a list I own or control. I'm trying to build a free "archive" for the list.
+
+----------------------
+
+(Taukuotas): some solution exist
+
+
+
+1. activate pop funcion on your own box with functionality leave messages on server.
+
+2. config another gmail acoutn for downloading messages from first inbox.
+
+
+
+[Vark assigned category: <b>Gmail</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

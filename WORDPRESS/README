@@ -23,7 +23,13 @@ TODO:
 
   - Create "[bc:volatile]" 'tag' that autoparses to say "this post
   changes a lot -- here's an RSS feed to just this page" (worry: some
-  RSS readers don't handle single-item feeds well?) (see https://webapps.stackexchange.com/questions/69641/why-does-ifttt-dislike-this-rss-feed but hopefully fixed)
+  RSS readers don't handle single-item feeds well?) (see
+  https://webapps.stackexchange.com/questions/69641/why-does-ifttt-dislike-this-rss-feed
+  but hopefully fixed)
+
+  - Create tags in general
+
+  - Verify category exists, esp. in new posts
 
   - Add JSON feed as well?
 

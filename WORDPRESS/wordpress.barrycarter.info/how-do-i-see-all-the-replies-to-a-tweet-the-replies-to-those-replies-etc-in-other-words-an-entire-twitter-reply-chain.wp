@@ -1,0 +1,50 @@
+
+ID: 28186
+post_name: how-do-i-see-all-the-replies-to-a-tweet-the-replies-to-those-replies-etc-in-other-words-an-entire-twitter-reply-chain
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 16 Apr 2010 22:02:50 +0000
+post_type: post 
+post_status: publish
+post_title: How do I see all the replies to a tweet, the replies to those replies, etc? In other words, an entire twitter reply chain?
+
+======================================================
+
+(You): How do I see all the replies to a tweet, the replies to those replies, etc? In other words, an entire twitter reply chain?
+
+(Bonnie): You need proper tweet software. Try using tweetdeck  It is free to download and also has app for iphone that will sink with your set up on your computer. Tweetdeck allows you to follow tweet replyies, see all replyies etc. Also allows you to set up columns for favorite people you want to be sure not miss tweets from Just go to tweeetdeck.com and give it a go
+
+(You): Thanks. Is there any way to follow all replies from the website? Does tweetdeck work w/ Linux?
+
+(Bonnie): Tweet deck should work with linux. Download it and play on it.
+
+----------------------
+
+(Luke): I've seen some GreaseMonkey scripts that do this. 
+
+
+
+If you don't already use Mozilla Firefox, download it. http://www.firefox.com
+
+
+
+Then, install the GreaseMonkey add-on.
+
+https://addons.mozilla.org/en-US/firefox/addon/748
+
+
+
+Here's a script that does it: http://userscripts.org/scripts/show/40617
+
+
+
+I know there are probably others, so you can look for more at userscripts.org. I used this feature for a while, but it was slow. This is because it's having to perform a lot of searches (consequently, using more bandwidth) to generate the threads for all the replies to a tweet.
+
+
+
+Hope this helps!
+
+
+
+[Vark assigned category: <b>Twitter</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

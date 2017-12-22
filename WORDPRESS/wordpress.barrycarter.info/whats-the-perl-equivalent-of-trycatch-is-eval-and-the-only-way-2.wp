@@ -1,0 +1,32 @@
+
+ID: 23000
+post_name: whats-the-perl-equivalent-of-trycatch-is-eval-and-the-only-way-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 06 Jan 2011 01:53:17 +0000
+post_type: post 
+post_status: publish
+post_title: What's the Perl equivalent of try/catch? Is eval and $@ the only way?
+
+======================================================
+
+(You): What's the Perl equivalent of try/catch? Is eval and $@ the only way?
+
+(Rich): Yes. eval{}; and $@ are the way to do it in base Perl. However, there are various modules that do this. See http://search.cpan.org/~ash/TryCatch-1.003000/lib/TryCatch.pm [http://search.cpan.org/~ash/TryCatch-1.003000/lib/TryCatch.pm] for example.
+
+(Rich): See also http://search.cpan.org/search?query=catch&mode=all
+
+(You): thanks! The corrected URL worked :)
+
+----------------------
+
+(Alexander): perl doesn't have exceptions, this can only be simulated with eval
+
+(Alexander): major minus for perl, I think
+
+(You): thanks. There are modules which can simulate try/catch, someone else told me http://search.cpan.org/search?query=catch&mode=all [http://search.cpan.org/search?query=catch&mode=all]
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

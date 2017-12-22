@@ -1,0 +1,56 @@
+
+ID: 23191
+post_name: is-there-any-webhosting-where-your-data-filesdatabasesetc-are-literally-on-2-or-more-machines-so-that-your-site-stays-up-if-one-machine-crashes-ideally-different-locations-too-this-is-easy-t
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 16 Dec 2010 01:18:44 +0000
+post_type: post 
+post_status: publish
+post_title: Is there any webhosting where your data (files/databases/etc) are literally on 2 or more machines, so that your site stays up if one machine crashes? (ideally, different locations too). This is easy to do w/ static websites, but more difficult when you changing databases, blogs/comments, etc. However, it seems like something a lot of people would want. There are many "cloud server" hosts out there, but I don't think they do this.
+
+======================================================
+
+(You): Is there any webhosting where your data (files/databases/etc) are literally on 2 or more machines, so that your site stays up if one machine crashes? (ideally, different locations too). This is easy to do w/ static websites, but more difficult when you changing databases, blogs/comments, etc. However, it seems like something a lot of people would want. There are many "cloud server" hosts out there, but I don't think they do this.
+
+(Mihhail): they do this??? their databases are duplicated on different machines ???
+
+(You): thanks! I'm using vark through IM, so I didn't get your link (I'm assuming you put one in). Could you resend the link
+
+(Mihhail): nop, I didn't  =) Use any cloud service, they are pretty stable and there won't be "site is down"  ??? that is nearly impossible
+
+(You): a lot of them offer "cloud hosting", but I've never seen one where they actually claim to duplicate databases on different machines. Can you give me a specific example?
+
+(Mihhail): mmm  ?????we are using amazon cloud service, our database was never corrupted ??? don't care why it so, but it works
+
+(You): oh, I didn't know Amazon had webhosting services. I know they have storage, but that's different. IS there a link to Amazon webhosting?
+
+(Mihhail): It's not like hosting, but Amazon EC2 is more like VPS solution ???
+
+(You): OK, so I can a VPS through Amazon, but that 1 VPS is really a bunch of VPSs?
+
+(Mihhail): yep, Amazon EC is 'very big' group of VPS ??? every cloud service works like that, so make comparison before decide one
+
+----------------------
+
+(Stephen): Yes -- you could try a service like Linode or Slicehost. They allow you to pay for multiple machines (in the same datacenter or in different data centers) and provide documentation for managing a database across multiple nodes, e.g., http://library.linode.com/linux-ha/highly-available-file-database-server-ubuntu-10.04    . However, Amazon EC2/S3 may be more fitting depending on what you want to do. Also, Linode is giving away $100 to the first 1000 customers on Friday, see http://blog.linode.com/2010/12/15/linode-100000-giveaway/
+
+(You): thanks. I do have a bunch of cheap VPSs, but the biggest pain is keeping the dbs in sync (I know about MySQL replication and stuff, but it's still ugly). I want a webhost who handles all this for me: I see one machine, but it's really multiple machines, ideally in different geographical locations.
+
+(Stephen): afraid I don't of one like that - sorry!
+
+(You): thanks. I once made a concerted effort to have 4 VPSs act as a single site... major disaster.
+
+----------------------
+
+(Mike): Large sites do this. It goes by several names, clustering, load balancing, high availability, etc. Cloud computing is a variant that grew from these techiniques, but your right, for most peoples usage, cloud computing is something different.
+
+(You): ok, is there a webhosting service that does this for me?
+
+(Mike): Here is one example: http://mediatemple.net/webhosting/gs/  I use it myself for a few websites. I am not super excited about it, but I am not unhappy with it either. They market more for bursty traffic than high availability.
+
+(You): thanks! That was what I was looking for!
+
+
+
+[Vark assigned category: <b>databases</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

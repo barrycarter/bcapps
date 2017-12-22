@@ -1,0 +1,24 @@
+
+ID: 28421
+post_name: subject-how-do-i-get-fedora-11-to-recognize-my-sound-card
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 06:30:23 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: How do I get Fedora 11 to recognize my sound card?
+
+======================================================
+
+(You): Subject: How do I get Fedora 11 to recognize my sound card?
+
+(Nicholas): You will need to find drivers for it. Not all hardware has compatible drivers for Linux.
+
+----------------------
+
+(Dan): That is a way loaded question.  If it doesn't recognize it, and you are sure it is hooked up right, just google Fedora + name of your soundcard
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

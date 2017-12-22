@@ -1,0 +1,48 @@
+
+ID: 22826
+post_name: i-accidentally-wrote-a-javascript-program-that-does-alert-constantly-and-the-alert-window-grabs-mouse-focus-how-do-i-get-rid-of-the-alert-box-long-enough-to-close-the-tab-or-something-hitting-t
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 01 Jun 2011 23:59:45 +0000
+post_type: post 
+post_status: publish
+post_title: I accidentally wrote a Javascript program that does 'alert()' constantly, and the alert window grabs mouse focus. How do I get rid of the alert box long enough to close the tab or something? Hitting the big red X in Firefox doesn't help, and neither does the escape key.
+
+======================================================
+
+(You): I accidentally wrote a Javascript program that does 'alert()' constantly, and the alert window grabs mouse focus. How do I get rid of the alert box long enough to close the tab or something? Hitting the big red X in Firefox doesn't help, and neither does the escape key.
+
+(Brian): You'll probably need to kill Firefox from the task manager and remove those alerts.  And get Firebug...
+
+(You): that's what I ended up doing. I do have Firebug... how can it help me? There must be an easier way to stop a runaway JS?
+
+(Brian): Firebug helps you use fewer alerts for debugging, that's all...
+
+(You): oh, I hadn't thought about that. Good point. It lets you use 'writeln()' or something? I'm very new to JS
+
+(Brian): look into the Javascript debugger in Firebug to inspect code rather than alerts.  You can also write to the Firebug console.
+
+----------------------
+
+(Ian): Easiest thing to do is kill the browser and edit the script before loading the page again. Some browsers will detect that case and try to break out of it, but not always.
+
+(Ian): Check out Firebug (http://getfirebug.com/ [http://getfirebug.com/]) for Firefox, or you can log to a console so you don't end up in an alert() loop like that.
+
+(You): that's what I ended up doing, but thought there should be a better way (I've seen programs that do this intentionally, which is annoying). There's no keystroke command for "stop loading JS on this page" or anything? I do have Firebug and will use it to debug starting now.
+
+(Ian): be careful to check the page with Firebug turned off too - the Firebug "console.log()" function will break some browsers because "console" doesn't exist. You can create a simple wrapper to get around that (http://stackoverflow.com/questions/783661/log-to-firefox-error-console-from-javascript [http://stackoverflow.com/questions/783661/log-to-firefox-error-console-from-javascript])
+
+(You): wow, I just started JS programming.. I thought maybe I could get firebug to just let me run the script line by line or something. Any idea why https://github.com/barrycarter/bcapps/blob/master/playground.html [https://github.com/barrycarter/bcapps/blob/master/playground.html] isn't doing what I want? [direct gchat: carter.barry@gmail.com]
+
+(Ian): There are couple things going on there - you need to define f() before you use it, and you want the xmlhttp.onreadystatechange to be a reference to the function, and not the result from executing the function (remove the parens). This should get you started: https://gist.github.com/1002914 [https://gist.github.com/1002914]
+
+(You): yikes, I shouldn't seen the second mistake. Even in Perl, &f and f() are different. The first one is because JS is interpreted, not compiled? Question: once I define xmlhttp.onreadystatechange, will JS keep "looping" forever, watching for changes? In other words, do JS scripts end, or keep running?
+
+(Ian): that js example won't loop, because it's not in a loop, but it's in the global scope and will stick around until the page is reloaded - the XMLHttpRequest is asynchronous, so it should keep calling the f() method when a readystatechange event is triggered
+
+(You): got it. In other words, just like in Tk, there's an implicit loop: I don't have to create one myself.
+
+
+
+[Vark assigned category: <b>JavaScript</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

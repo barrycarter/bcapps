@@ -1,0 +1,24 @@
+
+ID: 24302
+post_name: i-once-got-mathematica-to-draw-graphs-on-a-vt100-terminal-they-obviously-didnt-look-great-how-can-i-do-this-again
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 31 Aug 2010 01:17:41 +0000
+post_type: post 
+post_status: publish
+post_title: I once got Mathematica to draw graphs on a VT100 terminal (they obviously didn't look great). How can I do this again?
+
+======================================================
+
+(You): I once got Mathematica to draw graphs on a VT100 terminal (they obviously didn't look great). How can I do this again?
+
+(Steven): Don't know about Mathematica, but you can always use "set term dumb" in gnuplot with the same data/function
+
+----------------------
+
+(Vedran): Just type "math" at your command prompt, and than execute plotting commands (for example, Plot[x^2+x,{x,-3,2}]). See http://reference.wolfram.com/mathematica/tutorial/UsingATextBasedInterface.html
+
+
+
+[Vark assigned category: <b>VT100</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

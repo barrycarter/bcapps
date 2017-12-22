@@ -1,0 +1,26 @@
+
+ID: 26702
+post_name: which-commercial-virtual-machine-technology-xen-citrix-etc-do-you-think-is-best-and-how-much-do-they-charge-for-a-single-user-license
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 29 May 2010 06:24:39 +0000
+post_type: post 
+post_status: publish
+post_title: Which commercial virtual-machine technology (Xen, Citrix, etc) do you think is best, and how much do they charge for a single-user license?
+
+======================================================
+
+(You): Which commercial virtual-machine technology (Xen, Citrix, etc) do you think is best, and how much do they charge for a single-user license?
+
+(Nathan): VMware server. its free. :) they also sell a stand alone called ESX its about 2-3k per server
+
+(You): actually I did vmware on a machine once, but wasn't happy w/ how I had to setup a Windows guest -- console access through TCP/IP is very slow.
+
+----------------------
+
+(Grady): I'm not sure if it's what you're looking for, but VirtualBox is free and works well.
+
+
+
+[Vark assigned category: <b>Citrix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

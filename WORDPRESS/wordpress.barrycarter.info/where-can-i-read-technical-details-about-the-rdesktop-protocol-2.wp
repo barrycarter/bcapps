@@ -1,0 +1,32 @@
+
+ID: 25466
+post_name: where-can-i-read-technical-details-about-the-rdesktop-protocol-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 09:14:11 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I read technical details about the rdesktop protocol?
+
+======================================================
+
+(You): Where can I read technical details about the rdesktop protocol?
+
+(TT): Wiki "rdesktop" -&gt; rdesktop website -&gt; docs
+
+
+
+http://www.rdesktop.org/#docs
+
+----------------------
+
+(Steven): http://www.rdesktop.org/docs/rfc2126.html
+
+
+
+Usually standards will have an rfc document.
+
+
+
+[Vark assigned category: <b>rdesktop</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

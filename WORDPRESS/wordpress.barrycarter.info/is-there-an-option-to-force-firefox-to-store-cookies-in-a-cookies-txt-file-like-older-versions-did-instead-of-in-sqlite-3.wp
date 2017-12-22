@@ -1,0 +1,42 @@
+
+ID: 26813
+post_name: is-there-an-option-to-force-firefox-to-store-cookies-in-a-cookies-txt-file-like-older-versions-did-instead-of-in-sqlite-3
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 27 May 2010 22:20:12 +0000
+post_type: post 
+post_status: publish
+post_title: Is there an option to force Firefox to store cookies in a cookies.txt file (like older versions did) instead of in SQLite 3?
+
+======================================================
+
+(You): Is there an option to force Firefox to store cookies in a cookies.txt file (like older versions did) instead of in SQLite 3?
+
+(Glenn): You could:  sqlite3 -separator ' ' cookies.sqlite 'select * from moz_cookies' &gt; cookies.txt
+
+(Glenn): Couple of references:  http://www.linuxquestions.org/questions/linux-software-2/using-the-cookies-sqlite-from-firefox-3-in-wget-653227/
+
+(Glenn): And: https://addons.mozilla.org/en-US/firefox/addon/8154/
+
+(You): thanks! That was my backup plan, but I figured I'd have to do "SELECT col1,col2,etc" since I didn't realize the db had the cookie fields already in the right order. I also didn't realize ' ' worked in cookies.txt files: I thought it had to be TAB.
+
+(Glenn): Yeah, depends what you're doing with the cookies.txt.  If you're doing wget, I think it would be fine with spaces.
+
+(You): add-on not compatible w/ my version of Firefox :( I'm using curl, not wget, but maybe curl's cool w/ spaces too.
+
+(Glenn): Did you see the Python script?  It might be a good alternative for all of what you're doing.  Linked from that forum thread.
+
+(You): yes, I'm reading the entire thread. It looks like "sqlite separator" does use a tab on the command-line but others say the column order is wrong.
+
+----------------------
+
+(Robert): Doubtful, it was done for a reason. Check this out though.
+
+
+
+https://addons.mozilla.org/en-US/firefox/addon/5817/
+
+
+
+[Vark assigned category: <b>SQLite</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

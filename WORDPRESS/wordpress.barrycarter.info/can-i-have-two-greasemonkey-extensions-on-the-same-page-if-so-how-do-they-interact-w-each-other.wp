@@ -1,0 +1,36 @@
+
+ID: 24262
+post_name: can-i-have-two-greasemonkey-extensions-on-the-same-page-if-so-how-do-they-interact-w-each-other
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 12 Sep 2010 00:55:26 +0000
+post_type: post 
+post_status: publish
+post_title: Can I have two greasemonkey extensions on the same page? If so, how do they interact w/ each other?
+
+======================================================
+
+(You): Can I have two greasemonkey extensions on the same page? If so, how do they interact w/ each other?
+
+(James): yes you can have unlimited extensions for any page.  the ones lower on the list (with a higher priority number) will be initated after the earlier ones.
+
+(You): thanks (and good to talk to someone in the same state &lt;G&gt;). Does the 2nd script operate on the changes from the 1st script, or on the raw page itself?
+
+(James): the first script will fully execute before the second one starts, so the
+
+second will act upon the now modified page.
+
+(You): thanks! That's exactly the info I wanted! Question: can I code a script that says "this script relies on greasemonkey extension X and only runs if 1) X is running, and 2) X has been run before this script?". In others words, force an order for scripts to run in?
+
+----------------------
+
+(Anthony): Depends on what changes the scripts make to the page. Some combinations will work, some won't.
+
+(You): thanks. Do the changes combine, or does greasemonkey try to apply both "at the same time"?
+
+(Anthony): They combine.
+
+
+
+[Vark assigned category: <b>Greasemonkey</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

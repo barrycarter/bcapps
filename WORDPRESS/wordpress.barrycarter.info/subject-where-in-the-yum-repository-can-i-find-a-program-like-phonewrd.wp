@@ -1,0 +1,28 @@
+
+ID: 28453
+post_name: subject-where-in-the-yum-repository-can-i-find-a-program-like-phonewrd
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 00:11:37 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: Where in the yum repository can I find a program like phonewrd?
+
+======================================================
+
+(You): Subject: Where in the yum repository can I find a program like phonewrd?
+
+(Tom): yum info phonewrd
+
+
+
+If it can't be found it's not in the repository and you will have to install from the source code.
+
+----------------------
+
+(Scott): Which repositories you have installed depends on your distribution.  You can also add additional repositories that will then be searched by yum.  To locate a package that provides a specific program by file name, use the "yum whatprovides (name)" command to search for a specific name within the files provided by each package.  If any matches are found from the repositories you have installed, it will list the package name(s) so that you can then do a yum install on that.  You may find it easier however (especially particularly odd packages) to install from an RPM file or even from source code than to find a repository that both matches your distro and includes the package you want.
+
+
+
+[Vark assigned category: <b>Yum</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,78 @@
+
+ID: 27562
+post_name: why-are-there-so-many-different-programming-languages-i-understand-the-c-procedural-lisp-functional-prolog-logical-and-sql-query-based-are-fundamentally-different-from-each-other-but-what
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 01:49:38 +0000
+post_type: post 
+post_status: publish
+post_title: Why are there so many different programming languages? I understand the C (procedural), Lisp (functional), Prolog (logical), and SQL (query-based) are fundamentally different from each other, but what about the rest?
+
+======================================================
+
+(You): Why are there so many different programming languages? I understand the C (procedural), Lisp (functional), Prolog (logical), and SQL (query-based) are fundamentally different from each other, but what about the rest?
+
+(Dennis): programming languages are usually developed with a very specific task in mind.. examples: assembly lang was a way to allow programmers to move a step above machine lang ( 0's and 1's ).. it allowed programmers to work in a logical fashion... COBAL is a business lang designed around business applications dealing with financial data, PERL was orginally designed to handle a very complicated networking problem.. it has now been extended into all area's of programming needs.... and while most only know about C... there was an A and a B as well..... another example FORTRAN ( formula translation) was designed by scientists to deal with math problems... Hope this helps!!  Have a good day!
+
+(Dennis): and don't forget JAVA... this moves into the whole realm of object oriented programming... now for every "thing".. you define an "opject".. the objects have properties.. these are "real world" objects.. and could be anything... today most everyone is moving to Object Oriented Programming ( OOP ).. for end user applications.. and as for JAVA.. it was originally designed to be a highly secure lang that could be passed over the internet to provide applcations via a browser.. it has now been extended to handle all facets of programming need.
+
+(You): True, but Ruby and many other languages are object-oriented too. I guess my question is: why do we need so many different languages, given that there fundamentally only a few ways to program.
+
+(Dennis): in my opinion each new lang is someone trying to improve on what the view as imperfections in something prior.. i.e. Ruby.. by example is a lot like JAVA.. only better!!  :-)  as time goes on.. and certain languages come into favor others go by the wayside.. do you know anyone that still uses Pascal or Snobol  ?
+
+(You): Good point. However, at this point in time, it seems there are just too many redundant languages out there. Maybe someone should make an effort to merge some of them.
+
+(Dennis): I've been doing this a long time.. i.e. over 35 years.. it just takes time.. in my current job.. we have a lot of PERL and JAVA code.. running world wide business apps.. it takes time to convert.. but we are doing it.. moving away from both PERL and JAVA toward Ruby.. then for us.. we'll be done with PERL.. java will still be around... for a while though.. just too much code.
+
+(You): So you do think there will be a "winner" long term? Back in the early days, new programming languages were very rare. Now, every high school student seems to write one.
+
+(Dennis): I don't think there will ever be a "winner".. because Ruby certainly can't handle absoultely every need.. it might be the best choice at this point in time.. but something new will come along.. and there will be a shift.... and while every student might write their own.. those rarely make it into the mainstream.. it takes a large user base in order for these languages to come to the forefront and have staying power.
+
+(Dennis): think of it this way.. back in the olden days.. say in the 1950's when computers were just starting to come to common use.. each computer had it's own operating system and they were all incompatible.... when IBM's introduced the System 360 in the mid 1960's that there was any compatibility between computers.. every model of the 360 line could run the operating system of every other model... there were several operating systems available to serve different needs.. now we're down to a handful of operating systems for both personal computers and main frames...
+
+(You): Interesting. My take on it is that there used to be just a few languages, and then the number exploded in the 90s. If you go to a career site, they ask if you're an expert in each of 100+ languages.
+
+(Dennis): right.. and they want 20 years experience with stuff that's only been around for 5..
+
+(Dennis): a few years ago I was looking at jobs.. and they wanted people with x years experience programming internet applications.. I'm counting on my fingers and thinking.. the internet did not exist then!! What are they talking about.. :-)
+
+(You): LOL! Too true. I want to tell them: "look, I know X -- and Y is just X with different keywords"
+
+(You): I do remember seeing a "10 years Java experience" job about 2 years after Java came out.
+
+(Dennis): we're finding that anyone with any java experience can pick up Ruby in a day.
+
+----------------------
+
+(John): Languages try to solve different problems... One language may have syntax that is easier to understand (VisualBasic), while others may try to do things in the least amount of characters. There are a lot of low level changes in different languages, too... Some languages have no concept of (and don't support) NULLs. Whether or not NULLs are a good thing, changes from person to person. Some languages were designed with managed code in mind (.NET languages.. they provide tons of libraries, try to prevent memory leaks behind the scenes, etc.)... It's all about people being unhappy with one particular language, or the ideals of a language.
+
+----------------------
+
+(Andy): Wikipedia has exhaustive details on this subject.  There is no simple answer.  Some were developed as nothing more than a school project, others were designed because, at the time, there were no other tools to solve the precise problem someone was faced with at the time.
+
+----------------------
+
+(Brad): The reason why there are so many different languages is because each one has advantages and disadvantages over the others and the programmer can choose which language will help them get their code written the quickest.  Most popular languages are procedural, like C.  And most are simply derivatives of C but have additional functionality.  Example, C++ is Object Orientated.  Java and C# are interpreted instead of compiled. Could you do the same stuff with C as you could with Java? Sure! It's just going to take a lot more code to do so!.
+
+----------------------
+
+(James): It's like asking why there are so many human languages. There is no 
+
+controlling influence on the logic of what languages get developed or 
+
+why. Different ppl have different ideas on how a language should 
+
+appear and function, and these have evolved, building on the past.
+
+
+
+At 02:50 PM 5/2/2010, you wrote:
+
+(You): so I'd have to get an Internet connection to someone who has a non-Internet connection to mbone? So that their machine would act as a router?
+
+(You): so I'd have to get an Internet connection to someone who has a non-Internet connection to mbone? So that their machine would act as a router?
+
+
+
+[Vark assigned category: <b>Prolog</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

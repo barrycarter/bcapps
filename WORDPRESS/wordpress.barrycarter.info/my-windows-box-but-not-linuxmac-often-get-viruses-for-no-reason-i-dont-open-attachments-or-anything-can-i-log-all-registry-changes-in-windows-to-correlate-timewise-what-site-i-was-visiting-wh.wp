@@ -1,0 +1,52 @@
+
+ID: 23211
+post_name: my-windows-box-but-not-linuxmac-often-get-viruses-for-no-reason-i-dont-open-attachments-or-anything-can-i-log-all-registry-changes-in-windows-to-correlate-timewise-what-site-i-was-visiting-wh
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 13 Dec 2010 22:42:58 +0000
+post_type: post 
+post_status: publish
+post_title: My Windows box (but not Linux/Mac) often get viruses "for no reason" (I don't open attachments or anything). Can I log all registry changes in Windows to correlate timewise what site I was visiting when I got which virus?
+
+======================================================
+
+(You): My Windows box (but not Linux/Mac) often get viruses "for no reason" (I don't open attachments or anything). Can I log all registry changes in Windows to correlate timewise what site I was visiting when I got which virus?
+
+(Rajesh): Well, if you did something like that, it would only slow down your browzing speeds. There is a good chance that some of the files you have on your computer are already infected and you are catching the computer-virus from them after a clean install. I would suggest that you trash all the unwanted files, then move all your files to a non windows machine, then completely erase the HDD and reinstall windows.. next, you may want to try windows security essentials, try to sweep the computer once, under clean install, then try to bring back the old files using a jump drive etc, but before you copy, make sure you scan the files... also .. if you want to try something like clamv virus scanner on linux, that may be of some help ..
+
+(You): thanks. It's a VM, so I can totally wipe and reinstall if I want. However, it bugs me that I get viruses w/o opening attachments. I actually want to see what's happening, which sites cause it, and how they do this magic. I used SpyBot to get things cleaned up, so that's not the problem. Also, no problems on Linux, though I do know about clamav.
+
+(Rajesh): Yes, I understand. I have a triple boot machine, Mac, windows and Linux... and I can see your problems. The blessings of using a dominant operating system, at least in terms of market share :). Sometimes, it can just be popups from the sites. I severely restrict what sites can run on my machine, including java script and what not.. Just coz its out there, does not mean its good :)
+
+(You): I guess that's what I'm curious about. What Javascript and other scripts can cause Firefox to do terrible things? Ultimately, it's Firefox that's running that code, no? That's my concern: why is my web browser maliciously changing my registry settings.
+
+(Rajesh): Well, the Web browzer is running some jscript, which is just a program, which may be changing the reg. As far as FF is concerned, it is just running some Just-in-time code, it does not care what it touches or does, it should be the OS that restricts what each program can do. For example, I wouldn't give my house keys to my cable man, though he can come in and work at my house when I am there. However, I might give my house keys to my best friend. I am  afraid windows does not understand elevated privileges and also certain things are wrong about the way it sets up accounts as I see it. Running windows as a the sole administrator is like running linux as the root. That is plain insecure. I generally encourage people to create an admin account, and then create a User
+
+(Rajesh): account with lower privileges to do everyday stuff. When you need to install stuff, then yes, go install and come back. However the lack of easy but secure ways to gain and loose privileges in windows can be agonizing at best.
+
+(You): I'm still not sure I'm clear on this. I know Firefox needs to modify my registry legitimately sometimes, but surely JavaScript can't call that code in Firefox? I assume Firefox limits what JavaScript can do, yes?
+
+(Rajesh): Well, I am not sure if it is just Java Script. IT can be anything. Yes, in theory, FF is supposed to be very secure, but well, there is a lot of difference between theory and practice. I think it finally boils down to how the OS can handle such reg calls. And I am guessing its just not the reg calls that you are worried about, but more malicious code. am I right ?
+
+(You): yes. I'm OK with Firefox changing what appears in my browser window, but not with it running other programs, changing the registry in response to a webpage, etc. You'd think that the list of things Firefox would do in response to JavaScript would be limited, no?
+
+(Rajesh): don't click this link in windows - http://mc-computing.com/Parasites/Virus_Test/Javascript_virus_test.html [http://mc-computing.com/Parasites/Virus_Test/Javascript_virus_test.html] .. but a simple serach with the terms "java script, virus " will give you an idea. Regarding how FF would handle Java Script - I am not sure, yes, I would expect it to, but well, some legitimate code that looks perfectly reasonable might be taking some advantages of OS vulnerabilities, for example may be taking advantage of an over flow vulnerability in say some genuine windows dll, and FF will let that call happen as it looks like a genuine call and well... it was beyond it ... The above is just my guess... as in the way a bad code can cheat FF and take advantage ..
+
+(You): thanks. If Firefox is executing Shell.anything, no wonder it can create viruses! [direct gchat: carter.barry@gmail.com]
+
+(You): thanks. If Firefox is executing Shell.anything, no wonder it can create viruses! [direct gchat: carter.barry@gmail.com]
+
+(Rajesh): Yes, unfortunately, so it finally boils down to defending the Sanctum sanctorum (i.e. the Kernel) by our own judgment ... by grounding privileges etc.. Unfortunately, most people do not have the wherewithal to think beyond and do such .. and that's why you have spam mails from friends and  well many other things ..
+
+(You): yes. I have no sympathy for people who open executable attachments, but now I'm gaining some sympathy for people who get infected w/o doing anything obviously wrong. Does ActiveX() even work in Firefox? I thought that was an IE thing? [direct gchat: carter.barry@gmail.com]
+
+(Rajesh): I think it does not. I have used very little of windows. I have spent most of my computing time out of the last 7 years of my acquaintance with computers on Linux. However, I go to windows once in a wile to get some Firmware and BIOS updates. And yes, when I do that, I see that windows update won't work in FF as it does not support activeX. I have to use IE and well lately I use the windows' own update manager or some stuff ... what ever it is called...
+
+(Rajesh): http://stackoverflow.com/questions/721772/javascript-virus
+
+(You): thanks. That just appears to JS obfuscating a URL, which is bad, but not fatal.
+
+
+
+[Vark assigned category: <b>computer security</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

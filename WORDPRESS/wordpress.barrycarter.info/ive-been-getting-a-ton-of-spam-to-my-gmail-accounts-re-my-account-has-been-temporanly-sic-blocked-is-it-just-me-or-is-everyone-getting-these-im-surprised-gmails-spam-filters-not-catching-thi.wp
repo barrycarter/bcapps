@@ -1,0 +1,46 @@
+
+ID: 25546
+post_name: ive-been-getting-a-ton-of-spam-to-my-gmail-accounts-re-my-account-has-been-temporanly-sic-blocked-is-it-just-me-or-is-everyone-getting-these-im-surprised-gmails-spam-filters-not-catching-thi
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 17 Jun 2010 00:15:46 +0000
+post_type: post 
+post_status: publish
+post_title: I've been getting a ton of spam to my Gmail accounts re my account has been "temporanly" [sic] blocked. Is it just me or is everyone getting these? I'm surprised Gmail's spam filter's not catching this?
+
+======================================================
+
+(You): I've been getting a ton of spam to my Gmail accounts re my account has been "temporanly" [sic] blocked. Is it just me or is everyone getting these? I'm surprised Gmail's spam filter's not catching this?
+
+(Noel): Have you tried marking them as 'spam'?
+
+(You): no. I realize that will help, but shouldn't gmail be catching this if it's worldwide anyway?
+
+(Noel): FWIW, I don't see any of those kinds of emails in either my Inbox or my Spam
+
+folder.
+
+(You): thanks, it might just be me then.
+
+(Noel): Digging a bit deeper, it looks like there's email on
+
+clamav-users@lists.clamav.net about this virus.
+
+
+
+I don't know how GMail's spam filtering works (although I think it works
+
+/really/ well), but it might not have gotten enough of a signal yet about
+
+this particular virus.
+
+(You): wow, thanks. I know ClamAV's mailing list archives are open to everyone so I'll search there.
+
+----------------------
+
+(Ash): try and see the full email headers and check whether they are all coming from a particular source which might be trusted by ur gmail account. you can report it as spam if it helps or if there is a pattern then block it. i am not facing any spam issues with my account and gmail spam filter cannot work selective for any 2 accounts, so instead of gmail i think it must be an issue with your account. try and see the pattern in the spam u're reciving
+
+
+
+[Vark assigned category: <b>Gmail</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,26 @@
+
+ID: 27696
+post_name: is-there-a-free-dns-service-like-mydomain-com-that-has-an-api-that-lets-me-change-nameserversa-recordsetc-via-command-line
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 02:42:05 +0000
+post_type: post 
+post_status: publish
+post_title: Is there a free DNS service (like mydomain.com) that has an API that lets me change nameservers/A records/etc via command line?
+
+======================================================
+
+(You): Is there a free DNS service (like mydomain.com) that has an API that lets me change nameservers/A records/etc via command line?
+
+(Brett): zoneedit has this service. Check this link, see if it helps:
+
+http://www.zoneedit.com/doc/dynamic.html?AdRefer=http%3A%2F%2Fwww.google.com%2Fsearch%3Fclient%3Dsafari%26rls%3Den%26q%3Dzoneedit%26ie%3DUTF-8%26oe%3DUTF-8
+
+----------------------
+
+(Brad): Zoneedit.com allows you to make some changes over HTTP with basic auth, so you can use something like wget to call these changes.
+
+
+
+[Vark assigned category: <b>API</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

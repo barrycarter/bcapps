@@ -1,0 +1,37 @@
+
+ID: 13028
+post_name: better-way-to-celebrate-mathematical-and-physical-constants
+post_category: other
+post_author: barrycarter
+post_date_gmt: Sat, 03 Sep 2011 04:27:36 +0000
+post_type: post 
+post_status: publish
+post_title: Better way to celebrate mathematical and physical constants
+
+======================================================
+
+Many people celebrate March 14th as "Pi Day" because 3/14 matches the 
+first three digits of Pi. 
+ 
+Similarly, some people celebrate February 7th as "E Day" because 2/7 
+matches the first two digits of E. 
+ 
+[I suppose you could celebrate "Gamma Day" on May 8th (since gamma = 
+0.577, and the first two rounded non-leading-zero digits are 5 and 8), 
+but I don't think anyone does.] 
+ 
+However, these celebrations are based on an antiquated non-decimal 
+calendar, and it seems paradoxical to celebrate mathematical constants 
+in such a non-mathematical way. 
+ 
+Instead, we could create a time-linear function, f,  that maps the instant 
+of the winter solstice (an observable physical phenomena) to 1, and 
+the instant immediately previous to the next solstice as 9.9999... 
+ 
+We would then celebrate constants yearly at an interval around time t, 
+when f(t) equalled the constant's absolute value's mantissa 
+(significand). 
+ 
+Of course, we could compensate for Benford's Law, but that might be overkill. 
+
+

@@ -1,0 +1,24 @@
+
+ID: 23330
+post_name: is-there-such-a-thing-as-client-side-perl-in-web-browsers-when-someone-accesses-my-cgi-scripts-theres-a-load-on-my-server-however-most-clients-have-oodles-of-unused-cpu-cycles-and-it-would-be
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 05 Dec 2010 00:55:28 +0000
+post_type: post 
+post_status: publish
+post_title: Is there such a thing as client-side Perl (in web browsers)? When someone accesses my CGI scripts, there's a load on my server. However, most clients have oodles of unused CPU cycles, and it would be nice to run the number-crunching on the client side (to the extent possible).
+
+======================================================
+
+(You): Is there such a thing as client-side Perl (in web browsers)? When someone accesses my CGI scripts, there's a load on my server. However, most clients have oodles of unused CPU cycles, and it would be nice to run the number-crunching on the client side (to the extent possible).
+
+(Andries): You can try to look for a plugin, but there is no standard programming done in a browser save for javascript. The most standard non-javascript language is flash, which is proprietary. At least flash is widely supported, but that is about it.
+
+----------------------
+
+(Peter): No. You could create Javascript to do this and have the Javascript return the values you need.
+
+
+
+[Vark assigned category: <b>CGI</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

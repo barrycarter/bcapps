@@ -1,0 +1,40 @@
+
+ID: 25514
+post_name: in-firefox-can-i-view-two-or-more-tabs-at-the-same-time-using-split-screen-or-picture-in-picture-or-something
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 17 Jun 2010 18:16:08 +0000
+post_type: post 
+post_status: publish
+post_title: In Firefox, can I view two or more tabs at the same time? Using "split-screen" or "picture in picture" or something?
+
+======================================================
+
+(You): In Firefox, can I view two or more tabs at the same time? Using "split-screen" or "picture in picture" or something?
+
+(Venkateswaran): open 2 firefox window, arrange vertically
+
+(Venkateswaran): are you using windows XP or windows 7
+
+(You): I'm using Linux, and it would be nice to have two tabs in the same window, and have Firefox handle the tiling.
+
+(Venkateswaran): As I am using windows, I have never see this tilling in any browser, IE, Chrome and Fire Fox....
+
+(You): thanks. I'll try your multi-window idea.
+
+(Venkateswaran): :) Good Day
+
+----------------------
+
+(Jonathan): It looks like this might address your needs. https://addons.mozilla.org/en-US/firefox/addon/4287/
+
+(You): score! That's exactly what I was looking for!
+
+----------------------
+
+(Roz): You can "rip" a tab away, and it will become a separate window, Then you can size them to be next to each other, use "alt-Tab" to switch back and forth, or whatever you like.
+
+
+
+[Vark assigned category: <b>the Internet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

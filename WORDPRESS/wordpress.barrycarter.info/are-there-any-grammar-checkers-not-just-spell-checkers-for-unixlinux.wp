@@ -1,0 +1,34 @@
+
+ID: 28251
+post_name: are-there-any-grammar-checkers-not-just-spell-checkers-for-unixlinux
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 14 Apr 2010 07:59:42 +0000
+post_type: post 
+post_status: publish
+post_title: Are there any grammar checkers, not just spell checkers, for Unix/Linux?
+
+======================================================
+
+(You): Are there any grammar checkers, not just spell checkers, for Unix/Linux?
+
+(Elias): Here is the one used by OpenOffice. I have never tried it myself but it's open source: http://www.languagetool.org/
+
+(You): Thanks, Elias. I was hoping for something command line that worked on text files. OpenOffice isn't bad, but plain text is universal.
+
+(Elias): i believe the tool i pointed to works fine on text files. It does not require openoffice, it's just that openoffice uses it.
+
+(You): thanks, the "only works with OpenOffice.org 3.0.1 or later" scared me :)
+
+(Elias): i think that refers to the fact that older versions if openoffice doesn't support the tool.
+
+(You): I think you're right. It's a limitation of OpenOffice, not of the tool
+
+----------------------
+
+(Jon): Look into http://www.languagetool.org/
+
+
+
+[Vark assigned category: <b>board games</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,26 @@
+
+ID: 27786
+post_name: if-i-have-a-deb-file-how-do-i-install-it-i-know-it-has-something-to-do-w-dpkg-and-aptitude-but-cant-figure-out-the-parameters
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 09:34:53 +0000
+post_type: post 
+post_status: publish
+post_title: If I have a .deb file, how do I install it? I know it has something to do w/ dpkg and aptitude, but can't figure out the parameters!
+
+======================================================
+
+(You): If I have a .deb file, how do I install it? I know it has something to do w/ dpkg and aptitude, but can't figure out the parameters!
+
+(Laxminarayan): dpkg -i filename
+
+----------------------
+
+(Sreekanth): What version of debian linux are you using ? Is that Ubuntu Linux ?
+
+(Sreekanth): What parameters are you looking for ? What are you trying to do with .deb file ?
+
+
+
+[Vark assigned category: <b>dpkg</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 27692
+post_name: can-a-single-google-apps-account-accept-email-for-multiple-domains-or-do-i-have-to-create-a-separate-apps-account-for-each-domain
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 05:35:35 +0000
+post_type: post 
+post_status: publish
+post_title: Can a single google apps account accept email for multiple domains, or do I have to create a separate apps account for each domain?
+
+======================================================
+
+(You): Can a single google apps account accept email for multiple domains, or do I have to create a separate apps account for each domain?
+
+(Pete): yes, go to settings, and there you'll have the ability to accept mail from multiple inboxes as well as Send As whatever email address you want
+
+(You): Yes, but I can accept mail for other *domains* as well? In other words, mail to @abc.com and @xyz.com both go to a single Google Apps account?
+
+(Pete): yup, recieve and send
+
+(You): How do I setup the receive part?
+
+----------------------
+
+(Andy): AFAIK, you have to set up different apps accounts. Once you have, you can set up the emails to all forward to one address.
+
+
+
+[Vark assigned category: <b>Google Apps</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

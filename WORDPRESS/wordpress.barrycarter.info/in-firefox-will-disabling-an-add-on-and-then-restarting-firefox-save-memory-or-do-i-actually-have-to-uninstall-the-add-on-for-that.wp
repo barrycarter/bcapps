@@ -1,0 +1,36 @@
+
+ID: 27221
+post_name: in-firefox-will-disabling-an-add-on-and-then-restarting-firefox-save-memory-or-do-i-actually-have-to-uninstall-the-add-on-for-that
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 14 May 2010 07:50:33 +0000
+post_type: post 
+post_status: publish
+post_title: In Firefox, will disabling an add-on (and then restarting Firefox) save memory, or do I actually have to uninstall the add-on for that?
+
+======================================================
+
+(You): In Firefox, will disabling an add-on (and then restarting Firefox) save memory, or do I actually have to uninstall the add-on for that?
+
+(Joseph): Disabling is enough to fully deactivate an add-on, but it remains installed so that you can easily enable it again.
+
+I???m not sure though what kind of memory you mean, if you???re talking about space in your hard disk, then you do need to uninstall it to free that space, but add-ons only use some kBs so it is barely noticeable.
+
+(You): no I meant memory as in on the motherboard.
+
+(Joseph): Then yes, just disabling is enough, Firefox is pretty trustable about anything!
+
+----------------------
+
+(Jonathan): It depends on the add-on. simple ones save memory but ones that deal with functions and memory don't
+
+----------------------
+
+(Dana): yes disable then restart will save memory no uninstall needed.  also google for the firefox hack that frees system memory when firefox is minimized, it's a cool trick for some situations
+
+(You): thanks -- that one only works for Windows sadly.
+
+
+
+[Vark assigned category: <b>Firefox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

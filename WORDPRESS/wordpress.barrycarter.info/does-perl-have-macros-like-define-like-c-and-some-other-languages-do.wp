@@ -1,0 +1,26 @@
+
+ID: 26896
+post_name: does-perl-have-macros-like-define-like-c-and-some-other-languages-do
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 26 May 2010 04:17:44 +0000
+post_type: post 
+post_status: publish
+post_title: Does Perl have macros like "#define" like C and some other languages do?
+
+======================================================
+
+(You): Does Perl have macros like "#define" like C and some other languages do?
+
+(Alexander): perl used to support passing the source code through the cpp preprocessor but that isn't used anymore I guess. You can define constants though directly in perl
+
+(You): thanks. I was trying to combine some C code w/ Perl, but guess not.
+
+----------------------
+
+(Brandon): Yes It does.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,24 @@
+
+ID: 23175
+post_name: when-i-try-to-run-video-fullscreen-in-x11-my-x11-freezes-up-and-doesnt-respond-to-any-keystrokes-even-worse-whatever-i-was-watching-stays-on-the-screen-even-after-i-kill-x11-by-sshing-in-from-ano
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 17 Dec 2010 05:47:48 +0000
+post_type: post 
+post_status: publish
+post_title: When I try to run video fullscreen in X11, my X11 freezes up and doesn't respond to any keystrokes. Even worse, whatever I was watching stays on the screen EVEN AFTER I kill X11 (by sshing in from another machine). Googling shows that my video card might get "freaked out" sometimes, and that fullscreen video somehow "kills" it. My question: given that I still have ssh access to the machine, is there anything I can do (like "cat /dev/fb" [which doesn't work]), which will "reset" my video card, so at least I can get back to a console and restart X11?
+
+======================================================
+
+(You): When I try to run video fullscreen in X11, my X11 freezes up and doesn't respond to any keystrokes. Even worse, whatever I was watching stays on the screen EVEN AFTER I kill X11 (by sshing in from another machine). Googling shows that my video card might get "freaked out" sometimes, and that fullscreen video somehow "kills" it. My question: given that I still have ssh access to the machine, is there anything I can do (like "cat /dev/fb" [which doesn't work]), which will "reset" my video card, so at least I can get back to a console and restart X11?
+
+(Jeremie): i'm not sure...  i have similar problems with my sound card....  other than rebooting, i haven't found anything
+
+(You): for your sound card, have you tried "rmmod snd" and stuff like that? Sometimes removing modules and re-adding them helps. However, if your machine totally freezes, then you're out of luck.
+
+(Jeremie): thanks, i'll try that, and keep my ear out for video card possibilities
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

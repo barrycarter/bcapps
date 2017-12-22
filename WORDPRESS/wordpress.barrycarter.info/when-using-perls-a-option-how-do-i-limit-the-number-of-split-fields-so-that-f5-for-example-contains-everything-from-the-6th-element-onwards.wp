@@ -1,0 +1,42 @@
+
+ID: 24055
+post_name: when-using-perls-a-option-how-do-i-limit-the-number-of-split-fields-so-that-f5-for-example-contains-everything-from-the-6th-element-onwards
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 09 Oct 2010 23:57:15 +0000
+post_type: post 
+post_status: publish
+post_title: When using Perl's "-a" option, how do I limit the number of split fields so that $F[5] (for example) contains everything from the 6th element onwards?
+
+======================================================
+
+(You): When using Perl's "-a" option, how do I limit the number of split fields so that $F[5] (for example) contains everything from the 6th element onwards?
+
+(Dark): There doesn't appear to be a way to do that directly.  Instead of '-a', try putting this at the start:
+
+'@F = split ' ', $_, 5;'
+
+
+
+That should do the same thing.
+
+(You): that's what I ended up doing, thanks! Actually it has to be "/s+/" because -a catches multiple spaces as a single gap.
+
+(Dark): So does "split ' ''", actually.  It's special-cased: It will ignore leading whitespace, and split on all runs of whitespace.  (Note that it is different than "split / /", which only catches one space.)
+
+(You): I knew that Perl's split defaulted to one-or-more-space-characters, but I'm pretty sure that behavior is deprecated? They now encourage you to explicitly specify your regexp, no?
+
+(Dark): It's not mentioned as depreciated in the docs anywhere that I can see.  I'd recommend always specifying the pattern and source of your string, just because it's clearer to read, but it's not depreciated.  (Although it might fire a warning, if you have those turned on...)
+
+
+
+And the 'single space in single quotes' special case is still specifying it (even if it's the same as the default).
+
+
+
+See here for the docs: http://perldoc.perl.org/functions/split.html
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

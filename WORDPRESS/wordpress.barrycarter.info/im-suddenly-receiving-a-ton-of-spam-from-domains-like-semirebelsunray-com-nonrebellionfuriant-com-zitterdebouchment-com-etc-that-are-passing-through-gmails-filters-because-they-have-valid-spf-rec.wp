@@ -1,0 +1,40 @@
+
+ID: 26656
+post_name: im-suddenly-receiving-a-ton-of-spam-from-domains-like-semirebelsunray-com-nonrebellionfuriant-com-zitterdebouchment-com-etc-that-are-passing-through-gmails-filters-because-they-have-valid-spf-rec
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 06:05:19 +0000
+post_type: post 
+post_status: publish
+post_title: I'm suddenly receiving a ton of spam from domains like semirebelsunray.com, nonrebellionfuriant.com, zitterdebouchment.com, etc, that are passing through gmails filters because they have valid SPF records. Have spammers finally figured out how to use SPF to their advantage? :(
+
+======================================================
+
+(You): I'm suddenly receiving a ton of spam from domains like semirebelsunray.com, nonrebellionfuriant.com, zitterdebouchment.com, etc, that are passing through gmails filters because they have valid SPF records. Have spammers finally figured out how to use SPF to their advantage? :(
+
+(Ryan): im putting watermelon and pumpkin seedlings in the ground. how far apart should i put them. and how much soil shoud i till around them?
+
+(You): I'm pretty sure you didn't mean that as answer to my question :)
+
+(Ryan): i didnt
+
+----------------------
+
+(Jason): http://www.infoworld.com/d/security-central/spammers-using-sender-authentication-too-study-says-147
+
+Looks like it!
+
+(You): fantastic! (yes, there were two Jasons, and Vark screwed that up). I want to play the Flash games on aqworld.com w/ my Linux machine, but "gnash http://aqworlds.battleon.com/game/ [http://aqworlds.battleon.com/game/]" doesn't work. I don't want to use a browser plugin (mine doesn't work anyway), but a standalone Flash game player. What should I use? Am I using gnash wrong?
+
+(Jason): As far as standalone players go, I'm not too sure. On second reading, it seems that you may be using gnash wrong... as far as I know, gnash opens SWF files and doesn't deal directly with URLs. In other words you need to have the SWF file saved locally, and launch gnash by typing "gnash someswffile.swf" Try downloading the SWF file from the website by looking at the website's source code... (at first glance it seems you can download the SWF file here: http://aqworlds.battleon.com/game/gamefiles/loader.swf)
+
+But if you want your game to play perfectly, as much as I don't like to, I would probably avoid open source players such as gnash as their flash support usually isn't so great. Adobe have released a standalone player for linux (which I haven't tried) here: http://www.adobe.com/support/flashplayer/downloads.html
+
+Perhaps try downloading from the link "Download the Linux debugger and standalone players (TAR.GZ, 9.36 MB)" and see how you go.
+
+(You): thanks! Downloading loader.swf just downloads the "loading" animation, but using Adobe's standalone version worked like a charm!
+
+
+
+[Vark assigned category: <b>computer security</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

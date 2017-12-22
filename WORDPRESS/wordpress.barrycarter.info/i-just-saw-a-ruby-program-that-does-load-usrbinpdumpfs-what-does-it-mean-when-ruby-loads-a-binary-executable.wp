@@ -1,0 +1,38 @@
+
+ID: 24348
+post_name: i-just-saw-a-ruby-program-that-does-load-usrbinpdumpfs-what-does-it-mean-when-ruby-loads-a-binary-executable
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 27 Aug 2010 22:11:03 +0000
+post_type: post 
+post_status: publish
+post_title: I just saw a ruby program that does "load '/usr/bin/pdumpfs'". What does it mean when ruby "loads" a binary executable?
+
+======================================================
+
+(You): I just saw a ruby program that does "load '/usr/bin/pdumpfs'". What does it mean when ruby "loads" a binary executable?
+
+(robsclone): i believe ruby's load executes the program it's pointed at
+
+(You): actually, celsius.com points to 4 studies.
+
+(You): Isn't that what 'exec' does?
+
+----------------------
+
+(Steve): 'load' would not work unless pdumpfs was actually a ruby script, or something produced something that could be parsed by ruby.
+
+(You): oh, so it is! So 'load' is like Perl's "require"?
+
+(Steve): Yes, and like ruby's require -- no one really uses load. I never have, and
+
+frankly, I'm not 100% sure what the difference is, just that in idiomatic
+
+ruby you use require. :-)
+
+(You): thanks. I guess the people who wrote pdumpfs+rsync like it!
+
+
+
+[Vark assigned category: <b>web programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

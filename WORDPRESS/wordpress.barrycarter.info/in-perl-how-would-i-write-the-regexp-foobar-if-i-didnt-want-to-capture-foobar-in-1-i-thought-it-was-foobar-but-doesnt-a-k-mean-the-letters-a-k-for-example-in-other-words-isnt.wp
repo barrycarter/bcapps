@@ -1,0 +1,44 @@
+
+ID: 23903
+post_name: in-perl-how-would-i-write-the-regexp-foobar-if-i-didnt-want-to-capture-foobar-in-1-i-thought-it-was-foobar-but-doesnt-a-k-mean-the-letters-a-k-for-example-in-other-words-isnt
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 22 Oct 2010 03:58:25 +0000
+post_type: post 
+post_status: publish
+post_title: In Perl, how would I write the regexp "/(foo|bar)/" if I *didn't* want to capture foo/bar in $1? I thought it was /[foo|bar]/, but doesn't [a-k] mean the letters a-k for example? In other words, isn't [] a range selector or something?
+
+======================================================
+
+(You): In Perl, how would I write the regexp "/(foo|bar)/" if I *didn't* want to capture foo/bar in $1? I thought it was /[foo|bar]/, but doesn't [a-k] mean the letters a-k for example? In other words, isn't [] a range selector or something?
+
+(Olivier): you will need to add a clause for ^foo and ^bar
+
+(Olivier): ^ means not in
+
+(You): thanks, but you're saying (foo|bar) and [^foo|^bar] are the same thing?
+
+----------------------
+
+(Alexey): 1) /foo|bar/ ?
+
+2) yes
+
+(You): thanks... shouldn't that be interpreted as fo(o|b)ar? Or does the "|" operator apply to all characters to the left/right somehow?
+
+(Alexey): in fact I'm not a pro here, but in my test example it wasnt interpreted as fo(o|b)ar. I guess, for it to be interpreted as fo(o|b)ar it should be written as fo(o|b)ar :). As you mentioned, there are braces for character classes, so there is no need for '|' to be applied to characters rather than to strings.
+
+(You): wow, that seems dicey. So, "string1|string2" applies to the strings, while "string1[char1char2]string2" applies to characters. I guess it does work. How about "f(oo|ba)r" without any $1?
+
+(Alexey): surely there are ways to do this but it seems it's not a good way to do what you want to do in perl. maybe just backup $1 in another variable?
+
+(You): thanks. Somewhere, the Perl manual says that using parentheses in regexs is inefficient and should be avoided. The implication is that anything you can do WITH parentheses, you can also do without. But I haven't figured out how.
+
+(Alexey): in your example this is easy: f(oo|ba)r == foor|fbar. so you maybe you can always expand parentheses in this way. but that claim is kind of strange. surely foor|fbar is less efficient then f(oo|ba)r in general
+
+(You): well, that's what it says... but maybe it means "in general" and not in every specific case. As you point out, the "expand parentheses trick" would be unwieldy for long phrases.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 24824
+post_name: how-do-i-get-an-ls-lr-of-httpweather-noaa-govpubsl-us008001-httpweather-noaa-govpubsl-us008001-aka-ftptgftp-nws-noaa-govsl-us008001-ftptgftp-nws-noaa-govsl-us008001-or-eve
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Jul 2010 09:29:50 +0000
+post_type: post 
+post_status: publish
+post_title: How do I get an "ls -lR" of http://weather.noaa.gov/pub/SL.us008001/ [http://weather.noaa.gov/pub/SL.us008001/] aka ftp://tgftp.nws.noaa.gov/SL.us008001/ [ftp://tgftp.nws.noaa.gov/SL.us008001/] or even a listing of what all the subdirectories mean? I'm trying to find SYN data (not regional synopsis and not METAR cycle files) but not sure where to look.
+
+======================================================
+
+(You): How do I get an "ls -lR" of http://weather.noaa.gov/pub/SL.us008001/ [http://weather.noaa.gov/pub/SL.us008001/] aka ftp://tgftp.nws.noaa.gov/SL.us008001/ [ftp://tgftp.nws.noaa.gov/SL.us008001/] or even a listing of what all the subdirectories mean? I'm trying to find SYN data (not regional synopsis and not METAR cycle files) but not sure where to look.
+
+(Eric): try navigating to parent folder and clicking in the "data" folder.  Or use a ftp at the command line in Terminal (Mac/Linux) or cmd window in MS Windows.
+
+(Eric): http://weather.noaa.gov/pub/
+
+(You): thanks... I ran into http://www.nws.noaa.gov/datamgmt/filstnd.html [http://www.nws.noaa.gov/datamgmt/filstnd.html#df] which claims all the good stuff is under the SL.* directory, but they lie-- you're right, there's lots of goodies in /data/
+
+----------------------
+
+(Tommy): wget -c -r -np ftp://tgftp.nws.noaa.gov/SL.us008001/ will dump it all into your current working directory.
+
+(You): thanks. I just want the filenames, not the contents (they're huge) -- is that what those options to wget do?
+
+
+
+[Vark assigned category: <b>METAR</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

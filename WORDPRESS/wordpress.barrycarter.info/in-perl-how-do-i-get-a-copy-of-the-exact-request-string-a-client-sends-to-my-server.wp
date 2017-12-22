@@ -1,0 +1,38 @@
+
+ID: 23883
+post_name: in-perl-how-do-i-get-a-copy-of-the-exact-request-string-a-client-sends-to-my-server
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 22 Oct 2010 22:51:36 +0000
+post_type: post 
+post_status: publish
+post_title: In Perl, how do I get a copy of the EXACT request string a client sends to my server?
+
+======================================================
+
+(You): In Perl, how do I get a copy of the EXACT request string a client sends to my server?
+
+(Gyhrtyrt): use cgi script...  $string=$ENV('QUERY_STRING');
+
+(You): isn't that just the QUERY_STRING, not the entire request?
+
+(Gyhrtyrt): Now if you are looking for the entire HTTP request .. then you would have to
+
+create something that listens on the port itself.. like a server .... cos by
+
+the time the request reaches your script all th htp headers etc have been
+
+removed by the http running at application layer..
+
+(You): that's not true. Many of the headers are available in $ENV{}. In php, you can do http_get_request_headers() which has almost everything, but not quite.
+
+----------------------
+
+(Manny): Are you talking about accessing the HTML request from within a CGI script?
+
+(You): I want to access the HTTP request (that the browser sends) from the script.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,44 @@
+
+ID: 26061
+post_name: in-tcsh-what-gives-me-the-pid-of-background-job-n-i-thought-it-was-echo-n-but-that-doesnt-work
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 14 Jun 2010 01:11:15 +0000
+post_type: post 
+post_status: publish
+post_title: In tcsh, what gives me the PID of background job n? I thought it was "echo %n" but that doesn't work.
+
+======================================================
+
+(You): In tcsh, what gives me the PID of background job n? I thought it was "echo %n" but that doesn't work.
+
+(Ketil): That doesn't give you the PID, but it's a reference for programs like "bg" and "fg" and the shell itself to manipulate the process, without referring to the PID. You can fetch the PID from $! after starting the new process in the background.
+
+----------------------
+
+(Justin): try "echo $!"
+
+(You): thanks, but I'm looking for the PID of the 1st background job (for example) after I've backgrounded 5 jobs (for example).
+
+(Justin): ahh, ok sorry...I ignored the symbolic 'n'.  I don't know of any such command.  Usually, I would just use $! to store the PID immediately after starting the process.  I could then retrieve it later in a script.  Otherwise, I would use 'ps -ef | grep ...' to find a specific process.  Probably not what you are looking for though.
+
+(You): thanks. It turns out "jobs -l" does close enough to what I need.
+
+----------------------
+
+(Rob): I have looked up a little. But I use bash more than tcsh. 
+
+
+
+One option is:
+
+% jobs -p |sed -n Np # where N is the number of the job  you want.
+
+
+
+-Rob
+
+
+
+[Vark assigned category: <b>jobs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

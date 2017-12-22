@@ -1,0 +1,22 @@
+
+ID: 26079
+post_name: im-using-imacros-to-download-files-from-a-site-but-the-site-blocks-some-of-my-downloads-because-im-going-too-fast-how-do-i-tell-imacros-to-wait-n-seconds-between-commands-theres-no-sleep-command
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 13 Jun 2010 03:54:49 +0000
+post_type: post 
+post_status: publish
+post_title: I'm using iMacros to download files from a site, but the site blocks some of my downloads because I'm going too fast. How do I tell iMacros to wait n seconds between commands? There's no SLEEP command, and WAIT doesn't quite do the right thing.
+
+======================================================
+
+(You): I'm using iMacros to download files from a site, but the site blocks some of my downloads because I'm going too fast. How do I tell iMacros to wait n seconds between commands? There's no SLEEP command, and WAIT doesn't quite do the right thing.
+
+(Derek): Honestly look at a web crawler, they can use free proxies and are much faster.
+
+(You): thanks, but I' m downloading data from a password-protected site that has my financial information.
+
+
+
+[Vark assigned category: <b>iMacros</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

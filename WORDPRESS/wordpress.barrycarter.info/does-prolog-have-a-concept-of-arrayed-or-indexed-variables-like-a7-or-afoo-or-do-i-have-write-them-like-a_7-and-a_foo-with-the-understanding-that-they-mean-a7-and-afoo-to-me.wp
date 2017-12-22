@@ -1,0 +1,48 @@
+
+ID: 24194
+post_name: does-prolog-have-a-concept-of-arrayed-or-indexed-variables-like-a7-or-afoo-or-do-i-have-write-them-like-a_7-and-a_foo-with-the-understanding-that-they-mean-a7-and-afoo-to-me
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 01 Oct 2010 08:32:20 +0000
+post_type: post 
+post_status: publish
+post_title: Does Prolog have a concept of arrayed or indexed variables like a[7] or a["foo"]? Or do I have write them like a_7 and a_foo with the understanding that they mean a[7] and a["foo"] to me?
+
+======================================================
+
+(You): Does Prolog have a concept of arrayed or indexed variables like a[7] or a["foo"]? Or do I have write them like a_7 and a_foo with the understanding that they mean a[7] and a["foo"] to me?
+
+(Juanita): http://goo.gl/qsp8
+
+(You): thanks, but I think this page asks the same questions I do: it doesn't give an answer?
+
+(Juanita): I gave the syntax. Ok maybe this pdf manual can help?
+
+(You): I'm using vark thru IM, and didn't get a link to a PDF manual. Don't worry: I was hoping to find someone who knew Prolog and could answer off the top of their head.
+
+(Juanita): http://goo.gl/7WhK    sorry not sure I pasted also using IM and it is buggy. switched to web interface. I read/write via syntax so I can translate many scripts but I only know about 12 langs by heart and all are pretty much modern not legacy
+
+(You): 12 by heart?!?!! You are my new goddess!
+
+(Juanita): lol no biggies just the basics ASP PHP CF HTML etc... If you learn syntax they come easy and once you do an app or two in each you understand it. If it helps I have been trying to learn French for 20+ years and I can say 'good day' and 'thank you'   ;-)  every mind is different.
+
+(You): bonjour! OK, I guess I know PHP, HTML, Perl, but that's about it. Even PHP I sometimes have to cheat and check the manual. [direct gchat: carter.barry@gmail.com]
+
+(Juanita): We all have to check the manual every now and then. Actually the more langs I know the more I have to double check because they go in spurts. I use mostly PHP nowCF was few years ago then b4 that ASP I remember them but every once in a while I forget was it a ; or , for that lang. That is why just knowing basic C helped me understand syntax I can pretty much become great in a week at any lang or platform in about a week.  What biz are you in?
+
+(You): sadly, I'm a computer programmer. One thing I like about Ruby is that you can rewrite existing functions to make it look more like your favorite language. [direct gchat: carter.barry@gmail.com]
+
+(Juanita): My fav is ASP idk why... I guess to me it is like English while others are more like pig latin ??? @JCHRONOWSKI47 on Twitter :) Not sadly. I think best programmers can decipher code and learn it. I know a lot of programmers that cannot get creative and can only code what they learn from books. Then they can't grow and evolve. Their apps will have to be completely re-written by someone else at some point in time soon after they are completed.
+
+(You): I'm not a huge Windows fan myself, so ASP is out for me. I always thought C was Pig Latin :)
+
+----------------------
+
+(Raffi): I don't think that prolog really has variables. It's not an imperative language.
+
+(You): well, it definitely has some variables, because I've been using it that way... the only question is does it have array-indexed variables!
+
+
+
+[Vark assigned category: <b>Prolog</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,38 @@
+
+ID: 27167
+post_name: has-the-erg-unit-of-energy-been-deprecated-and-is-it-no-longer-properly-used
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 15 May 2010 19:44:52 +0000
+post_type: post 
+post_status: publish
+post_title: Has the 'erg' (unit of energy) been deprecated and is it no longer properly used?
+
+======================================================
+
+(You): Has the 'erg' (unit of energy) been deprecated and is it no longer properly used?
+
+(Chuck): The erg has indeed been deprecated, it is generally not accepted in the SI (International System of Units)
+
+(You): thanks. Do you have a source?
+
+(Chuck): http://www.iau.org/science/publications/proceedings_rules/units/ In "Table 6. Non-SI units and symbols whose continued use is deprecated."
+
+(You): this only applies to IAU right? Not the entire scientific community?
+
+(Chuck): As far as I know, it's only explicitly applied to IAU, but my physics professor told me they are usually on the cutting-edge of what is generally acceptable to the scientific community at large. This page was on our course syllabus at the beginning of this year.
+
+(Chuck): That said, I might try to find other evidence whether it's generally accepted or now, but personally I avoid using anything they have listed as deprecated.
+
+(You): thanks. Wolfram Alpha says deprecated too and I was going to update the wikipedia page, but now I'm not sure I have enough evidence.
+
+(Chuck): Yea, wikipedians tend to be pretty anal about what counts as "encyclopedic" although Oxford says something is "encyclopedic" simply on the basis that it's found in an encyclopedia. I'd definitely see if I could find more evidence.
+
+----------------------
+
+(Benjamin): 'erg', as part of CGS (centimetre gram second units) is not deprecated (there remain certain subfields where CGS is prevalent), but in many fields of science and engineering, SI (International System of Units) is the only system of units in use, where it equals 10^(???7) joule.
+
+
+
+[Vark assigned category: <b>deprecated</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

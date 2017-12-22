@@ -1,0 +1,72 @@
+
+ID: 23947
+post_name: when-i-use-vlc-or-mplayer-to-display-video-my-x11-often-crashes-this-is-a-pain-to-debug-since-every-test-crashes-x11-is-there-an-obvious-solution-andor-at-least-a-better-way-to-debug-this-pure-au
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 17 Oct 2010 20:37:46 +0000
+post_type: post 
+post_status: publish
+post_title: When I use vlc or mplayer to display video, my X11 often crashes. This is a pain to debug since every test crashes X11. Is there an obvious solution and/or at least a better way to debug this? Pure audio files work just fine. This problem started recently-- video worked fine until a few weeks ago.
+
+======================================================
+
+(You): When I use vlc or mplayer to display video, my X11 often crashes. This is a pain to debug since every test crashes X11. Is there an obvious solution and/or at least a better way to debug this? Pure audio files work just fine. This problem started recently-- video worked fine until a few weeks ago.
+
+(Waleed): Is it your display card driver? Do you have an nVidia, ATI or integrated graphic chip? Have you recently updated your drivers? If so it might trigger symptoms like these.
+
+(You): I don't *think* I've updated anything, at least not intentionally. I haven't changed any hardware for ages either. This also happens when I try to plot something in 3D using Mathematica. It's driving me nuts. Is there a good way to test this or run X in some weird "safe" mode?
+
+(Waleed): It's sounding more and more like you have driver issues. Do you know what type of card you have? 
+
+
+
+And yes, you can run in safe mode, but how to get to it depends on your Linux distribution. Furthermore, performance will be shockingly bad.
+
+(You): hmmm, no I don't... I could open my computer and check, but is there a better way?
+
+(Waleed): A few ways. Go to your command prompt and type in lspci -vv | less -- this gives you a full list. Or sometimes Gnome or KDE have a "hardware" application that shows the same information. Which Linux distribution is it?
+
+(You): it's Fedora 11 and the relevant section says: 00:02.0 VGA compatible controller: Intel Corporation 82G33/G31 Express Integrated Graphics Controller (rev 10) (prog-if 00 [VGA controller])
+
+Question: why was it working fine until recently?
+
+(Waleed): This means you have integrated graphics card. Have you started doing 3D
+
+stuff recently -- I suspect it's the 3D stuff that may be triggering the
+
+issue. Can you try to do a software update and see if it fixes things?
+
+(You): I do a lot of "yum install [stuff]", but havent' intentionally tweaked any drivers. The 3D stuff worked fine a few months ago, it just stopped working recently.
+
+----------------------
+
+(Denis): X keeps a log in /var/log/Xorg.0.log: look in that file for an obvious error message, then google it, since it's likely someone else has seen the problem.  There may also be a useful error message from mplayer: you can grab it with "mplayer foo.avi 2&gt;/tmp/mplayer-error.txt".
+
+(You): thanks. Actually, I'd posted the problem and forgot about it.. someone says i915_dri is responsible. Do you know what that means? Is that my video driver?
+
+(Denis): Yes,it's the Direct Rendering Infrastructure (dri) driver.  I'm not familiar with Ubuntu: you might be able to switch to a different graphics driver in the System menus, or try doing an update to see if there's a newer version available.  Finally, you can try to force mplayer to not use this by specifying a particular video output, try doing "mplayer -vo xv foo.avi".  If none of this works, you could try looking on the Ubuntu forums to see if anyone else has this problem.  Good luck!
+
+(You): thanks. Actually, I'm on fedora 11. Does "-vo xv" force mplayer to use X11's "native" video driver or something?
+
+(Denis): Oops, got you confused with another vark question.  :)  Yeah, basically: mplayer will use the video output format to make calls to render the video on the screen: xv is a pretty generic interface, as opposed to the DRI interface, which is very specific to the video card.  It might work...
+
+(You): ah! So mplayer is using specific features of the video card, but "-vo xv" says "just use the most basic stuff". Got it! Now, how do I do that w/ Mathematica? :)
+
+(Denis): So it crashes with Mathematica too?  I'm not at all familiar with it, but it's possible that it wants to make use of the accelerated graphics too.  You could try doing a google search to see if there's a way to disable accelerated graphics use in Mathematic, that's my only suggestion.  :(
+
+(You): thanks. I think I somehow need to convince X or whatever to use a different driver. But I have no idea how X got confused in the first place.. maybe a package I installed or something?
+
+(Denis): It could be, or I'd think it more likely that you actually have an i915 card, and the driver is buggy, such that when you try to use the accelerated graphics, it crashes.  You can look at your hardware directly (although if its an integrated graphics card, you may have to look the motherboard up online).  You can also use the lshw command to list the hardware: the output is long, but if you poke around at it, you might find something.  Finally, the X config file is (likely) /etc/X11/xorg.conf: have a look to see if the driver is specified in there: if it is, and you don't have an i915, then that's the place you would fix it.  What you would put in place of the i915 would depend on what your real graphics card is.
+
+(You): I have an "lshal". Is that the same thing? What bugs me is that this only started a little while ago. I used to watch movies and render Mathematica 3-D graphs all the time before that.
+
+(Denis): Did you do an upgrade or something that changed things?  Since I'm not a
+
+Fedora guy, you might be able to get help on the Fedora forums too.  This
+
+seems related: http://forums.fedoraforum.org/archive/index.php/t-243976.html
+
+
+
+[Vark assigned category: <b>MPlayer</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

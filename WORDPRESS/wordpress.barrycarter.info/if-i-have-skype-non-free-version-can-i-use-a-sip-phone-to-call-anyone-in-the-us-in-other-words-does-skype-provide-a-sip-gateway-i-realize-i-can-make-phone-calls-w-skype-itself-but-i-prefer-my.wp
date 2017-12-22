@@ -1,0 +1,28 @@
+
+ID: 25444
+post_name: if-i-have-skype-non-free-version-can-i-use-a-sip-phone-to-call-anyone-in-the-us-in-other-words-does-skype-provide-a-sip-gateway-i-realize-i-can-make-phone-calls-w-skype-itself-but-i-prefer-my
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 22:13:36 +0000
+post_type: post 
+post_status: publish
+post_title: If I have SkyPE (non-free version), can I use a SIP phone to call anyone in the US? In other words, does SkyPE provide a SIP gateway? I realize I can make phone calls w/ SkyPE itself, but I prefer my SIP phone.
+
+======================================================
+
+(You): If I have SkyPE (non-free version), can I use a SIP phone to call anyone in the US? In other words, does SkyPE provide a SIP gateway? I realize I can make phone calls w/ SkyPE itself, but I prefer my SIP phone.
+
+(Pdx): why dont you just pay for phone service.
+
+----------------------
+
+(Joshua): No, Skype's signaling protocol is proprietary. There have been Asterisk methods for terminating Skype calls, but you couldn't do this just with a sip phone.
+
+(Joshua): http://www.digium.com/en/products/software/skypeforasterisk.php
+
+(Joshua): http://nerdvittles.com/?p=680
+
+
+
+[Vark assigned category: <b>SIP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

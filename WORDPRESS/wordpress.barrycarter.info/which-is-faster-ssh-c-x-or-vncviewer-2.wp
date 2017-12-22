@@ -1,0 +1,28 @@
+
+ID: 25220
+post_name: which-is-faster-ssh-c-x-or-vncviewer-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 03:24:15 +0000
+post_type: post 
+post_status: publish
+post_title: Which is faster, "ssh -C -X" or "vncviewer"?
+
+======================================================
+
+(You): Which is faster, "ssh -C -X" or "vncviewer"?
+
+(Martin): vnc over ssh should be faster due to all the uncompressed image data that's on modern desktops.
+
+----------------------
+
+(Jesse): idk. They are doing different things though. the ssh means that rendering is done locally, so there is less lag while typing in things or moving the mouse around, so that might feel faster.
+
+----------------------
+
+(Bernardo): ssh is faster if you are running linux, vnc is faster if you are not
+
+
+
+[Vark assigned category: <b></b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

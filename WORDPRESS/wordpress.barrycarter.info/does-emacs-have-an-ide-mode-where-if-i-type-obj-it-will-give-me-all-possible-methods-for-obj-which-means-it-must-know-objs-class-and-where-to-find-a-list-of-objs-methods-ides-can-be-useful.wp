@@ -1,0 +1,58 @@
+
+ID: 26237
+post_name: does-emacs-have-an-ide-mode-where-if-i-type-obj-it-will-give-me-all-possible-methods-for-obj-which-means-it-must-know-objs-class-and-where-to-find-a-list-of-objs-methods-ides-can-be-useful
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 10 Jun 2010 04:28:20 +0000
+post_type: post 
+post_status: publish
+post_title: Does emacs have an "IDE" mode, where, if I type "obj." it will give me all possible methods for obj (which means it must know obj's class and where to find a list of obj's methods)? IDEs can be useful, but most have their own non-emacs keybindings.
+
+======================================================
+
+(You): Does emacs have an "IDE" mode, where, if I type "obj." it will give me all possible methods for obj (which means it must know obj's class and where to find a list of obj's methods)? IDEs can be useful, but most have their own non-emacs keybindings.
+
+(Earl): Have you considered using Eclipse for your IDE and getting an emacs-style plugin?
+
+(You): can you do that? I thought most IDEs came w/ their own editors, and there are very few editors that are as flexible as emacs. There's a good emacs-style editor that Eclipse can use?
+
+(Earl): A quick Google search (eclipse +emacs) shows plenty of options. Without too
+
+much digging, these two looked like they might be half-decent:
+
+
+
+http://marketplace.eclipse.org/content/emacs
+
+
+
+http://anirudhs.chaosnet.org/blog/2009.05.01.html
+
+
+
+YMMV -- Eclipse has boatloads of open source plugins, so you may want to try
+
+a few to see which one you like best.
+
+
+
+I don't actually use emacs (being a vi aficionado), so I can't give a solid
+
+opinion. I will say I tried to find a vi plugin for eclipse recently, and
+
+was not satisfied, but that may be because it's vi. :)
+
+----------------------
+
+(Bjilly): cedet
+
+(You): What is cedet? Wikipedia has no entry.
+
+
+
+(Bjilly): Google for "emacs cedet",  http://cedet.sourceforge.net/
+
+
+
+[Vark assigned category: <b>Emacs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

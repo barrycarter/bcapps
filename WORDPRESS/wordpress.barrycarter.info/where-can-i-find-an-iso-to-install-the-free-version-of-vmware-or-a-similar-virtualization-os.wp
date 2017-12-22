@@ -1,0 +1,30 @@
+
+ID: 27934
+post_name: where-can-i-find-an-iso-to-install-the-free-version-of-vmware-or-a-similar-virtualization-os
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 06:08:39 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find an ISO to install the free version of vmware or a similar virtualization OS?
+
+======================================================
+
+(You): Where can I find an ISO to install the free version of vmware or a similar virtualization OS?
+
+(Fred): https://www.vmware.com/tryvmware/?p=server20&lp=1&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a
+
+----------------------
+
+(Dan): Go to vmware.com and download ESXi
+
+(You): Damn, I thought Xen was an OS itself. Are there any free ones that install at the OS layer?
+
+(Dan): Not that I'm aware of, no. But ESXi is awesome, you should give it a
+
+try if your hardware can run it.
+
+
+
+[Vark assigned category: <b>VMware</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

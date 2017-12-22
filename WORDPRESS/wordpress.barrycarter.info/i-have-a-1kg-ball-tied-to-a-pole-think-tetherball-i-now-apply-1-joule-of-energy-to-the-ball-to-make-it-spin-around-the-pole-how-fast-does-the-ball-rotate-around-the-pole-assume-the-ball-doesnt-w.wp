@@ -1,0 +1,50 @@
+
+ID: 27136
+post_name: i-have-a-1kg-ball-tied-to-a-pole-think-tetherball-i-now-apply-1-joule-of-energy-to-the-ball-to-make-it-spin-around-the-pole-how-fast-does-the-ball-rotate-around-the-pole-assume-the-ball-doesnt-w
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 16 May 2010 00:01:34 +0000
+post_type: post 
+post_status: publish
+post_title: I have a 1kg ball tied to a pole (think tetherball). I now apply 1 Joule of energy to the ball to make it spin around the pole. How fast does the ball rotate around the pole (assume the ball doesn't wind around the pole like it does in real tetherball)? Since rotating requires constant acceleration, I assume the ball will eventually slow down and stop?
+
+======================================================
+
+(You): I have a 1kg ball tied to a pole (think tetherball). I now apply 1 Joule of energy to the ball to make it spin around the pole. How fast does the ball rotate around the pole (assume the ball doesn't wind around the pole like it does in real tetherball)? Since rotating requires constant acceleration, I assume the ball will eventually slow down and stop?
+
+(John): Yes because of accumilating gravity
+
+----------------------
+
+(Deborah): Friction is what will eventually stop the ball -- air resistance from the rope and ball, and friction at the point where the rope joins the pole. The acceleration is provided by the inward force from the rope, and acceleration in itself won't stop the ball. (If acceleration in itself would cause things to slow and stop, the Earth might be in trouble, or more specifically, in the sun, by now. But since it encounters very little friction as it sweeps its path through space, it is able to stay in its orbit for the billions of years until the sun expands to engulf it.) To get the linear speed of the ball, take that one joule of energy and assume it's converted wholly to kinetic energy (0.5mv^2). Then you can solve for the initial speed of the ball, before friction slows it down. Since you didn't provide the length of the rope, I'm assuming you don't need to know the rotational frequency of the ball. But if you have the radius, you can find it by dividing the circumference of the circle the ball describes, by its linear speed, to get revolutions per unit time.
+
+(You): wow thanks! So you're saying that, if there were no air resistance and friction, the ball would rotate forever around the pole with the 1 Joule of energy I gave it? If the rope is one meter long, the ball would travel at sqrt(2) meters per second, or make one revolution in pi*sqrt(2) seconds?
+
+(Deborah): Gravity would play a part too, bringing the ball down at more of an angle
+
+than the original (I'm assuming) horizontal, but yeah, that's right. I'm
+
+going to leave the arithmetic to you on this one. :)
+
+(You): thanks. My thought was sending 1000 watts of electricity to this "tetherball" for 100 days and see if the acceleration is significant in terms of relativity.
+
+----------------------
+
+(Clayton): Assuming no air resistance or friction and it never hits the pole, i suppose it should rotate forever. Similar to spaceships orbiting earth. Once they have the proper tangential speed they keep orbiting with no further work since their fall towards earth is in balance with their desire to shoot off on a tangent path from the earth. 
+
+
+
+It sounds like a problem where you just assume the ball will rotate forever like above, and they just want you to calculate the speed. Im no good at memorizing equations.
+
+(You): thanks. But ships rotate around the Earth because the Earth exerts gravity. The pole doesn't. Are you saying the normal force provided by the string is what will hold the ball in orbit forever?
+
+(Clayton): The centripetal force exerted by the string acts like gravity would. You could use a right triangle to find that with the vertical leg as gravity and the horizontal leg as the centrip force. 
+
+
+
+The force is acting at a right angle to the balls velocity, so it wont slow it down or speed it up, just change its direction.
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

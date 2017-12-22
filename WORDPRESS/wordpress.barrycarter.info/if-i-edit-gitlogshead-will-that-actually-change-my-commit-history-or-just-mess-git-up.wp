@@ -1,0 +1,30 @@
+
+ID: 23509
+post_name: if-i-edit-gitlogshead-will-that-actually-change-my-commit-history-or-just-mess-git-up
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 12 Nov 2010 01:54:59 +0000
+post_type: post 
+post_status: publish
+post_title: If I edit .git/logs/HEAD, will that actually change my commit history or just mess git up?
+
+======================================================
+
+(You): If I edit .git/logs/HEAD, will that actually change my commit history or just mess git up?
+
+(Summer): Honestly, I have no idea. But I did some searching and found a few reference sites:
+
+(You): thanks! I'm using the IM version of vark, so your links didn't come through -- I just saw a blank space.
+
+(Summer): http://jointheconversation.org/history.html
+
+(Summer): http://crypto.stanford.edu/~blynn/gitmagic/ch05.html
+
+(Summer): Good luck.
+
+(You): thanks! Shall I compare thee to a beautiful girl? ;)
+
+
+
+[Vark assigned category: <b>Git</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

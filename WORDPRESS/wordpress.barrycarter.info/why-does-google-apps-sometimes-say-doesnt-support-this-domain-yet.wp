@@ -1,0 +1,44 @@
+
+ID: 27962
+post_name: why-does-google-apps-sometimes-say-doesnt-support-this-domain-yet
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 00:07:54 +0000
+post_type: post 
+post_status: publish
+post_title: Why does google apps sometimes say "doesn't support this domain yet?"
+
+======================================================
+
+(You): Why does google apps sometimes say "doesn't support this domain yet?"
+
+(Rahim): What were you attempting to do with Google Apps when you received that message?
+
+(You): I was trying to setup google apps with a new domain entirely.
+
+(Rahim): Were you trying to sign up for a new domain through Google Apps? If so, then it might be that Google's domain partner, Enom, may not support that domain extension. You should try and sign up for the domain using a registrar like Godaddy and then sign up to Google Apps.
+
+(You): Thanks, but it was a .com domain
+
+(Rahim): Very strange. I'm afraid, this one has me stumped. If you do own the domain then my only suggestion would be to send a message to Google Apps support just in case someone has tried to sign up with this domain before.
+
+(You): Actually, I think it breaks with any domain that has 'suck' in it. But does Google actually publish a list of stop words in domains that they won't support?
+
+----------------------
+
+(Ethan): It's most likely due to features in Google Apps not being updated.
+
+(You): Thanks, but why does it only happen with certain domains?
+
+(Ethan): Usually through pre-activation. It happened toa couple of my registered
+
+domains, but now they both work without it displaying.
+
+(You): Weird. Did you do anything, or did it just go away automatically?
+
+(Ethan): Automatic for me. =)
+
+
+
+[Vark assigned category: <b>Google Apps</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

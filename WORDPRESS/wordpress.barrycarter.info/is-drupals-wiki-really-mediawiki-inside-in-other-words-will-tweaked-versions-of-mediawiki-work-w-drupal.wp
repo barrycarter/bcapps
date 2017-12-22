@@ -1,0 +1,28 @@
+
+ID: 23014
+post_name: is-drupals-wiki-really-mediawiki-inside-in-other-words-will-tweaked-versions-of-mediawiki-work-w-drupal
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 31 Dec 2010 01:54:51 +0000
+post_type: post 
+post_status: publish
+post_title: Is Drupal's wiki really Mediawiki inside? In other words, will tweaked versions of Mediawiki work w/ Drupal?
+
+======================================================
+
+(You): Is Drupal's wiki really Mediawiki inside? In other words, will tweaked versions of Mediawiki work w/ Drupal?
+
+(Steven): Nope - completely different products. Drupal was written independent of Mediawiki.
+
+(You): List, thanks. So the Drupal wiki supports Mediawiki markup (so it says), but isn't in any way Mediawiki?
+
+(Steven): It's a common form of markup (markdown).  So yes.
+
+(You): ah, got it. Bummer. I wanted to integrate Drupal w/ my custom Mediawiki alteration.
+
+(Steven): yeah, that's a waste.
+
+
+
+[Vark assigned category: <b>Drupal</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

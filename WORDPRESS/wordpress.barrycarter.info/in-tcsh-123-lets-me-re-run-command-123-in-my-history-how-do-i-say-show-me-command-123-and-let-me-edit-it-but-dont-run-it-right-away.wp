@@ -1,0 +1,64 @@
+
+ID: 25255
+post_name: in-tcsh-123-lets-me-re-run-command-123-in-my-history-how-do-i-say-show-me-command-123-and-let-me-edit-it-but-dont-run-it-right-away
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 22 Jun 2010 21:52:25 +0000
+post_type: post 
+post_status: publish
+post_title: In tcsh, "!123" lets me re-run command 123 in my history. How do I say "show me command 123 and let me edit it, but don't run it right away"?
+
+======================================================
+
+(You): In tcsh, "!123" lets me re-run command 123 in my history. How do I say "show me command 123 and let me edit it, but don't run it right away"?
+
+(Rob): Add :p at the end, ie !123:p
+
+
+
+Good luck!
+
+(You): ok, that sort of worked. What does it actually do? What's weird is that command 123 disappears from my history when I do that!
+
+(Rob): Wow - that's bizarre. It just brings back the command (p for 'print') without executing it, so you should be able to edit it. I have no idea why it would remove it from your history list.
+
+(You): does it do that for you too? What are other "colon commands" for history? Is there a reference? I realize "man tcsh" probably has it, but that thing is huge!
+
+(Rob): There are plenty of editing commands you can combine with ! To get all sorts of magical behavior, but eventually it's almost faster to just type the command!  For instance, if you typed 'pwq' instead of pwd, you could do ^q^d (rerun previous cmd but replace q with d).  Sorry I don't know any good references - I pulled those out of my head. Try Googling something like 'linux command line editing'. Good luck bud.
+
+(Rob): Few quick examples to show you how hairy this can get:
+
+  
+
+http://www.thegeekstuff.com/2008/08/15-examples-to-master-linux-command-line-history/
+
+
+
+It's for bash but I bet most will work for you.
+
+(You): score! ctrl-r does what I wanted -- emacs-like searching for tcsh w/ pre-execution editing! WOOHOO!
+
+(Rob): &lt;chuckle&gt; welcome to the club...nerd!
+
+(You): LOL! I'm a proud member of Club Nerd!
+
+(Rob): Your super double secret decoder ring is in the mail
+
+(You): thanks, but I'm doing the update across two tables. It turns out that doing a straight join worked for me.
+
+(You): PGP encryption, no doubt?
+
+----------------------
+
+(Sibren): This is likely not the cleanest way to do it, but you can do "echo !123" and then it will echo the command. From there you can hit the up arrow or copy and paste to edit the command.
+
+(You): thanks. Someone else pointed out that ctrl-r does the trick really well
+
+(Sibren): Ah, yes, I had not considered that, though of course ctrl-r will find the character string anywhere, not just at the beginning like ! will
+
+(You): good point. For my purpose, I actually needed it in the middle of the string.
+
+
+
+[Vark assigned category: <b>tcsh</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

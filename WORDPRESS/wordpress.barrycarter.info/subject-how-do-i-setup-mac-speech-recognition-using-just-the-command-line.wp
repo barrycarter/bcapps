@@ -1,0 +1,36 @@
+
+ID: 28451
+post_name: subject-how-do-i-setup-mac-speech-recognition-using-just-the-command-line
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 01:30:00 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: How do I setup Mac speech recognition using just the command line?
+
+======================================================
+
+(You): Subject: How do I setup Mac speech recognition using just the command line?
+
+(Daniel): Hi, Barry.  I hadn't looked at Speakable Items before, but it appears it's run with simple scripts in the ActionScript language.  If I've interpreted your question correctly, you need only create a custom script that includes the word you want to say and it's intended action.
+
+
+
+For instance, you can reference this URL, which describes a very basic example.  http://discussions.apple.com/thread.jspa?threadID=1480424&tstart=0 .
+
+
+
+Additionally, it looks like the Wikipedia site has some good, basic information.  For example, all scripts, shortcuts, etc. must be in the Speakable items folder to be accessible to the app.
+
+
+
+And I can't quite get this URL to load, but maybe Google's cached version will suffice.  http://www.mactips.org/archives/2005/07/29/command-line-text-to-speech/
+
+
+
+All of that writing scripts and storing them in the Speakable Items folder can be done in the Terminal, just as with any other command-line-edited text file.
+
+
+
+[Vark assigned category: <b>speech recognition</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

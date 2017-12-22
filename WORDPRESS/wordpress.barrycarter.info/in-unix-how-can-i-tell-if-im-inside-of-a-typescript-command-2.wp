@@ -1,0 +1,44 @@
+
+ID: 25079
+post_name: in-unix-how-can-i-tell-if-im-inside-of-a-typescript-command-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 29 Jun 2010 04:08:19 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, how can I tell if I'm inside of a 'typescript' command?
+
+======================================================
+
+(You): In Unix, how can I tell if I'm inside of a 'typescript' command?
+
+(Daniele): dani@gilean:~$ echo $PPID
+
+2815
+
+
+
+dani@gilean:~$ ps |grep $PPID
+
+ 2815 ttys000    0:00.02 script
+
+(Daniele): Uhm, i don't know if PPID variabile is a UNIX standard or a Mac OS extension
+
+(You): thanks. I get "undefined variable" when I try it -- is there something more obvious? Does 'script' set an ENV variable or something like that?
+
+(Daniele): With the -f flag ps shows also the parent pid, you can watch the pid of your shell (the $$ variable) and check if is father is a script process
+
+(You): thanks. I was hoping something like shlvl would tell me (shlvl itself doesn't work since I'm instead two screens).
+
+(Daniele): i'm sorry
+
+(You): no, thanks :) At least that helps if I can't find an obvious way.
+
+----------------------
+
+(Elias): That depends on that Unix system you are using. On Solaris, you can run the command "ptree $$" to see if typescript is part of your process tree. Other Unices have similar commands.
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

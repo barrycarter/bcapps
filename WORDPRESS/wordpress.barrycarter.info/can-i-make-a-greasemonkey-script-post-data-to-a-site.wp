@@ -1,0 +1,26 @@
+
+ID: 24581
+post_name: can-i-make-a-greasemonkey-script-post-data-to-a-site
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 15 Aug 2010 10:29:51 +0000
+post_type: post 
+post_status: publish
+post_title: Can I make a greasemonkey script post data to a site?
+
+======================================================
+
+(You): Can I make a greasemonkey script post data to a site?
+
+(Josip): IMO Its better to use iMacros for data submission.
+
+----------------------
+
+(Cody): Sure. You just have to use the POST settings for an XHR request
+
+(You): hey can you help me w/ other greasemonkey stuff?
+
+
+
+[Vark assigned category: <b>Greasemonkey</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 26184
+post_name: do-most-nas-systems-support-unix-mount-windows-smb-mounting-both-or-neither-what-other-ways-can-i-access-files-on-a-nas-http-ftp-webdav
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 21:36:56 +0000
+post_type: post 
+post_status: publish
+post_title: Do most NAS systems support Unix mount, Windows "SMB" mounting, both, or neither? What other ways can I access files on a NAS? HTTP? FTP? WebDAV?
+
+======================================================
+
+(You): Do most NAS systems support Unix mount, Windows "SMB" mounting, both, or neither? What other ways can I access files on a NAS? HTTP? FTP? WebDAV?
+
+(Giacomo): You will always find SMB, sometimes NFS. Apple's TimeCapsule (that's a NAS) support also AFS (Apple's one). Someone have http access (a list of file on an http server). My MovieHD have also ftp. Never seen WebDAV. YMMV, of course.
+
+(You): ok, so there's no standard for NAS -- I should read the specs on each one separately. thanks!
+
+(Giacomo): correct. ;)
+
+----------------------
+
+(Michael): Silly question. Most NAS systems support some or all of your list. But you already knew that so why ask?
+
+(You): no, I didn't know. That's why I asked!
+
+
+
+[Vark assigned category: <b>WebDAV</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

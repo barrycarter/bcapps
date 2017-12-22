@@ -1,0 +1,28 @@
+
+ID: 27852
+post_name: how-do-i-setup-a-soap-server-using-ruby-or-perl
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 27 Apr 2010 08:59:33 +0000
+post_type: post 
+post_status: publish
+post_title: How do I setup a SOAP server using Ruby or Perl?
+
+======================================================
+
+(You): How do I setup a SOAP server using Ruby or Perl?
+
+(Alexander): in Perl you can use SOAP::Lite, in Ruby I am not sure, but there should be a similar library
+
+----------------------
+
+(Jay): Here's a resource for Perl: 
+
+http://cookbook.soaplite.com/
+
+most of the perl modules I've used are SOAP clients, but I seem to recall at least one of them can work as a server if you use it w/ CGI or as an Apache module under mod_perl
+
+
+
+[Vark assigned category: <b>SOAP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

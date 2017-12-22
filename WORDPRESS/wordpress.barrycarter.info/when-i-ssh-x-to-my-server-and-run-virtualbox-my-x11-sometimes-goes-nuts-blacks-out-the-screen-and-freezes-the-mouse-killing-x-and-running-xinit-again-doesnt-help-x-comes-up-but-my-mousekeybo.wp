@@ -1,0 +1,18 @@
+
+ID: 26255
+post_name: when-i-ssh-x-to-my-server-and-run-virtualbox-my-x11-sometimes-goes-nuts-blacks-out-the-screen-and-freezes-the-mouse-killing-x-and-running-xinit-again-doesnt-help-x-comes-up-but-my-mousekeybo
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 10 Jun 2010 00:00:47 +0000
+post_type: post 
+post_status: publish
+post_title: When I "ssh -X" to my server and run VirtualBox, my X11 sometimes goes nuts, blacks out the screen and freezes the mouse. Killing X and running xinit again doesn't help (X comes up, but my mouse/keyboard still don't work). I end up having to reboot. How do I prevent this from happening? Is there any way to run "ssh -X" in "safe mode" so that my remote X11 session just crashes instead of bringing down my local X11 server?
+
+======================================================
+
+(You): When I "ssh -X" to my server and run VirtualBox, my X11 sometimes goes nuts, blacks out the screen and freezes the mouse. Killing X and running xinit again doesn't help (X comes up, but my mouse/keyboard still don't work). I end up having to reboot. How do I prevent this from happening? Is there any way to run "ssh -X" in "safe mode" so that my remote X11 session just crashes instead of bringing down my local X11 server?
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

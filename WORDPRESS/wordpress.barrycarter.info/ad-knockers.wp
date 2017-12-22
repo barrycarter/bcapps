@@ -1,0 +1,24 @@
+
+ID: 25800
+post_name: ad-knockers
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Sun, 17 Feb 2013 15:45:34 +0000
+post_type: post 
+post_status: publish
+post_title: Ad knockers
+
+======================================================
+
+Many ad blockers use JavaScript (and other techniques) to stop your 
+browser from loading ads. 
+ 
+The problem: webmasters know about this technique and are starting to 
+deny service to those who don't accept ads. 
+ 
+The solution: an ad blocker than downloads the ad (admiteddly using a 
+little bandwidth), but never displays it to the end user. This way, 
+the site has no way of knowing you're using an ad blocker (unless the 
+ad is interactive in some way and/or they quiz you on the ad). 
+
+

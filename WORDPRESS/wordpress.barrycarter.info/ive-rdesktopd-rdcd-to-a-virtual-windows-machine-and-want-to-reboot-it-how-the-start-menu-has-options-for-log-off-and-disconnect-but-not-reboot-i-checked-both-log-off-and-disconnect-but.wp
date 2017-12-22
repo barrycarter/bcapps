@@ -1,0 +1,38 @@
+
+ID: 24252
+post_name: ive-rdesktopd-rdcd-to-a-virtual-windows-machine-and-want-to-reboot-it-how-the-start-menu-has-options-for-log-off-and-disconnect-but-not-reboot-i-checked-both-log-off-and-disconnect-but
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 13 Sep 2010 22:42:56 +0000
+post_type: post 
+post_status: publish
+post_title: I've rdesktop'd (rdc'd) to a virtual Windows machine and want to reboot it. How? The Start Menu has options for "Log Off" and "Disconnect", but not "Reboot". I checked both Log Off and Disconnect, but neither has a suboption. Of course, I can always go the VM server and reboot from there, but there should be an easier way?
+
+======================================================
+
+(You): I've rdesktop'd (rdc'd) to a virtual Windows machine and want to reboot it. How? The Start Menu has options for "Log Off" and "Disconnect", but not "Reboot". I checked both Log Off and Disconnect, but neither has a suboption. Of course, I can always go the VM server and reboot from there, but there should be an easier way?
+
+(Timm): you cannot reboot from a virtual machine.. the whole 'machine' is 'fake' or nothing but a partitioned off space in memory to represent a whole pc... you hve to logoff the VM and reconnect after rebooting...
+
+(You): OK, but from a Linux VM, I can type "shutdown -r now", and it "reboots" fine. Of course, it just sends a signal to the VM server saying "reboot me", but the effect is the same.
+
+----------------------
+
+(Daniel): Hi, Barry. Try to get to a console/DOS prompt, and use "shutdown.exe."  I found out about it here: http://www.computing.net/answers/windows-xp/reboot-command-line-dos-in-xp/126025.html
+
+(You): thanks!
+
+(Daniel): Certainly.  Hope that helps.
+
+(You): I knew about that command in Linux, but didn't realize Windows had it too!
+
+----------------------
+
+(Thomas): The reboot option in start menu is missing as it would disconnect the virtual machine from the vm server. So you will have to do it using the vm server menu bar.
+
+(You): thanks. It turns out going to a DOS prompt and typing "shutdown" works too, just like it does for Linux/FreeBSD.
+
+
+
+[Vark assigned category: <b>Start Menu</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

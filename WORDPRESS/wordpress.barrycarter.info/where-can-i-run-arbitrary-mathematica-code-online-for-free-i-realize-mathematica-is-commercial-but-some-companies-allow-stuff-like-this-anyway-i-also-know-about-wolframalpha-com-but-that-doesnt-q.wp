@@ -1,0 +1,78 @@
+
+ID: 27261
+post_name: where-can-i-run-arbitrary-mathematica-code-online-for-free-i-realize-mathematica-is-commercial-but-some-companies-allow-stuff-like-this-anyway-i-also-know-about-wolframalpha-com-but-that-doesnt-q
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 11 May 2010 09:33:02 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I run arbitrary Mathematica code online for free? I realize Mathematica is commercial, but some companies allow stuff like this anyway. I also know about wolframalpha.com, but that doesn't quite do what I want.
+
+======================================================
+
+(You): Where can I run arbitrary Mathematica code online for free? I realize Mathematica is commercial, but some companies allow stuff like this anyway. I also know about wolframalpha.com, but that doesn't quite do what I want.
+
+(Sean): not one that i'm aware of. you can run other people's programs with the mathematica player
+
+(You): is there an online version of mathematica player? I have Mathematica myself but want to share my stuff w/ people who don't.
+
+(Sean): sure is, here's the link http://www.wolfram.com/products/player/
+
+(You): thanks. I was hoping for a version that actually ran online. Most people won't download a player, sadly.
+
+(Sean): Maybe there is some online verison - I'd contact Mathematica with your neec
+
+----------------------
+
+(Joshua): If alpha won't work, you're out of luck. What are you trying to do? You could use it at a university.
+
+(You): I'm trying to create a Mathematica-based website.
+
+(Joshua): You can ask wolfram to license it to you.
+
+(You): LOL :) Right... I was just hoping there was place someone was running it online. Maybe not.
+
+(Joshua): The site is about mathematica or uses it to perform calculations?
+
+(You): it uses Mathematica to perform calculations. Specifically, when WolframAlpha doesn't give an answer, I want to say "The Mathematica was to do it is here: [link]".
+
+(Joshua): Oh, use an open source symbolic engine like  Maxima
+
+(You): whoa! I never heard of that. Is it as good as Mathematica?
+
+(Joshua): Define good? What are the problem domains? There's also maple (which has a better symbolic engine than mathematica) and several others.
+
+(You): well, does it solve ODEs, PDEs, infinite precision math, symbolically solve cubic/quadratics, etc, etc. Maple's not free?
+
+(Joshua): Maxima supports all of that and can emit latex, which has higher quality typesetting than mathematica. I would use Maxima running on SBCL with latex output.
+
+(You): what's SBCL? I just installed Maxima on my Linux box.
+
+(Joshua): Sage also has a maxima interface. You can also check it out in gnu texmacs
+
+(You): OK, what's sage? I'm using Maxima from the command-line at the moment.
+
+(Joshua): Steel Bank Common Lisp and a python based open source mathematics software system (you can try it out online)
+
+(Joshua): Go to sagenb.org
+
+(You): oh, thanks. I just did "yum install maxima" and it magically handled the dependancies.
+
+(You): most of the stuff on sagenb.org doesn't work me. Does it work for you?
+
+(Joshua): To tell you the truth, I live in Matlab and Maple. However, if I had to create an online math service, I would use a combination of Sage components. If I had to do symbolic solving with steps, I would hack Maxima and use LaTeX. I use LaTeX for all of my math typesetting. Nothing comes close to the quality and it can be automated.
+
+(You): MathML is an open standard, isn't it? I'm not sure how to use Sage, but letting people run command-line Maxima (from my site or an existing site) would be cool.
+
+(You): minor bummer: Mathematica handles "Integrate[1/((x-3)^4+1/2),x]" but Maxima doesn't.
+
+(Joshua): Sure it will. Not a syntax difference?
+
+(You): no, I changed the syntax to be correct for each one. Maxima specifically mentions that it can't handle that integral (and I confirmed this) by itself -- you have to help it by doing a change of variable. Mathematica does that change of variable itself.
+
+(Joshua): I guess you'd have to pre-process it in the app
+
+
+
+[Vark assigned category: <b>Mathematica</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

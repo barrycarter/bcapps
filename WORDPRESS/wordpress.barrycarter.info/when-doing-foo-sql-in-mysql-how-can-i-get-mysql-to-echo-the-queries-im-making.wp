@@ -1,0 +1,34 @@
+
+ID: 26077
+post_name: when-doing-foo-sql-in-mysql-how-can-i-get-mysql-to-echo-the-queries-im-making
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 13 Jun 2010 11:47:49 +0000
+post_type: post 
+post_status: publish
+post_title: When doing ". foo.sql" in MySQL, how can I get MySQL to echo the queries I'm making?
+
+======================================================
+
+(You): When doing ". foo.sql" in MySQL, how can I get MySQL to echo the queries I'm making?
+
+(Kostyantyn): -vvv (use verbose mode)
+
+(You): is that a command line flag to the MySQL client? Is there anything I can do inside the client itself?
+
+(Kostyantyn): if you are logging on with -vvv (Example: d:/work/MySQL/bin/mysql dbname
+
+-uroot -vvv -p) it will always display the query that was executed. I 'm not
+
+sure about the possibility to enable it while being from client. Just try to
+
+google "verbose mode mysql"
+
+----------------------
+
+(Eduard): you can use 'tee filename' command to log all queries to file
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

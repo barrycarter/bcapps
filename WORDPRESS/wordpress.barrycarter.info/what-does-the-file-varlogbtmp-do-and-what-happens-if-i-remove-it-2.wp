@@ -1,0 +1,36 @@
+
+ID: 27293
+post_name: what-does-the-file-varlogbtmp-do-and-what-happens-if-i-remove-it-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 08 May 2010 05:28:18 +0000
+post_type: post 
+post_status: publish
+post_title: What does the file /var/log/btmp do and what happens if I remove it?
+
+======================================================
+
+(You): What does the file /var/log/btmp do and what happens if I remove it?
+
+(Ketil): Apparently it keeps track of failed logins. Why do you want to remove it? If it's large, you should look into what's going on. If it's small, it's doing no harm anyway.
+
+(You): it's huge, like 2G. How do I look at it?
+
+----------------------
+
+(Todd): http://www.question-defense.com/2009/07/03/how-to-read-varlogbtmp-rotate-the-btmp-log-with-logrotate
+
+(Todd): is it growing out of control, or what?  what is the size in bytes?
+
+----------------------
+
+(Azmirul): This file contains all info of failed login attempts. I you want to delete it, just recreate it  "touch /var/log/btmp" for future security audit purpose. If the file size is very big, it can means there are many failed login attempt to your server (eg brute force attack). better check it out.
+
+----------------------
+
+(Raymond): btmp logs not succeded logins. If you remove it it will probably stop logging those.
+
+
+
+[Vark assigned category: <b></b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,26 @@
+
+ID: 26543
+post_name: i-have-the-variable-csubstnonl-set-to-a-newline-in-tcsh-does-this-mean-anything
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 01 Jun 2010 05:20:09 +0000
+post_type: post 
+post_status: publish
+post_title: I have the variable $csubstnonl set to a newline in tcsh. Does this mean anything?
+
+======================================================
+
+(You): I have the variable $csubstnonl set to a newline in tcsh. Does this mean anything?
+
+(MZ): From http://pwet.fr/man/linux/commandes/tcsh "csubstnonl (+)
+
+If set, newlines and carriage returns in command substitution are replaced by spaces. Set by default."
+
+(You): thanks... oddly, I googled that and nothing came up -- I'm sure tcsh has a manual online?
+
+(MZ): Yep - http://www.manpagez.com/man/1/tcsh/
+
+
+
+[Vark assigned category: <b>tcsh</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

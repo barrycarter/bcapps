@@ -1,0 +1,18 @@
+
+ID: 27796
+post_name: getmail-sometimes-connects-to-an-imap-server-and-then-hangs-forever-how-do-i-get-it-to-give-up-after-its-received-no-data-for-a-given-number-of-seconds-the-timeout-config-wont-work-because-that
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 03:44:46 +0000
+post_type: post 
+post_status: publish
+post_title: getmail sometimes connects to an IMAP server and then hangs forever. How do I get it to give up after it's received no data for a given number of seconds? The 'timeout' config won't work, because that controls socket connection time and this hang occurs after the socket is connected.
+
+======================================================
+
+(You): getmail sometimes connects to an IMAP server and then hangs forever. How do I get it to give up after it's received no data for a given number of seconds? The 'timeout' config won't work, because that controls socket connection time and this hang occurs after the socket is connected.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

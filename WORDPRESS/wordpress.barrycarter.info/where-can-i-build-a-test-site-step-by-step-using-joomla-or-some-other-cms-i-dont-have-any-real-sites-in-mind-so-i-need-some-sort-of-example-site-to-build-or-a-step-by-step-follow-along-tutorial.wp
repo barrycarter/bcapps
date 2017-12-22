@@ -1,0 +1,32 @@
+
+ID: 23306
+post_name: where-can-i-build-a-test-site-step-by-step-using-joomla-or-some-other-cms-i-dont-have-any-real-sites-in-mind-so-i-need-some-sort-of-example-site-to-build-or-a-step-by-step-follow-along-tutorial
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 08 Dec 2010 08:44:07 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I build a test site, step-by-step, using Joomla or some other CMS? I don't have any real sites in mind, so I need some sort of example site to build, or a step-by-step follow along tutorial. Please don't point me to tutorials in general, since I haven't found one that takes you through building a site one step at a time.
+
+======================================================
+
+(You): Where can I build a test site, step-by-step, using Joomla or some other CMS? I don't have any real sites in mind, so I need some sort of example site to build, or a step-by-step follow along tutorial. Please don't point me to tutorials in general, since I haven't found one that takes you through building a site one step at a time.
+
+(Michael): You might consider following along with the Symfony PHP framework tutorial that shows how they built Askeet, but Symfony is more a framework that a CMS. Another thing to check out is the Drupal site. Drupal is definitely a CMS, is relatiely robust and has a good step by step sample app on their site (though I can't recall what the sample app is at this time)
+
+(You): thanks. Question: if I'm not aware I need a CMS (Joomla/Drupal), do I need one? What does it do for me that I can't do myself?
+
+----------------------
+
+(Sebastian): You can try and build a hosted Drupal site at drupalgardens.com. There is no one tutorial to build a web site built on a CMS framework as they are modular by nature. When looking for tutorial include 'site recipes' with your search term and you are
+
+More likely to find a more complete tutorial.
+
+
+
+Hope that helps.
+
+
+
+[Vark assigned category: <b>Joomla</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

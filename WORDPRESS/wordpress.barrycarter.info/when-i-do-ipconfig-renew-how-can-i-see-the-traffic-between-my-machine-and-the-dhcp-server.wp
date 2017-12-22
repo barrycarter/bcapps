@@ -1,0 +1,40 @@
+
+ID: 23811
+post_name: when-i-do-ipconfig-renew-how-can-i-see-the-traffic-between-my-machine-and-the-dhcp-server
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 24 Oct 2010 23:49:25 +0000
+post_type: post 
+post_status: publish
+post_title: When I do "ipconfig /renew", how can I see the traffic between my machine and the DHCP server?
+
+======================================================
+
+(You): When I do "ipconfig /renew", how can I see the traffic between my machine and the DHCP server?
+
+(Dan): you need wireshark it is a packet capture/analysis tool which can show you the actual data going back and forth between the PC an DHCP server
+
+(You): thanks, that's what I figured. There's no "/verbose" option to ipconfig, huh?
+
+(Dan): none I know of but it's possible. wireshark will show the actual traffic.
+
+(You): OK... I don't think I have wireshark on this machine, and since I can't get it connected to a network, installing might be a pain.
+
+(Dan): you could ask a friend to download the portable version of it and put it in a thumbdrive.
+
+(You): actually, it turns out I had wireshark on the machine after all. It looks like I'm getting no return when I broadcast UDP packets... so, the router isn't responding. Now, how do I wireshark a netgear router ;)
+
+(Dan): good question. :)
+
+----------------------
+
+(Mechno): if you download a program called WireShark it will let you listen in on all the network traffic crossing your interface
+
+----------------------
+
+(Benjamin): Install and use a packet sniffer.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

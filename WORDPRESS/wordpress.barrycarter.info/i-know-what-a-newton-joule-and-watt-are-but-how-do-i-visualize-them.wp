@@ -1,0 +1,116 @@
+
+ID: 26557
+post_name: i-know-what-a-newton-joule-and-watt-are-but-how-do-i-visualize-them
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 31 May 2010 21:39:06 +0000
+post_type: post 
+post_status: publish
+post_title: I know what a Newton, Joule and Watt are, but how do I visualize them?
+
+======================================================
+
+(You): I know what a Newton, Joule and Watt are, but how do I visualize them?
+
+(Grzegorz): Newton = (approzimately) force required to lift 100g object on earth
+
+(Grzegorz): Joule = (approx) the work to lift the same object 1 meter up
+
+(Grzegorz): Watt = (approx) the power one needs to use to lift the same object, 1meter up, every second
+
+(You): so force is measured instantaneously? In other words, if I hold a 100g mass up (against gravity) for 10 seconds, I've expended 1 Newton second of (what, energy)?
+
+(Grzegorz): if you hold a mass (without moving) the work is 0 (eg 0 Joules) which can be seen by making a table (or a floor) do the same ;)
+
+(You): that's a normal force though, right? I mean, you agree that holding an apple for 10 seconds is more difficult than holding it for 1 second, yes?
+
+(Grzegorz): I agree, but this is just a property of your body and you can easily find a replacement (like a table) which does the same without using any energy. The amount of energy your body uses to hold an apple cannot be calculated on physical grounds alone, and requires an understanding of inner workings of human organism. This amount of energy depends on a variety of factors, eg if you hold the apple with your hand stretchd forward it can be large (the energy used by the body), while if you can put in on your lap, or in a backpack it will be negligible.
+
+(You): so you're saying that holding an apple for 10 seconds really isn't any harder than holding it for 1 second because a table could hold it indefinitely, and doesn't have to exert anything to do so?
+
+(Grzegorz): It is harder, but standing still is also hard when done for eg 10hours, and still, just as with an apple no work is done.
+
+(You): OK. Different question: if I apply 1 Newton of force to a 1kg mass for one second, it will speed up by 1 m/s regardless of its current speed, correct?
+
+(Grzegorz): that's correct
+
+(You): *however*, the amount of 'work' I do depends on the current speed of the mass?
+
+(Grzegorz): that's also correct
+
+(You): I guess I don't understand that. It seems that applying 1 Newton of force for 1 second is the same thing regardless of the object's speed.
+
+(Grzegorz): it is "harder" (requires more energy) to act with 1N for 1s on something moving 1m/s, than on something moving 100m/s
+
+(You): but I'm not seeing why. I mean, a Newton*second is a Newton*second, no?
+
+(Grzegorz): that's why Newton*second does not even have a name ;) It is just not a very usefull quantity
+
+(You): so it really is the Newton*meter (Joule) that's the important quantity?
+
+(You): ultimately, why is it harder to push an object with the same force for the same time harder if the object is moving?
+
+(Grzegorz): that's because the energy of a mass "M", moving with velocity "V" is M*v^2/2, and energy is a conserved (in order to increase the one of a moving mass it has to come oft of something/someone)
+
+(You): no, I understand the physics behind it, but in the real world, it seems like it should be the same thing.
+
+(Grzegorz): It is just like that. Increase the speed of a car (electric one for simplicity) from 10km/h to 20km/h requires using more energy than from 50km/h to 60km/h (both can be achieved by using the same force over the same time), although in real world one has things like friction which dominate the energy budget.
+
+(You): thanks. I think I figured it out. In order to apply 1 Newton for 1 second to a mass in motion, I could accelerate to that mass' velocity and then push it just as if it were at rest. However, the energy I burn accelerating is exactly where the extra energy comes from.
+
+----------------------
+
+(Angus): 1 Newton is the force required to accelerate a 1kg mass to 1 m/s/s, 1 Joule is the amount of energy required to push that 1kg mass 1 metre, and 1 Watt is the power expended on doing this in 1s.
+
+(Angus): Thought of another way- 1N is the force due to gravity that your hand would experience if you held a 100g apple in it, 1 Joule is the amount of energy you'd expend lifting that apple 1m out of a barrel, and 1 Watt is the power that would be required to do this in 1s.
+
+(You): ok. If I held the apple for 10 seconds, I would have performed 1 Newton second of what? Not work, since I didn't move it, but clearly, holding an apple for 10 seconds requires more (something) than holding it for 1 second.
+
+(Angus): Yes work- remember that the surface of the Earth is a moving reference frame and that even satellites and the moon are falling towards the Earth all the time. They also have tangential velocity, though, so the combination of falling towards the Earth, and perpendicular to it results in circular motion. If the moon began to fall more quickly to the Earth (accelerated centripetally) then it would spiral in and crash. By holding the apple you are slowing down its fall to the Earth to a point where it is moving in a circular orbit. It is still moving in the direction of the gravitational force, and so you are still doing work.
+
+(You): ok, but let's pretend for a moment that gravity is the only force and that the Earth's not moving. Then, by holding an apple up for 10 seconds, am I doing work? If not, what exactly am I doing, physics-wise?
+
+(Angus): In that case, no work is done because there is no displacement. However, there is a force on your hand. If the apple was on a table, it might cause some compression in the legs of the table, for instance, increasing the elastic energy stored in the table's legs. So it does work while it is compressing the table, but after that, the system is in equilibrium. When you are holding an apple, you do work to raise it, and it may do work on stretching your arm, but once your arm is at rest, there is no change in energy and thus no work is done. If you feel a burn in your arm or you get tired, it is because your arm must consume chemical fuel to remain bent. If the weight of the apple is all on your skeleton, then you will not get tired.
+
+(You): OK- so there is some work initially done (to lift the apple for example), but no real work/energy done in holding it once you've raised it?
+
+(Angus): That's right- there can be a force without work being done, as you say, if there is no displacement in the direction of the force.
+
+(You): OK. Different question: if I apply 1 Newton of force to a 1kg mass for one second, it will speed up by 1 m/s regardless of its current speed, correct?
+
+(Angus): If you apply 1N of force to a 1kg mass it will accelerate at 1m/s/s
+
+(You): so, if I do it for one second, it'll go 1m/s faster than it was before, yes?
+
+(Angus): If it has initial speed u m/s, then its speed after t seconds if it is accelerated at a m/s/s will be v = u + a.t If a = 1 m/s/s and t = 1s, then its final speed will be v = u + 1 m/s
+
+(You): OK. But the amount of *work* I do (in Joules) depends on the mass' initial speed?
+
+(Angus): No, the amount of work you do is the change in energy of the system. If your mass is initially moving, then it has some kinetic energy Ki = 1/2.m.u*u, and after you've applied your force it has some other kinetic energy (greater or less than Ki depending on the direction of your force) Kf = 1/2.m*v*v where v is as given above. If your force also raised it then there would be some contribution from the potential energy etc.
+
+(You): OK, but from an intuitive point of view, isn't applying 1 Newton for 1 second the same thing regardless of the object's speed?
+
+(Angus): Yes, but it's the same thing in that it causes the same acceleration. Also note that as far as work is concerned, it doesn't matter how long you apply the force for, but for power work/time, then it does.
+
+(You): that's where I'm confused. If I apply 1 Newton*second to an object at rest, I do more work than if I apply 1 Newton*second to an object in motion? Why should that be?
+
+(Angus): That's not the case- work is the change in energy. If it's in motion it just means that the final energy will be higher than if it was at rest, but the change in energy, and thus the work, will be the same.
+
+(You): ok wait. You're saying that if I apply 1 Newton to a mass for 1 second, I'm doing the same amount of work regardless of the mass' speed?
+
+(Angus): ja
+
+(You): but that's not what the equations tell me? They say it's harder to push a mass in motion (in terms of work) than a stationary mass.
+
+(Angus): Which equations?
+
+(You): kinetic energy equations. If I accelerate a 1kg mass from 0 to 1 m/s, I've given if 1/2*m*v^2 or 1/2 Joule of energy. If I accelerate it another 1 m/s to 2m/s, it now has 1/2*m*v^2 or 2 Joules of energy. First push, I added 1/2 Joule; 2nd push, I added 1.5 Joules.
+
+(Angus): Ah, I hadn't thought of that. The reason is because kinetic energy (unlike potential energy) is not gauge invariant- you can't arbitrarily assign the zero of kinetic energy. The square term in the kinetic energy is the culprit. However, that does make sense from the equation W = F.s. Suppose it takes you 1s to accelerate the mass in these two instances. Remember the equation v = u + at? That implies that a = (v - u)/t. If t = 1, then the applied force is F = m(v - u), so F1 = F2 = 1N, but, because the moving particle has a larger initial speed, and displacement is the area under the velocity-time graph, the mass will move further, so W = F.s will be larger.
+
+(You): thanks. I think I figured it out. In order to apply 1 Newton for 1 second to a mass in motion, I could accelerate to that mass' velocity and then push it just as if it were at rest. However, the energy I burn accelerating is exactly where the extra energy comes from.
+
+
+
+[Vark assigned category: <b>Joule</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

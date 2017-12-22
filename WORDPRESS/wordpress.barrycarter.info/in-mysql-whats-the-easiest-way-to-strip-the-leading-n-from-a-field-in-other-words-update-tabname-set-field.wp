@@ -1,0 +1,46 @@
+
+ID: 26906
+post_name: in-mysql-whats-the-easiest-way-to-strip-the-leading-n-from-a-field-in-other-words-update-tabname-set-field
+post_category: uncategorized
+post_author: barrycarter
+post_date_gmt: Thu, 01 Jan 1970 00:00:00 +0000
+post_type: post 
+post_status: publish
+post_title: In MySQL, what's the easiest way to strip the leading 'N' from a field. In other words, "UPDATE tabname SET field
+
+======================================================
+
+(You): In MySQL, what's the easiest way to strip the leading 'N' from a field. In other words, "UPDATE tabname SET field=[something] WHERE field LIKE 'N%';"
+
+(Neil): You can use SUBSTRING to trim the matching fields...
+
+
+
+http://dev.mysql.com/doc/refman/5.0/en/string-functions.html#function_substring-index
+
+----------------------
+
+(Erik): use indexof and substring
+
+----------------------
+
+(Chris): I'd create a temporary table as a select from the source table combined with a substring, like:
+
+create temporary table tmp_foo AS select substring(field, 1), field2, field3 from foo where field like 'N%;
+
+(Chris): that way you aren't messing with the original data until you know you have it right
+
+(You): thanks. Does SUBSTRING(field,1) return all but the first letter of a string?
+
+(Chris): yes - the first argument "field" is the field you are selecting from, and the second argument is the starting position of the string.  That argument is zero based, so by specifying "1", you are saying, "start at the second character and read until the end of the string"
+
+(You): actually it looks like 2 is the correct value here. But thanks for pointing me to SUBSTRING1
+
+----------------------
+
+(Max): I don't know about declaring variables in SQL
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

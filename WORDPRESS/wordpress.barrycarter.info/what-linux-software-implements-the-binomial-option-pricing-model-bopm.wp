@@ -1,0 +1,32 @@
+
+ID: 26025
+post_name: what-linux-software-implements-the-binomial-option-pricing-model-bopm
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 15 Jun 2010 20:09:55 +0000
+post_type: post 
+post_status: publish
+post_title: What Linux software implements the Binomial Option Pricing Model (BOPM)?
+
+======================================================
+
+(You): What Linux software implements the Binomial Option Pricing Model (BOPM)?
+
+(Daniel): Hi, Barry.  Looks like there aren't many, but the URL below includes listing for a variety of WebCab offerings, some of which appear to meet your requirement.  Hope that helps.  http://www.filetransit.com/files.php?name=Binomial_Option_Pricing
+
+(You): thanks. It looks like those aren't free, alas (I didn't mention free in my original request, but should have). Even a Mathematica package would be nice.
+
+(Daniel): Hmm.  Well, a little bit of digging landed me on this page, http://www.mapleprimes.com/tags/finance, which includes a Maple worksheet for BOPM, http://www.mapleprimes.com/posts/41587-Binomial-Trees-For-Option-Pricing-Higher-Order.  I know the syntax isn't the same between most CASes, but perhaps either (a) you also have access to Maple or (b) there are tools for porting over.  Alas, maybe the best it offers is some pointers for your own implementation.  Which I could be of more help.
+
+
+
+This just in: there's a Mathematica demo with source available, here: http://demonstrations.wolfram.com/BinomialOptionPricingModel/
+
+(You): score! The Mathematica version is just what I needed. I can download and tweak it to my heart's content. Only badness is that it looks like BOPM doesn't support volatilities that change with strike price.
+
+(Daniel): Awesome.  +)
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

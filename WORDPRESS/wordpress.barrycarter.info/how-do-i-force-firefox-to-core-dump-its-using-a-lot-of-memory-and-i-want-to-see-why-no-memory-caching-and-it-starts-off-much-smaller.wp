@@ -1,0 +1,36 @@
+
+ID: 24071
+post_name: how-do-i-force-firefox-to-core-dump-its-using-a-lot-of-memory-and-i-want-to-see-why-no-memory-caching-and-it-starts-off-much-smaller
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 07 Oct 2010 01:33:37 +0000
+post_type: post 
+post_status: publish
+post_title: How do I force Firefox to core dump? It's using a lot of memory and I want to see why (no memory caching, and it starts off much smaller).
+
+======================================================
+
+(You): How do I force Firefox to core dump? It's using a lot of memory and I want to see why (no memory caching, and it starts off much smaller).
+
+(Cesar): There is a "problem" with Firefox that starts using too much memory resources until it crashes or freezes. Ive had this problem before. There is no way to fix it. I recommed to use another browser, I use Opera.
+
+(You): but Firefox has all sorts of cool addons and stuff that I use.
+
+(Cesar): folloup
+
+(You): I got "folloup"? [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Michael): assuming that the system can create a core file, you would send a SIGQUIT signal to the Firefox process (pkill -QUIT firefox)
+
+(You): thanks. I did kill -BUS but that didn't work.
+
+(Michael): try setting 'ulimit -c unlimited', then running firefox from that shell and performing the kill
+
+(You): thanks. Actually, I'll try kill -QUIT first (but only after firefox runs high on memory)
+
+
+
+[Vark assigned category: <b>core dump</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

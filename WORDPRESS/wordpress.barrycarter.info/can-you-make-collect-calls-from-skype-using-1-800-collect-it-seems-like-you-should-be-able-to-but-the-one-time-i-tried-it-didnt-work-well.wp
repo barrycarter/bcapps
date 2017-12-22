@@ -1,0 +1,140 @@
+
+ID: 27556
+post_name: can-you-make-collect-calls-from-skype-using-1-800-collect-it-seems-like-you-should-be-able-to-but-the-one-time-i-tried-it-didnt-work-well
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 02:21:26 +0000
+post_type: post 
+post_status: publish
+post_title: Can you make collect calls from SkyPE using 1-800-COLLECT? It seems like you should be able to, but the one time I tried, it didn't work well.
+
+======================================================
+
+(You): Can you make collect calls from SkyPE using 1-800-COLLECT? It seems like you should be able to, but the one time I tried, it didn't work well.
+
+(Joe): I agree, it seems like you should be able to, but if it didn't work for you I'd guess that's a good indication that it doesn't work. Of course I'm not a Skype user....
+
+If you're wanting to make calls from your computer, though, I highly suggest checking out Google Voice + Gizmo5. You can setup GV to use a Gizmo5 phone, and when you make a call with GV it first calls you and then calls the other party. Since it calls you first, Gizmo sees it as an incoming call, which is free. Just a thought...
+
+
+
+Also, there are a number of programs that can connect to Gizmo such as Ekiga and I think Gizmo might even have one available for Windows. Not sure though.
+
+(You): Is Gizmo a soft phone? gizmo5.com isn't taking new users right now, so I wasn't sure. Wouldn't I need a phone number for gizmo for this to work?
+
+(Joe): Huh, I hadn't noticed that they weren't taking new users. Sorry about that. But yes, it's a soft phone. And, typically you would need a real phone number for your soft phone, but Gizmo is integrated with Google Voice which provides the real phone to soft phone exchange... or something. It works. 
+
+
+
+If you don't know how GV works, pretty much they give you a new "Google" number and then when people call that it calls all the phones you've connected to it at the same time (They call Google, Google calls your House, Cell, Gizmo, etc) and the first to pickup gets the call (although you can transfer between them too).
+
+
+
+I don't know much about Skype really, but if they're cool and give you a real phone number + allow unlimited incoming calls you could have GV treat Skype like a real phone and use it.
+
+(You): I have Google Voice and have done the "call me and call other party and connect us" trick. However, my real phone is a cell phone w/ crappy reception, so this isn't great. I find SkyPE has much better sound quality. You're saying I can tell google to call the other party and call my gizmo phone and connect us, which sounds great. Do you know if it works w/ other soft phones like xlite?
+
+(Joe): Hmm... maybe a bit of miscommunication here. Not bad though. Basically, it will connect to any soft phone, period, if that phone has a real phone number (xxx-xxx-xxxx). For instance, if a friend can call a number with their cell phone and connect to your computer (or in this case your soft phone on your cell phone). If you can do that, you're set, all you have to do is give GV the number. Now, if you don't have a real phone number for it, you're a bit out of luck, sorry. Gizmo is the only provider GV directly supports without connecting to a real telephone number.
+
+
+
+It's been a while since I've looked into it, but it seems there are a few companies out there that offer free PC-Phone-Number (SIP) to Real-Phone-Number services. If you can find yourself one of these (or even one that offers the service for cheap) you can use any provider you like, since they all have free computer to computer calls, which more or less what they think will be happening. (Hope you're following this...)
+
+(You): Thanks. Yes, I was asking if Google Voice let me use xlite even if xlite didn't have a number. Apparently not. With gizmo5.com not taking new users, that's not a solution either. I think I need a service that goes the other way: real-phone-number to SIP. In other words, when someone dials 505-123-4567 it rings my computer. Or am I misunderstanding?
+
+(Joe): You've got it. And there are services out there that do just that, but you might have to do a bit of digging to find them. I've found them before but it's been a long while so I don't really remember where to look...
+
+(You): Digging? Ha! I just sent it out as a vark question ;)
+
+(Joe): Nice. You might check out http://phone.ipkall.com/ &lt;--seems like it MIGHT do the trick. Just don't forget to use it once every 30 days (inactive accounts get closed)
+
+(You): If this does what is says, it's fantastic! And since I'll only ever use it to connect calls, I can even let it drop and get a new one later.
+
+(You): Dumb question (I'm new to all this), but how do I find my SIP phone number and SIP proxy in xlite (or any softphone)?
+
+(Joe): Do you have the program setup so that you can use it right now?
+
+(Joe): Like... someone can call your xlite and connect to you
+
+(You): No. I have xlite so I can make outbound calls, but I have no idea how someone could call me, even if they have a SIP phone. Is it possible that my softphone has no SIP number?
+
+(Joe): Well, if you can make calls then you've got SOMETHING. Somewhere in the settings there should be an account you're connected to. Chances are all the SIP information is there... somewhere...
+
+(You): I found my SIP proxy (I think): sip.voipcheap.com, and I have a username, but is a username a valid SIP phone number? Or will a SIP phone number actually be a number?
+
+(Joe): Yeah, that's probably your proxy. And, it's been a while since I've looked at SIP stuff... does it have an '@' in your username?
+
+(You): No, it's just barrycarter2010.
+
+(Joe): I'm looking at voipcheap's website, should have something for you in just a sec
+
+(You): You rock! Thanks, Joe!
+
+(You): Beatcha to it: http://forum.voxilla.com/general-voip-discussion/my-sip-phone-number-voipcheap-33618.html [http://forum.voxilla.com/general-voip-discussion/my-sip-phone-number-voipcheap-33618.html]
+
+(Joe): Well, aren't you special :P
+
+(You): LOL! It turns out that ipkall doesn't like the @ sign -- since I guess what's after the @ sign is always the proxy anyway.
+
+(Joe): Huh, that's weird. Well, if that doesn't work I would suggest you could try the whole "alias" thing with SipBroker (it's in that forum you found)
+
+(You): No, dropping the @ sign seems to have worked, although I just realized that I lost sight of what I was doing. voipcheap.com lets me make outbound softphone calls anyway.
+
+(Joe): Ahh, but for free?
+
+(You): OK, more complex scenario. I want an ipkall.com number to ring on my FreeBSD server, have the server play a sound file and then hang up. How would I do that?
+
+(You): yes, up to 300 minutes a week, which should be enough. It's good to know I can go beyond that with GV, so I guess it was worthwhile :) Plus, I now have a semi-anonymous number that lets people talk to me (although GV gives me that too).
+
+(Joe): Pipes and scripts :P Don't know specifically, but:
+
+Setup a SIP phone on your server
+
+(Possibly) Start it in verbose mode piped into a script
+
+That script catches when there's an incoming call (hopefully, depends on how verbose the SIP client is)
+
+That script plays the sound and hangs up the phone
+
+(You): you lost me at "pipes". No, just kidding. But how do I set up a SIP phone on my server? SIP can go to any server, yes? So I don't need someone else's proxy?
+
+(Joe): They have xlite for Linux... just copy over the settings and it should be good
+
+(Joe): Or Ekiga, or Twinkle, or...
+
+(You): Yes, but that's all still GUI stuff. I want to do this command-line style.
+
+(You): GAIM is multi-client too!
+
+(Joe): Ahh... that could complicate things
+
+(You): But maybe not by that much. I'm sure someone has written programs that do this?
+
+(Joe): Yeah, just gotta find it. Terminal based SIP phone, kind of interesting really.
+
+(You): I'm googling it as we speak.
+
+(You): A long time ago, somebody offered free VXML parsing service, and I setup a weird kind of voicemail thing then.
+
+(Joe): Yeah, I just let Google handle my voicemail...
+
+(You): No, I mean like 'press 1 for weather, press 2 for time, etc'
+
+(Joe): Oh.... cool
+
+(Joe): Damn you, now I want that
+
+(You): let me see if I can remember who did that-- they might still be around
+
+(You): https://studio.tellme.com/ [https://studio.tellme.com/] is the one I used.
+
+(Joe): http://blog.pjsip.org/2008/01/21/command-line-sip-client/ looks promising (CLI SIP)
+
+(You): Thanks! I'm installing /usr/ports/net/openser on my box as we speak.
+
+(You): Hey, if you're OK w/ it, could you IM me directly at carter.barry@gmail.com? Would make things a little easier.
+
+
+
+[Vark assigned category: <b>1-800-COLLECT</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,28 @@
+
+ID: 26859
+post_name: my-colo-host-installed-xen-hypervisor-from-cd-on-my-remote-box-i-can-ssh-into-it-what-do-i-do-next-can-i-start-some-sort-of-web-based-graphical-interface-andor-create-vms-from-the-command-line
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 26 May 2010 22:56:08 +0000
+post_type: post 
+post_status: publish
+post_title: My colo host installed Xen Hypervisor (from CD) on my remote box. I can ssh into it. What do I do next? Can I start some sort of web-based graphical interface and/or create VMs from the command-line?
+
+======================================================
+
+(You): My colo host installed Xen Hypervisor (from CD) on my remote box. I can ssh into it. What do I do next? Can I start some sort of web-based graphical interface and/or create VMs from the command-line?
+
+(Shanmugam): i guess there is no gui based interface for creating VMs in Xen, there are command-line commands, jus look it up in google for the exact command
+
+(You): I was hoping to not have to google it, but get advice from someone who's used it to set up VMs already.
+
+----------------------
+
+(James): As far as I'm aware there is no web ui for xen. The easiest way to create domU's is on the console - check out http://wiki.kartbuilding.net/index.php/Create_DomU
+
+(You): for some reason, my install of Xen Hypervisor doesn't have an 'xm' command
+
+
+
+[Vark assigned category: <b>Hypervisor</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,56 @@
+
+ID: 27520
+post_name: how-accurate-is-httpwww-zabasearch-comzabainfo-httpwww-zabasearch-comzabainfo-in-finding-an-ip-address-location-down-to-the-zip-code
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 21:52:18 +0000
+post_type: post 
+post_status: publish
+post_title: How accurate is http://www.zabasearch.com/zabainfo/ [http://www.zabasearch.com/zabainfo/] in finding an IP address' location down to the zip code?
+
+======================================================
+
+(You): How accurate is http://www.zabasearch.com/zabainfo/ [http://www.zabasearch.com/zabainfo/] in finding an IP address' location down to the zip code?
+
+(Zac): Not accurate at all.  It uses published information about who owns the IP address.  While normally it is close to the end user, but it could be pretty far off, in some cases even another state.
+
+(You): It guessed my zip code exactly, even though my provider, Comcast, is HQ'd somewhere else. It's not using WHOIS information. The information it has is even more accurate than rr.arin.net
+
+(Zac): maybe comcast has your address associated with your ip?  Mine shows up at my ISPs HQ.  Also it could be tied to where your gateway is. They might break those down to your local area with physical address information.  where is the closest hop to you on a traceroute?
+
+(You): Even if Comcast knows my address -&gt; IP conversion (a bit weird, since they presumably dynamically allocate IPs + it would be a privacy issue). When I put in my first hop, 73.110.72.1, it gets Mount Laurel, NJ, which is Comcast HQ. I know a little about geolocation, and I've never seen anyone get zip code accuracy before!
+
+(Zac): What it is probably doing is pulling a rDNS entry for your current IP address.  Take a look at that, it should probably have a pretty long entry that has hop information, even DSLAM switches will be in there sometimes.  If so then those are probably within a mile of your house at the furthest.
+
+(You): I did an mtr and got reverse DNS for my first few hops, but where did it collect the data that xxx-yyy.albuq.comcast.net has a given zip code. Is there a database somewhere? I did "host -t LOC" on that address and got nothing.
+
+(Zac): I am not sure how all the databases are pulled together, but here are some free ones you can download.  http://ipinfodb.com/ip_database.php
+
+(Zac): it also shows how they pull it all together
+
+(You): Nice, thanks! So it looks like they just gather data as they can. There's no central db of all Comcast routers' physical addresses or anything.
+
+----------------------
+
+(H??vard): It can only show the zip to the closest ISP central. Which usually implies that the subscriber is around 10-2000 meters from the central.
+
+(You): That's still much more accurate than any other IP location I've seen. How do they get that kind of data?
+
+(H??vard): Some ISP's provide geo data from each central routing point. The information is not provided locally but rather a lookup in a database from the providers central database. THis function may or may not be enabled.
+
+(You): You mean that Comcast might be using IP loc or something? Otherwise, where would that database be?
+
+(H??vard): Comcast has a database of all distribution points. When you check your ip it will resolve the closest distribution point to you. It does it by checking with comcast where just that distribution point is.
+
+(You): OK, but how do they get access to that database. How do *I* get access to that database?
+
+(H??vard): you get access by using that search engine you just pasted into aardvark. You may connect directly yourself, but I am not a coder and dont know how to code that in HTML.
+
+(You): But why would Comcast share their db with a third party like that?
+
+(H??vard): i do not know, but i think they have to.
+
+
+
+[Vark assigned category: <b>ZIP code</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

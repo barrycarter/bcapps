@@ -1,0 +1,100 @@
+
+ID: 27926
+post_name: on-linux-i-replace-a-file-by-doing-mv-file-file-old-mv-file-new-file-to-minimize-the-time-the-file-is-unavailable-however-it-is-unavailable-between-the-two-commands-i-run-is-there-a-better-way
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 07:16:50 +0000
+post_type: post 
+post_status: publish
+post_title: On Linux, I replace a file by doing "mv file file.old; mv file.new file" to minimize the time the file is unavailable. However, it is unavailable between the two commands I run. Is there a better way to do this? Using mmv or rename for example?
+
+======================================================
+
+(You): On Linux, I replace a file by doing "mv file file.old; mv file.new file" to minimize the time the file is unavailable. However, it is unavailable between the two commands I run. Is there a better way to do this? Using mmv or rename for example?
+
+(Sungjin): What about hard link? Try ln command. ^^
+
+(You): What would be the exact sequence of commands I'd give?
+
+----------------------
+
+(Andy): Rotating files can be perilous and every way of doing it has positives and negatives.  The way you're doing it is the safest from a data corruption standpoint.  It's advisable to hup or restart any processes that may have had the file open for writing, though.  There are other ways, such as making a copy of the file and zeroing out the original file by doing a "cat /dev/null &gt; filename" but there is risk of data corruption because you may possibly be writing to that file at the same time as another process.
+
+----------------------
+
+(Oleg): Hi Barry,
+
+
+
+The answer depends on how the file "file" is used by an applications.
+
+
+
+Generally, it is not possible to replace "file" with "file.new" atomically
+
+without some support from the applications that use the "file".
+
+
+
+For example, if the "file" is a log file of some daemon and you want to
+
+implement a "log rotation" the usual aproach is:
+
+
+
+- mv "file" file.old. It is possible to rename (and even delete!) opened
+
+files in linux. The apllication which has the file opened continues to
+
+read/write to it without any problems
+
+
+
+- signal daemon to close "file" and re-start. This signaling is usually dome
+
+with kill -HUP or something equivalent.
+
+
+
+- the daemon close the file and reopens it with *O_CREAT* flag, i.e "create
+
+file if doesn't exist"
+
+
+
+Another approach is to implement some "locking" mechanism. If you
+
+applications are scripts you can use *lockfile* command for a semaphore
+
+implementation. If they are C/perl/phyton/.. then have a look at
+
+flock/fcntl() calls.
+
+
+
+Once you get the semaphore your "backup" script can do whatever it likes
+
+with the "file" because all other applications are sleeping on the
+
+semaphore...
+
+
+
+If you do not control the applications which use "file" then please provide
+
+more details on your applications and what are you trying to achieve.
+
+
+
+Hope it helps,
+
+
+
+Regards,
+
+Oleg
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

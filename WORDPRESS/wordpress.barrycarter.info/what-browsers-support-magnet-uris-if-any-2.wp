@@ -1,0 +1,60 @@
+
+ID: 23745
+post_name: what-browsers-support-magnet-uris-if-any-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 30 Oct 2010 22:18:06 +0000
+post_type: post 
+post_status: publish
+post_title: What browsers support "magnet" URIs, if any?
+
+======================================================
+
+(You): What browsers support "magnet" URIs, if any?
+
+(Daniel): I think it's more of a matter of having an app to read it. Works for me in Chrome/Firefox on OSX/Ubuntu
+
+(You): could you give me an example of a magnet URI that you can visit and tell me what Firefox does with it, so I can try it myself?
+
+(Daniel): When I click on a magnet link on (for instance) Pirate Bay it sends it to Transmission and begins to download it.
+
+(You): I thought TPB just had links to torrent files, not to magnet URIs?
+
+----------------------
+
+(Alexander): magent urls are actually p2p hashes, this is usually handled by bittorrent clients
+
+(You): so a magnet URI is just a torrent file in URL format or something else?
+
+(Alexander): no, its more like a pointer to a torrent file (or I'm getting this wrong and it is for kazaa and gnutella), usually you can identify files on p2p networks by their hash value and that was used by different p2p networks to publish the actual file pointers. magnet is a meta-uri that can have different hashes, in bittorrent this is called info-hash, but it only identifies the file, I think you still need a torrent file to be able to request the file
+
+i think it depends on the keywords for the magnet uri, if you have an example, maybe that is easier to check.
+
+the history section on the wikipedia article has a few clients that may support hashes:
+
+http://en.wikipedia.org/wiki/Magnet_URI_scheme#History
+
+(You): ok, so if I save a magnet URI from TPB, and TPB goes down, my magnet URI is worthless?
+
+(Alexander): almost yes. bittorrent works with the help of a tracker, essentially an url that enables peers to find each other, in the case of tbp this is an url with tr= in the magent url, the same url is used when you download the torrent file. when the url becomes unavailable, you will not be able to determine new peers via the tracker, however currently connected peers will still work, so that you may be able to finish the files that are currently being downloaded (I think for this you have to leave open the bittorrent program, since the current peers may not be saved, but maybe some clients can do that). Some Bittorrent clients have an additional feature to determine peers based on a serverless p2p network (usually called dht, distributed hash table), so that you may find new peers even when the tracker is gone just based on the content-hash value (assuming that they and you are both using a client that supports that, e.g. azureus/vuze).
+
+If a tracker is gone, you still may be able to add a new tracker for the exact same file but that is rather unlikely, in this case the magent uri hash to have the same hash but a different tr url
+
+(Alexander): the most important thing to do is not to keep supplies, that significantly reduces the need to eat something to pass the time
+
+(Alexander): great, what went to the wrong question
+
+----------------------
+
+(Igal): magnet, AFAIK, is a MIME that any browser will open with the default magnet program of the OS that the browser is installed on. For example, FireFox on Windows will open the default torrent app if it is defined to open magnet files, eg - Vuze.
+
+(You): thanks. Can you give me an example of a magnet URI so I can test that?
+
+(Igal): search for anything at thepiratebay.org and click on click/see the magnet icon in the search results.
+
+(You): thanks. I always thought TPB just linked to torrent files, not to magnet URIs.
+
+
+
+[Vark assigned category: <b>URIs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

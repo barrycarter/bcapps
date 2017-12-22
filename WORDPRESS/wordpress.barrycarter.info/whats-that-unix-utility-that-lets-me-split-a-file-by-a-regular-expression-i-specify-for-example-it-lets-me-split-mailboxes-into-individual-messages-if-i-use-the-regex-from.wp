@@ -1,0 +1,44 @@
+
+ID: 24645
+post_name: whats-that-unix-utility-that-lets-me-split-a-file-by-a-regular-expression-i-specify-for-example-it-lets-me-split-mailboxes-into-individual-messages-if-i-use-the-regex-from
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 01 Aug 2010 21:49:28 +0000
+post_type: post 
+post_status: publish
+post_title: What's that Unix utility that lets me split a file by a regular expression I specify? For example, it lets me split mailboxes into individual messages if I use the regex '^From '?
+
+======================================================
+
+(You): What's that Unix utility that lets me split a file by a regular expression I specify? For example, it lets me split mailboxes into individual messages if I use the regex '^From '?
+
+(Chris): awk
+
+(You): ha ha! I'm pretty sure awk can't easily handle things like that (neither can Perl -- not *easily*) -- there's a specific tool that does it very easily-- sort of like agrep
+
+(Chris): I wrote a script file to do that using awk.  It wasn't too hard.
+
+(You): yeah, I could write a script in Perl too, but I want to find that tool -- it would be really useful.
+
+(Chris): Happy hunting.
+
+(You): danke schoen.
+
+(You): perl -nle '$x="000000";if(/^From /){close(A);$x++;open(A,"&gt;$x");} print A $_' almost works.
+
+----------------------
+
+(Navdeep): man split
+
+(Navdeep): The copy of "split" that comes with Snow Leopard supports patterns but it seems other distributions don't.
+
+
+
+You might have been thinking of "csplit". Or maybe even "sed" but that's more general purpose.
+
+(You): thanks. I know there was a tool somewhere that did what split did w/ the feature you mention, but had a different name. On fedora, my split does not accept regexs.
+
+
+
+[Vark assigned category: <b>regular expression</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

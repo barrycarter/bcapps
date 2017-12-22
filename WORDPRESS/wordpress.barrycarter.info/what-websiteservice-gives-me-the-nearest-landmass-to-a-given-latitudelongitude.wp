@@ -1,0 +1,36 @@
+
+ID: 27810
+post_name: what-websiteservice-gives-me-the-nearest-landmass-to-a-given-latitudelongitude
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 28 Apr 2010 22:17:59 +0000
+post_type: post 
+post_status: publish
+post_title: What website/service gives me the nearest landmass to a given latitude/longitude?
+
+======================================================
+
+(You): What website/service gives me the nearest landmass to a given latitude/longitude?
+
+(Jacob): Do you have a batch of coordinates you need to process? Otherwise, I'd just eyeball it. There are lots of places that will map out coordinates for you.
+
+(You): I've used google maps to eyeball it, but I'm not sure I always get the nearest landmass. I'm curious as to if there's actually a site that does it-- theoretically not difficult.
+
+(Jacob): I know there's one that gives the address closest to a point... http://stevemorse.org/jcal/latlon.php
+
+(You): Damn that's good. How does he do it?
+
+(Jacob): No idea, but it is nice. I haven't had great success with his batch mode, but it is a decent page.
+
+(You): Yes, it even found the uninhabited island closest to my antipode!
+
+----------------------
+
+(Syd): google maps?
+
+(You): Thanks, but it's not always easy that way (although that's what I've been using until now)
+
+
+
+[Vark assigned category: <b>geography</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

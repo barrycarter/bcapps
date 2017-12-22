@@ -1,0 +1,28 @@
+
+ID: 24836
+post_name: is-there-a-linux-command-line-toolemacs-mode-that-lets-me-access-a-pastebin-service-directly
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 22 Jul 2010 21:19:17 +0000
+post_type: post 
+post_status: publish
+post_title: Is there a Linux command-line tool/emacs mode that lets me access a pastebin service directly?
+
+======================================================
+
+(You): Is there a Linux command-line tool/emacs mode that lets me access a pastebin service directly?
+
+(Dinesh): http://ubuntuforums.org/showthread.php?t=1229847
+
+----------------------
+
+(Tommy): There is something called "pastebinit" but I haven't tried it out.
+
+----------------------
+
+(Sancho): You might check out pastebinit: http://www.stgraber.org/2008/06/10/pastebinit-now-debian
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

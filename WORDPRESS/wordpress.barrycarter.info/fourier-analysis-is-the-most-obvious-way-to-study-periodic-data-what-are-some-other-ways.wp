@@ -1,0 +1,30 @@
+
+ID: 26371
+post_name: fourier-analysis-is-the-most-obvious-way-to-study-periodic-data-what-are-some-other-ways
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 07 Jun 2010 22:29:54 +0000
+post_type: post 
+post_status: publish
+post_title: Fourier analysis is the most obvious way to study periodic data. What are some other ways?
+
+======================================================
+
+(You): Fourier analysis is the most obvious way to study periodic data. What are some other ways?
+
+(Nils): You can for example use wavelets and wavelet transformation to study periodic data. You always have a trade-off between frequency resolution and time resolution when you analyse frequency content of a signal, and wavelets will let you have different time/frequency tradeoff:s at in frequency bands
+
+(Nils): Depending on what you are after, Welch is generally a great algorithm using the descrete fourier transformation in order to find frequency content of a signal http://www.mathworks.nl/access/helpdesk/help/toolbox/signal/spectrum.welch.html
+
+(You): are wavelet transforms different from Fourier analysis?
+
+(Nils): They are different from the fourier transformation
+
+(You): wouldn't a tool like that just use Fourier analysis, though?
+
+(You): hmmm, OK, I'll read up on wavelet transforms.
+
+
+
+[Vark assigned category: <b>Fourier analysis</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,32 @@
+
+ID: 23654
+post_name: what-linux-programs-let-me-fill-out-pdf-forms-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 01 Nov 2010 05:35:59 +0000
+post_type: post 
+post_status: publish
+post_title: What Linux programs let me fill out PDF forms?
+
+======================================================
+
+(You): What Linux programs let me fill out PDF forms?
+
+(Andy): I believe there's a version of Adobe Reader for Linux, and I've successfully used Evince (Gnome's default PDF viewer) for filling out PDF forms, but I don't think Evince lets you save forms, just fill them in and print them out.
+
+(You): thanks, that was my question. I wanted to fill them out and them email them back to the sender (who expects people to do it that way). Right now I have to use imagemagick to edit the image, which is ugly.
+
+----------------------
+
+(Adan): I once filled one in a Linux Mint (Gnome edition).
+
+----------------------
+
+(Daniel): I've tried many and none is really good.  I recommend the online webapp
+
+http://www.pdfescape.com/
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

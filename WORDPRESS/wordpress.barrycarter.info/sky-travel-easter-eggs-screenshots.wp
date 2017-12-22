@@ -1,0 +1,40 @@
+
+ID: 11326
+post_name: sky-travel-easter-eggs-screenshots
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Tue, 02 Aug 2011 17:03:36 +0000
+post_type: post 
+post_status: publish
+post_title: Sky Travel Easter Eggs (screenshots)
+
+======================================================
+
+Commodore Sky Travel had several Easter eggs. <a href="http://members.shaw.ca/cue64/skytravel.html">Some sites</a> list these in text format. I've now used VICE (Commodore emulator) to take screenshots of many (all?) of these Easter eggs. Click on any egg to see the full VICE screenshot. 
+
+<img src="http://wordpress.barrycarter.org/wp-content/uploads/2011/08/skytravel-cropped.png" usemap="#skytravel" alt="" title="skytravel-cropped" width="512" height="378" class="alignnone size-full wp-image-11325" />
+
+<map id="skytravel" name="skytravel">
+  <area href="/wp-content/uploads/2011/08/bigben.png" shape="rect" coords="0,0,127,125" alt="" />
+  <area href="/wp-content/uploads/2011/08/cntower.png" shape="rect" coords="128,0,255,125" alt="" />
+  <area href="/wp-content/uploads/2011/08/eiffel.png" shape="rect" coords="256,0,383,125" alt="" />
+  <area href="/wp-content/uploads/2011/08/empirestate.png" shape="rect" coords="384,0,511,125" alt="" />
+  <area href="/wp-content/uploads/2011/08/goldengate.png" shape="rect" coords="0,126,127,251" alt="" />
+  <area href="/wp-content/uploads/2011/08/mtfuji.png" shape="rect" coords="128,126,255,251" alt="" />
+  <area href="/wp-content/uploads/2011/08/penguin.png" shape="rect" coords="256,126,383,251" alt="" />
+  <area href="/wp-content/uploads/2011/08/polarbear.png" shape="rect" coords="384,126,511,251" alt="" />
+  <area href="/wp-content/uploads/2011/08/pyramid.png" shape="rect" coords="0,252,127,377" alt="" />
+  <area href="/wp-content/uploads/2011/08/stbasil.png" shape="rect" coords="128,252,255,377" alt="" />
+  <area href="/wp-content/uploads/2011/08/stlouisarch.png" shape="rect" coords="256,252,383,377" alt="" />
+</map>
+
+Note: If you want to change field-of-view when using Sky Travel w/ VICE (it doesn't help w/ the Easter eggs, which remain the same size), edit these two lines in your .vkm file:
+
+<pre>
+# edited for Sky Travel, next 2 rows 
+1 5 3 1 
+2 5 0 1 
+</pre>
+
+The '1' and '2' key (which are otherwise unused by Sky Travel[?]) will now let you change the field of view.
+

@@ -1,0 +1,20 @@
+
+ID: 23535
+post_name: sendmail-is-queueing-my-mails-w-errors-like-host-map-lookup-vmobl-com-deferred-even-though-im-using-a-smart-relay-how-do-i-tell-sendmail-not-to-look-up-hostnames-and-just-blindly-send-ever
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 11 Nov 2010 01:34:08 +0000
+post_type: post 
+post_status: publish
+post_title: Sendmail is queueing my mails w/ errors like "(host map: lookup (vmobl.com): deferred)", even though I'm using a smart relay. How do I tell sendmail NOT to look up hostnames and just blindly send everything to the smart relay (I already have DS set). It was working fine until my last reboot, and "find /etc -mtime -10" shows nothing suspicious.
+
+======================================================
+
+(You): Sendmail is queueing my mails w/ errors like "(host map: lookup (vmobl.com): deferred)", even though I'm using a smart relay. How do I tell sendmail NOT to look up hostnames and just blindly send everything to the smart relay (I already have DS set). It was working fine until my last reboot, and "find /etc -mtime -10" shows nothing suspicious.
+
+(Paul): This may not be real helpful, but increasingly the standard advice for dealing with odd sendmail problems these days is: switch to Postfix.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

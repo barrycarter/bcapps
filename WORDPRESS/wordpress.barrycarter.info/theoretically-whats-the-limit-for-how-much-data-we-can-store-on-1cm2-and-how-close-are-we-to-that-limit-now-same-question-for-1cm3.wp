@@ -1,0 +1,24 @@
+
+ID: 27373
+post_name: theoretically-whats-the-limit-for-how-much-data-we-can-store-on-1cm2-and-how-close-are-we-to-that-limit-now-same-question-for-1cm3
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 06 May 2010 06:48:06 +0000
+post_type: post 
+post_status: publish
+post_title: Theoretically, what's the limit for how much data we can store on 1cm^2, and how close are we to that limit now? Same question for 1cm^3
+
+======================================================
+
+(You): Theoretically, what's the limit for how much data we can store on 1cm^2, and how close are we to that limit now? Same question for 1cm^3
+
+(Steve): I don't know exactly but I believe we are quite close to the cm^2  limit now. Fortunately a company just figured out how to stack up chips efficiently in 3-D I believe it was IBM but it may have been Intel. So the real answer is that we are still many years away from any real concern.
+
+----------------------
+
+(David): http://gizmodo.com/5454719/ibm-sets-magnetic-tape-data-density-record-35tb-of-storage implies the current limit is 0.5 gigabytes/cm^2 (4 gigabits/cm^2); giving a dimension of an individual bit of 160 nm^2, if I've done the maths right. Theoretically we might be able to store one piece of data per atom in the far future (atoms are of the order of 0.1 nm in size) which would mean areal storage could increase by up to 1600^2, or about a million before hitting this limit. As for volumetrically, assuming one bit per atom a factor of ten billion would be gained.
+
+
+
+[Vark assigned category: <b>science</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

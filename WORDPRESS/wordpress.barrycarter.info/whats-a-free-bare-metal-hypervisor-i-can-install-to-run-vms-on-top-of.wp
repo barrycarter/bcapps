@@ -1,0 +1,32 @@
+
+ID: 26954
+post_name: whats-a-free-bare-metal-hypervisor-i-can-install-to-run-vms-on-top-of
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 20 May 2010 09:46:39 +0000
+post_type: post 
+post_status: publish
+post_title: What's a free "bare metal" hypervisor I can install to run VMs on top of?
+
+======================================================
+
+(You): What's a free "bare metal" hypervisor I can install to run VMs on top of?
+
+(James): Citrix XenServer.
+
+(You): thanks! Is the Linux tools ISO a separate download or what?
+
+(James): Support for Linux guest hosts requires a separate download.  http://www.citrix.com/lang/English/lp/lp_1688615.asp?ntref=hp_promo_C2
+
+(You): OK, I saw that, but is that an ISO you burn and put into the machine after you've got XenServer running or what?
+
+(James): Yes.  You need XenServer and XenCenter installed first.  Then you add support for Linux guest hosts.
+
+(James): http://www.citrix.com/lang/English/lp/lp_1688622.asp
+
+(You): thanks. That was what I was unsure of.
+
+
+
+[Vark assigned category: <b>hypervisor</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

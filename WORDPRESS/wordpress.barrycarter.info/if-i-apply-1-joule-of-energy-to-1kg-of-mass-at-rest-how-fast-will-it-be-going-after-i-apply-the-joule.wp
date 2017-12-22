@@ -1,0 +1,76 @@
+
+ID: 27157
+post_name: if-i-apply-1-joule-of-energy-to-1kg-of-mass-at-rest-how-fast-will-it-be-going-after-i-apply-the-joule
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 15 May 2010 20:26:41 +0000
+post_type: post 
+post_status: publish
+post_title: If I apply 1 Joule of energy to 1kg of mass at rest, how fast will it be going after I apply the joule?
+
+======================================================
+
+(You): If I apply 1 Joule of energy to 1kg of mass at rest, how fast will it be going after I apply the joule?
+
+(Andreas): sqrt of 2 ~ 1.4 m/s
+
+Mv^2/2=1 joule
+
+(You): so every Joule I apply will increase the speed by 1.4 m/s ?
+
+(Andreas): No its not exponential 
+
+You'll have to use the formula to calculate how much velocity gets added to the amount of energy. From the formula you'll have to break free v ( thats what it's called in english right) so that it's alone on one side and then calculate
+
+(You): OK, let me ask it this way. If I apply a force of one Newton to one kilogram for one second, it will speed up by 1 m/s regardless of how fast it was already going. Is that right?
+
+----------------------
+
+(Hongwan): Assuming all the energy goes into kinetic energy of the mass, the energy supplied E = 1/2 mv^2, with v being the final velocity and m being the mass. So v = sqrt 2 metres per second.
+
+(You): OK. Now the confusing part: if I apply another Joule of energy, does it go 2*sqrt(2) m/s?
+
+(Hongwan): nope... the velocity will be 2 m/s. If you double the energy, you increase the velocity by a factor of sqrt 2.
+
+(You): that's what confuses me. Let's go back a step. If I apply 1 Newton of energy to 1 kg for 1 second, it speeds up by 1m/s regardless of how fast it was already going, yes?
+
+(Hongwan): Do you mean a force of 1 Newton? Yes.
+
+(You): OK. So if I apply a force of 1 Newton to 1kg continuously, how many Joules of energy am I expending per second?
+
+(Hongwan): Well, it depends on what distance the force is acting over. The energy expended will be the force times the distance travelled.
+
+(You): so it takes more Joules of energy to exert a Newton of force on something that's going fast?
+
+(Hongwan): In other words, it depends on the speed at which the mass is moving.
+
+(Hongwan): The power is greater when it's moving faster, yes. More energy is imparted to the mass per unit time.
+
+(You): that's the part that is non-intuitive and confuses me. If I push something for 1 second, why does it take more energy if the thing is moving fast?
+
+(Hongwan): If you use a lever that is long enough, you can raise an elephant off the ground without exerting much force. In fact, the force that you exert can be as small as you want. But what you need to do is exert that force over a longer distance.  
+
+
+
+
+
+So force isn't the right way to think of "effort", although intuitively it seems like it is. The correct quantity to describe "effort" is Force x Distance.
+
+(You): so you're saying that if I exert a 1 Newton force until an object moves 1 meter, then I'm applying a consistent amount of energy regardless of the object's speed. Is that correct? However, if I apply it for 1 *second*, I'm not.
+
+(Hongwan): Another way to think about it is this: you can support an object with a weight of 1 newton for as long as you want, and that intuitively seems like it takes a lot of "effort", but in reality, nothing actually happens: the box stays stationary.
+
+
+
+So this concept of work done and energy doesn't really have any relation to our usual experience of doing work and energy.
+
+(Hongwan): Exactly. 1 Newton of force, used to move an object by one metre gives it 1 Joule of energy.
+
+(You): ah that helps. You're saying 'work' and 'energy' in the realm of physics is different from how we normally think of it. OK, great. But, intuitively, why is it  different to apply 1 Newton for 1 second to something moving fast vs something stationary? Is it because you have to speed up to the object's speed to touch it and push it?
+
+(Hongwan): no... i can't think of any extremely "intuitive" way of looking at this off-hand, except to go back to the definitions and think about it. I'll think about it, but you might want to ask someone else. i can't give a reply anytime soon at any rate!
+
+
+
+[Vark assigned category: <b>Joule</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

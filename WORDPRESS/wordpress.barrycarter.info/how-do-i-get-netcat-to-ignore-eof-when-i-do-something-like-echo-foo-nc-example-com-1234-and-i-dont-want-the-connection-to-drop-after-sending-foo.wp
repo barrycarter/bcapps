@@ -1,0 +1,36 @@
+
+ID: 28090
+post_name: how-do-i-get-netcat-to-ignore-eof-when-i-do-something-like-echo-foo-nc-example-com-1234-and-i-dont-want-the-connection-to-drop-after-sending-foo
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 21 Apr 2010 05:34:50 +0000
+post_type: post 
+post_status: publish
+post_title: How do I get netcat to ignore EOF when I do something like 'echo "foo" | nc example.com 1234' and I don't want the connection to drop after sending 'foo'?
+
+======================================================
+
+(You): How do I get netcat to ignore EOF when I do something like 'echo "foo" | nc example.com 1234' and I don't want the connection to drop after sending 'foo'?
+
+(Dave): echo -n will send 'foo' without the newline
+
+(You): Thanks, but netcat still aborts after sending the foo -- how do I tell netcat to keep on going until I kill it?
+
+----------------------
+
+(Arisu): The connection only drops if other side drops it too, netcat just forwards EOF to the other end.
+
+
+
+You can easily make netcat never receive EOF by keeping its stdin alive, let's say by:
+
+
+
+perl -e 'print "foo"; sleep 1 while 1' | nc 'google.com' 80
+
+(You): Thanks! I'm guessing there's no option to nc that tells it "ignore EOF on input"?
+
+
+
+[Vark assigned category: <b>netcat</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

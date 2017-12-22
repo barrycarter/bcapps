@@ -1,0 +1,36 @@
+
+ID: 23773
+post_name: when-i-visit-httpwww-appliancerepairarenal-com-httpwww-appliancerepairarenal-com-i-see-the-phone-number-as-505-814-2873-is-this-what-everyone-sees-or-is-this-geocoded-to-me-somehow
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 27 Oct 2010 20:27:44 +0000
+post_type: post 
+post_status: publish
+post_title: When I visit http://www.appliancerepairarenal.com/ [http://www.appliancerepairarenal.com/] I see the phone number as (505)-814-2873. Is this what everyone sees or is this geocoded to me somehow?
+
+======================================================
+
+(You): When I visit http://www.appliancerepairarenal.com/ [http://www.appliancerepairarenal.com/] I see the phone number as (505)-814-2873. Is this what everyone sees or is this geocoded to me somehow?
+
+(Lawrence): If you view the source code for that page you will see that the phone number is hard coded and is the same for any viewer.
+
+(You): I was thinking server side geocoding, but thanks.
+
+(Lawrence): It's always possible, but I doubt that an appliance repair business has a lot of phone numbers and a geocoded application.
+
+(You): sort of true, but it looks like the same people have appliancerental&lt;x&gt; where x is many different cities. So maybe they all go to one site or something? When I contacted these guys, they said they don't service Albuquerque.
+
+(Lawrence): That's interesting because one would expect that they would need to pay a fee for each domain name. I didn't find any other cities.
+
+Isn't Arenal a suburb of Albuquerque?
+
+Their promotion is apparently done by http://panoramapress.net/. Perhaps they could give you more information.
+
+(You): no, Arenal isn't anything at all as nearly as I can tell. Go to maps.google.com and search for "oven repair near 87101" (no quotes) and see what you get! Someone went slap-happy w/ appliancerepair&lt;x&gt;.com names!
+
+(You): OK, there's a small road called Arenal in Albuquerque.
+
+
+
+[Vark assigned category: <b>consumer electronics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

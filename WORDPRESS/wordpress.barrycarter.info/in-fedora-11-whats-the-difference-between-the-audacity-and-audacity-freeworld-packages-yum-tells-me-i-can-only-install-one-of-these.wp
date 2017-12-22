@@ -1,0 +1,24 @@
+
+ID: 26610
+post_name: in-fedora-11-whats-the-difference-between-the-audacity-and-audacity-freeworld-packages-yum-tells-me-i-can-only-install-one-of-these
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 23:08:00 +0000
+post_type: post 
+post_status: publish
+post_title: In Fedora 11, what's the difference between the "audacity" and "audacity-freeworld" packages? Yum tells me I can only install one of these.
+
+======================================================
+
+(You): In Fedora 11, what's the difference between the "audacity" and "audacity-freeworld" packages? Yum tells me I can only install one of these.
+
+(David): If you do "yum info audacity-freeworld" you will see that that version includes support for mp3 files and ffmpeg import/export which the other does not.
+
+----------------------
+
+(Ramindu): No big difference. Take your pick. :)
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

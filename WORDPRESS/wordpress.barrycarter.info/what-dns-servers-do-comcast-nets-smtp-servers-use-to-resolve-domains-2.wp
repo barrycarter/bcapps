@@ -1,0 +1,34 @@
+
+ID: 26900
+post_name: what-dns-servers-do-comcast-nets-smtp-servers-use-to-resolve-domains-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 25 May 2010 21:48:18 +0000
+post_type: post 
+post_status: publish
+post_title: What DNS servers do comcast.net's SMTP servers use to resolve domains?
+
+======================================================
+
+(You): What DNS servers do comcast.net's SMTP servers use to resolve domains?
+
+(Llewellyn): dns105.comcast.net
+
+   dns102.comcast.net
+
+   dns103.comcast.net
+
+   dns101.comcast.net
+
+   dns104.comcast.net
+
+(You): thanks! I was hoping to check some DNS records their, but it looks like they refuse my queries.
+
+----------------------
+
+(Thierry): mx2a.comcast.net also mx2b, mx1, mx1a, mx1b, mx2, mx3, mx4. According to checkdns.net they send status 554 (Transaction failed) instead of 220 (Service ready).
+
+
+
+[Vark assigned category: <b>SMTP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 23002
+post_name: is-there-an-x11-program-that-helps-me-test-my-mouse-in-particular-which-button-it-thinks-im-clicking-i-think-theres-something-wrong-w-my-mouse-but-want-to-be-more-sure
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 Jan 2011 06:47:21 +0000
+post_type: post 
+post_status: publish
+post_title: Is there an X11 program that helps me test my mouse; in particular, which button it thinks I'm clicking? I think there's something wrong w/ my mouse, but want to be more sure.
+
+======================================================
+
+(You): Is there an X11 program that helps me test my mouse; in particular, which button it thinks I'm clicking? I think there's something wrong w/ my mouse, but want to be more sure.
+
+(Tommy): https://wiki.archlinux.org/index.php/Get_All_Mouse_Buttons_Working
+
+----------------------
+
+(Carol): what kind of mouse do you have?
+
+(You): it's actually a trackball with two buttons -- the middle button emulation (pushing both buttons at once) seems a little flaky as does the left mouse button by itself... I think it's not registering correctly.
+
+(Carol): Have you ever tried Steermouse?  Here is the link http://plentycom.jp/en/steermouse/
+
+(You): I don't think it's a driver issue.. I think the mouse itself is damaged... I just need a place to test it. I can't use a real application because it messes things up. It'd be ideal to have a "test app" that just tells me what my mouse is doing
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

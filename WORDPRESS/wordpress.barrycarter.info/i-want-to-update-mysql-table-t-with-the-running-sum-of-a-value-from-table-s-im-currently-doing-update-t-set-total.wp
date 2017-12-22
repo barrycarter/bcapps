@@ -1,0 +1,32 @@
+
+ID: 26101
+post_name: i-want-to-update-mysql-table-t-with-the-running-sum-of-a-value-from-table-s-im-currently-doing-update-t-set-total
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 12 Jun 2010 06:55:35 +0000
+post_type: post 
+post_status: publish
+post_title: I want to update MySQL table t with the running sum of a value from table s. I'm currently doing "UPDATE t SET total 
+
+======================================================
+
+(You): I want to update MySQL table t with the running sum of a value from table s. I'm currently doing "UPDATE t SET total = (SELECT SUM(foo) FROM s WHERE s.date<=t.date);". This works, but seems inefficient. What's a better way of doing this "running sum"?
+
+(Victor): You can use a View for results.
+
+CREATE VIEW `running_sum` AS
+
+SELECT `t`.`id` as `id`, SUM(foo) as `sum` FROM s WHERE s.date&lt;=t.date
+
+When you query for table t, join with the id column from the view, or use your own foreign identifier like t.date
+
+SELECT `t`.*, `running_sum`.`sum` FROM `t`, `running_sum` WHERE (`t`.`id` = `running_sum`.`id` AND #your conditions#)
+
+----------------------
+
+(Martin): You should make a compiled SQL query inside MySQL to automatically update table t when s is updated.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

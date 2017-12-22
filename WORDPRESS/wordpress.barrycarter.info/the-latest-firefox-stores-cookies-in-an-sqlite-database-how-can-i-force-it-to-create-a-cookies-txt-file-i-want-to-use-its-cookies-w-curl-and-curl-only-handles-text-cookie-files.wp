@@ -1,0 +1,54 @@
+
+ID: 26816
+post_name: the-latest-firefox-stores-cookies-in-an-sqlite-database-how-can-i-force-it-to-create-a-cookies-txt-file-i-want-to-use-its-cookies-w-curl-and-curl-only-handles-text-cookie-files
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 27 May 2010 22:13:41 +0000
+post_type: post 
+post_status: publish
+post_title: The latest Firefox stores cookies in an SQLite database. How can I force it to create a cookies.txt file? I want to use its cookies w/ curl, and curl only handles text cookie files.
+
+======================================================
+
+(You): The latest Firefox stores cookies in an SQLite database. How can I force it to create a cookies.txt file? I want to use its cookies w/ curl, and curl only handles text cookie files.
+
+(Andrea): sqlite is a flat text file, and could theoretically be parsed by curl.
+
+(You): umm, you might be thinking of another db. sqlite is not flat text-- it uses indexes and stuff. I could dump it of course and try to rearrange the fields to how I need them, but that would require actual work.
+
+(Andrea): according to wiki: "The entire database (definitions, tables, indices, and the data itself) is stored as a single cross-platform file [http://en.wikipedia.org/wiki/Computer_file] on a host machine."
+
+(You): yes, but it's not a flat text file.
+
+(Andrea): Okay, I mis-used the "flat" term. You might try the CDK. I think it includes SQLite data management
+
+(You): what's CDK?
+
+(Andrea): Curl Data Kit is a curl library.
+
+(Andrea): http://sourceforge.net/projects/curl-cdk/ "The CDK library facilitates datacentric application development in Curl. It includes support for client side SQLite databases"
+
+(You): but curl can't read cookies directly from SQLite like it does for cookies.txt files, right?
+
+(Andrea): Curl reads *data* using the CDK. I doubt it has any prejudices against cookies.
+
+(You): but, I'd have recompile Perl to get this working, no? There's no easy solution?
+
+(Andrea): There may be an easier solution. I'm sure you aren't the first person to encounter this. But your original question said that curl only handles cookies.txt files, which is not the case. SQLite is a lightweight powerful solution which likely provides you a lot MORE than the cookies.txt file. There are probably many other options, but you may have to search for them. Maybe something in the multitude of FF plugins would get you closer to where you want to be.
+
+(You): thanks! I thought about config options but not add-ons for Firefox. You're saying that curl handles cookie files other an cookies.txt though? If so, with what options?
+
+(Andrea): No, I'm saying as a developer I'd much prefer to manage any data with SQLite than with a text file like cookies.txt
+
+(You): agreedish, but it lowers cross-compatibility of your files, and cookie data is supposed to be fairly small
+
+----------------------
+
+(Ketil): perhaps you could just export all the cookies from the sqlite database instead of changing firefox? Then you can use the exported file with curl
+
+(You): yes, I'm coming to that conclusion as well. It was much easier when curl and Firefox used the same cookie format!
+
+
+
+[Vark assigned category: <b>SQLite</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

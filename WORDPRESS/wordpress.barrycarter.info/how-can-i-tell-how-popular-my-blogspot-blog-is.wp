@@ -1,0 +1,50 @@
+
+ID: 27998
+post_name: how-can-i-tell-how-popular-my-blogspot-blog-is
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 23 Apr 2010 21:52:26 +0000
+post_type: post 
+post_status: publish
+post_title: How can I tell how popular my blogspot blog is?
+
+======================================================
+
+(You): How can I tell how popular my blogspot blog is?
+
+(Francisco): You can use Technorati.com to measure the relevance of your blog.
+
+----------------------
+
+(Ben): You can either use Technorati to see your ranking or you can get a Google Analytics account and see what your traffic looks like. You can also put your blog into feedburner in order to track how many people subscribe to you.
+
+(You): I just visited technorati.com, how do I enter my blog to see its ranking? Does google/blogspot give me logs of access if I don't have a Google Analytics account?
+
+(Ben): You just type in the address. If you haven't registered your blog with technorati yet, you will need to do that. If you have a Google account you have an analytics account, you just have to go to http://analytics.google.com and set it up.
+
+(You): OK. So I'm guessing they don't let me see my raw traffic logs and stuff like that?
+
+(Ben): Analytics absolutely does. Check it out.
+
+(You): Reading the instructions, it says I need to tweak the website source code to add the JS to get Google Analytics working. But my blogspot blog is owned by blogspot.com, so I can't edit the source?
+
+(Ben): Barry. It is all owned by Google. You just need the Code. There is a spot in Blogspot to pop it into.
+
+(You): Thanks! I just googled it, and realized blogspot lets you tweak your "template" and you can conveniently stick the source tweak in there.
+
+(You): I finally installed Google Analytics, but can't see how to get raw log files out of it?
+
+(Ben): Every report that you look at has an Export button in the top right (just
+
+before the sidebar). You can use this in order to get raw data.
+
+(You): Can you give me more details? I want to get log files like you get in Apache.
+
+----------------------
+
+(Rick): I don't use blogspot but I my blog I use Google Analytics which is free. It tracks every visitor. Google Analytics can make it possible to collects these sort of stats ( http://www.rickety.us/2009/12/rickety-top-ten-blog-posts-of-2009/ ). I don't know if you can use Analytics on blogspot. I should think so, they are both Google. Yo can put a plugin in your browser and measure PageRank but sometimes the numbers are skewed by blogspot. Hope this helps.
+
+
+
+[Vark assigned category: <b>blogging</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

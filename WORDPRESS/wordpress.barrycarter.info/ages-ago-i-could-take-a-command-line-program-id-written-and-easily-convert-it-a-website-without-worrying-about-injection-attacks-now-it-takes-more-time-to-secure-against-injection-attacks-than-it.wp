@@ -1,0 +1,26 @@
+
+ID: 23471
+post_name: ages-ago-i-could-take-a-command-line-program-id-written-and-easily-convert-it-a-website-without-worrying-about-injection-attacks-now-it-takes-more-time-to-secure-against-injection-attacks-than-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 18 Nov 2010 06:40:23 +0000
+post_type: post 
+post_status: publish
+post_title: Ages ago, I could take a command-line program I'd written and easily convert it a website without worrying about injection attacks. Now, it takes more time to secure against injection attacks than it does to write the program! Are there any tools/methodologies/etc that quickly and automatically fix the injection issue, so I can focus on what's important? I know about things like taintperl and PHP turning off register_globals by default, but is there anything "new and cool" in this field?
+
+======================================================
+
+(You): Ages ago, I could take a command-line program I'd written and easily convert it a website without worrying about injection attacks. Now, it takes more time to secure against injection attacks than it does to write the program! Are there any tools/methodologies/etc that quickly and automatically fix the injection issue, so I can focus on what's important? I know about things like taintperl and PHP turning off register_globals by default, but is there anything "new and cool" in this field?
+
+(Michael): To tell you the truth, it is very unlikely that you need any special effort if you really focus on what's important. There are tons of better reasons to escape stuff, not rely on any particular data representation on input, etc. than securing against injections.
+
+(You): remember, these programs start life as things that run on my computer and I'm the only one who uses it. So, there's no point in worrying about malice. Once they're on the web, I have to worry about it.
+
+(Michael): properly handling unexpected data is not really about malice. But well, if you're talking about isolated script and you don't register globals (which hits you only if you use undefined variables, not really about malice) all you have to do is sanitize input before passing it to your script. Where else would evil come from?
+
+(You): this is a Perl script, and I guess you're right, but I'm always worried I'll overlook something. I'm wondering if there's a "harness" or something I can run CGI in as an additional layer of protection.
+
+
+
+[Vark assigned category: <b>PHP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

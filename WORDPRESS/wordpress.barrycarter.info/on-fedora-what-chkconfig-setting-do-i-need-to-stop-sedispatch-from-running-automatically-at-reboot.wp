@@ -1,0 +1,30 @@
+
+ID: 24826
+post_name: on-fedora-what-chkconfig-setting-do-i-need-to-stop-sedispatch-from-running-automatically-at-reboot
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Jul 2010 02:37:04 +0000
+post_type: post 
+post_status: publish
+post_title: On Fedora, what chkconfig setting do I need to stop sedispatch from running automatically at reboot?
+
+======================================================
+
+(You): On Fedora, what chkconfig setting do I need to stop sedispatch from running automatically at reboot?
+
+(David): As the root user: chkconfig sedispatch off
+
+(You): "error reading information on service sedispatch: No such file or directory". I know how to use chkconfig in general, but was wondering how to turn off a service that doesn't show up on the list. There's no /etc/init.d file for it that I can find either. I have to use "pkill sedispatch"
+
+----------------------
+
+(Tommy): Don't think there is one.  If you just don't like SeLINUX, turn it of by editing "/etc/sysconfig/selinux" and rebooting.
+
+(You): thanks! That's what I needed!
+
+(You): I already have "SELINUX=disabled" in there?
+
+
+
+[Vark assigned category: <b>reboot</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

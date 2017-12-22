@@ -1,0 +1,66 @@
+
+ID: 27528
+post_name: the-files-in-my-mac-os-x-usersuserlibraryspeechspeakable-itemsapplication-speakable-itemsfinder-folder-look-like-xml-documents-and-none-of-them-work-is-this-correct-or-should-they-look-mu
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 08:10:57 +0000
+post_type: post 
+post_status: publish
+post_title: The files in my Mac OS X "/Users/user/Library/Speech/Speakable Items/Application Speakable Items/Finder" folder look like XML documents (and none of them work). Is this correct, or should they look much simpler?
+
+======================================================
+
+(You): The files in my Mac OS X "/Users/user/Library/Speech/Speakable Items/Application Speakable Items/Finder" folder look like XML documents (and none of them work). Is this correct, or should they look much simpler?
+
+(John): They should be XML-like and I believe its called SSML (http://www.w3.org/TR/speech-synthesis/).  Programs like eSpeak (I think macs use this, but I know Linux does) use SSML, as well as direct TTS strings to vocalize.  SSML allows you to mess with voice settings, but isn't terribly easy to use.
+
+(You): OK, so if those files look ok, why doesn't voice recognition work? Is there any place I can see logs or something that explain how it's "thinking"?
+
+(John): Hard to say, I'd google keywords like, "Mac Voice recognition" or "voice recognition" and/or look for a Mac support community and check their forums.  I'm not big on voice recognition, more on the TTS side of the coin.  Most people I know end up using a 3rd party program, since you tend to get better quality from companies that specialize in it, instead of a generalized app from a company that "has more important things" on their agenda.
+
+(You): I'm not looking for anything fancy. I'm sure the built-in one is enough for me. I just want to know why that one's not working.
+
+(John): I'd check the mac communities then.  It might be a small problem that others have had, which could be an easy fix.  Here's an article I found on Lifehacker about Mac's Speech Recognition: http://lifehacker.com/215764/hack-attack-make-your-macs-speech-recognition-work-for-you
+
+----------------------
+
+(Andy): That sounds right. What do you mean by 'none of them work'?
+
+(Andy): Also, why are you poking around in there? Is the VoiceOver utility not working on your Mac?
+
+(You): I'm trying to use voice recognition via the command line or something similar, because I want to script it a bit. If all my files look right, why isn't voice recognition working? Is there a way to debut it? What is VoiceOver? Is it the thing that brings up the microphone?
+
+(Andy): Oh, I was confused. VoiceOver is the Universal Access screenreader utility.
+
+It tells you what you're currently interacting with and reads out text.
+
+
+
+You can turn on Voice Recognition by going to the Speech preference pane in
+
+System Preferences and setting Speakable Items to On. I don't know about
+
+playing with voice recognition from the command line, though.
+
+(You): Yes, I have it turned on. There's a little circle with a microphone icon on it and it shows how loud I'm speaking. So, yes, my Mac is listening to me. However, no matter what I say (even the standard "what time is it") it doesn't respond.
+
+(Andy): Do you have the Voice settings configured that you have to address it by
+
+name or push a button before it starts listening to you? The circle with the
+
+mic should show you the prompt; when it's listening, there's a  &gt;&gt; (.) &lt;&lt;
+
+arrows pointing at the mic
+
+(You): I tweaked the settings so that I don't have to hold down the ESC key. Yes, when I talk, I see the two arrows pointing. They go away after I finish my sentence.
+
+(Andy): Well, I'm sorry to say that I don't know much more about playing with speech
+
+recognition. Good luck!
+
+(You): Thanks for the help!
+
+
+
+[Vark assigned category: <b>Mac OS X</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

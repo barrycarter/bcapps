@@ -1,0 +1,32 @@
+
+ID: 26564
+post_name: i-want-to-see-how-cvs-would-merge-two-files-without-actually-creating-a-cvs-repository-how-can-i-do-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 31 May 2010 21:25:50 +0000
+post_type: post 
+post_status: publish
+post_title: I want to see how CVS would merge two files, without actually creating a CVS repository. How can I do this?
+
+======================================================
+
+(You): I want to see how CVS would merge two files, without actually creating a CVS repository. How can I do this?
+
+(Konstantin): you can use diff to see what are the changes to be made compared to the original file
+
+(You): true, but I want to see if CVS would consider it a merge conflict or merge it w/o complaining. I know CVS uses diff, but I don't know how it'd handle my specific case.
+
+(Konstantin): then you can try to apply the diff to the unmodified file with 'patch'
+
+(You): does CVS use patch as its merge utility, or does it have its own algorithm?
+
+(Konstantin): CVS uses the patch utility or very similar algorithm
+
+----------------------
+
+(Joseph): This is referred to as "diff" and "patch". You take a diff on the two files to make a patch and then use the patch on the older file. There are commands block or fail on patch if there are conflicts, but this should be a starting point.
+
+
+
+[Vark assigned category: <b>CVS</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

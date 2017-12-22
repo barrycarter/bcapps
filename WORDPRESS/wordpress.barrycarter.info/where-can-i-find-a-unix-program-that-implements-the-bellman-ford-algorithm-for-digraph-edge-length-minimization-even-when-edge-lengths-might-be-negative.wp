@@ -1,0 +1,170 @@
+
+ID: 24306
+post_name: where-can-i-find-a-unix-program-that-implements-the-bellman-ford-algorithm-for-digraph-edge-length-minimization-even-when-edge-lengths-might-be-negative
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 30 Aug 2010 12:06:34 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find a Unix program that implements the Bellman-Ford algorithm for digraph edge length minimization even when edge lengths might be negative?
+
+======================================================
+
+(You): Where can I find a Unix program that implements the Bellman-Ford algorithm for digraph edge length minimization even when edge lengths might be negative?
+
+(Ole): Hi, have a look at 
+
+http://online-judge.uva.es/board/viewtopic.php?f=22&t=1827 .
+
+You have it also explained, including "the algorithm in a condensed 
+
+form" and what seems to be a complete program, at 
+
+http://compprog.wordpress.com/2007/11/29/one-source-shortest-path-the-bellman-ford-algorithm/ 
+
+.
+
+
+
+Best luck...
+
+(You): thanks. I was hoping to find a "ready to run" Perl implementation. The program I'm writing is fairly complex already, so I'd prefer not to independently code Bellman-Ford.
+
+(Ole): I've been playing a bit and written this (the sample graph comes from the
+
+page at compprog; it contains just the edges):
+
+
+
+sub bellman_ford
+
+{
+
+  $start = shift;
+
+  $n = shift;
+
+  @edges = @_;
+
+
+
+  my @d;
+
+
+
+  $d[$_] = 0xffffffff foreach (0 .. $n-1);
+
+
+
+  $d[$start] = 0;
+
+
+
+  for (my $z = 0; $z &lt; $n - 1; $z++) {
+
+    foreach (@edges) {
+
+      if ($d[$_-&gt;[0]] + $_-&gt;[2] &lt; $d[$_-&gt;[1]]) {
+
+        $d[$_-&gt;[1]] = $d[$_-&gt;[0]] + $_-&gt;[2];
+
+      }
+
+    }
+
+  }
+
+
+
+  return @d;
+
+}
+
+
+
+sub printDist {
+
+  my $dist = shift;
+
+  my @dist = @{ $dist };
+
+
+
+  print "Distances:n";
+
+
+
+  foreach (@dist) {
+
+    printf("%3dt", $_);
+
+  }
+
+  print "n";
+
+}
+
+
+
+
+
+# Number of nodes
+
+my $n = 0;
+
+
+
+while (&lt;DATA&gt;) {
+
+  # from, to, weight
+
+  next unless /([-0-9.]+)(?:,| s*)([-0-9.]+)(?:,| s*)([-0-9.]+)/;
+
+  push @edges, [$1 - 1, $2 - 1, $3];
+
+
+
+  $n = $1 if $1 &gt; $n;
+
+  $n = $2 if $2 &gt; $n;
+
+}
+
+
+
+$result = bellman_ford(0, $n, @edges);
+
+
+
+printDist($result);
+
+
+
+__DATA__
+
+1 2 6
+
+1 4 7
+
+2 3 5
+
+2 4 8
+
+2 5 -4
+
+3 2 -2
+
+4 5 9
+
+4 3 -3
+
+5 3 7
+
+5 1 2
+
+(You): !!!! now that's service!!! Wow, thanks! You are my new best friend!
+
+
+
+[Vark assigned category: <b>Bellman-Ford algorithm</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

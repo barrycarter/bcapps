@@ -1,0 +1,28 @@
+
+ID: 27500
+post_name: alpine-tells-me-folder-xyz-is-locked-but-i-dont-see-an-xyz-lock-file-in-fedora-11-how-else-are-files-locked-and-how-can-i-see-whats-locked-and-by-whom-ie-by-which-process
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 20:05:46 +0000
+post_type: post 
+post_status: publish
+post_title: Alpine tells me folder xyz is locked, but I don't see an xyz.lock file. In Fedora 11, how else are files locked, and how can I see what's locked and by whom (ie, by which process)?
+
+======================================================
+
+(You): Alpine tells me folder xyz is locked, but I don't see an xyz.lock file. In Fedora 11, how else are files locked, and how can I see what's locked and by whom (ie, by which process)?
+
+(Ketil): Could be done with the "int flock(int fd, int operation);" system call. You could perhaps check if this is the case using strace, if you're willing to dive right into the juicy details.
+
+(You): I'm not quite THAT brave :) When flock() is called, what actually happens. In other words, where in the system does the lock get stored? I'd like to see all the locks flock() has created.
+
+----------------------
+
+(Jay): Check the directory permissions, see if they are set to read/write/execute for user/group/other (in a terminal window, type ls -l and look for at least drwxr-xr-x on a folder, the w's are write access)
+
+(You): I'm pretty good w/ Unix perms so I don't think that's it. I think it's using flock() but I'm not exactly sure how to check what files flock() has locked.
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,28 @@
+
+ID: 25394
+post_name: how-can-i-safely-look-at-the-core-image-of-a-running-program-my-firefox-is-eating-500m-and-i-want-to-see-what-all-its-storing
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 21 Jun 2010 03:45:47 +0000
+post_type: post 
+post_status: publish
+post_title: How can I "safely" look at the core image of a running program? My Firefox is eating 500M+ and I want to see what all it's storing.
+
+======================================================
+
+(You): How can I "safely" look at the core image of a running program? My Firefox is eating 500M+ and I want to see what all it's storing.
+
+(Yosef): Download Soluto.com
+
+(You): thanks, but I'm on Linux, not Windows.
+
+----------------------
+
+(Martin): The only safe way is to use a debugger that wraps around the program and breaks it apart. The kernel _should_ stop external programs from inspecting memory they down own, of course if your root you can dump any section of memory. Depends if your using Linux or one of the less flexible systems.
+
+(You): I'm using Linux. I was hoping ot look at /proc/pid/something
+
+
+
+[Vark assigned category: <b>Core Image</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

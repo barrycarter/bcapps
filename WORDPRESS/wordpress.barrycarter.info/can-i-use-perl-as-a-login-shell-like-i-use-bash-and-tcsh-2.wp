@@ -1,0 +1,78 @@
+
+ID: 24667
+post_name: can-i-use-perl-as-a-login-shell-like-i-use-bash-and-tcsh-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 31 Jul 2010 08:01:23 +0000
+post_type: post 
+post_status: publish
+post_title: Can I use Perl as a login shell (like I use bash and tcsh)?
+
+======================================================
+
+(You): Can I use Perl as a login shell (like I use bash and tcsh)?
+
+(Chas.): Sort of, but it doesn't work well.  But there is the zoidberg shell that is basically a Perl shell http://search.cpan.org/dist/Zoidberg/lib/Zoidberg.pm [http://search.cpan.org/dist/Zoidberg/lib/Zoidberg.pm]
+
+(You): thanks! checking it out now
+
+(Chas.): you may also be interested in Devel::REPL (http://search.cpan.org/dist/Devel-REPL/lib/Devel/REPL.pm [http://search.cpan.org/dist/Devel-REPL/lib/Devel/REPL.pm]) it is a Perl prompt you can type individual Perl statements into and see their return values, similar to perl -nle 'print eval' but a lot more powerful.
+
+(You): but can you use it as a day-to-day shell like tcsh? I want a shell that just happens to have the power of Perl
+
+(Chas.): That is what zoidberg is
+
+(You): maybe I'll dl it... thanks!
+
+(Chas.): Are you familiar with CPAN?
+
+(You): "cpan package" yes? I install some stuff that way, though I also do "yum install perl-thing"
+
+(Chas.): Yum is probably the better method unless you are using local::lib or cpanm to partition your CPAN installed modules vs the package system installed modules
+
+(You): yes, I've had trouble mixing yum and cpan since they don't know about each other. However, "yum search zoid" yields nothing
+
+(Chas.): try zoidberg
+
+(Chas.): http://packages.sw.be/perl-Zoidberg/ [http://packages.sw.be/perl-Zoidberg/]
+
+(You): tried that first and no results. "zoid" yields two unrelated results.
+
+(Chas.): Also, take a look at local::lib (http://search.cpan.org/dist/local-lib/lib/local/lib.pm [http://search.cpan.org/dist/local-lib/lib/local/lib.pm])
+
+(You): that's the magic thing that lets cpan and yum play together?
+
+(Chas.): It lets you install modules from CPAN into a directory other than the system ones
+
+(You): ah, so it doesn't conflict w/ yum stuff.
+
+(Chas.): Personally, I use perlbrew (http://search.cpan.org/dist/App-perlbrew/lib/App/perlbrew.pm [http://search.cpan.org/dist/App-perlbrew/lib/App/perlbrew.pm]) to install and manage custom versions of Perl and cpanm (http://search.cpan.org/dist/App-cpanminus/lib/App/cpanminus.pm [http://search.cpan.org/dist/App-cpanminus/lib/App/cpanminus.pm]) to install CPAN modules (rather than cpan or cpanp)
+
+(You): I had a really bad experience w/ rvm, so I'm staying away from things like that for now.
+
+(Chas.): This means I have a system perl that things the package manager know about get the environment they expect and I get a nice perl that I can play with.
+
+(You): yes, that's the theory. rvm messed me up all to hell :( [direct gchat: carter.barry@gmail.com]
+
+(Chas.): Never played with rvm (I am a Perl head not a Rubyist)
+
+(You): I like both - but rvm is basically the same thing - -multiple versions of ruby
+
+(Chas.): I am just trying to make you aware of the Modern Perl toolchain (which is still under heavy development)
+
+(You): I'm sticking with one machine, one version for now :)
+
+----------------------
+
+(Kumar Sambhav): Hey - I just found something that would be useful - http://en.wikipedia.org/wiki/Perl_Shell.
+
+(Kumar Sambhav): Its important to understand that perl all by itself is like a virtual machine for the context of login shell usage
+
+----------------------
+
+(Chris): yes, there is a perl shell.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

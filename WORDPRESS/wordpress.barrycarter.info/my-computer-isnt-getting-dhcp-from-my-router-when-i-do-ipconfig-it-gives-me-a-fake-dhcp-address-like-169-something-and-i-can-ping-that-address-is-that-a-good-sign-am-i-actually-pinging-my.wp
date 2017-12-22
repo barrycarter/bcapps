@@ -1,0 +1,44 @@
+
+ID: 23809
+post_name: my-computer-isnt-getting-dhcp-from-my-router-when-i-do-ipconfig-it-gives-me-a-fake-dhcp-address-like-169-something-and-i-can-ping-that-address-is-that-a-good-sign-am-i-actually-pinging-my
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 24 Oct 2010 23:52:43 +0000
+post_type: post 
+post_status: publish
+post_title: My computer isn't getting DHCP from my router. When I do "ipconfig", it gives me a fake DHCP address (like 169. something), and I can *ping* that address. Is that a good sign? Am I actually pinging my router when I do that? Or am I just pinging my own machine?
+
+======================================================
+
+(You): My computer isn't getting DHCP from my router. When I do "ipconfig", it gives me a fake DHCP address (like 169. something), and I can *ping* that address. Is that a good sign? Am I actually pinging my router when I do that? Or am I just pinging my own machine?
+
+(Girish): its not good
+
+(You): it doesn't mean anything?
+
+(Girish): you enable NAT in your router. usually your computer IP should start with 192....try restarting the router
+
+(You): no, I realize that.. my question is: even before I get DHCP, if I can ping the "autoconfigure IP", is that a good sign? Does it mean I'm actually talking to my router?
+
+(Girish): is that a Linux or windows box ?
+
+(You): it's a Windows box.
+
+(Girish): please ping 192.168.1.1
+
+(You): that doesn't work. I don't have a NAT address yet.
+
+(Girish): sorry please try googling
+
+----------------------
+
+(Beau): You're pinging the NIC in your PC.
+
+(You): thanks. So I'm not pinging the router at all. There's no guarentee that I have any sort of connection?
+
+(Beau): If you are getting an IP address that starts with 169, the router had nothing to do with it. And it means you won't have an Internet connection.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

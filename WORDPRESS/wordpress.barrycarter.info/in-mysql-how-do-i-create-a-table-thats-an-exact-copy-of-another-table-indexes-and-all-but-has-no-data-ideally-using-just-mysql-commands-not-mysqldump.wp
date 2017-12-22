@@ -1,0 +1,28 @@
+
+ID: 27492
+post_name: in-mysql-how-do-i-create-a-table-thats-an-exact-copy-of-another-table-indexes-and-all-but-has-no-data-ideally-using-just-mysql-commands-not-mysqldump
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 21:22:57 +0000
+post_type: post 
+post_status: publish
+post_title: In MySQL, how do I create a table that's an exact copy of another table (indexes and all), but has no data. Ideally using just MySQL commands, not mysqldump.
+
+======================================================
+
+(You): In MySQL, how do I create a table that's an exact copy of another table (indexes and all), but has no data. Ideally using just MySQL commands, not mysqldump.
+
+(Timothy): CREATE TABLE newtable LIKE oldtable
+
+----------------------
+
+(Erik): you can get the table structure by "show create table &lt;tablename&gt;"
+
+(You): cool! Now how do I get MySQL to execute that and just change the table name?
+
+(Erik): just copy, change the name, and paste back into mysql?
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

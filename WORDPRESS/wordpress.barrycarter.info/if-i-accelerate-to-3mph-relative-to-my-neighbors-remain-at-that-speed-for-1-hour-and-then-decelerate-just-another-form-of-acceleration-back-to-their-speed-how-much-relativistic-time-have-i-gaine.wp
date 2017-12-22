@@ -1,0 +1,74 @@
+
+ID: 27149
+post_name: if-i-accelerate-to-3mph-relative-to-my-neighbors-remain-at-that-speed-for-1-hour-and-then-decelerate-just-another-form-of-acceleration-back-to-their-speed-how-much-relativistic-time-have-i-gaine
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 15 May 2010 22:31:38 +0000
+post_type: post 
+post_status: publish
+post_title: If I accelerate to 3mph (relative to my neighbors), remain at that speed for 1 hour and then decelerate (just another form of acceleration) back to their speed, how much relativistic time have I gained on them. I realize it's a trivial amount, but how trivial?
+
+======================================================
+
+(You): If I accelerate to 3mph (relative to my neighbors), remain at that speed for 1 hour and then decelerate (just another form of acceleration) back to their speed, how much relativistic time have I gained on them. I realize it's a trivial amount, but how trivial?
+
+(Mitch): http://en.wikipedia.org/wiki/Time_dilation#Time_dilation_due_to_relative_velocity
+
+
+
+About 0.000018ths of a second.
+
+(You): are their clocks that can measure to that accuracy? That's like 18 microseconds!
+
+(Mitch): I think you would need a really powerful clock to measure to that accuracy. A normal pocketwatch, no, a clock used by, say, NASA, maybe.
+
+(You): I think you did the calculation for 3 miles per second.
+
+(You): for 3mph, it appears to be on the order of picoseconds
+
+(Mitch): Oh right, sorry about that. Should've been meters/second.
+
+----------------------
+
+(Michael): Do the math.  Use tau = 1/Sqrt(1-v^2) x t
+
+(Michael): Wolfram alpha might help ya, http://www.wolframalpha.com/
+
+(Michael): Only taking into account the 1 hour of time in which you are traveling 3 mph relative to your neighbor, you will gain about 3.5 x 10^(-14) seconds.
+
+----------------------
+
+(Peter): It is't possible to answer this. 
+
+If you drive that hour at 4mph and neighbours 1mph you gained 3 hours
+
+If you drive 103mph and they 100mph you gained a bit short of 2 minutes.
+
+----------------------
+
+(Yotam Yosef): I'm not sure, but I think that The difference is practically 0. (less than
+
+(Yotam Yosef): I'm not sure, but I think that the difference is practically 0. (Less than something that typical hand calculator can find).
+
+(You): yes, I ran it on Mathematica and its on the order of picoseconds.
+
+----------------------
+
+(Jim): The precise answer will depend on some details of the acceleration, but it
+
+should be around 36 femtoseconds (that is, 3.6 x 10^(-14) seconds).  Even if
+
+you held this relative speed for a whole year, the amount of time "gained"
+
+would be about a third of a nanosecond, which is the amount of time it takes
+
+light to travel about four inches.
+
+
+
+--Jim Harrington
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

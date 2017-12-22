@@ -1,0 +1,54 @@
+
+ID: 24513
+post_name: can-i-use-anycast-myself-or-do-i-have-to-arrange-it-with-an-isp
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 24 Aug 2010 00:48:18 +0000
+post_type: post 
+post_status: publish
+post_title: Can I use 'anycast' myself, or do I have to arrange it with an ISP?
+
+======================================================
+
+(You): Can I use 'anycast' myself, or do I have to arrange it with an ISP?
+
+(Mikel): generally you will need to discuss this with your ISP b/c they may have anycast blocked on their gateway routers.
+
+(You): thanks. I think 'multicast' is the thing they block, not anycast?
+
+(Mikel): At the ISP I used to work for we block all uncommon traffic. You could certainly give it a try and if it works then your ISP isn't blocking it. If it doesn't work then it is likely are blocking...
+
+(You): right, that's my question: how do I try it? What do I do on my end to give it a shot?
+
+(Mikel): he.com [http://he.com] offers IPv6 free net blocks and has a good tutorial for 6to4 routing. I would say that's the best entrance into anycast that I can think of off the top of my head right now...
+
+(You): thanks, but I meant ipv4 anycast like opendns.com uses
+
+(Mikel): ok that's a bit different
+
+(You): I'm pretty sure it requires router tweaking unless you can somehow bgp it
+
+(Mikel): I have this in my bookmarks perhaps it will help...http://netlinxinc.com/netlinx-blog/45-dns/118-introduction-to-anycast-dns.html [help...http://netlinxinc.com/netlinx-blog/45-dns/118-introduction-to-anycast-dns.html] Out of curiosity what Operating System are you planning on testing this on?
+
+(You): I'm on Debian 5.
+
+----------------------
+
+(Joshua): Anycast is really only useful for autonomous systems with multiple points-of-presence speaking BGP. If you are an AS and announce an ARIN assigned netblock over BGP, you don't need anybody's permission to use Anycast.
+
+(You): I've got two machines on the net and want to give them the same IP address. But since I don't own either one, I guess I can't?
+
+(Joshua): Correct. If you're trying to do load balancing, what you want to do is have a third machine that's a load balancer - it uses layer-4 routing to balance requests among your two workers. From the perspective of the client, your two machines would both answer to the same IP address.
+
+(You): but that only works if they're on the same LAN, yes? Unless I stunnel from the balancer to each, hmmm.
+
+(Joshua): Depends on the means of load balancing. On Linux, the IPVS load balancing system can use IP-IP encapsulation, NAT-style masquerading, or traditional gatewaying. There are options to support lots of different network topologies.
+
+(You): but that all only works on a single LAN right? The machines can't be on vastly different subnets?
+
+(Joshua): They can be whereever you want.
+
+
+
+[Vark assigned category: <b>ISP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,38 @@
+
+ID: 23461
+post_name: how-much-does-a-t1-cost-these-days-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 19 Nov 2010 00:48:51 +0000
+post_type: post 
+post_status: publish
+post_title: How much does a T1 cost these days?
+
+======================================================
+
+(You): How much does a T1 cost these days?
+
+(Steven): It depends on your distance from the CLEC, but you're looking at $600/mo or thereabouts.
+
+(You): thanks. That's still really high. I thought it came way down since SDSL does almost as well for a lot less!
+
+(Steven): Yeah, with MPLS leases and cable modems being what they are T1s aren't very useful anymore.
+
+(You): which is why you'd think prices would get lower to compete... but I guess the technology is just going obsolete.
+
+(Steven): Exactly - way too expensive to maintain copper that way.
+
+(You): one day it'll be all fiber!
+
+(Steven): Sayin'.
+
+----------------------
+
+(Philip): It depends, of course, on the vendor and their offerings. Many organizations are going partial T1, T1, T3, OC3 or other offerings at varying costs
+
+(You): thanks. I'm trying to get a ballpark w/ the thought that SDSL and cable modems should've brought the price of T1s way down.
+
+
+
+[Vark assigned category: <b>T1</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

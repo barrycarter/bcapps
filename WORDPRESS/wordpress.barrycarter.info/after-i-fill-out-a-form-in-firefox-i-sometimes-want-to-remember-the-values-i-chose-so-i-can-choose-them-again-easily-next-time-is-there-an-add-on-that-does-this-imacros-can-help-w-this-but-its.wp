@@ -1,0 +1,40 @@
+
+ID: 24049
+post_name: after-i-fill-out-a-form-in-firefox-i-sometimes-want-to-remember-the-values-i-chose-so-i-can-choose-them-again-easily-next-time-is-there-an-add-on-that-does-this-imacros-can-help-w-this-but-its
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 10 Oct 2010 01:57:41 +0000
+post_type: post 
+post_status: publish
+post_title: After I fill out a form in Firefox, I sometimes want to "remember" the values I chose so I can choose them again easily next time. Is there an add-on that does this? iMacros can help w/ this, but it's not quite the same thing.
+
+======================================================
+
+(You): After I fill out a form in Firefox, I sometimes want to "remember" the values I chose so I can choose them again easily next time. Is there an add-on that does this? iMacros can help w/ this, but it's not quite the same thing.
+
+(Cam): I have become fond this year, after installing LastPass, with it's form filling templates and it also manages all my passwords with encryption in my browser. I can access my 'vault' of bookmarks from any computer too.
+
+http://blog.lastpass.com/ :)
+
+(You): thanks!
+
+(Cam): p
+
+----------------------
+
+(Bj??rn): Doesnt it remember stuff by default? it does for me. Anyway if you want more advanced stuff you can look into Roboform ... i heard it works great.
+
+(You): that's actually a good point. Firefox does remember my settings for most forms, so now I'm wondering why it doesn't for this one?
+
+(Bj??rn): Well i think site owners can disable it somehow, for example in online banking sites its often disabled. 
+
+
+
+What website is it?
+
+(You): it's conquerclub.com game creation. Actually, banks just change the form field names to be "username_random_key", where random_key changes each time. What's weird is conquerclub does NOT do this, but Firefox still fails.. maybe I added it as an exception at somet point, hmmm
+
+
+
+[Vark assigned category: <b>iMacros</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

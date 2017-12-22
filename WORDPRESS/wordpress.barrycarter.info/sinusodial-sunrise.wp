@@ -1,0 +1,23 @@
+
+ID: 22294
+post_name: sinusodial-sunrise
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Mon, 13 Feb 2012 18:20:26 +0000
+post_type: post 
+post_status: publish
+post_title: Sinusodial sunset
+
+======================================================
+
+To within 2 minutes of accuracy, Albuquerque sunset for 2012 is given by:
+
+<a href="http://wordpress.barrycarter.org/wp-content/uploads/2012/02/math.jpg"><img src="http://wordpress.barrycarter.org/wp-content/uploads/2012/02/math.jpg" alt="" title="math" width="694" height="40" class="alignnone size-full wp-image-22295" /></a>
+
+where x is the day of the year (1 = January 1st, 366 = December 31st, since this is a leap year), and the result is the number of decimal hours from midnight (ie, 17 means 5pm)
+
+This isn't entirely surprising, since sunset just depends on the time of true noon, which is given by the equation of time, which is itself the sum of two sine waves, and by the length of day, which also appears to be sinusoidal.
+
+I'm guessing this works for any city, even those north of the Arctic circle, providing you allow values > 24 (meaning no sunset) and < 0 (meaning no sunrise), but do the Fourier analysis only for days where sunset actually occurs.
+
+

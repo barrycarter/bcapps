@@ -1,0 +1,20 @@
+
+ID: 25147
+post_name: when-i-do-absolutetime-absolutetime197011-mathematica-gives-me-1-277402233095595-109-actually-the-last-9-is-a-superscript-how-can-i-tell-mathematica-to-avoid-using-scientific-notat
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 05:59:09 +0000
+post_type: post 
+post_status: publish
+post_title: When I do "AbsoluteTime[] - AbsoluteTime[{1970,1,1}]", Mathematica gives me "1.277402233095595 10^9" (actually, the last 9 is a superscript). How can I tell Mathematica to avoid using scientific notation, at least not for such small powers?
+
+======================================================
+
+(You): When I do "AbsoluteTime[] - AbsoluteTime[{1970,1,1}]", Mathematica gives me "1.277402233095595 10^9" (actually, the last 9 is a superscript). How can I tell Mathematica to avoid using scientific notation, at least not for such small powers?
+
+(Marc): I cannot find a way to force decimal notation output of this calculation using Mathematica.  I found this: http://reference.wolfram.com/mathematica/tutorial/NumericalPrecision.html , but I cannot figure out a way to force decimal notation output.  *shrug*
+
+
+
+[Vark assigned category: <b>scientific notation</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

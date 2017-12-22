@@ -1,0 +1,42 @@
+
+ID: 25063
+post_name: on-linux-i-often-scan-in-forms-and-then-fill-them-in-by-bringing-up-an-image-editor-like-display-imagemagick-this-works-but-imagemagick-isnt-the-best-program-for-hand-editing-images-what-prog
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 01 Jul 2010 02:28:57 +0000
+post_type: post 
+post_status: publish
+post_title: On Linux, I often scan in forms and then fill them in by bringing up an image editor like 'display' (ImageMagick). This works, but ImageMagick isn't the best program for hand editing images. What programs are better?
+
+======================================================
+
+(You): On Linux, I often scan in forms and then fill them in by bringing up an image editor like 'display' (ImageMagick). This works, but ImageMagick isn't the best program for hand editing images. What programs are better?
+
+(Greg): Gimp is probably the best tool over all, but I've never tried to use it in this sort of application.  I would imagine that the text tool would do exactly what you want, though.  I would recommend adding text in a new layer and blending it into the form.  Making subsequent changes is much easier using layers.
+
+(You): thanks. I've tried using gimp before but it baffles me. Everytime I touch the mouse, it does something weird and unexpected. I'd like to learn it, but I agree that it's overkill for text overlays.
+
+(Greg): If you're interested in learning, have a look at meetthegimp.org. The author hosts a series of videos highlighting different editing techniques in gimp.  I think it's worth checking out a few episodes and see what you think.
+
+----------------------
+
+(Brian): GIMP is the best free image editing program for Linux.  Mods and enhancements to it make it nearly identical to Photoshop.
+
+(You): thanks. I've tried using gimp before but it baffles me. Everytime I touch the mouse, it does something weird and unexpected. I'd like to learn it, but think it's overkill for text overlays.
+
+----------------------
+
+(Thaddeus): Linux has hundreds of programs that might be better, some of the better known graphic image manipulation programs can be found on the SourceForge, a well known open-source repository (www.sourceforge.net).
+
+
+
+You can also check the following link at some well-known graphics programs in the graphic arts section of the Unbuntu Linux Help website:
+
+
+
+http://ubuntulinuxhelp.com/top-100-of-the-best-useful-opensource-applications/
+
+
+
+[Vark assigned category: <b>ImageMagick</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,44 @@
+
+ID: 23396
+post_name: the-author-of-xkcd-suggests-that-python-is-a-far-superior-language-to-perl-in-terms-of-writing-terse-working-code-is-this-a-feeling-many-people-share-or-just-the-xkcd-author
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 26 Nov 2010 11:04:41 +0000
+post_type: post 
+post_status: publish
+post_title: The author of xkcd suggests that Python is a far superior language to Perl in terms of writing terse, working code. Is this a feeling many people share, or just the xkcd author?
+
+======================================================
+
+(You): The author of xkcd suggests that Python is a far superior language to Perl in terms of writing terse, working code. Is this a feeling many people share, or just the xkcd author?
+
+(Eric): everyone who codes in python thinks that it is vastly superior to perl. I haven't seen it, but I'm also not an expert python programmer. I think most people just like to rag on perl because it allows you to write crappy code. You can write terse, working code in perl, and have it be difficult to read though. Perl also has a number of other modules that python is lacking. shrugs. Perl works for me.
+
+(You): thanks, I'm a fan of Perl too, and am wondering if it's time to switch. I've tried Ruby, and it's pretty cool, but I wouldn't say superior to Perl.
+
+(Eric): I've written an enterprise app in a mixture of C+perl. Perl is incredibly handy. But it is not super performant. I'm thinking about switching to C++ for that reason. But I dread the regexp libraries I will have to use.
+
+(You): is python a lot faster than Perl? Is that why people like it?
+
+(Eric): http://infohost.nmt.edu/tcc/help/lang/python/vsperl.html
+
+(Eric): I haven't seen significant speed differences.
+
+(Eric): but I haven't run true profiles.
+
+(Eric): seems like a better abstract data type + true classes would be good. Perl's handling of complicated data structures is not stellar. A true ptr / class /object model would be better than these blessed refs.
+
+----------------------
+
+(Raj): I certainly agree. Google agrees too, as Google only allows it's developers to ship code in 3 languages: C/C++, Java, and Python. Many universities are starting to teach intro to programming in Python.
+
+
+
+Python is an easy to use yet powerful multiple-paradigm language. You can write procedural, object oriented, or functional Python code. I use it for everything from server admin scripts to web frameworks.
+
+(You): where can I find a good comparison of Perl and Python explaining why Python is better at an experienced programmer level? How do you feel about Python vs Ruby?
+
+
+
+[Vark assigned category: <b>C programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

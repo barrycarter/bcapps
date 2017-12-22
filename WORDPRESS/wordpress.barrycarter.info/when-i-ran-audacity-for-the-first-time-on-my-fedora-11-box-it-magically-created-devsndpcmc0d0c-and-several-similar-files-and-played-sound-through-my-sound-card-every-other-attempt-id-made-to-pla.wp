@@ -1,0 +1,28 @@
+
+ID: 26512
+post_name: when-i-ran-audacity-for-the-first-time-on-my-fedora-11-box-it-magically-created-devsndpcmc0d0c-and-several-similar-files-and-played-sound-through-my-sound-card-every-other-attempt-id-made-to-pla
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 03 Jun 2010 06:12:11 +0000
+post_type: post 
+post_status: publish
+post_title: When I ran audacity for the first time on my Fedora 11 box, it magically created /dev/snd/pcmC0D0c and several similar files AND played sound through my sound card. Every other attempt I'd made to play sound (incl mplayer, vlc, alsa-sound-drivers, etc) had failed. What magic does audacity too that suddenly made my sound card work?
+
+======================================================
+
+(You): When I ran audacity for the first time on my Fedora 11 box, it magically created /dev/snd/pcmC0D0c and several similar files AND played sound through my sound card. Every other attempt I'd made to play sound (incl mplayer, vlc, alsa-sound-drivers, etc) had failed. What magic does audacity too that suddenly made my sound card work?
+
+(Llewellyn): In my best exp. Linux is pretty "odd" about this stuff. Check your sound card settings and just make sure your stuff is not muted. It happens on some installs. Also alternatively you can use a Ubuntu LiveCD to verify and see if sound is truely not working or not supported.
+
+----------------------
+
+(Timm): http://forum.audacityteam.org/viewtopic.php?f=18&t=128 
+
+
+
+Might help....
+
+
+
+[Vark assigned category: <b>MPlayer</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

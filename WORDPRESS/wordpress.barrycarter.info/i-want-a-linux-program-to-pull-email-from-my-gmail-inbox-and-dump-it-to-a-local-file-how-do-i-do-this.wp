@@ -1,0 +1,48 @@
+
+ID: 27964
+post_name: i-want-a-linux-program-to-pull-email-from-my-gmail-inbox-and-dump-it-to-a-local-file-how-do-i-do-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 24 Apr 2010 23:03:31 +0000
+post_type: post 
+post_status: publish
+post_title: I want a Linux program to pull email from my Gmail INBOX and dump it to a local file. How do I do this?
+
+======================================================
+
+(You): I want a Linux program to pull email from my Gmail INBOX and dump it to a local file. How do I do this?
+
+(Francois): I would use fetchmail
+
+(Francois): http://www.axllent.org/docs/networking/gmail_pop3_with_fetchmail Check this out: http://www.axllent.org/docs/networking/gmail_pop3_with_fetchmail
+
+(You): Can fetchmail actually deliver to a file instead of to port 25?
+
+(Francois): I think so. The option --bsmtp &lt;filename&gt; dumps the message into a file.
+
+(You): According to "man fetchmail", --bsmtp "This simply contains the SMTP commands that would  normally  be  generated", implying a BSMTP file contains SMTP command, not the email itself?
+
+(Francois): it should be easy enough to setup you local mail delivery system. Then you can use fetchmail as described here: http://hasseg.org/blog/post/161/gmail-backups-with-fetchmail-on-os-x/
+
+----------------------
+
+(Sam): Thunderbird or even evolution should be able to do it. Choose to download all emails and when you have all you want locally export them to a file of your choice.
+
+(You): Oh, I was looking for an automated process that would run every minute via cron.
+
+(Sam): Yeah, you can use getmail. You should be able to using this guide, http://www.mattcutts.com/blog/backup-gmail-in-linux-with-getmail/
+
+(You): How do I tell getmail to only download IMAP messages after a given time? Right now, it's trying to download all my gmail!
+
+(Sam): I don't know to be honest, had a look through the FAQ at
+
+http://pyropus.ca/software/getmail/faq.html#faq-how but can't find anything
+
+on how to do this. If you are looking for offline access your best bet might
+
+be just to use Google gears in chrome.
+
+
+
+[Vark assigned category: <b>Gmail</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

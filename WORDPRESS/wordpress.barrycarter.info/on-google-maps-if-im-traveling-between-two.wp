@@ -1,0 +1,32 @@
+
+ID: 23493
+post_name: on-google-maps-if-im-traveling-between-two
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 13 Nov 2010 05:13:13 +0000
+post_type: post 
+post_status: publish
+post_title: On google maps, if I'm traveling between two 
+
+======================================================
+
+(You): On google maps, if I'm traveling between two 
+
+locations, can google show me restaurants (for example) that would be 
+
+on my way if I use their suggested route?
+
+----------------------
+
+(Stephen): no. But try aaa. it shows what you want :http://www.aaa.com/AAA_Travel/AAAMaps/travel_directions.htm [http://www.aaa.com/AAA_Travel/AAAMaps/travel_directions.htm]
+
+(You): not bad, thanks!
+
+----------------------
+
+(Marc): There may be an easier way to do this, but use local.google.com (rather than maps.google.com) and find their suggested route as you would on maps.google.com.  Once you have that, replace the address in the google address field with "restaurants" or whatever and hit "enter".  The suggested route should remain and you'll now see the restaurant results super-imposed along your route.
+
+
+
+[Vark assigned category: <b>Google Maps</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

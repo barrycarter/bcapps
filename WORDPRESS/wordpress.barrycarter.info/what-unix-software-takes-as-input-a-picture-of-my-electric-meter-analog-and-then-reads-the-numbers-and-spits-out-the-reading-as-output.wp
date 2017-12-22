@@ -1,0 +1,30 @@
+
+ID: 26618
+post_name: what-unix-software-takes-as-input-a-picture-of-my-electric-meter-analog-and-then-reads-the-numbers-and-spits-out-the-reading-as-output
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 22:40:26 +0000
+post_type: post 
+post_status: publish
+post_title: What Unix software takes as input a picture of my electric meter (analog) and then reads the numbers and spits out the reading as output?
+
+======================================================
+
+(You): What Unix software takes as input a picture of my electric meter (analog) and then reads the numbers and spits out the reading as output?
+
+(Thong): Try this? http://labs.moto.com/android-meets-energy/
+
+----------------------
+
+(Dominique): Unless I'm misunderstanding your situation, that sounds like an OCR problem. Google for "Linux OCR".
+
+(You): sort of, but electric meters have analog dials (like a clock), not numerical print out. So I need a program that figures out what analog reading a given snapshot has.
+
+(Dominique): Hmm, then you need some more intricate image processing to detect the orientation of the dial, and the orientation of the needle, and subtract. I'm not sure if there's any off-the-shelf software to do that.
+
+(You): unfortunately, that's my thought as well. Someone sent me a link re google doing something like this, but the "read the meter" stage is still manual.
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

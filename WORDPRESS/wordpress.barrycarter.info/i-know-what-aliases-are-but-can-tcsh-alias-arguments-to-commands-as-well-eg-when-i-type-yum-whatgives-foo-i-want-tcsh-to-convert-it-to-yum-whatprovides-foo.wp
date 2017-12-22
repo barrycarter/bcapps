@@ -1,0 +1,42 @@
+
+ID: 24768
+post_name: i-know-what-aliases-are-but-can-tcsh-alias-arguments-to-commands-as-well-eg-when-i-type-yum-whatgives-foo-i-want-tcsh-to-convert-it-to-yum-whatprovides-foo
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 31 Jul 2010 05:20:04 +0000
+post_type: post 
+post_status: publish
+post_title: I know what aliases are, but can tcsh "alias" arguments to commands as well? EG, when I type "yum whatgives foo", I want tcsh to convert it to "yum whatprovides foo".
+
+======================================================
+
+(You): I know what aliases are, but can tcsh "alias" arguments to commands as well? EG, when I type "yum whatgives foo", I want tcsh to convert it to "yum whatprovides foo".
+
+(Guy): http://forums.macosxhints.com/archive/index.php/t-2269.html
+
+(You): I might be missing it, but I see nothing about multi-word aliases there?
+
+(Guy): i misread your question. thought you were wanted to pass arguments to your alias. for what you want you need to create a script called yum, put it on your path and have some conditional logic inside the script that calls the real yum command with the args you want
+
+(You): thanks. Yes, that's what I end up doing sometimes, but it seems too complicated for this simple case. I was hoping there was a way to do this w/ aliases.
+
+(Guy): FWIW in bash, you'd use a function instead of a script which is a little tidier
+
+(You): yeah, someone else mentioned that too. But I prefer tcsh for other reasons.
+
+----------------------
+
+(Benny): In the C shell (and most of its derivatives) you cannot use functions, which is what you need. This is one of many reasons not to use the C shell. Do yourself a big favour and switch to a shell based on the Bourne shell (like Korn shell, ksh or bash (Born Again SHell)). Then you can easily do this, for example: fooyum() { foo `echo $1 | sed 's/whatgives/whatprovides/'` $2 } .
+
+(Benny): http://www.grymoire.com/Unix/CshTop10.txt
+
+(You): I've been using tcsh for over 20 years! I started using it because sh sucked + tcsh had more features. Just because sh rose out of the ground after sleeping 3 days doesn't mean I'm going to use it :)
+
+(Benny): Well, as you obviously have discovered, (t)csh does have its shortcomings. :-)  I've used, administered and developed under unix in a myriad flavours since the early 1980:s, and my advice is now and have always been, steer clear of csh. It is counterproductive if you need portability, it lacks important features in a scripting language and it just isn't any fun to work with. :-) You mileage varies, obviously, but I can't think of any simple solution to your question short of converting your aliases to small scripts and doing any argument translation there.
+
+(You): well, I don't use tcsh for much except the simple stuff. Anything that really gets complex, I go w/ Perl. And, IMO, Perl beats both bash and tcsh. Hmmm, can I set Perl as my login shell, I wonder... :)
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

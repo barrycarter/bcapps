@@ -1,0 +1,32 @@
+
+ID: 22820
+post_name: there-was-once-a-unix-program-that-spat-out-dates-in-a-zillion-different-calendars-some-obsolete-and-ancient-where-can-i-find-that-program
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 02 Jun 2011 04:42:22 +0000
+post_type: post 
+post_status: publish
+post_title: There was once a Unix program that spat out dates in a zillion different calendars, some obsolete and ancient. Where can I find that program?
+
+======================================================
+
+(You): There was once a Unix program that spat out dates in a zillion different calendars, some obsolete and ancient. Where can I find that program?
+
+(Daniel): Hi, Barry. I assume you're not talking about /usr/bin/date. Maybe it's in the list on Wikipedia: http://en.wikipedia.org/wiki/List_of_Unix_programs [http://en.wikipedia.org/wiki/List_of_Unix_programs]. Perhaps cal
+
+(You): Black, thanks. I'm familiar with both 'cal' and 'date', but neither do what I want. I'm talking about stuff like the Hebrew, Persian, Muslim, Japanese Imperial, etc, type of calendars. 'cal' and 'date' just print our existing Gregorian calendar in different ways.
+
+(Daniel): A little digging suggests it may be remind, available @ http://www.roaringpenguin.com/products/remind  Or, if not, perhaps it may work for you
+
+(You): thanks. That program says "Facilities for both the Gregorian and Hebrew calendars", but the one I'm thinking of had dozens of calendars: Mayan, Discordian, etc. 'ddate' appears to do the Discordian calendar, but I know there's more. Maybe 'yum whatprovides "*/ddate"' will hlep
+
+(You): OK, I think it might've been gcal
+
+(Daniel): That's a nice-looking utility.
+
+(You): yup, and I think it has more calendars than it advertises... will find out shortly!
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

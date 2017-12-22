@@ -1,0 +1,20 @@
+
+ID: 23821
+post_name: if-i-use-egrep-f-regexps-txt-file-txt-can-i-tell-which-expression-in-regexps-txt-resulted-in-the-match
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 24 Oct 2010 02:41:16 +0000
+post_type: post 
+post_status: publish
+post_title: If I use "egrep -f regexps.txt file.txt", can I tell *which* expression in regexps.txt resulted in the match?
+
+======================================================
+
+(You): If I use "egrep -f regexps.txt file.txt", can I tell *which* expression in regexps.txt resulted in the match?
+
+(Joel): I don't think so.  If possible you could break out each expression (by line) into separate files, though this might be more work.
+
+
+
+[Vark assigned category: <b>expression</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

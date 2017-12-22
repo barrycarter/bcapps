@@ -1,0 +1,34 @@
+
+ID: 25253
+post_name: when-i-do-an-update-in-mysql-it-returns-with-x-rows-updated-is-there-anyway-i-can-see-those-rows
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 22 Jun 2010 21:56:42 +0000
+post_type: post 
+post_status: publish
+post_title: When I do an UPDATE in MySQL, it returns with "x rows updated". Is there anyway I can see those rows?
+
+======================================================
+
+(You): When I do an UPDATE in MySQL, it returns with "x rows updated". Is there anyway I can see those rows?
+
+(David): It can't be done in a single query, unfortunately. You could do 2 queries, first a select to get the list of rows that will be updated, and then the update query.  There could be a slight chance that the select results are inaccurate, if something else updated the database between your select and update, but that would depend on the nature of the application.
+
+----------------------
+
+(Tom): I don't think you can do that.  You'd need to do two statements: one SELECT with the opposite criteria before you update, then an UPDATE statement, e.g.: "SELECT * FROM `table` WHERE `field` != 10", followed up "UPDATE `table` SET `field`=10"
+
+(You): and keep track of the first resultset?
+
+(Tom): Within MySQL?  It's much easier to keep track of result sets in whatever programming language you're using to interface with MySQL (e.g. python, perl, php, etc.)  If you have to keep track of the result set within MySQL, you can try user variables, e.g. "SET @foo = '1,2,3'", where 1,2,3 are the ids of the rows updated
+
+(You): I didn't realize a MySQL variable could hold a list? I'm using MySQL straight from the command-line client, not inside a programming language.
+
+(Tom): I think MySQL would treat "1,2,3" as a string.  You'd have to use a string function to manipulate the data.  Have you ever used views in MySQL?  I'm not sure what you're trying to do, but a table view might be the solution here.
+
+(You): thanks. It's more of a curiousity now -- I found a way to do it using a JOIN statement.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

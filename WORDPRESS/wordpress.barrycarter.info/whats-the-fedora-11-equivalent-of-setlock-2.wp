@@ -1,0 +1,44 @@
+
+ID: 27942
+post_name: whats-the-fedora-11-equivalent-of-setlock-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 03:17:11 +0000
+post_type: post 
+post_status: publish
+post_title: What's the Fedora 11 equivalent of setlock?
+
+======================================================
+
+(You): What's the Fedora 11 equivalent of setlock?
+
+(Tommy): setlock / daemontools is not included in the Fedora distribution.  You've probably already found that out.  But you should be able to achieve much the same behavior using a shell script:
+
+
+
+#!/bin/sh
+
+lockfile=`mktemp --tmpdir`
+
+trap "rm -f ${lockfile}" 0
+
+"$@"
+
+retval=$?
+
+rm -f ${lockfile}
+
+trap "" 0
+
+exit ${retval}
+
+
+
+I haven't test this so use caution.
+
+(You): Yes, I knew that. I meant I'm looking for an open-source alternative to the open-source nagios.
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

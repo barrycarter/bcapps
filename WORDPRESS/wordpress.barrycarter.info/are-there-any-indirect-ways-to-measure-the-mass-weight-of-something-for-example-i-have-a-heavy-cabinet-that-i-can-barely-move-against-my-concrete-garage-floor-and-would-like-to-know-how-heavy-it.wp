@@ -1,0 +1,28 @@
+
+ID: 26667
+post_name: are-there-any-indirect-ways-to-measure-the-mass-weight-of-something-for-example-i-have-a-heavy-cabinet-that-i-can-barely-move-against-my-concrete-garage-floor-and-would-like-to-know-how-heavy-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 05:33:54 +0000
+post_type: post 
+post_status: publish
+post_title: Are there any indirect ways to measure the mass (weight) of something? For example, I have a heavy cabinet that I can BARELY move against my concrete garage floor, and would like to know how heavy it is. As a parallel, I know you can measure the temperature of something by measuring the radio waves coming off it.
+
+======================================================
+
+(You): Are there any indirect ways to measure the mass (weight) of something? For example, I have a heavy cabinet that I can BARELY move against my concrete garage floor, and would like to know how heavy it is. As a parallel, I know you can measure the temperature of something by measuring the radio waves coming off it.
+
+(Pete): Break off a chunk, find the mass and size of it, then multiply it by however many times you think the cabinet   is bigger than the piece.
+
+(You): OK, I was hoping to do this non-destructively.
+
+----------------------
+
+(S??bastien): You could try to estimate its mass by calculating its volume and (roughly) multiply it by the density of the material it's made of. If there are different kinds of things, do that for each kind and sum the results.
+
+(You): that's a good idea, but the cabinet is made of one material and the stuff inside it varies considerably. It's not a solid block of something.
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

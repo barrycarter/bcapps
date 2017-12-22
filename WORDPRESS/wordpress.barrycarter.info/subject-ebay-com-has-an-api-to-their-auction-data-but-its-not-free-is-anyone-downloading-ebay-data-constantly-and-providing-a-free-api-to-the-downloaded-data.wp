@@ -1,0 +1,28 @@
+
+ID: 28412
+post_name: subject-ebay-com-has-an-api-to-their-auction-data-but-its-not-free-is-anyone-downloading-ebay-data-constantly-and-providing-a-free-api-to-the-downloaded-data
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 06:31:02 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: ebay.com has an API to their auction data, but its not free. Is anyone downloading ebay data constantly and providing a free API to the downloaded data?
+
+======================================================
+
+(You): Subject: ebay.com has an API to their auction data, but its not free. Is anyone downloading ebay data constantly and providing a free API to the downloaded data?
+
+(Nicholas): the API is free for 5000 calls per day, and if they evaluate your "app" they will allow 1.5 million per day.
+
+
+
+I believe if you require more then that you should pay for its use because you have to be making money from it.
+
+----------------------
+
+(David): Not sure what kind of data your looking for. The eBay listings API is free; just requires certification if you go above a certain level of calls. Very straightforward process - I went through it.
+
+
+
+[Vark assigned category: <b>eBay</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

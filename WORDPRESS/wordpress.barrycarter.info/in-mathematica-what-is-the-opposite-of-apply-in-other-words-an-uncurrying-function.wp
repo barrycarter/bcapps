@@ -1,0 +1,46 @@
+
+ID: 23171
+post_name: in-mathematica-what-is-the-opposite-of-apply-in-other-words-an-uncurrying-function
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 18 Dec 2010 11:23:02 +0000
+post_type: post 
+post_status: publish
+post_title: In Mathematica, what is the opposite of Apply[]? In other words, an uncurrying function.
+
+======================================================
+
+(You): In Mathematica, what is the opposite of Apply[]? In other words, an uncurrying function.
+
+(Daniel): What would the input and output be?
+
+(You): I have a function f[x,y] and want a function g[x] such that Apply[g[x],y] == f[x,y]. In other words, I want f as a pure function. [direct gchat: carter.barry@gmail.com]
+
+(Daniel): I think g[x] = f[#,y]& does what you want.
+
+(You): and someone pointed out g[x][y] = f[x,y] works too
+
+(You): no, wait, it doesn't.
+
+(You): your trick didn't quite work. I tried several variations. [direct gchat: carter.barry@gmail.com]
+
+(Daniel): i meant g = (f[#,y]&).  this would be a good question for stackoverflow
+
+(You): it's sort of already there: http://stackoverflow.com/questions/4476219/mathematica-interpolation-that-remains-constant-when-outside-range/4476513#4476513 [http://stackoverflow.com/questions/4476219/mathematica-interpolation-that-remains-constant-when-outside-range/4476513#4476513]
+
+(You): nope, your latest doesn't work either because g[5][6] becomes f[5, y][6]
+
+(You): you'd think "g = Function[x, Function[y, f[x,y]]]" would work, but it doesn't.
+
+(Daniel): g[x_] := (f[x,#]&)
+
+(You): I think that's what I just did, but I have "f[x,y] := x+y" and Mathematica just returns f[5,6] without doing the evaluation. OK, I'll post it directly to stackoverflow.
+
+(Daniel): did you accidentally say "f[x,y]:=x+y" instead of "f[x_,y_]:=x+y"?
+
+(You): damn you :) Yes, I think that was it.
+
+
+
+[Vark assigned category: <b>Mathematica</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

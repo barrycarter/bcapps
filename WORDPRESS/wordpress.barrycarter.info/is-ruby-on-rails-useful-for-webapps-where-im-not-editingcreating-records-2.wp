@@ -1,0 +1,28 @@
+
+ID: 25412
+post_name: is-ruby-on-rails-useful-for-webapps-where-im-not-editingcreating-records-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 20 Jun 2010 19:19:01 +0000
+post_type: post 
+post_status: publish
+post_title: Is Ruby On Rails useful for webapps where I'm not editing/creating records?
+
+======================================================
+
+(You): Is Ruby On Rails useful for webapps where I'm not editing/creating records?
+
+(Dimitri): Depends on what it does, really
+
+(You): it lets people choose something from a pulldown list and then performs an action based on what they chose.
+
+(Dimitri): sounds like that can be done in JavaScript =)
+
+----------------------
+
+(Tal): Sure, database access is just one feature of Rails. For example, ajax is very easy to use with a Rails backend.
+
+
+
+[Vark assigned category: <b>Ruby On Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

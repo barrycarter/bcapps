@@ -1,0 +1,38 @@
+
+ID: 26941
+post_name: when-i-installed-xen-hypervisor-it-appears-to-install-a-simple-linux-system-is-it-better-to-install-xen-from-cd-or-just-install-centos-or-something-and-then-install-xen-on-top-of-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 22 May 2010 00:10:54 +0000
+post_type: post 
+post_status: publish
+post_title: When I installed Xen hypervisor, it appears to install a simple Linux system. Is it better to install Xen from CD or just install CentOS or something and then install Xen on top of it?
+
+======================================================
+
+(You): When I installed Xen hypervisor, it appears to install a simple Linux system. Is it better to install Xen from CD or just install CentOS or something and then install Xen on top of it?
+
+(Michel): Do you need Xen in particular? The latest RHEL (and therefore CentOS) is migrating to KVM, which let you virtualize any unmodified OS (as opposed to Xen, which requires modified guest kernels). In any case, I think RHEL/Centos' Virtual Machine Manager let you set up both Xen and KVM virtual machines
+
+(You): can I install Windows on KVM? Is KVM a hypervisor in and of itself, or does it install on top of  a host OS? Is it free? Where's the ISO?
+
+(Michel): yes, you can. your hardware has to support hardware virtualization (Intel-VT or AMD-V). It comes bundled with RHEL, and therefore CentOS too. just "yum groupinstall Virtualization" . It's available on top of Linux, and is open source -- Red Hat owns it after acquiring Qumranet
+
+(You): so my "Dual AMD Opteron 2.2Ghz" won't support it?
+
+(Michel): it might. AMD-V is not a processor name, it's a technology enabled in new-ish AMD processors. I believe even Athlon 64s support it so you should be fine, but you should look up the exact processor number
+
+(Michel): your BIOS needs to support it too -- I've had systems where the CPU supports virtualization but the BIOS does not, most annoying, but server motherboards normally do support it
+
+(You): unfortunately, I bought this server online and had it shipped directly to a colo factory, so it's not easy to twiddle with the machine.
+
+(Michel): cat /proc/cpuinfo and see if 'svm' is listed
+
+(You): thanks! No, it's not. Just: "fpu de tsc msr pae cx8 apic mtrr cmov pat clflush mmx fxsr sse sse2 syscall nx mmxext 3dnowext 3dnow up nonstop_tsc ts fid vid ttp" on the flags line.
+
+(You): however, I'm pretty sure I'm running in Xen mode -- it's not seeing all the memory or HD either.
+
+
+
+[Vark assigned category: <b>CentOS</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

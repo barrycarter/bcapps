@@ -1,0 +1,32 @@
+
+ID: 25181
+post_name: how-can-i-get-audacity-to-just-play-an-mp3-file-ideally-without-even-opening-a-window-i-realize-audacity-isnt-meant-for-this-but-its-the-only-program-that-recognizes-my-sound-card
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 24 Jun 2010 19:59:14 +0000
+post_type: post 
+post_status: publish
+post_title: How can I get audacity to just play an MP3 file, ideally without even opening a window? I realize audacity isn't meant for this, but it's the only program that recognizes my sound card!
+
+======================================================
+
+(You): How can I get audacity to just play an MP3 file, ideally without even opening a window? I realize audacity isn't meant for this, but it's the only program that recognizes my sound card!
+
+(Rob): Audacity doesn't seem to have that capability, I would suggest trying to fix the problem with your sound card instead.
+
+(You): well, I agree with you, but how?
+
+(Rob): What distribution of linux are you running, and what sound card?
+
+(You): Fedora 11 and it's an Intel HDA.
+
+----------------------
+
+(Adam): Audacity doesn't support writing MP3 files right out of the box (due to licensing issues). I thought it supported reading them, but I could be wrong. If so, you'll need to download the LAME plugin. Go to Audacity's webpage and look for it. They link to the LAME website where you can download the right plugin
+
+(You): oh, Audacity reads and plays them just fine. I just want to get them to loop. Or are you answering a different question?
+
+
+
+[Vark assigned category: <b>MP3</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

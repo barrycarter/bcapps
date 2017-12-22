@@ -1,0 +1,30 @@
+
+ID: 27980
+post_name: how-do-i-get-raw-log-files-from-google-analytics
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 24 Apr 2010 20:42:27 +0000
+post_type: post 
+post_status: publish
+post_title: How do I get raw log files from Google Analytics?
+
+======================================================
+
+(You): How do I get raw log files from Google Analytics?
+
+(Kristoffer): ther is a exportbutton right at the top http://www.dailyblogtips.com/top-5-google-analytics-reports-for-bloggers/
+
+(You): Export does give me a LOT of information, but not raw log files?
+
+----------------------
+
+(Shank): ter s a google analytics API, search in code.google.com
+
+(You): any sample code to do what I want?
+
+(Shank): no idea dude...sry
+
+
+
+[Vark assigned category: <b>Google Analytics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,72 @@
+
+ID: 23231
+post_name: im-on-a-linux-machine-whats-the-easiest-way-i-can-connect-to-a-friends-windows-machine-the-friend-is-non-technical-so-i-ideally-need-something-with-as-little-work-on-their-part-as-possible
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 13 Dec 2010 01:53:12 +0000
+post_type: post 
+post_status: publish
+post_title: I'm on a Linux machine. What's the easiest way I can connect to a friend's Windows machine? The friend is non-technical, so I ideally need something with as little work on their part as possible.
+
+======================================================
+
+(You): I'm on a Linux machine. What's the easiest way I can connect to a friend's Windows machine? The friend is non-technical, so I ideally need something with as little work on their part as possible.
+
+(Alex): google for "vnc". have your friend download a vnc server, install a client and make sure his router will pass you thru to his box
+
+(You): that's what I did. It's not that easy, plus he's using Vista, and vnc server is problematic there.
+
+(Alex): for a one-time deal, try some browser-based meeting service like gotomeetings or smth - they usually have a free trial.
+
+(You): yes, that's what I meant. Which of those are compatible w/ Linux?
+
+(Alex): i don't know many names, but most likely anything that works within a browser on a win box will work on a reasonable browser within linux (i'd recommend getting firefox for that - and make sure java is installed)
+
+(You): no, many of them (like Webex) are proprietary and use ActiveX and other weird stuff. Many don't work w/ Linux :(
+
+(Alex): try looking at gotomeeting(s) then. iirc, it worked on non-windows a few years ago when i last used it.
+
+(You): thanks. teamviewer.com might be the answer here
+
+----------------------
+
+(Raj): Remote Desktop. On Ubuntu, the command is rdesktop. If you don't already have it, you should be able to apt-get install it.
+
+
+
+Your Windows friend will still have to enable remote connections, open the port, etc.
+
+
+
+Good luck!
+
+(You): yup, I absolutely love rdesktop. The remote system is Vista though. Does it support that? I tried connecting on port 3389 (after opening a whole in my friend's firewall), but nada.
+
+(Raj): Vista supports Remote Desktop, yes. But IIRC, you have to enable it somewhere in system preferences (it's disabled by default).
+
+(You): yes, I read the google page re how to enable it (stupid session 0 isolation!), and it's not easy. The Windows user is not that tech savvy.
+
+(Raj): I don't know of any easier way for you to connect. :-( Good luck.
+
+(You): yeah, I'm looking at teamviewer now. Vista is so bogus.
+
+----------------------
+
+(ted): vnc
+
+(You): not on Vista sadly :( The "session 0 desolation" breaks it.
+
+(ted): there's a hack that you can do to get RDP to work on vista. it's illegal of course. but if you google enough you can find it. then there's rdp clients for linux you can use
+
+(You): yes, I actually found it already... it just requires turning off session 0 isolation. But the user I'm helping won't be able to do that.. I need something simple on their side.
+
+(ted): gotomypc?
+
+(You): sadly, many of those services gotomypc, rassonline, pcanywhere, etc, don't work w/ Linux.
+
+(ted): tell them you won't be their friend anymore unless they upgrade to windows7 or linux
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

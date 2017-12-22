@@ -1,0 +1,30 @@
+
+ID: 27739
+post_name: are-there-prebuilt-vms-i-can-download-for-virtualbox-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 10:53:57 +0000
+post_type: post 
+post_status: publish
+post_title: Are there prebuilt VMs I can download for VirtualBox?
+
+======================================================
+
+(You): Are there prebuilt VMs I can download for VirtualBox?
+
+(Brett): I'm not sure if it's a good idea to run a virtual env under virtualization already. That's probably why you haven't found a VM for it yet.
+
+(You): No, I meant VMs I could run on top of VirtualBox. I have VirtualBox installed on a dedicated (non-VM) server.
+
+(Brett): Ah  ha! Try this.. http://virtualboximages.com/
+
+(You): Brilliant!!! That's exactly what I needed!
+
+----------------------
+
+(Tanner): http://virtualboxes.org/images/
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

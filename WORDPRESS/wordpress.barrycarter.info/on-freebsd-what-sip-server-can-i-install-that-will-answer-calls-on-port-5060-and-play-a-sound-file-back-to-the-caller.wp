@@ -1,0 +1,52 @@
+
+ID: 27544
+post_name: on-freebsd-what-sip-server-can-i-install-that-will-answer-calls-on-port-5060-and-play-a-sound-file-back-to-the-caller
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 05:14:46 +0000
+post_type: post 
+post_status: publish
+post_title: On FreeBSD, what SIP server can I install that will answer calls on port 5060 and play a sound file back to the caller?
+
+======================================================
+
+(You): On FreeBSD, what SIP server can I install that will answer calls on port 5060 and play a sound file back to the caller?
+
+(Andy): Asterisk is right in the ports collection.
+
+(You): OK, but once I install it, how do I do what I want with it?
+
+(Andy): The documentation for Asterisk is very thorough.
+
+----------------------
+
+(Fridolin): Have you looked into asterisk? There are a couple of all in one distros (e.g. Trixbox) and several great tutorials and at least trixbox and co are fairly simple to handle. The tutorials also include a ton of information on SIP in general...
+
+(You): Thanks! Actually, asterisk has so much documentation, I don't know where to start. Is there a tutorial that builds a simple, working SIP application? I don't even know how to set my config files.
+
+(Fridolin): Sure ... 
+
+Try http://www.nerdvittels.com
+
+
+
+And
+
+
+
+Http://www.sureteq.com/asterisk/trixbox2.0.htm
+
+
+
+Also: check the forum on trixbox.org
+
+
+
+Helped me a lot to get over the first hurdles..
+
+(You): Thanks!
+
+
+
+[Vark assigned category: <b>FreeBSD</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

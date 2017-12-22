@@ -1,0 +1,34 @@
+
+ID: 26045
+post_name: if-a-mass-m-is-moving-at-a-velocity-v-its-kinetic-energy-is-12mv2-as-v-c-the-kinetic-energy-approaches-12mc2-einstein-tells-us-that-if-an-object-is-completely-obliterated-to-provide-energ
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 15 Jun 2010 00:25:00 +0000
+post_type: post 
+post_status: publish
+post_title: If a mass m is moving at a velocity v, its kinetic energy is 1/2*mv^2. As v -> c, the kinetic energy approaches 1/2*mc^2. Einstein tells us that if an object is completely obliterated to provide energy, we mc^2 energy. Is the factor of 2 there significant? Does it have a deep meaning, or is it just a coincidence?
+
+======================================================
+
+(You): If a mass m is moving at a velocity v, its kinetic energy is 1/2*mv^2. As v -> c, the kinetic energy approaches 1/2*mc^2. Einstein tells us that if an object is completely obliterated to provide energy, we mc^2 energy. Is the factor of 2 there significant? Does it have a deep meaning, or is it just a coincidence?
+
+(Michael): the kinetic energy of an object is only 1/2*m*v^2 when v &lt;&lt; c.  The fomula for kinetic energy that is accurate for all speeds is:
+
+(Michael): KE = (relativistic mass - rest mass)*c^2.  See, for example: http://hyperphysics.phy-astr.gsu.edu/hbase/relativ/releng.html
+
+(You): I lost whatever you sent after the colon in the first message -- did you send the same link in the second message?
+
+(Michael): KE = (relativistic mass - rest mass)*c^2.  See, for example: http://hyperphysics.phy-astr.gsu.edu/hbase/relativ/releng.html
+
+----------------------
+
+(Michael): well, it's not really a factor of 2. I mean it seems like it, but it;s really squared, which I am sure you know. I think the real magic here is the way the inverse square that we observe in so many places actually works.
+
+----------------------
+
+(Conrad): the simple 1/2*mv^2 formula for KE doesn't apply at reletavistic speeds.  details here: http://en.wikipedia.org/wiki/Kinetic_energy#Relativistic_kinetic_energy_of_rigid_bodies
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

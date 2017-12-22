@@ -1,0 +1,34 @@
+
+ID: 24053
+post_name: can-i-create-a-tcsh-environment-variable-that-updates-itself-daily-example-setenv-date-date-d-but-automatically-updated-every-day-i-dont-think-cron-can-do-this-to-an-existing-shell
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 10 Oct 2010 01:12:28 +0000
+post_type: post 
+post_status: publish
+post_title: Can I create a tcsh environment variable that updates itself daily? Example: "setenv DATE `date +%D`", but automatically updated every day? I don't think cron can do this to an existing shell.
+
+======================================================
+
+(You): Can I create a tcsh environment variable that updates itself daily? Example: "setenv DATE `date +%D`", but automatically updated every day? I don't think cron can do this to an existing shell.
+
+(Ryan): I don't know about tcsh, but I could help you in zsh if you'd like. I would recommend looking at your shell's documentation.
+
+(You): thanks. So zsh has the concept of self-updating environment variables?
+
+(Ryan): Well, not exactly. I don't know if it has a default way, but here's how I'd do it. I make a function which sets DATE=`date +%D`, and then in my prompt variable I call that function, which updates the date every time the prompt variable is re-evaluated. I don't use it for the date, but in my prompt I have the time and my laptop's battery charge.
+
+(You): interesting. Now that I think about it, tcsh has a built-in way to do it for time variables... and maybe the function thing too. Thanks!
+
+(Ryan): No problem!
+
+----------------------
+
+(Johan): if it is a shell that is used interactively you could add it to the .bashrc file with some logic, if it non-interactive you could cron a job to update the variable in the /etc/profile
+
+(You): it's interactive thanks. I forgot that environment variables could be set to functions, and am looking into that now, thanks!
+
+
+
+[Vark assigned category: <b>environment variable</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,34 @@
+
+ID: 27678
+post_name: virtualbox-is-a-memory-hog-are-there-any-other-free-virtualization-platforms-that-use-less-memory-and-run-on-unix
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 22:21:10 +0000
+post_type: post 
+post_status: publish
+post_title: VirtualBox is a memory hog! Are there any other free virtualization platforms that use less memory and run on Unix?
+
+======================================================
+
+(You): VirtualBox is a memory hog! Are there any other free virtualization platforms that use less memory and run on Unix?
+
+(Vinay): try Sun xVM (Virtual machine) , i use it and I love it
+
+(You): Thanks re Sun xVM, I'll take a look at it (does that mean Sun has two separate VM servers: VirtualBox AND xVM?). Re saving state, how would that help me?
+
+(You): Is Sun xVM really much better re memory usage?
+
+----------------------
+
+(Deniz): virtual pc and vmware
+
+(You): Is vmware and virtualpc really low memory usage?
+
+(Deniz): maybe vmware but i'm not sure about virtual pc.
+
+(You): Thanks... I think I may just need to get a more powerful server, sigh.
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,64 @@
+
+ID: 23390
+post_name: i-want-to-let-people-call-specific-perl-functions-on-my-server-functions-ive-written-including-nested-calls-like-fghfoo-assuming-ive-defined-f-g-and-h-however-i-dont-want-people-call
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 28 Nov 2010 23:12:28 +0000
+post_type: post 
+post_status: publish
+post_title: I want to let people call specific Perl functions on my server (functions I've written), including nested calls like f(g(h("foo"))) assuming I've defined f, g, and h. However, I don't want people calling *arbitrary* functions like system() or even time(). How can I safely do this?
+
+======================================================
+
+(You): I want to let people call specific Perl functions on my server (functions I've written), including nested calls like f(g(h("foo"))) assuming I've defined f, g, and h. However, I don't want people calling *arbitrary* functions like system() or even time(). How can I safely do this?
+
+(Steven): You can do something like this in PHP - limiting to very specific functions and conversely eliminating specific functions. If you're doing perl CGI maybe there's an equivalent option in FastCGI's handler (or whatever the kids are using these days).
+
+(You): LOL! Thanks! I'm using lighttpd, which I think does use FastCGI. Is there an easier way to do this? Basically, I want to do "eval($input)" but without the hideous dangers that entails.
+
+(Steven): That smacks of "bad idea," but sometimes that's the only way to get the job done. The next best thing would be a jailed environment for the CGI. That way you could let them run rampant in their little sandbox. Scrubbing the input sounds like a nightmare.
+
+(You): yeah, I agree. My first thought is to just give them SOAP access to my individual functions, and then let them nest them or whatever on their end. Of course, my CGI (that runs THEIR CGI) has to have access to everything.
+
+(Steven): Definitely. At this point any abstraction would be better.
+
+(You): the one function thing might work. My goal is to provide an "API" for programmers, not something for end users.
+
+(Steven): In that case, SOAP definitely. That's what all the good ones seem to be using.
+
+(You): how do you easily convert a Perl library to SOAP?
+
+(Steven): I don't know about easy, and I've only been on the client side of SOAP, but this tutorial on creating a SOAP server looks tasty.
+
+
+
+http://www.perl.com/pub/2001/01/soap.html
+
+(You): NICE!!!! I've been looking for something like that and no one could point me to anything that simple. Hopefully, it still works (~10 years old, but who knows :) )
+
+----------------------
+
+(Kevin): Use private vars.
+
+(You): explain?
+
+(Kevin): Oops my bad perl doesn't allow true protected vars. the best way to do it is to set up the application to proxy user's calls. 
+
+
+
+are the users working with a web interface or a direct tcp/udp connection?
+
+(You): I'd planed on using SOAP, but maybe just a webform where they can type in their function call.
+
+(Kevin): That will work as long as you escape the input in the form fields.
+
+However doing it with perl
+
+(You): I'm still not sure I follow. What's to prevent someone from doing system("ls") or something in the form field I provide?
+
+(You): Mitnick, that's not really your name, is it?
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,54 @@
+
+ID: 25434
+post_name: in-virtualbox-how-do-i-move-a-file-from-the-host-to-a-windows-guest-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 19 Jun 2010 02:53:46 +0000
+post_type: post 
+post_status: publish
+post_title: In VirtualBox, how do I move a file from the host to a Windows guest?
+
+======================================================
+
+(You): In VirtualBox, how do I move a file from the host to a Windows guest?
+
+(Lionel): just drag and drop from virtual box to desktop
+
+(You): thanks. Is there any way the host can access the guest's disk directly?
+
+(Lionel): Check in the settings. there should be a sharing settings.
+
+(You): I'm sure there is, but I guess my question is: can VirtualBox "mount" a guest's disk?
+
+(Lionel): Yes I believe you can. I don't have it in front of me but im pretty sure you can.
+
+(You): that's what I'm trying to figure out how to do-- seems like the easiest way.
+
+----------------------
+
+(Oscar): Configure the shared folders and you'll be able to drop a file into the folder that is being shared between the two systems.
+
+http://forums.virtualbox.org/viewtopic.php?f=3&t=15868
+
+more information and steps on that link.
+
+(You): thanks. Is there any way the host can access the guest's disk directly?
+
+(Oscar): Not really without some sort of share mechanism. What are you looking to do? I might have another suggestion for you. 
+
+
+
+The only way to access the disk directly is to use a physical disk as the virtual machine's disk, but then it isn't available to the host machine either; I think that's different than what you want to do.
+
+(You): I have a 7z file that I can't get my Linux guest to uncompress, even with p7zip. So, I want to move it to my Windows guest, uncompress it, and move it back. This seems like a trivial thing to want to do, and the host obviously knows what the guest's drive looks like, so I thought there'd be a "one liner" that does this?
+
+(Oscar): One easy way to do it would be if you install Dropbox in both systems. then you can share files across them almost instantaneously (dependin gon the size) and this is the easiest way to share files across multiple computers.  Here's a link.
+
+
+
+http://bit.ly/bg9UzS
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

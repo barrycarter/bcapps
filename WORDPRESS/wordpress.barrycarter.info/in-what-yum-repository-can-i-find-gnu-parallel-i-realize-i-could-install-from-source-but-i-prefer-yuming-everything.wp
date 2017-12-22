@@ -1,0 +1,48 @@
+
+ID: 26341
+post_name: in-what-yum-repository-can-i-find-gnu-parallel-i-realize-i-could-install-from-source-but-i-prefer-yuming-everything
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 20:59:33 +0000
+post_type: post 
+post_status: publish
+post_title: In what yum repository can I find GNU parallel? I realize I could install from source, but I prefer yum'ing everything.
+
+======================================================
+
+(You): In what yum repository can I find GNU parallel? I realize I could install from source, but I prefer yum'ing everything.
+
+(Paul): I find that finding a relevant yum repo for a particular package is often difficult, and quite frustrating.  Also, there are yum repos for several different variants of Linux (e.g., CentOS/RHEL on the one hand, vs. Fedora, vs. ...)
+
+First place to check (which you probably already have) is the same place from which you would get the source.  If they don't offer a repo. and their FAQs don't identify some 3rd-party repo, about all you can do is start Googling around - maybe a query like this:
+
+  GNU parallel RPM CentOS
+
+Keep in mind that you want to make sure any repo you find & decide to try is one you really are willing to trust, since you're exposing your system to whatever they decide to send you.  Good luck!
+
+(You): thanks. I've added several repos already, and keep running into the frustration that there's no repo with "everything good" (even a GNU complete repo would be nice!). I'll install from source -- probably the best option anyway.
+
+(Paul): yeah, the fragmentation & incomplete coverage of repos is something of a nightmare, I think - and keeps reinforcing my preference for the Mac & OS X :-)
+
+(You): isn't fink even worse than yum? The main thing I dislike about source installs is that source installs sometimes install libraries and stuff that confuse yum. In other words, if you use something other than yum once, you might break yum in the future.
+
+(Paul): I've not used fink - the one or two times I've tried to do a source install, there were endless dependencies that I didn't want to make a career of tracking down.  Furthest I'll go is to manually download an RPM file and do a local yum install (like with the current MySQL - can't find it in a repo, but the RPM is available directly from the MySQL folks).  And yes, I can well believe the "contamination" effect you describe.
+
+Oh, and the other thiing that can help with all this, which I'm doing at this very moment in trying to install a new version of MySQL alongside an old one (and have both operable), is to do all of this work inside a VM (in my case, under Parallels on my Mac), where you can make a "before" snapshot of the system before trying something, and then roll back if you either hit a  dead end or your testing shows problems, like such contamination.  And once I have it worked out, then I'll do it "for real" on my Linux server.
+
+(You): wow we think alike! I'm installing Xen on my colo box as we speak. However, my home Mac is too wimpy to run Parallels efficiently.
+
+(Paul): One of my colleagues here has tried Xen, and has it somewhat working, but has also had various problems (e.g., no sound - this from hosting WinXP).  If your home Mac has an Intel processor (i.e., ???2006), you should be able to run Linux under Parallels enough to be useful - as long as you have enough RAM (take it to 4GB, if possible)
+
+----------------------
+
+(Nigel): I need a hit counter that I can run on an internal intranet (no connection to internet). Anyone have any that can run in c# asp.net
+
+(Nigel): sorry that was meant to be a question
+
+(You): you should ask again -- that came only to me.
+
+
+
+[Vark assigned category: <b>Yum</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

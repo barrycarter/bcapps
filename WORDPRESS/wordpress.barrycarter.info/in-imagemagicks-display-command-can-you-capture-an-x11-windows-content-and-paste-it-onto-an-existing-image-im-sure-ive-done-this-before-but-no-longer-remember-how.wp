@@ -1,0 +1,44 @@
+
+ID: 24188
+post_name: in-imagemagicks-display-command-can-you-capture-an-x11-windows-content-and-paste-it-onto-an-existing-image-im-sure-ive-done-this-before-but-no-longer-remember-how
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 02 Oct 2010 04:39:57 +0000
+post_type: post 
+post_status: publish
+post_title: In ImageMagick's display command, can you capture an X11 window's content and paste it onto an existing image? I'm sure I've done this before, but no longer remember how.
+
+======================================================
+
+(You): In ImageMagick's display command, can you capture an X11 window's content and paste it onto an existing image? I'm sure I've done this before, but no longer remember how.
+
+(Chengdu): there's a command called "import" in the ImageMagick package that does the trick.
+
+(You): thanks. It turned out to be File/Select.
+
+(Chengdu): then you can use the "gm composite" command to "paste" the image to another existing image.
+
+(You): thanks. That's the command line way I've been doing it. I was looking for a more visual one.
+
+(You): rats, File/Select doesn't work either.
+
+(Chengdu): are you using gnome or kde?
+
+(You): think I'm using kde, not sure. It turns out Image Edit/Composite, so you were close.
+
+----------------------
+
+(Oliver): you could do something like:
+
+import -window windowID /tmp/screen.pnm
+
+convert base.pnm -draw "image 0,0 /tmp/screen.pnm" output.pnm
+
+i'm not sure about the draw part, but you can find info on the man pages or the website of imagemagick
+
+(You): thanks. It turns out Image Edit/Composite was what I was looking for and later found.
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

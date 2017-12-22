@@ -1,0 +1,38 @@
+
+ID: 23741
+post_name: where-can-i-find-a-free-voice2text-app-for-unixlinux-it-doesnt-have-to-be-real-time
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 30 Oct 2010 22:22:34 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find a free voice2text app for Unix/Linux? It doesn't have to be real time.
+
+======================================================
+
+(You): Where can I find a free voice2text app for Unix/Linux? It doesn't have to be real time.
+
+(Steve): Wow, good question! Almost any audio app will record, but voice2text is not common. I found this project by googling "voice to text conversion on Ubuntu". Might be a start. I will keep researching...
+
+(You): thanks. vlingo.com has an app to do this, but it's only for mobile devices (but that does include Android, hmmm). Google voice does it for free, and I'm tempted to just send myself voicemail w/ the stuff I want to convert, but that seems ugly. Voice recognition technology has gotten quite good, so I'm guessing open source versions should start coming out.
+
+(Steve): agreed. GoogleOS [ChromeOS] will be out soon, and from the looks, it will be similar to Google TV, a marriage on Android for OS and Chrome for apps. I bet voice to text will be a standard app. Devices out in early November. THat should get some projects cranking.
+
+(You): GoogleOS will be something you can install on a desktop as a bare-metal OS? Or only on certain devices?
+
+----------------------
+
+(Andrius): try Simon
+
+(You): ummm, what's Simon and where can I get it? :)
+
+(Andrius): see http://www.simon-listens.org/index.php?id=122&L=1
+
+(Andrius): click the english flag in the top of the website for the english version
+
+(You): thanks! This looks interesting.
+
+
+
+[Vark assigned category: <b>real time</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

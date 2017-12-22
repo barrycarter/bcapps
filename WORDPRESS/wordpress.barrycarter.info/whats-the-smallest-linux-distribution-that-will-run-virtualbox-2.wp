@@ -1,0 +1,42 @@
+
+ID: 27895
+post_name: whats-the-smallest-linux-distribution-that-will-run-virtualbox-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 07:20:36 +0000
+post_type: post 
+post_status: publish
+post_title: What's the smallest Linux distribution that will run VirtualBox?
+
+======================================================
+
+(You): What's the smallest Linux distribution that will run VirtualBox?
+
+(Tim): id try out isolinux or damn small linux
+
+----------------------
+
+(Steve): Ubuntu desktop runs it. I bet Jolicloud runs it also [installing now...]. My next distro to play with would be gentoo. I am sure that one will also.
+
+(You): But those are huge distros! I want a VERY light distro to put VirtualBox on and then put guest OSs on top of VirtualBox
+
+(Steve): gentoo is only as big as you make it. You can trim Slackware down to just a kernel. I assumed a gui when you asked about virtualbox. Never tried it on the command line.
+
+(You): How small can gentoo get? I'm seeing Linux's at 50M (damnsmalllinux.org for example)
+
+(Steve): yes, damnsmalllinux would work great to start. I am not familiar enough with virutalbox to be able to say you won't have to load 300Mb of libraries and support programs to successfully run virtualbox. Are you looking to generate virtual machines, or play them? That could affect the requirements. I am as uneducated as you in this area it seems.
+
+(Steve): You have sparked questions I will want to look into... Just how many licks *does* it take to get to the center.... ;-]
+
+(You): I'm looking to create them -- I'm now wondering if I really do need a GUI for VirtualBox, and not just a command-line. LOL! Actually, VirtualBox has downloads for several OSs so I better choose one of those.
+
+(Steve): would be way too cool to run as a cli. I am fairly sure it can, as gui are usually just interfaces to change text values in a config file or on a command... If you have input later, you can dm or email me I think. I do have to look into a cli, then you just use armedslack or the ubuntu arm distros. Those are pretty small indeed.
+
+(You): Someone suggested xubuntu, and I'm going with that. http://dlc.sun.com/virtualbox/vboxdownload.html [http://dlc.sun.com/virtualbox/vboxdownload.html] has a list of officially supported Linuxes. I'm currently running vmware on another machine solely through CLI (no X11!), but wasn't sure if VirtualBox had a GUI-free interface.
+
+(Steve): Let me know how it goes. I will look into cli generation of vms. That is a must for some installations.
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

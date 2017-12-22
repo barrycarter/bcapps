@@ -1,0 +1,46 @@
+
+ID: 26177
+post_name: how-can-i-reverse-engineer-an-exe-file-on-a-linux-box-windows-executable-but-i-want-to-examine-it-in-linux
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 21:45:14 +0000
+post_type: post 
+post_status: publish
+post_title: How can I reverse engineer an EXE file on a Linux box? (Windows executable, but I want to examine it in Linux)
+
+======================================================
+
+(You): How can I reverse engineer an EXE file on a Linux box? (Windows executable, but I want to examine it in Linux)
+
+(Richard): http://freedomyug.wordpress.com/2009/02/09/extract-a-exe-file-in-linux/
+
+or 7zip http://en.wikipedia.org/wiki/7-Zip
+
+(You): thanks. This will unarchive an EXE file that contains other files, but I'm looking to see the byte code (or even the C++/.NET code) that created the EXE in the first place.
+
+(Richard): I think you probably want a hex editor then.
+
+(You): well, true, but I want to go a bit further than that. I want to see the code if possible (above/beyond "machine language")
+
+(Richard): Ah well, I haven't tried it, but you might look at REC http://www.backerstreet.com/rec/rec.htm
+
+----------------------
+
+(Brian): The rule is you can't. But try google decompiler + the language the program is written in (if you know)
+
+(You): is there such a rule? Well, maybe. Where is google decompiler and how do I get it?
+
+(Brian): After you write a program you compile it so the computer can understand it.
+
+The code the computer can understand is in-comprehensive to humans which is
+
+why you need decompiler software. You don't need a "google decompiler". You
+
+need to Search on www.google.com for decompiler
+
+(You): got it, thanks. I actually found REC.
+
+
+
+[Vark assigned category: <b>reverse engineer</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

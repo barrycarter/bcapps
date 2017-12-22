@@ -1,0 +1,36 @@
+
+ID: 24284
+post_name: which-online-chat-services-google-yahoo-etc-support-shared-whiteboarding-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 06 Sep 2010 07:53:09 +0000
+post_type: post 
+post_status: publish
+post_title: Which online chat services (google, yahoo, etc) support shared whiteboarding?
+
+======================================================
+
+(You): Which online chat services (google, yahoo, etc) support shared whiteboarding?
+
+(Jean): Not sure. But I know the deskt0p version of Windows Live Messenger has shared whiteboarding.
+
+(You): thanks. I'm trying to do this cross-platform (the other guy has Windows).
+
+----------------------
+
+(Mauro): Spark comes with a whiteboard plugin that you should make a try. Spark is a IM client part of Openfire project and connects nicely any jabber based IM server. Spark is @ http://www.igniterealtime.org/
+
+(You): ok, does the other person need Spark too? OR is there a protocol that supports whiteboarding?
+
+(Mauro): This is true, both dudes will need Spark and the installed whiteboard plugin.
+
+(You): thanks. Is Spark available for Windows too? I'm trying to do this w/ minimal setup for now.
+
+(Mauro): Spark comes with Windows, Mac and Linux versions.
+
+(You): thanks! That might be the way to go then!
+
+
+
+[Vark assigned category: <b>Google</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,28 @@
+
+ID: 23368
+post_name: if-i-want-to-type-every-four-digit-number-but-counted-123456-as-typing-1234-2345-and-3456-i-know-i-need-way-fewer-than-40000-characters-to-do-it-how-many-would-i-need-and-whats-the-general-n
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 01 Dec 2010 04:48:41 +0000
+post_type: post 
+post_status: publish
+post_title: If I want to type every four digit number, but counted "123456" as typing 1234, 2345, and 3456, I know I need way fewer than 40,000 characters to do it. How many would I need, and what's the general name for this sort of problem?
+
+======================================================
+
+(You): If I want to type every four digit number, but counted "123456" as typing 1234, 2345, and 3456, I know I need way fewer than 40,000 characters to do it. How many would I need, and what's the general name for this sort of problem?
+
+(Seth): I think you're looking for a De Bruijn sequence: http://en.wikipedia.org/wiki/De_Bruijn_sequence [http://en.wikipedia.org/wiki/De_Bruijn_sequence].  It's funny, because I just read an article about it the other day, relating to a card trick: http://www.technologyreview.com/blog/arxiv/26078/?ref=rss
+
+(You): thanks! That was it!
+
+----------------------
+
+(Adam): Interesting question. I'm afraid I don't know how you could figure that out, but I suspect you could somehow use Karnaugh maps to help figure it out.
+
+(You): Shirey, thanks. It turned out to be de Bruijn sequences.
+
+
+
+[Vark assigned category: <b>mathematics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

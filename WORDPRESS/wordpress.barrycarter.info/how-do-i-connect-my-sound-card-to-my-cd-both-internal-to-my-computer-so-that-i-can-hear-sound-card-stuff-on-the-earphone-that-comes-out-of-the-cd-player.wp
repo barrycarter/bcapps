@@ -1,0 +1,36 @@
+
+ID: 24059
+post_name: how-do-i-connect-my-sound-card-to-my-cd-both-internal-to-my-computer-so-that-i-can-hear-sound-card-stuff-on-the-earphone-that-comes-out-of-the-cd-player
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 09 Oct 2010 02:49:39 +0000
+post_type: post 
+post_status: publish
+post_title: How do I connect my sound card to my CD (both internal to my computer) so that I can hear sound card stuff on the earphone that comes out of the CD player?
+
+======================================================
+
+(You): How do I connect my sound card to my CD (both internal to my computer) so that I can hear sound card stuff on the earphone that comes out of the CD player?
+
+(Steven): I don't believe that you can do that. However, you should be able to hear everything through the audio output jack that is attached to the sound card, including CD
+
+(You): yes, but it turns out I have short-cord headphones, and the rear port is too far away to work well.
+
+(Steven): you can get an extension cable for your headphones easily enough
+
+(You): actually, that's what I'm doing now, but it ends up going through so many things (it's sort of hard to explain my setup) that even w/ a Behringer amplifier with everything at max, it's still fairly soft.
+
+----------------------
+
+(Bruno): Usually, you can not. The connection from CD to the soundcard in one way (from the CD to the card). You can hear both the CD and other sounds by connecting your earphone to the sound card output.
+
+(You): thanks, that's what I was worried about. Due to my odd setup, it's hard to reach the sound card port, but easy to reach the CD one.
+
+----------------------
+
+(Matthew): In control panel there should be an option for sound, in the first tap (playback) there should be an option for the audio port. If there is no option it means that it is either not connected or not installed. To check go to device manager and see if there is anything listed under either [CD Drives, Sound Video and Game controllers, or a general tab that has a yellow exclamation mark] if there is an option for your audio then it is connected, if there is a yellow triangle beside it then there is not currently a proper driver to handle it, if not listed then it is not connected internally and you will probably need another cable to do so.
+
+
+
+[Vark assigned category: <b>computer peripherals</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,34 @@
+
+ID: 25262
+post_name: can-i-do-a-fake-update-in-mysql-by-asking-the-server-what-rows-would-change-if-i-executed-this-update-statement-wo-actually-doing-the-update-i-realize-i-could-make-a-backup-first-but-would-pref
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 22 Jun 2010 20:16:00 +0000
+post_type: post 
+post_status: publish
+post_title: Can I do a "fake" UPDATE in MySQL by asking the server "what rows would change if I executed this UPDATE statement" w/o actually doing the UPDATE? I realize I could make a backup first, but would prefer doing it this way.
+
+======================================================
+
+(You): Can I do a "fake" UPDATE in MySQL by asking the server "what rows would change if I executed this UPDATE statement" w/o actually doing the UPDATE? I realize I could make a backup first, but would prefer doing it this way.
+
+(Art): Do a SELECT with the same WHERE clause as the UPDATE statement will use. You may want to lock the table before doing this so that there are no changes between the SELECT and the UPDATE.
+
+(You): OK, but I'm doing an UPDATE that requires multiple tables and joins
+
+----------------------
+
+(Robert): You can always do a SELECT statement that uses the same crieria you would use in the UPDATE statement.
+
+(You): it's a multi-table UPDATE so it's not quite as simple as that.
+
+----------------------
+
+(Kevin): You could run a select with the same criteria to preview the rows, but I don't think there is such a thing as a "fake update"
+
+(You): thanks. Since this involves multiple tables, it's not quite as easy as that.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

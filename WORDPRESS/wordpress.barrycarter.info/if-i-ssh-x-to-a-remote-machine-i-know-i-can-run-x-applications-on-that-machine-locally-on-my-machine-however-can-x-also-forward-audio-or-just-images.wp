@@ -1,0 +1,50 @@
+
+ID: 27780
+post_name: if-i-ssh-x-to-a-remote-machine-i-know-i-can-run-x-applications-on-that-machine-locally-on-my-machine-however-can-x-also-forward-audio-or-just-images
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 10:07:25 +0000
+post_type: post 
+post_status: publish
+post_title: If I "ssh -X" to a remote machine, I know I can run X applications on that machine locally on my machine. However, can X also forward audio, or just "images"?
+
+======================================================
+
+(You): If I "ssh -X" to a remote machine, I know I can run X applications on that machine locally on my machine. However, can X also forward audio, or just "images"?
+
+(Buck): X11 was not created to carry audio
+
+(You): Thanks, Buck. That's what I thought too. Maybe they'll get around to it in the 25th century!
+
+(Buck): There were some protocols developed to supplement X11 with audio, but they all died on the wire.
+
+(You): That actually sounds reasonable -- trasmitting audio is bandwidth intense.
+
+(Buck): NCD (http://en.wikipedia.org/wiki/Network_Computing_Devices) created an audio-over-network protocol for use by x11 terms.  Nobody really picked up on it, though.
+
+----------------------
+
+(Andy): The application runs and executes entirely on the remote machine, and the "X session" (gui) is forwarded to your local machine.
+
+
+
+If I remember correctly, audio is piped over along with IO.
+
+
+
+Tip: Use -C to compress data when tunneling through anything except a lan
+
+(You): does that mean the remote machine doesn't even have to be running X?
+
+(Andy): correct. Many headless machines are implemented in this way
+
+(You): Fantastic, that's what I thought, but wasn't sure. I'm running VirtualBox on remote debian server, but X11 and other crap is taking up too much memory-- I can kill X there and just run VirtualBox locally!
+
+----------------------
+
+(Rob): With ssh -d, you aren't running the application locally, you're running it remotely and exporting the X windows output to your machine. Unfortunately that would not include sound, though there are several freeware solutions like eSounD that will get you what you need. Good luck!
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

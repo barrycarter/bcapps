@@ -1,0 +1,30 @@
+
+ID: 26894
+post_name: how-do-i-import-a-c-struct-into-perl-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 26 May 2010 05:35:27 +0000
+post_type: post 
+post_status: publish
+post_title: How do I import a C struct into Perl?
+
+======================================================
+
+(You): How do I import a C struct into Perl?
+
+(S??bastien): The most used way is to write the corresping XS layer. It's not as awful as it looks. The utility h2xs can help to write such code. 
+
+You can also try with Inline::C, which is able to autogenerate the XS code in many cases (I've never used it, so I don't know its limits).
+
+There's also a FFI module, a partial binding of libffi, which the lib underlying Python's CTypes, IIUC. Totally don't know anything about this one.   
+
+Finally, take a look at Reini Urban's CPAN directory, he is the one working on making things easier in this very domain.
+
+----------------------
+
+(Hauk): http://dev.perl.org/perl6/rfc/61.html
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

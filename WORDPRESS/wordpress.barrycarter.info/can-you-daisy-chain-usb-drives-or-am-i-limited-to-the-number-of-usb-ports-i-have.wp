@@ -1,0 +1,102 @@
+
+ID: 24334
+post_name: can-you-daisy-chain-usb-drives-or-am-i-limited-to-the-number-of-usb-ports-i-have
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 28 Aug 2010 08:55:30 +0000
+post_type: post 
+post_status: publish
+post_title: Can you "daisy chain" USB drives, or am I limited to the number of USB ports I have?
+
+======================================================
+
+(You): Can you "daisy chain" USB drives, or am I limited to the number of USB ports I have?
+
+(Anthony): Hi! you're limited by the number of USB ports you have, as USB doesn't daisy-chain like Firewire does.  You can plug in multiple external drives via a USB HUB, but then you have to ensure either each drive is self-powered (ie has its own plugpack/wall-wort powering it), or that the USB HUB is of the powered type (ie it also has its own plugpack/wallwort) so that it can power downstream devices on each of its USB ports.  reason is that 1 USB port can only supply 5volts at 500mA (i.e. 2.5Watts), which is usually enough to power ONE 2.5" (laptop sized) drive (but not a 3.5" desktop sized drive).  plugging in more than 1 drive into a USB-port-powered-only HUB almost certainly won't work.
+
+(You): thanks, that's what I figured. That's why 4T drives cost more than twice as much as 2T drive-- you can't combine 2T drives to make a 4T drive :)
+
+----------------------
+
+(Dennis): You're limited to the number of USB ports you have. Firewire can daisy chain and that was one of its advantages over USB.
+
+----------------------
+
+(Peter): Well, yes and (mostly) no. Once upon a time this was written into the spec.
+
+In the real world we have two problems: 1) the 5V DC needed by many, if not
+
+most, devices needs to be maintained to most every device, along w/
+
+attendant amperage. This is a conundrum as it requires voltage in
+
+*both*series and parallel. 2) most devices have only one USB port,
+
+which pretty
+
+much ends the story there.
+
+
+
+Ultimately the solution I use w/ my main rig (at present an older Vaio
+
+laptop, the VGN-AX570G w/ a docking station giving me 7 ports - 2 1.1 & 5
+
+2.0) is the always faithful D-Link 7-port hub that has it's own power supply
+
+thus ensuring all me external devices are 'happy'. Here's the model:
+
+http://www.newegg.com/Product/Product.aspx?Item=N82E16817111402&cm_re=D-Link_USB-_-17-111-402-_-Productand
+
+this baby rocks. Please pay no mind to the unpowered 4-port 'cheaper'
+
+units out there; you'll be disappointed I guarantee you and you'll end up w/
+
+the D-Link anyway, so best to do it right from the get go. I realize this
+
+isn't the greatest of all possible worlds for portability/field use, but for
+
+rock-solid professional use I have yet to see better. This baby has gotten
+
+me out of more jams than I can count:
+
+http://www.google.com/products/catalog?client=ubuntu&channel=fs&q=APC%2Bmobile+power+pack&oe=utf-8&um=1&ie=UTF-8&cid=4904291704918670754&ei=r5F4TNG2PI3BnAeO99mTCw&sa=X&oi=product_catalog_result&ct=result&resnum=3&ved=0CDQQ8wIwAg#
+
+and with an easily & cheaply obtained USB Type 'A to USB Type 'B' (standard
+
+'flat' to one side 'rounded square') voila, power to go. The APC is frankly
+
+a 'must-have' for smartphones, field-powering USB devices without a computer
+
+and the list goes on.
+
+
+
+So with am machine like yours, I'm guessing three ports, get two D-link
+
+7-port hubs and now your machine has 15 SOLID USB connections for an
+
+investment of $60 or so. Tough logic to argue against, even for us uber
+
+penny-pinchers. If you live near a Fry's or a MicroCenter try there first,
+
+but beware as the D-Links don't linger on the shelves long with fiends like
+
+me snatching them up left and right.
+
+
+
+Bests,
+
+
+
+Peter
+
+----------------------
+
+(Jeffrey): If the external drive you have has USB ports, it effectively acts as a USB hub as well. so yes you can daisy chain.
+
+
+
+[Vark assigned category: <b>computer peripherals</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,34 @@
+
+ID: 24087
+post_name: how-do-i-use-itunes-on-the-mac-to-play-a-single-video-in-an-open-format-without-doing-all-the-other-crazy-stuff-it-does-vlc-wont-run-on-my-machine-and-quicktime-keeps-crashing
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 04 Oct 2010 02:03:19 +0000
+post_type: post 
+post_status: publish
+post_title: How do I use iTunes (on the Mac) to play a single video in an open format without doing all the other crazy stuff it does? (VLC won't run on my machine and Quicktime keeps crashing).
+
+======================================================
+
+(You): How do I use iTunes (on the Mac) to play a single video in an open format without doing all the other crazy stuff it does? (VLC won't run on my machine and Quicktime keeps crashing).
+
+(Thomas): Download the VLC Player, and perhaps Quicktime on your machine needs updating? It was officially updated fairly recently...
+
+(You): thanks. VLC won't run on my system because the OS it too old.
+
+----------------------
+
+(Waleed): iTunes uses Quicktime internally anyway, so does it work if you just click on it from the Finder? Does it play in iTunes?
+
+(You): Quicktime crashes when I try to play it. "mplayer" plays it, but the video goes VERY slowly while the audio works fine.
+
+(Waleed): So what happens if you right click on it in Finder and select "Open with
+
+..." &gt; iTunes? Does it work?
+
+(You): thanks. OK, I tried just double clicking on it. Quicktime came up and told me I needed to install more components. I did. After that, I got a white screen and no sound, but no complaints from Quicktime and no video. I tried opening it w/ DivX Player (crashed) and then iTunes (did nothing). Weird.
+
+
+
+[Vark assigned category: <b>iTunes</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

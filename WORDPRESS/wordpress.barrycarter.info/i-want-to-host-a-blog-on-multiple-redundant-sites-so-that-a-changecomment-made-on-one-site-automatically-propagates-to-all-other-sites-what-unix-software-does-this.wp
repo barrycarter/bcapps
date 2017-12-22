@@ -1,0 +1,42 @@
+
+ID: 26620
+post_name: i-want-to-host-a-blog-on-multiple-redundant-sites-so-that-a-changecomment-made-on-one-site-automatically-propagates-to-all-other-sites-what-unix-software-does-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 22:37:47 +0000
+post_type: post 
+post_status: publish
+post_title: I want to host a blog on multiple redundant sites so that a change/comment made on one site automatically propagates to all other sites. What Unix software does this?
+
+======================================================
+
+(You): I want to host a blog on multiple redundant sites so that a change/comment made on one site automatically propagates to all other sites. What Unix software does this?
+
+(Abd Allah): It is not a program feature, you should be able to connect the blog instances using the blog software you're using, for example Wordpress. To connect multiple sites and let them communicate with each other you should consider using XMLRPC.
+
+(You): are you saying wordpress has a way of doing this?
+
+(Abd Allah): I don't know, but wordpress uses XMLRPC, you might find a plugin to do it for you.
+
+----------------------
+
+(Charlie): Just a warning if you do this you can get the dreaded "Google slap" for duplicate content. A big no no in SEO
+
+(You): so if I have the same blog hosted on 4 servers for redundancy purposes, google will lower my ranking?
+
+(Charlie): You can syndicate content ie using RSS where it is ok, but if you actually are presenting it as original content on different sites you may be in trouble. There are some ways around this. For instance using different country TLDs.
+
+(You): thanks. I'll be using a single domain with multiple IP addresses.
+
+(Charlie): Then I think you should be ok. You are mirroring?
+
+(You): well, that's my problem. I'm *trying* to mirror, but not sure how.
+
+(Charlie): Sorry Barry, I know SEO but not much system admin. Good luck!
+
+(You): thanks!
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

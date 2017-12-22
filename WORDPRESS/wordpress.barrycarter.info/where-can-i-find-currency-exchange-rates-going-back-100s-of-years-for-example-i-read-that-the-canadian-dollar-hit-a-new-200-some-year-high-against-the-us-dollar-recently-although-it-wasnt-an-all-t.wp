@@ -1,0 +1,54 @@
+
+ID: 24475
+post_name: where-can-i-find-currency-exchange-rates-going-back-100s-of-years-for-example-i-read-that-the-canadian-dollar-hit-a-new-200-some-year-high-against-the-us-dollar-recently-although-it-wasnt-an-all-t
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 24 Aug 2010 23:26:55 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find currency exchange rates going back 100s of years? For example, I read that the Canadian dollar hit a new 200-some-year high against the US dollar recently, although it wasn't an all time high (a bit surprising given that the USA hasn't existed much more than 200 years). Where do I get data like this?
+
+======================================================
+
+(You): Where can I find currency exchange rates going back 100s of years? For example, I read that the Canadian dollar hit a new 200-some-year high against the US dollar recently, although it wasn't an all time high (a bit surprising given that the USA hasn't existed much more than 200 years). Where do I get data like this?
+
+(Ken): good question.  I don't know Canadian monetary history all that well, but I suspect that during good parts of the 19th and very early 10th centuries, the US dollar and Canadian dollar where fixed because they both were redeemable for a fixed amount of gold.  A US dollar _was_ defined as the weight of 1/20th of an ounce of gold.
+
+----------------------
+
+(Rachel): Hi Barry,
+
+
+
+ In fact, it really doesn't make much sense to look at exchange rates for developed (first world) economies much further back than 1971, when Germany and Japan abandoned the gold standard and the US and Britain quickly followed suit. Thus began the modern age of "managed float" ie of currency exchange rates that "float" relative to each other, although not quite freely as there is still the opportunity for central bank intervention. From 1944-1971 most first world economies were under the Bretton Woods Agreement of fixed exchange tied to a gold standard.
+
+
+
+That said, the best archive of those sorts of stats is the Federal Reserve. Check out the main website, which may send you to one of the branches that specializes in that particular research -
+
+
+
+Good luck -
+
+----------------------
+
+(Tim): Historic currency levels are available on the official Bank of England web site
+
+(Tim): The other site used by currency people is OANDA.COM
+
+(Tim): http://www.oanda.com/currency/historical-rates
+
+(You): yes, I think I mentioned that site in my original email. They only let you download data 500 days at a time, which I agree is better than nothing.
+
+(Tim): Ah, I see, more than 500 and they'll be classifying you are a pro user and trying to hook you into one of their feeds. I'm an equities tho'. Not my field
+
+(You): yeah, but you can do another 500 days after that, so not a biggie. I just figured there was some 1G file floating around somewhere that already had all this data.
+
+----------------------
+
+(Daniel): two ideas: wolframalpha.com or the st louis fed database
+
+
+
+[Vark assigned category: <b>economics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

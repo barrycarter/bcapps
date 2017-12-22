@@ -1,0 +1,36 @@
+
+ID: 27676
+post_name: can-i-run-a-vm-server-on-a-512m-box
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 22:52:33 +0000
+post_type: post 
+post_status: publish
+post_title: Can I run a VM server on a 512M box?
+
+======================================================
+
+(You): Can I run a VM server on a 512M box?
+
+(Roshan): Yes you should be able to, but its not ideal..
+
+(You): How many guest OSs do you think I can run w/ 512M and what VM server software do you recommend?
+
+(Roshan): Check this link out.. it might be helpful
+
+(You): I'm using IM and didn't get the link -- could you re-send?
+
+(Roshan): "http://bit.ly/cC5qNY"
+
+(You): Thanks! That worked.
+
+----------------------
+
+(Anders): More than likely not. You will need at least 1gb of ram to run the VM server and 512mb to install any modern OS in the VM.
+
+(You): Thanks... I guess I need a beefier server, sigh.
+
+
+
+[Vark assigned category: <b>VM</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

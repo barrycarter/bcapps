@@ -1,0 +1,24 @@
+
+ID: 28469
+post_name: subject-how-do-i-read-all-of-emacs-minibuffer-when-the-content-is-longer-than-my-screen-size
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 00:08:20 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: How do I read all of emacs minibuffer when the content is longer than my screen size?
+
+======================================================
+
+(You): Subject: How do I read all of emacs minibuffer when the content is longer than my screen size?
+
+(Simon): It scrolls. Use standard next-word, prev-word or next-line, prev-line.
+
+----------------------
+
+(Alexander): you can navigate through the buffer line with ^f and ^b
+
+
+
+[Vark assigned category: <b>Emacs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

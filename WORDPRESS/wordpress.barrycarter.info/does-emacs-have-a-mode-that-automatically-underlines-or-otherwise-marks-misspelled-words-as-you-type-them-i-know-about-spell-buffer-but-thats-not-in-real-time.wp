@@ -1,0 +1,40 @@
+
+ID: 27063
+post_name: does-emacs-have-a-mode-that-automatically-underlines-or-otherwise-marks-misspelled-words-as-you-type-them-i-know-about-spell-buffer-but-thats-not-in-real-time
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 16 May 2010 20:19:25 +0000
+post_type: post 
+post_status: publish
+post_title: Does emacs have a mode that automatically underlines (or otherwise marks) misspelled words as you type them? I know about "spell-buffer", but that's not in real time.
+
+======================================================
+
+(You): Does emacs have a mode that automatically underlines (or otherwise marks) misspelled words as you type them? I know about "spell-buffer", but that's not in real time.
+
+(Nikolaos): Try FlySpell
+
+(You): thanks!
+
+(Nikolaos): you're welcome ;-)
+
+(You): ok, followup :) I sometimes run emacs as my editor in alpine. What command line flags can I give emacs that say "load flyspell mode at startup"? Or do I have create a special init file (like .emacs_alpine) for this? I don't want flyspell to startup w/ other emacs', just the one I launch from Alpine.
+
+(Nikolaos): could turn on with Alt+x flyspell-mode??? or ???Alt+x flyspell-buffer..  ??
+
+(You): true, but I'd have to remember to do that each time. I want alpine to do it automatically for me so I don't forget to spellcheck emails.
+
+(Nikolaos): ? http://www.npjh.com/alpine.html
+
+(You): damn you're good! So it looks like I do need a separate init file... not a big deal.
+
+(Nikolaos): :-)  Have fun.
+
+----------------------
+
+(John): Try WcheckMode http://www.emacswiki.org/emacs/WcheckMode
+
+
+
+[Vark assigned category: <b>Emacs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

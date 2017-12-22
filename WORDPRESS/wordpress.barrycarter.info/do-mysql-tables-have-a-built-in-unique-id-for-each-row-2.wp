@@ -1,0 +1,44 @@
+
+ID: 25258
+post_name: do-mysql-tables-have-a-built-in-unique-id-for-each-row-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 22 Jun 2010 20:24:40 +0000
+post_type: post 
+post_status: publish
+post_title: Do MySQL tables have a built-in unique id for each row?
+
+======================================================
+
+(You): Do MySQL tables have a built-in unique id for each row?
+
+(Leonardo): I assume you mean like rownum in oracle. I don't think it does. Why? May be I can help you with what you need to do :) In case it can be done in a different way.
+
+(You): yes, or like a 'rowid' in sqlite3. Problem: I had an unique incremental column called oid, but then did "UPDATE tabname SET oid=(SELECT ...)"; I didn't realize this would wipe out the uniqueness of oid, but it did (it gave me warnings, but that didn't stop it from breaking the unique index condition).
+
+(Leonardo): although it doesn't exists there are ways to imitate the behaviour. Try searching on Google Mysql Rownum. That gave me lots of results that might help you. :) Good luck.
+
+(You): thanks-- will these ways work even though I messed up my "unique id" column.
+
+(Leonardo): seems like is a way to add an auto increment. You can just add a new column and then update the uniq filed. Weird that it let you mess that up if you had it set to unique
+
+----------------------
+
+(Rick): I wouldn't consider it "built-in" but you can designate a column with auto increment and it will do as requested
+
+(You): thanks. I broke the auto increment column I created and am now trying to fix it.
+
+(Rick): Have you tried adding another "id" column with type of autoincrement? If that works then you could drop the original one. Careful with foreign keys if you are using those. I normally generate a "GUID" that I add just to be sure I have a unique key that isn't specific to any database technology.
+
+(You): I think that's what I'll have to do. Some dbs (like sqlite) just include one of those for me and I forgot MySQL doesn't.
+
+----------------------
+
+(Kim): do you mean an "auto-increment" column type? If so, the answer is yes, you can declare a row as being AUTO_INCREMENT UNIQUE, seems to me that the datatype "SERIAL" might be what you're looking for
+
+(You): thanks. I already had a serial column and messed it up. I now need to find which rows have the same serial number but aren't actually the same row.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

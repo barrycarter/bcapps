@@ -1,0 +1,22 @@
+
+ID: 23388
+post_name: perls-str2timenext-week-returns-nothing-but-date-d-next-week-works-fine-what-perl-library-implements-dates-d-option
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 29 Nov 2010 01:22:13 +0000
+post_type: post 
+post_status: publish
+post_title: Perl's str2time("next week") returns nothing, but "date -d 'next week'" works fine. What Perl library implements date's -d option?
+
+======================================================
+
+(You): Perl's str2time("next week") returns nothing, but "date -d 'next week'" works fine. What Perl library implements date's -d option?
+
+(Brandon): Date::Manip is the canonical library for that kind of thing.  It's big and slow, though
+
+(Brandon): also, I've found that in many cases it's easier to let GNU date do it.  Date::Manip is a bit weird
+
+
+
+[Vark assigned category: <b>Perl and Library</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

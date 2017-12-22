@@ -1,0 +1,26 @@
+
+ID: 26487
+post_name: can-you-always-convert-json-output-to-a-hash-associate-array
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 04 Jun 2010 10:15:02 +0000
+post_type: post 
+post_status: publish
+post_title: Can you always convert JSON output to a hash (associate array)?
+
+======================================================
+
+(You): Can you always convert JSON output to a hash (associate array)?
+
+(David): yes.  The JSON format is very clearly defined (see www.json.org) and is always a set of string-value pairs.
+
+----------------------
+
+(Dorab): Yes.  JSON is essentially a key-value pair.  A hash table is one particular implementation of a key-value pair (also called a Map or AssociativeArray as you point out).
+
+To be very correct though, JSON also has an ordered list of values.  This can be modeled in a key value pair in the value part.  See www.json.org for details.
+
+
+
+[Vark assigned category: <b>JSON</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

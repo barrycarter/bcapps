@@ -1,0 +1,58 @@
+
+ID: 22930
+post_name: on-blogspot-how-do-i-create-a-multipage-blog-entry-so-people-can-see-the-1st-page-as-is-but-have-to-click-next-page-each-time-to-get-to-the-next-page
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 17 Feb 2011 05:22:48 +0000
+post_type: post 
+post_status: publish
+post_title: On blogspot, how do I create a multipage blog entry? So people can see the 1st page as is, but have to click "next page" each time to get to the next page?
+
+======================================================
+
+(You): On blogspot, how do I create a multipage blog entry? So people can see the 1st page as is, but have to click "next page" each time to get to the next page?
+
+(Marco): Did you try the &lt;!--next--&gt; tag? It *should* break the post. &lt;!--more--&gt; probably only works once/page.
+
+(You): that what tag? I think the angle brackets got lost in your answer.
+
+(Marco): Look at http://paste.ideaslabs.com/show/wwVnDDLTmq
+
+(You): nice, thanks! I'll try it.
+
+(You): I think it's --more-- but thanks :)
+
+(Marco): Always thought the "more" tag would only work on the front page :o   Good to know. Thanks for your feedback :)
+
+(You): woops, that didn't work either, rats. http://www.google.com/support/blogger/bin/answer.py?answer=154172 [http://www.google.com/support/blogger/bin/answer.py?answer=154172] is what I'm looking at.
+
+(Marco): Weird... look at http://www.jonespc.com/how-to-make-a-multi-page-blog-post-like-the-pros/2008/08/04/   Seems it work*ed* in the past
+
+(Marco): Forget it :-( The blog post was about Wordpress and not Blogspot :( Sorry.
+
+(You): rats. Hmmm, then again, wordpress.com has free blogs too, no?
+
+(Marco): Yes, but there you can only use themes they offer. No way to upload custom made themes. At least not for free. 
+
+
+
+Maybe Weebly is an alternative? But Weebly is probably too basic.
+
+(You): well, I'm happy w/ Wordpress for now... actually, I think I have my own install and am not using wordpress.com (wordpress.vonappleknocker.com is mine)
+
+(Marco): Hm.. you could use some free web host that allows custom WordPress installations. That might be a solution...
+
+(You): actually, I think mine is on fatcow and I'm getting it free for some odd reason.
+
+(Marco): Well then yes.. stick with Wordpress and maybe a custom installation on your webspace. 
+
+
+
+I'm using Wordpress since 4 or 5 years. Tried so many so-called alternatives... but always went back to good old Wordpress lol.
+
+(You): cool. I hand coded a blog once, back before they become uber-popular.
+
+
+
+[Vark assigned category: <b>the Internet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

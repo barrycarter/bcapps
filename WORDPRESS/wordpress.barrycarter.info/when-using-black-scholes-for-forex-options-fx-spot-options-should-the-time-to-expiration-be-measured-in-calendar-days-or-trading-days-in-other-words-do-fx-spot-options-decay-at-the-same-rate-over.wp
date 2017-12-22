@@ -1,0 +1,42 @@
+
+ID: 26262
+post_name: when-using-black-scholes-for-forex-options-fx-spot-options-should-the-time-to-expiration-be-measured-in-calendar-days-or-trading-days-in-other-words-do-fx-spot-options-decay-at-the-same-rate-over
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 23:38:50 +0000
+post_type: post 
+post_status: publish
+post_title: When using Black-Scholes for Forex options (FX spot options), should the time to expiration be measured in calendar days or trading days? In other words, do FX spot options decay at the same rate over weekends as they do over weekdays?
+
+======================================================
+
+(You): When using Black-Scholes for Forex options (FX spot options), should the time to expiration be measured in calendar days or trading days? In other words, do FX spot options decay at the same rate over weekends as they do over weekdays?
+
+(Noah): It depends on how the volatility is calculated. If the volatility is from daily returns including weekends, then you should include those days.
+
+(You): well, OK, but how would you handle an option sold Friday that expires on Monday? I'm sure the vol there would be different than for an option sold Tuesday that expired Wednesday (or Friday, if you count weekends on the first option)?
+
+(Noah): I think I misunderstood your question. You shouldn't include days that the market is closed and you're unable to trade the option.
+
+(You): got it. Does that mean an at-the-money option sold Friday at market close that expires Monday at market open is worthless, since there is zero market time between the two?
+
+(Noah): I'm not sure about when the options actually expire. If they expire before the open on Monday, then the time value is zero as soon as the market closes on Friday. But I thought options typically expire either during or at the end of a day.
+
+(You): you're correct. I was speaking hypothetically. The problem I have with that is that stocks/etc *can* receive good/bad news over the weekend and the Monday opening isn't always the same as the Friday closing. This suggests that you somehow have to account for weekend volatility. BTW, do you know anything about how FX spot option volatility is calculated?
+
+(Noah): Sorry, can't help you there. I'd have a look at John Hull's book on option pricing. You're talking about jumps in the return process, which can be dealt with, but is more complicated than just taking the standard deviation of past returns. (Look up jump process in Wikipedia for a start on references.)
+
+(You): thanks. I'm actually wondering how ikongm.com and saxobank.com come up with their volatility "smiles" for FX spot options. I sense it's nontheoretical.
+
+----------------------
+
+(Jesse): you run it through the weekends because currency is traded 24/7.        The sun never sets on the FX empire....
+
+(You): I'm pretty sure Forex trades 24/5, not 24/7. It's closed from 5pm Friday to 5pm Sunday New York time.
+
+(Jesse): ya your right.  sorry.
+
+
+
+[Vark assigned category: <b>Black-Scholes</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

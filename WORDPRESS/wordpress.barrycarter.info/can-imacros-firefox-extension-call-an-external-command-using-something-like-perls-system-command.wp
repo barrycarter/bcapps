@@ -1,0 +1,30 @@
+
+ID: 23495
+post_name: can-imacros-firefox-extension-call-an-external-command-using-something-like-perls-system-command
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 13 Nov 2010 00:01:46 +0000
+post_type: post 
+post_status: publish
+post_title: Can iMacros (Firefox extension) call an external command, using something like Perl's system() command?
+
+======================================================
+
+(You): Can iMacros (Firefox extension) call an external command, using something like Perl's system() command?
+
+(Ian): javascript should not be allowed to access local system files, even if you want them to. it's a huge security risk
+
+(You): iMacros isn't Javascript!
+
+(Ian): on my system, I can see my iMacros translated into javascript bookmarklets. Guess your system is different. Either way, browser plugins should never have access to system resources and external programs.
+
+(You): well, I have to disagree with you there. It would be very useful if I could run system commands from an iMacros script.
+
+(Ian): Useful, perhaps, for personal projects, and I'm sure you could work around that security precaution with a customized browser. But it wouldn't be very handy if a malicious user makes a plugin to start formatting your hard drive... or copying files to a remote location via FTP...
+
+(You): interesting point, but, to me, that's like saying a malicious user could write a Perl script that does bad things. True, but that's no reason to prevent Perl from having file access. When running macros, the ability to take screen snapshots, among other things, is useful.
+
+
+
+[Vark assigned category: <b>iMacros</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

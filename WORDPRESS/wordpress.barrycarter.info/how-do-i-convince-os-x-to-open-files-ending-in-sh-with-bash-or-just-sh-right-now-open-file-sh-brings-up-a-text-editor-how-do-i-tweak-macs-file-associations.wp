@@ -1,0 +1,56 @@
+
+ID: 23179
+post_name: how-do-i-convince-os-x-to-open-files-ending-in-sh-with-bash-or-just-sh-right-now-open-file-sh-brings-up-a-text-editor-how-do-i-tweak-macs-file-associations
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 17 Dec 2010 03:01:42 +0000
+post_type: post 
+post_status: publish
+post_title: How do I convince OS X to open files ending in ".sh" with bash (or just sh)? Right now "open file.sh" brings up a text editor. How do I tweak Mac's file associations?
+
+======================================================
+
+(You): How do I convince OS X to open files ending in ".sh" with bash (or just sh)? Right now "open file.sh" brings up a text editor. How do I tweak Mac's file associations?
+
+(Randall): In the finder, select the file and hit Command-I (or right-click and get File Info).  About halfway down you can change what the file is opened with, and there's a button for "Change All".
+
+(You): thanks! It turns out that "/bin/bash" isn't an option because Finder hides /bin. Even after I did "defaults write com.apple.Finder AppleShowAllFiles YES" + restarted Finder, Finder still hides /bin when you choose an application (but it stops hiding /bin in other cases).
+
+----------------------
+
+(Trey): Right click on the file ending in ".sh" and click on "Get Info" and there is a panel on the pop-up window that is titled "Open with:".  Choose the program you want to use (terminal in this case), and you can press the "Change All" button to apply this to all files ending in this extension.
+
+(You): opening something with Terminal is the same as "sh foo.sh"? I didn't know that!
+
+(Trey): The only thing worth noting is that if the script exits cleanly the window closes right away!
+
+(You): I'm doing "mplayer ..." inside the script... I could do an & at the end to get rid of the window, hmmm.
+
+----------------------
+
+(Daniel): It's not an OS X problem, it's a command problem.  Don't type "open file.sh", type "sh ./file.sh".  That way it will "run" the shell file instead of "open"ing it.
+
+(You): well sure, but I'm trying to use it as a speech recognition command, and speech recognition does the equivalent of "Open".
+
+(Daniel): Ah, I see the problem now. Unfortunately, I do not know the answer to that.
+
+(You): someone suggested opening "Terminal" to run the shell script. I also tried changing the "Opens with" setting, but that hides /bin/sh even when Finder is set not to hide files.
+
+----------------------
+
+(Talkie): you don't open them, you execute them
+
+(Talkie): you invoke the sh file   as   ./something.sh
+
+(You): I'm using it from Mac OS X's speech recognition which does "open". I can run it from the command line fine.
+
+(Talkie): ok, well that would be up to tuning that software by its prefs to do it.  But that would be difficult, since you have to differentiate there.  Sorry I don't have an answer for that.  Maybe there's a prefix like "open command"  what voice recognition is it?  just the built in stuff?
+
+(You): the way OS X speech recognition works (just learned this today) is that you put a file called "Foo" in Speakable Items, and OS X automatically runs "open Foo". BTW, love the Red Dwarf ref! [direct gchat: carter.barry@gmail.com]
+
+(Talkie): I'm aitoaster@gmail.com
+
+
+
+[Vark assigned category: <b>web programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

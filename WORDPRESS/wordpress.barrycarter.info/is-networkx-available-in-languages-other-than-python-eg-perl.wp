@@ -1,0 +1,54 @@
+
+ID: 24537
+post_name: is-networkx-available-in-languages-other-than-python-eg-perl
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 21 Aug 2010 22:29:29 +0000
+post_type: post 
+post_status: publish
+post_title: Is networkx available in languages other than Python? EG, Perl?
+
+======================================================
+
+(You): Is networkx available in languages other than Python? EG, Perl?
+
+(Alexander): this looks very much like a python-centric package, however you may be able to build a similar object structure in Perl and pass that to a python program to process it further
+
+(You): thanks. That's what I've been doing so far. Using Perl to build up Python scripts. Seems a little ugly though, since I'm sure networkx is a C lib somewhere.
+
+(Alexander): the description of the library looks like it is really implemented in Python, the whole object handling is very Python like, I don't think that is implemented as c or c++
+
+(You): but since Python itself is implemented in C, wouldn't that imply that, underneath it all, networkx is too? I mean, it's all assembly when you get right down to it, no?
+
+(Alexander): I wonder if it possible to run Python itself as a library in Perl (or the other way around), that could be possible
+
+(Alexander): the next version of python and perl will use the same virtual machine, but until now, both are separate interpreters
+
+(You): true, but that seems even slower (C -&gt; Perl -&gt; Python). Are python and perl going to start using JVM or some other "standardized" VM? [direct gchat: carter.barry@gmail.com]
+
+(Alexander): I have your im contact already from a previous conversation
+
+(Alexander): who
+
+  20:01:05: Barry Carter lives in Albuquerque, US.
+
+
+
+Helped friends with Qs about **ebooks**, **homework**, and **car maintenance**.
+
+
+
+Your last conversation with him: http://vark.com/a/QItdv-H.
+
+Type 'Barry:' to follow up with him directly.
+
+----------------------
+
+(S??bastien): networkx itself, no, it's a Python module. However you can find similar frameworks in other languages. I know some Perl developers who use and contribute to Gephi (gephi.org), an extremely powerful exploration and manipulation tool for very complex graphs.
+
+(You): thanks! that's just the type of thing I was seeking!
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

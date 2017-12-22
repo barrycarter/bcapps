@@ -1,0 +1,40 @@
+
+ID: 27970
+post_name: i-need-a-server-that-accepts-email-for-some-domains-and-lets-me-check-that-email-using-imap-whats-my-cheapest-alternative
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 24 Apr 2010 22:03:58 +0000
+post_type: post 
+post_status: publish
+post_title: I need a server that accepts email for some domains and lets me check that email using IMAP. What's my cheapest alternative?
+
+======================================================
+
+(You): I need a server that accepts email for some domains and lets me check that email using IMAP. What's my cheapest alternative?
+
+(William): You could use google apps on the domain. See http://www.google.com/apps/intl/en/group/index.html , free for up to 50 users.
+
+(You): Does that work with subdomains? I already have google apps on the main domain, so the IMAP server would be for a subdomain.
+
+(William): Don't know but it should work for subdomains too...
+
+(You): I'm almost certain it doesn't, but I'll try it.
+
+(You): William, you rock! Google Apps *does* work w/ subdomains!
+
+(William): Thats awesome news!
+
+(You): Yes! Mind you, if google ever pulls its free stuff, the entire world will crumble.
+
+----------------------
+
+(Boris): Google Apps!? It's free and have all you need.
+
+----------------------
+
+(Andy): You can do it with google.  The standard edition is free, up to 100 users iirc.  If you set up one domain, you can make other domains an alias for that domain, too.  It's not just gmail, either.  Once you've got your domain set up for google, you have access to all google services from that domain.  Chat, calendar, docs, etc, all free.  http://www.google.com/apps/intl/en/group/index.html
+
+
+
+[Vark assigned category: <b>IMAP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

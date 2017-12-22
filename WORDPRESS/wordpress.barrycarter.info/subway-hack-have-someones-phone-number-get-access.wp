@@ -1,0 +1,26 @@
+
+ID: 2233
+post_name: subway-hack-have-someones-phone-number-get-access
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Sat, 14 May 2011 23:30:03 +0000
+post_type: post 
+post_status: publish
+post_title: Subway hack: have someone's phone number? Get access!
+
+======================================================
+
+You can log into Subway's ordering system using just a phone 
+number. After choosing a state and store, you'll see this frame as 
+part of a larger page:
+
+<a href="http://wordpress.barrycarter.org/wp-content/uploads/2011/05/subwayhack.png"><img src="http://wordpress.barrycarter.org/wp-content/uploads/2011/05/subwayhack-300x265.png" alt="" title="subwayhack" width="300" height="265" class="alignnone size-medium wp-image-2234" /></a>
+ 
+Once you enter a phone number, you're logged in: no password 
+required. Of course, the real blame here lies w/ snapfinger.com, since 
+the frame URL starts with 
+"http://www.snapfinger.com/Applications/ETG/Core/SignIn.aspx"
+
+(and I'm sure no one at all will "wardial" this form &lt;G&gt;)
+
+

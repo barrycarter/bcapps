@@ -1,0 +1,30 @@
+
+ID: 17723
+post_name: dominos-pizza-hack
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Sun, 30 Oct 2011 12:47:51 +0000
+post_type: post 
+post_status: publish
+post_title: Domino's Pizza Hack
+
+======================================================
+
+If you visit 
+ 
+http://trkweb.dominos.com/orderstorage/GetTrackerData?Phone=1xxxyyyzzzz 
+ 
+you will see any Domino's pizza orders for the given phone number (in 
+10-digit format). No password is required. 
+ 
+Potential evil use: run a script to test 1000s of numbers until you 
+find someone who is ordering a pizza ("war pizza ordering"?). Call 
+them up, tell them there's a problem with their credit card, 
+and... well, let your mind go crazy. 
+ 
+Poor judgement on Domino's part and may even violate their own privacy policy! 
+ 
+Of course, Subway is even worse about this!:
+
+http://wordpress.barrycarter.org/index.php/2011/05/14/subway-hack-have-someones-phone-number-get-access/
+

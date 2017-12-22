@@ -1,0 +1,88 @@
+
+ID: 26805
+post_name: my-x-server-is-using-500m-of-memory-is-this-normal-can-i-have-it-use-less-memory-wo-restarting-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 27 May 2010 23:54:35 +0000
+post_type: post 
+post_status: publish
+post_title: My X server is using 500M+ of memory. Is this normal? Can I have it use less memory w/o restarting it?
+
+======================================================
+
+(You): My X server is using 500M+ of memory. Is this normal? Can I have it use less memory w/o restarting it?
+
+(Eugenio): Yes it is too much. Which tool did you use to see the total amount of memory?
+
+(You): I used both 'top' and 'ps'. How can I reduce the memory usage?
+
+(Eugenio): which linux distro and version are you using? and what xorg package? Window manager?
+
+(You): Fedora 11, not sure which xorg, and using FVWM2.
+
+(Eugenio): ok, then it's posible that the X Server is using that much memory
+
+(You): can I make it use less? When should I worry that it's too big? 750M? 1G?
+
+(Eugenio): If you use another windows manager (Gnome, KDE) the memory will be distributed across
+
+(Eugenio): many processes
+
+(You): but it'll still use a lot of memory total?
+
+(Eugenio): If you like light windows managers, try LXDE http://lxde.org/  of Fluxbox (older), or Xfce (old)
+
+(Eugenio): the amount of memory will depend on the apps that you start on the X Session...
+
+(You): I'm sort of hooked on fvwm2 and have tweaked it to be just right for me. So, when I run xclock (for example), that adds to the X server's memory load even though xclock uses its own memory too?
+
+(Eugenio): I think, taht will happened when you start complex apps like Firefox, or other that depends on a framework to work (gtk for gnome apps or qt for kde apps)
+
+(You): is there any way to see how X is using all this memory? Would closing windows make X give up memory back to the OS?
+
+(Eugenio): If close it, yes that will free the memory. But it's a great idea to update your system too. fedora is on 13 now, may be you need an update
+
+(Eugenio): or at least of your current version
+
+(You): updates are very painful so I tend to avoid them
+
+(You): I just closed an app and opened another and checked X11 memory each time -- no real change.
+
+(Eugenio): Sorry to tell that Fedora tends to be update dependant, so I strongly recommend you to do one a month
+
+(You): it takes me more than a month to recover from an update!
+
+(Eugenio): Jejeje, tried this to check xorg version. rpm -q xorg
+
+(You): it says "package xorg is not installed". I might be using XFree. I also use yum as my package manager-- is there an equivalent command?
+
+(Eugenio): Try rpm -qa xorg* . rpm is the package manager, yum is a tool to make life easier to us (that uses rpm for us).
+
+(You): OK, that command gave me lots of output. "xorg-x11-server-common-1.6.4-0.1.fc11.i586" is probably the most relevant result?
+
+(Eugenio): "https://bugzilla.redhat.com/show_bug.cgi?id=487494 [https://bugzilla.redhat.com/show_bug.cgi?id=487494] - Bug 487494 ??? Xorg server from rawhide takes up HUGE amounts of memory"
+
+(You): looking at that now, but what's the fix?
+
+(You): ack! It wants to upgrade 498 packages!
+
+(Eugenio): Yes!. Told you that Fedora relay on updates. Do it, remember that you can still work will it download and update packages
+
+(You): oh, it's not the time I care about. It just breaks everything I'm doing. I did "yum upgrade 'xorg-*'" and it only wants to update 3 driver-like packages.
+
+(Eugenio): try that, but I strongly recommed that you make a full upgrade.
+
+(You): thanks, but that kills me everytime. I doubt the driver updates will help -- they all seem to be video driver related and that's video memory, not main memory.
+
+(Eugenio): Good luck, and trust the updates!
+
+----------------------
+
+(Wannes): yes, that's a lot. Has it been running for a long time? I'm afraid there's no way to keep it down other than restarting it. Are you using standard drivers for your videocard? Or native ones?
+
+(You): I don't know-- I just installed Fedora 11 and everything worked, so I don't question it.
+
+
+
+[Vark assigned category: <b>X server</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

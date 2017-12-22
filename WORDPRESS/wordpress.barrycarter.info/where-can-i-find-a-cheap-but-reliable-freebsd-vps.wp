@@ -1,0 +1,32 @@
+
+ID: 27972
+post_name: where-can-i-find-a-cheap-but-reliable-freebsd-vps
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 24 Apr 2010 21:59:11 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find a cheap, but reliable FreeBSD VPS?
+
+======================================================
+
+(You): Where can I find a cheap, but reliable FreeBSD VPS?
+
+(Chad): Rootbsd.net offers FreeBSD Virtual Private Servers starting at $19.97. There are a few reviews online and they are almost all positive.
+
+(You): Thanks! $20/month is a lot though? I've seen VPS under $5/month at lowendbox.com. They aren't FreeBSD, but is FreeBSD really that much harder to virtualize?
+
+----------------------
+
+(Saul): I used johncompanies.com for bsd hosting years with no complaints, good support, no downtime, but now use Hetzner.de for European hosting, which is excellent and very affordable.
+
+(You): What's the ballpark range they charge? I've seen VMs for less than US $5/month.
+
+(Saul): Johncompanies was way more than that: 25 usd/month, but for a very decent set of features. Hetzner is way more expensive, but that's European hosting for you... If you can get $5/month and it meets your spec, go for it!
+
+(You): Thanks! I'm just trying to run a simple IMAP server, so I don't need much.
+
+
+
+[Vark assigned category: <b>FreeBSD</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,26 @@
+
+ID: 26252
+post_name: in-virtualbox-how-do-i-mount-a-media-volume-eg-mymachine-vdk-on-to-the-host-os-i-want-to-pull-some-files-off-a-vm-and-then-nuke-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 10 Jun 2010 00:20:55 +0000
+post_type: post 
+post_status: publish
+post_title: In VirtualBox, how do I mount a media volume (eg, mymachine.vdk) on to the host OS? I want to pull some files off a VM and then nuke it.
+
+======================================================
+
+(You): In VirtualBox, how do I mount a media volume (eg, mymachine.vdk) on to the host OS? I want to pull some files off a VM and then nuke it.
+
+(Isidoro): is not possible, based on my experience. I use other methods to tranfer files between VM and "Host Machine", like ssh or ftp.
+
+(You): thanks. The guest machine in this case is Windows -- is there an easy way to get files off it? Right now, I'm using Guest Additions and shared folders, but this seems ugly.
+
+(Isidoro): install filezilla server on windows an connetc to it from the other machine. Then pull or push the files
+
+(You): thanks. It turns out Guest Additions worked quite well!
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

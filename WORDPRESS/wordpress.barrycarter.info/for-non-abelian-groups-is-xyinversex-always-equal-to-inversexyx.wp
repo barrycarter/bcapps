@@ -1,0 +1,36 @@
+
+ID: 27554
+post_name: for-non-abelian-groups-is-xyinversex-always-equal-to-inversexyx
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 02:22:15 +0000
+post_type: post 
+post_status: publish
+post_title: For non-Abelian groups, is x*y*inverse(x) always equal to inverse(x)*y*x?
+
+======================================================
+
+(You): For non-Abelian groups, is x*y*inverse(x) always equal to inverse(x)*y*x?
+
+(Harris): Unfortunately, this is not so. Check out dihedral 3 as an example of a contradiction.
+
+(You): Where can I see that group? Is there a wikipedia page for it? It's not the same thing as S3, the permutation group on 3 elements, right?
+
+(Harris): http://mathworld.wolfram.com/DihedralGroupD3.html
+
+(You): Thanks! It looks like this is S3 after all.
+
+(Harris): Oop. Right you are.
+
+----------------------
+
+(Matt): No.
+
+(You): Gee, that's helpful.
+
+(Matt): Specifically, consider the group of invertible 2x2 matrices.  Let x = [[2,1][0,1]] and let y = [[0,-1][1,0]].
+
+
+
+[Vark assigned category: <b>non-Abelian</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

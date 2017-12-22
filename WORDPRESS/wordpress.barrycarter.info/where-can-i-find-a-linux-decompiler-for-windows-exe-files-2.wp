@@ -1,0 +1,46 @@
+
+ID: 26167
+post_name: where-can-i-find-a-linux-decompiler-for-windows-exe-files-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 23:14:36 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find a Linux decompiler for Windows EXE files?
+
+======================================================
+
+(You): Where can I find a Linux decompiler for Windows EXE files?
+
+(Andy): "Decompiling" Windows EXEs in general is difficult, as the compiled version could be from any of a number of different environments: it may have been written by hand in assembly, it could have been a C program compiled by any one of several compilers, it could be interpreted code and a wrapper, etc. Your best bet, unless you know a good deal about the source file, is to try a disassembler, and work from there. IDA Pro is one of the more well-known disassemblers, and it has a Linux version (as well as a Windows version that I'm told works acceptably under Wine). You may also have some success running the free Windows disassembler OllyDbg (try version 2.0, just released) under Wine, although it is still 32-bit only.
+
+(Andy): You can try IDA Pro 5.6 as a demo, or get 4.9 (for non-commercial purposes) as freeware from http://www.hex-rays.com/idapro/idadown.htm  . It's not clear where the Linux version can be downloaded for a demo, but the fact that there is a Linux version is mentioned at http://www.hex-rays.com/idapro/linux/index.htm  , and you can probably contact them for more information.
+
+(You): thanks. Are there any decompilers that run natively on Linux but decompile EXE files. I found REC, but wonder if there are others.
+
+(You): thanks... let me see what REC does first.
+
+(Andy): Good luck. This page has a fairly good explanation of things at the moment: http://strategoxt.org/Transform/AutomaticDecompiler [http://strategoxt.org/Transform/AutomaticDecompiler] . (See also http://strategoxt.org/Transform/DeCompilation [http://strategoxt.org/Transform/DeCompilation] )
+
+----------------------
+
+(Derek): Wine is a good choice.  Avalible for mac or Linux, also on ubuntu software center.
+
+(You): thanks, but I want to decompile the software, not run it!
+
+(Derek): What program?
+
+(You): it's a custom program called "Best Options Direct". I know they use SOAP/REST or something to get their data, but sniffing the network traffic hasn't helped enough. I need to find exactly what they're doing. Running "strings" on the executable helps, but is insufficient.
+
+(Derek): Figure out what code it is written in, c,c#,basic? Usually decompilers are code speciic.
+
+(You): I found something called 'REC' that decompiles it into what looks like assembly. I'm guessing they wrote it in C# for .NET but am not sure. My interest in the problem is also mild-- if decompilation doesn't work, there must be another solution.
+
+(Derek): Yeah.  If it doesn't work ask around at some fourms.
+
+(You): thanks. I'm seriously tempted to just work on the network sniff and/or tackle the problem in some other way.
+
+
+
+[Vark assigned category: <b>decompiler</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

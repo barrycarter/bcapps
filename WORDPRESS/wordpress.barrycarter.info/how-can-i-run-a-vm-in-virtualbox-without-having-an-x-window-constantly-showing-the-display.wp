@@ -1,0 +1,48 @@
+
+ID: 27735
+post_name: how-can-i-run-a-vm-in-virtualbox-without-having-an-x-window-constantly-showing-the-display
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 21:40:55 +0000
+post_type: post 
+post_status: publish
+post_title: How can I run a VM in VirtualBox without having an X window constantly showing the display?
+
+======================================================
+
+(You): How can I run a VM in VirtualBox without having an X window constantly showing the display?
+
+(Michael): lame workaround...you should probably wait for a better answer :-)
+
+
+
+Run vncserver, connect to your vncserver session and start the VM there. 
+
+
+
+Then it's actually running, but not on your screen and you can connect/disconnect from VNC at will.
+
+(You): Actually, that's exactly what I was doing previously. It is a little nicer, since the windows are running on another machine, but I'm going to remove X on that machine, since I want the physical layer of the VM server to be as small as possible. So "ssh -X" is the only way I can run X apps on it. I suspect VirtualBox has a non-graphics mode it runs in, but I can't figure out how to get to it.
+
+(Michael): IIRC, you will find that ssh -X will not work if you remove X from the server. I know that VMWare does do command line only VMs as I have run it that way before, but I have never done CLI VirtualBox. Best of luck!
+
+(You): Thanks. I thought "ssh -X" just ran a tunnel back to the client machine and only the client machine had to run X? I've used vmrun to control VMs via command line too... maybe I should go w/ that, but everyone says VirtualBox is better.
+
+(Michael): Apps run through SSH are located on the server. I think the real issue is that graphical apps link to shared X libraries. So, you remove X, those libs are gone, and it will complain. When I was doing it though, I had more pressing matters and ended up just leaving X installed, so there may be a way around it, or it may have been the specific programs I was working with.       You can test with your package manager, run the remove X command and check what all it wants to remove.
+
+(You): You're right, of course. I think what I meant was that X11 doesn't have to be *running* on the remote machine, it just has to be installed. That's still a big plus because the X process takes up lots of memory, at least when I run it.
+
+(Michael): That makes sense. Yes, running VNC would still be using up RAM for the X process. So by going CLI you won't save disk space, but you will save on RAM (which is probably more in demand anyways)
+
+----------------------
+
+(Shawn): You're looking for "headless":
+
+http://forums.virtualbox.org/viewtopic.php?f=1&t=30245&p=134263&hilit=headless#p134263
+
+(You): Thank you! I saw "headless" earlier (along with 3 other options re how to start VirtualBox), but didn't know what it meant, so ignored it.
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

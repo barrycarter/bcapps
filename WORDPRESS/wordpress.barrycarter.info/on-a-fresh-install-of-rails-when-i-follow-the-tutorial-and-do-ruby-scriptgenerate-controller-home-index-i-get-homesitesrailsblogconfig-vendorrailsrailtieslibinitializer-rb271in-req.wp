@@ -1,0 +1,18 @@
+
+ID: 25406
+post_name: on-a-fresh-install-of-rails-when-i-follow-the-tutorial-and-do-ruby-scriptgenerate-controller-home-index-i-get-homesitesrailsblogconfig-vendorrailsrailtieslibinitializer-rb271in-req
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 20 Jun 2010 21:31:13 +0000
+post_type: post 
+post_status: publish
+post_title: On a fresh install of rails, when I follow the tutorial and do "ruby script/generate controller home index" I get "/home/sites/rails/blog/config/../vendor/rails/railties/lib/initializer.rb:271:in `require_frameworks': no such file to load -- action_controller (RuntimeError)". Fix how?
+
+======================================================
+
+(You): On a fresh install of rails, when I follow the tutorial and do "ruby script/generate controller home index" I get "/home/sites/rails/blog/config/../vendor/rails/railties/lib/initializer.rb:271:in `require_frameworks': no such file to load -- action_controller (RuntimeError)". Fix how?
+
+
+
+[Vark assigned category: <b>web programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

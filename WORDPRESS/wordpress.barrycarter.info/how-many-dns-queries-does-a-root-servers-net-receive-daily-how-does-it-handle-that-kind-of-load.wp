@@ -1,0 +1,38 @@
+
+ID: 27345
+post_name: how-many-dns-queries-does-a-root-servers-net-receive-daily-how-does-it-handle-that-kind-of-load
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 08 May 2010 00:04:01 +0000
+post_type: post 
+post_status: publish
+post_title: How many DNS queries does a.root-servers.net receive daily + how does it handle that kind of load?
+
+======================================================
+
+(You): How many DNS queries does a.root-servers.net receive daily + how does it handle that kind of load?
+
+(Steve): Unknown as to the number, but I believe that queries to a.root-servers.net is usually reserved for larger ISPs when making queries. the a level servers hold the master database. Once asked for an address, the asker should then query to authoritative server for the domain in question, not go back to the root.
+
+(Steve): a.root-servers.net does not have to be a single machine, it could be many machines load balanced to answer quries to the name a.root-servers.net. THis is conjecture. In any case, since the root servers are only supposed to be asked when finding out what host is DNS authoritative for a given domain, the amount of queries *should* be less than say other main ISP dns servers.
+
+(You): Thanks. Yes, I realize most ISP domain servers know to a.gtld-servers.net or cache information for specific domains. However, I just figured there were enough badly behaved apps that a.root-servers got pounded. Even w/ load balancing, that router must handle a lot of traffic (yes, it's UDP + each query is tiny, but still?)
+
+(Steve): yes, they do get pounded, and about 6 months ago, there was a botnet that flooded the net w/bogus dns requests. Came very close to seriously disrupting things. Changes to the root network were initiated because of that storm. maybe a year ago.
+
+(You): interesting, thanks! They don't release stats on how much traffic they get, huh?
+
+(Steve): try netcraft.net - there is all kinds of network stuff recorded there, like browsers, hosts, and dns
+
+----------------------
+
+(Jordan): while I am sure they get a lot of load, it is probably a lot less than you would expect. DNS is inherently hierarchical & cacheable, so most of the time any given request wont go anywhere near the root servers at all. normally, when you make a request it will be sent through your ISP's system, which will have cached DNS records. Should your request's address not be in the cache, it will propogate upwards to the next set of DNS servers before falling back to the root servers as a last resort. The root servers really mostly exist just to be the canonically correct listing for the very top level providers to access, and everyone else reads from the cache of the layer just above them.
+
+(You): thanks! I thought there would be enough badly behaved servers (or applications) that a.root-servers would get pounded. Maybe not.
+
+(Jordan): its happened, notably back in '02 or '03 they had a significant DDOS attack against the root servers. due to the structure of DNS it didn't really bother anyone since they just used their own caches or their peer's caches when they had difficulty accessing the root servers. These days the root servers are pretty heavily duplicated, too, so the "13 root servers" are actually supported by over 200 real machines spread out over different geographic sites (and hence different internet links) so when one goes down they can switch to a mirror somewhere else
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

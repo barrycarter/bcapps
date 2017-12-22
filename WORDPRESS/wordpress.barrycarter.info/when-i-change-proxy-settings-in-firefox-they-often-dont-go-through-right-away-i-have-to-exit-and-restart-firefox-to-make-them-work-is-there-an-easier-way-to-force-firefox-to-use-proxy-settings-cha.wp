@@ -1,0 +1,32 @@
+
+ID: 23485
+post_name: when-i-change-proxy-settings-in-firefox-they-often-dont-go-through-right-away-i-have-to-exit-and-restart-firefox-to-make-them-work-is-there-an-easier-way-to-force-firefox-to-use-proxy-settings-cha
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 15 Nov 2010 03:23:10 +0000
+post_type: post 
+post_status: publish
+post_title: When I change proxy settings in Firefox, they often don't go through right away: I have to exit and restart Firefox to make them work. Is there an easier way to force Firefox to use proxy settings changes the moment I make them?
+
+======================================================
+
+(You): When I change proxy settings in Firefox, they often don't go through right away: I have to exit and restart Firefox to make them work. Is there an easier way to force Firefox to use proxy settings changes the moment I make them?
+
+(Poodle): Use Chrome.
+
+----------------------
+
+(Dirk): hi,
+
+
+
+that's a strange behavior of FireFox, never heard any similar. but you can try foxyproxy. It's a plugin and supports a lot proxies and is easy to handle
+
+
+
+hope this helps. if not, check your installation of your operating system
+
+
+
+[Vark assigned category: <b>Firefox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,20 @@
+
+ID: 25100
+post_name: how-do-i-comment-out-a-region-of-code-in-mathematica-the-obvious-is-stuff-but-this-doesnt-work-if-the-commented-out-code-has-comments-itself
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 28 Jun 2010 05:30:46 +0000
+post_type: post 
+post_status: publish
+post_title: How do I comment out a region of code in Mathematica? The obvious is "(* stuff *)", but this doesn't work if the commented out code has comments itself?
+
+======================================================
+
+(You): How do I comment out a region of code in Mathematica? The obvious is "(* stuff *)", but this doesn't work if the commented out code has comments itself?
+
+(Daniel): Hi, Barry.  +)  I'm seeing a few indications that using a text region for this.  "A text region is very useful for adding comments or to temporarily disabling some code and prevent it from executing ("commenting out")."  Here's the source of that quote: http://www.exciton.cs.rice.edu/faculty/wong/mathematica/MathTips.htm#Manipulating%20Input%20Regions
+
+
+
+[Vark assigned category: <b>Mathematica</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

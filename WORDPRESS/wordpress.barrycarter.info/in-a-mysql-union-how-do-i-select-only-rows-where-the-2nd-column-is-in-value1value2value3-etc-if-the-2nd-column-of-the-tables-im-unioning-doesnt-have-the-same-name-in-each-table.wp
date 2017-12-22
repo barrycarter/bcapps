@@ -1,0 +1,40 @@
+
+ID: 26403
+post_name: in-a-mysql-union-how-do-i-select-only-rows-where-the-2nd-column-is-in-value1value2value3-etc-if-the-2nd-column-of-the-tables-im-unioning-doesnt-have-the-same-name-in-each-table
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 05 Jun 2010 20:04:21 +0000
+post_type: post 
+post_status: publish
+post_title: In a MySQL union, how do I select only rows where the 2nd column is IN (value1,value2,value3), etc, if the 2nd column of the tables I'm unioning doesn't have the same name in each table?
+
+======================================================
+
+(You): In a MySQL union, how do I select only rows where the 2nd column is IN (value1,value2,value3), etc, if the 2nd column of the tables I'm unioning doesn't have the same name in each table?
+
+(Tamal): Alias the columns so they have the same name:
+
+
+
+SELECT foo AS bar, baz AS n FROM ...
+
+----------------------
+
+(Abd Allah): You can give the columns aliases. For example:
+
+SELECT * FROM (
+
+SELECT A, B As MyColumn, C FROM TABLE1
+
+UNION
+
+SELECT D, E As MyColumn, F FROM TABLE2
+
+) AS UnionSelect
+
+WHERE MyColumn IN (Value1, Value2, Value3);
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,34 @@
+
+ID: 24045
+post_name: how-do-i-use-repeat-to-repeat-the-date-command-10-times-with-a-5-second-interval-between-each-command-repeat-10-date-sleep-5-doesnt-work
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 10 Oct 2010 21:50:02 +0000
+post_type: post 
+post_status: publish
+post_title: How do I use 'repeat' to repeat the date command 10 times with a 5 second interval between each command? "repeat 10 (date; sleep 5)" doesn't work.
+
+======================================================
+
+(You): How do I use 'repeat' to repeat the date command 10 times with a 5 second interval between each command? "repeat 10 (date; sleep 5)" doesn't work.
+
+(Tanaeem): use until, see syntax from http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-7.html
+
+----------------------
+
+(Klaus): I don't seem to have repeat installed, but you could try: repeat 10 sh -c "date; sleep 5"
+
+(Klaus): Or you could simply: for i in {1..10} ; do date ; sleep 5 ; done
+
+(You): that worked, thank you!!! repeat is tcsh-builtin, not an external program.
+
+(Klaus): Ah, your question was tagged **bash** so I thought it was a bourne shell.  I only know tcsh superficially...
+
+(You): I really should retag questions when vark gets them wrong, but I'm too lazy :)
+
+(Klaus): :)
+
+
+
+[Vark assigned category: <b>mathematics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

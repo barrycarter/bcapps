@@ -1,0 +1,34 @@
+
+ID: 17969
+post_name: quora-tip-ask-question-without-stupid-autocomplete
+post_category: other
+post_author: barrycarter
+post_date_gmt: Wed, 02 Nov 2011 20:45:31 +0000
+post_type: post 
+post_status: publish
+post_title: Quora tip: ask question without stupid autocomplete!
+
+======================================================
+
+Ever since vark.com died, I've used quora.com to ask simple questions 
+(stackexchange.com for more complex ones). 
+ 
+I prefer to type my questions in a word processor (emacs) and then 
+cut/paste them, since webform boxes were never meant for editing. 
+ 
+The problem: Quora tries to auto-complete your question, and cut/paste 
+somehow breaks this. If I give in and try typing the question out, the 
+auto-complete slows the process down to a crawl. 
+ 
+Solution: After preparing your question in a word processor, do "add 
+question" in Quora, with the title "WTF?" (or any short phrase). Then, 
+when the "add detail" box comes up, you can cut/paste the subject (and 
+body) without autocomplete interfering. 
+ 
+Note: If Quora gives you an error, go to the subject box, and add a 
+space to the end of the text. This will remove the "too short" 
+error. If you click "ask question" and it says "doesn't look like a 
+real question", click on the hyperlink (not button) to confirm it is a 
+question. 
+
+

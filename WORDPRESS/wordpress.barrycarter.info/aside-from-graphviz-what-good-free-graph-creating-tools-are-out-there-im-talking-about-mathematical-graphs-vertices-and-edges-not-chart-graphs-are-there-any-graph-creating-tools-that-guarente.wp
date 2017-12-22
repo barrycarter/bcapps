@@ -1,0 +1,60 @@
+
+ID: 25462
+post_name: aside-from-graphviz-what-good-free-graph-creating-tools-are-out-there-im-talking-about-mathematical-graphs-vertices-and-edges-not-chart-graphs-are-there-any-graph-creating-tools-that-guarente
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 09:18:44 +0000
+post_type: post 
+post_status: publish
+post_title: Aside from graphviz, what good free graph-creating tools are out there? I'm talking about mathematical graphs (vertices and edges), not "chart graphs". Are there any graph-creating tools that guarentee a planar graph will be drawn in a planar fashion?
+
+======================================================
+
+(You): Aside from graphviz, what good free graph-creating tools are out there? I'm talking about mathematical graphs (vertices and edges), not "chart graphs". Are there any graph-creating tools that guarentee a planar graph will be drawn in a planar fashion?
+
+(Daniel): gnuplot
+
+(You): gnuplot doesn't deal with graphs at all, does it? Not mathematical ones anyway?
+
+(Daniel): gnuplot was specifically designed to do mathematical graphing.
+
+(You): I'm pretty sure we're talking about different meanings of the word graph, but OK: how do I get gnuplot to display K4 (the complete graph on 4 vertices) planarly?
+
+(Daniel): Ok what definition of graph are you working off of?
+
+(You): http://en.wikipedia.org/wiki/Graph_%28mathematics%29 [http://en.wikipedia.org/wiki/Graph_%28mathematics%29]
+
+(Daniel): Try NetworkX or Graphviz
+
+(You): networkx is great and I use it, but I don't believe it draws graphs -- it just solves graph-related problems, no?
+
+(Daniel): I assume it can:
+
+
+
+http://networkx.lanl.gov/reference/generated/networkx.draw.html
+
+(You): hmmm, cool! I didn't know it could do that.
+
+----------------------
+
+(Tamvana): I think the Boost graph library can do planar embeddings of graphs. If that doesn't work for you, a little bit of poking around suggests you might have luck with JGraphEd, WilmaScope or VGJ.
+
+(You): OK, I've installed the boost library. Does it give me any command-line tools or can I only write C++ programs with it?
+
+(Tamvana): Only C++ programs, but there are examples online of how to do the kind of thing you want to do. (Just search for "Boost planarity")
+
+(You): thanks. Surely someone has written some basic command line tools, just like they do for most libraries? Is there a Perl Boost module? I feel more comfortable programming in Perl.
+
+----------------------
+
+(Adam): I don't have direct personal experience, but there are some links to explore
+
+here:
+
+http://en.wikipedia.org/wiki/DOT_language
+
+
+
+[Vark assigned category: <b>Graphviz</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

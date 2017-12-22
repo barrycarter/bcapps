@@ -1,0 +1,32 @@
+
+ID: 24238
+post_name: what-are-some-good-open-source-nosql-database-programs-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 18 Sep 2010 05:21:02 +0000
+post_type: post 
+post_status: publish
+post_title: What are some good open-source NoSQL database programs?
+
+======================================================
+
+(You): What are some good open-source NoSQL database programs?
+
+(Michael): never used them... heard of mongo + cassandra but beyond me in this mysql + mssql world (my project managers never heard of and i couldnt begine to explain)
+
+(You): thanks. Yes, I'm curious what's so great about NoSQL too. SQL has always served my needs wonderfully w/ the exception of accumulating variables. I want to download a program to see what all the fuss is about.
+
+(Michael): but of course this is hi-end stuff in the realm of facebook + google who have super site or of course the next startup that becomes facebook lol
+
+(You): yes, I've read some articles that say how great NoSQL is for those purposes, but none that actually explain how NoSQL works, or how it's different from MySQL.
+
+----------------------
+
+(S??bastien): CouchDB, MongoDB, TokyoCabinet, Redis to name a few. There are many more, but the choice of which to use depends on your needs.
+
+(You): thanks. My current desire is to just understand and learn the concept of NoSQL. Any reccomendations?
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

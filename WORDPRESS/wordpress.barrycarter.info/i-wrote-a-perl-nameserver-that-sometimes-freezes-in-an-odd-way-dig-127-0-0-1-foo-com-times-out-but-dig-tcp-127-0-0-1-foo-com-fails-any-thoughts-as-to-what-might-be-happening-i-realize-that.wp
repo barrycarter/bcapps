@@ -1,0 +1,44 @@
+
+ID: 26053
+post_name: i-wrote-a-perl-nameserver-that-sometimes-freezes-in-an-odd-way-dig-127-0-0-1-foo-com-times-out-but-dig-tcp-127-0-0-1-foo-com-fails-any-thoughts-as-to-what-might-be-happening-i-realize-that
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 14 Jun 2010 21:52:15 +0000
+post_type: post 
+post_status: publish
+post_title: I wrote a Perl nameserver that sometimes freezes in an odd way: "dig @127.0.0.1 foo.com" times out, but "dig +tcp @127.0.0.1 foo.com" fails. Any thoughts as to what might be happening? I realize that I should post code, etc, but, for right now, I want to know if there's an obvious solution based on the 'dig' results.
+
+======================================================
+
+(You): I wrote a Perl nameserver that sometimes freezes in an odd way: "dig @127.0.0.1 foo.com" times out, but "dig +tcp @127.0.0.1 foo.com" fails. Any thoughts as to what might be happening? I realize that I should post code, etc, but, for right now, I want to know if there's an obvious solution based on the 'dig' results.
+
+(Ketil): what is "sometimes", perhaps there's a hint in understanding when this happens... UDP doesn't guarantee arrival, as you already know, but you shouldn't be losing anything on 127.0.0.1. Use tcpdump/wireshark to see exactly what is going on on the wire, while running your program in strace to see exactly what it does. Then you'll know what to do next.
+
+(You): thanks. I actually did strace it and it seems to be waiting for something. It's like it stops listening for UDP packets entirely.
+
+(Ketil): maybe something in the code?
+
+(You): LOL :) Maybe. It works fine w/ UDP for a while (a while being anywhere from 5m to 24h+) and then decides to stop listening on UDP. I did an strace. When I use +tcp, I get lots of stuff and it works fine. When I don't, it does this like it's totally ignoring the UDP request: select(8, [4], NULL, NULL, {5, 762000}) = 0 (Timeout)
+
+time(NULL)                              = 1276531320
+
+select(8, [4], NULL, NULL, {10, 0})     = 0 (Timeout)
+
+time(NULL)                              = 1276531330
+
+select(8, [4], NULL, NULL, {10, 0})     = 0 (Timeout)
+
+time(NULL)                              = 1276531340
+
+(Ketil): does a tcpdump show packets being sent "on the wire"? Can you spot something in those packets? I can't think of anything really obvious that would cause this
+
+(You): Thanks, it looks like that will be my next step
+
+----------------------
+
+(Aaron): I would try using wireshark to see what is going on.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

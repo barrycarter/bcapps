@@ -1,0 +1,20 @@
+
+ID: 26387
+post_name: i-want-to-add-a-rectangle-not-a-region-of-numbers-in-emacs-is-there-any-way-to-do-this-i-realize-i-could-export-the-rectangle-and-use-another-program-etc-but-does-emacs-have-any-rudimentary-spr
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 06 Jun 2010 23:55:41 +0000
+post_type: post 
+post_status: publish
+post_title: I want to add a rectangle (not a region) of numbers in emacs. Is there any way to do this? I realize I could export the rectangle and use another program, etc, but does emacs have any rudimentary "spreadsheet like" functions built-in?
+
+======================================================
+
+(You): I want to add a rectangle (not a region) of numbers in emacs. Is there any way to do this? I realize I could export the rectangle and use another program, etc, but does emacs have any rudimentary "spreadsheet like" functions built-in?
+
+(Jay): http://www.emacswiki.org/emacs/SimpleEmacsSpreadsheet is a spreadsheet major mode for emacs
+
+
+
+[Vark assigned category: <b>Emacs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,42 @@
+
+ID: 27496
+post_name: when-i-do-a-load-data-infile-in-mysql-how-can-i-tell-it-ignore-rows-that-would-break-my-unique-index-in-other-words-the-load-data-equivalent-of-insert-ignore
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 21:16:08 +0000
+post_type: post 
+post_status: publish
+post_title: When I do a "LOAD DATA INFILE" in MySQL, how can I tell it ignore rows that would break my UNIQUE INDEX. In other words, the LOAD DATA equivalent of "INSERT IGNORE"
+
+======================================================
+
+(You): When I do a "LOAD DATA INFILE" in MySQL, how can I tell it ignore rows that would break my UNIQUE INDEX. In other words, the LOAD DATA equivalent of "INSERT IGNORE"
+
+(Jay): no, i don't believe so.  you can drop the index first
+
+(You): but I'm using the index to prevent duplicates. And I won't be able to add it back. Am I stuck w/ using INSERT IGNORE?
+
+(Jay): yes, unless you want to insert into a separate table and then merge the two
+
+(You): yes, someone else suggested that as well. That's how I'll do it!
+
+----------------------
+
+(Rob): not sure.  but you can load into a temp table and then do an insert select into the table you originally wanted to load to (insert into "existing table" (fields) select from "temp table" where rows in temp table do not confilct with unique index on "existing table").
+
+(You): I like that! And if I use INSERT IGNORE, I can preserve uniqueness.
+
+(Rob): Yes.  I dont know how to use the IGNORE as I've never done it.  But the Load into a temp table and Insert-Select combo I have used many times in Oracle and SQL Server so I'm sure it'll work in MySQL and you can keep the data in the Temp Table in case you dont want to dump the data that conflicts with the Unique Index
+
+----------------------
+
+(Robert): I don't believe there is a way directly.  An option would be to LOAD the data into a temporary table and then use an INSERT SELECT query with the IGNORE or ON DUPLICATE modifier.
+
+(You): thanks, but http://dev.mysql.com/doc/refman/5.5/en/load-data.html [http://dev.mysql.com/doc/refman/5.5/en/load-data.html] shows that LOAD DATA supports IGNORE!
+
+(Robert): That is if you know the the top n rows of the source file have header information.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

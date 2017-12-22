@@ -1,0 +1,20 @@
+
+ID: 24643
+post_name: i-roll-3-dice-and-my-opponent-rolls-2-if-the-highest-of-my-dice-beats-the-highest-of-his-dice-i-win-in-case-of-a-tie-i-lose-for-example-if-i-roll-146-the-highest-of-my-dice-is-6-if-one-of-m
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 01 Aug 2010 23:55:51 +0000
+post_type: post 
+post_status: publish
+post_title: I roll 3 dice and my opponent rolls 2. If the highest of my dice beats the highest of his dice, I win. In case of a tie, I lose. For example, if I roll {1,4,6} the highest of my dice is 6. If one of my opponents dice reads 6, since ties mean I lose. What's my probability of winning? How about for m and n dice instead of 3 and 2?
+
+======================================================
+
+(You): I roll 3 dice and my opponent rolls 2. If the highest of my dice beats the highest of his dice, I win. In case of a tie, I lose. For example, if I roll {1,4,6} the highest of my dice is 6. If one of my opponents dice reads 6, since ties mean I lose. What's my probability of winning? How about for m and n dice instead of 3 and 2?
+
+I can solve this problem by enumerating all 6^5 cases, but there must be a better way, as n^m grows rapidly.
+
+
+
+[Vark assigned category: <b>gambling</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

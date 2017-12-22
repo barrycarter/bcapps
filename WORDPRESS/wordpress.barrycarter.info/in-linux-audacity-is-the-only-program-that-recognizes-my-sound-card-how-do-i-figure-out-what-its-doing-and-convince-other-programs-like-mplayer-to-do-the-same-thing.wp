@@ -1,0 +1,24 @@
+
+ID: 25177
+post_name: in-linux-audacity-is-the-only-program-that-recognizes-my-sound-card-how-do-i-figure-out-what-its-doing-and-convince-other-programs-like-mplayer-to-do-the-same-thing
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 24 Jun 2010 20:02:39 +0000
+post_type: post 
+post_status: publish
+post_title: In Linux, audacity is the only program that recognizes my sound card. How do I figure out what it's doing and convince other programs (like mplayer) to do the same thing?
+
+======================================================
+
+(You): In Linux, audacity is the only program that recognizes my sound card. How do I figure out what it's doing and convince other programs (like mplayer) to do the same thing?
+
+(David): Take a look at your drivers to see if there are  multiple ones to choose from.
+
+----------------------
+
+(fiver): Many Linux audio programs will let you manually choose the soundcard they use -usually found under the applications preferences. --You could also try disabling the other soundcard/onboard sound completely (in Ubuntu it's under Sound Preferences, Hardware Tab, select the soundcard you want to modify, and set to off). I'm sure it's a similar method in most of the big distros.
+
+
+
+[Vark assigned category: <b>sound card</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

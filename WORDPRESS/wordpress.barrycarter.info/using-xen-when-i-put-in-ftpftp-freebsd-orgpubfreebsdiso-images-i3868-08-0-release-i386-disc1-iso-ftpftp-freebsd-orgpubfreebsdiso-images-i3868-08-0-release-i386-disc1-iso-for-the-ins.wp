@@ -1,0 +1,18 @@
+
+ID: 26335
+post_name: using-xen-when-i-put-in-ftpftp-freebsd-orgpubfreebsdiso-images-i3868-08-0-release-i386-disc1-iso-ftpftp-freebsd-orgpubfreebsdiso-images-i3868-08-0-release-i386-disc1-iso-for-the-ins
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 23:02:26 +0000
+post_type: post 
+post_status: publish
+post_title: Using Xen, when I put in ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso [ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso] for the install URL, it tells me "ValueError: Invalid install location: Opening URL ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso [ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso] failed.". Why can't it see this image? It really does exist.
+
+======================================================
+
+(You): Using Xen, when I put in ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso [ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso] for the install URL, it tells me "ValueError: Invalid install location: Opening URL ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso [ftp://ftp.freebsd.org/pub/FreeBSD/ISO-IMAGES-i386/8.0/8.0-RELEASE-i386-disc1.iso] failed.". Why can't it see this image? It really does exist.
+
+
+
+[Vark assigned category: <b>Xen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

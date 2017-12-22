@@ -1,0 +1,22 @@
+
+ID: 25776
+post_name: unix-seconds
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Wed, 06 Feb 2013 03:45:12 +0000
+post_type: post 
+post_status: publish
+post_title: Unix seconds
+
+======================================================
+
+At Unix time 1408160338 (seconds since 1 Jan 1970 0000 GMT), it will 
+be 2014-08-16 03:38:58 GMT. In other words, 1408160338 will match the 
+two-digit year, month, day, hour, and minute in that order. If you're 
+rounding, it will be one second later. 
+ 
+Exercise for the reader: find when the time match occurs in your time 
+zone. In mine, it's 1408151918 which is 2014-08-15 19:18:38 MDT (or, 
+again, one second later if you're rounding). 
+
+

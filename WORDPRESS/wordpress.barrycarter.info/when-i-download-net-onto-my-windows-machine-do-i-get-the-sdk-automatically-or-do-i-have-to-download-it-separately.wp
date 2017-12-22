@@ -1,0 +1,38 @@
+
+ID: 26260
+post_name: when-i-download-net-onto-my-windows-machine-do-i-get-the-sdk-automatically-or-do-i-have-to-download-it-separately
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 23:42:23 +0000
+post_type: post 
+post_status: publish
+post_title: When I download .NET onto my Windows machine, do I get the SDK automatically, or do I have to download it separately?
+
+======================================================
+
+(You): When I download .NET onto my Windows machine, do I get the SDK automatically, or do I have to download it separately?
+
+(Bart): You will have to download it separately.
+
+(You): presumably easy to find on the MS site?
+
+(Bart): http://www.microsoft.com/downloads/details.aspx?FamilyID=c17ba869-9671-4330-a63e-1fd44e0e2505&displaylang=en
+
+(You): thanks!
+
+(You): thanks!
+
+----------------------
+
+(Wouter): Hi, you'll also have to download the SDK. The normal download only includes the runtime. Know that if you are a student, you can also download MS Visual Studio for free on www.dreamspark.com
+
+To download the SDK, see http://www.microsoft.com/downloads/details.aspx?familyid=fe6f2099-b7b4-4f47-a244-c96d69c35dec&displaylang=en
+
+----------------------
+
+(Sergey): .NET Framework does not include SDK, you should get it separately.
+
+
+
+[Vark assigned category: <b>SDK</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

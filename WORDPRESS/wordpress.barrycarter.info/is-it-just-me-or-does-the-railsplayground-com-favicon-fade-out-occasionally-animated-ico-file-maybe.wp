@@ -1,0 +1,74 @@
+
+ID: 25408
+post_name: is-it-just-me-or-does-the-railsplayground-com-favicon-fade-out-occasionally-animated-ico-file-maybe
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 20 Jun 2010 21:18:46 +0000
+post_type: post 
+post_status: publish
+post_title: Is it just me or does the railsplayground.com favicon fade out occasionally -- animated ICO file maybe?
+
+======================================================
+
+(You): Is it just me or does the railsplayground.com favicon fade out occasionally -- animated ICO file maybe?
+
+(David): You can see the favicon from here:http://railsplayground.com/wp-content/themes/RailsPlayground/favicon.png [http://railsplayground.com/wp-content/themes/RailsPlayground/favicon.png]
+
+(David): Being a PNG file, I doubt it is animated
+
+(You): OK, how do they get the fade-in/fade-out effect? PNG files can be animated just like GIFs, no?
+
+(David): I didn't notice a fading in and out effect.
+
+(You): it takes like 15 seconds.
+
+(David): I haven't noticed it fading out. I'm on a Mac, so that might make a difference.
+
+(You): ah, ok, I'm using Firefox on Linux (Fedora 11 to be specific).
+
+----------------------
+
+(Peter): Does not seem to be animated to me. The URL for the icon is
+
+http://railsplayground.com/wp-content/themes/RailsPlayground/favicon.png
+
+and info about the file just shows an 8 bit png image, 16x16 pixels.
+
+(You): wait like 15 seconds -- unless I'm going blind, it does!
+
+(Peter): Which browser are you using?
+
+(You): Firefox on Fedora 11 Linux
+
+(Peter): Agreed. It's steady as a rock in Safari, but Firefox animates it.
+
+(You): whew! The eyes haven't given out quite yet. So it's probably an animated PNG?
+
+(Peter): So it seems. I'd download an "APNG" editor and examine the file. Actually, I'm on it.
+
+(You): OK, someone told me PNG files can't be animated, but I'm pretty sure that's wrong.
+
+(Peter): Well. They can't, not as PNGs. However, there is a "standard" out there for animated PNGs called APNG. Note that support for this format varies.
+
+(You): I thought PNG was intended as a drop-in replacement for GIF after the copyright owner threatened to do bad things? Since GIF is animated, once would except PNG to be as well?
+
+(Peter): PNG was designed as a single frame format, with no animation. I just found out that there are (at least) two formats for animated PNGs: MNG (Multi-image Network Graphics) and APNG (Animated PNG).
+
+(You): but neither is considered a standard?
+
+(Peter): Sorry, I don't know. APNG is currently supported only by Firefox and Opera. I'm not sure about MNG. However, MNG comes from the same team as PNG itself. Note though, that since animation support is limited, people seem to use javascript to implement fram-by-frame animation.
+
+(You): isn't that a bit ugly? Obviously, they can't be doing that here (since favicon.ico is just a single file).
+
+(Peter): I don't know about the DOM-representation for the favicon, but technically it's possible to use javascript to load other PNG-files and replace the favicon in a timer event.
+
+(You): really? I thought favicon.ico was literally just a single image file? You're saying it could be more? Or are you saying you could use multi-part MIME or something?
+
+(Peter): The favico is just a file. But with javascript you can download completely different image files (like favicon2.png, etc) and set the favicon of the document programmatically.
+
+However: since the file is animated when shown separately (http://railsplayground.com/wp-content/themes/RailsPlayground/favicon.png) no javascript can be involved in this particular case.
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

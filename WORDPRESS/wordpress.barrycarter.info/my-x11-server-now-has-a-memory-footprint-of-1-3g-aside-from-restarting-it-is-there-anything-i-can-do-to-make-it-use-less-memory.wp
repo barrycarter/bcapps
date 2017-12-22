@@ -1,0 +1,26 @@
+
+ID: 27225
+post_name: my-x11-server-now-has-a-memory-footprint-of-1-3g-aside-from-restarting-it-is-there-anything-i-can-do-to-make-it-use-less-memory
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 14 May 2010 06:53:58 +0000
+post_type: post 
+post_status: publish
+post_title: My X11 server now has a memory footprint of 1.3G -- aside from restarting it, is there anything I can do to make it use less memory?
+
+======================================================
+
+(You): My X11 server now has a memory footprint of 1.3G -- aside from restarting it, is there anything I can do to make it use less memory?
+
+(Rob): Take a look at the configuration of it. Reinstall if needed.
+
+----------------------
+
+(Todd): What kernel are you running, and what version of X11 is being used?
+
+(You): good question -- how do I find out what X11 version I'm running?
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,48 @@
+
+ID: 26055
+post_name: on-virtualbox-my-windows-guest-is-using-a-bridged-network-through-my-centos-host-how-do-i-sniff-the-network-traffic-windows-is-sending-from-the-centos-host-i-dont-want-to-install-wiresharketc-on
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 14 Jun 2010 21:41:22 +0000
+post_type: post 
+post_status: publish
+post_title: On VirtualBox, my Windows guest is using a bridged network through my CentOS host. How do I sniff the network traffic Windows is sending from the CentOS host? I don't want to install wireshark/etc on the Windows guest. I want to do it all in CentOS. This'd be easy if Windows network was routing, but is bridged.
+
+======================================================
+
+(You): On VirtualBox, my Windows guest is using a bridged network through my CentOS host. How do I sniff the network traffic Windows is sending from the CentOS host? I don't want to install wireshark/etc on the Windows guest. I want to do it all in CentOS. This'd be easy if Windows network was routing, but is bridged.
+
+(Bob): When bridged, the Windows guest should be using a different Ethernet address than CentOS. You should be able to use Wireshark on CentOS to sniff for all traffic from/to the Ethernet address used by the Windows guest.
+
+(You): you're saying that sniffing traffic on CentOS will work, even though Windows is bridging through it and not routing through it?
+
+(Bob): I can't say I've done this with my own fingers and seen it work, but this should be the software equivalent of the old Ethernet hubs where everybody could hear all traffic. We know for certain that the Windows guest is using the CentOS Ethernet driver to send and receive all traffic. Wireshark should have access to all traffic passing through that Ethernet driver.
+
+(You): thanks. I'll give it a shot. My one worry is that there's no network interface for the bridge, so I'm not sure what to tell sniffit/tcpdump.
+
+(Bob): There is an interface from the guest's point of view, but from the CentOS point of view, the guest is just generating a bit more traffic for regular old eth0 or whatever interface it's using. Just use tcpdump/Wireshark to sniff eth0 and you should see the traffic.
+
+(You): I'd never thought of that! I'll try it.
+
+----------------------
+
+(Bharath Bhushan): I have a bridged network for a Slackware guest on a Windows 7 host using VMWare. With wireshark on the host operating system I could capture the ping packets that the guest was sending.
+
+
+
+Did you try using wireshark on the host? Or do you not want to do that either?
+
+(You): thanks. I'm OK w/ running tcpdump/sniffit on the host. I didn't realize until now (someone else's answer) that the Windows traffic will simply show up on eth0. I always assumed each interface had one outbound IP address, but I guess not!
+
+(Bharath Bhushan): Each bridged virtual machine has it's own IP address. If you have a DHCP server on your network (router / modem / server), this IP for the guest is assigned by it.
+
+
+
+Your primary interface on the computer (eth0) acts like a hub.
+
+(You): yes, that's what I figured out (someone told me) just now. It never occurred to me that eth0 was carrying bridged traffic, but, now that I know that, I'll take a look.
+
+
+
+[Vark assigned category: <b>CentOS</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

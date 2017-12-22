@@ -1,0 +1,30 @@
+
+ID: 25552
+post_name: how-do-i-restore-part-of-a-mysql-table-keeping-rowids-intact-detail-i-backed-up-a-table-and-then-deleted-part-of-it-i-then-entered-new-data-which-i-later-realized-was-garbage-ive-now-deleted-the
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 16 Jun 2010 07:19:55 +0000
+post_type: post 
+post_status: publish
+post_title: How do I restore part of a MySQL table keeping rowids intact? Detail: I backed up a table and then deleted part of it. I then entered new data, which I later realized was garbage. I've now deleted the garbage, and want to re-insert the backed up data... *but* I need to preserve to rowids from the backed up data. Is there an easy way to do this?
+
+======================================================
+
+(You): How do I restore part of a MySQL table keeping rowids intact? Detail: I backed up a table and then deleted part of it. I then entered new data, which I later realized was garbage. I've now deleted the garbage, and want to re-insert the backed up data... *but* I need to preserve to rowids from the backed up data. Is there an easy way to do this?
+
+(Peter): If you exported the row id column, then you can probably do one of two things. 1) alter the column such that auto increment is off. 2) there might be an option on the insert command to ignore auto increment columns.
+
+(You): OK, but INSERT statements can't choose their own rowid, right? Or can they if you turn autoincrement off?
+
+(Peter): Not sure I'm understanding the specific situation. If you didn't export the prior rowids, then there's nothing to preserve. If you're talking about recreating the auto-increment ids starting from 0 because you inserted garbage, then just drop and re-create the table. If you exported the row id, then turning off auto-increment should allow you to insert your own id.
+
+(You): oh, ok. So I should do "INSERT INTO table SELECT rowid,* FROM backuptable" or something? Isn't the rowid column special to MySQL internally?
+
+----------------------
+
+(Alexander): the dump of the table should contain the autoincrement id, you can normally insert these rows unless you have a conflicting rows, even though your autoincrement is already higher that the numbers in the dump
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

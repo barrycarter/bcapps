@@ -1,0 +1,40 @@
+
+ID: 23813
+post_name: where-can-i-download-a-generic-pci-network-card-driver-for-windows-xp-the-machine-i-need-it-on-currently-has-no-network-connectivity-so-ill-be-downloading-from-one-machine-and-copying-to-another
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 24 Oct 2010 22:50:26 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I download a generic PCI network card driver for Windows XP? The machine I need it on currently has no network connectivity, so I'll be downloading from one machine and copying to another.
+
+======================================================
+
+(You): Where can I download a generic PCI network card driver for Windows XP? The machine I need it on currently has no network connectivity, so I'll be downloading from one machine and copying to another.
+
+(Carl): You will need to find out what card is present in the machine and download the relevent driver.
+
+(You): it's an onboard card, can't I use a generic network driver?
+
+(Carl): No, find the model of the motherboard and visit their site - you should be able to download from there.
+
+----------------------
+
+(Zoso): I am unsure about a generic PCI network driver, your best bet would be to download it from the manufacturers website and copy it over to the other computer...
+
+(You): thanks. So there's no such thing as a generic? Is there an easy way to find the network card's manufacturer?
+
+(Zoso): not really a generic "one that works for all" kind of driver.  As far as finding the manufacturer, it should be printed on the card itself somewhere, that is where I would start.  Open up the puter and take a look at it.  Have you done that kind of stuff before?
+
+(You): thanks. I finally found it, it's Intel. So I'm going to download from that site.
+
+----------------------
+
+(Arpan): Do u know the manufacturer of your network card..
+
+(You): I finally figured it out, thanks
+
+
+
+[Vark assigned category: <b>Windows XP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 27490
+post_name: in-mysql-how-do-i-write-a-datetime-field-without-a-space-im-doing-load-data-infile-and-using-space-as-my-separator-so-my-datetime-data-must-be-a-single-field-no-spaces
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 21:32:14 +0000
+post_type: post 
+post_status: publish
+post_title: In MySQL, how do I write a DATETIME field without a space? I'm doing LOAD DATA INFILE and using space as my separator, so my date/time data must be a single field (no spaces).
+
+======================================================
+
+(You): In MySQL, how do I write a DATETIME field without a space? I'm doing LOAD DATA INFILE and using space as my separator, so my date/time data must be a single field (no spaces).
+
+(G??ran): You can??t. Change your separator
+
+(You): thanks, but someone already told about FIELDS TERMINATED BY (http://dev.mysql.com/doc/refman/5.5/en/load-data.html [http://dev.mysql.com/doc/refman/5.5/en/load-data.html])
+
+----------------------
+
+(Olivier): "You can specify DATETIME          DATE  and         TIMESTAMP  values using any of a         common set of formats:" .... =&gt; http://dev.mysql.com/doc/refman/5.0/en/datetime.html
+
+(Olivier): the one you're looking for is probably "As a string with no delimiters in either             'YYYYMMDDHHMMSS' or             'YYMMDDHHMMSS' format"
+
+(You): Thanks!
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

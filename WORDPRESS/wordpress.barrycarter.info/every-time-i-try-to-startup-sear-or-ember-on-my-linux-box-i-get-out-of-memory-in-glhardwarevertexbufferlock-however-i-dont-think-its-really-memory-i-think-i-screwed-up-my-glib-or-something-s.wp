@@ -1,0 +1,26 @@
+
+ID: 26463
+post_name: every-time-i-try-to-startup-sear-or-ember-on-my-linux-box-i-get-out-of-memory-in-glhardwarevertexbufferlock-however-i-dont-think-its-really-memory-i-think-i-screwed-up-my-glib-or-something-s
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 05 Jun 2010 01:58:01 +0000
+post_type: post 
+post_status: publish
+post_title: Every time I try to startup sear or ember on my Linux box, I get "Out of memory in GLHardwareVertexBuffer::lock". However, I don't think it's really memory. I think I screwed up my glib or something somehow. Is there an easy fix?
+
+======================================================
+
+(You): Every time I try to startup sear or ember on my Linux box, I get "Out of memory in GLHardwareVertexBuffer::lock". However, I don't think it's really memory. I think I screwed up my glib or something somehow. Is there an easy fix?
+
+(Keith): What distro are you using?  Did these programs ever work?
+
+(You): I'm using Fedora 11, and yes, they were working fine until a few days ago.
+
+----------------------
+
+(John): It isn't confirmed as a global fix, but the following website has reported success by some:  http://www.ogre3d.org/forums/viewtopic.php?f=4&t=47594
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

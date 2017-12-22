@@ -1,0 +1,30 @@
+
+ID: 25154
+post_name: what-do-i-give-to-date-d-to-get-the-next-june-14th-for-example-in-other-words-june-14th-2011-if-i-asked-now-of-course-the-next-june-30th-should-give-me-this-years-june-30th
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 01:16:23 +0000
+post_type: post 
+post_status: publish
+post_title: What do I give to "date -d" to get the next June 14th, for example? (in other words, June 14th 2011 if I asked now). Of course, the next June 30th should give me this year's June 30th.
+
+======================================================
+
+(You): What do I give to "date -d" to get the next June 14th, for example? (in other words, June 14th 2011 if I asked now). Of course, the next June 30th should give me this year's June 30th.
+
+(Terry): When i have to do that I "say next, not this" or next year's June 14th.
+
+(You): ummm, I was asking about the Unix program "date", sorry.
+
+(Terry): OK, look at http://en.wikipedia.org/wiki/Date_(Unix) see if that helps
+
+----------------------
+
+(Josiah): If you're trying to set the date from a bash shell, try typing "man date" into the shell, and reading the information there.  The -j option looks particularly promising, if you don't really want to set the date, but merely want to express a given date as Epoch time.
+
+(You): thanks. I was hoping to do it w/o calling 'date'. I'd prefer to use pure Perl.
+
+
+
+[Vark assigned category: <b>June 30th</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

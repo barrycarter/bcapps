@@ -1,0 +1,18 @@
+
+ID: 23181
+post_name: the-speech-recognition-on-my-mac-works-fine-when-i-calibrate-it-but-doesnt-work-at-all-when-i-use-it-in-the-normal-way-the-circular-microphone-thing-comes-up-and-even-shows-arrows-when-i-speak-but
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 17 Dec 2010 02:36:16 +0000
+post_type: post 
+post_status: publish
+post_title: The speech recognition on my Mac works fine when I calibrate it, but doesn't work at all when I use it in the normal way. The circular microphone thing comes up and even shows arrows when I speak, but I never get a ping (meaning "phrase recognized") and it never does anything at all. I may've messed up some daemons somewhere. How to fix, or at least obtain more details? /var/log has nothing useful.
+
+======================================================
+
+(You): The speech recognition on my Mac works fine when I calibrate it, but doesn't work at all when I use it in the normal way. The circular microphone thing comes up and even shows arrows when I speak, but I never get a ping (meaning "phrase recognized") and it never does anything at all. I may've messed up some daemons somewhere. How to fix, or at least obtain more details? /var/log has nothing useful.
+
+
+
+[Vark assigned category: <b>speech recognition</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

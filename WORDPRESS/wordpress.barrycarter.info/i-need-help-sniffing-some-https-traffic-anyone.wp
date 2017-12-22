@@ -1,0 +1,50 @@
+
+ID: 28263
+post_name: i-need-help-sniffing-some-https-traffic-anyone
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 14 Apr 2010 06:28:29 +0000
+post_type: post 
+post_status: publish
+post_title: I need help sniffing some https traffic. Anyone?
+
+======================================================
+
+(You): I need help sniffing some https traffic. Anyone?
+
+(Chris): Use Paros with a self-signed certificate
+
+(You): what is Paros and can I used it w/ Linux?
+
+(Chris): Paros is an in-line proxy which can be used to disect http and https  
+
+requests. WebScarab is also a good tool. I believe either paros or  
+
+webscarab is java based so it should run in Linux.
+
+----------------------
+
+(Nick): Not possible, unless you can perform an SSL man in the middle attack, but that needs you to get them to install a certificate on their client.
+
+(You): I'm trying to intercept my own SSL traffic. So I can have my browser's 
+
+https proxy set to localhost:1234 and have something that listens/logs on 
+
+port 1234. Do you know how I can do that?
+
+(Nick): The traffic you were sniffing at the HTTP proxy (i.e. port 1234 on your machine) would still be encrypted.
+
+(Nick): You'd need to be capturing the data stream before the point that it gets encrypted, which would be pretty difficult, since that all happens at the application layer. You'd have to actually be looking at the internal operation of the web browser. You're definitely not looking at anything that a packet sniffer can do.
+
+(You): If I set my browser https proxy to "localhost:1234", it will send traffic to that port unencrypted and I could sniff it there.
+
+(Nick): The HTTPS proxy just proxies the (encrypted) traffic between your browser and the remote server. The encryption is still happening in your browser. It is possible to have your HTTPS proxy make a break in the chain, so effectively you are making an SSL connection to the proxy and it is making a separate one to the server, in which case you don't need a packet sniffer, you need the proxy to be able to log/output the unencrypted content. If you did this though, you'd lose the ability to verify the authenticity of the remote servers, because your browser would only see your proxy server's certificate.
+
+(You): Actually, I already got this working using paros. "https proxy" forces the browser to send unencrypted traffic to the proxy: even browsers that can't do encryption can use it.
+
+(Nick): Oh cool. The answerer becomes the answeree... :)
+
+
+
+[Vark assigned category: <b>computer security</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

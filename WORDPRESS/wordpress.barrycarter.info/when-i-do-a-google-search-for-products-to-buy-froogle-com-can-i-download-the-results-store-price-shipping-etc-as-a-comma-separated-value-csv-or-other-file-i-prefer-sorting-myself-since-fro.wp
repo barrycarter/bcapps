@@ -1,0 +1,44 @@
+
+ID: 26047
+post_name: when-i-do-a-google-search-for-products-to-buy-froogle-com-can-i-download-the-results-store-price-shipping-etc-as-a-comma-separated-value-csv-or-other-file-i-prefer-sorting-myself-since-fro
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 14 Jun 2010 23:45:43 +0000
+post_type: post 
+post_status: publish
+post_title: When I do a google search for products to buy (froogle.com), can I download the results (store, price, shipping, etc) as a comma-separated value (CSV) or other file? I prefer sorting myself, since froogle's sort is often weird.
+
+======================================================
+
+(You): When I do a google search for products to buy (froogle.com), can I download the results (store, price, shipping, etc) as a comma-separated value (CSV) or other file? I prefer sorting myself, since froogle's sort is often weird.
+
+(Yano): Related API:
+
+http://code.google.com/apis/base/
+
+
+
+http://www.google.com/prdhp
+
+----------------------
+
+(Andrew): No; the only way to get better results with any Google search is to experiment with different search terms.
+
+----------------------
+
+(Andrew): No. As far as I know you can't simply download a CSV (or similar file) containing all search results for you to process as you like.
+
+
+
+This applies equally to ordinary web searches. Note that by default, Google search (and Froogle) only displays the top 10 results on the first page, but there may be thousands or millions of further results. A downloadable file containing all the results and associated info could be huge.
+
+(Andrew): If however you have the time and programming know-how then I suggest you look at the Google Base API which would enable you create your own program to query Google's product data. It may indeed help you achieve what you are talking about.
+
+
+
+You can find more info here: http://code.google.com/apis/base/index.html
+
+
+
+[Vark assigned category: <b>Google</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

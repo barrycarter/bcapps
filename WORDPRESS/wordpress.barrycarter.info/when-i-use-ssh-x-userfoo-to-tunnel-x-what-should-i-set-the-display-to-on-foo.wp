@@ -1,0 +1,28 @@
+
+ID: 25227
+post_name: when-i-use-ssh-x-userfoo-to-tunnel-x-what-should-i-set-the-display-to-on-foo
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 02:36:17 +0000
+post_type: post 
+post_status: publish
+post_title: When I use "ssh -X user@foo" to tunnel X, what should I set the DISPLAY to on foo?
+
+======================================================
+
+(You): When I use "ssh -X user@foo" to tunnel X, what should I set the DISPLAY to on foo?
+
+(Alexander): ssh will set the DISPLAY variable automatically to accomodate X forwarding, this is usually foo:10, foo:11 etc
+
+(You): thanks! It turns out I didn't have xauth installed on the remote machine, so "echo $DISPLAY" was doing nothing. Now good.
+
+----------------------
+
+(Vlad): Usually SSH sets up the DISPLAY variable for you.  It creates a local port on host machine where X lib based clients could connect to.
+
+(You): thanks, it turns out I didn't have xauth installed remotely, causing issues.
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

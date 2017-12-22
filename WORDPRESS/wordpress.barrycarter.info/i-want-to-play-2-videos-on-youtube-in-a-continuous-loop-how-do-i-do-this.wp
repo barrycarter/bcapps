@@ -1,0 +1,56 @@
+
+ID: 27705
+post_name: i-want-to-play-2-videos-on-youtube-in-a-continuous-loop-how-do-i-do-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 00:30:07 +0000
+post_type: post 
+post_status: publish
+post_title: I want to play 2 videos on YouTube in a continuous loop. How do I do this?
+
+======================================================
+
+(You): I want to play 2 videos on YouTube in a continuous loop. How do I do this?
+
+(Maureen): http://www.youtubedoubler.com/
+
+
+
+
+
+you just need to make sure to add the "&loop=1" to the end of each video URL
+
+(You): That lets you watch two youtube videos at once. I want to watch two videos, one after the other (and then loop back to the first one)
+
+----------------------
+
+(Filipe): Hi Barry,
+
+
+
+If you create a playlist with those 2 videos and play them, at the end of the second video it will go back to the first.
+
+
+
+Hope this helps!
+
+(You): Thanks! That's exactly what I was asking :) How do I create a playlist? I didn't see an option for it?
+
+(Filipe): Just use the instructions here:
+
+
+
+http://www.google.com/support/youtube/bin/answer.py?hl=en&answer=57792
+
+
+
+&lt;http://www.google.com/support/youtube/bin/answer.py?hl=en&answer=57792&gt;
+
+(You): Thanks! It looks like you have to be a YouTube user (which I know is free)-- that's the part I was missing (I hate signing up on websites!)
+
+(Filipe): Gotcha! You should! Lot's of nice features :)
+
+
+
+[Vark assigned category: <b>YouTube</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

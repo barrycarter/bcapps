@@ -1,0 +1,40 @@
+
+ID: 24922
+post_name: a-function-on-the-complex-plane-is-bounded-and-everywhere-continuous-and-different-ie-c-infinity-theres-a-theorem-about-some-properties-it-must-have-but-i-cant-remember-the-theorem-what-is-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 16 Jul 2010 21:46:42 +0000
+post_type: post 
+post_status: publish
+post_title: A function on the complex plane is bounded and everywhere continuous and different (ie, C-infinity). There's a theorem about some properties it must have, but I can't remember the theorem. What is it?
+
+======================================================
+
+(You): A function on the complex plane is bounded and everywhere continuous and different (ie, C-infinity). There's a theorem about some properties it must have, but I can't remember the theorem. What is it?
+
+Er, differentiable, not different
+
+----------------------
+
+(Jeremy): is it the green theorem? sounds like it
+
+----------------------
+
+(Willy): are you talking about holomorphic functions?
+
+(You): thanks! Yep, that was it. And the theorem I was thinking of is Liouville's theorem. Thanks for helping me remember!
+
+----------------------
+
+(~Jett): I am not sure if you already have an answer but i believe the Theorem you are talking about is Cauchy's Theorem, or if the function contains only first partial derivatives then maybe Green's Theorem.  
+
+the wikki : http://tiny.cc/8iua8
+
+
+
+i hope this helps. ~Jett
+
+
+
+[Vark assigned category: <b>complex plane</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

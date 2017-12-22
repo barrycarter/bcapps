@@ -1,0 +1,62 @@
+
+ID: 23909
+post_name: starting-with-the-empty-string-i-want-to-build-up-the-word-doghouse-using-only-insertions-deletions-if-needed-and-changing-one-character-to-another-if-needed-however-the-operations-must
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 21 Oct 2010 23:12:55 +0000
+post_type: post 
+post_status: publish
+post_title: Starting with the empty string "" I want to build up the word "doghouse", using only insertions, deletions (if needed), and changing one character to another (if needed). However, the operations must be commutative: in other words, I should be able to apply them in any order. How can I do this?
+
+======================================================
+
+(You): Starting with the empty string "" I want to build up the word "doghouse", using only insertions, deletions (if needed), and changing one character to another (if needed). However, the operations must be commutative: in other words, I should be able to apply them in any order. How can I do this?
+
+(Eric): this sounds like a school programming assignment and not a true programming problem. the simple solution is to use strncat, or simply inserting characters to a preexisting char[9], or sprintf. However, the commutative piece makes it super tricky. Why must it be commutative?
+
+(You): it's not a homework problem LOL! I'm trying to find a canonical way of building up a string so that I can compute some sort of "Levenshtein" distance by simply comparing how the two strings were built up. Ideally, the strings can be built up from purely rearrangeable functions, so I can just diff the two sets.
+
+(Eric): I don't suppose you've looked at the wikipedia samples on the Levenshtein computations? What you've described to me seems like commutative is the super hard part. To be able to build the string doghouse, using insertions, deletions, and changing one char to another without any other intervening logic, and to make the operations reorderable is probably a very difficult problem...
+
+(Eric): for example, insert d, o, g, h, o, u, s, e... that is not reorderable.
+
+(Eric): so you've really defined a brain teaser - of how we can insert, and then delete, and then change any given letter to another. but as soon as you reorder those operations, you'll get a different result. I'm not certain it can be done in a finite set of operations.
+
+(You): I have looked, yes. But, those assume that you have TWO strings, not just one. And, yes, doing it with orderable steps (or even partially orderable) is easy. I'm beginning to think it's impossible with commutative steps (in other words, I want a SET of functions, not an ORDERED set of functions).
+
+(You): I'll ask you this offhand before varking it: if you have sets S and T of length s and t, how long (big O) would it take to computer S-T (elements in S not in T)?
+
+(Eric): O(s*t) -- O(n^2) for a simple comparison. dual for loops
+
+(You): thanks, that's what I thought. So I can't use a big O argument to prove that it's impossible.
+
+(Eric): but you can probably do it faster with a few tricks. Use a hash to represent T. Then compare each element in s against that hash. Lookups are o(1) generally on hashes, so you could, in theory, get it in roughly O(s)
+
+(Eric): but I see your point on the big-o notation. good luck on finding an answer. I suppose there may be a solution to this. maybe you need to ask a math person.
+
+(You): right, but I'm looking for a computer theoretical way of doing it in less than O(s*t) time. If I can do that, I can prove there's no commutative set of transforms that can build up a word.
+
+(You): sadly, I AM a math person :)
+
+(Eric): so you can do it in less than O(s*t) time... Assume that set T is comprised of letters, not necessarily unique. (doghouse repeats the letter o)
+
+(Eric): so really, to determine S-T all you need to do is look at the unique letters in S compared to the unique letters in T.
+
+(Eric): but I assume you are placing some sort of value to both letter _and_ position???
+
+(You): well, the sets I'm constructing are sets of transformations, not sets of letters. In theory, each element of my set can be arbitrarily complex.
+
+(Eric): ok, my brain does not have sufficient caffeine at this point to help. Sorry. This is why I'm a computer engineer that writes code rather than a math/cs guy. You could try your local university profs in CS perhaps? One that teaches big-o notation?
+
+(You): I'm pretty sure (from another answer) that it IS O(s*t) sadly, so my cant-be-done proof doesn't work... so now, back to trying to find such a set of transforms. http://cstheory.stackexchange.com/questions/2148/intermediate-coding-representation-for-levenshtein-distance/2342#2342 [http://cstheory.stackexchange.com/questions/2148/intermediate-coding-representation-for-levenshtein-distance/2342#2342] if you really want more :)
+
+----------------------
+
+(Steven): do your own homework
+
+(You): Mocking, this isn't a homework problem! In fact, it might be impossible.
+
+
+
+[Vark assigned category: <b>C programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

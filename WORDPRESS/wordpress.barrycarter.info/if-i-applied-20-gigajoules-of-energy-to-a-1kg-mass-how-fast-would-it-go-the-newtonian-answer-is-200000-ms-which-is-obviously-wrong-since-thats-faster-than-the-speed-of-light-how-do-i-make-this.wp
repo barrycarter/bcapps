@@ -1,0 +1,68 @@
+
+ID: 26683
+post_name: if-i-applied-20-gigajoules-of-energy-to-a-1kg-mass-how-fast-would-it-go-the-newtonian-answer-is-200000-ms-which-is-obviously-wrong-since-thats-faster-than-the-speed-of-light-how-do-i-make-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 04:05:11 +0000
+post_type: post 
+post_status: publish
+post_title: If I applied 20 gigajoules of energy to a 1kg mass, how fast would it go? The Newtonian answer is 200,000 m/s, which is obviously wrong, since that's faster than the speed of light. How do I make this calculation taking relativity into consideration?
+
+======================================================
+
+(You): If I applied 20 gigajoules of energy to a 1kg mass, how fast would it go? The Newtonian answer is 200,000 m/s, which is obviously wrong, since that's faster than the speed of light. How do I make this calculation taking relativity into consideration?
+
+(Roberto): speed of light is 3x10^8 m/s. So your calculation is valid.
+
+(You): OK, but what if I applied 80GJ -- that would put the result at 400000 km/s
+
+(Roberto): If K is the kinetic energy and m the mass then v=sqrt(2*K/m). So, even with K=80GJ, v is still 4x10^5 meters per sec, not Km per sec
+
+(You): thanks, my bad.
+
+(Roberto): no problem. if you want to know what happens if you enter the relativisti regime you should use the formula K=(gamma-1)*m*c^2, where gamma=(v/c)^2, c being the speed of light.
+
+(You): thanks. Oddly, your colon parentheses was turned into a frowny face by google chat :) I actually did look up the relativistic equations later.
+
+----------------------
+
+(Wouter): The speed of light is 300,000 km/s, so you are not there yet by a factor 1000.  But anyway, take a look at the formulas in http://en.wikipedia.org/wiki/Kinetic_energy#Relativistic_kinetic_energy_of_rigid_bodies .  Whatever energy you add (20 GJ) is pure kinetic energy, and those formulas will allow you to determine v/c, the fraction of the light speed (always smaller than 1).  The faster an object goes, the more energy you need to get the same increase in velocity.  That is the difference with Newtonian mechanics.
+
+----------------------
+
+(David): &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+You need to use the relativistic formula:
+
+
+
+E^2 = m^2c^4 + p^2c^2
+
+
+
+E is the total energy, m is the mass, p is the momentum, and c is the
+
+speed of light.??
+
+(You): I'd talk to a lawyer to make sure. I'm guessing the oil company will want to run some tests to see how much oil is down there before making you an offer. It could be a substantial amount, but I think a lawyer can tell you the next steps you should be taking.
+
+(You): I'd talk to a lawyer to make sure. I'm guessing the oil company will want to run some tests to see how much oil is down there before making you an offer. It could be a substantial amount, but I think a lawyer can tell you the next steps you should be taking.
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

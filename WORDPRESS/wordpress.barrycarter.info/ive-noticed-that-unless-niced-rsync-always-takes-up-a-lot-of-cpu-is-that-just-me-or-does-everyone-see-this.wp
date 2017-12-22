@@ -1,0 +1,30 @@
+
+ID: 27237
+post_name: ive-noticed-that-unless-niced-rsync-always-takes-up-a-lot-of-cpu-is-that-just-me-or-does-everyone-see-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 13 May 2010 12:07:30 +0000
+post_type: post 
+post_status: publish
+post_title: I've noticed that, unless 'nice'd, rsync always takes up a lot of CPU. Is that just me, or does everyone see this?
+
+======================================================
+
+(You): I've noticed that, unless 'nice'd, rsync always takes up a lot of CPU. Is that just me, or does everyone see this?
+
+(Erik): it's not just you. But if you consider that rsync generally is doing a checksum of every single file it touches, it makes sense that it would eat CPU. The kernel scheduler should keep it from bogging down other processes, but rsync is both CPU & I/O intensive, so it's easy for its appetite to be felt.
+
+(Erik): incidentally, you can probably mitigate the CPU hunger by telling rsync to use timestamps rather than checksums (I'd have to look up the cmdline args for that, it's been a while) in the cases where file timestamps are likely to be accurate (enough)
+
+(You): I've used rsync with -vv and I'm pretty sure it *does* use timestamps when possible, and only reverts to the hash algorithm when necessary (when using Windows, you have to give some other --timestamp-window option or something that says two files that differ by 2 seconds are considered identical, because Windows only keeps/kept timestamps to ~2s accuracy).
+
+----------------------
+
+(S??bastien): If you execute rsync over a deep hierarchy, yes that's very known and unfortunate. That's why people use or develop other ways to synchronise remote hosts, for example csync2.
+
+(You): wow thanks! It never occurred to me to use another program!
+
+
+
+[Vark assigned category: <b>computers</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,46 @@
+
+ID: 24232
+post_name: where-can-i-find-a-greasemonkey-or-other-script-that-automatically-and-randomly-fills-in-all-radio-buttons-on-a-given-page
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 18 Sep 2010 06:33:55 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find a greasemonkey or other script that automatically and randomly fills in all radio buttons on a given page?
+
+======================================================
+
+(You): Where can I find a greasemonkey or other script that automatically and randomly fills in all radio buttons on a given page?
+
+(Kurin): if you are wanting the plugin for firefox, it is located here: https://addons.mozilla.org/en-US/firefox/addon/748/ [https://addons.mozilla.org/en-US/firefox/addon/748/]   Roboform is also a good tool if you want to automatically fill in data on web-forms.
+
+(You): thanks. I already have greasemonkey... I wanted a script that randomly filled out radio buttons. Do you know if RoboForm does that?
+
+(Kurin): Roboform lets you fill out similar data from other pages (credit card info, etc) so if all of those radio buttons are named the same, I don't see how Roboform couldn't do that.  If each page is random, though, you'll likely have to make your own.
+
+(You): thanks, yes. Each form is random, sadly.
+
+----------------------
+
+(Jeremy): userscripts.org
+
+(You): any specific one?
+
+(Jeremy): i would use a website like www.guru.com to find a good developer. create a project and set a budget. i use it all the time.
+
+(You): that would cost actual money. It's way easier to ask here.
+
+(Jeremy): sorry i got confused on who i was responding to. i am not sure which script would work.
+
+(You): thanks. I can't imagine it's too difficult to do this.
+
+----------------------
+
+(Perfecto Ong): Randomly? I think you will need someone to write this for you.
+
+(You): rats... there's no existing script out there for that? It seems easy enough to create.
+
+
+
+[Vark assigned category: <b>Greasemonkey</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

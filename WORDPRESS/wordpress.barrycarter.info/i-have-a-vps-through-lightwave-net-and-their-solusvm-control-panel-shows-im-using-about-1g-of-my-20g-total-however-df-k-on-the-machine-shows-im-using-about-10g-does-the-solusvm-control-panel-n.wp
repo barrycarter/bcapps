@@ -1,0 +1,38 @@
+
+ID: 23173
+post_name: i-have-a-vps-through-lightwave-net-and-their-solusvm-control-panel-shows-im-using-about-1g-of-my-20g-total-however-df-k-on-the-machine-shows-im-using-about-10g-does-the-solusvm-control-panel-n
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 17 Dec 2010 08:26:40 +0000
+post_type: post 
+post_status: publish
+post_title: I have a VPS through lightwave.net and their SolusVM control panel shows I'm using about 1G of my 20G total. However, "df -k" on the machine shows I'm using about 10G. Does the SolusVM control panel not update disk usage information immediately?
+
+======================================================
+
+(You): I have a VPS through lightwave.net and their SolusVM control panel shows I'm using about 1G of my 20G total. However, "df -k" on the machine shows I'm using about 10G. Does the SolusVM control panel not update disk usage information immediately?
+
+(Kyle Alan): That could be possible, though I must admit I've never used that CP.  For what it's worth, though, I've had instances where my "df" didn't match my "du", or what my file manager reported.  It ended up being caused by some insane logging that had piled up, though I never figured out why the discrepancy was there.  Once I resolved the log files issue, the discrepancy went away.
+
+(You): thanks. In this case, I just rsync'd a bunch of data (like 4G) over earlier this afternoon, so I'm wondering if there's a delay. However, the bandwidth data seems current and correctly shows a major spike during my rsyncing.
+
+(Kyle Alan): Yeah, that's weird; I'll bet you're right.  A lot of control panels use cron scripts to calculate stats like that, so if that particular CP does the same, it would explain the behavior.
+
+(You): that's my guess. Of course, you'd think they'd run them at least hourly, but maybe it's daily.
+
+(Kyle Alan): Probably.  Although, if you have root access, and they are cron-ing it, you could modify the schedule to do it more often.
+
+(You): it's a VPS, so I'm pretty sure they're running the job on the VPS server, not my specific VPS.
+
+(Kyle Alan): Yeah, good point.
+
+----------------------
+
+(Jim): They may be using thin provisioning
+
+(You): Saunders, what does that mean?
+
+
+
+[Vark assigned category: <b>VPS</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

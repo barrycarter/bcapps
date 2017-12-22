@@ -1,0 +1,40 @@
+
+ID: 23392
+post_name: can-i-have-gnu-screen-count-how-many-times-i-switch-to-a-given-screen-in-other-words-increment-a-counter-everytime-i-do-ctrl-a-5-to-switch-to-screen-5
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 28 Nov 2010 22:05:17 +0000
+post_type: post 
+post_status: publish
+post_title: Can I have GNU screen count how many times I switch to a given screen? In other words, increment a counter everytime I do ctrl-a 5 to switch to screen 5?
+
+======================================================
+
+(You): Can I have GNU screen count how many times I switch to a given screen? In other words, increment a counter everytime I do ctrl-a 5 to switch to screen 5?
+
+(Jeremy): 5 second workaround ...
+
+
+
+Setup a key logger and this will create a log. You can then  grep the log-file to see how many entries there are.
+
+
+
+# grep -N "text_showing_the_switch" log.file
+
+(You): thanks. What's a good keylogger for Fedora 11?
+
+----------------------
+
+(Aaron): Looks like your best bet is perhaps rebinding the key using eval, and then exec'ing a shell script (or oneliner or whatever) that would add the tally into a file somewhere. Also, you should check out tmux which is basically screen except it's being actively developed
+
+(You): I've also heard of mrxvt which aims to replace screen as well? Wouldn't calling a shell script on a keypress really slow things down? Is there a good keylogger for Fedora 11?
+
+(Aaron): Well, you don't change screens so often that a short shell script or oneliner would be an issue; it's already in memory since you have it running etc etc. Should be fine. No idea about mxrvt or a keylogger though.
+
+(You): thanks. No, that actually IS the problem. I sometimes literally check my email every 1-2 seconds, sometimes maybe even more. I'm really bored, so I switch to another screen to do something, obsessively wonder if I've gotten email and go back. I realize I probably need treatment for OCD more than I need to measure it, but measuring it would require less work.
+
+
+
+[Vark assigned category: <b>GNU screen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

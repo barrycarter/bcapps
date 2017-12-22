@@ -1,0 +1,36 @@
+
+ID: 24368
+post_name: in-fvwm2-how-do-i-move-a-full-screen-window-for-regular-windows-i-click-on-the-background-and-choose-the-move-tool-but-there-is-no-background-on-a-full-screen-window
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 27 Aug 2010 02:10:11 +0000
+post_type: post 
+post_status: publish
+post_title: In fvwm2, how do I move a full screen window? For regular windows, I click on the background and choose the 'move' tool, but there is no background on a full screen window.
+
+======================================================
+
+(You): In fvwm2, how do I move a full screen window? For regular windows, I click on the background and choose the 'move' tool, but there is no background on a full screen window.
+
+(Anton): press alt + left mouse button
+
+(You): well, that was fun, but it had no effect whatsoever on a full screen (or even a regular) window.
+
+----------------------
+
+(Attila): Isn't there a "grab" key? In Awesome, for example, I can move by holding down Meta and dragging a window by its content.
+
+(You): thanks. Someone else suggested that as well, but it looks like default fvwm2 doesn't have such a key (at least the version I have). I'll tweak .fvwm2rc to see if that helps. Of course, it's possible that the window itself will react to my key.
+
+(Attila): well, in awesome, when I'm holding down Meta, the underlying window will not recieve the click.
+
+(You): hmmmm, that doesn't always work for me (of course, I'm running emacs too, which has a habit of grabbing everything). I'm also using vncviewer and rdc, both of which like to "steal" keybindings.
+
+(Attila): I see; it's a tricky case then. You need to enable moving somehow, probably by some key binding like C-M-M-X-M-Butterfly (as long as your Emacs will not catch that too), to trigger the move event, then move with the mouse without actually clicking the mouse button. Good luck with that :)
+
+(You): thanks. Yup, I've got to find a "trigger" key and then add things trigger-a = foo. It's not a huge deal, but it can be annoying.
+
+
+
+[Vark assigned category: <b>fvwm2</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,53 @@
+
+ID: 22339
+post_name: sphere-of-humanity
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Thu, 23 Feb 2012 14:17:57 +0000
+post_type: post 
+post_status: publish
+post_title: Sphere of Humanity
+
+======================================================
+
+If we could hook everyone up to virtual reality, and give them 8 cubic 
+feet of space (1 foot by 1 foot base times up to 8 feet height), we 
+could fit a world population of 7 billion into a cube with sides of 
+about 3826 feet (less than a mile), much smaller than most people 
+would think. 
+ 
+Even if the world population grows at 3% (it's actually closer to 1.1% 
+now), the cube's side would increase by only about 38 feet per year, 
+at least for now. This rate would increase by 4.5 inches per year 
+every year. 
+ 
+By the year 5497, the cube's side's velocity, excluding relativistic 
+effects would be the speed of light. Of course, it's impossible to 
+reach the speed of light, so this just shows relativistic effects 
+would become significant by 5497. 
+ 
+By the year 6132, the cube's side would be accelerating at an uncomfy 
+5g (again neglecting relativistic effects). 
+ 
+Of course, building something 3826 feet high would be difficult 
+(world's tallest building is currently only 2723 feet), so what if we 
+gave everyone 1 sq ft, but didn't try stacking them on top of each 
+other? 
+ 
+For now, we'd need a square that's 16 miles on each side (about half 
+the size of the city of Hong Kong), growing at a rate of about 0.25 
+miles per year, accelerating at about 19 feet per year per year. 
+ 
+Of course, by 4495, the square's side would be accelerating at an 
+uncomfy 5g, and, before that, in 4099, the square's side would be the 
+speed of light (again ignoring relativistic effects). 
+ 
+Supporting calculations: https://github.com/barrycarter/bcapps/blob/master/sphere-of-humanity.m 
+ 
+I was originally going to describe a "sphere of humanity", thus the 
+title of this blog post. However, constructing a large sphere seems 
+even harder than constructing a large cube, so I changed it to 
+cube. But, since "sphere of humanity" sounds way cooler, I left the 
+blog title as is. 
+
+

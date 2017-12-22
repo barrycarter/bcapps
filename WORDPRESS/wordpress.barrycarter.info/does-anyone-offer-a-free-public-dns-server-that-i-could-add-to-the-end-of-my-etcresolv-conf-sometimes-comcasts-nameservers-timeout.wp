@@ -1,0 +1,34 @@
+
+ID: 27155
+post_name: does-anyone-offer-a-free-public-dns-server-that-i-could-add-to-the-end-of-my-etcresolv-conf-sometimes-comcasts-nameservers-timeout
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 15 May 2010 22:11:35 +0000
+post_type: post 
+post_status: publish
+post_title: Does anyone offer a free public DNS server that I could add to the end of my /etc/resolv.conf? Sometimes, comcast's nameservers timeout.
+
+======================================================
+
+(You): Does anyone offer a free public DNS server that I could add to the end of my /etc/resolv.conf? Sometimes, comcast's nameservers timeout.
+
+(Diego): you can use opendns or google's
+
+(You): google doesn't restrict queries on its nameservers?
+
+(Diego): nope ??? they're just offering the service free of charge
+
+(You): you're right! I just tried it and it worked.
+
+----------------------
+
+(Brian): go to www.opendns.com [http://www.opendns.com] and there should be a free version of it you can use that will give you a DNS server.. Also i think google has free dns servers that you can use as well
+
+----------------------
+
+(Alexander): google offers a dns service (8.8.8.8 and  8.8.4.4) or opendns.com is another
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

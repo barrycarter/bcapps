@@ -1,0 +1,26 @@
+
+ID: 25248
+post_name: where-can-i-read-a-rails-exampletutorial-that-isnt-about-editing-tables-in-a-database-andor-is-at-least-one-step-above-just-doing-that
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 00:10:33 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I read a Rails example/tutorial that *isn't* about editing tables in a database (and/or is at least one step above just doing that)?
+
+======================================================
+
+(You): Where can I read a Rails example/tutorial that *isn't* about editing tables in a database (and/or is at least one step above just doing that)?
+
+(Qun): http://guides.rubyonrails.org/
+
+(You): does that include examples that aren't just db-editing focused?
+
+----------------------
+
+(Ravindranath): Head down to 37signals.com you might find some good pointers. David, RoR creater's company site. Their blog has some really good material. Try some other users for pointers as well. Cheers!
+
+
+
+[Vark assigned category: <b>web programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

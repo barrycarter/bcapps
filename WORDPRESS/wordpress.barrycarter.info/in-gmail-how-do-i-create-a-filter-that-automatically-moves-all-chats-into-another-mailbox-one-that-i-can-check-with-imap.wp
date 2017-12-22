@@ -1,0 +1,38 @@
+
+ID: 27650
+post_name: in-gmail-how-do-i-create-a-filter-that-automatically-moves-all-chats-into-another-mailbox-one-that-i-can-check-with-imap
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 01 May 2010 23:53:51 +0000
+post_type: post 
+post_status: publish
+post_title: In Gmail, how do I create a filter that automatically moves all chats into another mailbox (one that I can check with IMAP)?
+
+======================================================
+
+(You): In Gmail, how do I create a filter that automatically moves all chats into another mailbox (one that I can check with IMAP)?
+
+(Khalid): It's pretty easy, actually.
+
+Create a filter for all messages with 'Chat with' in the subject line. Then forward them to an email address of your choice.
+
+(You): Thanks! Is there a more clever way like "is:Chats"?
+
+(Khalid): Perhaps, but chat history items always have 'Chat with' in the subject line, so the end result will be the same.
+
+(You): The only trivial nitpick is that a real email could have that too.
+
+(Khalid): It could, but it's pretty unlikely. It looks like the label Chat would work: http://googlesystem.blogspot.com/2006/10/hidden-labels-in-gmail.html though it's an old article, I'd imagine it still holds true.
+
+(You): Thanks! That's exactly what I needed. I hate hacks, and wanted to do it "the right way"
+
+----------------------
+
+(Lillian): Create a filter. In the "Has the words" box, you can type "is:chat".
+
+(You): Thank you Lillian! Someone suggested "Chat with" in the subject, but your way is more precise.
+
+
+
+[Vark assigned category: <b>Gmail</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

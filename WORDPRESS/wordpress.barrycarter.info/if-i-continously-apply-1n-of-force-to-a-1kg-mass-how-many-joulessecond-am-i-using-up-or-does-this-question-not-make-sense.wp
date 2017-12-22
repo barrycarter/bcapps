@@ -1,0 +1,28 @@
+
+ID: 27151
+post_name: if-i-continously-apply-1n-of-force-to-a-1kg-mass-how-many-joulessecond-am-i-using-up-or-does-this-question-not-make-sense
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 15 May 2010 22:29:40 +0000
+post_type: post 
+post_status: publish
+post_title: If I continously apply 1N of force to a 1kg mass, how many Joules/second am I using up? Or does this question not make sense?
+
+======================================================
+
+(You): If I continously apply 1N of force to a 1kg mass, how many Joules/second am I using up? Or does this question not make sense?
+
+(Eran): does not make sense - need more info like the distance you are pushing it.  You are asking how much power you need, but power is Force times distance over time (F*d/t) and your question does not have a time component.  The only thing that your question can answer is how much the mass will accelerate.
+
+----------------------
+
+(Kevin): I don't have the time to try and figure it out, my advice would be to convert it all done to meters, seconds and kilograms see if the units work out
+
+----------------------
+
+(Christophe): if you assume that the force put the mass in motion according to newton's law, then it may make sense - you can calculate the energy by first calculating the motion (using f.e. newton's law) then the relation "work = energy"
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

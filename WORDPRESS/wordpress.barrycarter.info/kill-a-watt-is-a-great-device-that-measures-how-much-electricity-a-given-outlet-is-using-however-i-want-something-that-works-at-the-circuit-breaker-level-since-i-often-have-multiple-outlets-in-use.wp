@@ -1,0 +1,36 @@
+
+ID: 25143
+post_name: kill-a-watt-is-a-great-device-that-measures-how-much-electricity-a-given-outlet-is-using-however-i-want-something-that-works-at-the-circuit-breaker-level-since-i-often-have-multiple-outlets-in-use
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 07:45:09 +0000
+post_type: post 
+post_status: publish
+post_title: Kill-a-Watt is a great device that measures how much electricity a given outlet is using. However, I want something that works at the circuit breaker level, since I often have multiple outlets in use in a given room/area. What devices measure total circuit breaker usage? I realize my electric meter measure whole house usage, but I want it broken down by circuit breaker.
+
+======================================================
+
+(You): Kill-a-Watt is a great device that measures how much electricity a given outlet is using. However, I want something that works at the circuit breaker level, since I often have multiple outlets in use in a given room/area. What devices measure total circuit breaker usage? I realize my electric meter measure whole house usage, but I want it broken down by circuit breaker.
+
+(Srikanth): You can try using Watt nodes if you want to know KWh power or you can use current transformers for measuring current (in Amperes). Check this website for more details: http://www.ccontrolsys.com/products/pulse_output.html
+
+
+
+We measured power at the circuit breaker of a building using current transformer and watt node combinations. The data output will be in pulses and can be converted into KWh using conversion tables given by the manufacturer.
+
+----------------------
+
+(Jacob): There are expensive power meters that clip on to cables. If you know the cable coming out of the breaker box, you could clip one of those meters on and get a measurement of power usage.
+
+(You): thanks. Someone recommended: http://www.ccontrolsys.com/products/pulse_output.html [http://www.ccontrolsys.com/products/pulse_output.html] but I don't know how hard they are to install (plus they're pretty expensive themselves).
+
+(Jacob): This is the kind of thing I mean: http://www.hotektech.com/GMCMetraclip72.htm
+
+(You): about how much does something like that cost?
+
+(Jacob): I have no idea. I saw a commercial electrician use one in a theatre I was at. I think Home Depot carries them, but they are several hundred dollars, I believe.
+
+
+
+[Vark assigned category: <b>electrical work</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,110 @@
+
+ID: 25404
+post_name: in-ruby-on-rails-are-script-and-commands-the-same-directory-my-app-cant-find-commandsgenerate-but-scriptgenerate-is-there
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 20 Jun 2010 21:47:51 +0000
+post_type: post 
+post_status: publish
+post_title: In Ruby on Rails, are "script/" and "commands/" the same directory? My app can't find "commands/generate", but "script/generate" is there.
+
+======================================================
+
+(You): In Ruby on Rails, are "script/" and "commands/" the same directory? My app can't find "commands/generate", but "script/generate" is there.
+
+(Andy): I'm used to the "script" directory being the location of the generate command, yes. Depending on your application, it sounds like you may indeed want the "script" folder rather than "commands", and you may have some success linking them together. (The only reference I can find to a commands/generate is in railties, and has since been removed: http://dev.rubyonrails.org/log/trunk/railties/lib/commands/generate?mode=path_history  )
+
+(You): thanks. It sort of bugs me that my version of rails is "broken" enough to require this.
+
+(Andy): You may want to try updating your Rails application to the newest version (gem update --system, gem install rails, rake rails:update). (If you're using an IDE, update that as well, because I'm not used to Rails applications themselves running script/generate.)
+
+(You): I thought rails was an IDE? Rails wanted to run command/generate but couldn't.
+
+(Andy): Hm, no, Rails is the application framework, but it's primarily Ruby code with no GUI. You might be using Aptana's IDE? See if there's a Help-&gt;About menu to get more information on what you're running.
+
+(You): I'm not using any IDE-- I'm following the Rails tutorial at the moment :( -- it turns out script/generate calls command/generate, so that's not much help. Maybe I created the project wrong somehow?!
+
+(Andy): Ah, okay, that makes more sense. Try making a new directory somewhere clean, moving there, and creating a new Rails project. (Also, first make sure you have the gems updated: run "gem update --system", although you may need a sudo in front of the command if you're on OS X/Linux.)
+
+(You): I'm in as root (I know, I know) -- and gem update --system is disabled on debian (it tells you so very directly). I re-created the project and my dir structure matches http://guides.rubyonrails.com/getting_started.html [http://guides.rubyonrails.com/getting_started.html] but that doesn't have commands/ either.
+
+(You): my bad. The command/generate is there, hiding under lib. The real problem is "`require_frameworks': no such file to load -- action_controller (RuntimeError)"
+
+(Andy): Ah, okay. I'd suggest trying "gem install rails" again, and if that doesn't work, perhaps "gem install activesupport" (although ActionController should be part of the rails gem, if I recall).
+
+(You): thanks. I'm doing "gem install rack" after googling, but not sure that will work
+
+(Andy): Yeah, I'm not quite sure what's wrong. It might be related to http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=583219  , but I can't tell. The advice for Debian/Ubuntu used to be to compile and install rubygems from the website directly, because the Debian/Ubuntu versions are modified (to better fit the apt packaging strategy). That may be an option, although it may also create problems with some directories having different names than Debian expects.
+
+(You): I'm going with option 3 ... try the same thing on a completely different machine :) [FreeBSD]
+
+(Andy): Good luck!
+
+(You): sadly, I might just need it. Are there any Linux platforms better for Rails? I have a VM server and could have something up and running in a few minutes.
+
+(Andy): I've been running it under Ubuntu (Desktop and Server) fairly successfully once I recompiled and installed rubygems from source. The guide at http://superuser.com/questions/90765/how-to-install-update-ruby-on-rails-on-ubuntu-9-10  looks likely to be correct for more recent versions, though.
+
+(You): is there a Linux for which no guide is required? I want to do something like "yum install rails" and get on with it. I'm surprised I can't.
+
+(Andy): Sadly, not that I know of. The problem as far as I can tell is that Rails uses the gem packaging system (which is obviously just for Ruby), and that's usually out of sync with most OS packaging systems, so most operating systems don't package it natively. (Ubuntu did at one point, but it caused more problems than it solved, because updates didn't work properly.)
+
+(You): well, my install on FreeBSD is complaining about 'camelize' and I'm trying an install on my local Fedora box now. So far, not seeing Rails as a big timesaver ;)
+
+(Andy): Yeah, it's nice once it's set up, but it can be a pain to get there.
+
+(You): well, I finally got it working on Fedora 11. Does this mean that if I want to deploy it, I'll have to get RoR working on my other machines too? Or is RoR just the framework? In other words, do the results of RoR require rails, or just ruby/erb?
+
+(Andy): Well, you'll have to get Ruby working on your server, at least. If you "freeze" the gems you're using into your Rails application (see something like http://www.softiesonrails.com/2008/1/3/freezing-your-rails-application  ), then you shouldn't have to install all of Rails onto your server, at least in theory. (Although I've never tried it without having Rails installed on the server as well.) You *may* need to have rubygems installed, but you shouldn't need the rails gems installed. (And semi-obviously, you'll only need to have Rails installed or frozen where you'll be running/serving from, as the actual code is just plain text. So you can develop with just a text editor, and then put things onto a server that is set up to work with Rails (or a frozen version), without needing Rails on the computer you're developing on. Although it helps if the computer you're developing on is a server as well, so you can test more quickly.)
+
+(You): thanks. So, hopefully I can develop on my home machine and just rsync the blog/ directory over to my servers. I'm pretty sure ruby and erb work fine there-- it's just rails that's a pain. I suppose I can test when the time comes. Did I ask you this already: is rails for creating applications where you need to CRUD records or can I use it for significantly different purposes?
+
+(Andy): Rails makes CRUD fairly easy, but it can also be used for significantly different things. (Obviously, some things might have problems fitting into REST-like patterns, but Rails will handle non-REST "routes" without too much effort, as it started without REST and added it later.)
+
+(You): I notice a lot of indirection in RoR (like you don't edit index.html, but something that creates it?), which is actually quite good. I also like that dbs automatically include all those fields I usually have to add manually (oid + a flag field to indicate data I just migrated in case I need to delete it all).
+
+(Andy): Yep, it's fairly easy to create data models, which is one of the nicer features. Have fun with your exploration!
+
+(You): thanks -- it's sort of like a builtin phpmyadmin.
+
+(Andy): Yep, take a look at scaffolding for some default things as well.
+
+(You): ok, I see why people like it. It's not doing anything I haven't done myself, but it IS doing it all automatically, which is nice.
+
+(You): I'm actually trying to rewrite an existing app in RoR. How easy is it to migrate existing dbs into rails?
+
+(Andy): It depends on how your data is structured. You'll have a fair amount of success if you have tables that are similar to the "Rails way" of managing them: an auto-incrementing "id" column (although you can specify a different column name in the model if you have to), and specific columns for parent-child and many-to-many relationships. I guess it depends on your original database, but take a look at http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html [http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html] for information on how Rails tries to manage tables and the relationships between various rows.
+
+(You): ugh, I don't have any of that. This data comes from a PHP app I wrote ages ago. Oh well, maybe there's a workaround. Can you recommend any tutorials -- I've read the blog/ one and want to read a couple more before rolling my own.
+
+(Andy): http://guides.rubyonrails.org/  has some guides, but most of them aren't complete tutorials so much as information on certain things. I liked Agile Web Development With Rails as book (although I only have the first two editions, they're currently working on the fourth: http://pragprog.com/titles/rails4/agile-web-development-with-rails  ). It has a good online store tutorial throughout the book tying everything together.
+
+(Andy): http://railscasts.com/  also has some quick tutorials for a number of different things, but some of their screencasts assume a basic application in the first place.
+
+(You): hate to be a pain, but anything w/o video? My computer doesn't do video well.
+
+(You): how well does RoR support limiting access. EG, I want some objects to have create/edit methods, but I only want certain people using those methods. Does RoR do "401 style" authentication?
+
+(Andy): Sorry, I had to step away for a bit. The railscasts generally have links to "Read it on ASCIIcasts," which gives you everything that's in the video in a pretty good text format. There are a number of authentication setups for Rails, each with their benefits and problems. There's a short preview at http://www.themomorohoax.com/2009/02/21/rails-2-3-authentication-comparison  , but take a look at a number of them and see what might help. If you do want the HTTP 401 authentication, you can do that as well, looking at something like http://ryandaigle.com/articles/2009/1/30/what-s-new-in-edge-rails-http-digest-authentication  or http://www.aidanf.net/rails_user_authentication_tutorial  . (I'd suggest the digest authentication rather than the basic authentication, but it's your choice.)
+
+(You): yes, I prefer storing passwords in hashed format as well. I'm still trying to figure out the "goodness" of RoR. Is it this: once you know how you want the guts of an application to work + have written the difficult code, RoR lets you turn it into a nice web app?
+
+(Andy): Somewhat, yes. RoR lets you abstract away much of the database layer, and lets you write your application code in Ruby as well as the display code in separate parts. It has some other features for separating different things (such as XML output and HTML output, or different languages), and allowing you to use the same code with different displays. (Some other helpers are useful as well.)
+
+(You): yes, I noticed that I get a free REST server when writing an RoR app. And "has_many" is nice as it puts the relational into database. I'm really impressed. Do you know of any tutorials that don't primarily focus on editing a database?
+
+(Andy): Not off the top of my head. The majority of them do because that's what's specific to Rails. Sorry!
+
+(You): hmmm, so is rails not appropriate for apps that use data in a database versus editing it?
+
+(Andy): No, it'll do that just fine too. If you get a chance to take a look at the Agile Web Development in Rails book I mentioned, that shows a fair amount of handling data in a database as well. Unfortunately, I don't know many good long-form tutorials for other things with Rails, though.
+
+----------------------
+
+(Thong): Rails 3 (beta) has commands, whereas "script/generate" is for Rails 2. You probably have a Rails 2 app.
+
+Aside: In Rails 3, use "rails generate" See http://guides.rails.info/getting_started.html#say-hello-rails
+
+
+
+[Vark assigned category: <b>Ruby on Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

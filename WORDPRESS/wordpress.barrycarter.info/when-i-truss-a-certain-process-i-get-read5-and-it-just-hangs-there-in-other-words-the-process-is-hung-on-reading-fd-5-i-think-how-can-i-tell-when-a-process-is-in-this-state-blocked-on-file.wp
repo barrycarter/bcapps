@@ -1,0 +1,18 @@
+
+ID: 27788
+post_name: when-i-truss-a-certain-process-i-get-read5-and-it-just-hangs-there-in-other-words-the-process-is-hung-on-reading-fd-5-i-think-how-can-i-tell-when-a-process-is-in-this-state-blocked-on-file
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 06:32:50 +0000
+post_type: post 
+post_status: publish
+post_title: When I truss a certain process, I get "read(5, " and it just hangs there. In other words, the process is hung on reading fd 5 (I think). How can I tell when a process is in this state (blocked on file read) and how long it's been blocked (with the goal of killing it if it's been blocked for too long)?
+
+======================================================
+
+(You): When I truss a certain process, I get "read(5, " and it just hangs there. In other words, the process is hung on reading fd 5 (I think). How can I tell when a process is in this state (blocked on file read) and how long it's been blocked (with the goal of killing it if it's been blocked for too long)?
+
+
+
+[Vark assigned category: <b>truss</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

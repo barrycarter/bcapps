@@ -1,0 +1,26 @@
+
+ID: 24244
+post_name: i-want-to-let-website-visitors-run-arbitrary-queries-on-my-readonly-sqlite3-database-ill-limit-runtime-to-5s-and-the-file-itself-is-read-only-how-can-i-do-this-safely
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 18 Sep 2010 00:49:09 +0000
+post_type: post 
+post_status: publish
+post_title: I want to let website visitors run arbitrary queries on my *readonly* SQLite3 database (I'll limit runtime to 5s, and the file itself is read only). How can I do this safely?
+
+======================================================
+
+(You): I want to let website visitors run arbitrary queries on my *readonly* SQLite3 database (I'll limit runtime to 5s, and the file itself is read only). How can I do this safely?
+
+(Adam): I'm not sure there is a way to limit queries in SQLIte to read-only from a database administration point-of-view. I think you'd have to parse the queries and block anything that appears to write, but I think that would be terribly error-prone
+
+(You): I agree.. that's why I want to do it in the source code or with something more reliable.
+
+(Adam): The simple way to do it would be to only run a query if it doesn't contain certain keywords (insert, update, delete, drop), but there's probably a more extensive set that you'd need to hit up. Even then, depending on the nature of your site and data, maybe there are legitimate queries that would contain those strings -- a contrived example would be a table containing to-do list entries: "update resume by Saturday" would be unnecessarily blocked.
+
+(You): no, I'm OK w/ the db being totally read-only, so that's not an issue. I think that might work: go through a list of sqlite3 keywords and deny most of them. Someone else suggested making sure a query STARTED with "SELECT", but that's insufficient since sqlite3 allows nested queries. Of course, I also have to catch dot commands like ".output /etc/passwd" type of stuff, sigh.
+
+
+
+[Vark assigned category: <b>SQLite3</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

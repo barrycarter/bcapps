@@ -1,0 +1,46 @@
+
+ID: 26232
+post_name: there-are-two-stocks-x-and-y-both-priced-at-10share-when-the-market-opens-their-price-at-the-end-of-the-day-will-be-a-normal-distribution-with-a-mean-of-10-and-a-standard-deviation-of-50-cents
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 10 Jun 2010 05:52:31 +0000
+post_type: post 
+post_status: publish
+post_title: There are two stocks, X and Y, both priced at $10/share when the market opens. Their price at the end of the day will be a normal distribution with a mean of $10 and a standard deviation of 50 cents. Stock X trades 3 times that day, and stock Y trades 100 times that day. Question: which stock has the greater chance of hitting $11/share (even if the price later goes back down below $11/share)? Intuitively, you'd think they'd have the same chance, but I don't believe that's statistically true.
+
+======================================================
+
+(You): There are two stocks, X and Y, both priced at $10/share when the market opens. Their price at the end of the day will be a normal distribution with a mean of $10 and a standard deviation of 50 cents. Stock X trades 3 times that day, and stock Y trades 100 times that day. Question: which stock has the greater chance of hitting $11/share (even if the price later goes back down below $11/share)? Intuitively, you'd think they'd have the same chance, but I don't believe that's statistically true.
+
+(Robert): i am not sure, but I would have to say that the stock that trades more has a greater chance of hitting 11 because there is a larger population in the sample, and therefore more chances to hit 11.
+
+(You): when you run the numbers, that's what I get too. Unfortunately, you run into the bizarre conclusion that a stock that trades infinitely often has a 100% chance of hitting any value. This doesn't seem right.
+
+(Robert): well - and i have to preface this by saying that statistics was not my strongest class - but with a normal distribution, that would be correct.  if a stock traded an infinite amount of times, it would hit every price within that distribution.  most of the trades within a sample would statistically fall at or near the mean (hence the fact that it is the mean).  with a standard deviation of 0.5, this means that 68% of the trades would fall within the range of 9.50-10.50, and 95% of all trades would be withing 9-11 and 99% of the trades would fall withing 8.50-11.50, but with an infinite amount of trades you would hit every point under the normal distribution curve.  so that seems right to me.  again, i was not a statistics wiz so hopefully someone else can give a better answer
+
+aardvark: Please type:
+
+'followup' - if that's for Barry,
+
+'new' - if that's a new question,
+
+'cancel' - if you want me to ignore that.
+
+ Sent at 8:19 PM on Wednesday
+
+aardvark: 
+
+Sorry, I wasn't sure what to do with your last message: "well - and i have..."
+
+
+
+Feel free to send it again -- or start over by sending a new question.
+
+ Sent at 8:21 PM on Wednesday
+
+(You): it makes sense the way you say it! Of course, the SD for 1/2 day is only 1/Sqrt[2] the SD for the whole day, but it's like a fractal -- even if the stock trades at 10 for two consecutive seconds, it could go crazy between those 2 seconds. This is pretty much random walk theory then. This is weird because it means you can't pretend things like foreign exchange (Forex) trade continuously. There's a huge difference between "trades 10 times a second" and "trades infinitely often". Wow!
+
+
+
+[Vark assigned category: <b>normal distribution</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 23091
+post_name: whats-the-best-way-to-tidy-json-data-tidy-only-works-w-html-and-xml-i-think
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 24 Dec 2010 04:29:26 +0000
+post_type: post 
+post_status: publish
+post_title: What's the best way to "tidy" JSON data? "tidy" only works w/ HTML and XML, I think.
+
+======================================================
+
+(You): What's the best way to "tidy" JSON data? "tidy" only works w/ HTML and XML, I think.
+
+(Andy): Well, there's Tidy JSON: http://www.raboof.com/Projects/TidyJson/ 
+
+
+
+Why do you want to tidy it and for what context?
+
+----------------------
+
+(Francesco): try http://www.jsonlint.com/
+
+(You): thanks. I also found http://www.raboof.com/Projects/TidyJson/ [http://www.raboof.com/Projects/TidyJson/] for local use
+
+
+
+[Vark assigned category: <b>JSON</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

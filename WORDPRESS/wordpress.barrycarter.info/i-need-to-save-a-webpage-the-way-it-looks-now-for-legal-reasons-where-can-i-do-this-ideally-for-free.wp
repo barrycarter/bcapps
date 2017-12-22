@@ -1,0 +1,70 @@
+
+ID: 23965
+post_name: i-need-to-save-a-webpage-the-way-it-looks-now-for-legal-reasons-where-can-i-do-this-ideally-for-free
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 16 Oct 2010 03:26:47 +0000
+post_type: post 
+post_status: publish
+post_title: I need to save a webpage the way it looks now for legal reasons. Where can I do this, ideally for free?
+
+======================================================
+
+(You): I need to save a webpage the way it looks now for legal reasons. Where can I do this, ideally for free?
+
+(Scott): Get on the webpage, hit the print screen button on your keyboard, open Microsoft paint and paste the image. Repeat until you have the entire page saved. Sry that's the best I can think of.
+
+(You): I already saved the page, but the other side can claim I made it (or altered it) myself. I need something legally binding in a civil case.
+
+----------------------
+
+(Dark): Print it.  Check a couple of browsers to see which matches it's 'print' version closest to it's 'screen' version.
+
+
+
+You could probably print it to PDF as well, saving paper and having it in electronic format.  (How depends on what OS you are using.)
+
+
+
+Some, very few, webpages specify a different stylesheet between screen and print.  I think Firefox and Opera can override that.  (And some others might also.)
+
+
+
+The other free option is to download each file that makes up the webpage (the HTML, CSS, and any image files, etc.) and save them in an archive.  Then you can always re-create the webpage by opening it in a browser.  (Which might take some minor editing of the HTML/CSS, to fix file paths.)  Again, some browsers have this as a built-in option.
+
+(You): I already saved the page, but the other side can claim I made it (or altered it) myself. I need something legally binding in a civil case.
+
+(Dark): Sorry, at that point it's not technical, but legal.  I thought to answer from a technical standpoint.  I can't think of anything you could do on your computer that they couldn't say you altered or created it yourself.  (The webarchive project might have a recent index of it though, which would be useful.)
+
+
+
+Beyond that...  You are going to need a trusted third party, and probably a lawyer.
+
+(You): that's what I meant... a website that takes snapshots of other websites in a neutral way that is useful in civil litigation.
+
+----------------------
+
+(Cheri): Hi Barry,
+
+
+
+On a Mac you can click command-shift-4, then draw a box around the  
+
+page and it will save a screenshot to your desktop. So simple and free!
+
+
+
+Cheri
+
+:D
+
+----------------------
+
+(Greg): just take a screen shot from any browser -- function/print screen on PC, then paste into another document; command-shift-3 on Mac (which will save an image file)
+
+(You): thanks. The issue is that it has to be admissible in a civil case. In other words, a disinterested third party has to do it, preferably one that runs a business doing it.
+
+
+
+[Vark assigned category: <b>webpage</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

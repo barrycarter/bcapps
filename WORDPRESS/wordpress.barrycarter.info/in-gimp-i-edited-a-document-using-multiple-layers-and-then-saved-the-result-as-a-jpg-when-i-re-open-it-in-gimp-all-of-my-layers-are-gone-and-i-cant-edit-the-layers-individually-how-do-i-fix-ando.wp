@@ -1,0 +1,24 @@
+
+ID: 28018
+post_name: in-gimp-i-edited-a-document-using-multiple-layers-and-then-saved-the-result-as-a-jpg-when-i-re-open-it-in-gimp-all-of-my-layers-are-gone-and-i-cant-edit-the-layers-individually-how-do-i-fix-ando
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 22 Apr 2010 11:22:41 +0000
+post_type: post 
+post_status: publish
+post_title: In GIMP, I edited a document using multiple layers and then saved the result as a JPG. When I re-open it in GIMP, all of my layers are gone and I can't edit the layers individually. How do I fix and/or prevent this from happening again?
+
+======================================================
+
+(You): In GIMP, I edited a document using multiple layers and then saved the result as a JPG. When I re-open it in GIMP, all of my layers are gone and I can't edit the layers individually. How do I fix and/or prevent this from happening again?
+
+(Mark): Oh dear.  What you need to do is save in BOTH formats.  Do a Save As into Gimp or photoshop format with laters.  And then a second Save As or Export as a JPG.  You ALWAYS maintain TWO copies of a file when dealing with layers.
+
+----------------------
+
+(??ukasz): You should use format that supports layers like Gimp's own, psd or tiff.
+
+
+
+[Vark assigned category: <b>GIMP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

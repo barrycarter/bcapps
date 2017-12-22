@@ -1,0 +1,18 @@
+
+ID: 27654
+post_name: i-use-ctrl-x-2-in-xemacs-to-split-the-window-into-two-frames-if-i-view-two-parts-of-the-same-file-and-then-do-nothing-for-a-while-the-bottom-frame-changes-to-match-the-top-frame-how-can-i-prevent-t
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 01 May 2010 23:02:00 +0000
+post_type: post 
+post_status: publish
+post_title: I use ctrl-x 2 in xemacs to split the window into two frames. If I view two parts of the same file and then do nothing for a while, the bottom frame changes to match the top frame. How can I prevent this? This only happens when the two frames are on the same file. Everything works fine if the two frames are visiting different files. Also, I never had this problem in RedHat 7.3, just Fedora 11.
+
+======================================================
+
+(You): I use ctrl-x 2 in xemacs to split the window into two frames. If I view two parts of the same file and then do nothing for a while, the bottom frame changes to match the top frame. How can I prevent this? This only happens when the two frames are on the same file. Everything works fine if the two frames are visiting different files. Also, I never had this problem in RedHat 7.3, just Fedora 11.
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

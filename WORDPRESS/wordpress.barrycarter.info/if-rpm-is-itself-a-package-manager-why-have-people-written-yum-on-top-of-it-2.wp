@@ -1,0 +1,38 @@
+
+ID: 26333
+post_name: if-rpm-is-itself-a-package-manager-why-have-people-written-yum-on-top-of-it-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 23:03:35 +0000
+post_type: post 
+post_status: publish
+post_title: If RPM is itself a package manager, why have people written YUM on top of it?
+
+======================================================
+
+(You): If RPM is itself a package manager, why have people written YUM on top of it?
+
+(Bruno): Yum manages remote packages and updates while RPm handles the local database of packages.
+
+(Bruno): In other words, yum makes sure your system is up to date based oin a remote repository, whcih is not handled by RPM.
+
+(You): OK, I think I got it. In other words, RPM will never fetch a file for you-- it will only install files you already have on the local hard drive? How does apt fit into all this?
+
+(Bruno): Yes. APT is like YUM, but for DEB files (not RPM).
+
+(You): what's the difference between deb and rpm files? Just different formats? One Debian created, and the other Redhat created? What is the .deb equivalent of the rpm command? Or does apt for .deb do the jobs of both yum and rpm for .rpm files?
+
+(Bruno): Yes. DIfferent package formats. dpkg is equivalent to rpm.
+
+(You): fantastic, thanks! Now I understand. Can one system use both .rpm and .deb files?
+
+(Bruno): Yes.
+
+----------------------
+
+(Forrest): RPM is a package manager while Yellowdog Update Manager (YUM) is an automatic updater and package remover/installer.  So YUM helps to automate RPM usage.
+
+
+
+[Vark assigned category: <b>RPM</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

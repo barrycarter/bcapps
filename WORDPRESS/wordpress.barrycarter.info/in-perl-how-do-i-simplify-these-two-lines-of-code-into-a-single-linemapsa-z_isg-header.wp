@@ -1,0 +1,78 @@
+
+ID: 26067
+post_name: in-perl-how-do-i-simplify-these-two-lines-of-code-into-a-single-linemapsa-z_isg-header
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 13 Jun 2010 22:48:09 +0000
+post_type: post 
+post_status: publish
+post_title: In Perl, how do I simplify these two lines of code into a single line?:map(s/[^a-z_]//isg, @header);
+
+======================================================
+
+(You): In Perl, how do I simplify these two lines of code into a single line?:map(s/[^a-z_]//isg, @header);
+
+  map($_=lc($_), @header);
+
+----------------------
+
+(Olivier): map { s/[^a-z_]//isg; lc } @header;
+
+(You): wow thanks! I forgot that map's first arg could be an entire block of code.
+
+----------------------
+
+(Ketil): Try this:
+
+map { s/[^a-z_]//isg; $_=lc($_); } @header
+
+(You): can I fetch the PID of %1 after I've already backgrounded several jobs? I could've sworn there was some shell where "echo %1" gave the PID of the first bg job, but tcsh obviously isn't it.
+
+(Ketil): In bash, there's a builtin called "jobs". With the -l parameter, it shows
+
+the PID of the background jobs, but you'll need to parse it:
+
+
+
+$ sleep 30 &
+
+[1] 24865
+
+$ sleep 45 &
+
+[2] 24870
+
+$ jobs -l
+
+[1]- 24865 Running                 sleep 30 &
+
+[2]+ 24870 Running                 sleep 45 &
+
+
+
+"echo %1" doesn't work in bash either:
+
+
+
+$ sleep 30 &
+
+[1] 24839
+
+$ echo %1
+
+%1
+
+$ fg %1
+
+sleep 30
+
+^C
+
+$
+
+(You): YES!!!!! "jobs -l" does what I want!
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

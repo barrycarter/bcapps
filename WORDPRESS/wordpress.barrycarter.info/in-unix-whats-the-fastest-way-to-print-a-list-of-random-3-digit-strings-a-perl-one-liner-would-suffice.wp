@@ -1,0 +1,24 @@
+
+ID: 25105
+post_name: in-unix-whats-the-fastest-way-to-print-a-list-of-random-3-digit-strings-a-perl-one-liner-would-suffice
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 27 Jun 2010 23:12:27 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, what's the fastest way to print a list of random 3-digit strings? A Perl one-liner would suffice.
+
+======================================================
+
+(You): In Unix, what's the fastest way to print a list of random 3-digit strings? A Perl one-liner would suffice.
+
+(Jos): while true; do printf "%03dn" $(expr $RANDOM % 1000); done
+
+----------------------
+
+(Steph): http://www.random.org/strings/?num=10&len=3&digits=on&unique=off&format=html&rnd=new
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

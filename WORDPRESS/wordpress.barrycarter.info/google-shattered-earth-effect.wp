@@ -1,0 +1,33 @@
+
+ID: 8935
+post_name: google-shattered-earth-effect
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Sat, 28 May 2011 03:06:16 +0000
+post_type: post 
+post_status: publish
+post_title: Google "Shattered Earth" Effect
+
+======================================================
+
+http://code.google.com/apis/kml/documentation/mapsSupport.html tells
+us that Google Maps API limits us to 1000 "Maximum number of total
+document-wide features".
+
+I interpret this to mean 1000 polygons (for example) *total*,
+regardless of zoom level.
+
+They're actually usually more generous: http://wordpress.barrycarter.org/index.php/voronoi-temperature-map/ routinely loads 3000+
+polygons without any problem.
+
+The limit also only applies to polygons on the visible map, not the
+whole map: when I briefly modified the page above to have 6000+
+polygons, Google only rendered some of them, resulting in this cool
+"shattered glass" effect:
+
+<a href="http://wordpress.barrycarter.org/wp-content/uploads/2011/05/goog-shattered.png"><img src="http://wordpress.barrycarter.org/wp-content/uploads/2011/05/goog-shattered-300x225.png" alt="" title="Google Shattered" width="300" height="225" class="alignnone size-medium wp-image-8936" /></a>
+
+Once I zoomed in a little, everything was fine:
+
+<a href="http://wordpress.barrycarter.org/wp-content/uploads/2011/05/goog-normal.png"><img src="http://wordpress.barrycarter.org/wp-content/uploads/2011/05/goog-normal-300x226.png" alt="" title="Google Normal" width="300" height="226" class="alignnone size-medium wp-image-8937" /></a>
+

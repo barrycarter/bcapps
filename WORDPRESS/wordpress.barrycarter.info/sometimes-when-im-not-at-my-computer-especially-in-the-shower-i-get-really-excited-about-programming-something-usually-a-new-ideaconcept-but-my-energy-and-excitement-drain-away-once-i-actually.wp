@@ -1,0 +1,368 @@
+
+ID: 24880
+post_name: sometimes-when-im-not-at-my-computer-especially-in-the-shower-i-get-really-excited-about-programming-something-usually-a-new-ideaconcept-but-my-energy-and-excitement-drain-away-once-i-actually
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 20 Jul 2010 06:43:39 +0000
+post_type: post 
+post_status: publish
+post_title: Sometimes when I'm not at my computer (especially in the shower), I get really excited about programming something (usually a new idea/concept), but my energy and excitement drain away once I actually sit in front of the keyboard. Is this normal and how can I cure it?
+
+======================================================
+
+(You): Sometimes when I'm not at my computer (especially in the shower), I get really excited about programming something (usually a new idea/concept), but my energy and excitement drain away once I actually sit in front of the keyboard. Is this normal and how can I cure it?
+
+(Dr): it's over-excitement. It happens all the time... just try to focus more on developing the idea in your head before finding yourself in front of the keyboard, or even sit down and sketch a layout...
+
+(You): does that really work w/ computer programs? You mean like a flow chart or something? Intentionally avoid sitting at the computer and trying to type code?
+
+(Dr): well... I'm a programmer myself... I adore coding more than anything else... And what you describe has happened to me numerous time...
+
+
+
+You know... it's that feeling : I'm at the supermarket - I've got THE idea - then being in sth like a trance... But when you get to writing it down, it all stops...
+
+
+
+As for me, this happens usually when the idea in my head is NOT so well-thought upon - that's why organising it into code gets messy... Just give yourself some time... think it over and over... twist in your head... when it's time to be written down, you'll know it - anyway, coding is an ART, and an artist can be excused not to be inspired ALL the time, huh?
+
+
+
+cheers!
+
+(You): I guess you're right. Normally, if I think about it for a while (like I'm at the store and it's an hour before I sit down to code), I come up with all sorts of corner cases where it won't work. Still, I think the idea itself is sound-- but maybe it's the corner cases that kill me, hmmm.
+
+(Dr): I still know what you mean... it seems as if coders face almost the same issues... lol - when I'm too concerned about the 'corner cases', either i leave them till they arise... or set my goals a bit lower so that I avoid the corner case at an early stage + avoid getting disappointed too easily...
+
+
+
+Basic Implementation (and we'll see what's gonna get out of it) of BIG Ideas is my solution... ;-)
+
+(You): it's like I'm trying to find reasons not to code though -- maybe that's the issue.
+
+(Dr): Well... speaking from a psycho/philosophical point of view... this could either be your searching for "a reason not to" or protecting yourself from being "defeated" by sth which did not work as supposed to...
+
+
+
+Why are you so concerned? Are you a coder by profession? Are you just a hobbyist?
+
+(You): I'm a recently-retired coder who's now a hobbyist. Coding for a living, you get paid by the hour, so it's not the same thing. Coding for yourself and for open source is quite different.
+
+(Dr): Well it is... different. For the sake of argument, I'm an-ex medical student, who 10 months ago, just dropped everything at the age of 24 to pursue his lifelong passion... :)
+
+(You): wow, 24 is awfully young to stop on the road to doctorhood. What is your lifelong passion?
+
+(Dr): I've left everything behind on the last semester...
+
+
+
+My passion? Huh...
+
+
+
+Programming :) (I've been accepted into a Comp.Sci. department here in Greece)
+
+
+
+I've started 16 years ago... and never stopped... I'm currently (at this very time before talking) developping a brand-new Script-Interpreter intended for web use... (Web App framework, etc) lol
+
+(You): wow-- I bet your parents are thrilled that you left medicine for computers ;)
+
+(Dr): haha...
+
+
+
+no, they weren't but I think they are now...
+
+
+
+at the end of the day, what matter the most is to be able to be calm and satisfied with yourself - if a job gives you that, then that's all it takes...
+
+(You): I guess so. Some people feel there will be a glut of programmers soon. Let's face it: it doesn't really require THAT much intelligence. Once people figure that out, we're screwed :)
+
+(Dr): well... i can't explain that (and it's not THAT good)...
+
+
+
+I've never seen coding as a 100% pure profession... Sure, it pays - for me, it pays well - but when coding, I never realise THIS has to be called 'work'... I enjoy it SO MUCH anyway...
+
+
+
+ah... you talked about Open Source... have a look at some of my projects (https://sourceforge.net/users/drkameleon) and see if you are interested in contributing to any of them... ;-)
+
+(You): is MathMachine like an OS Mathematica?
+
+(Dr): i don't know what OS Mathematica is...
+
+
+
+MathMachine is just a *nix Console for Advanced Calculations, mostly directed towards Prime Numbers and some of my allegations towards proving the famous Goldbach's conjecture
+
+(You): Mathematica is a program for complex math calculations -- sort of like MatLab, etc.
+
+(Dr): + It can handle huge numbers with millions of digits and quite a fast processing (A MUST when dealing with prime-testing/Mersenne primes/etc)
+
+(You): Mathematica does that too. You've never heard of it?
+
+(Dr): well... i think i do... but i've never looked into it... I'm not THAT interested in maths... JUST number theory... and I just wanted a test base for some of my hypotheses... but - guess what?! - it grew a bit bigger than i thought... with full expression parsing, custom functions, plotting, diagrams, etc -- if you're on a Linux machine, you may give it a try (I've also uploaded a .deb for Ubuntu-ish distros)
+
+(You): could you give me some examples of what it could do? I want to run them thru Mathematica (which does all that too). if Mathematica fails, I'll take a look at it.
+
+(Dr): MathMachine [Version 0.2.2]
+
+Copyright (C) 2009 Dr.Kameleon
+
+
+
+This program comes with ABSOLUTELY NO WARRANTY;
+
+This is free software, and you are welcome to redistribute it
+
+under the the conditions of GNU General Public License version 3.
+
+
+
+=====================================================================
+
+|      Type 'help' to view instructions and available commands      |
+
+=====================================================================
+
+
+
+[MathMachine]??? help
+
+            set   -   Set/Enable a console option
+
+          unset   -   Unset/Disable a console option
+
+         define   -   Define a new function using prototype
+
+           list   -   List elements in category
+
+           eval   -   Evaluate a math expression
+
+          evalp   -   Evaluate a 'postfix' expression
+
+         prime?   -   Check if prime
+
+        mprime?   -   Check if M[expression] is a Mersenne Prime
+
+        pprime?   -   Check if probable prime
+
+       coprime?   -   Check if coprime
+
+     composite?   -   Check if composite
+
+       perfect?   -   Check if perfect
+
+           odd?   -   Check if odd
+
+          even?   -   Check if even
+
+     divisible?   -   Check if divisible
+
+          $eval   -   Evaluate expression, for x in &lt;range&gt;
+
+           plot   -   Plot the graph of an expression, for x in &lt;range&gt;
+
+        $prime?   -   Check if prime, for x in &lt;range&gt;
+
+       $mprime?   -   Check if M[x] is a Mersenne Prime, for x in &lt;range&gt;
+
+       $pprime?   -   Check if probable prime, for x in &lt;range&gt;
+
+      $coprime?   -   Check if coprime, for x in &lt;range&gt;
+
+    $composite?   -   Check if composite, for x in &lt;range&gt;
+
+      $perfect?   -   Check if perfect, for x in &lt;range&gt;
+
+          $odd?   -   Check if odd, for x in &lt;range&gt;
+
+         $even?   -   Check if even, for x in &lt;range&gt;
+
+    $divisible?   -   Check if divisible, for x in &lt;range&gt;
+
+         manual   -   Display Syntax/Help for a specific command
+
+           help   -   Display Instructions
+
+          clear   -   Clear current viewport
+
+           exit   -   Terminate this session
+
+(Dr): Oooops... I just copied the main commands list... but it got messed up
+
+(You): LOL :) Thanks. I meant, a few specific examples of things it does well. [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Alexander): It's pretty standard for all creative people, actually, or can be. Part of it comes from not training yourself to retain that energy and enthusiasm because the usual line believed is, "You can't be creative on demand." You can, you just have to condition yourself to it, even when your mental state has changed and you're in a different headspace. That's just work. The other thing that can happen is you have this great idea in the shower, wait a few minutes and your subconscious figures out its not that great an idea after all. You walk out with the conscious intent to manifest it, but ... poof, no energy or excitement. Working out which of these is the problem (or situation) just takes practice and conscious self-observation.
+
+(You): thanks. I guess it's more that the idea seems so simple and easy when I first think about it, and then gets more complex when I actually have to do it. Is that my subconscious saying "it's not easy after all"? Or just the difference between the thought of doing something vs actually doing it? Any mind tricks to fool myself into not losing that energy so I can actually create stuff? [direct gchat: carter.barry@gmail.com]
+
+(Alexander): Everything is more complicated when you actually have to do it, whether it be tracing a recursive call down into the IP stack or putting together a heavy techno bassline. Your best bet is to just bull on through, if you really believe in the idea. Setting personal deadlines and making public statements of "OK, I'll have this done by ____" or "I have this cool idea and I'll show you tomorrow!" helps me a lot because then there's a commitment. If there's no investment and no commitment, there's no production in any creative industry and, despite what a lot of Engineers'll tell you, software engineering is a creative act. "Just do it" is the only measure of accomplishment.
+
+(You): thanks. Honestly, I often wonder if someone's already done it somewhere (and it's hard to google stuff like this). So, if it takes an hour or so, no problem -- I've done it faster than I could've found/downloaded/installed it. But once I start thinking it will take "a while", I'm wondering why bother for something that's probably inferior to something else out there.
+
+(Alexander): Welcome to science, where everything's probably been done by someone else somewhen. Come to think of it, that's true for music, architecture and pornography as well ... Anyway, you've discovered the crux of the creative act, "why bother?" Unless you have a reason for that up front, you won't. It's that simple. The only thing that makes that better is having an answer. Any answer. If you don't have one then the answer is, "I shouldn't."
+
+(You): thanks. But if someone's already done it, isn't it better to find what they've done and use it? In fact, I can pretty much guarantee that any idea I get off the top of my head won't be as good as one that people have improved over years.
+
+(Alexander): Probably. So either devote your life to becoming the go-to guy for finding everything ever done in any field ever (there being a market for that, actually) or resign yourself to the fact that to actually accomplish anything, you'll probably reimpliment something. The fact that ten-thousand people have used a basic 4:4 kick drum beat doesn't keep more techno from getting made and the fact every man with a keyboard has implimented a bubble sort doesn't keep them from being rewritten.
+
+(You): hmmmm. I don't want to BE the guy who can find anything in any field ever-- I want to *find* that guy, tell him my idea, and have him say, "so and so did it 10 years ago-- download it here".
+
+(Alexander): That Guy gets paid a lot of cash because NO ONE wants to be That Guy. And this is the universe we inhabit.
+
+(You): admit it... there is no such Guy! [direct gchat: carter.barry@gmail.com]
+
+(Alexander): For the folks what know me, I am That Guy. :P
+
+(You): you are now my BFF forever. I'll bring all my ideas straight to you.
+
+(Alexander): I may tell you they suck. This is the risk all saponts take here. ;)
+
+(You): can you tell me someone else has done it? That beats "it sucks" because then I at least have the option of finding that other code and using it.
+
+(Alexander): Probably. It was probably Wirth. (I'm the onlt ex-coder I know with Wirth's "The Art of Computer Programming" on his shelf, all three volumes.)
+
+(You): so this Wirth guy has done everything?
+
+(Alexander): Dude, you don't know Wirth?
+
+(You): are you sure you don't mean Knuth?
+
+(Alexander): Maybe. See? You knew if he'd done something!
+
+(You): yeah, but that's more algorithms and stuff. I'm talking one step higher.
+
+(You): could you gchat me at [direct gchat: carter.barry@gmail.com]?
+
+(Alexander): Algorithms are the step higher. If your question is "has anyone done this before?" and its something even reasonably obvious, then the answer is "yes." But you haven't heard of it, or you'd know it. So whatever it is you want to do, do it, and make sure people know about it in the future. Problem solved.
+
+(You): that's inefficient. Why don't I find who done it and use it? OK, ready for the ideas?
+
+(Alexander): It's perfectly efficient if you account for the time you spend dithering and wondering if something's been done, then searching for something that may or may not exist instead of just accomplishing it.
+
+(You): ah ha! You've hit the nail on the head. If it's something REALLY easy, I just code it, exactly for the reason you said. However, if it's something relatively complex, it's better to search/find, because a program that's been around a while probably has many bugs fixed, they've dealt w/ the odd issues, etc. [direct gchat: carter.barry@gmail.com]
+
+(Alexander): I can tell you're young. Too optimistic. That'll burn out of you once you've maintained an OS or two.
+
+(You): hmmm... in any case, can I barrage you w/ my ideas now?
+
+(Alexander): I'm exposed to artillery, so I'd either need to get under cover or accept it.
+
+(You): OK, you lost me on that metaphor.
+
+(Alexander): "Barrage."
+
+(You): so you're saying you'll either accept or evade my ideas? :)
+
+(Alexander): Prezactly.
+
+(You): precisely + exactly :) -- OK: lots of backup schemes encrypt file contents, but I want to encrypt file names as well. Of course, the backup should be efficient, etc, too. I think I've come up w/ a way to do this. Already done?
+
+(Alexander): See almost everything from Schneier as to why that's usually a bad idea. Entire encrypted mounts/domains have been used by secure systems for decades on every OS though, so it's definitely "been done." The key issue being that you need some kind of reference handle to access a given clump of data, and if you're encrupting the contents and you care that someone might derive info from the filenames, you just encrypt the whole thing with an "encrypted filesystem" or rough equivalent that impliments its own file handles, indexing and whatnot.
+
+(You): I considered that, but attempting to rsync an 80G encrypted disk image has many problems. Can you give me a quick hint re why Schneier thinks this is a bad idea? My thought was batching files into tar files of "fixed" size and rsyncing those.
+
+(Alexander): Short version, "because it solves the wrong problem." Mainly because either you implimented an entire encrypted dataspace, and thus encrypting filenames comes for free, or you don't care enough to do so. It's an in-between solution that gets you nothing. Rsyncing an 86G anything is a bad idea, but there's an inherent problem with doing to any kind of crypted binary: If you care enough to crypt the hard data, you probably don't want to send it in the open. If you don't care about sending it, you probably don't need to worry about crypting the data on the disk.
+
+(You): what about the case where you're OK w/ having the data unencrypted locally, but want the backups encrypted since they're not in a secure location?
+
+(Alexander): Aside from the obvious "never store your backups in a location less secure than your servers" issue that's kind of huge, there are several encrypted backup solutions. (Hell, we used to support one out of the Tru64 team that was big; I've blocked out most everything I ever knew about it to save my sanity. It was a beast.) In that case, you'd want a full end-to-end crypted channel, not just stored binaries but the comm channel and everything else. And you still have to deal with the problem that your backups will now be a slow, waddling PitA to recover at the time you MOST want fast, easy and transparent: when your business/system is down because you've had a huge problem.
+
+(You): so you're saying that I shouldn't store *encrypted* backups in a non-safe location? And rsync over ssh is encrypted, but since the backups themselves are encrypted, it's not a huge deal. Also, I'm sort of the opposite re backups. I'm so grateful to have them, the extra effort isn't a problem.
+
+(Alexander): I'm saying you should never ship secure data anywhere that's not secure unless you absolutely have to. "Secure" means different things for different needs, but if you don't control the channel and the storage, well ... Encryption's nice, but paranoia works. You don't mind if your backups are awkward to access? Now I *know* you've never had to do support or worked in a production facility; the moment when backups are needed is the worst moment you'll ever face. You've tried everything else, the system's down, and you need to get the system back up NOW because this is how you make money ... or worse, someone else makes money. Or the system's undergoing "planned maintainance" and, inevitably, it takes longer and is more stressful than you planned. See situation #1. Backups are always a nightmare.
+
+(You): but this is a backup for my personal machine, not a work situation. And having to backup my data in a secure location would be really expensive. Remote disk space is cheap.
+
+(Alexander): Then you don't need to impliment anything. Use a barely-noticable anything for making crypted binaries, ship them however, and don't worry about it. Because you really don't care and the big thing to note is "neither does anyone else." Perhaps the most important aspect of security analysis most often neglected: who cares? What's the cost if anyone does?
+
+(You): there are still issues to be resolved though-- how to be efficient, how to avoid backing up files, versioning, etc.
+
+(Alexander): Dude, there are probably a hundred Linux open-source back-up solutions on the Net. Pull a few and start disecting. Or start implimenting something that scratches your itch. But you've got to do one of the two if you care, and if you don't care, do something else.
+
+(You): ok, fine. I've come up w/ how I'd do it, but there has to be someone whose already done it!
+
+(Alexander): Probably. Fifty or sixty times. So go start disecting those open-source solutions and find out how they did it. Or don't, and don't, but you cab't have it both ways.
+
+(You): ok, so my question for you: who has done this already? A specific answer.
+
+(Alexander): This is where I peer at you. With an eyebrow cocked. Google, "Linux remote backup," start studying. What, you thought being a programmer was easy?
+
+(You): argh! No, you're right, there are tons of them. BUT none of them do what I want. They're all just a little off. If I give you my specs/idea, can you tell me which one does all the stuff I'd do?
+
+(Alexander): No. Dear Hell, you do know that part of becoming good at what you do is studying the stuff others have done before you, ESPECIALLY if it doesn't do exactly what you want? How does it work? How does it succeed? Where does it fail to meet what you need? What does THIS thing do that THAT one doesn't? Can you bodge them together? That is the very essence of development process.
+
+(You): I always code from scratch. I hate looking at other people's code.
+
+(Alexander): Then you've decided you're going to be a crappy programmer. Good to know you've got that covered up front, though.
+
+(You): well I use libraries and stuff, but that's different.
+
+(Alexander): Every single creative effort requires you to study the works of others. They got there first. They may not be better, but knowing how they're broken means you know how to do it better.
+
+(You): so you don't think starting fresh works?
+
+(Alexander): If you want to impliment the principles of programming over the last few decades, sure. Do you have 60 x a couple million man-hours to burn?
+
+(You): hmmm. I hate studying code, alas. Maybe this is an unsolvable problem (psychologically speaking)
+
+(Alexander): Possibly so. Not everyone is suited to all efforts. I, for instance, am the World's Worst Electronic Musician. But I enjoy learning and exploring the headspace; I like seeing what's come before. Millions of man-hours of creative effort, a hundred-million different approaches ... I may be reimplimenting the wheel, but its MY reimplimentation of the wheel, whether Gary Newman or Knuth got there first.
+
+(You): I was a lot happier before I knew about the Internet -- writing it myself was the only way to do it. Now that I know someone else has probably done it better, I'm obsessed w/ finding that better way first.
+
+(Alexander): You'll never write the better way if you don't know what the not-better-ways are. How will you ever know if you're better?
+
+(You): that's what I'm saying -- how do I find who has already done this stuff so I dont' rewreite it!
+
+(Alexander): Unless you can disect and study it, even if you found it how would you know if you're better?
+
+(You): there is a practical aspect here. If I find something meeting my needs, I can just use it.
+
+(Alexander): Except you haven't put in the basic research necessary to know if anything can, or will, or should. This one's on you, dude; if you can't do due dilligence, don't do.
+
+(You): my claim is that you can only do due diligence to a point -- yes, I can find Linux backup programs-- but no, I can't analyze every one of them to see if it does what I want. That's too much work.
+
+(Alexander): Being lazy is only a useful trait if you intend to work for the government. Hell, I'd prefer not to have to try and comprehend 2,000 years of music theory to really UNDERSTAND making music, but that's the basic truth: to really create the new, you have to understand the old. Disection, vivisection, recreation, reimplementation, they all require you understand and really delve into what went before. You can't do that or at least just suck it up and accept the stuff will not only have been done before but done better ... don't waste your time. Seriously, just don't.
+
+(You): well, the fear of having to do all that work for a simple app would pretty much stop me dead in my tracks. I guess I don't have what it takes to be a progammer.
+
+(Alexander): Not to be a good one. Like I said, its like any other creative effort; you either want to do it, and have things you want to do so much that you want to know how to, or you don't. It's really that simple, at heart.
+
+(You): I just realized that I don't want to do it. I want solutions to my problems and programming is just a method to achieve those. I'd much rather use other people's work.
+
+(Alexander): Welcome to management. Here's your MBA.
+
+(You): oh dear god, I'm cut out to be a manager... I can feel my hair getting pointy already.
+
+(Alexander): Also, welcome to Hell. I took a swath of management courses but I could never manage a team. Too honest and biting. I'm great as a consultant, but in the chain of command I'm simply too driven to achievement to play in most corporate environments.
+
+(You): I hate people too. So I'll probably suck at management as well.
+
+(Alexander): So do something else. Something you like. That can take a while to figure out. (Hell, I did what I was good at for a decade before I figured out I hated it but I was oh-so-awesome at it. And then I stopped, because retirement is better than doing stuff you despise but worse is doing stuff you just don't care about.)
+
+(You): I have no idea what I like. I just know that I'm really really bored.
+
+(Alexander): So do different things. You'll figure it out eventually. Shotguns always work.
+
+(You): you mean try doing tons of stuff and see what I like?
+
+(Alexander): What else do you have going on? Might as well.
+
+(You): absolutely nothing. My life is empty.
+
+----------------------
+
+(Pete): if you get a great idea anywhere, but when you sit in front of your keyboard you lose your energy, try writing down the idea instead of jumping in and programming right away.  Write down the most important part of the idea, and then other parts.  Then let your imagination go for a little while and write down all the great things about your idea.  This helps specify all the things that would go into your actual program, and it's a great way to get you excited again.  Then, when you are ready to program it (after you're all excited again), start with just the most fundamental part and get that right.  Add the rest on later.  It's great to see a little bit working - rather than waiting a long time to see the results of your work.                        And Good Luck!
+
+(You): thanks. I think you're on to something. The few times my computer is down (ie, in the shop), I get all excited about the things I'll do when it gets back -- and I start planning them and stuff (w/o writing code) -- often I actually end up doing stuff when it returns. So maybe running to the computer every time I have an idea isn't the way to go, hmmm.
+
+
+
+[Vark assigned category: <b>computers</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

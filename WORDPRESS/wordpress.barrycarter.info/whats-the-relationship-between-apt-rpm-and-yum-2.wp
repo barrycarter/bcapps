@@ -1,0 +1,36 @@
+
+ID: 26331
+post_name: whats-the-relationship-between-apt-rpm-and-yum-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 23:03:59 +0000
+post_type: post 
+post_status: publish
+post_title: What's the relationship between apt, rpm, and yum?
+
+======================================================
+
+(You): What's the relationship between apt, rpm, and yum?
+
+(Michael): what a great question! first one I have seen that completely baffles me:-)
+
+(You): LOL :) Thanks!
+
+----------------------
+
+(Dibyajyoti): apt and yum do similar thing - installing packages from online repositories.
+
+Only difference is apt works in ubuntu whereas yum for redhat based systems
+
+like Fedora and CentOs.
+
+
+
+rpm is redhat package manager for installing rpm packages on fedora and
+
+centos systems. This has no relationship with yum or apt.
+
+
+
+[Vark assigned category: <b>rpm</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

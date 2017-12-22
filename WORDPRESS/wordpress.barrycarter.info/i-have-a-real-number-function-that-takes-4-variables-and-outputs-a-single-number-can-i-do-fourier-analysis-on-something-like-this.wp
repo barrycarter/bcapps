@@ -1,0 +1,42 @@
+
+ID: 26373
+post_name: i-have-a-real-number-function-that-takes-4-variables-and-outputs-a-single-number-can-i-do-fourier-analysis-on-something-like-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 07 Jun 2010 22:29:29 +0000
+post_type: post 
+post_status: publish
+post_title: I have a real number function that takes 4 variables and outputs a single number. Can I do Fourier analysis on something like this?
+
+======================================================
+
+(You): I have a real number function that takes 4 variables and outputs a single number. Can I do Fourier analysis on something like this?
+
+(Vinay): What is your end objective? What do you want to do the fourier analysis for?
+
+(You): I want the Fourier analysis to give me a smooth, simple approximation to my function.
+
+(Vinay): I guess it can be done. provide smaller steps (something to the tune of 10^-3) to get smoother output.
+
+----------------------
+
+(Dreezz??n): what kind of function it is ? is it polynomial ? Fourrier Analysis is to my mind polynomial-ization of functions so...
+
+(You): it's actually data points, and not really a function.
+
+(Dreezz??n): What do you what to do with those data points ? or it's the end of the stry ?
+
+(You): my data points are temperature readings, and I'm trying to find the simplest function that comes within 2C of 90% of the data points (for example). And then balance function complexity against accuracy. I'm looking at the numpy thing now.
+
+(You): I have Mathematica but it doesn't have a simple answer to my question.
+
+(Dreezz??n): your problem is not simple :) (even my bad mathematic english vocabular let met think that what you are trying to do is simple for a human but not for the machines...)
+
+----------------------
+
+(David): Yes; http://en.wikipedia.org/wiki/Fourier_transform#Formulas_for_general_n-dimensional_functions implies it's possible, but I don't understand it enough.
+
+
+
+[Vark assigned category: <b>Fourier analysis</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

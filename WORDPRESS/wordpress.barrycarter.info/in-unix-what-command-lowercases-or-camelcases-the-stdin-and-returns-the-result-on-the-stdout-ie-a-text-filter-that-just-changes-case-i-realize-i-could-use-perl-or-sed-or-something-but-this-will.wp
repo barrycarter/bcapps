@@ -1,0 +1,56 @@
+
+ID: 25374
+post_name: in-unix-what-command-lowercases-or-camelcases-the-stdin-and-returns-the-result-on-the-stdout-ie-a-text-filter-that-just-changes-case-i-realize-i-could-use-perl-or-sed-or-something-but-this-will
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 21 Jun 2010 18:51:10 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, what command lowercases or camelcases the stdin and returns the result on the stdout? (ie, a text filter that just changes case). I realize I could use Perl or Sed or something, but this will be part of an already complex pipeline.
+
+======================================================
+
+(You): In Unix, what command lowercases or camelcases the stdin and returns the result on the stdout? (ie, a text filter that just changes case). I realize I could use Perl or Sed or something, but this will be part of an already complex pipeline.
+
+(Mike): tr A-Z a-z
+
+----------------------
+
+(Andrew): The tr command will do the trick. You use it like so: `echo 'Hello' | tr [:upper:] [:lower:]`
+
+----------------------
+
+(Alexander): in haskell this will be your program:
+
+module Main where
+
+import System.Environment
+
+import Data.Char (toLower, toUpper)
+
+main = do
+
+  (s:_) &lt;- getArgs
+
+  case s of
+
+    "l" -&gt; interact (map toLower)
+
+    "u" -&gt; interact (map toUpper)
+
+
+
+then just use it like this:
+
+p0 | runhaskell Prog.hs l | p1
+
+(Alexander): whoops... indentation fucked that up. I
+
+(Alexander): ...I guess the simplest would be an AWK one-liner...
+
+(You): thanks. Someone reminded me about tr
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

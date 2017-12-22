@@ -1,0 +1,34 @@
+
+ID: 27656
+post_name: after-i-install-xen-on-a-machine-can-i-ssh-to-it-or-otherwise-setup-guest-oss-remotely
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 01 May 2010 03:32:22 +0000
+post_type: post 
+post_status: publish
+post_title: After I install Xen on a machine, can I ssh to it or otherwise setup guest OSs remotely?
+
+======================================================
+
+(You): After I install Xen on a machine, can I ssh to it or otherwise setup guest OSs remotely?
+
+Addition: Xen Hypervisor
+
+----------------------
+
+(Vasco): I haven't played with that for a while, but i believe that you can ssh and push the X to the local machine.
+
+(You): Thanks! I know "ssh -X" lets me run X apps locally, even though the binary is on a remote machine not necessarily running X.
+
+----------------------
+
+(Manuel): sorry for the delay had some other things going on, i've only played around with xen but the i do know it has
+
+no knowledge of networking, external storage devices, video. you must have domain 0 at a minimum before networking support is enabled
+
+(You): Thank you! Does dom 0 have to have a real OS on it, or can it just be the Xen OS itself.
+
+
+
+[Vark assigned category: <b>Xen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,20 @@
+
+ID: 26999
+post_name: on-fedora-11-my-firefox-just-a-few-addons-is-using-206m-memory-is-this-normal-how-high-must-it-be-before-i-should-worry-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 17 May 2010 22:32:49 +0000
+post_type: post 
+post_status: publish
+post_title: On Fedora 11, my firefox (just a few-addons) is using 206M memory. Is this normal? How high must it be before I should worry?
+
+======================================================
+
+(You): On Fedora 11, my firefox (just a few-addons) is using 206M memory. Is this normal? How high must it be before I should worry?
+
+(Akshey): yeah that is fine. Mine goes to around 400-500MB (with 13 addons installed) when I have spent many hours without restarting firefox. Increase in memory usage as time passes happens because of memory leakage in addons. Moreover, in addition to number of addons, memory usage depends highly on the number of open tabs. I panic only when I am running out of memory, then I just restart firefox and it starts at less than 200MB.
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

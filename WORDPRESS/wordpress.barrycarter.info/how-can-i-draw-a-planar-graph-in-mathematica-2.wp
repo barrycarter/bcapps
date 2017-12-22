@@ -1,0 +1,40 @@
+
+ID: 24633
+post_name: how-can-i-draw-a-planar-graph-in-mathematica-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 05 Aug 2010 21:25:56 +0000
+post_type: post 
+post_status: publish
+post_title: How can I draw a planar graph in Mathematica?
+
+======================================================
+
+(You): How can I draw a planar graph in Mathematica?
+
+(Lewis): ShowGraph[]
+
+(You): I did that with K4 and the result wasn't planar.
+
+----------------------
+
+(Jonah): what do you mean by Planar. Plot[f[x],{s,low,high}]
+
+(You): http://en.wikipedia.org/wiki/Planar_graph [http://en.wikipedia.org/wiki/Planar_graph] might be helpful.
+
+(Jonah): sorry, can't help you there, though, I think building a graphics function might be the best approach.
+
+(You): there are lots of programs that will draw graphs, but I can't find a single one that can always draw a planar graph planarly.
+
+(Jonah): I was suggesting build a one in Mathematica
+
+(You): Mathematica's Combinatorica package does a lot of graph stuff, including PlanarQ[] to determine planarity, but I couldn't find a way to force it draw planar graphs planarly. Combinatorica is huge -- if it can't draw planar graphs, I'm not sure I could write something that will.
+
+(Jonah): Yeah, it's possible it won't be easy, but the power of Mathematica is that there's almost always a way.
+
+(You): LOL :) You want to take it on? I'll even pay you if you do. However, it appears that this problem is NP-hard.
+
+
+
+[Vark assigned category: <b>planar graph</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

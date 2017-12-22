@@ -1,0 +1,26 @@
+
+ID: 23889
+post_name: in-perl-can-you-do-foo-hashfoo
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 22 Oct 2010 07:20:00 +0000
+post_type: post 
+post_status: publish
+post_title: In Perl, can you do: ($foo, $hash{$foo}) = (1,2) ... or is $foo not necessarily defined by the time Perl sees $hash{$foo}? 
+
+======================================================
+
+(You): In Perl, can you do: ($foo, $hash{$foo}) = (1,2) ... or is $foo not necessarily defined by the time Perl sees $hash{$foo}?
+
+(Alexander): i believe the assignment is evaluated in parallel, so that all assignments happen at the same time, this means that $foo is not known
+
+(You): thanks. That would explain the odd behavior I was getting.
+
+(Alexander): the easiest example is ($a,$b)=($b,$a)
+
+(You): well, that one doesn't count because you're trying to assign vars on the left side. In my example, I was trying to assign vars from earlier in the list.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

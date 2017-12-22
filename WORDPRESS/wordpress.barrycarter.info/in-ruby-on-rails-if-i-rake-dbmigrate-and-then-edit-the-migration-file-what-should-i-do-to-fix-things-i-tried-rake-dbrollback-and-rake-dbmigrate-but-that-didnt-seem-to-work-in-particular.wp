@@ -1,0 +1,20 @@
+
+ID: 25384
+post_name: in-ruby-on-rails-if-i-rake-dbmigrate-and-then-edit-the-migration-file-what-should-i-do-to-fix-things-i-tried-rake-dbrollback-and-rake-dbmigrate-but-that-didnt-seem-to-work-in-particular
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 21 Jun 2010 07:06:26 +0000
+post_type: post 
+post_status: publish
+post_title: In Ruby On Rails, if I "rake db:migrate" and then edit the migration file, what should I do to fix things? I tried "rake db:rollback" and "rake db:migrate" but that didn't seem to work. In particular, it's ignoring my Thingy.reset_column_information method
+
+======================================================
+
+(You): In Ruby On Rails, if I "rake db:migrate" and then edit the migration file, what should I do to fix things? I tried "rake db:rollback" and "rake db:migrate" but that didn't seem to work. In particular, it's ignoring my Thingy.reset_column_information method
+
+(Griffley): don't use a rake. rakes are for leaves and japanese gardens/
+
+
+
+[Vark assigned category: <b>Ruby On Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

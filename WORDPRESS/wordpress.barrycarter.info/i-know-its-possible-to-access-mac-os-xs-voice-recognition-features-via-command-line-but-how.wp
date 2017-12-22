@@ -1,0 +1,30 @@
+
+ID: 28084
+post_name: i-know-its-possible-to-access-mac-os-xs-voice-recognition-features-via-command-line-but-how
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 21 Apr 2010 09:26:24 +0000
+post_type: post 
+post_status: publish
+post_title: I know it's possible to access Mac OS X's voice recognition features via command-line, but how?
+
+======================================================
+
+(You): I know it's possible to access Mac OS X's voice recognition features via command-line, but how?
+
+(Thomas): What would you like to do with them via the command-line?
+
+(You): For now, I just want the Mac to recognize a word and send it to a Perl script I write, like "myscript.pl &lt;word/phrase recognized&gt;"
+
+----------------------
+
+(Brendan): Here's a lifehacker tutorial:
+
+
+
+http://lifehacker.com/215764/hack-attack-make-your-macs-speech-recognition-work-for-you
+
+
+
+[Vark assigned category: <b>voice recognition</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

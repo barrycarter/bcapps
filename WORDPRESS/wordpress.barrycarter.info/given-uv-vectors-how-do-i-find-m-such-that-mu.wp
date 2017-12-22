@@ -1,0 +1,40 @@
+
+ID: 22873
+post_name: given-uv-vectors-how-do-i-find-m-such-that-mu
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 09 May 2011 19:06:00 +0000
+post_type: post 
+post_status: publish
+post_title: Given u,v vectors, how do I find M such that M*u=v
+
+======================================================
+
+(You): Given u,v vectors, how do I find M such that M*u=v ?
+
+(Stepa): Lets think row-by-row: to get the first element of v, we take the dot product of the first row of M, say "r", with u. One way to get this is if the first element of r is equal to v(1)/u(1). Therefore, M could be a matrix with first column being v(i)/u(1), where v(i) is the ith entry in the v vector. Of course the other columns of M are all zeros.
+
+But, as long as more than one entry of u is non-zero, there are infinitely many vectors that would have a certain dot product with u, and therefore, there are infinitely many possible matrices M.
+
+(You): thanks! Actually, I figured it out w/ the help of #math on irc.freenode.net
+
+----------------------
+
+(Benjamin): Solve for M using the equation M*u=v.  So M=v/u.
+
+(You): LOL! 
+
+(Benjamin): lol, it seemed pretty straightforward to me.  I'm sure the question is driving at something else though.
+
+(You): yes. u and v are vectors and M is a matrix. :)
+
+----------------------
+
+(John): The diagonal matrix with M_n,n = v_n / u_n solves this equation
+
+(John): unless one of the u_n is 0
+
+
+
+[Vark assigned category: <b>vectors</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

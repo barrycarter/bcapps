@@ -1,0 +1,64 @@
+
+ID: 26836
+post_name: running-xen-i-found-xenconsole-hiding-in-a-directory-not-in-my-path-i-ran-xenconsole-dom0-and-got-invalid-domid-dom0-what-should-i-try-next
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 27 May 2010 04:06:05 +0000
+post_type: post 
+post_status: publish
+post_title: Running Xen, I found 'xenconsole' (hiding in a directory not in my path). I ran "xenconsole dom0" and got "Invalid DOMID `dom0'". What should I try next?
+
+======================================================
+
+(You): Running Xen, I found 'xenconsole' (hiding in a directory not in my path). I ran "xenconsole dom0" and got "Invalid DOMID `dom0'". What should I try next?
+
+(Michael): Read the documentation.
+
+(You): that was like not helpful at all!
+
+----------------------
+
+(Gennadiy): I'm not sure what you're trying to do here, as xen commands are already executed from the dom0. If you need to connect to one of the domU, you should be using "xm console".
+
+(You): my Xen install doesn't have an 'xm'. Is it broken?
+
+(Gennadiy): Is it actually xenserver, and not just regular xen? If so, then try the following: "xe vm-list"
+
+ to get a list of vms, then match it up with "list_domains" command, which gives you the domain id. use the xenconsole command with the domain id to get console access to the vm. Generally in this case you might want to get XenCenter to manage XenServer.
+
+(You): that worked!!! Unfortunately, when I run xenconsole, I get a python error. What yum command do I use to install xencenter?
+
+(You): when I do "xe cd-list", I see a CD w/ XenCenter on it -- how do I actually install it?
+
+(Gennadiy): Try getting xenserver from http://www.citrix.com/xenserver/download - you'll need a windows box or virtual to run it on.
+
+(You): but I already installed hypervisor on bare metal.
+
+(Gennadiy): Yes, XenCenter is for ease of management of the baremetal hypervisor using a windows GUI. It is also needed for managing multiple hypervisors with advanced licensed functionality, such as HA. Otherwise, you have to use xe (complicated) or xsconsole (curses cli gui), which is local only.
+
+(You): thanks. Are you saying that XenCenter requires Windows (the operating system) or creates windows (like X11 does). This server is remote so I'm not physically on it, just via ssh. When I did 'xe list-cd' (or similar), I did see a XenCenter ISO, but have no idea how to install it.
+
+(Gennadiy): XenCenter does require windows, the microsoft type. Once it's installed, you can use it for connecting to and managing the actual xenserver installs. I'd just download it from the provided link, otherwise as I've mentioned you're limited to xe and xsconsole.
+
+(You): but I hate Windows with a passion -- plus there's no way to access it (rdesktop maybe?) remotely. I don't mind using xe and xsconsole-- I'm a command-line person. However, my xsconsole gives me python errors, and I'm not sure how I can use xe to do stuff. Any thoughts? Very much appreciate the help you've already given me.
+
+(Gennadiy): Erg. Hrm. I wonder if you're running xen cloud platform or something weird. Can you try http://www.openxencenter.com/ ?
+
+(You): is there an easy way to tell? Some xe command I can run? I'm tempted to blow away my install, go with CentOS and "yum install xen", but that's more wasteful than the hypervisor, no?
+
+(Gennadiy): I'm not sure if it's possible to easily tell xcp from xenserver. There's not much real difference architecturally from one xen platform to another, because they are all, including centos (after xen install), running a patched xen kernel in dom0. Technically, dom0 itself is a virtual, the first one that is spawned by the xen kernel.
+
+(You): are you saying that installing CentOS and then "yum install xen" is pretty much the same thing as what Xen hypervisor is?
+
+(Gennadiy): With some gotchas... well, I did say architecturally :) You will lose out on some features/improvements because Centos/RHEL are always running older versions for stability purposes. If you demand latest and the greatest, the only real way to do that is to build the xen kernel yourself using the directions over at http://wiki.xensource.com/xenwiki/Xen4.0 though the process is certainly more involved than a simple yum.
+
+(You): doesn't Zen have an ISO? That's what I used.
+
+----------------------
+
+(George): I don't have a clue on this one
+
+
+
+[Vark assigned category: <b>Xen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

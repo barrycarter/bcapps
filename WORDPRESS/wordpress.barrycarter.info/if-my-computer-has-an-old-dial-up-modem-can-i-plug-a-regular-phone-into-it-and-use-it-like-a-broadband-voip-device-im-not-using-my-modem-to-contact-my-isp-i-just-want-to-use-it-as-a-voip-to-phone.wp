@@ -1,0 +1,62 @@
+
+ID: 24089
+post_name: if-my-computer-has-an-old-dial-up-modem-can-i-plug-a-regular-phone-into-it-and-use-it-like-a-broadband-voip-device-im-not-using-my-modem-to-contact-my-isp-i-just-want-to-use-it-as-a-voip-to-phone
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 04 Oct 2010 01:28:57 +0000
+post_type: post 
+post_status: publish
+post_title: If my computer has an old dial-up modem, can I plug a regular phone into it, and use it like a broadband VOIP device? I'm not using my modem to contact my ISP, I just want to use it as a VOIP-to-phone device.
+
+======================================================
+
+(You): If my computer has an old dial-up modem, can I plug a regular phone into it, and use it like a broadband VOIP device? I'm not using my modem to contact my ISP, I just want to use it as a VOIP-to-phone device.
+
+(Mark): no, dial-up modems don't have voip support. some claim to but the quality is horrible
+
+(You): and there's no way to tweak asterix (or whatever) to send the modem a signal that it can turn into voice?
+
+(Mark): You mean asterisk? Asterisk can do that if it has a driver for the modem. The problem is the modems don't support it.
+
+(You): OK, I think I understand. There's nothing you can send to a modem that will make it send out "voice like" sounds over a regular telephone port?
+
+(Mark): right
+
+(You): OK, so I need one of those devices that lets you hook a phone in the back and  that connects to your VOIP provider on the inside?
+
+(Mark): Yes a Linksys/Cisco ATA is really the best way. I like the SPA2102. Check ebay.
+
+(You): thanks. That's the word I was looking for ... ATA.. something telephone adapter.
+
+----------------------
+
+(Szabolcs): nop, you need to have a contract with your ISP to be able to do this
+
+(You): could you explain? I'm not sure I understood your answer.
+
+(Szabolcs): probably you have a contract to use your phone only, and if you would like to use it with a modem to use it for VOIP - you will need an internet contract (username, password, ...)
+
+(You): umm, I don't have a regular phone connection. I *just* have a broadband connection.
+
+(Szabolcs): then you don't need a modem, u can use your broadband connection for VOIP
+
+(You): yes, but I can't connect a phone into my broadband connection because the port is wrong.
+
+(Szabolcs): ah, I got it, then you need a VOIP router, which has that port - it would get the connection from your broadband...
+
+(You): exactly! An ATA.. but I'm wondering if I can use a modem as an ATA somehow.
+
+----------------------
+
+(Pouyan): with dial up modem ,I think you can't have broadband voip device.
+
+(You): I have broadband and want voice.
+
+(Pouyan): if you have broadband you can use skype or voip discount or google talk to have voice (but for that you dont need modem) you can use it on a internet conected computer.
+
+(You): thanks. But I still have no way to connect a regular phone into my broadband connection.
+
+
+
+[Vark assigned category: <b>VOIP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

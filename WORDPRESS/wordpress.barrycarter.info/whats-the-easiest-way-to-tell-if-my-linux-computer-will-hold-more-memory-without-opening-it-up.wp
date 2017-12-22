@@ -1,0 +1,34 @@
+
+ID: 27223
+post_name: whats-the-easiest-way-to-tell-if-my-linux-computer-will-hold-more-memory-without-opening-it-up
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 14 May 2010 06:56:39 +0000
+post_type: post 
+post_status: publish
+post_title: What's the easiest way to tell if my Linux computer will hold more memory (without opening it up)?
+
+======================================================
+
+(You): What's the easiest way to tell if my Linux computer will hold more memory (without opening it up)?
+
+(Greg): There are two limiting factors to memory: whether linux will support it and whether your motherboard will support it.  If you are running a 32bit version, you will be limited to 4GB of RAM.  For more memory, you would have to install a 64bit version of your distribution.  On the other hand, your motherboard will be specified with a limit.  You will have to find out your motherboard manufacturer and model and search online for the specification.  This should be in your owner??s manual.  Otherwise, it??ll be printed on the motherboard directly (you may need to open the case after all.)
+
+(You): thanks. So there's no magic "cat /proc/something" command that will tell me how much memory my motherboard can hold and how much it has right now?
+
+(Greg): I don??t know.  I would assume no.  I don??t think there is a readable register that stores max memory, but I could easily be proved wrong.  Good luck with that.
+
+(You): thanks, I think you're right. There are registers that store installed memory, but apparently the motherboard doesn't advertise total memory capacity.
+
+----------------------
+
+(Nasr): http://www.ehow.com/how_4906312_tell-much-memory-computer.html
+
+
+
+http://www.secguru.com/article/finding_hardware_details_your_linux_machine_without_using_screw_driver
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

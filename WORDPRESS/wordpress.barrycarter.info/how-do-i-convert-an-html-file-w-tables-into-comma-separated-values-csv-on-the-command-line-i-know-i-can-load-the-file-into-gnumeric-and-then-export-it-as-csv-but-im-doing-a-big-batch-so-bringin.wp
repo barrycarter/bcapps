@@ -1,0 +1,44 @@
+
+ID: 26890
+post_name: how-do-i-convert-an-html-file-w-tables-into-comma-separated-values-csv-on-the-command-line-i-know-i-can-load-the-file-into-gnumeric-and-then-export-it-as-csv-but-im-doing-a-big-batch-so-bringin
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 26 May 2010 22:54:33 +0000
+post_type: post 
+post_status: publish
+post_title: How do I convert an HTML file w/ tables into comma-separated values (CSV) on the command-line? I know I can load the file into gnumeric and then export it as CSV, but I'm doing a big batch, so bringing up a non-command line GUI wouldn't work for me.
+
+======================================================
+
+(You): How do I convert an HTML file w/ tables into comma-separated values (CSV) on the command-line? I know I can load the file into gnumeric and then export it as CSV, but I'm doing a big batch, so bringing up a non-command line GUI wouldn't work for me.
+
+(Rupert): i wrote some java code for that a little while ago - I think it reads general html tables.  Let me know if you are interested
+
+(You): sure. I was hoping for an existing OS solution -- it seems like there must be one for something so simple?
+
+(Rupert): I think not for batch jobs - otherwise Excel could work
+
+(You): I don't think Excel is open source, and not available on Linux either?
+
+(Rupert): openoffice otherwise?  We do quite a bit of data conversion and ran into a similar problem, not even our ETL tools can do what you are trying to do (a problem is that the tool wouldn't know where in the HTML to look for the table - I had to make specific assumption in the java code I wrote).  Generally a nice solution for data import is spoon (part of the pentaho BI suite at pentaho.org - check community.pentaho.org for the OS version)
+
+(You): hmmm, let me see if spoon is available via yum. I'm being lazy, actually. I could (and have) easily write a Perl script to extract the data. I was hoping there was an easier way.
+
+(Rupert): yes, perl should do the trick ;-) my java piece mainy uses regex ... you might need to look for pantaho on um, since that's the package name
+
+(You): the only spoon yum finds is a Perl module that does Spiffy Application Building
+
+(Rupert): can you download and install it form pentaho? (never used yum)
+
+(You): I searched for pentaho too and got nothing. That's OK, I'll do it the Perl way!
+
+----------------------
+
+(Andy): You could have a php (or some other language) script that 1) removes all carriage returns, 2) replaces &lt;/td&gt; with comma, 3) replaces &lt;/tr&gt; with carriage return, 4) remove text outside the &lt;table&gt;, and 5) strip all HTML tags.  Would be pretty easy to do.
+
+(You): thanks. Yes, I could write a Perl script to do this, but was hoping someone had already solved the problem. Apparently not. Obviously, I could do whatever gnumeric does, but it's probably not worth the time/effort to dig into that code.
+
+
+
+[Vark assigned category: <b>Gnumeric</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,32 @@
+
+ID: 23817
+post_name: i-want-to-compare-20-strings-to-see-if-they-match-any-of-20-perl-regular-expressions-the-obvious-way-is-a-nested-loop-of-400-comparisons-is-there-a-more-efficient-way
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 24 Oct 2010 21:15:31 +0000
+post_type: post 
+post_status: publish
+post_title: I want to compare 20 strings to see if they match any of 20 Perl regular expressions. The obvious way is a nested loop of 400 comparisons. Is there a more efficient way?
+
+======================================================
+
+(You): I want to compare 20 strings to see if they match any of 20 Perl regular expressions. The obvious way is a nested loop of 400 comparisons. Is there a more efficient way?
+
+(David): this sounds like an interview or school problem set question.  in any case, the theory of regular expressions says that it is correct combine the 20 regexps into one regexp and then do a single pass over the 20 strings.  this method may not be more efficient than doing the 400 comparisons unless there's some substructure of the 20 regexps that you can exploit.  unless the strings are really, really long (e.g. the kind of dataset that you'd want to process with a Hadoop cluster), you're probably better off doing the 400 comparisons and getting back to other things that are more fun or rewarding to do with your life.
+
+(You): thanks. Why does everyone think my questions are of the homework type, sigh? I'm capturing subpatterns, so combining the strings would be difficult. You don't think using /o to "compile" the strings would help? is there a Unix program that does it all faster? (eg, egrep -p, but that's experimental).
+
+(David): sorry to be snarky about the homework thing!  egrep sounds like a good idea, and (if you're using a modern hyperthreaded/multicore processor) you can spawn a bunch of egreps to run in parallel to do all of the regexp processing.  assuming that you really need this computation to go fast, i'm guessing that you're probably running this computation many times.  in this case, i'd be worried that process startup time dominates the regexp processing.  if that's true, egrep should start faster than perl.  you might also consider using pipes for input/output to avoid process startup time.
+
+(You): actually I meant "egrep -f", but I'm using PCRE, and egrep warns that support for that's buggy. Ultimately, if nothing's faster than looping, that's how I'll have to do it.
+
+----------------------
+
+(Denis): Put all your regular expressions in an array, and all your strings in an array.  Then just write two nested for loops, comparing each string with each regular expression.
+
+(You): thanks, but that was my original suggestion!
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

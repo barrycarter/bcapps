@@ -1,0 +1,52 @@
+
+ID: 23787
+post_name: in-linux-how-can-i-make-various-keys-emulate-mouse-movements-i-dont-need-something-as-heavy-as-ratpoison-i-think
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 26 Oct 2010 07:25:50 +0000
+post_type: post 
+post_status: publish
+post_title: In Linux, how can I make various keys emulate mouse movements? I don't need something as heavy as ratpoison I think
+
+======================================================
+
+(You): In Linux, how can I make various keys emulate mouse movements? I don't need something as heavy as ratpoison I think
+
+(Mark): http://www.nongnu.org/xbindkeys/xbindkeys.html
+
+(Mark): xbindkeys  could be the answer.  here is the description from synaptic:  xbindkeys is a program that allows you to launch shell commands with
+
+ your keyboard or your mouse under the X Window System.
+
+It links commands to keys or mouse buttons, using a configuration file.
+
+It's independent of the window manager and can capture all keyboard keys
+
+(ex: Power, Wake...).
+
+
+
+It optionally supports a guile-based configuration file layout, which enables
+
+you to access all xbindkeys internals, so you can have key combinations,
+
+double clicks or timed double clicks take actions. Also all functions that work
+
+in guile will work for xbindkeys.     END QUOTE    good luck
+
+(You): thanks. That seems like the opposite of what I want: mouse movement when I click a given key?
+
+----------------------
+
+(Adan): Try Ctrl+Alt+NumLock. It works in almost every X server.
+
+(You): wait, what does ctrl-alt-numlock actually do in terms of the mouse... oh, you mean use the direction keys?
+
+(Adan): Yes, I do.
+
+(You): OK, I tried this, and it didn't work, but it looks like xdotool does what I want.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

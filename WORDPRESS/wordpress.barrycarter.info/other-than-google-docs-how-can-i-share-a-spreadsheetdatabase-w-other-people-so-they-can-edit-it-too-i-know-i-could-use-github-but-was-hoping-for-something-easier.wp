@@ -1,0 +1,36 @@
+
+ID: 22732
+post_name: other-than-google-docs-how-can-i-share-a-spreadsheetdatabase-w-other-people-so-they-can-edit-it-too-i-know-i-could-use-github-but-was-hoping-for-something-easier
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 01 Aug 2011 01:27:36 +0000
+post_type: post 
+post_status: publish
+post_title: Other than google docs, how can I share a spreadsheet/database w/ other people (so they can edit it too)? I know I could use github, but was hoping for something easier.
+
+======================================================
+
+(You): Other than google docs, how can I share a spreadsheet/database w/ other people (so they can edit it too)? I know I could use github, but was hoping for something easier.
+
+(Oliver): Adobe also has a system like gdocs. Annd maybe you can also use an etherpad, that is open source and you can install it on any server (ot sure it handles tablkes, tough...)
+
+(You): etherpad is more for text documents isn't it? I was thinking of something a bit more formatted?
+
+(Oliver): well I guess Adobe can do that. But I guess most of the systems that are as powerful as gdocs wll cost you mney. some wikis might also be able to do it. actually: most wikis, try http://pbwiki.com
+
+(You): @ oooh, of course! A mediawiki table would do the trick!
+
+(Oliver): ;)
+
+----------------------
+
+(John): you could try Dropbox
+
+(You): thanks. Someone reminded me that mediawiki tables do exactly what I need.
+
+(John): cool. np
+
+
+
+[Vark assigned category: <b>Google Docs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

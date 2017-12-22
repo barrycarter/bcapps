@@ -1,0 +1,54 @@
+
+ID: 27684
+post_name: how-much-memory-can-i-cram-into-a-1u-server-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 22:18:23 +0000
+post_type: post 
+post_status: publish
+post_title: How much memory can I cram into a 1U server?
+
+======================================================
+
+(You): How much memory can I cram into a 1U server?
+
+(Shashi): It depends on how many sockets are on the motherboard. Usually you can't expect to fit DIMMs taller than 1.5" into a 1U chassis. There aren't many that ARE taller than that, however.
+
+(You): I know very little about servers. How much memory can I fit in one total?
+
+(Shashi): Unfortunately I can't answer that question without know more. Servers are basically heavy-duty PCs. Just like a normal desktop or laptop has a maximum amount of memory, a server will have a max amount too. This is determined by the number of memory slots inside the server and by the size of the memory sticks (DIMMs) you put into those slots. For example, if your server has 4 memory slots and you buy 8GB DIMMs, you can have 32GB installed.  If you have 16 memory slots and install 2GB DIMMs, you can get 32GB that way too. If you use 8GB DIMMs instead, you'll max out at 128GB. 
+
+
+
+Do you have a model number or a manual for your server that you can use to get more information on how many slots it has and the largest single DIMM it can take?
+
+(You): I guess my real question should've been: what's the "beefiest" 1U server I can buy? I want to colocate a machine, and most places charge per U. So I want to get the most memory into a 1U unit and ship it to them.
+
+(Shashi): Ahh, this makes sense. Unfortunately, I can't give you a recommendation on a specific server, but I have had good luck with Dells, Apples, and IBMs.  Be sure to get one with an Intel Xeon processor in it, because with &gt;4GB you'll need a 64-bit CPU and currently Intel is the better choice for cost/performance. If you're looking for non-major brand, try this : http://www.aberdeeninc.com/abcatg/1Uservers.htm
+
+(You): Thanks! Price is a big issue for me, so I'll check out that link.
+
+(Shashi): If price is a major concern, AMD Opteron CPU will save you some money. You can also get a lower-end Dell server from their small biz unit that should be very reasonably priced as well.   Also check out Gwww.compgeeks.com - sometimes they have older servers that are perfectly good and perform well, but are just being clearanced out.. good luck
+
+----------------------
+
+(Guy): with one cpu - 32gb
+
+with two physical cpu - 64gb
+
+i mean for new servers based core i7
+
+
+
+cheers
+
+(You): Thanks!
+
+----------------------
+
+(Youcef): 4tb & 12gig ram
+
+
+
+[Vark assigned category: <b>1U server</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

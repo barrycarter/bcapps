@@ -1,0 +1,32 @@
+
+ID: 24234
+post_name: in-unix-makefile-is-normally-capitalized-does-makefile-lower-case-have-a-different-meaning-to-make
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 18 Sep 2010 06:22:58 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, "Makefile" is normally capitalized. Does "makefile" (lower-case) have a different meaning to make?
+
+======================================================
+
+(You): In Unix, "Makefile" is normally capitalized. Does "makefile" (lower-case) have a different meaning to make?
+
+(Matthew): I don't have a unix machine infront of me.  Try typing 'man Makefile' and 'man makefile'  See what comes up.  'man "command"' is pretty much a help function that explains that command and its variations.
+
+(You): alas, no entry for either. Probably "man make" would tell me, though I suspect there's no difference between [mM]akefile
+
+----------------------
+
+(Perfecto Ong): Yes, Unix is case sensitive.
+
+(You): well, yes, but maybe make just uses either of [Mm]akefile?
+
+(Perfecto Ong): I've just checked now, and the manual http://unixhelp.ed.ac.uk/CGI/man-cgi?make states that either will work.
+
+(You): thanks!
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

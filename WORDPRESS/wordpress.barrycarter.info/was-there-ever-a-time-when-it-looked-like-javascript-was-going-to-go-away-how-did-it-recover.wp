@@ -1,0 +1,44 @@
+
+ID: 24505
+post_name: was-there-ever-a-time-when-it-looked-like-javascript-was-going-to-go-away-how-did-it-recover
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 24 Aug 2010 04:26:42 +0000
+post_type: post 
+post_status: publish
+post_title: Was there ever a time when it looked like Javascript was going to go away? How did it recover?
+
+======================================================
+
+(You): Was there ever a time when it looked like Javascript was going to go away? How did it recover?
+
+(Pawel): Javascript was on the verge of extinction more than you think. New technologies entering the market were threatening the continued support efforts from the application development standpoint. It recovered and expanded thanks to devoted community (tutorials, forums etc) and the natural ease-of-applicability.
+
+(You): thanks. I (who don't like it) thought it would be gone soon, so never bothered learning it.
+
+----------------------
+
+(Benjamin): I've been in the web design industry for 15 years, seen have a dozen technologies come and go, but I don't recall a time that I was ever considered about JavaScript going away.  The only even semi-serious competitor has always been something from Microsoft, and thus far none of their alternatives have gained a significant foothold in other browsers.  If a competing technology ever gains native support in more than one major browser, pay attention to it, but until then I think JavaScript is here to stay.
+
+(You): thanks. I remember when complaints about Javascript were rampant (security issues, non-cross-browser compatibility, etc) and thought it was pretty much dead. Somehow, it came back. I'm pretty sure it's more popular now than it was, say, 7 years ago.
+
+(Benjamin): I remember those ... and it might have died if a good alternative had been submitted during that time ... but nothing showed up that did any better at dealing with security issues.
+
+
+
+Thing is, only a handful of those were solely javascript bugs, and I think most of the security issues were in early XMLHttpRequest implementations.
+
+
+
+The rest were a combination of JavaScript and rendering engine issues ... and those are still around.  Why else do you think complex helper libraries like MooTools and jquery are so popular?
+
+
+
+I think that a big part of the increase in popularity has been the standardization of CSS and the libraries that make it simpler to design cross-browser code.
+
+(You): yes, I remember thinking libs like overlib were great because they did if/then/switch statements to do the right thing regardless of browser. Newer versions of Javascript (ECMAscript) are standardized, yes? So you don't need JQuery as much anymore? I'm getting into greasemonkey myself, though I just realized that's firefox specific.
+
+
+
+[Vark assigned category: <b>Javascript</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

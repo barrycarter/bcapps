@@ -1,0 +1,38 @@
+
+ID: 25218
+post_name: is-it-betterfaster-to-rdesktop-to-a-windows-machine-or-use-vnc-if-vnc-what-vnc-server-should-i-install-on-my-windows-machine
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 03:29:13 +0000
+post_type: post 
+post_status: publish
+post_title: Is it better/faster to rdesktop to a Windows machine, or use VNC? If VNC, what VNC server should I install on my Windows machine?
+
+======================================================
+
+(You): Is it better/faster to rdesktop to a Windows machine, or use VNC? If VNC, what VNC server should I install on my Windows machine?
+
+(Brian): why not use the built in RDP client?? if not just use any open source VNC client
+
+(You): that's my question. Is VNC faster/better than RDP, or should I stick w/ RDP?
+
+(Brian): stick with RDP. its much faster and more reliable
+
+----------------------
+
+(Manny): I'd say VNC and RD are about the same.  VNC gives you unix/linux support.  I use RD most of the time because you generally don't need to install anything.  When I use VNC I generally use tightVNC. www.tightvnc.com
+
+(You): thanks. The only real thing I like better about VNC is the F8 menu. Does rdesktop have any "meta" thing like that to let me control my session locally?
+
+(Manny): What items in the popup menu are you looking for?  with RD the local and remote clip boards are linked, ctrl-alt-end sends ctrl-alt-del to the remote system.  One feature of RD I really link is the ability to make my local disks & printers available on the remote machine.  Means I can save or print locally easily.
+
+(You): something like 'end viewer' without having to go to the command line and do "pgrep rdesktop" or something. Also would be nice to resize rdesktop on the fly.
+
+(Manny): are you running the client on linux or windows? I'm not really familiar with the RD from linux, so I don't know all the options there.
+
+(You): running rdesktop from Linux.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

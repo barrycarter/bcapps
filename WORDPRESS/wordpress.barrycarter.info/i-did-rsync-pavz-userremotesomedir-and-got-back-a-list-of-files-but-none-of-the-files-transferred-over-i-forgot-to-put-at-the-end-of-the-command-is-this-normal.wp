@@ -1,0 +1,20 @@
+
+ID: 22944
+post_name: i-did-rsync-pavz-userremotesomedir-and-got-back-a-list-of-files-but-none-of-the-files-transferred-over-i-forgot-to-put-at-the-end-of-the-command-is-this-normal
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 06 Feb 2011 23:42:09 +0000
+post_type: post 
+post_status: publish
+post_title: I did "rsync -Pavz user@remote:/some/dir/*" and got back a list of files, but none of the files transferred over (I forgot to put "." at the end of the command). Is this normal?
+
+======================================================
+
+(You): I did "rsync -Pavz user@remote:/some/dir/*" and got back a list of files, but none of the files transferred over (I forgot to put "." at the end of the command). Is this normal?
+
+(Jeff): You haven't told it where to sync the files to so yes, it's normal.
+
+
+
+[Vark assigned category: <b>computer security</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,26 @@
+
+ID: 23101
+post_name: when-i-do-use-posix-in-perl-how-do-i-get-the-min-and-max-of-a-list-i-cant-believe-this-isnt-part-of-the-posix-standard
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 23 Dec 2010 00:46:45 +0000
+post_type: post 
+post_status: publish
+post_title: When I do "use POSIX;" in Perl, how do I get the min() and max() of a list? I can't believe this isn't part of the POSIX standard?
+
+======================================================
+
+(You): When I do "use POSIX;" in Perl, how do I get the min() and max() of a list? I can't believe this isn't part of the POSIX standard?
+
+(Chris): You need to remember that POSIX is the kernel/userland interface definition.  In addition to that, it includes definitions of how different programs work.  I.e. what 'ls', 'df' and other programs take as arguments and produce as results.   min() and max() are *library* calls.  They have no connection to the kernel nor to POSIX.  Having said that, give me a minute and I'll give you how to find the min() or max() of a list in perl.
+
+----------------------
+
+(Alexander): posix has nothing to do with perl, this is more or less a OS standard defined by a standards document.
+
+To use max and min on lists, you can use List::Util
+
+
+
+[Vark assigned category: <b>POSIX</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

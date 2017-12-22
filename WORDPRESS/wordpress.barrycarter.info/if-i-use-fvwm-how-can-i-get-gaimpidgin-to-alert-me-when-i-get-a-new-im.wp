@@ -1,0 +1,24 @@
+
+ID: 28285
+post_name: if-i-use-fvwm-how-can-i-get-gaimpidgin-to-alert-me-when-i-get-a-new-im
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 14 Apr 2010 04:18:57 +0000
+post_type: post 
+post_status: publish
+post_title: If I use fvwm, how can I get GAIM/Pidgin to alert me when I get a new IM 
+
+======================================================
+
+(You): If I use fvwm, how can I get GAIM/Pidgin to alert me when I get a new IM 
+
+(assuming I'm in another fvwm window at the time?)
+
+----------------------
+
+(Andy): One of the stock plugins is "Message Notification" which gives you extra notification options.  Enable it and there's options in there that should play nice with fvwm.  I forget what they are off the top of my head (I'm running Adium at the moment), but one of the options is to flip on the window importance property.  I think that one in particular may be good for fvwm use.
+
+
+
+[Vark assigned category: <b>FVWM</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

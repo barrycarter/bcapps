@@ -1,0 +1,52 @@
+
+ID: 26379
+post_name: httpwxug-us2aik-httpwxug-us2aik-claims-to-show-radar-maps-updated-to-the-minute-but-theyre-not-moving-at-all-why
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 07 Jun 2010 07:22:18 +0000
+post_type: post 
+post_status: publish
+post_title: http://wxug.us/2aik [http://wxug.us/2aik] claims to show radar maps updated to the minute, but they're not moving at all. Why?
+
+======================================================
+
+(You): http://wxug.us/2aik [http://wxug.us/2aik] claims to show radar maps updated to the minute, but they're not moving at all. Why?
+
+(Cagatay): a full sweep of a doppler weather radar usually takes between 5 and 10 minutes, depending on its sensitivity. See http://weather.noaa.gov/radar/radinfo/radinfo.html#update
+
+(You): thanks. So you're saying it's nearly real time but not quite?
+
+(Cagatay): it's at most six to a dozen updates an hour, i wouldn't even say it's near real-time
+
+(You): Catagay, fair enough, but the map I pointed to has been the same for about 30 minutes.
+
+(Cagatay): that's a question for weather underground. The numbers I gave are best case; any particular weather radar may work at a slower schedule or can batch load the updates or the web site could cut corners etc.
+
+(You): true, but I wonder why they bother to update the timestamp then... vanity?
+
+----------------------
+
+(Geoff): as far as I know wunderground does have very current information, but they don't update the radar map in real time. You can generally see something that is within the last ten minutes or so. At the radar map I use on their site there's an animate button that shows images from the last forty minutes or so in succession, so you can see the storm moving. You can also click to see the storm tracks, which can help show which way things are moving: http://www.wunderground.com/radar/radblast.asp?zoommode=pan&prevzoom=zoom&num=6&frame=0&delay=15&scale=1.000&noclutter=0&ID=ABX&type=N0R&showstorms=0&lat=35.13309479&lon=-106.36306000&label=Cedar%20Crest,%20NM&map.x=400&map.y=240&scale=1.000&centerx=400&centery=240&showlabels=1&rainsnow=0&lightning=0&lerror=20&num_stns_min=2&num_stns_max=9999&avg_off=9999&smooth=0
+
+(You): thanks! What bugs me is that they update the timestamp in the upper right corner every minute, implying that it's live.
+
+(Geoff): I hadn't noticed that. annoying indeed
+
+----------------------
+
+(James): NOAA provides free radar data used by Weather Underground and other  
+
+sites. While the sites may update by the minute, NOAA only updates its  
+
+feed every so often (typically ten minutes, but apparently less in  
+
+different weather conditions). See
+
+
+
+	http://www.srh.noaa.gov/radar/radinfo/radinfo.html#update
+
+
+
+[Vark assigned category: <b>radar</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

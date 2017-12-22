@@ -1,0 +1,24 @@
+
+ID: 26783
+post_name: a-program-that-ran-fine-until-yesterday-as-a-regular-non-root-user-gives-a-segmentation-fault-today-it-runs-fine-when-i-run-it-as-root-strace-shows-that-the-last-command-it-runs-before-it-crashes
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 28 May 2010 07:49:35 +0000
+post_type: post 
+post_status: publish
+post_title: A program that ran fine until yesterday as a regular (non-root) user gives a segmentation fault today. It runs fine when I run it as root. strace shows that the last command it runs before it crashes (as non-root) is munmap. Any thoughts as to what the problem could be and how to fix it?
+
+======================================================
+
+(You): A program that ran fine until yesterday as a regular (non-root) user gives a segmentation fault today. It runs fine when I run it as root. strace shows that the last command it runs before it crashes (as non-root) is munmap. Any thoughts as to what the problem could be and how to fix it?
+
+(Tommy): If it's not crashing in the system call itself, try using ltrace -- it's like strace, but also traces library calls.
+
+----------------------
+
+(Chinthaka): I think U use Linux based OS, (for me question is not clear, other one will answer) & root privileges is the problem then change user privileges permanently on the file
+
+
+
+[Vark assigned category: <b>strace</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

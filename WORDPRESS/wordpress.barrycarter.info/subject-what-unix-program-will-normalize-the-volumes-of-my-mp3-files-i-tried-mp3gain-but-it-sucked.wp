@@ -1,0 +1,28 @@
+
+ID: 28448
+post_name: subject-what-unix-program-will-normalize-the-volumes-of-my-mp3-files-i-tried-mp3gain-but-it-sucked
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 01:31:32 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: What Unix program will normalize the volumes of my mp3 files? I tried mp3gain, but it sucked.
+
+======================================================
+
+(You): Subject: What Unix program will normalize the volumes of my mp3 files? I tried mp3gain, but it sucked.
+
+(Alan): I'm no Unix expert, but try Audacity, http://audacity.sourceforge.net/
+
+
+
+I've used it on Mac and Windows and it's probably the best free audio editor out there.
+
+----------------------
+
+(Steven): If its just a few files you could use audacity. It also has some batch processing for somewhat larger numbers, but I'm not sure it works for 100+ files.
+
+
+
+[Vark assigned category: <b>MP3Gain</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

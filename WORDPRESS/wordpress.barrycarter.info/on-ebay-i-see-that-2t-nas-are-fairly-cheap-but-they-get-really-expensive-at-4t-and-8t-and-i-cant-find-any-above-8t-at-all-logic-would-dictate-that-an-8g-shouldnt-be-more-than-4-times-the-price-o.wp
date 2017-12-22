@@ -1,0 +1,26 @@
+
+ID: 26179
+post_name: on-ebay-i-see-that-2t-nas-are-fairly-cheap-but-they-get-really-expensive-at-4t-and-8t-and-i-cant-find-any-above-8t-at-all-logic-would-dictate-that-an-8g-shouldnt-be-more-than-4-times-the-price-o
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 21:42:32 +0000
+post_type: post 
+post_status: publish
+post_title: On eBay, I see that 2T NAS are fairly cheap, but they get really expensive at 4T and 8T. And I can't find any above 8T at all. Logic would dictate that an 8G shouldn't be more than 4 times the price of a 2T, but it is. Why? And where can I find 8T+ NAS?
+
+======================================================
+
+(You): On eBay, I see that 2T NAS are fairly cheap, but they get really expensive at 4T and 8T. And I can't find any above 8T at all. Logic would dictate that an 8G shouldn't be more than 4 times the price of a 2T, but it is. Why? And where can I find 8T+ NAS?
+
+(Chris): tomshardware.com has 16T but prices aren't linear-- just look at memory.
+
+(You): thanks. Does this mean its more economical to buy multiple 2T network drives vs a single 16T drive?
+
+----------------------
+
+(Ian): Build one. You can start with a bare NAS (or get a good deal on a ReadyNAS with 4 drive bays on eBay) and add your own drives. The cost isn't linear partly because small drives are cheaper per GB than larger drives.
+
+
+
+[Vark assigned category: <b>eBay</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,46 @@
+
+ID: 26217
+post_name: what-linuxunix-tools-can-help-me-edit-wikis-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 10 Jun 2010 20:34:05 +0000
+post_type: post 
+post_status: publish
+post_title: What Linux/Unix tools can help me edit wikis?
+
+======================================================
+
+(You): What Linux/Unix tools can help me edit wikis?
+
+(Randy): You edit a wiki with a web browser from any operating system. You don't actually use special tools on your own machine.
+
+(You): thanks! I meant a tool that made it faster and easier to edit wikis, perhaps using the wikimedia API (for example).
+
+(Randy): I'm pretty sure you just want to learn the wiki markup.
+
+(You): well no. I already know that. I want a tool that lets me easily edit wikipedia entries in emacs, for example.
+
+(Randy): Emacs has a built-in web browser. Haven't tried that in years. But it might do the job for you.
+
+(You): you know, you're right, I forgot about that. I use emacs in no window mode so that doesn't really work for me. But might be worth a shot.
+
+----------------------
+
+(Malaiarasan): i think this may helps you http://trac.edgewall.org/wiki
+
+(You): thanks. I was actually looking for a tool to edit existing wikis in mediawiki format, not create a new wiki using trac.
+
+(Malaiarasan): http://www.mediawiki.org/wiki/Extension:FCKeditor_%28Official%29
+
+(You): thanks. Anything that lets me do this in emacs?
+
+----------------------
+
+(Kiran): http://sourceforge.net/projects/wikiviz/
+
+(You): thanks. Any way I can edit wikis in emacs?
+
+
+
+[Vark assigned category: <b>wikis</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

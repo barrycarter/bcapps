@@ -1,0 +1,46 @@
+
+ID: 24236
+post_name: does-nosql-treat-every-database-like-a-huge-spreadsheet-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 18 Sep 2010 05:27:26 +0000
+post_type: post 
+post_status: publish
+post_title: Does NoSQL treat every database like a huge spreadsheet?
+
+======================================================
+
+(You): Does NoSQL treat every database like a huge spreadsheet?
+
+(Emmett): That question is not meaningful
+
+(You): explain?
+
+(Emmett): You have a bunch of suppositions that are "not even wrong"...you're missing the basic background understanding which could even allow you to understand the explanation.
+
+(You): so enlighten me, hobo clown. [direct gchat: carter.barry@gmail.com]
+
+(Emmett): What are you actually trying to find out? Because your question doesn't have an answer.
+
+(You): how is nosql different from sql, fundamentally speaking?
+
+(Emmett): no sql doesn't use sql to get the data, sql does. Sql is a data query language: http://en.wikipedia.org/wiki/SQL
+
+(You): thank you, I know what SQL is. So, how does nosql get data?
+
+(Emmett): Literally any way except SQL. Every one is differnet. It's like asking, what color is a non-lime fruit?
+
+(You): ah, OK, I get it! NoSQL isn't a specific technique. It's the collective name for non SQL databases?
+
+(Emmett): exactly. So there's really nothing to say about them, as a whole. The movement is about people looking at data storage other than SQL databases, which used to be the default.
+
+(You): ah, ok. I found a program called nosql, which is a bit confusing. That's what got me.
+
+----------------------
+
+(Fernando): NoSQL is a term to describe different databases, each one with its own way of treating data. Some maybe are like huge spreadsheets, not all. http://en.wikipedia.org/wiki/Mozilla_Firefox#Version_4.0
+
+
+
+[Vark assigned category: <b>spreadsheet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

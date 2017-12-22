@@ -1,0 +1,122 @@
+
+ID: 26681
+post_name: according-to-my-calculations-the-energy-required-to-accelerate-a-1kg-mass-to-99-the-speed-of-light-is-6c2-where-c-is-the-speed-of-light-is-this-correct-it-takes-more-energy-to-accelerate-the-mas
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 04:33:40 +0000
+post_type: post 
+post_status: publish
+post_title: According to my calculations, the energy required to accelerate a 1kg mass to 99% the speed of light is 6*c^2, where c is the speed of light. Is this correct? It takes more energy to accelerate the mass to .99*c than the mass would have if you annihilated it in a nuclear sense?
+
+======================================================
+
+(You): According to my calculations, the energy required to accelerate a 1kg mass to 99% the speed of light is 6*c^2, where c is the speed of light. Is this correct? It takes more energy to accelerate the mass to .99*c than the mass would have if you annihilated it in a nuclear sense?
+
+(Mathieu): which formula of the kinetic energy do you use?
+
+(You): the relativistic one shown at http://en.wikipedia.org/wiki/Kinetic_energy#Relativistic_kinetic_energy_of_rigid_bodies [http://en.wikipedia.org/wiki/Kinetic_energy#Relativistic_kinetic_energy_of_rigid_bodies]
+
+----------------------
+
+(Burt): Essentially yes.
+
+
+
+beta = .99 -&gt; gamma = 1/sqrt(1 - beta^2)
+
+gamma is about 7.1.
+
+
+
+So the energy of the 1kg is mass at .99c would be about 7 mc^2.  At rest,
+
+it's 1 mc^2.
+
+
+
+And if you annihilated the 1 kg mass, it would only yield 1 mc^2. (Or 2 mc^2
+
+-- you'd need another 1kg anti-matter chunk to annihilate it with!)
+
+----------------------
+
+(Brandon): No.  The energy required to accelerate the 1kg is 1/2mv^2, so about 4.5x10^16.  To convert it all to energy, by e=mc^2, Its about 3x10^8 joules (kg*m/s^2 is joules).  So yes, it does take more energy to accelerate it.
+
+(You): I'm pretty sure relativistic effects apply here, since we're dealing with speeds close to that of light, no?
+
+----------------------
+
+(John): I cannot confirm the figures you produced, because (a) I'm at work, and (b)
+
+I'm too darn lazy to pump thru the math.
+
+
+
+Instead, I'll give you some things to think about.
+
+
+
+I hope we agree that accelerating a mass to 100% light speed is impossible,
+
+since it would take an infinite amount of energy to impart the infinite
+
+momentum required on the object to achieve light speed. So you can imagine
+
+some fractionally slower speed (99%, 99.9%, 99.999...999%, whatever) that
+
+would (conceptually at least) require as much energy to attain as is
+
+contained in the "nuclear sense" of which you speak. So the answer is, yes,
+
+whatever the "annihilation energy" is, you should be able to think of a
+
+speed that would require more than that amount of energy to attain.
+
+
+
+Now I've been putting the words "nuclear sense" and "annihilation energy" in
+
+quotes, because I wasn't sure if you meant the e=mc^2 energy content or
+
+fission or fusion or antimatter annihilation or what. I'll assume the
+
+Mnaught*C^2 energy.
+
+
+
+Regardless, I'm hoping the above paragraph will help convince you that
+
+REGARDLESS of the quantity of energy you come up with, it will be only
+
+sufficient to accelerate the mass to SOME high percentage of the speed of
+
+light.
+
+
+
+Darn...ok, the math. At what speed is the rest mass energy (your
+
+"annihilation energy, Mnaught*C^2) EQUAL to the relativistic kinetic energy,
+
+
+
+1/2 * Mnaught / Sqrt(1 - V^2/C^2) ? Back-of-the-envelope calculation sez
+
+Sqrt(3/4) C, or about 87% of C. Any velocity faster than that will require
+
+more energy to attain than is contained in the mass itself. And yes, the
+
+energy required to accelerate an object to .99C is about 6 times the rest
+
+mass annihilation energy, Mnaught*C^2.
+
+
+
+Verbose, but hopefully clear.
+
+(You): thanks! Yes, that was very clear, and confirms what I was seeing when I did the math.
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

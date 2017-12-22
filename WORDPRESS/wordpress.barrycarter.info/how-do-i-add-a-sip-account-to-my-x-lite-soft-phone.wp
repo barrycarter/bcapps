@@ -1,0 +1,86 @@
+
+ID: 25440
+post_name: how-do-i-add-a-sip-account-to-my-x-lite-soft-phone
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 22:42:24 +0000
+post_type: post 
+post_status: publish
+post_title: How do I add a SIP account to my X-lite soft phone?
+
+======================================================
+
+(You): How do I add a SIP account to my X-lite soft phone?
+
+(Timm): o setup your SIP account in x-lite, just right click anywhere on the x-lite window and select ???SIP Account Settings?????? and you will be presented with:
+
+
+
+Read more: http://truvoipbuzz.com/2010/01/how-to-setup-sip-accounts-in-x-lite-sip-phone-tutorial/#ixzz0rE1Sxc2w
+
+(Timm): does that help
+
+(Timm): FYI... In free version only 1 SIP account...
+
+(You): thanks -- yup, that's the problem I was running into. Only 1 SIP account at a time. I also can't figure out how to use Google Voice or SkyPE as a SIP gateway.
+
+(Timm): Barry... GVoice you'd have to have a working phone for it to ring... or an
+
+active SIP... skype I'm not sure on but they are their own platform and
+
+usually u have to have their app.. such as with iPhone .
+
+
+
+Timm
+
+
+
+
+
+Need PC help, visit www.crossloop.com/The_Doctor
+
+
+
+"Skill is successfully walking a tightrope over Niagara Falls. Intelligence
+
+is not trying." ~Anon.
+
+
+
+"Not everything that can be counted counts, and not everything that counts
+
+can be counted." ~ Albert Einstein
+
+(You): why would I need a hard phone? I want to make an outbound call from my computer to a real phone?
+
+(Timm): You can have multiple SIP's with the paid version
+
+
+
+
+
+Need PC help, visit www.crossloop.com/The_Doctor
+
+
+
+"Skill is successfully walking a tightrope over Niagara Falls. Intelligence
+
+is not trying." ~Anon.
+
+
+
+"Not everything that can be counted counts, and not everything that counts
+
+can be counted." ~ Albert Einstein
+
+----------------------
+
+(Pdx): you have to put the SIP in your x-lite so you can SIP while you x-lite , dawg!
+
+(You): OK, but how do I *get* a SIP gateway that lets me make outbound calls to US numbers?
+
+
+
+[Vark assigned category: <b>soft phone</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

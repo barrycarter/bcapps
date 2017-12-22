@@ -1,0 +1,22 @@
+
+ID: 26075
+post_name: when-doing-file-in-firefox-can-i-make-it-do-filename-completion
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 13 Jun 2010 20:35:58 +0000
+post_type: post 
+post_status: publish
+post_title: When doing "file:///" in Firefox, can I make it do filename completion?
+
+======================================================
+
+(You): When doing "file:///" in Firefox, can I make it do filename completion?
+
+(Tom): The closest thing I can find is an extension called "URL Tab Completion", but I've never used it, not entirely sure if it is close to what you are looking for:
+
+https://addons.mozilla.org/en-US/firefox/addon/6257/
+
+
+
+[Vark assigned category: <b>filename completion</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

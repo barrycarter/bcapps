@@ -1,0 +1,72 @@
+
+ID: 23217
+post_name: why-does-the-author-of-xkcd-com-love-python-language-so-much-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 13 Dec 2010 11:26:44 +0000
+post_type: post 
+post_status: publish
+post_title: Why does the author of xkcd.com love Python (language) so much?
+
+======================================================
+
+(You): Why does the author of xkcd.com love Python (language) so much?
+
+(Michael): reasonable defaults mean that generally speaking you can write a lot less code for hacking out a quick prototype.  If you are 'macguyver coding' (filling a quick need) it makes it very easy.
+
+(You): even more so than Perl? I can hack out quick Perl scripts in 30 minutes (and that's after debugging).
+
+(Michael): similar in speed to perl, less syntactic sugar ($@_'s)
+
+(You): I've sort of grown accustomed to Perl's syntactic sugar, but I understand what you're saying
+
+----------------------
+
+(John): try it, you'll love it too.
+
+(You): thanks, but my own feeling is that there are too many new languages out there. I know Ruby, Perl, PHP, Java, etc... I can't learn Python simply to learn it. How is it better than Perl
+
+(John): Well, of course it's a personal preference as always, but here are the
+
+reasons i'd say it's worth it to learn python:
+
+
+
+1. forced whitespace: ruby, perl, and php can get really hard to read when
+
+you work with someone else's code and sometimes even your own code. Python's
+
+syntax requires tabs that should be placed in other langauges anyway or it
+
+won't compile. The syntax looks clean and easy to read.
+
+
+
+2. strong typed and object oriented: Though you don't have to use the
+
+objects, everything is an object. I like this a lot better than working with
+
+php's functions (where it's not always clear which param is the needle and
+
+which is the haystack). I'd like to mention that it can also pass argments
+
+by a keyword not just the order of the params - that makes it easier to do
+
+optional params. I think ruby can do that, but i can't remember
+
+
+
+3. django and google: Python isn't an old language, but it's popularity can
+
+come more into focus since the django project and google's adoption of
+
+python code in some of it's projects.
+
+
+
+That said, it really dosen't matter if you learn it, code in what you like.
+
+
+
+[Vark assigned category: <b>Python</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

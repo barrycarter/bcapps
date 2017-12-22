@@ -1,0 +1,136 @@
+
+ID: 26363
+post_name: i-have-some-data-10k-points-and-am-looking-for-the-simplest-function-that-comes-close-to-the-data-and-doesnt-wiggle-too-much-i-realize-i-can-use-fourier-analysis-or-find-a-wiggly-polynomial
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 07 Jun 2010 22:40:36 +0000
+post_type: post 
+post_status: publish
+post_title: I have some data (10K+ points) and am looking for the "simplest" function that comes "close" to the data and doesn't "wiggle" too much. I realize I can use Fourier analysis or find a wiggly polynomial that hits all the data points. I also realize this problem isn't well-defined. What are some approaches I might try?
+
+======================================================
+
+(You): I have some data (10K+ points) and am looking for the "simplest" function that comes "close" to the data and doesn't "wiggle" too much. I realize I can use Fourier analysis or find a wiggly polynomial that hits all the data points. I also realize this problem isn't well-defined. What are some approaches I might try?
+
+(Dreezz??n): You may be looking for http://en.wikipedia.org/wiki/Polynomial_interpolation
+
+(You): I'm not looking for cubic splines or anything like that -- I want a smooth function that approximates my data.
+
+(Dreezz??n): that's what she said !
+
+(Dreezz??n): With popular mathematical tool you can do it automagicaly - I think. That said I would recommand using a FLOSS tool like numpy : http://docs.scipy.org/doc/numpy/reference/generated/numpy.interp.html
+
+----------------------
+
+(Peter): I'm not sure what your data are like, but time series analysis might help you break them down such that you can identify any simple linear or cyclical trends in the data.
+
+(You): thanks. Is time series analysis different from Fourier analysis?
+
+(Peter): As best I recall, the answer is both yes and no - the best way to fit a time
+
+series to the data is to bring in Fourier transforms, but the techniques and
+
+fitting methods are are a bit broader.
+
+(You): thanks. So you're saying that Fourier analysis is one of several curve fitting methods, but not the only possible one.
+
+----------------------
+
+(Marty): Hey, I like your question a lot.  Here's my suggestion.  Depending on your choices, it can probably be implemented using some programming, even maybe in Excel:
+
+
+
+1.  Identify the type of function you are willing to accept.  For instance, maybe you want a linear function represented by a matrix, or you want a polynomial function of at most nth degree, or you want some logarithmic or exponential function.
+
+
+
+2.  Then identify the coefficients needed to represent these kinds of functions.  (e.g. for a linear function of 3 variable, you would have 9 coefficients.)
+
+
+
+3.  Now, identify a measure of how "far" the approximate function is to your data, the "error".  For instance, maybe you will sum the distance between each point and the approximation, or the square of the distances, or some exponential decay.  This will probably be a sum over all 10K points.
+
+
+
+4.  (The hard part) Find a way to retrieve the coefficients which minimize the error.  This will depend significantly on the choices you made in function types and error measurement.
+
+
+
+The choices you make will depend very much on the specific problem you're solving and the computing resources you have available.  By far the most common technique in this are is to use linear regression but that may not be best for your problem.  It can lead to very wrong approximations when misused.
+
+
+
+By the way, this outline is extremely common and a very generic way of thinking about data analysis.  Some choices will be so common that standard tools are available; others are specialized and would need custom programming.  For instance, if you seek a linear approximation with error measured as the sum of squares, you will be doing completely standard linear regression which tools like Excel make very easy.  Other words to look up include (logistic regression, spline approximations, Fourier analysis, etc.)
+
+
+
+http://en.wikipedia.org/wiki/Linear_regression_model
+
+
+
+http://en.wikipedia.org/wiki/Smoothing_spline
+
+
+
+http://en.wikipedia.org/wiki/Taylor_series
+
+
+
+http://en.wikipedia.org/wiki/Fourier_series
+
+
+
+http://en.wikipedia.org/wiki/Logistic_regression
+
+
+
+-Marty
+
+(You): thanks! I'm using Mathematica and am fairly familiar with curve fitting techniques. My problem: what if the data fits SOME simple function, but I don't know in advance what that function is. If I knew the parametrized function I wanted, it'd just be a question of optimizing parameters, as you noted. As an example, part of the function might fit something like B(t)*Sin[C(t)*t-D(t)], where B(t), C(t), D(t) themselves are periodic sine-like functions. I'm pretty sure there's no basic technique that would find a fit like that?
+
+(Marty): If you believe your points perfectly fit a relatively simple function, it might be fun to try to find it (because you'll know for sure when you do,  error=0) but unless you have some guess at its structure, it will be hard to find.
+
+
+
+You are right that if your function is non-standard, like" B(t)*Sin[C(t)*t-D(t)], where B(t), C(t), D(t) themselves are periodic sine-like functions"  you'll not find existing techniques or code to solve it, but you can use the general process I outlined and write your own optimizer to find the best solution.  This would take a long time and it would be a sort of research project.
+
+
+
+Sometimes, what appears to be a strange functional form can be translated into a linear or close to linear problem and solved using standard regression methods.
+
+
+
+I'd be happy to provide advice if you embark on such a project.
+
+
+
+-Marty
+
+(You): thanks. My data points are temperature readings, so I doubt they fit any simple function exactly. The idea is sort of information-theoretic: whats's the simplest function that comes within 2C of 90% of the data points (for example).
+
+(Marty): Of course, if you allow polynomials of large enough degree, or sin/cos functions of high frequency you can get close to almost anything.  It might be interesting to see if some simple functions get you anywhere near the, say 90%, target you seek.
+
+
+
+You're right about it being an information theory problem.  But as you know, choosing which simple functions to target is an art.  Identifying the simplest way to describe 10K points is a known hard problem.  For instance, I could give you the first 10,000 decimal digits of /pi divided by 7 - e^2. That is incredibly simple, yet no one would notice that.
+
+
+
+Of course, polynomials are probably bad for temperature readings, since polynomials go to infinity at the ends and I assume you don't want that.  Knowing what qualitative behavior your data should satisfy is a great way to hone in on the right form.  It sounds like your intuition is that we have some kind of recursive periodic system.
+
+
+
+-Marty
+
+(You): yes. I hope my original question mentioned that I realize a polynomial of order 10000 would work, but would be too "wiggly" to really count. Of course, you could cubic spline the data, but that uses the data itself, and so isn't a "simple" function. Any function w/ too many terms is really too complex as well. The simplest function is the constant T where T is the average temperature of the world. The next simplest is probably a summer-winter sin wave, then a daily sin wave, etc. However, the next simplest function probably isn't a sin wave of higher order (which is what Fourier would tell us). That's where I get stuck.
+
+(Marty): You might want to read about "overfitting".  It's an interesting topic in general and maybe something useful for your project.:
+
+
+
+http://en.wikipedia.org/wiki/Overfitting
+
+
+
+[Vark assigned category: <b>Fourier analysis</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

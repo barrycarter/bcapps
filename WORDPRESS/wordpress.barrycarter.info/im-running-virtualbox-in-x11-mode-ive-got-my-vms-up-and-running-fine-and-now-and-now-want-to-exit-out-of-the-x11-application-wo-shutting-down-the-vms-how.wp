@@ -1,0 +1,40 @@
+
+ID: 27686
+post_name: im-running-virtualbox-in-x11-mode-ive-got-my-vms-up-and-running-fine-and-now-and-now-want-to-exit-out-of-the-x11-application-wo-shutting-down-the-vms-how
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 22:18:09 +0000
+post_type: post 
+post_status: publish
+post_title: I'm running VirtualBox in X11 mode. I've got my VMs up and running fine, and now and now want to exit out of the X11 application w/o shutting down the VMs. How?
+
+======================================================
+
+(You): I'm running VirtualBox in X11 mode. I've got my VMs up and running fine, and now and now want to exit out of the X11 application w/o shutting down the VMs. How?
+
+(Vinay): you can actually save the state
+
+----------------------
+
+(Michel): I've not used VBox for a while, but shouldn't closing the X11 application *not* kill the VMs? I think they should still run in the background
+
+(You): I'm trying it now... you're right! VirtualBox kept running-- can I do the same thing w/ the guest console windows?
+
+(Michel): I do believe you can. you should be able to reopen the windows you want from the Virtual Machine Manager (or whatever the exact term is). Have you tried Seamless Mode too?
+
+(You): Do you mean headless mode, or is seamless something different?
+
+(Michel): take a look: http://www.google.de/search?q=seamless+mode&num=20&hl=en&safe=off&client=firefox-a&rls=org.mozilla:en-US:official&source=univ&tbs=vid:1&tbo=u&ei=YBPbS9GJIIKhOPGG0ccP&sa=X&oi=video_result_group&ct=title&resnum=4&ved=0CB4QqwQwAw&cts=1272648555808 [http://www.google.de/search?q=seamless+mode&num=20&hl=en&safe=off&client=firefox-a&rls=org.mozilla:en-US:official&source=univ&tbs=vid:1&tbo=u&ei=YBPbS9GJIIKhOPGG0ccP&sa=X&oi=video_result_group&ct=title&resnum=4&ved=0CB4QqwQwAw&cts=1272648555808]
+
+(Michel): you can run your guest applications directly on the host desktop
+
+(You): Oh, I have X11 turned off on the host machine (too much memory) -- I'm running X using "ssh -X"
+
+(Michel): ah ok. makes sense that you're looking for a way to close the window. I personally use -Y instead of -X -- some apps like Emacs need it
+
+(You): Wow! I didn't even know about -Y until now.
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

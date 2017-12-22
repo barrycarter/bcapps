@@ -1,0 +1,62 @@
+
+ID: 26478
+post_name: is-there-any-database-that-lets-me-reference-the-previous-row-for-a-given-sort-order-in-a-select-statement-example-select-x-previous_row_valuex-as-xdelta-i-realize-this-is-really-a-sprea
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 04 Jun 2010 22:19:51 +0000
+post_type: post 
+post_status: publish
+post_title: Is there any database that lets me reference the previous row (for a given sort order) in a SELECT statement? Example: "SELECT x-PREVIOUS_ROW_VALUE(x) AS xdelta ...". I realize this is really a "spreadsheet" function, but it would be a very useful feature. I know I can have a program do this, but I'm looking for a pure database example. Every db I know (MySQL, sqlite3, PostgreSQL) don't do this. Are there any dbs out there that do?
+
+======================================================
+
+(You): Is there any database that lets me reference the previous row (for a given sort order) in a SELECT statement? Example: "SELECT x-PREVIOUS_ROW_VALUE(x) AS xdelta ...". I realize this is really a "spreadsheet" function, but it would be a very useful feature. I know I can have a program do this, but I'm looking for a pure database example. Every db I know (MySQL, sqlite3, PostgreSQL) don't do this. Are there any dbs out there that do?
+
+(Igor): there are ways of doing similar things in MySQL and SQL Server
+
+(Igor): Like, if you're trying to do this on a numeric column, for example, and the column is sorted, you could do select x, (select top 1 x AS y where y &lt; x order by y desc/asc (depending on case) from etc...
+
+(Igor): That "top 1" part was a typo, ignore that part.
+
+(You): can you give me an example?
+
+(You): sorry ignore -- sent that too early
+
+(You): I'd forgotten that MySQL now supports subselects. However, doesn't that query run painfully slowly, even with indexes?
+
+(Igor): Depends on how big the table is. You could also do it using a T-Sql function, but writing that out would take a bit longer.
+
+(You): is T-Sql a type of PL/SQL or a totally different db server?
+
+(Igor): T-Sql = transact-sql. it's just another language you can use in MySQL or SQL server alongside normal SQL to create more interesting functions
+
+(Igor): It let's you have while loops and variables and stuff like that that you can't use directly in normal SQL.
+
+(You): does it "come with" MySQL, or is it an add-on, or a separate program entirely?
+
+(Igor): Yup. It comes with it and you can use it directly out of the box. Usually, people use it to create user defined functions and stored procedures.
+
+(You): could you give me an example re how I would use it at the "mysql&gt;" prompt? I know I can do things like "SET @a=5", but didn't realize there was more?
+
+(Igor): just that you can use a while loop or a cursor to iterate through a query, like here:
+
+http://www.databasejournal.com/features/mssql/article.php/3111031/T-SQL-Programming-Part-3---Processing-Sequentially-Through-a-Set-of-Records.htm
+
+(Igor): so the idea would be you can create a function that takes a table and a colval, returns the prev colval to that colval by looping through the table using a cursor.
+
+(You): thanks! Reading that page now.
+
+(Igor): Also, I  just realized, for your particular case, you could do what you want using identity columns. What I mean is, you could do something like "select a.x, b.x from a, a as b where a.ident = b.ident+1"
+
+(Igor): That would be by far the most efficient way of doing it. I don't know why I didn't think of that before.
+
+(Igor): you could even do it as an inner join to get even better performance:
+
+select a.x, b.x from a inner join a b on a.ident = b.ident+1
+
+(You): thanks. That's a good idea if I had a sequential index, but I don't. I do have a unique index (date), but it can skip over days sometimes. The page you pointed me to mentions MS SQL, but I assume MySQL does this too?
+
+
+
+[Vark assigned category: <b>SQLite3</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

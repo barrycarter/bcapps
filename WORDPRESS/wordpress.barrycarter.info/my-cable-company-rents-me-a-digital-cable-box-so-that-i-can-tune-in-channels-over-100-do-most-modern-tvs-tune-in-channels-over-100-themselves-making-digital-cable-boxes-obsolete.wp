@@ -1,0 +1,56 @@
+
+ID: 27726
+post_name: my-cable-company-rents-me-a-digital-cable-box-so-that-i-can-tune-in-channels-over-100-do-most-modern-tvs-tune-in-channels-over-100-themselves-making-digital-cable-boxes-obsolete
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 23:03:12 +0000
+post_type: post 
+post_status: publish
+post_title: My cable company rents me a digital cable box so that I can tune in channels over 100. Do most modern TVs tune in channels over 100 themselves, making digital cable boxes obsolete?
+
+======================================================
+
+(You): My cable company rents me a digital cable box so that I can tune in channels over 100. Do most modern TVs tune in channels over 100 themselves, making digital cable boxes obsolete?
+
+(Andy): Some can.  But digital cable boxes won't become obsolete because cable companies encrypt a good portion of their content and it can only be decrypted by their cable box.
+
+(You): I know they encrypt premium channels like CineMAX, HBO, etc, but does that apply to non-premium channels too?
+
+(Andy): Yes, definitely.  Generally, they only leave their most basic subscription channel lineup unencrypted.
+
+(You): OK, so when the installer told me "all this does is let you tune in channels over 100", that was inaccurate?
+
+(Andy): Depends entirely on the individual cable company (or individual market for a larger national cable company).  Personally, I've never heard of a cable company transmitting in the clear over about 60 - 70 channels.  The reason is simply because it's easier to control the channel lineup with a set-top box.  A television is predefined that channel 6 = a certain frequency.  But with a set-top box, they can and do alter channel lineups at will, so that channel 200 might not always be assigned to a certain frequency.  Cable companies need this kind of mobility so they offer other services besides television on certain frequencies.  Cable modems upstreams, for example, do not run well over too high a frequency.  But they can't put the frequency too low because the channels (iirc) start at something like 32 mhz.  I think it's 18 mhz and below is pure muck and is unusable by anything.  So this leaves a narrow range of usable upstream for cable modems.  In order to overcome this limit, the cable company has to jump their upstream frequency all the way past the regular unencrypted channel lineup which is 6mhz per channel multiplied by the number of pre-defined channel frequencies.  The larger issue really is that digital cable is easier to encrypt, from an infrastructure standpoint.  So it wouldn't surprise me if cable companies start offering less and less and less unencrypted content.
+
+(You): Sadly, that makes sense. Thank you!
+
+----------------------
+
+(Adriana): Your digital cable box, with a digital tuner and antenna, will deliver you the digital signal from the broadcast companies, like ABC, CBS, FOX, NBC, TNT, and PBS. However, to get cable channels, you need to go through your cable company. You cannot get ESPN, FX, Lifetime, MTV, Food Network, HGTV, Bravo, Comedy Central, or programmers like that for free, they are distributed exclusively through cable or satellite and not over the air like the broadcasters.
+
+(Adriana): Also for HBO and other movie channels. Those you have to pay for, through the cable or satellite company.
+
+(You): Thanks. I have cable, but want to watch two channels at once. I have a splitter and one cable is hooked into the digital cable box. I want to hook the other part of the split into a regular TV. Will that work?
+
+(Adriana): i am not really an expert in the actual connections, but if your TV has two inputs AND if you have a digital tuner/antenna to be able to recieve the over the air digital signal from the broadcaster AND if you have a picture in picture TV, I am sure you could make it work somehow.  Also, if you have a picture in picture TV, you could do it anyway through the cable company.
+
+(Adriana): Oh wait, into a different TV?
+
+(Adriana): You could still watch the OTA air channels that are on basic cable, I believe, using a splitter, on a box. But you would not get the digital channels over 100 on there.
+
+(Adriana): Using a splitter to another TV, I mean
+
+(You): Thanks. So if I wanted to watch two cable channels at once (on two TVs, or one TV w/ picture-in-picture and two tuners), I really couldn't do that without having two digital boxes?
+
+(Adriana): I believe you will be able to get some of the lower number cable channels, the ones that would be included in Basic Cable service. You know, you could call the cable company and ask for tech support, they would be happy to tell you.
+
+----------------------
+
+(Maureen): you need the box to convert the digital cable signal to analog if your tv is not digital. the box also decrypts the signal from your provider
+
+(You): Thanks. Do they encrypt most channels or just the premium ones?
+
+
+
+[Vark assigned category: <b>TVs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

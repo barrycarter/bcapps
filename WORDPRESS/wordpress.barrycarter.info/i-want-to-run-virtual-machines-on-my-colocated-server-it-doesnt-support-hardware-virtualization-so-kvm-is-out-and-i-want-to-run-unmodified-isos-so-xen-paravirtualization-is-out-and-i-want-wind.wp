@@ -1,0 +1,32 @@
+
+ID: 26313
+post_name: i-want-to-run-virtual-machines-on-my-colocated-server-it-doesnt-support-hardware-virtualization-so-kvm-is-out-and-i-want-to-run-unmodified-isos-so-xen-paravirtualization-is-out-and-i-want-wind
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 05:07:53 +0000
+post_type: post 
+post_status: publish
+post_title: I want to run virtual machines on my colocated server. It doesn't support hardware virtualization (so kvm is out), and I want to run unmodified ISOs (so Xen paravirtualization is out), and I want Windows as a guest OS (so openvz is out). What free choices remain?
+
+======================================================
+
+(You): I want to run virtual machines on my colocated server. It doesn't support hardware virtualization (so kvm is out), and I want to run unmodified ISOs (so Xen paravirtualization is out), and I want Windows as a guest OS (so openvz is out). What free choices remain?
+
+(Graham): My friend is tellig me to ask you if you have tried virtualbox
+
+----------------------
+
+(devon): I use vmware and virtualbox. Vmware works nicely but requires a lot of customization for it to work...especially with the network interfaces.  And any time you upgrade your kernal you have to recompile and reconfigure vmware. Virtualbox doesnt run as a server, but I start a secure vnc session and open it, leaving virtualbox running. Virtualbox in my experience actually crashes much less than vmware. Im running both on debian lenny.
+
+(You): thanks. I finally ended up running VirtualBox and like it -- I use ssh -X to access the GUI, but the headless option is also nice to have.
+
+(devon): Just a recommendation since x forwarding is so slow -- set up rdc on the windows machine with a strong password. That's what ive done for quite a while and never had a single issue. Just be sure you dont have any account lockout policies defined on the rdc login. I forgot my password once, tried to login too many times, and it locked me out permanently.
+
+(You): but my base install is CentOS, not Windows? Installing rdc on a Windows guest (which I plan to do) won't help, since guests can't access VirtualBox itself, right?
+
+(You): I do realize that running the headerless mode will create a fake rdesktop for config purposes, but that's probably not useful for long term use.
+
+
+
+[Vark assigned category: <b>paravirtualization</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,36 @@
+
+ID: 24035
+post_name: rsyncing-an-sqlite3-database-that-has-changed-only-slightly-takes-a-long-time-since-the-changes-are-scattered-throughout-the-files-how-can-i-rsync-a-little-changed-sqlite3-database-quickly
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 12 Oct 2010 01:43:25 +0000
+post_type: post 
+post_status: publish
+post_title: Rsyncing an sqlite3 database that has changed only slightly takes a long time (since the changes are scattered throughout the files?). How can I rsync a little-changed sqlite3 database quickly?
+
+======================================================
+
+(You): Rsyncing an sqlite3 database that has changed only slightly takes a long time (since the changes are scattered throughout the files?). How can I rsync a little-changed sqlite3 database quickly?
+
+(Steven): One idea would be to dump a sorted version of the table to a text file - rsync should pick up the similarities in the sorted text file. After the rsync, you could re-import the text file on the other side.
+
+
+
+Another alternative would be to track the SQL statements that are running on one side and copy them over to be run on the destination, which would completely take rsync out of the picture.
+
+----------------------
+
+(Bill): ymnjh"RH Ymry
+
+eaeszt
+
+hrsyjx
+
+cxty
+
+(You): thanks, that's brilliant!
+
+
+
+[Vark assigned category: <b>SQLite3</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

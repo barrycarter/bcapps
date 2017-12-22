@@ -1,0 +1,60 @@
+
+ID: 24665
+post_name: how-do-i-search-for-all-ebay-items-near-me-without-having-to-type-in-a-search-phrase-into-advanced-search
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 31 Jul 2010 08:13:25 +0000
+post_type: post 
+post_status: publish
+post_title: How do I search for ALL eBay items near me without having to type in a search phrase into "advanced search"?
+
+======================================================
+
+(You): How do I search for ALL eBay items near me without having to type in a search phrase into "advanced search"?
+
+(John): you can't - use have to use the advanced search to specify zip code and distance in miles
+
+(You): right, I did that -- but it won't accept that -- it looks like I *also* have to specify a search phrase or something
+
+(John): well of course you have to add have keywords of some kind - or you get no results
+
+(You): I just want to find all items near me, sorted by price.
+
+(John): not possible - you must have keywords.  I would know, I build ebay plugins for web sites for a living.
+
+(You): well, I could loop through all the categories and do the search using the EBAY API, no?
+
+(John): followupo
+
+(You): followupo? [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Dan): Type in "*" in the search field to list all items
+
+(You): " Please enter at least two characters before the asterisk (*). Example: dog*"
+
+----------------------
+
+(Chris): You could do a search in Google that will provide results for all items for
+
+sale in your town and or surrounding cities or towns.  Such a search would
+
+look like this:
+
+
+
+site:ebay.com "new york"
+
+or
+
+site:ebay.com "new york" camaro
+
+(You): thanks. Before I got your reply, I tried it using MAX and it failed -- however, the DVD-R *did* recognize the disk which is a good sign
+
+(You): thanks re the ebay search -- I'm not sure how accurate and up to date that is. I think I found a workaround though, thanks.
+
+
+
+[Vark assigned category: <b>eBay</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

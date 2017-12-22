@@ -1,0 +1,22 @@
+
+ID: 22760
+post_name: on-a-mediawiki-wiki-i-want-to-find-all-pages-x-that-are-in-a-certain-category-and-have-a-link-to-a-given-page-y-is-this-possible
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 14 Jun 2011 20:11:21 +0000
+post_type: post 
+post_status: publish
+post_title: On a MediaWiki wiki, I want to find all pages X that are in a certain category AND have a link to a given page Y. Is this possible?
+
+======================================================
+
+(You): On a MediaWiki wiki, I want to find all pages X that are in a certain category AND have a link to a given page Y. Is this possible?
+
+(Marco): I don't think you can do this from the standard search page. You should work from the backend, searching in the MySQL directly.
+
+(You): thanks, that's what I was afraid of.
+
+
+
+[Vark assigned category: <b>MediaWiki</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

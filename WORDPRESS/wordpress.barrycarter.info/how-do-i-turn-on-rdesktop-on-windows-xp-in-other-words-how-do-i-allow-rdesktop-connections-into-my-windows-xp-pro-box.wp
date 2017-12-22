@@ -1,0 +1,28 @@
+
+ID: 26278
+post_name: how-do-i-turn-on-rdesktop-on-windows-xp-in-other-words-how-do-i-allow-rdesktop-connections-into-my-windows-xp-pro-box
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 20:21:16 +0000
+post_type: post 
+post_status: publish
+post_title: How do I turn on rdesktop on Windows XP? In other words, how do I allow rdesktop connections into my Windows XP Pro box?
+
+======================================================
+
+(You): How do I turn on rdesktop on Windows XP? In other words, how do I allow rdesktop connections into my Windows XP Pro box?
+
+(Mike): Right-click 'My Computer', click 'Properties', click the 'Remote' tab and enable 'Allow remote connections'.  The user you are currently logged in as will have access; if you want other users to be able to log in as well, add them in the box there.
+
+----------------------
+
+(Wes): Start, Settings, Control Panel, System, Remote Tab.  In the future it might help if you spell out Remote Desktop
+
+----------------------
+
+(Chip): Remote tab in system properties
+
+
+
+[Vark assigned category: <b>rdesktop</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

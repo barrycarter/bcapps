@@ -1,0 +1,48 @@
+
+ID: 27409
+post_name: how-do-i-start-firefox-wo-opening-all-the-tabs-i-had-open-previously-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 06 May 2010 01:06:25 +0000
+post_type: post 
+post_status: publish
+post_title: How do I start Firefox w/o opening all the tabs I had open previously?
+
+======================================================
+
+(You): How do I start Firefox w/o opening all the tabs I had open previously?
+
+(Kevin): when you exit, don't choose "exit and save", choose "exit"
+
+(You): Thanks! What if Firefox crashed? Is there a startup option like "firefox --no-session" or something?
+
+(Kevin): it may prompt you when you relaunch, but if not then it definitely does if there's consecutive crashes
+
+----------------------
+
+(Joseph): Access Firefox preferences, the option to change that is right under the main ???general??? tab.
+
+----------------------
+
+(Autumn): usually you are given the option to either save tabs and quit, or just quit. Choosing the later should hopefully solve your problem. If that is not your case, check if firefox is up to date; this option has been available for some time now.
+
+
+
+If this is not the case:
+
+
+
+A- Go to "tools ---&gt; Options ---&gt; Tabs" and unmark "warn me when closing multiple tabs" (that way you will not be prompted to save"
+
+
+
+B- Check if you have any ad-don which automatically saves your tabs and opens in next session (e.g. Tabs mix plus)
+
+
+
+Hope that helps!
+
+
+
+[Vark assigned category: <b>the Internet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

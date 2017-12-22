@@ -1,0 +1,42 @@
+
+ID: 22772
+post_name: what-unix-program-compares-the-stdin-to-a-given-string
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 07 Jun 2011 20:49:04 +0000
+post_type: post 
+post_status: publish
+post_title: What Unix program compares the STDIN to a given string?
+
+======================================================
+
+(You): What Unix program compares the STDIN to a given string?
+
+(hamutaro): http://libc.blog47.fc2.com/blog-entry-15.html
+
+(You): I'm sorry, I don't read Japanese.
+
+(hamutaro): use the google or babylon
+
+----------------------
+
+(Iv): /usr/bin/test ?
+
+(You): According to my "man test", this checks files, not strings?
+
+----------------------
+
+(Ra??l): grep ? http://unixhelp.ed.ac.uk/CGI/man-cgi?grep
+
+(You): You're right! fgrep with the "exact match" option will do this!
+
+----------------------
+
+(Brian): have you tried grep or awk?
+
+(You): thanks. I felt foolish for not realizing grep would work!
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

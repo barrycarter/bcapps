@@ -1,0 +1,40 @@
+
+ID: 22998
+post_name: whats-the-easiest-way-of-keeping-track-of-my-wii-tennis-scores-i-know-the-wii-does-this-itself-but-not-in-a-way-that-i-can-transfer-to-my-computer-or-anything
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 06 Jan 2011 06:48:25 +0000
+post_type: post 
+post_status: publish
+post_title: What's the easiest way of keeping track of my Wii Tennis scores? I know the Wii does this itself, but not in a way that I can transfer to my computer or anything.
+
+======================================================
+
+(You): What's the easiest way of keeping track of my Wii Tennis scores? I know the Wii does this itself, but not in a way that I can transfer to my computer or anything.
+
+(Abram): no easy way to do it, I'm afraid. I think your best bet is to connect the wii to your computer, and take a screenshot after you play a game. Then you'll need to find/write a computer program to read the score off the screen. This article may get you started: http://www.ehow.com/how_5182967_wii-screenshot.html
+
+(You): thanks. Was hoping for a more automated way, sigh
+
+(Abram): well, you can script the image manipulation and data entry to only require a single key press, with the rest of the process automated. the problem is that you'd have to do all the programming yourself, and it would not be trivial.
+
+(You): I actually don't mind writing down the scores manually later... but not while I'm playing the game obviously. However, even w/ screenshots, I'm not sure I'd get all the data I wanted.
+
+(Abram): theoretical solution. reverse engineer the code for wii tennis, and include your own statistics reporting solution. enable homebrew on your wii, and play the modified game. That first step is of course laughably difficult, but I expect it's the best you'll be able to do. http://forum.wiibrew.org/list.php?27
+
+(You): sheesh... if I'm going to go that insane, why not just decrypt the format Wii uses to store its data. That'd be easier.
+
+----------------------
+
+(Aaron): Post-It notes.
+
+(You): any sort of writing doesn't work well because of the amount of info I have to write down
+
+(Aaron): There isn't a way to electronically transfer the data from the Wii Console to a computer, unfortunately.
+
+(You): I know :( You can put the data on SD card, but no one's figured out their encryption algorithm (yet)
+
+
+
+[Vark assigned category: <b>Wii Tennis</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

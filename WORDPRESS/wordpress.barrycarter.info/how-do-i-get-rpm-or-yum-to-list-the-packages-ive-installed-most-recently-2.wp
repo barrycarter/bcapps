@@ -1,0 +1,40 @@
+
+ID: 26785
+post_name: how-do-i-get-rpm-or-yum-to-list-the-packages-ive-installed-most-recently-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 28 May 2010 06:48:28 +0000
+post_type: post 
+post_status: publish
+post_title: How do I get rpm or yum to list the packages I've installed most recently?
+
+======================================================
+
+(You): How do I get rpm or yum to list the packages I've installed most recently?
+
+(Tommy): rpm -qa --last | less
+
+(You): thanks! I didn't know about ltrace. ltrace shows it going as far as "powf(0x3de69ad4, 0x3b800000, 0xb4c8008, 0xb4cba90, 0x3b800000) = 1" and then dying on the next line (a partial powf line). The only weirdness (aside from the fact that powf is a math function) is that powf returns hex values until its near the end at which point it returns 1. Thoughts?
+
+(Tommy): Is this a multi-threaded application?  Could be roaching in another thread.
+
+You could start the app using gdb and put a breakpoint at that spot.  Then
+
+you could step through until it blows up.  A "bt" command (backtrace) will
+
+then show you how you got there.
+
+(You): will that work for binaries someone else gave me? I don't think it's multithreaded and it was working fine until 2 days ago.
+
+(You): it's the Eternal Lands client if that helps any.
+
+(Tommy): Sure, doesn't matter where you got the binary.  Never came into contact with EL before.
+
+----------------------
+
+(David): history | grep rpm comes to mind quickly:)
+
+
+
+[Vark assigned category: <b>rpm</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

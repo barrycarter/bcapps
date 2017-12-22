@@ -1,0 +1,86 @@
+
+ID: 27449
+post_name: how-do-i-cutpaste-a-column-from-an-html-table-using-firefox-rows-are-easy-but-cant-figure-out-how-to-do-a-column
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 22:57:10 +0000
+post_type: post 
+post_status: publish
+post_title: How do I cut/paste a column from an HTML table using Firefox? Rows are easy, but can't figure out how to do a column.
+
+======================================================
+
+(You): How do I cut/paste a column from an HTML table using Firefox? Rows are easy, but can't figure out how to do a column.
+
+(Zeke): If you just want the text from the column not the actually HTML. Then paste then entire table into something like Word or Pages and then hold down the alt or opt key and drag and select to copy a column. 
+
+
+
+If you looking to actually copy the HTML as in: 
+
+&lt;table&gt;&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;
+
+&lt;/tr&gt;
+
+&lt;tr&gt;
+
+&lt;td&gt;2&lt;/td&gt;
+
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+
+
+Then I don't know of a way to do that automatically.
+
+(You): I just need the data from the columns, not the HTML that creates them. However, I'm on Linux and don't use Word/Pages. Is there another option?
+
+(Zeke): I'd recommend using something like jQuery to do instead. I couldn't find a plugin, but it would be easy to setup yourself.
+
+(You): jQuery is like a server-side Javascript library, no?
+
+(Zeke): It's not a server side language. It's completely run by the user's browser.
+
+(You): True (just like all JavaScript), but it's normally used on pages that are served. Clients/browsers don't initiate its use. How could I use JQuery as a client to someone else's server.
+
+(Zeke): Not sure I'm understanding your question. Do you want to load jQuery on a page that you don't have access to. Such as google.com [http://google.com] or amazon.com [http://amazon.com] or ??? ?
+
+
+
+On your own server you can just edit the header.php file and add: &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js [http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js]" charset="utf-8"&gt;&lt;/script&gt;
+
+(You): I'm trying to grab one column from a table that's on someone else's site. Will jQuery help me?
+
+(Zeke): Ok. The easiest way would be to copy the entire html table by using viewing source then put that on in your own html document on your computer than you can run an scripts you want on the file. jQuery could be a tool use use to do this, but you'd have to write some custom code, I don't know of a plugin that does that for you.
+
+(You): wow that's a lot of work! I meant something using cut and paste. Otherwise, I'd just save the source and run a Perl script against it.
+
+(Zeke): If you have dreamweaver it supports copy, pasting and repositioning columns in tables. You have to save the site's content to your local computer first.
+
+(You): I'm a Linux user :) But thanks. I ended up solving my main problem w/o having to extract the column.
+
+(You): hold down control while selecting cells.
+
+(Zeke): ahhh ctrl on linux, it's opt on the Mac. Cheers!
+
+----------------------
+
+(Evan): hold control, click and drag.
+
+(You): You are my new God!
+
+----------------------
+
+(Ketil): I don't think you can. But I've added myself to this question in case someone else comes up with a better answer. :)
+
+(You): LOL, thanks! It looks like there's no easy way to do this. I was hoping there was Firefox add-on... maybe I'll write one ;)
+
+(You): hold down control while selecting cells.
+
+(Ketil): Brilliant!! Thanks! Sure managed to turn this Q/A on it's head. ;)
+
+
+
+[Vark assigned category: <b>HTML</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

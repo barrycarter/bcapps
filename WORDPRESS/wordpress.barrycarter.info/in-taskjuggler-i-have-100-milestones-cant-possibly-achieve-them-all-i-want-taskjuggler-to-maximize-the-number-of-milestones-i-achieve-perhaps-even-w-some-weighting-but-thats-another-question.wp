@@ -1,0 +1,72 @@
+
+ID: 24312
+post_name: in-taskjuggler-i-have-100-milestones-cant-possibly-achieve-them-all-i-want-taskjuggler-to-maximize-the-number-of-milestones-i-achieve-perhaps-even-w-some-weighting-but-thats-another-question
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 29 Aug 2010 23:13:31 +0000
+post_type: post 
+post_status: publish
+post_title: In taskjuggler, I have 100 milestones + can't possibly achieve them all. I want taskjuggler to maximize the number of milestones I achieve (perhaps even w/ some weighting, but that's another question). Can taskjuggler or some other Unix open source program do this?
+
+======================================================
+
+(You): In taskjuggler, I have 100 milestones + can't possibly achieve them all. I want taskjuggler to maximize the number of milestones I achieve (perhaps even w/ some weighting, but that's another question). Can taskjuggler or some other Unix open source program do this?
+
+(Chris): Software works usually on statistical or rudimentary math
+
+
+
+Even speech recognition is math
+
+
+
+Do you know any rules a human expert could use - to decide which goals are more achievable than others
+
+
+
+This is a minefield
+
+
+
+The answer maybe - the most stupid and simplest tasks are best done first 
+
+
+
+Many algorithms are goal seeking - unless you know - "what you really want" - you can easily achieve failure
+
+(You): well, there are Unix programs out there that schedule tasks. An obvious way to maximize milestones is to consider every possible critical path and then choose the one that hits the most milestones. That's probably not feasible even for a computer, but there must be some software that helps you optimize.
+
+(Chris): That assumes the milestones are set correctly - if you are maximising to please the person who set the milestones then OK
+
+
+
+You can only achieve a true maximum effort if the goals are set correctly
+
+
+
+Maybe - bad milestones (too many early milestones) bad outcome (milestone fatigue)
+
+
+
+Sometimes scheduling is all about requiring A is done before B
+
+
+
+ (A) Weld it -&gt; (B) Paint it
+
+
+
+Sometimes scheduling is a matter of resources - to Weld job A - needs 2 men x 10 hours - Weld job B - needs 2 men x 10 hours
+
+
+
+1 man could Weld job A for 5 hours then go help - 1 man Weld job B - (maybe he wants to go home early for the dentist)
+
+
+
+Scheduling is actually a simplified view of the world - when there are 1,000 men all of the errors round out
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

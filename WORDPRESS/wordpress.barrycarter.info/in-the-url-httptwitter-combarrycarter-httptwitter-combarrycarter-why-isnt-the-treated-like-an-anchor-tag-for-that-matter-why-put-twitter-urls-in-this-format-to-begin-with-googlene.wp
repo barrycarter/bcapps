@@ -1,0 +1,90 @@
+
+ID: 23304
+post_name: in-the-url-httptwitter-combarrycarter-httptwitter-combarrycarter-why-isnt-the-treated-like-an-anchor-tag-for-that-matter-why-put-twitter-urls-in-this-format-to-begin-with-googlene
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 08 Dec 2010 23:02:58 +0000
+post_type: post 
+post_status: publish
+post_title: In the URL http://twitter.com/#!barrycarter [http://twitter.com/#!barrycarter] why isn't the # treated like an anchor tag? For that matter, why put twitter URLs in this format to begin with? (googlenexus "advertises" the hashbang URL)
+
+======================================================
+
+(You): In the URL http://twitter.com/#!barrycarter [http://twitter.com/#!barrycarter] why isn't the # treated like an anchor tag? For that matter, why put twitter URLs in this format to begin with? (googlenexus "advertises" the hashbang URL)
+
+(Kevin): The # needs a matching &lt;a name="hashname"&gt; on the page. I'm not sure why the hashmark is there in the first place, but my suspicion is that it might be tied to some javascript action.
+
+(You): your message came out funny (I'm using vark thru IM), but I'm guessing you said a matching "{a name}" tag, correct? (I'm using {} to escape HTML, since it'll look like HTML otherwise)?
+
+(Kevin): Yes, {a name} tag.
+
+(You): ok, my question is: the browser normally sends nothing after the # tag to the server. The # tag is only used after the browser loads the page and looks for a matching {a name}. So, how did the browser know to send stuff after the # to the server?
+
+(Kevin): I think Twitter is now just set up to refresh/redirect a profile page to the # version once the page loads. I don't know why they're doing that, though.
+
+(You): OK, but how can twitter.com even SEE the #? The browser should never even send it, right?
+
+(Kevin): I think that depends on how the page is being redirected. There's a good chance Twitter does see the # .
+
+(You): yes, that's what I figure, but I wonder why Firefox even sends it.
+
+----------------------
+
+(Alexander): the part after the hash may be an anchor, however if there is no matching anchor, the whole page is displayed. I assume that the javascript code on the page evaluates the url and loads the page accordingly (plus it can change the url without reloading the page).
+
+----------------------
+
+(Martin): So-called "single page" web sites (i.e. web applications) try to reduce or completely remove full page reloads because these are time-intensive and often unnecessary because only a small part of the page must be refreshed after any given user action. With the help of JavaScript, Ajax and dynamic partial page updates this is technically possible.
+
+
+
+Normally, in an old-fashioned web site, the URL would change when a new page should display, e.g. after the user clicks a button or a link. However, you can't change the URL of a page without making the browser reload all of it automatically - which is exactly what you're trying to avoid for modern interactive sites.
+
+
+
+Still, you *somehow* have to represent page state and have something users can add to their favorites. The only part of a URL you can change without triggering a reload is the part after the hash. Many modern web applications like Twitter or GMail actually use that trick to have the cake and eat it, too: There is a valid URL representing page state (which means back/forward buttons work and you can add  it to your favorites) and yet there is no actual reload happening when you navigate the page - the actual URL (before the hash) does not change.
+
+(Martin): So-called "single page" web sites (i.e. web applications) try to reduce or
+
+completely remove full page reloads because these are time-intensive and
+
+often unnecessary because only a small part of the page must be refreshed
+
+after any given user action. With the help of JavaScript, Ajax and dynamic
+
+partial page updates this is technically possible.
+
+
+
+Normally, in an old-fashioned web site, the URL would change when a new page
+
+should display, e.g. after the user clicks a button or a link. However, you
+
+can't change the URL of a page without making the browser reload all of it
+
+automatically - which is exactly what you're trying to avoid for modern
+
+interactive sites.
+
+
+
+Still, you *somehow* have to represent page state and have something users
+
+can add to their favorites. The only part of a URL you can change without
+
+triggering a reload is the part after the hash. Many modern web applications
+
+like Twitter or GMail actually use that trick to have the cake and eat it,
+
+too: There is a valid URL representing page state (which means back/forward
+
+buttons work and you can add  it to your favorites) and yet there is no
+
+actual reload happening when you navigate the page - the actual URL (before
+
+the hash) does not change.
+
+
+
+[Vark assigned category: <b>Twitter</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

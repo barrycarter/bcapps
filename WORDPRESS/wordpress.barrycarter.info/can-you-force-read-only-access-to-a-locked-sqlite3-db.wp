@@ -1,0 +1,22 @@
+
+ID: 26807
+post_name: can-you-force-read-only-access-to-a-locked-sqlite3-db
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 27 May 2010 22:54:21 +0000
+post_type: post 
+post_status: publish
+post_title: Can you force read-only access to a locked SQLite3 db?
+
+======================================================
+
+(You): Can you force read-only access to a locked SQLite3 db?
+
+(Dan): Does this help?
+
+http://www.sqlite.org/c3ref/busy_handler.html
+
+
+
+[Vark assigned category: <b>SQLite3</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

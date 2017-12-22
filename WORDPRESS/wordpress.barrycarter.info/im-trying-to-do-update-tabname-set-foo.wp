@@ -1,0 +1,42 @@
+
+ID: 25250
+post_name: im-trying-to-do-update-tabname-set-foo
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 22 Jun 2010 22:07:08 +0000
+post_type: post 
+post_status: publish
+post_title: I'm trying to do "UPDATE tabname SET foo 
+
+======================================================
+
+(You): I'm trying to do "UPDATE tabname SET foo = (SELECT foo FROM othertab WHERE x = tabname.x);". However, I don't want foo updated if the inner select returns nothing. How do I put this into my WHERE condition? I tried aliasing the subselect, but you still can't refer to it in the WHERE condition by its alias.
+
+(Apple): if you're doing that with some other code like php or others language , i think you should separate it into 2 queries.
+
+(You): you mean use a loop inside PHP?
+
+(Apple): yeah ! i think or it may not be loops, it can be some once-running code !
+
+(You): thanks, I still think it can be done w/ a query.
+
+----------------------
+
+(Rob): Little hard to follow your pseudo-SQL, but a subselect should do what you want. For instance, if you do:
+
+
+
+update foo set col=value where value IN (select bar from tbl where blah blah...)
+
+
+
+Then if the subselect returns nothing, no rows are modified. 
+
+
+
+Man... Pseudo queries sure are ugly!
+
+
+
+[Vark assigned category: <b>aliasing</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

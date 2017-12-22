@@ -1,0 +1,72 @@
+
+ID: 26688
+post_name: i-calculated-that-if-i-applied-one-kilowatthour-3-6-megajoules-of-energy-to-a-1kg-mass-it-would-end-up-going-1900-meters-per-second-does-that-seem-reasonable-it-seems-really-high-to-me
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 03:55:40 +0000
+post_type: post 
+post_status: publish
+post_title: I calculated that if I applied one kilowatthour (3.6 megajoules) of energy to a 1kg mass, it would end up going 1900 meters per second. Does that seem reasonable? It seems really high to me.
+
+======================================================
+
+(You): I calculated that if I applied one kilowatthour (3.6 megajoules) of energy to a 1kg mass, it would end up going 1900 meters per second. Does that seem reasonable? It seems really high to me.
+
+(Kyle): http://www.google.com/search?hl=en&q=(2+*+1+kilowatt+hour++/+1kg)+^+0.5&aq=f&aqi=h1&aql=&oq=&gs_rfai=
+
+(Kyle): it's actually a factor of root(2) faster than you thought
+
+(Kyle): http://en.wikipedia.org/wiki/Kinetic_energy#Newtonian_kinetic_energy [http://en.wikipedia.org/wiki/Kinetic_energy#Newtonian_kinetic_energy]
+
+----------------------
+
+(Harrison): That would be correct but I believe that you forgot the .5 in the kinetic energy equation. Kinetic energy = .5mv^2. So the real velocity is much higher and is 2683 m/s. Which is has occurred as an extreme velocity in extreme circumstances.
+
+----------------------
+
+(Joseph): Sure, if you can somehow perfectly convert that kwh to kinetic energy. That is impossible, though the details of how you might try it will illuminate various ways to speed your mass to 1900 m/s. Maybe something like a rail gun would be able to do it with high enough efficiency to reach some ridiculous speeds like that.
+
+----------------------
+
+(Denis): Barry wrote:
+
+
+
+
+
+
+
+
+
+Assuming the initial velocity is zero and that all the applied energy
+
+is converted to kinetic energy of the object:
+
+
+
+E = 1/2 M V^2
+
+=&gt;?? V^2 = 2E/M
+
+=&gt;?? V = sqrt(2E/M)
+
+
+
+1 J = 1 kg m s^-2
+
+E = 3.6E6 kg m s^-2
+
+M = 1 kg
+
+V = sqrt(2 * 3.6E6 / 1)
+
+???? = 2700 m s^-1
+
+
+
+So the final velocity is actually even higher than you calculated.
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

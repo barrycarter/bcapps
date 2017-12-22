@@ -1,0 +1,38 @@
+
+ID: 24354
+post_name: can-i-add-freebsd-style-snapshotting-to-my-linux-machine
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 27 Aug 2010 21:54:25 +0000
+post_type: post 
+post_status: publish
+post_title: Can I add FreeBSD-style "snapshotting" to my Linux machine?
+
+======================================================
+
+(You): Can I add FreeBSD-style "snapshotting" to my Linux machine?
+
+(Michele): Gentoo has portage and its is the BSD way in
+
+(Michele): Linux
+
+(You): thanks. Is there a version for fedora?
+
+(Michele): No, portage is the package's system of Gentoo
+
+----------------------
+
+(Dennis): Yes, using lvm2 you can do snapshots
+
+(You): tell me more? It turns out I'm already using lvm, but didn't know about snapshots? [direct gchat: carter.barry@gmail.com]
+
+(Dennis): Example of doing a snapshot of / which is /dev/server1/root: lvcreate -L10G -s -n rootsnapshot /dev/server1/root
+
+(Dennis): see more here http://www.howtoforge.com/linux_lvm_snapshots_p2
+
+(You): and the snapshot literally takes no time or space right? Until I start changing files? Reading up now
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

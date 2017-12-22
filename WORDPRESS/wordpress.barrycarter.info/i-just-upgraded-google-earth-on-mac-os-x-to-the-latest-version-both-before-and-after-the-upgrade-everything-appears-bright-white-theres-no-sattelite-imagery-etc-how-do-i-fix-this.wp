@@ -1,0 +1,30 @@
+
+ID: 27530
+post_name: i-just-upgraded-google-earth-on-mac-os-x-to-the-latest-version-both-before-and-after-the-upgrade-everything-appears-bright-white-theres-no-sattelite-imagery-etc-how-do-i-fix-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 07:37:57 +0000
+post_type: post 
+post_status: publish
+post_title: I just upgraded Google Earth on Mac OS X to the latest version. Both before and after the upgrade, everything appears bright white, there's no sattelite imagery, etc. How do I fix this?
+
+======================================================
+
+(You): I just upgraded Google Earth on Mac OS X to the latest version. Both before and after the upgrade, everything appears bright white, there's no sattelite imagery, etc. How do I fix this?
+
+(Phase): sounds like its not taking the stream from the google map servers.  check your firewall is not blocking the application
+
+(You): I feel stupid. I had it in advanced graphics mode, and was accessing my Mac thru VNC. Changing it to safe graphics solved everything!
+
+(Phase): Ahh..  that'll do it..    :o)
+
+----------------------
+
+(Armin): In the preferences, look for settings that are labeled "cache" and there should be a button to delete the local cache. This should force Google Earth to reload the maps and picture data from the servers. You'll need to be online for this to work.
+
+(You): Thanks! It turns out turning off enhanced graphics mode worked, since I was viewing my Mac via VNC.
+
+
+
+[Vark assigned category: <b>Google</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

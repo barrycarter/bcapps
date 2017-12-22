@@ -1,0 +1,28 @@
+
+ID: 27855
+post_name: when-i-do-yum-search-esniper-i-get-nothing-back-what-can-i-add-to-my-fedora11-yum-conf-to-auto-install-esniper
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 27 Apr 2010 08:42:57 +0000
+post_type: post 
+post_status: publish
+post_title: When I do "yum search esniper", I get nothing back. What can I add to my fedora11 yum.conf to auto-install esniper?
+
+======================================================
+
+(You): When I do "yum search esniper", I get nothing back. What can I add to my fedora11 yum.conf to auto-install esniper?
+
+(Bill): There doesn't seem to be an RPM available for esniper in Fedora, thus it won't be in any yum repositories.
+
+(Bill): You may need to compile it from the source located at http://sourceforge.net/projects/esniper/files/esniper/2.22.0/esniper-2-22-0.tgz/download
+
+(You): Rats, I was hoping for an easier solution
+
+(Bill): It's not too hard. I just used the standard './configure && make && sudo make install' and it was done in under a minute with no problems. I hope your Linux-fu is good today!
+
+(You): Yes, I do that as well (but I use "sh configure"), but that sometimes messes up RPM when you try to install something else -- wrong versions of libraries and all that crap.
+
+
+
+[Vark assigned category: <b></b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,50 @@
+
+ID: 26099
+post_name: how-do-i-unzip-a-7z-file-on-linux-debian-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 12 Jun 2010 08:35:20 +0000
+post_type: post 
+post_status: publish
+post_title: How do I unzip a .7z file on Linux (Debian)?
+
+======================================================
+
+(You): How do I unzip a .7z file on Linux (Debian)?
+
+(Abe): http://packages.debian.org/unstable/utils/p7zip
+
+(You): thanks. i did that but it tells me "Can not open file as archive"
+
+(Abe): Hmm... That error could be due to a corrupted archive or unsupported version... Have you tried the p7zip-full package?
+
+(You): nope-- also at SF? or above?
+
+(Abe): I found it here... http://packages.debian.org/search?keywords=p7zip-full
+
+(You): I just checked that and the SF project got me all of those variants and none of them work :(
+
+(Abe): Sorry, man the archive my be corrupt or written in a format that the Linux p7zip cannot read.
+
+(You): rats. You don't know where I can download a Snow Leopard ISO for VirtualBox, do you?
+
+(Abe): Hope this helps... http://btjunkie.org/torrent/Mac-OS-X-10-6-Snow-Leopard-Final-Release/1236066bdba0aacce2b82b74076b11b6f7851250faad
+
+(You): nice, thanks! Actually, I found an ISO right after I replied -- I'd found DMGs already, but not ISOs.
+
+----------------------
+
+(Tommy): It's a 7zip file.
+
+
+
+http://goo.gl/7Mtk
+
+----------------------
+
+(Jake): You should first download and install the program called 7zip. Try to type sudo apt-get install 7zip  in the terminal to do so. Then, you can probably choose to unzip the file via the graphical interface by right clicking it. You need to have 7zip. If you already do and can't unzip it, I can't help you.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

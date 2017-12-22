@@ -1,0 +1,32 @@
+
+ID: 24617
+post_name: i-need-to-automatically-draw-arrows-between-a-bunch-of-points-fixed-pixel-locations-in-a-nice-way-ideally-so-the-arrows-dont-run-into-each-other-i-tried-using-graphviz-to-do-this-but-it-doesn
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 09 Aug 2010 07:04:15 +0000
+post_type: post 
+post_status: publish
+post_title: I need to automatically draw arrows between a bunch of points (fixed pixel locations) in a "nice" way (ideally so the arrows don't run into each other). I tried using graphviz to do this, but it doesn't work well. What other free Unix program might help? It has to be command line, since I have to automate this. I know about "fly" but that's my last resort.
+
+======================================================
+
+(You): I need to automatically draw arrows between a bunch of points (fixed pixel locations) in a "nice" way (ideally so the arrows don't run into each other). I tried using graphviz to do this, but it doesn't work well. What other free Unix program might help? It has to be command line, since I have to automate this. I know about "fly" but that's my last resort.
+
+(Zane): Uh oh. Graphviz is kind of the gold standard. Did you try all the different layout engines (dot, neato, etc)?
+
+(You): yes, even twopi and circo and fdp and sfdp :) The problem is that graphviz wants to draw a huge rectangle around my text, way bigger than the text itself. I want dot to dot connections with labels hanging off the side.
+
+(Zane): Lamentably you've reached the limits of my knowledge in this area. I hope you find a good solution!
+
+(You): thanks.
+
+----------------------
+
+(Steph): you could have a look at http://tulip.labri.fr/TulipDrupal/
+
+tell if it helps.
+
+
+
+[Vark assigned category: <b>Graphviz</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

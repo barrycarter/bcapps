@@ -1,0 +1,130 @@
+
+ID: 27932
+post_name: what-are-some-free-os-based-virtualization-platforms-that-compete-with-xen-and-vmware
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 06:09:37 +0000
+post_type: post 
+post_status: publish
+post_title: What are some free OS-based virtualization platforms that compete with Xen and VMware?
+
+======================================================
+
+(You): What are some free OS-based virtualization platforms that compete with Xen and VMware?
+
+(Dan): VirtualBox is excellent
+
+(You): It looks like Virtualbox installs on top of an existing OS? Do you know of any that install as the OS itself?
+
+(Dan): Even Xen installs on the OS, remember: it needs a Dom U in order to function, which is a fully-functioning Linux subsystem. VirtualBox offers similar performance to Xen with a better user experience, and it's free.
+
+(You): Damn, I thought Xen was an OS itself. Are there any free ones that install at the OS layer?
+
+(You): Also, what base OS do you recommend? I'm getting a Celeron 2.4GHZ 400FSB 
+
+512MB DDR RAM 60 GB IDE from 
+
+https://www.hostfolks.com/manage/cart.php?a=confproduct&i=0 Will that be strong enough to run a base OS, VirtualBox, and a few guest OSs? 
+
+
+
+(Dan): There is no point in a virtualisation system running on bare metal; the OS is incredibly useful for providing well-maintained hardware abstraction. Any virtualisation layer that didn't run on an OS would essentially have to _become_ an OS in order to actually provide hardware virtualisation.
+
+----------------------
+
+(Sreekanth): Desktop Virutalization, Try Virtual Box and if you are on KDE linux try KVM...Not sure if this info helps.....
+
+(You): It does, thanks! What base OS do you recommend? I'm getting a Celeron 2.4GHZ 400FSB
+
+512MB DDR RAM 60 GB IDE from
+
+https://www.hostfolks.com/manage/cart.php?a=confproduct&i=0 [https://www.hostfolks.com/manage/cart.php?a=confproduct&i=0] Will that be
+
+strong enough to run a base OS, VirtualBox, and a few guest OSs
+
+(Sreekanth): Looks like it is Celeron....I would try a very light weight Linux OS like Puppy Linux....it works great for a configuration like this
+
+(Sreekanth): Base OS cannot be definitely a Windows OS...it might not sustain to 512 MB Ram
+
+(You): Will VirtualBox run on Puppy Linux? If so, that's be great! How about minix and other teeny linuxes?
+
+(Sreekanth): So you want a base OS and on top of it you will install a guest OS using VM/. Is my understanding right ?
+
+(You): Yes, I need a base OS, and then I'll install VirtualBox on top of it, and then guest OSs on top of that. That's how I have to do it, right? My question: can I use Puppy Linux or Minix or whatever as the base OS and put VirtualBox on top of it?
+
+(Sreekanth): Yes you can do that..But I am afraid it will be very very slow..If you are trying to do some testing/research it might be a good idea..but if you have plans of using it as a base OS that you would use to watch youtube videos/cnn then it will not work..
+
+(Sreekanth): it is a good idea to try VM if you atleast have 1GB of RAM. else do not try that...I am afraid you will be disappointed...
+
+(You): this is all on a remote dedicated server, so I won't be running X11, won't be watching videos, etc. In fact, I won't use the base OS at all, just the guest OSs I create on top of it.
+
+(Sreekanth): Got that...Hold on..Let me think of a better plan!
+
+(You): Right now, I'm paying $100/month+ for a dedicated server and running vmware on it. It works fine, but that's a lot of money!
+
+(Sreekanth): Best bet would be to install XUbuntu as base OS and on top of it Install Virtual box. XUbuntu is very light weight and Virtual box installs like a charm...
+
+(Sreekanth): Is increasing RAM  on the box in your control ? I know this is a bad question. But trying to understand
+
+(You): Fantastic! So I'm assuming you do need a GUI to install Virtualbox? Where can I get xubuntu ISO? I think I can increase RAM, checking.
+
+(Sreekanth): http://mirror.anl.gov/pub/ubuntu-iso/CDs-Xubuntu/9.10/release/xubuntu-9.10-desktop-i386.iso
+
+(You): You rock! Which version of VirtualBox should I download? There are several choices for Ubuntu.
+
+(Sreekanth): Always download the latest virtual box. There are lot of fixes that went in recently......You have facility to get all the files from Base OS, You can get all the hardware shared (webcam, iphone, pendrives, VPN etc..)
+
+(You): OK, but http://dlc.sun.com/virtualbox/vboxdownload.html [http://dlc.sun.com/virtualbox/vboxdownload.html] has a huge list of downloads. Which one do I pick?
+
+(Sreekanth): Hold on ...let me check that..
+
+(Sreekanth): Step 1: http://www.xubuntu.org/news/9.10-release. Download the latest torrent version of XUbuntu from this location http://cdimage.ubuntu.com/xubuntu/releases/9.10/release/xubuntu-9.10-desktop-i386.iso.torrent
+
+(You): Actually, I'm ordering a dedicated server, so step 1 is to order it and ask them to install that. Once I've done that, what VirtualBox file do I download?
+
+(Sreekanth): Step 2: Download http://download.virtualbox.org/virtualbox/3.1.6/virtualbox-3.1_3.1.6-59338_Ubuntu_karmic_i386.deb
+
+(Sreekanth): Even before you do this please watch this You Tube video http://www.youtube.com/watch?v=JjXdMdWH3ho&feature=related
+
+(Sreekanth): Sorry that video is not relevant...
+
+(You): OK, I hadn't watched it yet. Which video is relevant?
+
+(Sreekanth): Trying to figure out the best way to explain the steps...hold on...
+
+(You): Thanks! Actually, it'll take them sometime to give me the dedicated server, so no rush.
+
+(Sreekanth): What will you be doing on the dedicated server. Why not use the Cloud OS which is eye OS ?
+
+(Sreekanth): If you are using it to share videos/music or for that matter anything .....Just make your 60 GB drive as you web server and you host it from your home itself...$100 is a lot of money...
+
+(You): I plan to use it to test VMs and create small single-use Windows and Linux VMs. Does VirtualBox install on CloudOS?
+
+(Sreekanth): No VM does not work on Cloud OS....
+
+(You): Oh, you were suggesting Cloud OS as an alternative to running a VM server? In other words, you think I might want to rent VMs instead of creating a VM server?
+
+(Sreekanth): Cloud OS can just be used to store some files/data/videos/music. I am not sure if that fits in to your requirement. This is what I am doing right now...I have a 40GB dell laptop at home with 760 MB RAM. I installed a eye OS on it. I share all the movie/songs/files on that. I gave the laptop a DNS as www.myfamily.com. My brothers/dad and mom just hit that link and listen to my songs collection/browse photos remotely from my system that is in my house...
+
+(You): I feel uncomfortable hosting sites on my home system (it's against my provider's TOS, but that's not the only reason)
+
+(Sreekanth): Got that..
+
+(Sreekanth): Check this link. This is exactly what I was trying to tell. This guy first installed XUbuntu, then installed Virtual box and inside virtual box he installed Windows XP. http://divby0.blogspot.com/2008/09/windows-xp-in-xubuntu-with-virtualbox.html
+
+(Sreekanth): This is what you would intend to do....
+
+(You): Fantastic, thank you! I've now ordered my Xubuntu server and will do exactly that once it's set up.
+
+(Sreekanth): You are welcome!
+
+----------------------
+
+(S??bastien): Qemu, VirtualBox, KVM, LXS
+
+(You): Do all of those run on existing OSs or are any of them OSs themselves?
+
+
+
+[Vark assigned category: <b>Xen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

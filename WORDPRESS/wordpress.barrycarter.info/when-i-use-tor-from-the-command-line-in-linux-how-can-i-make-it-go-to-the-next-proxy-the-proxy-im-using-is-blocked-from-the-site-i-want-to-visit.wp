@@ -1,0 +1,30 @@
+
+ID: 26780
+post_name: when-i-use-tor-from-the-command-line-in-linux-how-can-i-make-it-go-to-the-next-proxy-the-proxy-im-using-is-blocked-from-the-site-i-want-to-visit
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 28 May 2010 08:00:53 +0000
+post_type: post 
+post_status: publish
+post_title: When I use tor from the command line in Linux, how can I make it go to the next proxy? The proxy I'm using is blocked from the site I want to visit.
+
+======================================================
+
+(You): When I use tor from the command line in Linux, how can I make it go to the next proxy? The proxy I'm using is blocked from the site I want to visit.
+
+(Jay): Im not sure you can.  Perhaps try sending the HUP signal to the process to have it re-read the config; maybe it rebuilds connections?
+
+(You): thanks. I know the Windows version has a GUI interface that lets you do this, so I figured the Linux version would have a command line for the same thing, hmmm
+
+(Jay): It might, but the linux CLI client is pretty spartan in comparison.
+
+(You): true. I'll try the HUP and see what happens.
+
+----------------------
+
+(Rahul): export http_proxy=&lt;ip&gt;:&lt;port&gt;      -- You can try this
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

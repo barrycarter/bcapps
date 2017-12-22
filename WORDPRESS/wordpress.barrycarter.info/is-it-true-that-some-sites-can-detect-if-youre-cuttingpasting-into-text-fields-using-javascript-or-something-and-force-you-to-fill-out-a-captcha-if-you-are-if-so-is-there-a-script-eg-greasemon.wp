@@ -1,0 +1,28 @@
+
+ID: 24117
+post_name: is-it-true-that-some-sites-can-detect-if-youre-cuttingpasting-into-text-fields-using-javascript-or-something-and-force-you-to-fill-out-a-captcha-if-you-are-if-so-is-there-a-script-eg-greasemon
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 03 Oct 2010 01:16:46 +0000
+post_type: post 
+post_status: publish
+post_title: Is it true that some sites can detect if you're cutting/pasting into text fields (using JavaScript or something) and force you to fill out a captcha if you are? If so, is there a script (eg, Greasemonkey) that works around this?
+
+======================================================
+
+(You): Is it true that some sites can detect if you're cutting/pasting into text fields (using JavaScript or something) and force you to fill out a captcha if you are? If so, is there a script (eg, Greasemonkey) that works around this?
+
+(Diogo): Yes, It's possible for a javascript to detect if the contents of a field has changed without pressed keys. You can workaround this by disabling Javascript in your browser or using a javascript that simulates key presses on the field. It could be done either with a custom Greasemonkey script or simply with one of those scriptlets URL.
+
+(You): thanks. Do you have a bookmarklet URL that does this for me?
+
+----------------------
+
+(Mihael): It is definitely possible to detect the paste event with JavaScript...  (if (e.keydown == 86) //86 is Paste event).
+
+But I dont know if there is a way around it.
+
+
+
+[Vark assigned category: <b>CAPTCHA</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

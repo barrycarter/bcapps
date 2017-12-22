@@ -1,0 +1,36 @@
+
+ID: 23022
+post_name: what-open-source-software-helps-me-create-a-catalog-site-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 31 Dec 2010 01:01:10 +0000
+post_type: post 
+post_status: publish
+post_title: What open source software helps me create a 'catalog' site?
+
+======================================================
+
+(You): What open source software helps me create a 'catalog' site?
+
+(Ryan): Drupal is my weapon of choice. You can grab it at drupal.org . It has a a bit of a learning curve but it is very well developed and flexible. The newest version, Drupal 7, is just about to come out, but you can use the latest release candidate. I would use Drupal 7 over Druapl 6 as they upgraded the admin backend heavily.
+
+(You): I've heard of Drupal, but is it really good for catalog sites? Or is it a general CMS that's good for "everything"?
+
+(Ryan): It has a built in Taxonomy system that makes doing catalog sites pretty simple. Drupal core is general, but then you leverage the massive module catalog to fine tune it to the site you are building. However in your case, Drupal out of the box would be perfectly suited for a catalog site. You'll want the module 'views' though which allows you to query your catalog and then display it however you want.
+
+(Ryan): Drupal 7 RC3 here:http://drupal.org/drupal-7.0-rc3 [http://drupal.org/drupal-7.0-rc3]and the Views Module here:http://drupal.org/project/views [http://drupal.org/project/views]
+
+(You): thanks! And the cool thing about Drupal is that I can give different people permission to edit different catalogs, yes?
+
+(Ryan): Correct, Drupal has a pretty robust permissions system.
+
+----------------------
+
+(Andrea): Are you thinking about a library catalog site? Something like Koha (koha.org) or Evergreen (open-ils.org) would do that.
+
+(You): thanks. Someone else suggested Drupal, which I've heard many good things about. I'll take a look at those other 2 pieces of software too.
+
+
+
+[Vark assigned category: <b>open source</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,38 @@
+
+ID: 23891
+post_name: how-bad-is-it-to-use-goto-in-a-perl-script
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 22 Oct 2010 19:48:41 +0000
+post_type: post 
+post_status: publish
+post_title: How bad is it to use "goto" in a Perl script?
+
+======================================================
+
+(You): How bad is it to use "goto" in a Perl script?
+
+(Denis): This is a religious topic, so you won't find a consensus on the answer.  However, in my opinion, the proscription on goto is related to its over-use and the resulting spaghetti code.  Used in moderation, particularly with clear and illuminating labels, can improve code readability.
+
+(You): thanks. That's the answer I wanted to hear :)
+
+(Denis): Cool.  :)
+
+----------------------
+
+(Steven): Can you even do that? I never knew that function existed.
+
+(You): yes you can. I've now used it twice but loathed myself for it.
+
+(Steven): Yeahhh - go and have a shower and rethink how to do what you want to do ;)
+
+
+
+S
+
+(You): nah, I used it, and am getting over it ;)
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

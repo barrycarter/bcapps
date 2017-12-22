@@ -1,0 +1,30 @@
+
+ID: 28254
+post_name: what-programming-languages-still-support-the-let-keyword-as-in-let-x
+post_category: uncategorized
+post_author: barrycarter
+post_date_gmt: Thu, 01 Jan 1970 00:00:00 +0000
+post_type: post 
+post_status: publish
+post_title: What programming languages still support the LET keyword? As in "LET x 
+
+======================================================
+
+(You): What programming languages still support the LET keyword? As in "LET x = 7"
+
+(Patrick): In most variants of BASIC, LET is legal syntax, but it is unnecessary for an assignment statement.
+
+(You): I know, that's why I was curious. Mathematically, "x=x+7" seems like a silly statement. Most computer languages know it means "LET x=x+7", but I was wondering how many of them still use LET.
+
+(Patrick): in most programming languages these days, = is an assignment operator, so "x = x + 7" means "take x, add 7 to it, then assign the resulting value to x". The LET keyword was intended as a hint to the BASIC interpreter, that's all. As far as I know (20 years programming), no other language uses the LET keyword
+
+(You): Thanks! Thats what I was wondering.
+
+----------------------
+
+(Ivan): Haskell
+
+
+
+[Vark assigned category: <b>programming languages</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

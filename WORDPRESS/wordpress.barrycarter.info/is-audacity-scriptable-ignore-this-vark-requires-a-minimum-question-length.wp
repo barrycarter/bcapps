@@ -1,0 +1,40 @@
+
+ID: 26616
+post_name: is-audacity-scriptable-ignore-this-vark-requires-a-minimum-question-length
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 22:42:54 +0000
+post_type: post 
+post_status: publish
+post_title: Is audacity scriptable? [ignore this: vark requires a minimum question length]
+
+======================================================
+
+(You): Is audacity scriptable? [ignore this: vark requires a minimum question length]
+
+(Jay): You can create what are called 'chains' to run a specific sequence of
+
+actions on a file, or a group of files (batch processing). Does that help?
+
+(You): yes! That's what I was looking for. Are 'chains' (which would be like Unix pipes?) documented in Audacity's documentation?
+
+(Jay): I don't know if they are or not. Google should be able to help you out, now
+
+that you know the name. Not sure how similar they are, but I think it is
+
+more like a script.
+
+----------------------
+
+(Ryan): Not sure, but look like their talking about it http://wiki.audacityteam.org/index.php?title=Automation Maybe this is a start for you.
+
+(You): OK, so Perl has no way to override built-in functions like Ruby does?
+
+(Ryan): I don't think so. I think you'd have to build a custom version of Perl. But I'm not 100% on that as Perl is not my favorite language.
+
+(You): thanks. Perl was my fave for a long time, but Ruby really has some strengths.
+
+
+
+[Vark assigned category: <b>Aardvark</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

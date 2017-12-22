@@ -1,0 +1,22 @@
+
+ID: 22804
+post_name: on-httpwordpress-barrycarter-info-httpwordpress-barrycarter-info-how-do-i-move-contact-to-the-right-side-of-the-menu-bar
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 03 Jun 2011 00:38:20 +0000
+post_type: post 
+post_status: publish
+post_title: On http://wordpress.barrycarter.org/ [http://wordpress.barrycarter.org/] how do I move "Contact" to the right side of the menu bar?
+
+======================================================
+
+(You): On http://wordpress.barrycarter.org/ [http://wordpress.barrycarter.org/] how do I move "Contact" to the right side of the menu bar?
+
+(Sebastian): Add the following to your theme's CSS file:
+
+#menu-item-9466 { float: right }
+
+
+
+[Vark assigned category: <b>menu bar</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

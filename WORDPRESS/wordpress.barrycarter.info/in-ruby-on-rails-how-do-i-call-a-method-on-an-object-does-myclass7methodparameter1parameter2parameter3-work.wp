@@ -1,0 +1,28 @@
+
+ID: 25294
+post_name: in-ruby-on-rails-how-do-i-call-a-method-on-an-object-does-myclass7methodparameter1parameter2parameter3-work
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 21 Jun 2010 22:40:12 +0000
+post_type: post 
+post_status: publish
+post_title: In Ruby on Rails, how do I call a method on an object? Does "/myclass/7/method/parameter1/parameter2/parameter3" work?
+
+======================================================
+
+(You): In Ruby on Rails, how do I call a method on an object? Does "/myclass/7/method/parameter1/parameter2/parameter3" work?
+
+(Jon): It could work if you set up your routes.rb file correctly. I'd read up on it. This might help: http://www.computerworld.com/s/article/9060861/Ruby_on_Rails_routing_demystified
+
+(You): thanks, so it's not "built into" Rails like xml is?
+
+----------------------
+
+(Ryan): If your routes are set up to handle those params. But it seems funky. You might wanna consider just passing old school get args and reading params[] in the controller.
+
+(You): so what would be the correct way to do it? I'm new to Rails.
+
+
+
+[Vark assigned category: <b>Ruby on Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,28 @@
+
+ID: 24615
+post_name: i-made-file-x-a-hard-link-to-file-y-ln-y-x-but-they-somehow-got-unlinked-in-other-words-i-edited-y-and-x-no-longer-has-the-same-content-how-does-this-happen
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 09 Aug 2010 07:43:33 +0000
+post_type: post 
+post_status: publish
+post_title: I made file x a hard link to file y ("ln y x"), but they somehow got unlinked. In other words, I edited y and x no longer has the same content. How does this happen?
+
+======================================================
+
+(You): I made file x a hard link to file y ("ln y x"), but they somehow got unlinked. In other words, I edited y and x no longer has the same content. How does this happen?
+
+(Michael): that question is entirely too vague to answer...
+
+(You): geez, I was just hoping to find someone to help
+
+(Michael): i would *love* to help you, but you asked a question that is unanswerable.  ie - what application are you using?  what kind of file is it?  what kind of data is it?  are you a developer?  people will help, they just have to know what it is you need. ;)
+
+(You): I mean I was hoping to use that question as a hook. I'm editing the files using emacs. Sometimes they stay the same, sometimes they don't. I'm using git to push the files up to a repo.
+
+(Michael): those apps don't ring a bell for me, good luck finding your answer
+
+
+
+[Vark assigned category: <b>hard link</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

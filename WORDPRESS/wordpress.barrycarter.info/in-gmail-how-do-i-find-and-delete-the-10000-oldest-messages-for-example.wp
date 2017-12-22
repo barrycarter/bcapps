@@ -1,0 +1,90 @@
+
+ID: 27349
+post_name: in-gmail-how-do-i-find-and-delete-the-10000-oldest-messages-for-example
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 07 May 2010 21:47:50 +0000
+post_type: post 
+post_status: publish
+post_title: In gmail, how do I find and delete the 10000 oldest messages (for example)?
+
+======================================================
+
+(You): In gmail, how do I find and delete the 10000 oldest messages (for example)?
+
+(Robert): not sure if this will help, but here is what I found on the web May need to be in older version of Google, although I just tried it in the newer version???and it worked!You can go into?????search options?????and put in the box you want to delete and then the date range if you don't know the correct language (sql string) to enter.
+
+Ie: today or 1year etc and then from xxxxxxx??(and then look below and it will give you a sql string such as:)is:sent after:2008/9/1 before:2010/9/2????(this will bring up messages in the sent box between these dates)after:2008/1/1 before:2010/1/2??(will bring up messages in this date range)When it brings up the desired messages,?????select all?????and then look for the new message that says:All 20 conversations on this page are selected.??Select all conversations that match this searchRemember that you must go to the "trash" folder and delete forever to free up space.Not all that get maxed out are using the email inappropriately.?? This took time to figure out, but I am sure others will find it useful.
+
+(You): thanks! In other words, do a search using google's interface first and then tweak based on the SQL-like result google gives you when it normalizes your search paramters.
+
+(Robert): I would asume so. I have never deleted that many at a time before but at least if you do the search parameter you can see if the results show you what you are looking for.
+
+(You): thanks, my google mailbox is full :(
+
+(Robert): wow, I thought I was bad.   I don't have many attachments but I do have mail that I threw in there that goes as far back as 1994.... I'm a dated mail packrat
+
+(You): wow! I only go back to 2006. Wait, gmail wasn't around in 1994?
+
+(Robert): I know I uploaded all of my old mail since i got started back then so I could have it available when I need it.
+
+(You): wow! 1994 = Internet pioneer ;)
+
+(Robert): I was on AOL for 10 years back in 1984 when it was called Applink  before they changed the name. about 1993-95 I called them to cancel my account and they asked why, I said the Internet is here so I don't need you anymore.
+
+(You): LOL! I thought they were called QuantumLink back in the day?
+
+(Robert): Your right but I had an Apple II an IIGS and Quantam had a special version called Applink for us Apple Geeks.(and early Mac users too)
+
+(You): wow! I remember the Apple ][ -- I was on a Commodore back in those days. Were you guys on the main network? In other words, could Commodore geeks like me communicate w/ Apple geeks like you?
+
+(Robert): I don't remember, my brain cells don't go that far back ;)  I've been on Gmail almost  4 and 1/2 years now, so I'm sort of an expert at it.
+
+(You): nice! I'll come to you w/ all my questions about it ;)
+
+(Robert): I setup new Google Apps accounts almost every month for my clients, so if you have any questions try me.   Have a good weekend.
+
+(You): fantastic, thanks! Quick question: does google apps filter domain domains based on certain words?
+
+(You): don't actually go all the way through it, but try to register the domain sucklingpig.com
+
+(Robert): hmmmm, I have never registered a domain with them, I always setup an existing domain.
+
+(You): sorry, I meant try to set it up as an existing domain with them.
+
+(You): can I move lots of email from one gmail account to another vs deleting it?
+
+(Robert): via pop or imap you can move stuff around.  if you use the fetch pop feature you can tell the old account to delete mail after being popped.
+
+(You): OK. So no really easy way inside gmail itself. Can you mass-forward a bunch of messages? I know how to suck down email using IMAP, but how do I push an email into gmail from my machine?
+
+(You): is there a header most/all mailing lists use? I want to delete mailing list emails (older than a certain date and not cc'd to me) since those are hte most "recoverable".
+
+(Robert): I meant you can internally (I believe, but I have not tried. it.) you can setup to in the new gmail account to pop the old account and set the old account to delete after pop. but if you want full control of what goes where, you can use Thunderbird / IMAP to move stuff back and forth
+
+(You): can you set it to just POP messages up to a given date? Otherwise, my other gmail account would overflow.
+
+(Robert): are you familar with Thunderbird? if so then setup imap on that box and then you can do some fancy filtering offline and then have it sync the results.
+
+(You): good point. I just realized I could do the same thing w/ Alpine, my favorite mail client :) But I'm being silly -- there's really no need to archive mailing lists in my gmail account.
+
+----------------------
+
+(Eugene): you can do it by date - type "before:2009/01/01" for example
+
+----------------------
+
+(Craig): You can search for before:xx/xx/xxxx date. There is no way I a maware of to find a specific number of emails.
+
+(Craig): once you have searched just select all (then hit select all messages) and delete.
+
+----------------------
+
+(Andrea): you can't search and delete the last xxx messages. You can however search for messages according to certain criteria, select all of them at once (not only those you see on the screen) and delete them. I suggest you use the Search Options, and the "Date within" criterium. For example, select all messages within 6 month from Jan 1st, 2009. When you do the search, you'll be show the first 20 matches. Click on Select: All (on top of the message list) and you'll be given the option to select ALL matching messages, not only those you see on the screen. You can then use Delete.
+
+(Andrea): use the tip with caution. If you delete something by mistake, remember that you can retrieve deleted messages from the trash.
+
+
+
+[Vark assigned category: <b>Google</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

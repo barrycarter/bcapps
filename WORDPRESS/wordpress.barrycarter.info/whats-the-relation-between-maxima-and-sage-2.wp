@@ -1,0 +1,40 @@
+
+ID: 22942
+post_name: whats-the-relation-between-maxima-and-sage-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 07 Feb 2011 23:37:18 +0000
+post_type: post 
+post_status: publish
+post_title: What's the relation between Maxima and Sage?
+
+======================================================
+
+(You): What's the relation between Maxima and Sage?
+
+(Mar): they are moth software for mathematics
+
+(You): thanks. I know that, but I think one is part of the other or something. I thought they were independent but apparently not.
+
+----------------------
+
+(Ben): I believe my understanding is that sage was either inspired by or contains
+
+maxima within it.  You interact with sage in plain python though, I know
+
+that for sure.
+
+(You): thanks. When sage shuts down, it says something about "closing Maxima". I really like Maxima, but Sage leaves me cold. It's weird that they're related.
+
+(Ben): Sage is a godsend for python programmers ... but seems more natural to
+
+someone coming at it as much from a computer science direction as math...
+
+hard to explain, but...
+
+(You): hmmm... I'm a Mathematica user, and just ported one of my scripts to Maxima fairly easily (it's not WORKING, but that's just a minor issue). Maybe since Maxima came from MACSYMA and MACSYMA is similar to Mathematica, I like it.
+
+
+
+[Vark assigned category: <b>Maxima</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

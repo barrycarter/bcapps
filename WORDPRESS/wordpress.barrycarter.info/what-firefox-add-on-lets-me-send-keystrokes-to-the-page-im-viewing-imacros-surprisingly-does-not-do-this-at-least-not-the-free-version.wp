@@ -1,0 +1,50 @@
+
+ID: 24792
+post_name: what-firefox-add-on-lets-me-send-keystrokes-to-the-page-im-viewing-imacros-surprisingly-does-not-do-this-at-least-not-the-free-version
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Jul 2010 23:57:30 +0000
+post_type: post 
+post_status: publish
+post_title: What Firefox add-on lets me send keystrokes to the page I'm viewing. iMacros surprisingly does not do this (at least not the free version).
+
+======================================================
+
+(You): What Firefox add-on lets me send keystrokes to the page I'm viewing. iMacros surprisingly does not do this (at least not the free version).
+
+(Gavin): not entirtely sure what this means
+
+(Gavin): if you can clarify what you need to send the keystrokes for?
+
+(You): let's say I'm on a form whose field names change all the time (so I can't use iMacros standard methods) -- I want to send the form "TAB SPACE TAB xyz" to fill in the form.
+
+(Gavin): is autofill form fields powerful enough? https://addons.mozilla.org/en-US/firefox/addon/4775/
+
+(Gavin): the web devleoper toolbar for firfox also lets you fill in form fields
+
+(You): I think those only work if the fields have a fixed 'name' attribute, correct? iMacros easily handles that. The form I'm filling out changes its name attributes each time, presumably for security/session tracking. [direct gchat: carter.barry@gmail.com]
+
+(Gavin): you could use a greasemonkey script (with jquery) to select the form fields by index (i.e. nth-child(0) etc.) and then fill them in like that?
+
+(Gavin): unless the order also changes
+
+(You): the order doesn't change. That seems complex, and there are probably hidden fields as well. It seems like just sending keystrokes would be easier?
+
+(Gavin): i think greasemonkey is your best bet
+
+(You): blech, seems like overkill.
+
+----------------------
+
+(Matt): selenium IDE .  maybe some other testing suite if that doesn't work.
+
+(You): wow, a testing suite just to send a few keystrokes? Is it free?
+
+(Matt): you can use the plugin without the testing suite. i was just listing that as a reference.  You could always roll your own greasemonkey script.
+
+(You): so there's no secret iMacro's command that does this that I somehow overlooked? Or a command line utility for X11?
+
+
+
+[Vark assigned category: <b>iMacros</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

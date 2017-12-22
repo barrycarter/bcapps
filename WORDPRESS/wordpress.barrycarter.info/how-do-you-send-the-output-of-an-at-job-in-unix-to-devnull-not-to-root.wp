@@ -1,0 +1,46 @@
+
+ID: 27281
+post_name: how-do-you-send-the-output-of-an-at-job-in-unix-to-devnull-not-to-root
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 09 May 2010 04:53:37 +0000
+post_type: post 
+post_status: publish
+post_title: How do you send the output of an 'at' job in Unix to /dev/null, not to root?
+
+======================================================
+
+(You): How do you send the output of an 'at' job in Unix to /dev/null, not to root?
+
+(Alexander): redirect stdout and stderr to /dev/null, e.g.
+
+
+
+#! /bin/sh
+
+
+
+exec &gt;/dev/null 2&gt;/dev/null
+
+
+
+command
+
+...
+
+(You): is there any way I can do that when I'm just piping a command to 'at' like, "echo command | at 0123"?
+
+----------------------
+
+(Leonardo Armando): "1&gt;/dev/null 2&gt;/dev/null"
+
+ in the end of the command that you want to run. It will redirect the output and error to /dev/null.
+
+you can choose to redirect the error to a file if you want. (but I suppose that you already know it).
+
+(You): Thanks. That's what I've been doing, but that doesn't suppress the output of the shell that runs the command for some reason
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

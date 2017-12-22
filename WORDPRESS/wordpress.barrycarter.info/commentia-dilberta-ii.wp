@@ -1,0 +1,163 @@
+
+ID: 22344
+post_name: commentia-dilberta-ii
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Sun, 26 Feb 2012 17:41:46 +0000
+post_type: post 
+post_status: publish
+post_title: Commentia Dilberta II
+
+======================================================
+
+I'm a big fan of Dilbert, and like reading/replying to the comments
+other people make on the strips.
+
+Although many forums allow you to watch topics for new
+messages/comments, United Media Syndicate (UMS) won't notify me when a
+new Dilbert comment is posted (ie, no per-title notification).
+
+I can turn on notifications on a strip-by-strip basis, but UMS has an
+unusual rule: you must comment on a strip to be notified of comments
+to the strip.
+
+To date, UMS has ignored my requests for per-title notifications and
+per-strip notifications without requiring a comment.
+
+So, I decided to "help myself" by posting a generic comment to each
+Dilbert strip, so that I could be notified of new comments. Actually,
+I skipped the last few months worth of strips, since the more recent
+strips garner dozens of worthless comments. All the "good stuff" (in
+terms of comments) is in the earlier strips.
+
+The process involved isn't difficult, and should work for other UMS
+comics too:<ul>
+
+<li>If you look at the source of http://dilbert.com/strips/comic/1999-07-07/ (for example), you'll notice:
+
+<code>{input type="hidden" name="PrintPath" value="/dyn/str_strip/000000000/00000000/0000000/000000/00000/7000/100/7123/7123.strip.print.gif" /}</code>
+
+(except with angle brackets, not braces)
+
+The "7123" is the "strip id", which appears to be unique across all
+UMS comics. In other words, there is no 7123 for the Ziggy strip.</li>
+
+<li>Then, scriptmatically download all strips. I used a triple loop
+where the year ran from 1989-2012, the month ran from 01-12 and the
+date ran for 01-31. Of course, you'll get errors for nonexistent dates
+like 2003-02-30, etc, but that's not a big deal.
+
+For Dilbert, the stripids are: <a href='http://wordpress.barrycarter.org/wp-content/uploads/2012/02/stripids.txt'>here</a>.
+</li>
+
+<li>Now, login to the Dilbert site normally, and use Firebug (or
+network sniffing) to find the cookie UMS sends you. It will look
+something like this:
+
+Cookie: __qca=P0-1139712539-1324358578740;
+__utma=90561551.1243507441.1424358579.1330180073.1430184206.26;
+__utmz=90561551.1324358579.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);
+v_comment=%5B57771%2C56970%2C128404%2C41144%2C65838%2C56974%2C56146%2C55391%2C56746%2C57149%2C1153938%2C8052%5D;
+bcookie=285cb7721b48175f1c99; PHPSESSID=3lp3fsfejlgn2oqri5pd1p022;
+__utmc=90561551; meebo-cim-session=22d2338227f65b801e472;
+__utmb=90561551.14.10.1330384206; cid=788245123
+
+Now, to make a comment on strip 7123 (for example), just do this:
+
+curl -L -d 'PrimaryKeyID=7123&Type=Strip&DateStrip=2000-05-19&Message=I+am+making+this+comment+solely+to+get+notifications+since+I+couldnt+find+a+way+to+get+notifications+without+making+a+comment&x=123&y=34&Notify=on' -H 'Cookie: [use the cookie you got above]' <code>http://dilbert.com/comment.process</code>
+
+Note that the "DateStrip" does NOT need to match the actual date. The
+above command comments on the 1999-07-07 strip, and the '2000-05-19'
+is completely ignored.
+</li>
+
+</ul>
+
+After I'd run the script, several people commented. Here are my
+responses (visit the URLs to see the original comments):<ul>
+
+<li>
+http://dilbert.com/strips/comic/2011-03-29/
+
+@usessimpletools I'm actually interested in all the Dilbert strips and
+all the comments. Just because *I* don't have something interesting to
+say on a strip doesn't mean that the strip's not interesting or that
+others may not have an interesting comment.
+</li>
+
+<li>
+http://dilbert.com/strips/comic/2010-04-04/
+
+@varunachar My goal was to get notifications on all strips, so I ran
+an automated script. You'll notice that I didn't already have a
+previous comment on this strip.
+</li>
+
+<li>
+http://dilbert.com/strips/comic/2010-01-27/
+
+@Welshman09 I realized after the fact that people will get email
+notifications when my generic comment posts to a strip they'd
+previously commented on. This was unintentional. My goal was to get
+notifications of new comments, not to "spam" people's inboxes.
+</li>
+
+<li>
+http://dilbert.com/strips/2010-02-29
+
+@marileetombo Those were great times, weren't they!
+</li>
+
+<li>
+http://dilbert.com/strips/comic/2009-02-24/
+
+@ewood Why not? If it's because you got too many emails, see reply above.
+</li>
+
+<li>
+http://dilbert.com/strips/comic/2004-04-01/
+http://dilbert.com/strips/comic/2003-11-01/
+http://dilbert.com/strips/comic/2007-01-01/
+http://dilbert.com/strips/comic/2002-01-01/
+
+@MarillionFan Yes, I wanted to go all the way back to the first
+Dilbert strip. No, I didn't see any of these emails until the script
+stopped running. I'm hoping this will motivate UMS to offer per-title
+notification.
+
+</li>
+
+<li>
+http://dilbert.com/strips/comic/2003-07-06/
+
+@dilogic Hopefully, this blog entry answers your question?
+</li>
+
+<li>
+http://dilbert.com/strips/comic/2007-01-15/
+
+@McFortner Thanks! There's an engineering solution to every problem!
+</li>
+
+<li>
+http://dilbert.com/strips/comic/2006-08-31/
+
+@garrisonaw Thanks!
+</li>
+
+<li>
+http://dilbert.com/strips/comic/1989-04-16/
+
+@leibnix How did you feel about me before this? Tell me about your mother...
+
+@danopia Deliriously so
+</li>
+
+</ul>
+
+The title of this blog post refers back to:
+http://wordpress.barrycarter.org/index.php/2011/06/10/commentia-dilberta/
+which is probably now much worse.
+
+
+

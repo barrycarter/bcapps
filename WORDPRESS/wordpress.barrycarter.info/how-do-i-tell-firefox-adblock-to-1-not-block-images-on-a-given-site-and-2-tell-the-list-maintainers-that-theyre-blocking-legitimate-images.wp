@@ -1,0 +1,34 @@
+
+ID: 26974
+post_name: how-do-i-tell-firefox-adblock-to-1-not-block-images-on-a-given-site-and-2-tell-the-list-maintainers-that-theyre-blocking-legitimate-images
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 19 May 2010 21:05:12 +0000
+post_type: post 
+post_status: publish
+post_title: How do I tell Firefox AdBlock to 1) not block images on a given site, and 2) tell the list maintainers that they're blocking legitimate images?
+
+======================================================
+
+(You): How do I tell Firefox AdBlock to 1) not block images on a given site, and 2) tell the list maintainers that they're blocking legitimate images?
+
+(Valent??n): On 1, look for the adblock logo and then disable adblock for that website. On 2 visit the site of the list keepers and look for a form to fill with that information.
+
+(You): thanks, but I can't see an adblock logo on my firefox?
+
+(Valent??n): Lower right corner
+
+(You): I only have a "screengrab" logo there
+
+(You): I found it -- it was top right for me.
+
+----------------------
+
+(Brad): If you click the adblock icon (stop sign with ABP in it) select disable on xyz.com where xyz.com is the site you want unblocked
+
+(You): thanks!
+
+
+
+[Vark assigned category: <b>AdBlock</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

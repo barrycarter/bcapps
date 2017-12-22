@@ -1,0 +1,30 @@
+
+ID: 27536
+post_name: whats-the-sip-number-for-a-physical-phone-number-is-it-1xxxyyyyyyysipphone-com-mailto1xxxyyyyyyysipphone-com-for-example
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 03 May 2010 06:22:24 +0000
+post_type: post 
+post_status: publish
+post_title: Whats the SIP number for a physical phone number? Is it 1xxxyyyyyyy@sipphone.com [mailto:1xxxyyyyyyy@sipphone.com] for example?
+
+======================================================
+
+(You): Whats the SIP number for a physical phone number? Is it 1xxxyyyyyyy@sipphone.com [mailto:1xxxyyyyyyy@sipphone.com] for example?
+
+(Andy): I think it depends on your pbx.  My gizmo5 account sip address, for example, is formatted like 1xxxyyyzzzz@proxy01.sipphone.com
+
+(You): OK, but is sipphone.com a gateway to any phone number in the world? Just US/Canada phone numbers?
+
+(Andy): AFAIK, as long as that particular user has an account on the sip server, it doesn't matter as to which country they're in.
+
+(You): Yes, but it'd be great if you could point me to an asterisk tutorial that does exactly what I want. Re the SIP server, I'm talking about people with real landline phones, not SIP phones. Is there a gateway to get out of SIP and back into real phone numbers?
+
+(Andy): Not for free, no.  That is generally how sip providers like gizmo5 monetize their service.
+
+(You): Damn! That's what I figured. Otherwise, anyone could call the USA and other countries for free.
+
+
+
+[Vark assigned category: <b>SIP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

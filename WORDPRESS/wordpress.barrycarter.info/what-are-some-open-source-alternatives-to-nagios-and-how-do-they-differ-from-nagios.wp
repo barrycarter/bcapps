@@ -1,0 +1,34 @@
+
+ID: 27928
+post_name: what-are-some-open-source-alternatives-to-nagios-and-how-do-they-differ-from-nagios
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 07:06:50 +0000
+post_type: post 
+post_status: publish
+post_title: What are some open source alternatives to nagios and how do they differ from nagios?
+
+======================================================
+
+(You): What are some open source alternatives to nagios and how do they differ from nagios?
+
+(Todd): We used cfengine to great success.  Supports a lot of user customization, I think the newer versions change a lot of the formatting required.
+
+(You): I might be missing something. To me, nagios is a monitoring system. Wikipedia shows cfengine as something completely different?
+
+(Todd): you set up cfengine so all your machines are updating their statuses to a central logging server.  Machines not checking in... they're boned.
+
+(Todd): also, we used bigbrother, which is a much more traditional open-source monitoring app.  Worked great.
+
+(You): cfengine sounds great for uptime, but what about when a specific service is down?
+
+(Todd): for that, yes, we used bigbrother.  It supports routine maintanance windows, too
+
+----------------------
+
+(Tommy): Nagios _is_ open-source.  You can just buy support for it if you want/need.
+
+
+
+[Vark assigned category: <b>open source</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,46 @@
+
+ID: 22906
+post_name: how-do-i-force-curl-to-not-interpret-and-as-multi-url-specifications
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Feb 2011 21:20:25 +0000
+post_type: post 
+post_status: publish
+post_title: how do i force curl to NOT interpret {} and [] as multi-URL specifications?
+
+======================================================
+
+(You): how do i force curl to NOT interpret {} and [] as multi-URL specifications?
+
+(aside from using %xx coding, which is ugly)
+
+----------------------
+
+(Chris): You can try using  in front of them.
+
+(You): Johnson, doesn't work (I did try that first). Of course, I'm running from tcsh, so I might need to  the  itself?
+
+(Chris): You might need \ in order to punch the  through tcsh to curl.  Another thing you can do is just write a very short /bin/sh script with what you want in it.  That way you can edit, write, test.
+
+(You): I actually wrote a sh one-liner... that works, but %xx looks ugly and, eyeball-wise, it's hard to see %48 as { and %4a (or whatever) as }.
+
+(Chris): Yes, but if you are using /bin/sh you can 'http://xxx.example.com/my.php?xyx{abc}' [http://xxx.example.com/my.php?xyx{abc}'] with the single quotes and that might work with curl.  If it doesn't, you can add the {abc} and don't have to worry about the stripping of extra characters.
+
+(Chris): and why don't you just ask me directly?
+
+----------------------
+
+(Kevin): Instead of %xx coding, try xxx coding.
+
+
+
+
+
+;)
+
+(You): what does that mean? :)
+
+
+
+[Vark assigned category: <b>curl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

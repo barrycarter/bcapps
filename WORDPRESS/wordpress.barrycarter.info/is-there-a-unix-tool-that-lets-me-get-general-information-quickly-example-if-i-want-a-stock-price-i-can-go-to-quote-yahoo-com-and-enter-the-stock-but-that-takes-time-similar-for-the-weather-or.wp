@@ -1,0 +1,74 @@
+
+ID: 26323
+post_name: is-there-a-unix-tool-that-lets-me-get-general-information-quickly-example-if-i-want-a-stock-price-i-can-go-to-quote-yahoo-com-and-enter-the-stock-but-that-takes-time-similar-for-the-weather-or
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 00:18:38 +0000
+post_type: post 
+post_status: publish
+post_title: Is there a Unix tool that lets me get "general information" quickly? Example: if I want a stock price, I can go to quote.yahoo.com and enter the stock, but that takes time. Similar for the weather or a currency exchange rate. Is there a single clever commandline tool that knows about all these sources, strips the HTML from the response, and just gives me a quick answer to things like "How many lira to the dollar?"
+
+======================================================
+
+(You): Is there a Unix tool that lets me get "general information" quickly? Example: if I want a stock price, I can go to quote.yahoo.com and enter the stock, but that takes time. Similar for the weather or a currency exchange rate. Is there a single clever commandline tool that knows about all these sources, strips the HTML from the response, and just gives me a quick answer to things like "How many lira to the dollar?"
+
+(Steve): this is a stretch, but you could use elinks to get the html page then output to stdout, I'm sure you could do better if you filter the output a little with grep, perl or something else.
+
+(You): LOL! This is exactly what I'm doing now. I've mapped a key to run a Perl script that does that. It works, but it's kludgy, and I ultimately have to bring up a 2nd copy of elinks (or lynx) to POST my data. I was wondering if there was a cleaner solution than my homebrew.
+
+(Steve): Looks like google was listening, not exactly what you were looking for, but very nice for us commandline junkies http://lifehacker.com/5568817/five-really-handy-google-command-line-tricks
+
+(You): awesome!
+
+----------------------
+
+(Kimberly): dunno about unix, but google does both of those really easily - e.g. type in "stock:aapl" to get stock info, or "convert lira to dollars" to get conversion rates, right at the top of search results - they have all kinds of these little easter eggs, straight from the chrome address bar or firefox search box..
+
+(You): nice! Thanks, that might be the way to go.
+
+----------------------
+
+(Drew): Since the Italian Lira doesn't actually exist anymore, I'm guessing that you're after the Turkish Lira to Euro.  (As an FYI,  the Italian Lira is still technically pegged to the Euro at 1936.27 Lira/Euro.)  The Unix tool that would be most useful for getting information, such as currency exchange rates, would be the web browser.  If you don't have an X-terminal up and running, you can use the text based: lynx browser (just go to the command line and type:  "lynx") to do a google search??? which would reveal that there are ~0.5201 Euros/Lira.
+
+(You): thanks. That works, but I'm looking for something that requires far fewer keystrokes and mouse movements. Maybe a Perl script that queries google or something. Like, I want to type in "AAPL" and have the script automatically realize I'm looking for a stock quote.
+
+(Drew): well, actually there is something that you could try.  The open source Surfraw project:http://surfraw.alioth.debian.org/ [http://surfraw.alioth.debian.org/]
+
+(Drew): Here's a longer description of what it can do: http://www.h3manth.com/content/surfraw-fast-unix-command-line-interface-www-services
+
+(You): thank you! This is exactly what I had in mind. I was going to write something like this because it's such an obvious tool.
+
+(Drew): It's funny, it reminds me of gopher: a bit??? not that I every really used gopher.
+
+(Drew): we've come full circle I guess
+
+(You): sniff sniff. I miss gopher :) (and archie and veronica-- remember them?). I think the techies have always preferred pure, unadorned information. Programs like surfraw have a niche, but I doubt they're considered popular.
+
+(Drew): I much prefer the command line, myself, for anything programatic.  But for information, I usually don't have any hesitancy to fire up the web browser and wade thru the GUI.  Never really thought about it before. :)
+
+(Drew): and of course I remember archie and veronica. :)
+
+(You): finally, someone who goes back as far as I do! I've always found non-text-based browsers to be slow. Also, you have to remember what site to use for given info (oanda.com, etc), although the google hack might work. Do you know how to use surfraw? I tried the examples and it keeps spitting back the help message at me.
+
+(Drew): you know, to be honest, I just came across it after you posed the question.   I'm going to install it on an Ubuntu box I'm running here and see if I get better results
+
+(You): thanks. I might have to setup the /etc/surfraw.conf file -- I was hoping the default one would work, but maybe not.
+
+(Drew): I got it to "work" by typing: surfraw stockquote AAPL   unfortunately, all it seems to do is open a browser with an appropriate url.   Really, it's not much different than firefox search keywords.
+
+(You): when I do that, it just spits back its help message at me. Did you have to tweak /etc/surfraw.conf? And you're right, opening a URL isn't what I wanted. Hmmm, time to write my own maybe?
+
+(Drew): I just typed exactly what I wrote above, after the installation was complete.  It seems like webs ervices would be a perfect complement to what you want to do.  I was just poking around and found these guys: http://www.webservicex.net  They seems to have a number of web services available that would respond to a SOAP message with XML that could be more consistent parsed (this would be the biggest issue with using existing web sites as the data source; since there are no guarantees that the HTML will not change)
+
+(You): yes! SOAP/REST is exactly what I had in mind. I've used it w/ Ruby and Perl. But now we need a meta-webservice that knows which webservice to contact for a given piece of data.
+
+(You): wolframalpha might be approaching this actually.
+
+(Drew): I was wondering the same thing about wolfram.
+
+(You): of course, the output is still HTML and you'd have to strip it. And I'm not sure if it has all the data I want... hmm.
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

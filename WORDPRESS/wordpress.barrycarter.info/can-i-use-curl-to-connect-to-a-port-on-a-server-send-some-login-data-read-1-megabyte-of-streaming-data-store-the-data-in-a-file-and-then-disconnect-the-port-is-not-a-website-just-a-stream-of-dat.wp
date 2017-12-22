@@ -1,0 +1,44 @@
+
+ID: 28097
+post_name: can-i-use-curl-to-connect-to-a-port-on-a-server-send-some-login-data-read-1-megabyte-of-streaming-data-store-the-data-in-a-file-and-then-disconnect-the-port-is-not-a-website-just-a-stream-of-dat
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 21 Apr 2010 05:06:10 +0000
+post_type: post 
+post_status: publish
+post_title: Can I use curl to connect to a port on a server, send some login data, read 1 megabyte of streaming data, store the data in a file, and then disconnect? The port is NOT a website, just a stream of data. If not curl, what tool should I use? (wget?). I realize I can use telnet, but I want to automate the process.
+
+======================================================
+
+(You): Can I use curl to connect to a port on a server, send some login data, read 1 megabyte of streaming data, store the data in a file, and then disconnect? The port is NOT a website, just a stream of data. If not curl, what tool should I use? (wget?). I realize I can use telnet, but I want to automate the process.
+
+(Scott): Use nc.  wget/curl require HTTP protocol to exist on the port.
+
+(You): OK, I tried 'echo "user READONLY pass -1" | nc rotate.aprs.net 10152' but it failed, even though it works when I do the same thing via telnet?
+
+----------------------
+
+(Arisu): Use netcat. echo "user password" | nc blah.com 1234 &gt;output
+
+
+
+That assuming server terminates connection. If you want to force break it use -w timeout.
+
+
+
+If you really need 1M, then
+
+ echo "user password" | nc blah.com 1234 | head -c 1M &gt;output
+
+(You): Thanks. If you do 'echo "user READONLY pass -1" | nc rotate.aprs.net 10152 &gt; test.txt' you'll notice that test.txt has very little in it. However, if you do something similar via telnet, you'll get lots of data.
+
+(Arisu): That's because netcat sees that input ends and sends the server EOF, while telnet does not. A fairly ridiculous workaround is:
+
+
+
+perl -e '$|=1; print "user READONLY pass -1n"; sleep 1 while 1'  | nc rotate.aprs.net 10152
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

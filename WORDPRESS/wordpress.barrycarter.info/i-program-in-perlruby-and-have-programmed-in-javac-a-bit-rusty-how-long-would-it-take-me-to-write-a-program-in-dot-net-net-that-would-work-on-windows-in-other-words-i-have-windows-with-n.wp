@@ -1,0 +1,24 @@
+
+ID: 26264
+post_name: i-program-in-perlruby-and-have-programmed-in-javac-a-bit-rusty-how-long-would-it-take-me-to-write-a-program-in-dot-net-net-that-would-work-on-windows-in-other-words-i-have-windows-with-n
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 23:29:54 +0000
+post_type: post 
+post_status: publish
+post_title: I program in Perl/Ruby, and have programmed in Java/C (a bit rusty). How long would it take me to write a program in "dot net" (.NET) that would work on Windows? In other words, I have Windows with .NET installed and want to write a minimal program ("hello world") just to make sure I understand the tools/process for doing so.
+
+======================================================
+
+(You): I program in Perl/Ruby, and have programmed in Java/C (a bit rusty). How long would it take me to write a program in "dot net" (.NET) that would work on Windows? In other words, I have Windows with .NET installed and want to write a minimal program ("hello world") just to make sure I understand the tools/process for doing so.
+
+(Bart): Don't overestimate .NET programming (C#). It is a very high level programming level, it is very close to the English language. From the moment you have installed Visual Studio to the moment you have either a command line or GUI program that says "hello world" you would be busy for around 15 minutes. Take a look at a tutorial if you are unsure what to do (http://www.csharp-station.com/Tutorial.aspx)
+
+----------------------
+
+(Chris): after downloading the IDE (visual studio 2010 express) - you will have a working "Hello World" in 5 min.
+
+
+
+[Vark assigned category: <b>.NET</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

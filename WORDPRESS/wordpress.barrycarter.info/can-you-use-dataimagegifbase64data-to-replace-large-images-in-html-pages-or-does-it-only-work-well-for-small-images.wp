@@ -1,0 +1,24 @@
+
+ID: 26525
+post_name: can-you-use-dataimagegifbase64data-to-replace-large-images-in-html-pages-or-does-it-only-work-well-for-small-images
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 03 Jun 2010 00:31:18 +0000
+post_type: post 
+post_status: publish
+post_title: Can you use "data:image/gif;base64,[data]" to replace large images in HTML pages, or does it only work well for small images?
+
+======================================================
+
+(You): Can you use "data:image/gif;base64,[data]" to replace large images in HTML pages, or does it only work well for small images?
+
+(Jc): see if this answers your question... http://www.sveinbjorn.org/dataurls_css
+
+----------------------
+
+(Abd Allah): The maximum length of data URIs varies from browser to another, opera 4KB, IE8 32KB, Firefox unlimited. Taking in mind that the page should work cross browser you have to make sure your data is not more that 4 KB.
+
+
+
+[Vark assigned category: <b>HTML</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

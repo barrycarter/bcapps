@@ -1,0 +1,52 @@
+
+ID: 28361
+post_name: subject-is-there-any-javascriptecmascriptetc-that-can-make-my-browser-submit-a-form-even-if-i-dont-press-a-submit-button-on-that-page
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 13 Apr 2010 00:22:02 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: Is there any JavaScript/ECMAscript/etc that can make my browser submit a form even if I dont press a submit button on that page?
+
+======================================================
+
+(You): Subject: Is there any JavaScript/ECMAscript/etc that can make my browser submit a form even if I dont press a submit button on that page?
+
+(Rajanikanth): u can do that with Ajax.. JQuery is javascript framework has a very usable function already defined
+
+----------------------
+
+(Gregory): you can use ajax to make a POST call . with jquery this is as easy as 	$.ajax({
+
+		type:"POST",
+
+		data:{your form data},
+
+		url: your URL,
+
+		success: success_callback
+
+	});
+
+----------------------
+
+(Jordan): Yeap.
+
+
+
+&lt;script&gt;
+
+document.forms["id_attribute_of_form"].submit();
+
+&lt;/script&gt;
+
+----------------------
+
+(Alex): Yes, most javascript libraries support this. MooTools for instance provides a send method for form elements that can be called whenever you like.
+
+(Alex): http://mootools.net/docs/core/Request/Request#Element-Properties:send [http://mootools.net/docs/core/Request/Request#Element-Properties:send]
+
+
+
+[Vark assigned category: <b>web programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,116 @@
+
+ID: 25416
+post_name: is-ruby-on-rails-really-as-great-as-everyone-says-it-is-what-makes-it-so-much-better-than-other-software-development-methodologies
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 20 Jun 2010 19:05:29 +0000
+post_type: post 
+post_status: publish
+post_title: Is Ruby on Rails really as great as everyone says it is? What makes it so much better than other software development methodologies?
+
+======================================================
+
+(You): Is Ruby on Rails really as great as everyone says it is? What makes it so much better than other software development methodologies?
+
+(Gordon): Yes.  It's not a methodology.  It a language + a framework both of which are very good.  As for why it's better than others... Thats hard to explain in an IM.
+
+(You): in your experience, is developing w/ Rails much faster than developing w/ PHP?
+
+(Gordon): Haven't used PHP much... coming from Java myself... not so much of a speed difference between Rails & PHP... in that comparison the main advantage of Rails is maintainability I think.  Rails apps tend to follow very similar structure.  Also the culture around rails is heavily influenced by the Agile movement... TDD etc.
+
+(You): hmmm... I've been coding PHP apps and using code conventions for quite some time and develop fairly quickly. I agree that Java development is slow. I'm not impressed that RoR is faster than Java-- but if it's faster than PHP (development speed, not running speed) the way I do it, I'm impressed. I've always coded w/o an IDE and am wondering if maybe it's time to start using one.
+
+(Gordon): as I said... from what I've heard there isn't much speed difference between PHP and RoR for a greenfield app.  I think you'd be happier with RoR after about 6 months of maintaining/enhancing it though, also if you have to recruit someone to help it's much easier to get a rails developer up to speed because of the rails conventions... I'm not using an IDE
+
+(You): is RoR considered an IDE?
+
+(Gordon): No... sorry for the confusion accidentally hit enter while editing.   Ruby is a language.... Rails is a framework written in that language...so it may be better to compare Ruby with PHP and Rails with something like CakePHP.  There are several other Ruby frameworks for web development Sinatra for instance... but Rails was the early one...that showed it was possible to get the speed of PHP without sacrificing the Maintainability of Java or .Net.
+
+(You): oh, so Rails was never designed to compete w/ PHP in terms of programming speed. It was just designed to show an interpreted language could be as good (in maintenance terms) as compiled languages.
+
+(Gordon): hmm... not sure if that was why it was designed but thats pretty much the effect it had....in other words thats how it has gained mindshare when both Java and PHP were already entrenched.
+
+(You): so the "faster" thing was never meant in comparison to PHP or Perl? I could've sworn they made claims like writing a complex web app in hours and saying it was faster than PHP, etc... and it seems everyone who uses it loves it to pieces.
+
+(Gordon): hmm... can't comment on speed comparison with PHP... these are just impressions based on what I've read.   Try finding someone who came from a PHP background.  Actually the creator of rails did... There's a 15 min video on the rails site that shows creating a blog... I was pretty impressed when I first saw it a couple years ago.
+
+
+
+rails development may be faster depending on which plugins you need that are already available.... http://ruby-toolbox.com/
+
+
+
+Yep... I love it to pieces too.  Would rather eat glass than go back to developing in Java.  
+
+
+
+*shrug*  try it and see... 
+
+
+
+you can try out the ruby language here http://tryruby.org/ without having to install anything...
+
+
+
+As for rails .... watch the vids on http://rubyonrails.org/  in the "Get Excited" section
+
+
+
+Watch some of these for some more advanced topics http://railscasts.com/
+
+
+
+If you're interested read this http://www.4shared.com/document/ZSc-JwwO/Agile_Web_Development_with_Rai.htm
+
+
+
+actually the introduction and first couple chapters of that book will probably answer some of your "what" & "why" questions also.
+
+----------------------
+
+(Alexander): Essentially rails saves you many tasks that you usually repeat over and over, e.g. implementing a database connector.
+
+(You): is writing a Rails application several times faster than writing a PHP or Perl application?
+
+(Alexander): i think it is, in general using a framework will result in much faster development for everything except very small projects. There is a similar framework like rails available for php as well called cake
+
+(You): ok, so cakephp == ruby on rails in terms of what they do? I'm having some trouble learning RoR -- it seems like a lot of effort and it's not clear to me what the long-term benefit is vs writing ruby (or perl or php) by hand.
+
+(Alexander): even though the effort is higher in the beginning, maintaining a site based on ror or cake should be easier later
+
+(You): and once I learn RoR, will it be easier to create new applications quickly? I don't tend to do a lot of maintenance-- I program it and just let it run.
+
+(Alexander): i think so
+
+(You): ok, so learning rails has advantages even if I don't use the maintenance features?
+
+(Alexander): yes, building sites should be easier in rails as well
+
+(You): why am I getting a "`require_frameworks': no such file to load -- action_controller (RuntimeError)"?
+
+(You): I tracked it down to "require commands/generate" but there isn't even a commands subdirectory. Should I make commands a symlink to scripts?
+
+(Alexander): I assume that package action_controller is missing
+
+(You): shouldn't that come with rails? Will "gem install action_controller" fix it?
+
+(Alexander): I think that should be in rails
+
+(You): OK. I did "apt-get install rails" but now I'm doing "gem install rails". Maybe I'll have better luck.
+
+(Alexander): i am currently using ruby in windows, maybe the gem install is different
+
+(You): apparently, script/generate and commands/generate are supposed to be identical.
+
+(Alexander): hm, when I create a empty application in windows, it works, maybe something is missing in the deb installation
+
+(Alexander): if you want to try a ROR installation, you could use virtualbox/vmware images, this way you get a ready to run installation to test development
+
+e.g. turnkeylinux.org
+
+(You): I hadn't thought about that -- I do have VirtualBox and could've gone that route. However, I've now got it running on my local machine, so I'm happy. I'm coding an app now, can I bug you as I go along? If so, could I IM you directly (I'm carter.barry@gmail.com [mailto:carter.barry@gmail.com] if you want to IM me)
+
+
+
+[Vark assigned category: <b>Ruby on Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

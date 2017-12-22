@@ -1,0 +1,68 @@
+
+ID: 27516
+post_name: is-there-any-emulator-i-can-download-that-will-show-me-what-the-ipad-will-be-like-what-files-it-will-read-etc
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 01:34:33 +0000
+post_type: post 
+post_status: publish
+post_title: Is there any emulator I can download that will show me what the iPad will be like, what files it will read, etc?
+
+======================================================
+
+(You): Is there any emulator I can download that will show me what the iPad will be like, what files it will read, etc?
+
+(Marie-Lynn): The development SDK for the iPad is available to a limited amount of people and you must be running a Mac environment to have access to their emulator. There is a program calle d iPhoney that comes close. I do not have a Mac environment so I cannot hep you any further.
+
+----------------------
+
+(Robert J.): Yes, you can download the iPhone / iPad SDK from Apple for free and a simulator is included. 
+
+
+
+http://developer.apple.com/iphone/
+
+(Robert J.): The application you'll be looking for is called "iPhone Simulator" and it will reside in Hard Drive/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/
+
+
+
+Alternatively you can just use Spotlight in the top right corner of your mac to search for iPhone Simulator.
+
+
+
+Once in the application go to the Hardware menu and change the Device selection to iPad.
+
+(You): But probably only in Snow Leopard or whatever, yes?
+
+(Robert J.): Yes, you will need a Mac w/ Leopard or Snow Leopard. (not sure on requirements)
+
+
+
+Alternatively you could try one out at an Apple retail store.
+
+(You): I want to see what one can do before I buy one!
+
+(Robert J.): For most casual tasks I use my iPad exclusively now. I really only break out my laptop if I need to write a LOOOONG paper or something like that. So far the AppStore has solved all my problems, including printing.
+
+(You): Fantastic! So, you don't find any trouble typing on the iPad vs typing on a full-size keyboard? The keys aren't too small or too close together?
+
+(Robert J.): I think landscape mode is easier to type on, but I can use both comfortably.
+
+
+
+I've been considering the keyboard accesory to see if I could do "bigger" projects on the iPad, but so far the built-in virtual keyboard is fine. I have been using an iPhone before so there wasn't much of a learning curve with regards to typing.
+
+(You): I find laptop keyboards a little cramped. Is it smaller than that?
+
+(Robert J.): It's more cramped in portrait mode, but larger in landscape mode.
+
+----------------------
+
+(Jonathan): XCode which is used to develop Mac applications for the iPad has a Simulator which will emulate the basics while developing. If its anything like the iPhone Simulator then the basic applications like Contacts etc will be emulated but anything further than this is not covered. XCode for developing iPad apps will only run on Snow Leopard (as I understand it) on a Mac
+
+(You): Thanks. Where would I get it if I had Snow Leopard, which I don't?
+
+
+
+[Vark assigned category: <b>emulator</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

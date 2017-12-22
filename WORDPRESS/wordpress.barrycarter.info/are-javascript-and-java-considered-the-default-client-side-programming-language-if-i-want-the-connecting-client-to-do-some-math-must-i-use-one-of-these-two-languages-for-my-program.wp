@@ -1,0 +1,52 @@
+
+ID: 23328
+post_name: are-javascript-and-java-considered-the-default-client-side-programming-language-if-i-want-the-connecting-client-to-do-some-math-must-i-use-one-of-these-two-languages-for-my-program
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 05 Dec 2010 00:56:22 +0000
+post_type: post 
+post_status: publish
+post_title: Are Javascript and Java considered the default client-side programming language? If I want the connecting client to do some math, must I use one of these two languages for my program?
+
+======================================================
+
+(You): Are Javascript and Java considered the default client-side programming language? If I want the connecting client to do some math, must I use one of these two languages for my program?
+
+(Abby): Javascript and Java is not the same thing. Javascript is client side, but Java is a application, that could be embedded, like flash. 
+
+
+
+The other methods you could possibly use, is a embedded flash application. Using a server side language, such as PHP, ASP.net and JSP then using a form for the answer, submit that hit another page, process the answer then respond to the answer.
+
+(You): I realize Javascript and Java are very different, but the important thing is that they both process on the client side, not the server. Flash is another example, thanks. However, using a server side language, I'd be using the server's CPU, not the clients.
+
+(Abby): It depends on the maths that is required to be done, generally only the most complex math (like huge) would take a bit of CPU power, (after all CPU is designed to do a lot of maths)
+
+(You): right, but the problem is that 100 people might be visiting my server at the same time. So, my server has to enough CPU power for all of them. Distributing load across the clients seems more efficient.
+
+(Abby): Seems more efficient, but it's still a tiny, tiny hit on CP. Doing the math would take less CPU then serving the page would.
+
+(Abby): Side note, you could also use SliverLight (Microsoft version of flash)
+
+(You): hmmm, but my server sometimes slows down under its load, while I know most home machines run at 1-2% load
+
+(You): not everyone uses Windows though and I don't think there's a Linux version?
+
+(Abby): Do you have a lot of loops? Loops can slow down a cpu.
+
+(You): this is more of a general question. Right now, the more people that hit a computation website, the more CPU power it needs. If we could transfer that load to the clients (who have plenty of power to spare), it might let people run popular computational sites with less hardware/CPU.
+
+(Abby): Thinking about it, I think there's also VBScript (MS version to Javascript)
+
+(You): urk :) More Microsoft-specific stuff? I do want it to work w/ Linux too. My thought now is can I automatically convert a Perl server side script to Javascript to the extent possible? I'm guessing this is hard to do automatically, since you need to separate out the computational and data portions of your program. [direct gchat: carter.barry@gmail.com]
+
+(Abby): client side is about if the browser support it, rather then what OS it is on. I believe there is support for Siverlight on Linux via firefox but not 100% sure. 
+
+
+
+Not aware of anything that could automatically convert perl to javascript.
+
+
+
+[Vark assigned category: <b>JAVA</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,34 @@
+
+ID: 28304
+post_name: can-someone-help-me-sniff-an-https-connection
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 14 Apr 2010 02:15:30 +0000
+post_type: post 
+post_status: publish
+post_title: Can someone help me sniff an https connection?
+
+======================================================
+
+(You): Can someone help me sniff an https connection?
+
+(Hans): Use arpspoof and sslstrip. Be sure to flip ip forwarding to in.
+
+(You): I can set my browser to use an https proxy -- does that make it easier? I just want a proxy that listens, converts the request to SSL, and logs everything.
+
+(Hans): a proxy won't help. You need their traffic to route through you (its called a man in the middle attack)... Use arpspoof to make their computer think your machine is the router. Then enable ip forwarding (echo "1" &gt; /proc/sys/net/ipv4/ip_forward) then launch sslstrip.
+
+(You): I'm trying to intercept my own SSL traffic, not someone elses!
+
+(Hans): Then just run sslstrip on the interface.
+
+----------------------
+
+(Mustafa Kutsal): You (anybody) cannot do it. That's why it is called Secure Socket (SSL).
+
+(You): Actually, I think I can do it using an SSL proxy and packet sniffing, but thanks.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

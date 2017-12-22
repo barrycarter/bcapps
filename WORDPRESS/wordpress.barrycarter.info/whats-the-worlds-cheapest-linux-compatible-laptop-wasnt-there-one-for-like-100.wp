@@ -1,0 +1,80 @@
+
+ID: 22960
+post_name: whats-the-worlds-cheapest-linux-compatible-laptop-wasnt-there-one-for-like-100
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 18 Jan 2011 23:22:03 +0000
+post_type: post 
+post_status: publish
+post_title: What's the world's cheapest *Linux compatible* laptop? Wasn't there one for like $100?
+
+======================================================
+
+(You): What's the world's cheapest *Linux compatible* laptop? Wasn't there one for like $100?
+
+(Andries): OLPC - but you need to buy in huge bulk. The $100 one I think is now a little more expensive, but it depends on the deal, I think.
+
+(You): where can I find OLPC? Are there resellers who sell them one-at-a-time? Is the $100 one that has a hand crank?
+
+(Andries): don't think you can - you need to buy a couple of thousand machines plus to gain access. some of the $100 I think had a hand-crank, yes - not sure whether they were sold, though.
+
+(You): rats. Thanks.
+
+(Andries): thought about craigslist for a second hand one?
+
+(You): that's my normal process, but the hard drives tend to die quickly on those. I now have 4 laptop "bricks". Of course, with an external drive, maybe...
+
+(Andries): yes, still needs to boot... :-(
+
+(You): some laptops can boot from an external drive, but not all of them. And that's a difficult question to email someone who's trying to get rid of a $75 laptop.
+
+----------------------
+
+(Alexander): There is the "One Laptop per Child"-projekt [http://one.laptop.org/]. The laptop itself was buyable. Seems that currently its not.
+
+Anyway nearly every modern laptop should be  -comaptible with linux. In my experience dell and ibm are good choice - a used machine should not be that expensive.
+
+
+
+Asus eeepc are fully comaptible as they run native linux.
+
+
+
+Compatibility list (for ubuntu) can be found here:
+
+[https://wiki.ubuntu.com/Testing/Laptop/Lucid/Reports]
+
+(You): thanks. Are machines that run Windows CE also Linux compatible? Those are usually the cheapest ones, but I think they use speciality drivers or something.
+
+(Alexander): I would say it depends on the distribution you want to use. 
+
+Linux itself, the kernel which is the base of any linux distribution, supports different hardware archictecures like x86 or ARM. So does WIndows CE.
+
+
+
+Some yeas ago there was a lot of succeeding hacking to bring linux on windows ce phones and pds.
+
+(You): do you know where I can find that? That's what I need!
+
+(Alexander): There are some tutorials and articles about installing linux on ce devices, most of them concern pdas or smartphones
+
+
+
+PDA:
+
+[http://embedded.centurysoftware.com/docs/nx/iPAQ-linux-new-install.html]
+
+Phones:
+
+[http://www.linuxfordevices.com/c/a/Linux-For-Devices-Articles/Hacking-HTCs-Windows-CE-phones-with-Linux-a-progress-report/]
+
+
+
+Anyway I found this website where you probably could search for cheap windows ce netbooks/laptops. When you have spot a specific model it should be easy to find out if the hardware is fully compatible to linux.
+
+(Alexander): http://www.windowsfordevices.com/
+
+
+
+[Vark assigned category: <b>laptops</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,28 @@
+
+ID: 28020
+post_name: in-gimp-i-want-to-place-textlabel-overlays-on-an-existing-image-where-i-can-control-the-sizeorientationcolor-of-the-label-and-the-label-background-is-transparent-whats-the-easiest-way-to-do-thi
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 22 Apr 2010 05:50:03 +0000
+post_type: post 
+post_status: publish
+post_title: In GIMP, I want to place text/label overlays on an existing image, where I can control the size/orientation/color of the label and the label background is transparent. What's the easiest way to do this?
+
+======================================================
+
+(You): In GIMP, I want to place text/label overlays on an existing image, where I can control the size/orientation/color of the label and the label background is transparent. What's the easiest way to do this?
+
+(Tiago): Simply add text to the existing background as a new layer. If you don't discard the text information, it'll always be editable.
+
+----------------------
+
+(Alexander): GIMP has a dedicated text tool, accessed by default with the shortcut key (T). While a text field is selected with this tool, its various attributes can be modified from the Tool Options panel.
+
+Since a text field exists on its own layer, it can be stacked and filtered just like other layers, and moved using the Move Tool (M).
+
+If you need finer control over the text's shape and orientation, the "Text along Path" option is also available.
+
+
+
+[Vark assigned category: <b>GIMP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

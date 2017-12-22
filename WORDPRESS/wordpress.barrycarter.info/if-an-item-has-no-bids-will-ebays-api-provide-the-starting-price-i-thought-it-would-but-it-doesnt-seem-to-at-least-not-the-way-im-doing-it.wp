@@ -1,0 +1,26 @@
+
+ID: 24625
+post_name: if-an-item-has-no-bids-will-ebays-api-provide-the-starting-price-i-thought-it-would-but-it-doesnt-seem-to-at-least-not-the-way-im-doing-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 08 Aug 2010 05:08:27 +0000
+post_type: post 
+post_status: publish
+post_title: If an item has no bids, will eBay's API provide the starting price? I thought it would, but it doesn't seem to, at least not the way I'm doing it.
+
+======================================================
+
+(You): If an item has no bids, will eBay's API provide the starting price? I thought it would, but it doesn't seem to, at least not the way I'm doing it.
+
+(Bob): If there are no bids and let's say the starting price is $5.00, and you want to put a higher price in just in case someone outbids you. So you put in $10.00, but it should start out at the minimum bid of $5.
+
+----------------------
+
+(Christian): You set the starting bid when you list the item.
+
+(You): yes, but how do I read the starting bid using eBay's API?
+
+
+
+[Vark assigned category: <b>API</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

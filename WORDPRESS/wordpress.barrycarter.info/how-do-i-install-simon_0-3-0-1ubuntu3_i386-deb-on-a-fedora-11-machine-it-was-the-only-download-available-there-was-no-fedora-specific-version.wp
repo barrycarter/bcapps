@@ -1,0 +1,32 @@
+
+ID: 23678
+post_name: how-do-i-install-simon_0-3-0-1ubuntu3_i386-deb-on-a-fedora-11-machine-it-was-the-only-download-available-there-was-no-fedora-specific-version
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 31 Oct 2010 02:06:10 +0000
+post_type: post 
+post_status: publish
+post_title: How do I install simon_0.3.0-1ubuntu3_i386.deb on a Fedora 11 machine? It was the only download available, there was no fedora-specific version.
+
+======================================================
+
+(You): How do I install simon_0.3.0-1ubuntu3_i386.deb on a Fedora 11 machine? It was the only download available, there was no fedora-specific version.
+
+(Ali): can't you just download the source version (usually a file with .tar.gz extension) and build it from source in fedora?
+
+(You): that's what I'd like to do, but http://sourceforge.net/projects/speech2text/ [http://sourceforge.net/projects/speech2text/] has only one button?
+
+(Ali): well, there is another button labelled "view all files" just next to the "download" button, if you click on it, you will find all other formats. there is also a fedora specific package there.
+
+(You): yeah, I found it right after I replied... I'm dling the fedora stuff now. Thanks :)
+
+----------------------
+
+(Kenneth): I don't know about Fedora or simon in particular, but sometimes alien can convert packages.
+
+(You): thanks. It turns out the other download options were hidden and I now have the source.
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,40 @@
+
+ID: 25402
+post_name: whats-the-difference-between-a-framework-and-an-ide-are-ides-often-frameworks-too
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 20 Jun 2010 22:12:06 +0000
+post_type: post 
+post_status: publish
+post_title: What's the difference between a "framework" and an "IDE"? Are IDEs often frameworks too?
+
+======================================================
+
+(You): What's the difference between a "framework" and an "IDE"? Are IDEs often frameworks too?
+
+(Martin): No, frameworks are systematic selections of code and libraries which are designed to all work together in order to produce a higher goal. For instance html+css+javascript is technically a framework. And so with django or any other framework. IDEs are just programs used to edit code, nothing more.
+
+(You): under those definitions, Ruby on Rails would be an IDE? (because it edits auto-generated code?)
+
+(Martin): No, because Ruby on Rails is simply the Ruby language plus the Rails libraries. It doesn't edit code, that would be something else on top. Besides even if it did edit code, that doesn't make it an IDE because an IDE is for _you_ you edit code with.
+
+----------------------
+
+(Bob): IDEs are integrated development environments. They provide an integrated set of tools etc for developing software. These tools might include an editor, compiler, debugger, source control system, etc. 
+
+
+
+A framework is basically a library of existing software modules that you use (perhaps within an IDE) that you can utilize within the software you are developing.
+
+----------------------
+
+(Mohamed Reda): a framework is an abstraction in which common code providing generic functionality can be selectively overridden or specialized by user code providing specific functionality while an IDE is a tool which allows using the framework in an easiest way
+
+----------------------
+
+(Guillaume): They're not the same at all. IDEs are GUI applications that help you program, build and debug applications, and sometimes design them too. They contain code editors, debuggers, designers, etc. Examples are Visual C++,  Eclipse, Borland. They are sometimes language-agnostic, like Eclipse (which supports Java, Python, C++, etc). Frameworks are more like sets of libraries that give higher-level functionalities to solve certain problems, such as writing Web Applications, Action Games. Examples include J2EE, Eclipse's RCP, Ruby on Rails, MFC. Now the link between the 2 is that often frameworks include plugins to help in developing with a given framework. So that Visual C++ will make it very easy to write Windows MFC applications, or C# web applications, by providing visual tools to build forms and the like. While Eclipse provides innumerable plugins to do web development, J2EE applications in Java, messaging applications, working with IBM Websphere, Tomcat, etc. I think IDEs used to be linked to a particular framework, such as Visual C++ and MFC, but that's not the case anymore, as they've become more generic and open via the usage of plugins.
+
+
+
+[Vark assigned category: <b>IDEs</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

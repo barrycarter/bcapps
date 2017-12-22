@@ -1,0 +1,30 @@
+
+ID: 23925
+post_name: i-do-use-posix-in-a-perl-library-and-then-define-my-own-tmpfile-function-i-wrote-the-library-way-before-i-started-including-posix-in-it-this-works-but-i-get-the-warning-subroutine-tmpfile-re
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 20 Oct 2010 06:18:14 +0000
+post_type: post 
+post_status: publish
+post_title: I do "use POSIX;" in a Perl library and then define my own tmpfile() function [I wrote the library way before I started including POSIX in it]. This works, but I get the warning "Subroutine tmpfile redefined at libname.pl ...". How can I suppress this warning (I'm not using perl -w)?
+
+======================================================
+
+(You): I do "use POSIX;" in a Perl library and then define my own tmpfile() function [I wrote the library way before I started including POSIX in it]. This works, but I get the warning "Subroutine tmpfile redefined at libname.pl ...". How can I suppress this warning (I'm not using perl -w)?
+
+(Nate): why can't you rename your own tmpfile()?
+
+(You): because it's used in way too many existing programs.
+
+(Nate): can you do 'use POSIX qw/func1 func2/' to import only the functions you use?
+
+----------------------
+
+(Steven): Any clothing shop in the Boston area which specializes in somewhat smaller sizes? I' m a small/medium and most shops seem to have &gt;95% of their stock L or bigger, which makes finding clothes a pain.
+
+(Steven): Whoops sorry. Multiple windows...  But as for your question: don't think you can disable this. Odd that you get it since POSIX's deprecated tmpfile lives as POSIX::tmpfile. In any case you might want to use IO::File::new_tmpfile() for your temporary file needs anyway.
+
+
+
+[Vark assigned category: <b>POSIX</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

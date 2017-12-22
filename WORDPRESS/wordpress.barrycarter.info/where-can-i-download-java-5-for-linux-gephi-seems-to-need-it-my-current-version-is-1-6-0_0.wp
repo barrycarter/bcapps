@@ -1,0 +1,82 @@
+
+ID: 24527
+post_name: where-can-i-download-java-5-for-linux-gephi-seems-to-need-it-my-current-version-is-1-6-0_0
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 22 Aug 2010 01:12:12 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I download Java 5 for Linux? gephi seems to need it. My current version is "1.6.0_0"
+
+======================================================
+
+(You): Where can I download Java 5 for Linux? gephi seems to need it. My current version is "1.6.0_0"
+
+(Chris): If you need to compile something, you need the JDK. If you just need to run something, you need the JRE. 5.0 update 22 is here: http://java.sun.com/products/archive/
+
+(You): thanks. I'd like to get the JDK while I'm at it?
+
+(Chris): wouldn't hurt to grab both. They are on that page.
+
+(You): thanks. That was the archive page.. I went to the fresh page
+
+(Chris): Java 5 is old, hence archive
+
+(You): thanks -- hoping the latest Java will run gephi too (it better!)
+
+(Chris): Ahhh, well FYI Java 1.6 IS Java 6. They changed their naming scheme a while back to make each revision seem more important I guess. 1.5 is 5 and 1.6 is 6.
+
+(You): weird, thanks. Actually, I just got the "true latest" working (my version was blackdown or something), and gephi works so I'm happy!
+
+(Chris): Odd. Glad it worked though, enjoy
+
+----------------------
+
+(Steve): ok, looking at the site :http://gephi.org/users/install/ 
+
+
+
+it mentions "Install Sun Java via Synaptic, do a Quick Search Search for ???sun java??? and install the jre and jdk. Do not forget to run update-alternatives --config java and update-alternatives --config javac." 
+
+
+
+using synaptic i found the packages sun-java-jdk and sun-java-jre I think if you installed those you should be well on your way. 
+
+
+
+If you dont mind I would be quite interested in knowing how you will be using it, it looks like an interesting program.
+
+(You): thanks. I actually got it installed thanks to help for others. Do you play conquerclub.com, an online Risk game? That's where I'm using it.
+
+----------------------
+
+(Andrew): Which Linux distro do you have?  With ubuntu you can just run synaptic 
+
+("sudo synaptic"), search for java, and and add the version you want I 
+
+believe it OK to install multiple versions, i.e. you can leave version 
+
+1.6 there and just add 1.5 as well.
+
+(You): thanks. I have fedora 11, and I'm pretty sure yum won't install it ("yum search java" failed) because of legal issues.
+
+(Andrew): Check this out:
+
+
+
+http://java.sun.com/products/archive/
+
+(You): thanks! Found it, installed it, and now happily running gephi
+
+----------------------
+
+(Hack): They do kind of bury it, but it's out there. Try this:
+
+
+
+https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jre-1.5.0_22-oth-JPR@CDS-CDS_Developer
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

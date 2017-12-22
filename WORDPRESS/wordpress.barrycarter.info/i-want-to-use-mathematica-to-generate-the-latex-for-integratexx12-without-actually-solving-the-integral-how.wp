@@ -1,0 +1,32 @@
+
+ID: 23541
+post_name: i-want-to-use-mathematica-to-generate-the-latex-for-integratexx12-without-actually-solving-the-integral-how
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 11 Nov 2010 00:39:48 +0000
+post_type: post 
+post_status: publish
+post_title: I want to use Mathematica to generate the LaTex for "Integrate[x,{x,1,2}]" without actually solving the integral. How?
+
+======================================================
+
+(You): I want to use Mathematica to generate the LaTex for "Integrate[x,{x,1,2}]" without actually solving the integral. How?
+
+(Erik): have you tried "TeXForm[Integrate[x,{x,1,2}]]"?
+
+(You): yup, the answer is "frac{3}{2}".
+
+(Erik): how about "f[x,a,b]:=Integrate[x,{x,a,b}]" then "TeXForm[f[x,1,2]]"
+
+(You): it turns out HoldForm[] does what I want, but thanks!
+
+(Erik): Thank you! Aardvark works both ways, I'll use that later today!
+
+----------------------
+
+(Andrius): I'd use openoffice formula instead, it exports to latex
+
+
+
+[Vark assigned category: <b>Mathematica</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

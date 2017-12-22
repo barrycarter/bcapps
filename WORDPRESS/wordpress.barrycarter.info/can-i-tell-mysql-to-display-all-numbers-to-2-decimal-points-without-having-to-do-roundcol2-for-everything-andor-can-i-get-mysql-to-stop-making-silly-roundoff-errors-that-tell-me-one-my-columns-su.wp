@@ -1,0 +1,28 @@
+
+ID: 26103
+post_name: can-i-tell-mysql-to-display-all-numbers-to-2-decimal-points-without-having-to-do-roundcol2-for-everything-andor-can-i-get-mysql-to-stop-making-silly-roundoff-errors-that-tell-me-one-my-columns-su
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 12 Jun 2010 05:43:49 +0000
+post_type: post 
+post_status: publish
+post_title: Can I tell MySQL to display all numbers to 2 decimal points without having to do ROUND(col,2) for everything? And/or can I get MySQL to stop making silly roundoff errors that tell me one my columns sums to -2.18278728425503e-11?
+
+======================================================
+
+(You): Can I tell MySQL to display all numbers to 2 decimal points without having to do ROUND(col,2) for everything? And/or can I get MySQL to stop making silly roundoff errors that tell me one my columns sums to -2.18278728425503e-11?
+
+(Simon): The best place to do this is in the application that gets the data from MySQL, not MySQL itself.
+
+(You): thanks-- I'm using the MySQL client directly.
+
+----------------------
+
+(Tian): http://www.plus2net.com/sql_tutorial/format.php
+
+(You): Thanks, but doesn't that still require using FORMAT on a per-column basis?
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

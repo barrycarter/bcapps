@@ -1,0 +1,37 @@
+
+ID: 17739
+post_name: were-doing-a-great-job-spam-filtering-thats-why-youre-getting-so-much-spam
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Sun, 30 Oct 2011 14:30:48 +0000
+post_type: post 
+post_status: publish
+post_title: We're doing a great job spam filtering: that's why you're getting so much spam
+
+======================================================
+
+If 99% of all email is spam, and your ISP blocks 99% of all spam, what 
+percentage of your email should be spam? 
+ 
+Without thinking, the answer may seem to be 1%, but it's actually 
+closer to 50%. 
+ 
+Example:<ul> 
+ 
+<li>For every 10000 emails you receive, 9900 are spam and 100 are 
+legitimate (99% of email is spam).</li> 
+ 
+<li>Your ISP blocks 99% of the 9900 spams, letting only 1% of the 
+spams into your mailbox.</li> 
+ 
+<li>One percent of 9900 spams is 99 spams.</li> 
+ 
+<li>So, you receive 100 legitimate messages and almost as many spam 
+messages, even though your ISP is filtering 99% of all spam!</li> 
+ 
+<li>Many people incorrectly think that, if 50% of their email is spam, 
+their ISP is only blocking 50% of spam. Not true!</li> 
+ 
+</ul> 
+
+

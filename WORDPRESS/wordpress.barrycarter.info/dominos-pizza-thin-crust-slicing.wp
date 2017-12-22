@@ -1,0 +1,48 @@
+
+ID: 25767
+post_name: dominos-pizza-thin-crust-slicing
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Thu, 31 Jan 2013 20:52:00 +0000
+post_type: post 
+post_status: publish
+post_title: Dominos Pizza thin crust slicing
+
+======================================================
+
+<font color='#ff0000' size=+2><b>THE CALCULATIONS BELOW ARE INCORRECT, WORKING ON A FIX</b></font>
+
+UPDATE: For 10" and 12" thin crust pizzas, the serving size is 1/4 pizza (or 2 radial slices), so adjust accordingly.
+
+Dominos Pizza give nutrition information per radial slice (8 slices =
+1 pizza), but, when you order a thin crust pizza, they cut it
+differently:
+
+<a href="http://wordpress.barrycarter.org/wp-content/uploads/2013/01/domino-sliced-thin.jpg"><img class="alignnone size-full wp-image-25768" title="domino-sliced-thin" src="http://wordpress.barrycarter.org/wp-content/uploads/2013/01/domino-sliced-thin.jpg" alt="" width="533" height="400" /></a>
+
+So what is the radial slice equivalent of each thin crust slice?
+
+<a href="http://wordpress.barrycarter.org/wp-content/uploads/2013/01/snap_2013-01-31_08462.png"><img class="alignnone size-full wp-image-25772" title="snap_2013-01-31_08:46" src="http://wordpress.barrycarter.org/wp-content/uploads/2013/01/snap_2013-01-31_08462.png" alt="" width="338" height="334" /></a>
+How did I get this?
+
+Assume AC=1, and consider triangle ADF. Since AF=1 (radius) and
+AD=1/2, DF=Sqrt[3]/2
+
+Since DE=1/2, EF = Sqrt[3]/2-1/2.
+
+By similar argument: EH = Sqrt[3]/2-1/2.
+
+HEF (wedge) is 1/4th of a circle with radius Sqrt[3]/2-1/2. Thus wedge
+area = (2-Sqrt[3])*Pi/8 (approx 0.105223)
+
+ADEB is a square with sides 1/2, and thus has area 1/4 (0.25)
+
+Shapes GHED and CFEB are similar and thus have equal area.
+
+Since wedge area GAC is Pi/4, each shape has 1/2 the remaining area or:
+
+(Sqrt[3]*Pi-2)/16 (approx 0.215087 each)
+
+Dividing into pi (the entire area of the pie, ha ha) and multiplying
+by 8 yields the results in the diagram.
+

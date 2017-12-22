@@ -1,0 +1,70 @@
+
+ID: 28220
+post_name: how-do-i-use-cwiid-on-my-linux-box-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 15 Apr 2010 22:25:53 +0000
+post_type: post 
+post_status: publish
+post_title: How do I use cwiid on my Linux box?
+
+======================================================
+
+(You): How do I use cwiid on my Linux box?
+
+(Art): What is cwiid?
+
+(You): cwiid presumably lets you use a Wiimote w/ your Linux box.
+
+----------------------
+
+(Alexander): https://help.ubuntu.com/community/CWiiD perhaps this helps? It would help in the future if you stated what you wanted to do with cwiid, what you have tried, what distribution you are using, and what specific issue you are having... feel free to post back more specifics if the above doesn't help you.
+
+(You): I just want to know what hardware I need to use it-- does it use RF or ???
+
+(Alexander): So I only skimmed that page that I sent you, but from the looks of it it
+
+interfaces with the computer via bluetooth, and can use anything as its
+
+reference point (ie, you can use just a light bulb rather than the wii bar
+
+or whatever), though I didn't look into specifically how it did this.
+
+(You): Thanks! I always thought the reference point (the Wii bar) sent data back to the Wii as well, whereas a light bulb obviously couldn't. I'll investigate further on my own, thanks!
+
+(You): Well, even if they're not listed on ebay, I think pogo.com points aren't worth a lot. Although I think ebay reversed this policy later.
+
+(Alexander): No the way that the wimote works is that there is a "camera" of sorts in the
+
+wimote itself, (among other sensors etc), and it just reports its position
+
+based on how the array of ir led's look to it. But I am thinking that for
+
+simple pointing in a 2d coordinate system, all it needs is something to act
+
+as the origin, and then can just reply where the center of its "picture" is
+
+in relation to that point or something like that.
+
+Good luck!
+
+(You): So you're saying the only reason to plug the Wii bar into the Wii is for electricity so it can shine red LEDs? There's no other magic to it?
+
+(Alexander): From what I remember there isn't... though it is IR and not red. But it
+
+would be worthwhile to look into more. There was this hack that was posted
+
+online though where someone attached the wii bar to the brim of a hat, so
+
+that the monitor would look 3D when you moved around, because the wii mote
+
+(on top of the tv would think it was moving), but I think the main reason
+
+that he switched them is that all he needed to do was add some batteries and
+
+the hat would work perfectly without all the weight of a wiimote.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

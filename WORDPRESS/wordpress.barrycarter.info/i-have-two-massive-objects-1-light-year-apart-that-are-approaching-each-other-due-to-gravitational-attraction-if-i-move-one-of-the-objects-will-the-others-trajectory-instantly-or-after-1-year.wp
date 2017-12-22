@@ -1,0 +1,150 @@
+
+ID: 24372
+post_name: i-have-two-massive-objects-1-light-year-apart-that-are-approaching-each-other-due-to-gravitational-attraction-if-i-move-one-of-the-objects-will-the-others-trajectory-instantly-or-after-1-year
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 27 Aug 2010 01:32:08 +0000
+post_type: post 
+post_status: publish
+post_title: I have two massive objects 1 light year apart that are approaching each other due to gravitational attraction. If I move one of the objects, will the others trajectory instantly, or after 1 year?
+
+======================================================
+
+(You): I have two massive objects 1 light year apart that are approaching each other due to gravitational attraction. If I move one of the objects, will the others trajectory instantly, or after 1 year?
+
+(Richard): Instantly.  There is no mention of time in the gravitational attraction formula, so you can consider it as an attraction.  That said, momentum might mean that any changes will be slow to act, but it will *start* to decelerate immediately.
+
+(You): actually, I thought this was what gravity waves were all about?
+
+(Richard): in your original question, did you miss out a word after 'trajectory'?
+
+(Richard): I read your question wrong. I'm sorry. I'm going for 1 year now. Newton's Theory of Gravitation requires that the gravitational force be transmitted instantaneously. Given the classical assumptions of the nature of space and time before the development of General Relativity, there will be a significant propagation delay in gravity.
+
+(You): thanks. If gravity "travels", that would mean gravity waves exist, yes? I thought this was an unanswered question.
+
+----------------------
+
+(Michael): after 1 year.  Gravity propagates at C.  See: http://en.wikipedia.org/wiki/Speed_of_gravity [http://en.wikipedia.org/wiki/Speed_of_gravity]
+
+(You): thanks! I'm getting conflicting answers, but you were the only one to provide a backup link.
+
+(Michael): my pleasure.  Interesting to note that newtonian physics assumed instantaneously; I wasn't aware of that.
+
+(You): well, as some people have pointed out, there's no t in the gravitational equation.
+
+(Michael): I'm not a physicist, so I could very easily be shown to be wrong.  At which point I'd have to update (or ask someone to update) wikipedia.  =)
+
+(You): well, I'm hoping the people who wrote that article are physicists. Of course, I could check the source material, but no one does that!
+
+(Michael): For an opposing view, see: http://metaresearch.org/cosmology/speed_of_gravity.asp
+
+(Michael): Lots on google; "speed of gravity"
+
+(You): yes! My initial guess was that this was an unsolved problem and essentially what 'gravity waves' are all about.
+
+(Michael): It's a question I've wondered about for a long time; never thought to ask Aardvark!
+
+(Michael): it makes me wonder if the nuclear forces have a propagation speed, but that's getting way beyond the limit of my grey cells.
+
+(You): since those decay as the 4th power of distance, it's probably not as important. The argument at http://metaresearch.org/cosmology/speed_of_gravity.asp [http://metaresearch.org/cosmology/speed_of_gravity.asp] seems convincing, except that, maybe the planets angular momentum IS increasing, but just immeasurably.
+
+----------------------
+
+(Greg): The effect on the remote objects would be instant. Gravity doesn't have a propagation delay. While nearly impossible to measure in the lab due to the extremely weak nature of gravity, it is easily provable based on observable phenomenon such as the planets' orbits.
+
+(You): someone else pointed me to http://en.wikipedia.org/wiki/Speed_of_gravity [http://en.wikipedia.org/wiki/Speed_of_gravity] which suggests otherwise?
+
+(Greg): Check out http://www.xs4all.nl/~johanw/PhysFAQ/Relativity/GR/grav_speed.html
+
+I saw a really good article on the subject some time back that went into more depth and had the math to prove it. I tried to find it, and couldn't, but found this one instead. Good luck.
+
+(You): thanks. The only convincing argument I found for instantaneous speed says the angular momentum of objects in orbit would increase. However, the Wikipedia pages acknowledge this, but point out the change is very small.
+
+(Greg): And, to clarify, yeah, it looks like it does have a propagation time, though I've not seen anything to peg the precise speed. Interesting, but different that what my professor taught. :) Go figure. I guess there is a reason he is teaching rather than doing.  ;)
+
+(You): alas, the ivory tower withstands not the cannons of truth. [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Steven): after one year; gravitational waves travel at the speed of light.
+
+(You): thanks. That seems to be the consensus even though some argued for instantaneous.
+
+(Steven): there is experimental evidence for the consensus: http://www.nrao.edu/pr/2003/gravity/
+
+----------------------
+
+(Jim): The trajectory will change immediately, even if to the smallest degree.
+
+
+
+ 
+
+
+
+The gravitational force exerted between two bodies (directed between their centers of mass) is defined as:
+
+
+
+ 
+
+
+
+F = gMm/r^2, where F is the force exerted between the bodies, g is the gravitational constant (9.8 m/sec^2 or 32 ft/sec^2, m is the mass of the first body, M is the mass of the second body, and r is the distance between them.  Make sure your units are consistent.  Keep in mind that force is a vector (as is acceleration), which means it has both magnitude and direction.
+
+
+
+ 
+
+
+
+That, with the fundamental formula F=ma (force = mass * acceleration), says that if you keep everything else constant and change the location of the center of mass, the force vector changes in one way or another.  If the distance between the bodies changes, the magnitude of the force changes.  If it moves but stays the same distance apart, the direction changes but the magnitude stays the same.   In any case, the force changes immediately, so the bodies will immediately begin to accelerate in a different direction and their trajectories will change immediately. It may be really small, but it happens nevertheless.
+
+
+
+ 
+
+
+
+A light year is just a distance, like a mile or an inch, so the basics still apply.
+
+
+
+ 
+
+
+
+Hope this helps.
+
+(You): thanks. The consensus I got on this answer (along w/ wikipedia) seems to disagree.
+
+(Jim): I can tell you that absolutely, positively, without question, that what I have said is true.  Ask the same question to your other respondents, but replace ???1 light-year??? with ???ten feet???.  If their answer is different, they don???t know what they are talking about.   In fact, if they disagree and their answer is the same, they still don???t know what they are talking about. 
+
+
+
+ 
+
+
+
+I honestly don???t mean to be difficult, but this is the most basic physics (F=ma, baby!).  No question.  I???m assuming that you had a minor typo in your question.  Did you mean ???will the other???s trajectory CHANGE instantly????  If so, I guarantee you that I am correct.
+
+
+
+ 
+
+
+
+ 
+
+
+
+???I have two massive objects 1 light year apart that are approaching each other due to gravitational attraction. If I move one of the objects, will the others trajectory instantly, or after 1 year????
+
+(Jim): actually, I???d be interested to see your reference from Wikipedia.  A light year is just the distance that light travels in a year, and actually doesn???t have anything else to do with time.  It???s like a mile or an inch, just really a lot bigger, so the ???time??? component of your question doesn???t really matter.  The bodies will start to accelerate in a different direction immediately.
+
+(You): thanks. Yes, I omitted the word "change" in my original question. WP refs: http://en.wikipedia.org/wiki/Gravitational_wave [http://en.wikipedia.org/wiki/Gravitational_wave] http://en.wikipedia.org/wiki/Speed_of_gravity [http://en.wikipedia.org/wiki/Speed_of_gravity] -- the problem w/ instant effect is that means you can transmit information faster than the speed of light, which relativity says is impossible.
+
+
+
+[Vark assigned category: <b>light year</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

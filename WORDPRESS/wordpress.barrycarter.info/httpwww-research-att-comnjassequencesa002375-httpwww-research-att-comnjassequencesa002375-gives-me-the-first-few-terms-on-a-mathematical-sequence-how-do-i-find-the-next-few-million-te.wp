@@ -1,0 +1,28 @@
+
+ID: 24840
+post_name: httpwww-research-att-comnjassequencesa002375-httpwww-research-att-comnjassequencesa002375-gives-me-the-first-few-terms-on-a-mathematical-sequence-how-do-i-find-the-next-few-million-te
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 22 Jul 2010 12:20:02 +0000
+post_type: post 
+post_status: publish
+post_title: http://www.research.att.com/~njas/sequences/A002375 [http://www.research.att.com/~njas/sequences/A002375] gives me the first few terms on a mathematical sequence. How do I find the next few million terms w/o computing them myself?
+
+======================================================
+
+(You): http://www.research.att.com/~njas/sequences/A002375 [http://www.research.att.com/~njas/sequences/A002375] gives me the first few terms on a mathematical sequence. How do I find the next few million terms w/o computing them myself?
+
+(David): Either you compute them yourself or you find someone who has already done so: I doubt you will be readily able to find a list. I'd suggest computing, sadly.
+
+----------------------
+
+(Davide): This is a link that provides the first 10,000 terms: http://www.research.att.com/~njas/sequences/b002375.txt
+
+
+
+I couldn't find an online repository for millions of records. Writing a computer algorithm to compute such numbers shouldn't be too hard, but calculating millions of them is gonna take a while even for a modern machine.
+
+
+
+[Vark assigned category: <b>mathematical sequence</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

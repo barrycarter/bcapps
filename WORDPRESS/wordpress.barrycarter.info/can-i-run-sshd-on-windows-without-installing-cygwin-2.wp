@@ -1,0 +1,26 @@
+
+ID: 26197
+post_name: can-i-run-sshd-on-windows-without-installing-cygwin-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 20:53:16 +0000
+post_type: post 
+post_status: publish
+post_title: Can I run sshd on Windows *without* installing Cygwin?
+
+======================================================
+
+(You): Can I run sshd on Windows *without* installing Cygwin?
+
+(Azmirul): Try this, 
+
+http://sshwindows.sourceforge.net/
+
+----------------------
+
+(Neil): i mean, if you can find an sshd exe port then yeah
+
+
+
+[Vark assigned category: <b>Cygwin</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

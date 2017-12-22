@@ -1,0 +1,36 @@
+
+ID: 24908
+post_name: how-do-i-get-into-openplug-org-the-device-not-the-site-do-i-have-to-ssh-into-it-how-do-i-console-into-it-it-doesnt-appear-to-have-a-video-output
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 18 Jul 2010 21:28:17 +0000
+post_type: post 
+post_status: publish
+post_title: How do I get into openplug.org (the device, not the site)? Do I have to ssh into it? How do I console into it? It doesn't appear to have a video output?
+
+======================================================
+
+(You): How do I get into openplug.org (the device, not the site)? Do I have to ssh into it? How do I console into it? It doesn't appear to have a video output?
+
+(Jesse): You don't mention specifically which device you have, but it looks like you can SSH in or use the Mini USB plug on the side as a serial console maybe. I would look at this page for how to get started:  	http://plugcomputer.org/plugwiki/index.php/New_Plugger_How_To
+
+I should note that, while I have looked into them in the past, I have never actually gotten around to getting one of these, so this info is not based on personal experience.
+
+----------------------
+
+(John): Openplug comes with ubuntu 9.04 installed.  To connect to it you can connect it directly to your home router, grab the ip address, then use that to ssh into it.  From there you can install and configure all you want.
+
+(You): thanks. So, if I ever brick it, I can force it to come up w/ Ubuntu and sshd running? And it'll do dhcp to get an address? My worry is that if gets hosed (network wise), there's no way to get in "at the console" to fix it.
+
+----------------------
+
+(Sid): you need to read the following: http://www.openplug.org/plugwiki/index.php/Getting_the_Plug_Computer_Running_with_an_Operating_System
+
+(Sid): yes you need to ssh into it: use "ssh root@&lt;ip of the plug&gt;".  you this assumes you have it hooked up to a router with DHCP to automatically assign it an ip address.
+
+http://www.openplug.org/plugwiki/index.php/New_Plugger_How_To#Logging_in_to_the_existing_Ubuntu_install
+
+
+
+[Vark assigned category: <b>SSH</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

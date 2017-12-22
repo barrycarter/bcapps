@@ -1,0 +1,36 @@
+
+ID: 25476
+post_name: is-there-macro-maker-for-windows-i-want-to-send-mouse-clicks-and-text-to-a-given-application
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 08:51:52 +0000
+post_type: post 
+post_status: publish
+post_title: Is there macro maker for Windows? I want to send mouse clicks and text to a given application.
+
+======================================================
+
+(You): Is there macro maker for Windows? I want to send mouse clicks and text to a given application.
+
+(TT): http://superuser.com/questions/107113/whats-a-good-macro-recorder-for-windows
+
+----------------------
+
+(Ronnie): Microsoft C#
+
+----------------------
+
+(Guy): use AutoIt 3 http://www.autoitscript.com/autoit3/index.shtml
+
+----------------------
+
+(Ronan): AutoHotkey
+
+----------------------
+
+(Johan): well there's always winautomation?
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

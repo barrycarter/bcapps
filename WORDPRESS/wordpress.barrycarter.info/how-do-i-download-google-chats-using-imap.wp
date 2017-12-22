@@ -1,0 +1,44 @@
+
+ID: 27831
+post_name: how-do-i-download-google-chats-using-imap
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 27 Apr 2010 21:44:48 +0000
+post_type: post 
+post_status: publish
+post_title: How do I download Google Chats using IMAP?
+
+======================================================
+
+(You): How do I download Google Chats using IMAP?
+
+(Khalid): Change chat settings so that it archives all your chats with people and then filter them to be saved into inbox. Then they'll get downloaded when you do a send/receive on Outlook, or whatever you're using.
+
+(You): Thanks! So you can't download them using '[Gmail]/Chats' or anything like that, I take it?
+
+(Khalid): You might be able to, but that's how I do it. Only I use Gmail on Android as my only other email client
+
+(You): Thanks! I'm trying to keep my chats separate from my INBOX, and ideally just download them straight w/o filtering.
+
+(Khalid): Well, chats can be saved without going to the inbox, but I don't know how to get them seperately. Perhaps you could just have a label applied to all chats and sync that with Outlook, or whatever you're using. I generally prefer the web client, but there are of course times when you can't use that.
+
+(You): Thanks... I'm probably one of the few people who dislike the web client. Filtering + applying label might be the way to go. I actually didn't know you could filter chats!
+
+(Khalid): Well, you can filter by sender and then apply a label. You could easily enough make a new contact with just someone's GTalk id/name as their contact details. Then it'd be distinct.
+
+(You): But wouldn't I have to do that per person? So if I chatted w/ someone new, I'd have to tweak the filter?
+
+(Khalid): I assumed you'd want to keep them all totally seperate. You could just apply a filter when the subject contains 'Chat with' and that would do it.
+
+(You): oooh, that would work, thanks! (unless someone sends me an email w/ that subject!)
+
+----------------------
+
+(Bob): Click Alt-F4
+
+(You): Huh?
+
+
+
+[Vark assigned category: <b>IMAP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

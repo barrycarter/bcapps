@@ -1,0 +1,36 @@
+
+ID: 25150
+post_name: i-thought-i-found-an-image-viewer-for-linux-that-scanned-for-changes-in-the-display-file-for-example-if-you-did-xyz-temp-jpg-it-would-update-the-picture-if-temp-jpg-changed-however-i-cant-seem
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 05:05:34 +0000
+post_type: post 
+post_status: publish
+post_title: I thought I found an image viewer for Linux that scanned for changes in the display file. For example, if you did "xyz temp.jpg" it would update the picture if temp.jpg changed. However, I can't seem to find it now-- what was it?
+
+======================================================
+
+(You): I thought I found an image viewer for Linux that scanned for changes in the display file. For example, if you did "xyz temp.jpg" it would update the picture if temp.jpg changed. However, I can't seem to find it now-- what was it?
+
+(Dane): Sounds like imagemagick
+
+(You): yes, I thought it was 'display' as well, but I can't find the --scan-every-x-seconds option for it.
+
+----------------------
+
+(Bjilly): It works as well as 'grep -f'. It checks for file timestamp change and if is it just re-reads its.
+
+Also you can take a look at FAM (File Access Monitor).
+
+----------------------
+
+(Rudy): I'd use the stat command (or system call) on the file and check the mtime
+
+(modify time). [I'm not necessarily good for Linux questions because I'm
+
+pretty much a command line/shell user in my current work.] Cheers.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

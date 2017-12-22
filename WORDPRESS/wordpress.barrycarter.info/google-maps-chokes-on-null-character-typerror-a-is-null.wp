@@ -1,0 +1,20 @@
+
+ID: 28560
+post_name: google-maps-chokes-on-null-character-typerror-a-is-null
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Tue, 17 Sep 2013 17:03:54 +0000
+post_type: post 
+post_status: publish
+post_title: Google Maps chokes on null character "typerror: a is null"
+
+======================================================
+
+I cut and paste some google maps code from https://developers.google.com/maps/documentation/javascript/overlays, but it didn't work. 
+ 
+After hours of work, comparing it to known good code, whittling it 
+down to find the error, and using od, I finally found the problem: the bad script had a null character (ASCII value 0) in it, just afer a semicolon and just before a newline. 
+
+I looked at the source of the google document and the null character was there too. I've alerted google to the error.
+
+

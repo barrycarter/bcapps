@@ -1,0 +1,56 @@
+
+ID: 24545
+post_name: i-want-to-store-encrypted-backup-dvds-remotely-cheaply-ideally-for-free-any-thoughts
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 20 Aug 2010 23:01:46 +0000
+post_type: post 
+post_status: publish
+post_title: I want to store encrypted backup DVDs remotely cheaply, ideally for free. Any thoughts?
+
+======================================================
+
+(You): I want to store encrypted backup DVDs remotely cheaply, ideally for free. Any thoughts?
+
+(James): You could send them to someone you trust and have them store it for you. It would be best if you had multiple dvd backups since they can become damaged.
+
+(You): yes, that was sort of my backup plan, though I'm ironically worried that they'll lose them. I've heard about optical disk degradation -- how serious is it?
+
+(James): Don't depend on a single optical disk, and don't expect them to keep the data forever since they do degrade over time, but if they are kept sealed out of sunlight they should last. I'd suggest backing up to Hard Drives as well as DVDs.
+
+(You): but HDs are really expensive compared to blank optical media, no?
+
+(James): That is incorrect, HDs are infact cheaper than blank DVDs. A 2TB HD can be had for $100, that is $0.05 per gigabyte. Which means a DVD needs to be cheaper than $0.21 cents each to achieve the same cost per gigabyte. If you compound that expense of the DVD with the fact that it takes much longer to backup info to a DVD, as well as taking more to manage the sheer number of DVDs required, Hard Drives become the better option, and that is not even taking into account the re-writability of the Hard Drive.
+
+(James): If you have less than 20 GB of data to backup, then your internal HD and blank DVDs are not a bad way to go. If you are trying to backup more than that then DVDs can quickly become unwieldy, especially when you should burn more than one copy of the DVD incase one gets damaged. Then add to this the fact that you need to re burn the DVDs periodically to keep them up to date. If you use rewritable DVDs then they are more fragile, take longer, and are more costly initially. If you use one time DVDs, then each time you update your backup, you are going to be re-investing the cost of the backup, but that is not the case with a hard drive.
+
+(James): Contrast this with an external hard drive that can be set to do automated backups and require not user interaction to do. Don't forget to factor in the cost of your time into the cost of doing the backup.
+
+(James): If you have more than 2TB of data to backup (in which case you would not be considering DVD backup) then I would highly suggest a Drobo.
+
+(James): http://www.drobo.com/
+
+----------------------
+
+(Jacob): You could get a program to make a virtual image of the DVDs, such as ISODisk.  Then upload them to a free file-sharing site, such as MegaUpload (you may have to split the files into multiple parts using something such as WinRAR first so you don't exceed the file size limit) (also make sure you know how long the file sharing site will keep your data, without a subscription they may not keep the files forever, but I believe Megaupload will.)
+
+(You): thanks. I already have unlimited online storage space (allmydata.com and onlinestoragesolution.com) and have tried this, but uploading 14*4G every few months really doesn't work well, even if I limit it to nights (especially since I also do a lot of torrenting). This is one case where I think physical media has a real advantage.
+
+(Jacob): Well in that case I would just recommend getting an external hard drive, I know BJ sells a 1 TB for $90, so even though it won't be free it won't run you that much, hope this helps.
+
+(You): ok, but where would I store the hard drive? I mean, I already have the DVDs I'm burning to -- my question is: where to send them?
+
+(Jacob): Ah I'm sorry I misunderstood your question, in that case all I can recommend is a safe deposit box, a small one for just CDs shouldn't cost most than $20 a year.  Good Luck, sorry I can't be of more help.
+
+(You): yup, that might be the way to go. I'd send it to friends, but if they lose it when I need it most... shudder!
+
+----------------------
+
+(Jeff): http://www.megaupload.com/
+
+(You): thanks, but uploading 14 DVDs every few months is a bit much on my bandwidth, alas.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

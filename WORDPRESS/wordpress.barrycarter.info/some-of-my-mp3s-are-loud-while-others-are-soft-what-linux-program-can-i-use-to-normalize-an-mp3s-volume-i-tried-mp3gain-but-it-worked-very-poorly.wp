@@ -1,0 +1,30 @@
+
+ID: 26627
+post_name: some-of-my-mp3s-are-loud-while-others-are-soft-what-linux-program-can-i-use-to-normalize-an-mp3s-volume-i-tried-mp3gain-but-it-worked-very-poorly
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 21:58:44 +0000
+post_type: post 
+post_status: publish
+post_title: Some of my MP3s are loud, while others are soft. What Linux program can I use to normalize an MP3's volume? I tried mp3gain, but it worked very poorly.
+
+======================================================
+
+(You): Some of my MP3s are loud, while others are soft. What Linux program can I use to normalize an MP3's volume? I tried mp3gain, but it worked very poorly.
+
+(Joel): you could try audacity.  http://wiki.audacityteam.org/index.php?title=Amplify_and_Normalize
+
+(Joel): http://audacity.sourceforge.net/
+
+----------------------
+
+(James): Audacity has that functionality I believe but I'm not sure how scriptable it is.
+
+(You): thanks! Mbone looks like it needs special hardware, so I'm guessing a person w/ a regular Internet connection can't get multicast stuff just through my ISP (Comcast)?
+
+(James): You have to tunnel it from someone who does using a vpn. I had thought that there was a client that allowed tunneling but that might have been with the mbone6.
+
+
+
+[Vark assigned category: <b>MP3Gain</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

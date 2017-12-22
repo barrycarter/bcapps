@@ -1,0 +1,74 @@
+
+ID: 23626
+post_name: i-want-to-use-joomla-or-some-other-cms-to-create-a-website-solely-for-the-purpose-of-learning-a-cms-is-there-a-tutorial-or-something-that-shows-me-how-to-build-a-test-website-that-uses-several-cms
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 06 Nov 2010 06:45:13 +0000
+post_type: post 
+post_status: publish
+post_title: I want to use Joomla (or some other CMS) to create a website solely for the purpose of learning a CMS. Is there a tutorial or something that shows me how to build a test website that uses several CMS features?
+
+======================================================
+
+(You): I want to use Joomla (or some other CMS) to create a website solely for the purpose of learning a CMS. Is there a tutorial or something that shows me how to build a test website that uses several CMS features?
+
+(Frederick): well, if you just want to test out a cms or learn to use it:
+
+http://php.opensourcecms.com/
+
+(You): does that actually have a sample site you can build?
+
+(Frederick): you can do anything in the demos. but they reset pretty often
+
+(Frederick): for CMS's like drupal where there are modules you can use the extend functionality you'll have to host your own website
+
+(You): ok, what I mean is... is there a walk-through somewhere that says "here's how to build a simple site?"
+
+(Frederick): hmm... I don't know about that, I'd imagine there would be some sort of guide on the Joomla site. There was a guide for drupal, that was pretty good on it's site.
+
+(You): ok, I just got a free account w/ cloudaccess.net. I guess I'm looking for something that will get me excited about joomla and convince me it's better than using emacs to edit my site.
+
+(Frederick): well I think the main advantage of a CMS is that you can have lots of people editing the content online. If you're the only one editing your site, then I think it would be better to go without
+
+(You): so there's nothing extra cool about having a CMS installed?
+
+(Frederick): well it allows you to eidt your content from online, but if you're the only one editing, most offline editors are better than any online versions you can get, so I don't think there's much point, unless there's some features that you really like that are built into one (for example drupal comes with a forum module so you can basically pull a fully working forum site out of a box)
+
+(You): so nothing that would excite a "real" programmer?
+
+(Frederick): I mean I'm using drupal, it has a good base, and lots of modules you can extend it with. I'm coding my own module now, so that part's real programming, but we also have an artist and a writer who can edit the pages online.
+
+(You): OK, but if it's a one-man operation, no real help?
+
+(Frederick): yeah... probably not? Drupal comes with a bunch of useful functions, but if you don't like the schema it'll be a pain to work with. I don't use a CMS for my fraternity website, and I find myself (re)writing a lot of the functionality that's built into drupal, but then it's customized, and more efficient so... I like it both ways
+
+(You): I usually use MySQL for db stuff... can/does Drupal use that?
+
+(Frederick): it does... but it also has wrapper functions for the database calls, so it'll automatically check the data type and cleanse your input and such, but you can still use the unwrapped functions if you want
+
+----------------------
+
+(Mike): Yes there is.
+
+----------------------
+
+(????????????????): You can just install joomla and "add sample data:. It uses most of the 
+
+CMS features.
+
+
+
+
+
+
+
+???????? 6/11/2010 2:46 ????, ??/?? aardvark@vark.com ????????????:
+
+----------------------
+
+(Robert): You can learn about Dialogs at www.Dialogs.com [http://www.Dialogs.com]. Request a login in the support section, which will give you full access to the knowledge base and sandbox site. Dialogs has all the tools you need, from CMS to ecommerce to blogs.
+
+
+
+[Vark assigned category: <b>Joomla</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

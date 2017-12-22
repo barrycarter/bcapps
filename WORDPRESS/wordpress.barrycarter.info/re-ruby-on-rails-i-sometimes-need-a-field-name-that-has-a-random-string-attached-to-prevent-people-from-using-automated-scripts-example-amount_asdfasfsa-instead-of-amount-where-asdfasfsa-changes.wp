@@ -1,0 +1,24 @@
+
+ID: 25372
+post_name: re-ruby-on-rails-i-sometimes-need-a-field-name-that-has-a-random-string-attached-to-prevent-people-from-using-automated-scripts-example-amount_asdfasfsa-instead-of-amount-where-asdfasfsa-changes
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 21 Jun 2010 19:22:18 +0000
+post_type: post 
+post_status: publish
+post_title: Re Ruby on Rails, I sometimes need a field name that has a random string attached to prevent people from using automated scripts (example: amount_asdfasfsa instead of amount, where "asdfasfsa" changes with each reload). Can RoR handle this?
+
+======================================================
+
+(You): Re Ruby on Rails, I sometimes need a field name that has a random string attached to prevent people from using automated scripts (example: amount_asdfasfsa instead of amount, where "asdfasfsa" changes with each reload). Can RoR handle this?
+
+(Ryan): I don't know if rails handles that "out of the box". But it would be trivial to create your own field (not use a helper) and append some extra text to the field name. 
+
+
+
+Not sure what that gets you. If you're trying to do this as a mens of fraud protection, it sounds a little backward. Cuz the bots just gonna put whatever in the field regardless of what you name it.
+
+
+
+[Vark assigned category: <b>Ruby on Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

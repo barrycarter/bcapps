@@ -1,0 +1,18 @@
+
+ID: 26994
+post_name: in-perl-if-i-do-exit2-but-have-a-sub-end-that-runs-systemcommand-will-the-exit-value-be-2-or-the-return-value-of-command-if-the-latter-how-do-i-fix-it-to-use-my-exit-value
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 17 May 2010 22:50:50 +0000
+post_type: post 
+post_status: publish
+post_title: In Perl, if I do exit(2) but have a "sub END" that runs "system(command)", will the exit value be 2 or the return value of command? If the latter, how do I fix it to use my exit value?
+
+======================================================
+
+(You): In Perl, if I do exit(2) but have a "sub END" that runs "system(command)", will the exit value be 2 or the return value of command? If the latter, how do I fix it to use my exit value?
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

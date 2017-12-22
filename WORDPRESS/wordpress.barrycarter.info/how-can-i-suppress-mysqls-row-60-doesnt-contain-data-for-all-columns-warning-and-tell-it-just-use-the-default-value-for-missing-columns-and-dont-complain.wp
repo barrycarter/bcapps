@@ -1,0 +1,46 @@
+
+ID: 27452
+post_name: how-can-i-suppress-mysqls-row-60-doesnt-contain-data-for-all-columns-warning-and-tell-it-just-use-the-default-value-for-missing-columns-and-dont-complain
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 22:48:23 +0000
+post_type: post 
+post_status: publish
+post_title: How can I suppress MySQL's "Row 60 doesn't contain data for all columns" warning and tell it "just use the default value for missing columns and don't complain"?
+
+======================================================
+
+(You): How can I suppress MySQL's "Row 60 doesn't contain data for all columns" warning and tell it "just use the default value for missing columns and don't complain"?
+
+(Manos): I don't know much about MySQL, I am SQL Server expert, but I guess this has something to do with the query that you write. I suppose that it's nagging because there are null values, so you have to use some kind of a function that replaces the null value with your "default"
+
+(You): thanks! I already have 'DEFAULT NULL' for the column definition. I just want MySQL to realize that if I don't provide values for all columns, I want the default values from that column and any columns to the right of it.
+
+(Manos): Yes, you see, the db engine warns you that the data might have no meaning if null values exist. If for example you apply an aggregation, the rows with nulls migh missing, depending on groupings, etc. As I said, try to wrap the columns with the vull values inside functions that return somethng when meet null, say zeros if we're talking about numericals
+
+(You): oh you mean alter the data that I'm feeding MySQL to explicitly have nulls or 0s?
+
+(Manos): Not really, I mean instead of "SELECT x FROM ..." do something like "SELECT ISNULL(x, 0) FROM ...". There must be something like ISNULL in MySQL. This, returns either the non-null value or 0 instead of null. But you have to make sure that you use the same function on every apearance of the "x" column
+
+(You): it's the other way around. I have a text file and want to import it INTO MySQL. I'm not exporting.
+
+(Manos): Sorry, but that's as far as I can go, I think I'm out of my knowledge field here... Try googling it: http://tinyurl.com/2urz25s
+
+(You): thanks for your help. It was a non-fatal warning, so my data got it. I was just worried this warning was obscuring other, legitimate warnings.
+
+----------------------
+
+(Brett): You'll likely need to reformat your query. If in an insert, you omit that column, it'll use the default. Be sure the defaults are actually in the column definition. 
+
+
+
+So your insert should be like:
+
+INSERT INTO tablename (col1,col2,col4) VALUES ('a','b','d') 
+
+doing that, col3 will use the default from the definition..
+
+
+
+[Vark assigned category: <b>databases</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

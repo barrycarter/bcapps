@@ -1,0 +1,24 @@
+
+ID: 26946
+post_name: whats-the-open-source-clientserver-combo-that-people-are-using-to-write-games-like-crossfire-themanaworld-eveonline-eternal-lands-etc-i-dont-think-it-actually-runs-any-of-those-but-the-goal-i
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 21 May 2010 23:44:48 +0000
+post_type: post 
+post_status: publish
+post_title: What's the open source client/server combo that people are using to write games like crossfire, themanaworld, eveonline, eternal lands, etc? I don't think it actually runs any of those, but the goal is to let anyone create servers that do stuff like those games.
+
+======================================================
+
+(You): What's the open source client/server combo that people are using to write games like crossfire, themanaworld, eveonline, eternal lands, etc? I don't think it actually runs any of those, but the goal is to let anyone create servers that do stuff like those games.
+
+(Overmind): There are not specific platforms for those, those are custom-made, for example, eve online is quite unique in that it uses a Stackless based system for its massive-single-world server setup, no other setup does something like that.  For specific games, over 99% of the time, the systems are custom made (usually using open-source libraries though).
+
+----------------------
+
+(Joseph): I want to say if you use java http://www.reddwarfserver.org/ its a fork of http://www.projectdarkstar.com/ which is a mmorpg type game server with sample clients. Other then that whatever you can google is probably best.
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

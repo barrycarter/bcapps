@@ -1,0 +1,48 @@
+
+ID: 24631
+post_name: in-mathematica-how-do-i-create-a-graph-object-from-a-list-of-edges-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 06 Aug 2010 08:30:04 +0000
+post_type: post 
+post_status: publish
+post_title: In Mathematica, how do I create a Graph[] object from a list of edges?
+
+======================================================
+
+(You): In Mathematica, how do I create a Graph[] object from a list of edges?
+
+(Daniel): http://stackoverflow.com/questions/2941727/showgraph-e1-e2-e1-e3-e1-e2-e3-what-is-the-problem-here
+
+(You): wow you're good. I've spent 2 hours trying to figure this out. OK, can Mathematica take strings as vertex names instead of numbers?
+
+(Daniel): I'm not sure.  the two answers there give two approaches. i suspect one of them allows strings instead of integers for vertices
+
+(You): well, I can't use GraphUtilities, because I want to do fairly deep analysis on the result. And i've been going mad trying to get Combinatorica to accept named edges.
+
+(Daniel): maybe create a hash from integers to strings and vice versa; then you can keep the combinatorica package happy with integers for vertices but be able to translate back and forth to the strings
+
+(Daniel): in any case, this would make a good stackoverflow question
+
+(You): except that I need labeled vertices for ShowGraph[] -- posting it on stackoverflow now
+
+(Daniel): cool, let me know the url
+
+(You): http://pastebin.com/Se1Nhe3M [http://pastebin.com/Se1Nhe3M] is the pastebin -- stackoverflow question coming up in a min!
+
+(Daniel): pro tip: use etherpad instead of pastebin for that sort of thing
+
+(You): what's the diff?
+
+(Daniel): etherpad is a dirt-simple shared text-editor
+
+(You): so people don't have to reply to fix things? Hey, I know who you are :)
+
+----------------------
+
+(Marty): I am not sure what you mean by Edges. If they are graphics objects check out Show. If they are data than I would say a ListPlot.
+
+
+
+[Vark assigned category: <b>Mathematica</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

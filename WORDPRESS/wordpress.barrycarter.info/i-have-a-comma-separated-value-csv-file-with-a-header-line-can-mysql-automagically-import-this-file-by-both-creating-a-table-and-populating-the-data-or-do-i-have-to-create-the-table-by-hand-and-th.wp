@@ -1,0 +1,30 @@
+
+ID: 26071
+post_name: i-have-a-comma-separated-value-csv-file-with-a-header-line-can-mysql-automagically-import-this-file-by-both-creating-a-table-and-populating-the-data-or-do-i-have-to-create-the-table-by-hand-and-th
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 13 Jun 2010 21:11:35 +0000
+post_type: post 
+post_status: publish
+post_title: I have a comma-separated value (CSV) file with a header line. Can MySQL automagically import this file by both creating a table and populating the data? Or do I have to create the table by hand and then use "LOAD DATA INFILE"?
+
+======================================================
+
+(You): I have a comma-separated value (CSV) file with a header line. Can MySQL automagically import this file by both creating a table and populating the data? Or do I have to create the table by hand and then use "LOAD DATA INFILE"?
+
+(Dan): I believe you can do this through PhpMyAdmin.
+
+----------------------
+
+(Eduard): you need to create a table. then use mysqlimport or LOAD DATA.
+
+(You): does that work even if you're doing ". file" to input queries? I don't think so? My "tee" is already set to STDOUT and I don't see them?
+
+----------------------
+
+(Stig): Don't think it can create the table by itself. How should it know which types to use for the columns? I guess you know that you could use mysqlimport from the command line instead of using load data infile???
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

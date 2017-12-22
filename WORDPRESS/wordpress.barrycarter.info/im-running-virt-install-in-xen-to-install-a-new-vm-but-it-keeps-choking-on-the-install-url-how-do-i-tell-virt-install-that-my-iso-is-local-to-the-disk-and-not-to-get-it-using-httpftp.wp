@@ -1,0 +1,18 @@
+
+ID: 26337
+post_name: im-running-virt-install-in-xen-to-install-a-new-vm-but-it-keeps-choking-on-the-install-url-how-do-i-tell-virt-install-that-my-iso-is-local-to-the-disk-and-not-to-get-it-using-httpftp
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 22:02:42 +0000
+post_type: post 
+post_status: publish
+post_title: I'm running virt-install in Xen to install a new VM, but it keeps choking on the "install URL". How do I tell virt-install that my ISO is local to the disk and not to get it using HTTP/FTP?
+
+======================================================
+
+(You): I'm running virt-install in Xen to install a new VM, but it keeps choking on the "install URL". How do I tell virt-install that my ISO is local to the disk and not to get it using HTTP/FTP?
+
+
+
+[Vark assigned category: <b>Xen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

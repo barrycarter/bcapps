@@ -1,0 +1,20 @@
+
+ID: 26171
+post_name: anytime-i-run-yum-search-anything-it-takes-forever-to-update-its-info-w-refresh-packagekit-how-can-i-tell-it-to-run-this-plugin-only-once-every-week-or-so
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 22:49:59 +0000
+post_type: post 
+post_status: publish
+post_title: Anytime I run "yum search (anything)" it takes forever to update its info w/ "refresh-packagekit". How can I tell it to run this plugin only once every week or so?
+
+======================================================
+
+(You): Anytime I run "yum search (anything)" it takes forever to update its info w/ "refresh-packagekit". How can I tell it to run this plugin only once every week or so?
+
+(Tommy): # yum --disableplugin=refresh-packagekit search &lt;foo&gt;
+
+
+
+[Vark assigned category: <b>plugin</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

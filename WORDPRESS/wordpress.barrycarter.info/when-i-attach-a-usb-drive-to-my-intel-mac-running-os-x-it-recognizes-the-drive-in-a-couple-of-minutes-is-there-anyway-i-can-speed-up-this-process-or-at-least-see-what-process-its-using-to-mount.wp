@@ -1,0 +1,26 @@
+
+ID: 25073
+post_name: when-i-attach-a-usb-drive-to-my-intel-mac-running-os-x-it-recognizes-the-drive-in-a-couple-of-minutes-is-there-anyway-i-can-speed-up-this-process-or-at-least-see-what-process-its-using-to-mount
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 29 Jun 2010 22:53:23 +0000
+post_type: post 
+post_status: publish
+post_title: When I attach a USB drive to my Intel Mac (running OS X), it recognizes the drive in a couple of minutes. Is there anyway I can speed up this process, or at least see what process it's using to mount the drive?
+
+======================================================
+
+(You): When I attach a USB drive to my Intel Mac (running OS X), it recognizes the drive in a couple of minutes. Is there anyway I can speed up this process, or at least see what process it's using to mount the drive?
+
+(Aron): I doubt it on a mac.  But it shouldn't take that long
+
+(You): thanks. I was thinking something like fsck might be the problem.
+
+----------------------
+
+(Ramesh): there is a software tool named as "USBsafelyremove" google and download it. It may help you.
+
+
+
+[Vark assigned category: <b>Intel</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

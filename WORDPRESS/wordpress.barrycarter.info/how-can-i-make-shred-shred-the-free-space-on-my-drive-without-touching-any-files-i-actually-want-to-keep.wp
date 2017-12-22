@@ -1,0 +1,72 @@
+
+ID: 24057
+post_name: how-can-i-make-shred-shred-the-free-space-on-my-drive-without-touching-any-files-i-actually-want-to-keep
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 09 Oct 2010 04:36:30 +0000
+post_type: post 
+post_status: publish
+post_title: How can I make 'shred' "shred" the free space on my drive without touching any files I actually want to keep?
+
+======================================================
+
+(You): How can I make 'shred' "shred" the free space on my drive without touching any files I actually want to keep?
+
+(Tinus): Don't think you can. Here is a tool that will help... http://techthrob.com/2009/03/02/howto-delete-files-permanently-and-securely-in-linux/
+
+(You): thanks!
+
+(Tinus): (specifically the sfill command of secure-delete)
+
+(You): yup, just read it, cool. I'm trying to see if fedora11 has it thru yum.
+
+(Tinus): hmm.. hope it does. I use debian ,so no problems this side.
+
+(You): it looks like there's a "srm" package, but no secure-delete... let's see if that contains sfill, though "yum whatprovides */sfill" gave me nothing
+
+(Tinus): Im guessing you have a lot of sensitive data on your hdd. srm seems like it should have it. http://www.perceptualmotion.co.uk/secure_erasing.html
+
+(You): nope, "srm" doesn't include sfill, at least not in fedora 11. secure-delete probably would if that package existed. I was using shred to delete files, got sick of it, and just did a "rm -r". I now regret my hastiness and want to securely wipe out the rm'd files.
+
+(Tinus): you tried scrub?
+
+(You): wait, woops, I missed that, hang on
+
+(You): yay, I found scrub!
+
+(Tinus): hehehe.. nice... enjoy.
+
+(You): I didn't read down to the bottom of the page you linked... I thought it was more on sfill and secure-delete
+
+(Tinus): thats fine. I also thought so.. when linking to it.. browsed through afterwards. Think it will do the job?
+
+(You): well, I'm about to "man scrub" and find out :)
+
+(Tinus): goodluck man. asked you since.. im feeling lazy now. hmmm.. will remember about it incase my paranoia or required secrecy ever increases. :-) .. .aa who am i kidding.. i also use shred every now and then.
+
+(You): hmmm, scrub doesn't seem to have an option to wipe out just free space. The -X option fills up free space and then wipes everything.
+
+(Tinus): how sensitive is your data though. Recovering from ext3 is very hard.. http://www.xs4all.nl/~carlo17/howto/undelete_ext3.html
+
+(Tinus): (im assuming that or ext4 is used by you)
+
+(You): yes, I may be overdoing it. This is an external USB drive, but I think I reformatted it from ntfs to ext4 (or maybe ext3). OK, I'll hit it w/ good old rm -r and be done with it.
+
+(Tinus): or fire up knoppix and secure delete :)
+
+(Tinus): obviously also overdoing.. hehe
+
+(You): LOL :) That's what I was about to say. [direct gchat: carter.barry@gmail.com]
+
+(Tinus): added you.. (jmcloete)
+
+----------------------
+
+(Jim): Yes, look up Heidi eraser
+
+(You): that's a Unix program?
+
+
+
+[Vark assigned category: <b>free space</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,62 @@
+
+ID: 24043
+post_name: is-there-an-option-to-rsync-that-says-if-it-looks-like-another-rsync-is-already-transferring-this-file-in-other-words-file-random-hex-exists-skip-this-file-on-the-assumption-that-the-other-rs
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 10 Oct 2010 22:10:12 +0000
+post_type: post 
+post_status: publish
+post_title: Is there an option to rsync that says: "if it looks like another rsync is already transferring this file [in other words, .file.[random hex] exists], skip this file on the assumption that the other rsync will take care of it?
+
+======================================================
+
+(You): Is there an option to rsync that says: "if it looks like another rsync is already transferring this file [in other words, .file.[random hex] exists], skip this file on the assumption that the other rsync will take care of it?
+
+(Jacob): You might do better using the Daemon if possible. It might be a little more intelligent. You really should not be using more than one rsnc on the same files. It was not designed for that. There is a chance that --inplace will help you. I am unaware of any locking. You could use a two pass system to implement locking yourself. Scan for changes with --dryrun
+
+(You): thanks. I don't intentionally double-rsync.. it's just that I sometimes have cron jobs that "run into" each other. Yes, the hard way is to implement client-side locking, but I was looking for an easy out.
+
+(Jacob): It is also possible that you can have it store all temporary files in one location (you can specify temporary file location) and it might crash on conflict.
+
+(You): except that each instance chooses a different random code. Like my remote system now has ".file.asdfas" and ".file.sdsss" and so on.
+
+(Jacob): You could implement whole folder locking. Have a simple shell script that creates a file, does the rsync, and removes the file. If the file already exists, stop or send a message. You would then need to monitor rsync. You could also change your script to kill any existing identical rsync transfer.
+
+(You): yes, yes, yes :) LOL :) I was hoping for a quick fix. It actually only happens occasionally.
+
+(Jacob): --inplace feels like it might modify the one copy of the file. I would think that one of the delta updates would work, the other would barf in a bad way
+
+(Jacob): that might be your easiest out. The failed update should be completely harmless.
+
+(You): looking at --inplace now, but this is a big file and it has to be accessible during the rsync. I'm guessing --inplace won't do that.
+
+(Jacob): yeah, inplace will not do that. deltas, with partial updates, with keep partial are probably your best options. They will transfer the minimum deltas
+
+(Jacob): Good luck....I have to run
+
+(You): thanks
+
+(Jacob): sorry that I did not have a cheap solution. :) I still like the dry-run with single file atomic transfers. That would just be a for loop. Unless you have a ton of files changed, it would also be pretty darn fast.
+
+(You): or I could change the cron job to be a daemon (which is what you originally suggested?) so there are never two running at the same time
+
+(Jacob): sadly, no. The daemon is just a server to talk to. I don't think it is cool enough to keep directories in sync. You could try something like dropbox if that service would work for you. They are designed to do multi-point syncs and give you 2 GB free
+
+(You): oh, I meant instead of running my client job as a cron job every 5 minutes, just run it constantly, so I'll never have 2 of the cron job running at once.
+
+(You): I'm guessing that going thru a third party will slow things down. The data is semi-time-sensitive.
+
+(Jacob): This is my kind of problem. :) I did think, BTW, that the daemon might detect two concurrent attempts to modify the same file and drop one of them. It is probably just a protocol though.
+
+(Jacob): shoot me an email if you would like to discuss further: jacob.taylor@gmail.com gotta run. Good luck.
+
+(You): I'll look at the rsync server option... however, when you rsync, I think the server side already runs "rsync --server" anyway. [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Denis): Nope, I don't think there's an option for that, although it sounds like it would be a good idea.
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

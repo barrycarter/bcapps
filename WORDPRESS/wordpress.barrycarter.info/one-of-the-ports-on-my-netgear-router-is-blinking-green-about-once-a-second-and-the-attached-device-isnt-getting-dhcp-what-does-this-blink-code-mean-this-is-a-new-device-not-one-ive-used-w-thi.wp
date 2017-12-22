@@ -1,0 +1,42 @@
+
+ID: 28234
+post_name: one-of-the-ports-on-my-netgear-router-is-blinking-green-about-once-a-second-and-the-attached-device-isnt-getting-dhcp-what-does-this-blink-code-mean-this-is-a-new-device-not-one-ive-used-w-thi
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 15 Apr 2010 03:30:34 +0000
+post_type: post 
+post_status: publish
+post_title: One of the ports on my Netgear router is blinking green about once a second (and the attached device isn't getting DHCP). What does this blink code mean? This is a new device, not one I've used w/ this router before.
+
+======================================================
+
+(You): One of the ports on my Netgear router is blinking green about once a second (and the attached device isn't getting DHCP). What does this blink code mean? This is a new device, not one I've used w/ this router before.
+
+(Matthew): I would guess it's trying to connect to the network, is the new device setup for dhcp or a static address? If it's static hen you will have to ensue the ip address matches that of your router. Other possibility is a bad Ethernet cable, try swapping in a cable you know works
+
+(You): Thanks. The device is setup for dhcp and tries to make a dhcp connection, but can't. I was wondering if the green blinking light every second had a specific meaning. I guess not. I'll try switching cables, good idea.
+
+----------------------
+
+(Forrest): First make sure your PC is enabled for DHCP.
+
+
+
+But we will need to know the specific router model in order to look up the blink codes for it.
+
+(You): yes, the device on the other end is definitely doing dhcp. It's a MR814 v2. Where can I find blink codes?
+
+(Forrest): http://kb.netgear.com/app/products/model/a_id/2503
+
+
+
+&lt;http://kb.netgear.com/app/products/model/a_id/2503&gt;This link should take
+
+you to download page for that models manuals.
+
+(You): Fantastic, thanks! Downloading it now
+
+
+
+[Vark assigned category: <b>Netgear</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

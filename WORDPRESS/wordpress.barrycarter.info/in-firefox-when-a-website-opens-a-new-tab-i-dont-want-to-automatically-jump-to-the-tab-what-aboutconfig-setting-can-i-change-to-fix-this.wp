@@ -1,0 +1,26 @@
+
+ID: 27802
+post_name: in-firefox-when-a-website-opens-a-new-tab-i-dont-want-to-automatically-jump-to-the-tab-what-aboutconfig-setting-can-i-change-to-fix-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 00:05:36 +0000
+post_type: post 
+post_status: publish
+post_title: In Firefox, when a website opens a new tab, I don't want to automatically jump to the tab. What about:config setting can I change to fix this?
+
+======================================================
+
+(You): In Firefox, when a website opens a new tab, I don't want to automatically jump to the tab. What about:config setting can I change to fix this?
+
+(Susan): Tools- Options- Tabs- "when i open a link in a new tab, switch to it immediately" Make sure that is unchecked.
+
+(You): D'oh! I'm so used to about:config, I forgot about the menu options!
+
+----------------------
+
+(Vinay): use ctrl+click to open background tab
+
+
+
+[Vark assigned category: <b>Firefox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

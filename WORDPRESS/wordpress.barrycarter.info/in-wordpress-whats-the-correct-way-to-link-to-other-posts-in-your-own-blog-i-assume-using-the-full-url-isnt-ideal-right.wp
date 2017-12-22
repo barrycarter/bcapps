@@ -1,0 +1,24 @@
+
+ID: 22816
+post_name: in-wordpress-whats-the-correct-way-to-link-to-other-posts-in-your-own-blog-i-assume-using-the-full-url-isnt-ideal-right
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 02 Jun 2011 10:49:38 +0000
+post_type: post 
+post_status: publish
+post_title: In WordPress, what's the correct way to link to other posts in your own blog? I assume using the full URL isn't ideal, right?
+
+======================================================
+
+(You): In WordPress, what's the correct way to link to other posts in your own blog? I assume using the full URL isn't ideal, right?
+
+(Michael): Full url is best -- remember wordpress gets read in feeds too so the full url tracks back when using something like google reader.
+
+----------------------
+
+(Mahdi): i use full url
+
+
+
+[Vark assigned category: <b>WordPress</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,24 @@
+
+ID: 22406
+post_name: msn-com-isnt-on-its-period
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Tue, 27 Mar 2012 14:05:03 +0000
+post_type: post 
+post_status: publish
+post_title: msn.com isn't on it's period!
+
+======================================================
+
+Adding a dot to the end of a domain name is technically valid on the 
+Internet. For example, instead of "barrycarter.info", you can say 
+"barrycarter.info.". 
+ 
+Most sites handle the extra dot well. For example 
+<a href="http://yahoo.com.">http://yahoo.com.</a>will redirect you to http://www.yahoo.com/ 
+ 
+MSN, however, doesn't (it appears to be the largest/most popular site 
+that doesn't handle the extra dot well). While http://msn.com/ works 
+fine, <a href="http://msn.com.">http://msn.com.</a> yields an error. 
+
+

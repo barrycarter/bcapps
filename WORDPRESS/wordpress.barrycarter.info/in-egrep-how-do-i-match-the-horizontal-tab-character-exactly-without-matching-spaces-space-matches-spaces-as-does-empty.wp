@@ -1,0 +1,48 @@
+
+ID: 22758
+post_name: in-egrep-how-do-i-match-the-horizontal-tab-character-exactly-without-matching-spaces-space-matches-spaces-as-does-empty
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 22 Jun 2011 21:34:21 +0000
+post_type: post 
+post_status: publish
+post_title: In egrep, how do I match the horizontal tab character exactly without matching spaces? [::space::] matches spaces, as does [::empty::]
+
+======================================================
+
+(You): In egrep, how do I match the horizontal tab character exactly without matching spaces? [::space::] matches spaces, as does [::empty::]
+
+(Alexander): You can (at least) print tab as it is. To tape it in bash (and in vim editor), press ^V, then tab.
+
+(You): thanks! Any way to do it inside a Perl program? quoted-insert doesn't seem to do the trick (using emacs)
+
+(Alexander): If you invoke egrep as a system call from perl, I think system("egrep "t" filename") or system("egrep "x09" filename) would do
+
+(You): I tried x09 and Perl didn't even compile the program w/ it.
+
+(Alexander): I've just tried this perl code:
+
+system("egrep "x09" a.txt");
+
+and it works for me
+
+(You): oh! Quoting the tab character for egrep... I wasn't doing that.
+
+----------------------
+
+(Anubhava): you can simply run: egrep "       " file.txt where you type tab character by inside double quote using keys ctrl-v-i pressed together
+
+(You): thanks. I'm doing this in a Perl script using emacs. Thoughts?
+
+(Anubhava): I don't use emacs but I'm sure there will be a way to type tab character literally in emacs
+
+(You): there is, but the Perl script won't compile when you do that.
+
+(Anubhava): Even in double quotes perl script doesn't allow a tab character?
+
+(You): my mistake, I wasn't using double quotes. That was the problem.
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

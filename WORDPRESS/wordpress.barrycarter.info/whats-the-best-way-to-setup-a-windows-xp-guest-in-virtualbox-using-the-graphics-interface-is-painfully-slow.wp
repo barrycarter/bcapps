@@ -1,0 +1,26 @@
+
+ID: 27711
+post_name: whats-the-best-way-to-setup-a-windows-xp-guest-in-virtualbox-using-the-graphics-interface-is-painfully-slow
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Apr 2010 00:18:20 +0000
+post_type: post 
+post_status: publish
+post_title: What's the best way to setup a Windows XP guest in VirtualBox? Using the graphics interface is painfully slow.
+
+======================================================
+
+(You): What's the best way to setup a Windows XP guest in VirtualBox? Using the graphics interface is painfully slow.
+
+(Ian): You can always adjust the VirtualBox guest profile temporarily to complete the setup. I've done this on a dual-core system and allocated both CPU's and 2GB of RAM to do the installation, then downgraded the guest profile to a single CPU core with 1GB of RAM, and it works just fine.
+
+(You): I don't think memory's the problem. I meant that the "console interface" that VirtualBox gives you seems really slow -- like it's redrawing the screen pixel by pixel (I know it's not really doing that). Any speedup for that?
+
+----------------------
+
+(Michael): Depends on what your trying to do?
+
+
+
+[Vark assigned category: <b>VirtualBox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,38 @@
+
+ID: 26027
+post_name: what-option-pricing-models-are-more-accurate-than-black-scholes-black-scholes-assumes-that-an-instrument-has-a-fixed-volatility-but-real-quotes-show-that-volatility-depends-on-both-the-strike-price
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 15 Jun 2010 20:06:39 +0000
+post_type: post 
+post_status: publish
+post_title: What option pricing models are more accurate than Black-Scholes? Black-Scholes assumes that an instrument has a fixed volatility, but real quotes show that volatility depends on both the strike price and expiration date.
+
+======================================================
+
+(You): What option pricing models are more accurate than Black-Scholes? Black-Scholes assumes that an instrument has a fixed volatility, but real quotes show that volatility depends on both the strike price and expiration date.
+
+(Alessandro): Real quotes show the implied volatility. That is the volatility that returns the quoted price according to Black and Scholes model. In that respect, implied volatility is backed out of prices, and not vice versa (Black-Scholes returns the price of an instrument given its volatility. Here we're saying we back out the volatility implied by a market price). There are other volatility models, stochastic volatility or Heston model allows for volatility of volatility.
+
+(You): thanks! I just found out about the Binary Options Pricing Model (BOPM) and will look into the other models you mention as well. I'm basically trying to figure out how my broker determines FX spot option pricing, and replicate his model on my own computer.
+
+(Alessandro): interesting, a lot of work ahead of you!
+
+(You): so, you don't have a magic bullet for me? :)
+
+(You): it looks like both Heston and other stochastic models treat volatility as variable in time, but not in strike price?
+
+(Alessandro): that's right, why would the price of, say, oil change depending on the strikes of the options you build upon the underlying? It moves for a number of factors, but the strikes of the options dont move the price, and don't move the volatility. It's like saying the variability of weather will be more or less variable depending on how meteo people forecast it.
+
+(You): well, that's true in theory, but my brokers pricing has option volatilities changing with strike price (I've heard this called the volatility "smile" somewhere).
+
+(Alessandro): yes, but the price does not depend on the strike. It would make more sense to say that the statistical distribution of the underlying is not normal, therefore the assumption of Black-Scholes that volatility is fixed is wrong. Why the smile? Because volatility is higher for out of the money options. If the stock reaches a very low level, its volatility is higher as the company might go bankrupt.
+
+(You): OK. So my goal is to figure out how ikongm.com determines volatility based on strike price and time to expiration. I have a few data points but want to determine the whole curve from there.
+
+(Alessandro): very hard I say...good luck!
+
+
+
+[Vark assigned category: <b>option pricing models</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

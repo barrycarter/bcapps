@@ -1,0 +1,46 @@
+
+ID: 28279
+post_name: do-powerline-network-adapters-work-with-switches
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 14 Apr 2010 04:26:34 +0000
+post_type: post 
+post_status: publish
+post_title: Do Powerline network adapters work with switches?
+
+======================================================
+
+(You): Do Powerline network adapters work with switches?
+
+(Chris): The ethernet side of the adapter can go into a switch.
+
+(You): So I can go: multiple machines -&gt; switch -&gt; Powerline adapter -&gt; other Powerline adapter -&gt; switch -&gt; router -&gt; cable modem?
+
+(Chris): Should be fine
+
+----------------------
+
+(Jeff): Ethernet is ethernet....so yes.  You can have a small network with switches and routers in one area of the home, like the basement and jump the network over powerline ethernet and come out in an upstairs room to another switch which could also have a router or just a switch....
+
+(You): OK. Powerline just spooks me because it's such a weird way to pass traffic.
+
+(Jeff): The electric on the line is low frequency and the current is electronically blocked and filtered to essentially give you a neutral medium unto pass a higher frequency.....
+
+
+
+The copper wire is a perfect medium to pass digital traffic...much like your broadband cable or even DSL.  DSL is a better example...there is a 50-140 VDC on that line and a ring is 30-45 hz of 90VAC.  Yet, with DSL filters, you can pass broadband traffic.
+
+
+
+It is safe and there is one large electric utility which  was beta testing it in, I believe, Texas because the electric infrastructure was built up, but the copper for cable and telephone was not up to snuff for broadband......
+
+
+
+It isn't much more weird than the concept of DSL and broadband.
+
+(You): Well, it's weird to me, because power cables were never meant to pass information. Then again, maybe air waves never were either...
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

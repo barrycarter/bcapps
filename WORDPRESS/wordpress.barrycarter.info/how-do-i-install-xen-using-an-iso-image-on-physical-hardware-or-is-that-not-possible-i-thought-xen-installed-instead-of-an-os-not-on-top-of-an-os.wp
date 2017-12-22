@@ -1,0 +1,48 @@
+
+ID: 26976
+post_name: how-do-i-install-xen-using-an-iso-image-on-physical-hardware-or-is-that-not-possible-i-thought-xen-installed-instead-of-an-os-not-on-top-of-an-os
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 19 May 2010 01:05:53 +0000
+post_type: post 
+post_status: publish
+post_title: How do I install xen (using an ISO image) on physical hardware, or is that not possible? I thought Xen installed instead of an OS, not on top of an OS?
+
+======================================================
+
+(You): How do I install xen (using an ISO image) on physical hardware, or is that not possible? I thought Xen installed instead of an OS, not on top of an OS?
+
+(Mike): As far as I know, it only runs on top of another OS, what's called a hosted hypervisor.  See http://en.wikipedia.org/wiki/Hypervisor and http://lists.xensource.com/archives/html/xen-users/2006-06/msg00071.html - I think Xen architecture hasn't changed substantially in the last couple of years since I last used it.
+
+(You): thanks! What free hypervisors run on bare metal and are they any good? For some reason, I thought running on bare metal was what distinguished Xen from Vmware, etc?
+
+(Mike): vmware esx/vsphere runs on bare metal, player/server/fusion/workstation run on a guest.  Xen's a bit closer to the metal, I'd say.  They may well by now have a bare metal version too - it's been a couple years since I had to care much.  They may also have a commercial version that packages everything up, not sure.
+
+(You): no, I couldn't find a Xen bare metal version -- was hoping someone here would have a pointer to an ISO. Is vmware free or no? I'm looking for a very light hypervisor -- I want most of the power to go to the machines.
+
+(Mike): you'll probably want to look at VSphere, which I think is what VMWare call ESX nowadays, and also anybody who competes in that same sector.
+
+(You): I'm guessing VSphere is commercial?
+
+(Mike): both, there's a free version too but it's limited
+
+(Mike): can't really say much more than that on the subject though, I'm not a sysadmin any more, just a consumer now of VSphere, somebody else runs it for me and takes care of licensing ;)
+
+(You): you've lost touch with your sysadmin/hacker roots? ;)
+
+(Mike): haha, somewhat, I was a sysadmin for 8 years, now I work in IT security group ;)
+
+(You): ah the good old days when security meant turning the modem off at night :)
+
+(Mike): haha, yeah.  Well, it's a living.  :)
+
+----------------------
+
+(Tommy): Yup, XEN installs against bare metal.  You need a guest O/S to do any real work.
+
+(You): thanks! How do I install xen on bare metal? Is there an ISO somewhere?
+
+
+
+[Vark assigned category: <b>Xen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

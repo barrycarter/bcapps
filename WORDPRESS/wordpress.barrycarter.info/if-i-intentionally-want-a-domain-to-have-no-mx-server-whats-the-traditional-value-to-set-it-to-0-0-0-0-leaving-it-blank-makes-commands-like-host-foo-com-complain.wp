@@ -1,0 +1,30 @@
+
+ID: 23004
+post_name: if-i-intentionally-want-a-domain-to-have-no-mx-server-whats-the-traditional-value-to-set-it-to-0-0-0-0-leaving-it-blank-makes-commands-like-host-foo-com-complain
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 01 Jan 2011 11:26:13 +0000
+post_type: post 
+post_status: publish
+post_title: If I intentionally want a domain to have no MX server, what's the traditional value to set it to? 0.0.0.0? Leaving it blank makes commands like "host foo.com" complain.
+
+======================================================
+
+(You): If I intentionally want a domain to have no MX server, what's the traditional value to set it to? 0.0.0.0? Leaving it blank makes commands like "host foo.com" complain.
+
+(Alexander): a domain without mx entry is completely legal, that should give any error message. if you want to explicitly deny mail delivery to the domain, I would use an undefined host entry, e.g. mx nomail.domain.com
+
+----------------------
+
+(Lewin): Set it to loopback, 127.0.0.1
+
+(You): Edwards, it's traditional to set an MX record to be a name, not an IP address, no?
+
+(Lewin): If you require a name then call it localhost. But either ought to work. Who is enforcing this "tradition" of which you speak? I thought you were looking for a solution to make host(1) stop complaining.
+
+(You): true, but isn't an MX record, by definition, a hostname and not an IP address. I suppose you could argue "127.0.0.1" is a host under the never-used ".1" domain... I sense that 127.0.0.1 would make other DNS tools warn me... I'm hoping for a clean solution where no tool complains about my MX record (example.com maybe?)
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

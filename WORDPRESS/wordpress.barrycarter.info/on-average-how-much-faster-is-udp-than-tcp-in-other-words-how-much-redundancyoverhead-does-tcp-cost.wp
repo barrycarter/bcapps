@@ -1,0 +1,50 @@
+
+ID: 27385
+post_name: on-average-how-much-faster-is-udp-than-tcp-in-other-words-how-much-redundancyoverhead-does-tcp-cost
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 06 May 2010 04:58:44 +0000
+post_type: post 
+post_status: publish
+post_title: On average, how much faster is UDP than TCP? In other words, how much redundancy/overhead does TCP cost?
+
+======================================================
+
+(You): On average, how much faster is UDP than TCP? In other words, how much redundancy/overhead does TCP cost?
+
+(Americo): Half
+
+(You): Do you have a source for that?
+
+(Americo): It is actually faster, udp just shotguns the packets out there there is no syn and no ack so it is faster due to lack of verification. actual speed charts are available online.
+
+(You): where can I see these speed charts?
+
+(Americo): http://www.csm.ornl.gov/~dunigan/net100/AIMD-results.pdf [http://www.csm.ornl.gov/~dunigan/net100/AIMD-results.pdf]
+
+(You): Amazing! Thanks!
+
+(Americo): np Enjoy!
+
+----------------------
+
+(Sarah): Everyone runs TCP, in any Windows network anyway.  When would you run a straight UDP network?
+
+(You): Most streaming media use UDP.
+
+(Sarah): Sure, but why would you want to get rid of TCP?
+
+(You): I didn't say that. I was just wondering how much overhead there was to it.
+
+(Sarah): Oh, sorry, misunderstood.  I think it sends three transmissions to verify the integrity of the data.  On current networks, 1GB is common 10GB is becoming common, so the overhead is neglidgeable.  On the other hand, if you don't verify the transmission drop packets won't be resent and data will be lost.  This could be critical for certain applications.  You probably know this, but I hope I helped.
+
+(You): but TCP never really sends packets that are 1GB in size, right? The data is broken down into MTU sized units, no?
+
+(Sarah): correct.  That's why with the bandwidth being what it is today makes the overhead neglidgeable.
+
+(You): OK, but if even TCP breaks the packets down, the overhead is per packet, yes?
+
+
+
+[Vark assigned category: <b>UDP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,54 @@
+
+ID: 25390
+post_name: i-want-to-create-a-simple-ruby-object-x-such-that-x-tag
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 20 Jun 2010 18:11:00 +0000
+post_type: post 
+post_status: publish
+post_title: I want to create a simple Ruby object x such that x.tag="GET". How can I do this easily? 
+
+======================================================
+
+(You): I want to create a simple Ruby object x such that x.tag="GET". How can I do this easily?
+
+(Adrian): class Getter; attr_accessor x; end; x.tag = "GET";
+
+(You): thanks! So there is no Ruby object that has a constructor like ("tag=foo") that automatically creates/assigns fields on the fly? I realize I could create one, but there isn't an existing one?
+
+(Adrian): x =Getter.new; x.x = "GET"; x.x
+
+(Adrian): google openstruct
+
+(Adrian): there are other variations of openstruct can't remember one right now
+
+(You): thanks! Is openstruct part of ruby or something you download and add?
+
+(Adrian): is part of the standard library
+
+(Adrian): require 'openstruct'
+
+----------------------
+
+(John): Sorry, accidentally hit enter. Do:
+
+module x
+
+def tag; "GET"; end
+
+end
+
+(You): thanks! Someone else suggested openstruct, which also does the trick.
+
+(John): Oh, hey, that's totally perfect for an extension I'm writing. Thanks for sharing it!
+
+(You): well great! Do you anything about Ruby On Rails?
+
+(John): Sure. Use it for work.
+
+(You): In Ruby On Rails, if I "rake db:migrate" and then edit the migration file, what should I do to fix things? I tried "rake db:rollback" and "rake db:migrate" but that didn't seem to work. In particular, it's ignoring my Thingy.reset_column_information method
+
+
+
+[Vark assigned category: <b>Ruby</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

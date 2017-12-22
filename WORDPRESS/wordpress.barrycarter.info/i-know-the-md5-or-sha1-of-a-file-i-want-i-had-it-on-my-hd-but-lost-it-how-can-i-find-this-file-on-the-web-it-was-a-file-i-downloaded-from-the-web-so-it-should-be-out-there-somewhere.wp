@@ -1,0 +1,52 @@
+
+ID: 26073
+post_name: i-know-the-md5-or-sha1-of-a-file-i-want-i-had-it-on-my-hd-but-lost-it-how-can-i-find-this-file-on-the-web-it-was-a-file-i-downloaded-from-the-web-so-it-should-be-out-there-somewhere
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 13 Jun 2010 21:09:01 +0000
+post_type: post 
+post_status: publish
+post_title: I know the md5 (or sha1) of a file I want (I had it on my HD but lost it). How can I find this file on the web? It was a file I downloaded from the web so it should be out there somewhere.
+
+======================================================
+
+(You): I know the md5 (or sha1) of a file I want (I had it on my HD but lost it). How can I find this file on the web? It was a file I downloaded from the web so it should be out there somewhere.
+
+(Eduard): try to google for md5, it is possible google indexed it somewhere.
+
+(You): I've tried that before and it rarely works. Is there a search engine that actually records MD5s or something -- one that lets me search by MD5/SHA1/etc?
+
+(Eduard): I saw a services that cracks md5 not search files. Sorry
+
+(You): that actually might help-- assuming the cracked file is the one I want?
+
+(Eduard): Probably not, they cracks passwords, not index files. If google doesn't finds it you can try other search engines
+
+(You): do you know of any other good search engines that index what google doesn't?
+
+(Eduard): I would try yahoo, bing at first
+
+----------------------
+
+(Rangan): if Google cant find it i don't think it can be found
+
+(You): lies, all lies!
+
+(Rangan): plz let me know if you get it, and how
+
+(You): things like thepiratebay and "magnet links" might do some of this. Google's nice, but it's not the only game in town.
+
+(Rangan): depends on what you are looking for
+
+----------------------
+
+(Brad): I would simply google the hash and see what comes up.
+
+(You): I tried that, but it doesn't usually work. Isn't there a better engine for searching MD5s?
+
+(Brad): None that I know of.
+
+
+
+[Vark assigned category: <b>MD5</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

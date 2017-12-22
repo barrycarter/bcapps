@@ -1,0 +1,17 @@
+
+ID: 1196
+post_name: aprs-wx-voronoi-google-maps
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Wed, 04 May 2011 18:26:15 +0000
+post_type: post 
+post_status: publish
+post_title: APRS WX Voronoi google maps
+
+======================================================
+
+I'm working on creating rapidly-updated Voronoi-style google maps for
+APRS WX data. Check out:
+<a href="https://github.com/barrycarter/bcapps/blob/master/bc-aprs-wx.pl">https://github.com/barrycarter/bcapps/blob/master/bc-aprs-wx.pl</a>
+
+

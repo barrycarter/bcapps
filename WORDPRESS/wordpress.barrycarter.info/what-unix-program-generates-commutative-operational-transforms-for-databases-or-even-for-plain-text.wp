@@ -1,0 +1,42 @@
+
+ID: 26568
+post_name: what-unix-program-generates-commutative-operational-transforms-for-databases-or-even-for-plain-text
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 31 May 2010 08:10:45 +0000
+post_type: post 
+post_status: publish
+post_title: What Unix program generates commutative operational transforms for databases, or even for plain text?
+
+======================================================
+
+(You): What Unix program generates commutative operational transforms for databases, or even for plain text?
+
+(Jeff): Do you mean SQL?
+
+(Jeff): if that's the case, plain text is the answer
+
+(You): no, I mean something like the wikipedia entry for 'operational transforms'. The order in which edits arrive is irrelevant.
+
+(Jeff): Could you give me an example with more detail what exactly you're trying to do?
+
+(You): http://stackoverflow.com/questions/2941084/commutative-operational-transform-diffs-for-databases [http://stackoverflow.com/questions/2941084/commutative-operational-transform-diffs-for-databases]
+
+(Jeff): not very sure :( Off top of my head, I don't think there is one on native Unix
+
+(You): rats -- but luckily someone else answered.
+
+(Jeff): What was the answer? I'm interested in that as well.
+
+(You): git or any CVS should do this. See: http://stackoverflow.com/questions/2941084/commutative-operational-transform-diffs-for-databases [http://stackoverflow.com/questions/2941084/commutative-operational-transform-diffs-for-databases] for the continuing discussion.
+
+(Jeff): Cool. Good to know. Thanks.
+
+----------------------
+
+(Milton): I think that would be COCO puffs
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

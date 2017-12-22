@@ -1,0 +1,828 @@
+
+ID: 27930
+post_name: in-gaimpidgin-on-linux-how-do-i-type-special-characters-like-the-o-with-two-dots-over-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 25 Apr 2010 07:01:32 +0000
+post_type: post 
+post_status: publish
+post_title: In gaim/pidgin on Linux, how do I type special characters like the o with two dots over it?
+
+======================================================
+
+(You): In gaim/pidgin on Linux, how do I type special characters like the o with two dots over it?
+
+(Ronald): Try holding ctrl+alt+shift and typing: u00F6
+
+(You): Thank y??u! It turns out just ctrl-shift works too. Where do I get the full list of u00xx codes?
+
+(Ronald): Unicode Chart - http://www.ssec.wisc.edu/~tomw/java/unicode.html
+
+----------------------
+
+(Tyro): I think first you have to press ctrl+shift+u ...... then type in the code like 171 etc.
+
+(You): Thanks! Where can I get a list of all the uxxxx codes?
+
+(Tyro): Here you are..... :)
+
+(You): Was there supposed to be a link with that? :)
+
+(Tyro): No, I sent you an attachment ( it was a html file )
+
+(Tyro): If vark does not support attachments.... here are all the codes ....enjoy :)
+
+
+
+Alt - 0 = NUL
+
+Alt - 1 = ???
+
+Alt - 2 = ???
+
+Alt - 3 = ???
+
+Alt - 4 = ???
+
+Alt - 5 = ???
+
+Alt - 6 = ???
+
+Alt - 7 = ???
+
+Alt - 8 = ???
+
+Alt - 9 = ???
+
+Alt - 10 = ???
+
+Alt - 11 = ???
+
+Alt - 12 = ???
+
+Alt - 13 = ???
+
+Alt - 14 = ???
+
+Alt - 15 = ???
+
+Alt - 16 = ???
+
+Alt - 17 = ???
+
+Alt - 18 = ???
+
+Alt - 19 = ???
+
+Alt - 20 = ??
+
+Alt - 21 = ??
+
+Alt - 22 = ???
+
+Alt - 23 = ???
+
+Alt - 24 = ???
+
+Alt - 25 = ???
+
+Alt - 26 = ???
+
+Alt - 27 = ???
+
+Alt - 28 = ???
+
+Alt - 29 = ???
+
+Alt - 30 = ???
+
+Alt - 31 = ???
+
+Alt - 32 = SPACE
+
+Alt - 33 = !
+
+Alt - 34 = "
+
+Alt - 35 = #
+
+Alt - 36 = $
+
+Alt - 37 = %
+
+Alt - 38 = &
+
+Alt - 39 = '
+
+Alt - 40 = (
+
+Alt - 41 = )
+
+Alt - 42 = *
+
+Alt - 43 = +
+
+Alt - 44 = ,
+
+Alt - 45 = -
+
+Alt - 46 = .
+
+Alt - 47 = /
+
+Alt - 48 = 0
+
+Alt - 49 = 1
+
+Alt - 50 = 2
+
+Alt - 51 = 3
+
+Alt - 52 = 4
+
+Alt - 53 = 5
+
+Alt - 54 = 6
+
+Alt - 55 = 7
+
+Alt - 56 = 8
+
+Alt - 57 = 9
+
+Alt - 58 = :
+
+Alt - 59 = ;
+
+Alt - 60 = &lt;
+
+Alt - 61 = =
+
+Alt - 62 = &gt;
+
+Alt - 63 = ?
+
+Alt - 64 = @
+
+Alt - 65 = A
+
+Alt - 66 = B
+
+Alt - 67 = C
+
+Alt - 68 = D
+
+Alt - 69 = E
+
+Alt - 70 = F
+
+Alt - 71 = G
+
+Alt - 72 = H
+
+Alt - 73 = I
+
+Alt - 74 = J
+
+Alt - 75 = K
+
+Alt - 76 = L
+
+Alt - 77 = M
+
+Alt - 78 = N
+
+Alt - 79 = O
+
+Alt - 80 = P
+
+Alt - 81 = Q
+
+Alt - 82 = R
+
+Alt - 83 = S
+
+Alt - 84 = T
+
+Alt - 85 = U
+
+Alt - 86 = V
+
+Alt - 87 = W
+
+Alt - 88 = X
+
+Alt - 89 = Y
+
+Alt - 90 = Z
+
+Alt - 91 = [
+
+Alt - 92 = 
+
+Alt - 93 = ]
+
+Alt - 94 = ^
+
+Alt - 95 = _
+
+Alt - 96 = `
+
+Alt - 97 = a
+
+Alt - 98 = b
+
+Alt - 99 = c
+
+Alt - 100 = d
+
+Alt - 101 = e
+
+Alt - 102 = f
+
+Alt - 103 = g
+
+Alt - 104 = h
+
+Alt - 105 = i
+
+Alt - 106 = j
+
+Alt - 107 = k
+
+Alt - 108 = l
+
+Alt - 109 = m
+
+Alt - 110 = n
+
+Alt - 111 = o
+
+Alt - 112 = p
+
+Alt - 113 = q
+
+Alt - 114 = r
+
+Alt - 115 = s
+
+Alt - 116 = t
+
+Alt - 117 = u
+
+Alt - 118 = v
+
+Alt - 119 = w
+
+Alt - 120 = x
+
+Alt - 121 = y
+
+Alt - 122 = z
+
+Alt - 123 = {
+
+Alt - 124 = |
+
+Alt - 125 = }
+
+Alt - 126 = ~
+
+Alt - 127 = ???
+
+Alt - 128 = ??
+
+Alt - 129 = ??
+
+Alt - 130 = ??
+
+Alt - 131 = ??
+
+Alt - 132 = ??
+
+Alt - 133 = ??
+
+Alt - 134 = ??
+
+Alt - 135 = ??
+
+Alt - 136 = ??
+
+Alt - 137 = ??
+
+Alt - 138 = ??
+
+Alt - 139 = ??
+
+Alt - 140 = ??
+
+Alt - 141 = ??
+
+Alt - 142 = ??
+
+Alt - 143 = ??
+
+Alt - 144 = ??
+
+Alt - 145 = ??
+
+Alt - 146 = ??
+
+Alt - 147 = ??
+
+Alt - 148 = ??
+
+Alt - 149 = ??
+
+Alt - 150 = ??
+
+Alt - 151 = ??
+
+Alt - 152 = ??
+
+Alt - 153 = ??
+
+Alt - 154 = ??
+
+Alt - 155 = ??
+
+Alt - 156 = ??
+
+Alt - 157 = ??
+
+Alt - 158 = ???
+
+Alt - 159 = ??
+
+Alt - 160 = ??
+
+Alt - 161 = ??
+
+Alt - 162 = ??
+
+Alt - 163 = ??
+
+Alt - 164 = ??
+
+Alt - 165 = ??
+
+Alt - 166 = ??
+
+Alt - 167 = ??
+
+Alt - 168 = ??
+
+Alt - 169 = ???
+
+Alt - 170 = ??
+
+Alt - 171 = ??
+
+Alt - 172 = ??
+
+Alt - 173 = ??
+
+Alt - 174 = ??
+
+Alt - 175 = ??
+
+Alt - 176 = ???
+
+Alt - 177 = ???
+
+Alt - 178 = ???
+
+Alt - 179 = ???
+
+Alt - 180 = ???
+
+Alt - 181 = ???
+
+Alt - 182 = ???
+
+Alt - 183 = ???
+
+Alt - 184 = ???
+
+Alt - 185 = ???
+
+Alt - 186 = ???
+
+Alt - 187 = ???
+
+Alt - 188 = ???
+
+Alt - 189 = ???
+
+Alt - 190 = ???
+
+Alt - 191 = ???
+
+Alt - 192 = ???
+
+Alt - 193 = ???
+
+Alt - 194 = ???
+
+Alt - 195 = ???
+
+Alt - 196 = ???
+
+Alt - 197 = ???
+
+Alt - 198 = ???
+
+Alt - 199 = ???
+
+Alt - 200 = ???
+
+Alt - 201 = ???
+
+Alt - 202 = ???
+
+Alt - 203 = ???
+
+Alt - 204 = ???
+
+Alt - 205 = ???
+
+Alt - 206 = ???
+
+Alt - 207 = ???
+
+Alt - 208 = ???
+
+Alt - 209 = ???
+
+Alt - 210 = ???
+
+Alt - 211 = ???
+
+Alt - 212 = ???
+
+Alt - 213 = ???
+
+Alt - 214 = ???
+
+Alt - 215 = ???
+
+Alt - 216 = ???
+
+Alt - 217 = ???
+
+Alt - 218 = ???
+
+Alt - 219 = ???
+
+Alt - 220 = ???
+
+Alt - 221 = ???
+
+Alt - 222 = ???
+
+Alt - 223 = ???
+
+Alt - 224 = ??
+
+Alt - 225 = ??
+
+Alt - 226 = ??
+
+Alt - 227 = ??
+
+Alt - 228 = ??
+
+Alt - 229 = ??
+
+Alt - 230 = ??
+
+Alt - 231 = ??
+
+Alt - 232 = ??
+
+Alt - 233 = ??
+
+Alt - 234 = ??
+
+Alt - 235 = ??
+
+Alt - 236 = ???
+
+Alt - 237 = ??
+
+Alt - 238 = ??
+
+Alt - 239 = ???
+
+Alt - 240 = ???
+
+Alt - 241 = ??
+
+Alt - 242 = ???
+
+Alt - 243 = ???
+
+Alt - 244 = ???
+
+Alt - 245 = ???
+
+Alt - 246 = ??
+
+Alt - 247 = ???
+
+Alt - 248 = ??
+
+Alt - 249 = ???
+
+Alt - 250 = ??
+
+Alt - 251 = ???
+
+Alt - 252 = ???
+
+Alt - 253 = ??
+
+Alt - 254 = ???
+
+Alt - 255 = BLANK
+
+Alt - 0127 = 
+
+Alt - 0128 = ???
+
+Alt - 0129 = ???
+
+Alt - 0130 = ???
+
+Alt - 0131 = ??
+
+Alt - 0132 = ???
+
+Alt - 0133 = ???
+
+Alt - 0134 = ???
+
+Alt - 0135 = ???
+
+Alt - 0136 = ??
+
+Alt - 0137 = ???
+
+Alt - 0138 = ??
+
+Alt - 0139 = ???
+
+Alt - 0140 = ??
+
+Alt - 0141 = ???
+
+Alt - 0142 = ??
+
+Alt - 0143 = ???
+
+Alt - 0144 = ???
+
+Alt - 0145 = ???
+
+Alt - 0146 = ???
+
+Alt - 0147 = ???
+
+Alt - 0148 = ???
+
+Alt - 0149 = ???
+
+Alt - 0150 = ???
+
+Alt - 0151 = ???
+
+Alt - 0152 = ??
+
+Alt - 0153 = ???
+
+Alt - 0154 = ??
+
+Alt - 0155 = ???
+
+Alt - 0156 = ??
+
+Alt - 0157 = ???
+
+Alt - 0158 = ??
+
+Alt - 0159 = ??
+
+Alt - 0160 = BLANK
+
+Alt - 0161 = ??
+
+Alt - 0162 = ??
+
+Alt - 0163 = ??
+
+Alt - 0164 = ??
+
+Alt - 0165 = ??
+
+Alt - 0166 = ??
+
+Alt - 0167 = ??
+
+Alt - 0168 = ??
+
+Alt - 0169 = ??
+
+Alt - 0170 = ??
+
+Alt - 0171 = ??
+
+Alt - 0172 = ??
+
+Alt - 0173 = ??
+
+Alt - 0174 = ??
+
+Alt - 0175 = ??
+
+Alt - 0176 = ??
+
+Alt - 0177 = ??
+
+Alt - 0178 = ??
+
+Alt - 0179 = ??
+
+Alt - 0180 = ??
+
+Alt - 0181 = ??
+
+Alt - 0182 = ??
+
+Alt - 0183 = ??
+
+Alt - 0184 = ??
+
+Alt - 0185 = ??
+
+Alt - 0186 = ??
+
+Alt - 0187 = ??
+
+Alt - 0188 = ??
+
+Alt - 0189 = ??
+
+Alt - 0190 = ??
+
+Alt - 0191 = ??
+
+Alt - 0192 = ??
+
+Alt - 0193 = ??
+
+Alt - 0194 = ??
+
+Alt - 0195 = ??
+
+Alt - 0196 = ??
+
+Alt - 0197 = ??
+
+Alt - 0198 = ??
+
+Alt - 0199 = ??
+
+Alt - 0200 = ??
+
+Alt - 0201 = ??
+
+Alt - 0202 = ??
+
+Alt - 0203 = ??
+
+Alt - 0204 = ??
+
+Alt - 0205 = ??
+
+Alt - 0206 = ??
+
+Alt - 0207 = ??
+
+Alt - 0208 = ??
+
+Alt - 0209 = ??
+
+Alt - 0210 = ??
+
+Alt - 0211 = ??
+
+Alt - 0212 = ??
+
+Alt - 0213 = ??
+
+Alt - 0214 = ??
+
+Alt - 0215 = ??
+
+Alt - 0216 = ??
+
+Alt - 0217 = ??
+
+Alt - 0218 = ??
+
+Alt - 0219 = ??
+
+Alt - 0220 = ??
+
+Alt - 0221 = ??
+
+Alt - 0222 = ??
+
+Alt - 0223 = ??
+
+Alt - 0224 = ??
+
+Alt - 0225 = ??
+
+Alt - 0226 = ??
+
+Alt - 0227 = ??
+
+Alt - 0228 = ??
+
+Alt - 0229 = ??
+
+Alt - 0230 = ??
+
+Alt - 0231 = ??
+
+Alt - 0232 = ??
+
+Alt - 0233 = ??
+
+Alt - 0234 = ??
+
+Alt - 0235 = ??
+
+Alt - 0236 = ??
+
+Alt - 0237 = ??
+
+Alt - 0238 = ??
+
+Alt - 0239 = ??
+
+Alt - 0240 = ??
+
+Alt - 0241 = ??
+
+Alt - 0242 = ??
+
+Alt - 0243 = ??
+
+Alt - 0244 = ??
+
+Alt - 0245 = ??
+
+Alt - 0246 = ??
+
+Alt - 0247 = ??
+
+Alt - 0248 = ??
+
+Alt - 0249 = ??
+
+Alt - 0250 = ??
+
+Alt - 0251 = ??
+
+Alt - 0252 = ??
+
+Alt - 0253 = ??
+
+Alt - 0254 = ??
+
+Alt - 0255 = ??
+
+(You): I'm doing this by IM... whoa, just got it thanks!
+
+(You): (that was supposed to be a smiley face, hmmm)
+
+(Tyro): You are welcome. Barry
+
+
+
+By the way, for any help in programming, you can contact me at
+
+www.liveperson.com/anuj-behl
+
+(You): Groovy, thanks!
+
+(You): Do you know anything about Twitter's streaming API?
+
+(Tyro): Sorry, no idea about that.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

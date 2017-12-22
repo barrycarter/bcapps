@@ -1,0 +1,34 @@
+
+ID: 26161
+post_name: in-mysql-why-does-select-round160005000-return-16000-instead-of-15000-as-id-expect
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 23:52:58 +0000
+post_type: post 
+post_status: publish
+post_title: In MySQL, why does "SELECT ROUND(16000,5000);" return 16000, instead of 15000 as I'd expect?
+
+======================================================
+
+(You): In MySQL, why does "SELECT ROUND(16000,5000);" return 16000, instead of 15000 as I'd expect?
+
+(Amit): The second parameter is the number of decimal places.  5000 is an awfully large degree of precision
+
+(You): woops! Thanks! How do I round 16000 to the nearest 5000? IS there a single function to do that or do I have to use FLOOR and stuff?
+
+(Amit): select 5000*round(16000/5000); works
+
+(Amit): don't know if there's a single function for that
+
+(You): thanks. I ended up using that (well, actually, I needed CEIL because my numbers are negative and it turns out I wanted CEIL-like behavior).
+
+(Amit): cool.
+
+----------------------
+
+(Mustafa): if decimal part of the number is greater than 0.5, ROUND() rounds the number to next integer. You need to use FLOOR() if you want to round it to floor.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

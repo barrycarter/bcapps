@@ -1,0 +1,29 @@
+
+ID: 25858
+post_name: open-letter-to-free-email-providers
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Tue, 09 Apr 2013 00:18:37 +0000
+post_type: post 
+post_status: publish
+post_title: Open letter to free email providers
+
+======================================================
+
+[I've actually sent this via fax and email to Google, Microsoft, and Yahoo, no reply yet]
+
+As you know, many 419 (advance fee fraud) scammers use your service to communicate with potential victims. 
+ 
+In other words, scammers use both your email addresses to receive 
+replies, and your SMTP servers to send email. 
+ 
+I know that you shut down these addresses when they're reported, and 
+was wondering if you could take one additional step. 
+ 
+After these account are closed, could you go through the scammer's 
+"sent mail" and inform all potential victims about 419 scams? 
+ 
+I believe this wouldn't violate your privacy policy, since it 
+explicitly deals with criminal activity. 
+
+

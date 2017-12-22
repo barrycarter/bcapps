@@ -1,0 +1,18 @@
+
+ID: 23505
+post_name: i-tried-to-do-git-filter-branch-env-filter-export-git_author_name
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 12 Nov 2010 02:24:37 +0000
+post_type: post 
+post_status: publish
+post_title: I tried to do "git-filter-branch --env-filter "export GIT_AUTHOR_NAME
+
+======================================================
+
+(You): I tried to do "git-filter-branch --env-filter "export GIT_AUTHOR_NAME='Barry Carter'; export GIT_AUTHOR_EMAIL='carter.barry@gmail.com'" HEAD", but git told me "Namespace refs/original/ not empty". What does this mean and how can I fix it?
+
+
+
+[Vark assigned category: <b>Google</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

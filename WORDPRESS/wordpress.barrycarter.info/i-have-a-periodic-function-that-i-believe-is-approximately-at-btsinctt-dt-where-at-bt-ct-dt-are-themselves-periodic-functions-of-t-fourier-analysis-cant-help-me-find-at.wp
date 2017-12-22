@@ -1,0 +1,34 @@
+
+ID: 26365
+post_name: i-have-a-periodic-function-that-i-believe-is-approximately-at-btsinctt-dt-where-at-bt-ct-dt-are-themselves-periodic-functions-of-t-fourier-analysis-cant-help-me-find-at
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 07 Jun 2010 22:39:11 +0000
+post_type: post 
+post_status: publish
+post_title: I have a periodic function that I believe is approximately "A(t) + B(t)*Sin[C(t)*t-D(t)]" where A(t), B(t), C(t), D(t) are themselves periodic functions of t. Fourier analysis can't help me find A(t), etc, because it only works when the periodicity is constant, and not itself variable. What tools might help me solve this problem?
+
+======================================================
+
+(You): I have a periodic function that I believe is approximately "A(t) + B(t)*Sin[C(t)*t-D(t)]" where A(t), B(t), C(t), D(t) are themselves periodic functions of t. Fourier analysis can't help me find A(t), etc, because it only works when the periodicity is constant, and not itself variable. What tools might help me solve this problem?
+
+(Matthew): I don't know of any good way to find an analytical expression for a complex wave pattern like an audio signal, which sounds like the kind of thing your talking.  What is it that you need to do with the signal?  Perhaps there's a way to do it without having an exact analytical expression.
+
+(You): I believe the data I have follows a simple mathematical function, but I don't know what that function is. I'm looking for techniques to find that function. The goal is the simple function itself.
+
+(Matthew): Alright, then the name of the game is curve fitting.  I don't know enough about it to recommend a technique, but here's the mos interesting thing I found with a quick google search: http://www.digitalcalculus.com/demo/curvfit.html
+
+Anyway, you should definitely tag your aardvark question with 'curve fitting' and see where that takes you.  Good luck!
+
+(You): thanks, I'll take a look. I'm noticing that most answerers ignore tags and just look at open questions, so I'm not sure how useful tagging would be.
+
+----------------------
+
+(Vijay): use periodic functions in matlab
+
+(You): I'm using Mathematica. Any tips?
+
+
+
+[Vark assigned category: <b>Fourier analysis</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

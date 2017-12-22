@@ -54,16 +54,37 @@ for $i (@{$data->{channel}->{item}}) {
     $cat = $i->{'category'}->{'nicename'};
   }
 
+  # it turns out dc:creator can do this too
+  # TODO: if this happens frequently, subroutinize
+  
+  my(@aut, $aut) = ();
+
+  if (ref($i->{'dc:creator'}) eq "HASH") {
+    debug("CREATOR IS HASH", $i->{'dc:creator'});
+    debug(var_dump("creator", $i->{'dc:creator'}));
+
+    # TODO: empty hash? temporarily just assinging auth to nothing
+    $aut = "";
+
+#    for $j (@{$i->{'dc:creator'}}) {
+#      push(@aut, $j);
+#    }
+#    $aut = join(", ", @aut);
+  } else {
+    $aut = $i->{'dc:creator'};
+  }
+
+
   debug(var_dump("I",$i));
 
-  debug("AUTH:", $i->{'dc:creator'});
+  debug("AUTH:". $i->{'dc:creator'});
 
 $str = << "MARK";
 
 ID: $i->{'wp:post_id'}
 post_name: $i->{'wp:post_name'}
 post_category: $cat
-post_author: $i->{'dc:creator'}
+post_author: $aut
 post_date_gmt: $i->{'pubDate'}
 post_type: $i->{'wp:post_type'} 
 post_status: $i->{'wp:status'}

@@ -1,0 +1,24 @@
+
+ID: 25368
+post_name: my-web-apps-sometimes-call-complex-long-running-functions-in-development-i-want-to-cache-the-output-of-those-functions-so-that-i-dont-have-to-wait-for-results-each-time-does-ruby-on-rails-or-any-o
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 21 Jun 2010 19:37:18 +0000
+post_type: post 
+post_status: publish
+post_title: My web apps sometimes call complex long-running functions. In development, I want to cache the output of those functions so that I don't have to wait for results each time. Does Ruby on Rails or any other framework help me do this?
+
+======================================================
+
+(You): My web apps sometimes call complex long-running functions. In development, I want to cache the output of those functions so that I don't have to wait for results each time. Does Ruby on Rails or any other framework help me do this?
+
+(Philip): checkout: http://railsenvy.com/2007/2/28/rails-caching-tutorial  and http://api.rubyonrails.org/classes/ActionController/Caching.html [http://api.rubyonrails.org/classes/ActionController/Caching.html]
+
+----------------------
+
+(Michael): I don't know much about Ruby on Rails, but when I am programming and encounter such a problem, I use Threading.
+
+
+
+[Vark assigned category: <b>Ruby on Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

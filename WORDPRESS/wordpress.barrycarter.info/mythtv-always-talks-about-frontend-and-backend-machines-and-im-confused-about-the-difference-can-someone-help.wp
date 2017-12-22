@@ -1,0 +1,40 @@
+
+ID: 24906
+post_name: mythtv-always-talks-about-frontend-and-backend-machines-and-im-confused-about-the-difference-can-someone-help
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 18 Jul 2010 21:29:31 +0000
+post_type: post 
+post_status: publish
+post_title: MythTV always talks about frontend and backend machines and I'm confused about the difference. Can someone help?
+
+======================================================
+
+(You): MythTV always talks about frontend and backend machines and I'm confused about the difference. Can someone help?
+
+(Henrik): ivenever actually used myth, but with my limited knowlage id say the backend is where recieving tv and/or recording, encoding and storing is done, while the frontend shows a pretty guy and plays the movies
+
+(Henrik): gui*
+
+(You): thanks. I guess that makes sense. What's weird is that everyone seems to suggest MythTV should always use two computers.
+
+(Henrik): yeah, thats so you can hide the backend computer with spinning fans and harddrives in a closet somewhere, and use a minimal computer as a frontend. But dont worry, i quite sure you can use the same computer as both a frontend and backend
+
+(You): so how does MythTV pass data between the backend and frontend? Is it fast enough to make the TV show look smooth?
+
+(Henrik): followu??
+
+----------------------
+
+(Jesse): It has been a while since I lookked at MythTV, my recolection is that it is built so that you can have multiple machines working together. The machine  that records and stores the shows (the one with the PVR card) can be different than the one that plays them back. There may be a way to have the machine that controlls the playback be a different machine than the playback machine too (think turning your computer into a remote). So the front end machine is the playback machine, and the back end stores the files and records the video. 
+
+
+
+Assuming a box with enough disk/memory/ram... both rolls can go on one computer, but if you want to record to a big machine with lots of disks, you may not want that next to your TV because of noise, so MythTV lets you split up the rolls.
+
+(You): thanks. Anything a little more high-tech?
+
+
+
+[Vark assigned category: <b>MythTV</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

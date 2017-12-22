@@ -1,0 +1,26 @@
+
+ID: 27009
+post_name: when-i-run-top-i-see-some-processes-have-rt-listed-for-priority-what-does-that-mean-and-how-do-i-set-it-for-one-of-my-processes
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 17 May 2010 07:23:56 +0000
+post_type: post 
+post_status: publish
+post_title: When I run 'top',  I see some processes have 'RT' listed for priority. What does that mean and how do I set it for one of my processes?
+
+======================================================
+
+(You): When I run 'top',  I see some processes have 'RT' listed for priority. What does that mean and how do I set it for one of my processes?
+
+(Kcinick): u can change the priority with "nice", check the man page...
+
+----------------------
+
+(Ian): RT stands for Real-Time. These process are given highest priority in the process list because they need low latency. The process priority is normally changed with nice or similar process priority tool. Note if the process you are attempting to make real-time is a heavy load and long process it may severely impact overall system performance. Also if this is a shared system placing a process in real-time priority will impact all users on that system, both local and remote. If you simply need the process to be higher priority move it to a high priority instead of real-time.
+
+(You): thanks! I thought it was something like that, but why 'RT'? Why not just call it priority -20 (since -19 is the lowest existing one) or something. Does RT have some special meaning above and beyond "higher than -19 priority"?
+
+
+
+[Vark assigned category: <b>processes</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

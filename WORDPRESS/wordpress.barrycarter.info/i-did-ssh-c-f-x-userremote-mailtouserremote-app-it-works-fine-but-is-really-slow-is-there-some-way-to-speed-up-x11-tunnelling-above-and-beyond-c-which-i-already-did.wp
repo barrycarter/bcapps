@@ -1,0 +1,24 @@
+
+ID: 25222
+post_name: i-did-ssh-c-f-x-userremote-mailtouserremote-app-it-works-fine-but-is-really-slow-is-there-some-way-to-speed-up-x11-tunnelling-above-and-beyond-c-which-i-already-did
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 03:21:42 +0000
+post_type: post 
+post_status: publish
+post_title: I did "ssh -C -f -X user@remote [mailto:user@remote] app" -- it works fine, but is REALLY slow. Is there some way to speed up X11 tunnelling (above and beyond -C which I already did?)
+
+======================================================
+
+(You): I did "ssh -C -f -X user@remote [mailto:user@remote] app" -- it works fine, but is REALLY slow. Is there some way to speed up X11 tunnelling (above and beyond -C which I already did?)
+
+(Warren): X11 is slow, thats why you use the shell... you are passing video data through the internet, there might be ways to speed it up a little but not enough for you feel achievement.
+
+----------------------
+
+(Noah): Make sure you're on the same subnet/switch
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,28 @@
+
+ID: 26401
+post_name: in-mysql-whats-the-easiest-way-to-make-today-an-alias-for-curdate-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 05 Jun 2010 21:31:59 +0000
+post_type: post 
+post_status: publish
+post_title: In MySQL, what's the easiest way to make TODAY() an alias for CURDATE()?
+
+======================================================
+
+(You): In MySQL, what's the easiest way to make TODAY() an alias for CURDATE()?
+
+(Tamal): You can define a function: http://dev.mysql.com/doc/refman/5.1/en/adding-functions.html or a variable.
+
+
+
+This is generally a Bad Idea for CURDATE() because you'll be using custom functions for something which there is a perfectly good and documented function for. It'll sacrifice portability for readibility.
+
+----------------------
+
+(Abd Allah): Use stored procedures: http://www.brainbell.com/tutorials/MySQL/Using_Stored_Procedures.htm
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

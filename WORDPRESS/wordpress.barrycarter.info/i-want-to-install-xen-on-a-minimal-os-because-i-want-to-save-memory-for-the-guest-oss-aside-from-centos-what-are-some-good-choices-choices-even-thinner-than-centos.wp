@@ -1,0 +1,68 @@
+
+ID: 26706
+post_name: i-want-to-install-xen-on-a-minimal-os-because-i-want-to-save-memory-for-the-guest-oss-aside-from-centos-what-are-some-good-choices-choices-even-thinner-than-centos
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 29 May 2010 05:42:41 +0000
+post_type: post 
+post_status: publish
+post_title: I want to install Xen on a minimal OS (because I want to save memory for the guest OSs). Aside from CentOS, what are some good choices? Choices even "thinner" than CentOS?
+
+======================================================
+
+(You): I want to install Xen on a minimal OS (because I want to save memory for the guest OSs). Aside from CentOS, what are some good choices? Choices even "thinner" than CentOS?
+
+(Allan): Gentoo would be my choice for an optimal host environment, but Gentoo is not for the feint of heart. My recommendation would be to stick with whichever distro you have the most experience with.
+
+(Allan): If you can afford to go the pay route, I would suggest using XenServer as it is as close to Bare Metal Xen as you can get.
+
+(You): my plan is literally to install xen on something and then never touch the host system, and do all my work in the guests.
+
+(You): I hate spending money on stuff, but how much would that cost (roughly)?
+
+(Allan): Use XenServer then - I just checked and there is a free version available.
+
+(You): that's what I have running now, but I can't figure out how to work it. xsconsole crashes w/ a python error and I'm not sure what xe can do!
+
+(Allan): Which version are you running?
+
+(You): my uname -a says: "Linux xenserver-iwshizue 2.6.18-128.1.6.el5.xs5.5.0.505.1024xen #1 SMP Mon Nov 16 09:08:33 EST 2009 i686 athlon i386 GNU/Linux". Does that help?
+
+(Allan): You might try v5.0 instead of v5.5 - I have not upgraded our production environment yet because I am behind on my testing.
+
+(You): hmmm... the machine is actually remote, so every time I try something, it costs me. I'm worried that if 5.5 didn't work, 5.0 might not either.
+
+(You): plus, it appears that Xen Hypervisor really IS a Linux system, just one they built.
+
+(Allan): In that circumstance, I would suggest going with what you know best. Save yourself the pain and suffering. It is, but Citrix is a major player behind Xen commercially so it is meant to be optimized somewhat.
+
+(You): Citrix isn't free, right? About how much do these commerical offerings run for a hobbyist like me?
+
+(Allan): XenServer is free, Essentials for XenServer Enterprise is $2750, Essentials for XenServer Platinum is $5500.
+
+(You): well, I'm paying $50/month for colo, so I can't afford those.
+
+----------------------
+
+(Grady): PuppyLinux is very small. Slax is also small.
+
+(You): thanks! Will either of them run xen?
+
+(You): does VirtualBox install on bare metal or on top of another OS?
+
+(Grady): VirtualBox installs in the OS, not bare metal.  It seems like you can run Xen in almost any distro, but it's just a question of how much effort it will be to get it working.  It seems that you won't really lose that much space by installing a 'bigger' distro like Ubuntu.  There's also a live CD to try Xen, but I don't know if this would suit your needs.
+
+(You): when I installed Xen from a CD on "bare metal", it turns out they have their own Linux distro, so it's not *really* bare metal. Virtualbox on CentOS might be good. Does it make it easier to configure Windows machines?
+
+(Grady): It really depends on your needs.  Generally, XEN is for setting up many large virtual servers (and so has a learning curve).  Virtualbox is better suited to something like, "I run Linux, but also want to run Windows (and maybe another OS" 'inside' of my main Linux computer."  VirtualBox is very, very easy to use.  Once it's installed, you basically click "New Windows (or Linux) installation" and run the installation from a Windows or Linux DVD.
+
+(You): thanks. This is a colocated box (I'm not on the console + have never even seen the machine) with 8G of memory. I want to run 4-5 OSs on it: Windows, FreeBSD, Linux, etc. I might even run two FreeBSDs, one a "production" server, another a "test" server, and so on. I've used vmware before (free version) and liked it except that psuedo-KVM access to a Windows guest is painfully slow.
+
+(Grady): If you're only running one of those OSes at a time, I'd at least try Virtualbox and see how it works for you.   It's also a good idea to minimize graphic effects (especially on the Windows guest OS) and use compression whenever you connect to speed things up.
+
+(You): nope, I'll be running several hosts at once (I've done it w/ vmware). I guess my question is: can I configure Windows using the command-line, at least to the point I can rdesktop into it?
+
+
+
+[Vark assigned category: <b>CentOS</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 23012
+post_name: can-i-use-drupal-to-view-an-existing-mysql-database-or-must-all-dbs-be-in-drupal-format
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 31 Dec 2010 02:48:43 +0000
+post_type: post 
+post_status: publish
+post_title: Can I use Drupal to view an EXISTING MySQL database, or must all dbs be in "Drupal format"?
+
+======================================================
+
+(You): Can I use Drupal to view an EXISTING MySQL database, or must all dbs be in "Drupal format"?
+
+(Juan): Hi Barry, you need to connect you're drupal site with an external database? It's possible, here's an example from Drupal forums http://drupal.org/node/335697#comment-1114671
+
+(You): thanks. I actually meant merge that database so Drupal can use it like it uses any other db.
+
+(Juan): in that case, you should import the content of the external database into drupal with a script. It's easier than modifiyng drupal to read from both data sources
+
+(You): ok, that makes sense. So Drupal can import existing dbs, yes?
+
+----------------------
+
+(Gilberto): To browse any database you could use phpmyadmin, it??s a very nice utility to do exactly that.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,86 @@
+
+ID: 24246
+post_name: how-do-sites-tell-that-im-using-adblock-and-require-me-to-turn-it-off-to-continue
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 18 Sep 2010 00:48:55 +0000
+post_type: post 
+post_status: publish
+post_title: How do sites tell that I'm using AdBlock and require me to turn it off to continue?
+
+======================================================
+
+(You): How do sites tell that I'm using AdBlock and require me to turn it off to continue?
+
+(James): It is probably as easy as having some javascript check the page to see if the ad is loaded.
+
+(You): Stewart, thanks! Is there ad blocking software that *loads* the ad, but doesn't display it to you, so that the website thinks you've seen it, even though you haven't?
+
+(James): I don't think that would be very easy, but there may be.
+
+(You): I mean using squid or something, you could almost see it happening.
+
+(James): try ad block plus in chrome, it does not work the same was as in firefox, so it may work there. You might be able to use a proxy server to block the ads.
+
+(You): thanks. I use squid already, so that may be the way to go.
+
+----------------------
+
+(Kurin): Typically sites check an on-loaded variable in javascript or similar.  Once the ad loads, it sets a javascript variable that it has loaded.  Later on in the javascript, it checks to see if the ad had loaded, and if it hasn't, then it displays the new 'you blocked me' ad/message.
+
+(You): thanks. Are there adblockers that load the ad but then throw it away instead of showing it to me?
+
+(Kurin): Typically adblock plus for firefox (and chrome) has that option hidden.  I typically just block the 'you blocked me' so to speak, so it doesn't matter to me.
+
+(You): what if I want to view the non-blocked content on the site? I want to defeat adblock-blockers, not avoid them?
+
+(Kurin): Typically most major ad-block addins block only the particular div/tag/etc hosting the ad, not the whole content from the page.
+
+(You): right, but if the site detects that you're using adblock, some sites will send you a "you can't view this site at all until you turn off Adblock"
+
+(Kurin): As far as I know you would have to whitelist the site itself, then try blocking or collapsing the ad itself that you don't want to see.  As far as I know that's the only way.
+
+(You): thanks.
+
+----------------------
+
+(Drew): I'm not exactly sure, but I would guess that they have some javascript code (ad.js or something) that meets the blocking criteria, which if not present, indicates to the page that the browser is using Adblock.
+
+(You): thanks. Is there an adblocker that actually loads the ads (so the website has no idea that you're blocking them) but then just discards them instead of showing them to the end user?
+
+(Drew): here's a blog http://www.catswhoblog.com/5-reasons-why-bloggers-should-consider-blocking-adblock  recommending people that they use a WordPress plugin (http://omninoggin.com/projects/wordpress-plugins/anti-adblock-wordpress-plugin/) to block adblock
+
+(Drew): About the client side adblocker, I'm not aware of one
+
+(Drew): here's a blog http://www.catswhoblog.com/5-reasons-why-bloggers-should-consider-blocking-adblock  people that they use a WordPress plugin (http://omninoggin.com/projects/wordpress-plugins/anti-adblock-wordpress-plugin/ [http://omninoggin.com/projects/wordpress-plugins/anti-adblock-wordpress-plugin/]) to block adblock
+
+(You): ok, thanks.
+
+(Drew): About the client side adblocker, I'm not aware of one
+
+----------------------
+
+(Denis): So you visit a web site, and the web site send a response, including some
+
+ad content which is configured to make a second request to the web site.  If
+
+the site detects that it sent you the first response, but you didn't make
+
+the subsequent ad-content-triggered request, than it thinks you are running
+
+some kind of ad blocker.  The secondary request can be done from inside a
+
+Flash app, or via javascript, or even just by detecting image requests from
+
+the displayed ad.
+
+(You): thanks. Is there an adblocker that actually loads the ad from the site, but simply doesn't display it to the user? That would fool the site into thinking you loaded the ad, even though you never actually saw it.
+
+(Denis): Not that I'm aware of: it would be tricky to get some things to work, like
+
+making flash work in the background.  Hope this helps!
+
+
+
+[Vark assigned category: <b>AdBlock</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

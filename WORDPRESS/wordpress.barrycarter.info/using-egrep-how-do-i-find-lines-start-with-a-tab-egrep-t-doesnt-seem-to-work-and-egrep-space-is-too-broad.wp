@@ -1,0 +1,36 @@
+
+ID: 25075
+post_name: using-egrep-how-do-i-find-lines-start-with-a-tab-egrep-t-doesnt-seem-to-work-and-egrep-space-is-too-broad
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 29 Jun 2010 21:36:06 +0000
+post_type: post 
+post_status: publish
+post_title: Using egrep, how do I find lines start with a tab? "egrep '^t'" doesn't seem to work and "egrep '[[:space:]]'" is too broad.
+
+======================================================
+
+(You): Using egrep, how do I find lines start with a tab? "egrep '^t'" doesn't seem to work and "egrep '[[:space:]]'" is too broad.
+
+(Adam): "egrep '^t'" should work.  Are you sure you're dealing with tabs and not multiple spaces? You might also try "egrep '^[t]'", though I don't see how that's very different from what you wrote.
+
+(You): thanks. It turns out if you hit ctrl-v in tcsh, the next character is interpreted literally, so you have to do ctrl-v TAB. "t" matches the letter t.
+
+----------------------
+
+(Alexander): you should be able to edit a tab into a shell script with e.g. vi, or try to enter a tab with ctrl-q tab in the shell
+
+(Alexander): it turns out ctrl-q tab only works in emacs not in bash
+
+(You): that might've worked! My workaround:  hit ctrl-v in tcsh, the next character is interpreted literally, so you have to do ctrl-v TAB.
+
+----------------------
+
+(John): try /t
+
+(You): thanks. It turns out if you hit ctrl-v in tcsh, the next character is interpreted literally, so you have to do ctrl-v TAB. "t" matches the letter t, even with a backslash before it.
+
+
+
+[Vark assigned category: <b>egrep</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

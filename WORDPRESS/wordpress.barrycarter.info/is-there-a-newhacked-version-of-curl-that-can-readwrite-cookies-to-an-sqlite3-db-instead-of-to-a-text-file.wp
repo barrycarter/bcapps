@@ -1,0 +1,28 @@
+
+ID: 26810
+post_name: is-there-a-newhacked-version-of-curl-that-can-readwrite-cookies-to-an-sqlite3-db-instead-of-to-a-text-file
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 27 May 2010 22:25:42 +0000
+post_type: post 
+post_status: publish
+post_title: Is there a new/hacked version of curl that can read/write cookies to an SQLite3 db instead of to a text file?
+
+======================================================
+
+(You): Is there a new/hacked version of curl that can read/write cookies to an SQLite3 db instead of to a text file?
+
+(Alexander): you can access the sqlite databases with Squirrel-SQL and a sqlite jdbc driver, but I'm not sure how to convert it to cookies format exactly.
+
+http://squirrel-sql.sourceforge.net/
+
+http://www.zentus.com/sqlitejdbc/
+
+(Alexander): can't you just use the cookies dialogue in Firefox to copy the necessary cookies to a text file?
+
+(You): the problem: I don't know which cookies are necessary. It's probably just the ones that end in the site I'm visiting, but lots of sites also load crap from other sites (like doubleclick.net). It's safest to just take all the cookies, instead of figuring out which ones are relevant and which ones aren't.
+
+
+
+[Vark assigned category: <b>SQLite3</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

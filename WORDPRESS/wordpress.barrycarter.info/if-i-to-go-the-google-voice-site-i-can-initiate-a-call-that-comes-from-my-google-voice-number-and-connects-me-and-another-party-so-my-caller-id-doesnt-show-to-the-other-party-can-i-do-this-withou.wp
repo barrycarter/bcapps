@@ -1,0 +1,42 @@
+
+ID: 23457
+post_name: if-i-to-go-the-google-voice-site-i-can-initiate-a-call-that-comes-from-my-google-voice-number-and-connects-me-and-another-party-so-my-caller-id-doesnt-show-to-the-other-party-can-i-do-this-withou
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 22 Nov 2010 01:12:40 +0000
+post_type: post 
+post_status: publish
+post_title: If I to go the google voice site, I can initiate a call that comes from my google voice number and connects me and another party (so my caller id doesn't show to the other party). Can I do this without visiting google's site? In other words, can I call my google voice number and have it call out?
+
+======================================================
+
+(You): If I to go the google voice site, I can initiate a call that comes from my google voice number and connects me and another party (so my caller id doesn't show to the other party). Can I do this without visiting google's site? In other words, can I call my google voice number and have it call out?
+
+(Zoso): are you wanting to show your google voice number on outgoing calls?
+
+(You): yes, that's exactly it.
+
+(Zoso): so, I have an android phone that does this automatically, but when I had a Palm Pre, I had to do the 406 number thing.  Go over to google voice, go to the support forums and look for 406 tricks.  That may answer your question
+
+(You): thanks. I don't know what a 406 trick is, but I'm about to find out!
+
+(Zoso): or you can just go get an android phone.... :)
+
+(You): if I wanted to spend THAT kind of money, I'd pay efax or something :)
+
+----------------------
+
+(Eric): As far as I know, you must originate the call from the web interface in order for the assigned google voice number to be sent as Caller ID.  It may work if you use Google voice for your voice mail.  This might only work for a cell phone. I have not tried this.
+
+(You): explain more about using Google Voice for voice mail w/ my cell phone. What would I do to have outbound calls originate from my Google Voice number on a cell?
+
+----------------------
+
+(Mark): i'll ask for what purpose, as *67 does the same?
+
+(You): I'm holding someone ransom and want them to see only my Google Voice number ;) -- nah, I just like semi-anonymous phone calls. However, *67 (or whatever the "turn off caller id" thing is) may work.
+
+
+
+[Vark assigned category: <b>caller ID</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

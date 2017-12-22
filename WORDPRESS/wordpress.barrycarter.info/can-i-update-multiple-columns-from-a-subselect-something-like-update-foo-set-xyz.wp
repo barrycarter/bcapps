@@ -1,0 +1,62 @@
+
+ID: 25260
+post_name: can-i-update-multiple-columns-from-a-subselect-something-like-update-foo-set-xyz
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 22 Jun 2010 07:18:00 +0000
+post_type: post 
+post_status: publish
+post_title: Can I update multiple columns from a subselect. Something like "UPDATE foo SET x,y,z 
+
+======================================================
+
+(You): Can I update multiple columns from a subselect. Something like "UPDATE foo SET x,y,z = (SELECT a,b,c FROM othertable)"?
+
+(Apple): you should check it with the sql syntax validator
+
+http://developer.mimer.se/validator/parser200x/index.tml
+
+To see if it possible or not :D
+
+(You): thanks. I'm pretty sure my syntax won't work. My question is: what's the correct syntax in MySQL to update multiple columns from a subselect?
+
+----------------------
+
+(Jeff): Not all three columns in one subquery.  Each column needs its own subquery, like: update dbo.TABLE_1
+
+    set  COL_1 = (select 1),
+
+        COL_2 = (select 2),
+
+        COL_3 = (select 3)
+
+(You): thanks. Is that inefficient? It looks like I'm doing 3 SELECTs where I need only do one? Or is MySQL smart enough to optimize?
+
+(Jeff): I suspect it is inefficient.  I dont know the mysql optimizer that well.  I am a Sybase / Oracle guy.  If you are only updating one row, I would do it in two steps...  select @VAR_1 = VAL_1, @VAR_2 = VAL_2, @VAR_3 =VAL_3, 
+
+    from TABLE_2
+
+    where CONDITION
+
+    
+
+update TABLE_1
+
+    set COL_1 = @VAR_1,
+
+    COL_2 = @VAR_2,
+
+    COL_3 = @VAR_3
+
+    where CONDITION
+
+(You): that only works if CONDITION returns 1 row, yes?
+
+(Jeff): correct
+
+(You): in my case, I'm updating COL_1 = (SELECT COL_1 FROM table) so it's going to be multiple values.
+
+
+
+[Vark assigned category: <b>SET</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

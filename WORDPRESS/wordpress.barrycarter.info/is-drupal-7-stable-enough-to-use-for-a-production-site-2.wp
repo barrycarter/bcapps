@@ -1,0 +1,48 @@
+
+ID: 23006
+post_name: is-drupal-7-stable-enough-to-use-for-a-production-site-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 31 Dec 2010 03:57:38 +0000
+post_type: post 
+post_status: publish
+post_title: Is Drupal 7 stable enough to use for a production site?
+
+======================================================
+
+(You): Is Drupal 7 stable enough to use for a production site?
+
+(Colin): Yes, Drupal 7 will be released the first week of 2011 and the current
+
+release candidate (RC4) is stable enough to start building on. I would
+
+however keep an eye on drupal.org and go ahead and download the final
+
+release when it is available. It's a very easy upgrade from RC4 to the final
+
+though.
+
+(You): it turns out many of the modules are not ready for primetime, and you can't use old modules, so thinking I'll wait.
+
+(Colin): Most of the popular modules have been updated for D7 (views, cck, token, cck, etc) however smaller, single developer modules typically take a while before seeing an update (either from the developer themselves or the community).
+
+
+
+Drupal 7 is a significant update with regard to performance, stability and abstraction. So you have to weigh whether or not those advantages outweigh the time you may have to spend upgrading, patching or rewriting some contributed modules yourself. If it's not a high traffic site though you're probably best to wait. :)
+
+(You): but #drupal channel on freenode says ubercart isn't working w/ Drupal 7 yet?
+
+(Colin): Yeah, ubercart has a Drupal 7 beta but if ubercart is something you need to build your site (and you need your site to be live in the next 2-4 months) I'd stick with Drupal 6.
+
+(You): I'm trying to setup a mockup site by later this evening, so sticking w/ Drupal 6.
+
+----------------------
+
+(Gilberto): I will recommend to wait until january 5th, 2011, the date that Drupal 7 will be available as official release.
+
+(You): thanks, but the #drupal channels tells me that many modules will NOT be updated.
+
+
+
+[Vark assigned category: <b>Drupal</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

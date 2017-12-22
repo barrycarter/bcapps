@@ -1,0 +1,31 @@
+
+ID: 13025
+post_name: fma-newton-was-wrong
+post_category: other
+post_author: barrycarter
+post_date_gmt: Sat, 03 Sep 2011 03:55:53 +0000
+post_type: post 
+post_status: publish
+post_title: F=ma? Newton Was Wrong!
+
+======================================================
+
+Physics teachers tell us force equals mass times acceleration, but, as 
+any rocket scientist would tell you, this is false. 
+ 
+Force is actually the change in momentum over time. Since momentum (p) is 
+mass times velocity, force is actually: 
+ 
+F = dp/dt = d(m*v)/dt = m*dv/dt + v*dm/dt = ma + v*dm/dt 
+ 
+In other words, force is mass times acceleration PLUS velocity times 
+change in mass per unit time. 
+ 
+For items with fixed mass, dm/dt=0, and this reduces to Newton's equation. 
+ 
+For items with changing mass (like rockets, which expel mass to gain 
+velocity), Newton was wrong.
+
+[Of course, Einstein also showed F=ma isn't 100% accurate because of relativistic effects]
+
+

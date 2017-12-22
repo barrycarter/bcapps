@@ -1,0 +1,42 @@
+
+ID: 28445
+post_name: subject-what-unix-program-will-convert-an-mp3-into-just-a-raw-series-of-amplitudes-ie-a-headerless-uncompressed-wav-file
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 01:31:51 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: What Unix program will convert an mp3 into just a raw series of amplitudes (ie, a headerless uncompressed WAV file)?
+
+======================================================
+
+(You): Subject: What Unix program will convert an mp3 into just a raw series of amplitudes (ie, a headerless uncompressed WAV file)?
+
+(Trevor): There are some decoders on this page, but I'm sure there are more out there:
+
+
+
+http://www.mp3-converter.com/decoders/index.htm
+
+----------------------
+
+(Bertrand): Use a combination of mpg123 (or mpg321) and sox.
+
+
+
+mpg123 -b 2048 -s filename.mp3 | sox -t raw -r 44100 -w -c2 - filename.wav
+
+
+
+Something like that should do the trick.  Both programs are in most debian
+
+and fedora core based distros.
+
+----------------------
+
+(Andrew): Audacity. Open MP3, Export as .WAV
+
+
+
+[Vark assigned category: <b>WAV</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

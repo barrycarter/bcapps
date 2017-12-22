@@ -1,0 +1,54 @@
+
+ID: 26369
+post_name: i-have-a-tar-file-and-want-to-grep-for-a-wordphrase-in-one-of-the-tarred-files-without-untarring-is-there-a-utility-that-lets-me-do-this-i-realize-that-grep-will-probably-work-since-the-tar-file
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 07 Jun 2010 22:31:38 +0000
+post_type: post 
+post_status: publish
+post_title: I have a tar file and want to grep for a word/phrase in one of the tarred files (without untarring). Is there a utility that lets me do this? I realize that grep will probably work (since the tar file contains the contents of the files it tars), but I want to know which file the match is in, and maybe the line number, etc.
+
+======================================================
+
+(You): I have a tar file and want to grep for a word/phrase in one of the tarred files (without untarring). Is there a utility that lets me do this? I realize that grep will probably work (since the tar file contains the contents of the files it tars), but I want to know which file the match is in, and maybe the line number, etc.
+
+(Guy): untar and then use 'find'
+
+(You): thanks, but I was hoping to do this without untarring anything.
+
+----------------------
+
+(John): Try tar --extract --file RS.tar --to-stdout RS/Save1/main.tex | fgrep baseline
+
+(You): I was hoping to do this without untarring at all -- not even a single file (besides, what does the command you gave do? extract all the files in the tarfile to a single file??)
+
+(John): The command I put together untars the one file you want to extract (that's
+
+the .tex file name) and streams that file to stdout so you can run commands
+
+on it.  The command does not create any new file in the file system.
+
+
+
+John
+
+(You): true, but I want to grep for a word/phrase across all the files in the tarfile to find out which one it's in (in addition to finding out which line it occurs in).
+
+----------------------
+
+(Vlad): One could use libtar; there must be more libraries / for other languages, etc.
+
+However writing an app such as this a) will take time, b) will likely have problems (as e.g. you won't be able to use standard grep w/o untarring, and competing with grep by handling regex yourself? - c'mon). 
+
+
+
+In short, the condition "w/o untarring" looks awkward, artificial, and bringing zero value.
+
+
+
+Please comment if I missed something.
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

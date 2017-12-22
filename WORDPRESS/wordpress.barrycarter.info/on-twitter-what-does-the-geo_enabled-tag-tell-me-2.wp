@@ -1,0 +1,28 @@
+
+ID: 26063
+post_name: on-twitter-what-does-the-geo_enabled-tag-tell-me-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 14 Jun 2010 01:08:55 +0000
+post_type: post 
+post_status: publish
+post_title: On Twitter, what does the geo_enabled tag tell me?
+
+======================================================
+
+(You): On Twitter, what does the geo_enabled tag tell me?
+
+(William): It tells you the location of the person the posted when they were posting
+
+----------------------
+
+(Jesse): Well you should read the Twitter API docs first. I guess it's a boolean value to determine whether geolocation is enabled or not.
+
+----------------------
+
+(Ileane): Geo-enabled allows your location to appear in Twitter. It's mostly used when people are tweeting from their mobile phones.
+
+
+
+[Vark assigned category: <b>Twitter</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

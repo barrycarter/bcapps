@@ -1,0 +1,26 @@
+
+ID: 24278
+post_name: etherpad-com-is-cool-because-it-lets-youothers-type-text-and-remembers-keystrokes-so-you-can-go-backwardsforwards-in-time-question-what-drawing-program-does-the-same-thing-but-doesnt-require-jav
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 06 Sep 2010 09:06:02 +0000
+post_type: post 
+post_status: publish
+post_title: Etherpad.com is cool because it lets you/others type text and remembers keystrokes so you can go backwards/forwards in time. Question: what drawing program does the same thing, but doesn't require Java or Flash, both of which are memory intensive? Javascript is OK, but not Java itself.
+
+======================================================
+
+(You): Etherpad.com is cool because it lets you/others type text and remembers keystrokes so you can go backwards/forwards in time. Question: what drawing program does the same thing, but doesn't require Java or Flash, both of which are memory intensive? Javascript is OK, but not Java itself.
+
+(Rick): Sorry, I only know those using Flash.
+
+(You): thanks, that's what I'm finding too :(
+
+----------------------
+
+(Randen): I really doubt your going to find any not using java or flash. For sheer performance and response time, those too plugins are the best out there for the situation you speak of. Collaborative environments need to send lots of data repetitively in order for you to have real-time collaboration. Javascript would need to send to a server side script (on both user's ends) and then parse and transmit the data both ways. Too intensive.
+
+
+
+[Vark assigned category: <b>JavaScript</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,32 @@
+
+ID: 28379
+post_name: subject-do-devices-like-linksysnetgear-powerline-use-any-electrical-outlet-as-a-network-connection-work-with-ordinary-ethernet-cards-or-only-with-specially-designed-cards
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 12 Apr 2010 21:41:51 +0000
+post_type: post 
+post_status: publish
+post_title: Subject: Do devices like Linksys/Netgear Powerline (use any electrical outlet as a network connection) work with ordinary ethernet cards, or only with specially-designed cards?
+
+======================================================
+
+(You): Subject: Do devices like Linksys/Netgear Powerline (use any electrical outlet as a network connection) work with ordinary ethernet cards, or only with specially-designed cards?
+
+(Jacob): any ethernet cards, they conform to the proper standards and work just like a networking port RJ45
+
+----------------------
+
+(David): Should work with any ethernet card, as the ethernet card plugs into the powerline adapter (Ethernet to Ethernet).
+
+----------------------
+
+(Scott): They work with ordinary ethernet cards.  Run a cable from your ethernet jack on the computer (or any other ethernet device) into the ethernet jack on the powerline device and that's it.  The speed is comparable to wifi.  Note of course that you have to have a matched pair of units.  Basically, it's just an ethernet cable extension that talks over the house wiring.
+
+----------------------
+
+(Chris): They have a standard ethernet jack, to which you connect your standard ethernet port on your computer using a regular ethernet cable.
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

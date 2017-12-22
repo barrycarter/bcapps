@@ -1,0 +1,32 @@
+
+ID: 22776
+post_name: in-wordpress-how-do-i-make-child-pages-automatically-appear-as-menu-items-under-their-parent-pages-on-the-main-menu-ive-googled-but-none-of-the-solutions-actually-seem-to-work-this-seems-like-a-s
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 05 Jun 2011 23:11:59 +0000
+post_type: post 
+post_status: publish
+post_title: In WordPress, how do I make child pages automatically appear as menu items under their parent pages on the main menu? I've googled, but none of the solutions actually seem to work. This seems like a simple thing to do? I realize I can add child pages manually, but that's not the same thing.
+
+======================================================
+
+(You): In WordPress, how do I make child pages automatically appear as menu items under their parent pages on the main menu? I've googled, but none of the solutions actually seem to work. This seems like a simple thing to do? I realize I can add child pages manually, but that's not the same thing.
+
+(Shawn): How this is done depends on the theme. If you're using a newer theme with wp menus, then you can select the option to include children. If not, you'll need to edit the theme files to add the child parameter to the links call.
+
+(You): thanks. I'm using the default twentyten theme. There doesn't appear to be an include children option, though?
+
+----------------------
+
+(Apoorv): it depends on the theme.
+
+(Apoorv): if you are using default theme as twenty10, it should show up
+
+(Apoorv): or else, send me the link and I'll help you through.
+
+(You): thanks! Sorry I didn't reply sooner,  I was away. It is the twentyten theme, but I can't figure out how to make this happen. [direct gchat: carter.barry@gmail.com] and the site is wordpress.barrycarter.org
+
+
+
+[Vark assigned category: <b>WordPress</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

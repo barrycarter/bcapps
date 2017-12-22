@@ -1,0 +1,36 @@
+
+ID: 25112
+post_name: aside-from-xml-json-wddx-csv-what-are-some-popular-ways-to-pass-data-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 27 Jun 2010 08:18:41 +0000
+post_type: post 
+post_status: publish
+post_title: Aside from XML, JSON, WDDX, CSV, what are some popular ways to pass data?
+
+======================================================
+
+(You): Aside from XML, JSON, WDDX, CSV, what are some popular ways to pass data?
+
+(Nick): It depends on the language, but I'd stick with JSON or XML for generic data.
+
+(You): thanks. I'm generating output and want to make it available in as many formats as possible. So I need a list of formats that people use.
+
+----------------------
+
+(Derek): Databases like Mysql, xls, postegre SQL, Microsoft has a couple of servers.
+
+(You): thanks, but MySQL and PostgreSQL don't really have their own data format, do they? XLS is good, but I think Excel reads CSV files. My goal is to provide information in enough common formats that almost anyone can "mash" it into their application.
+
+(Derek): You can run a lot if those through converters like applied in open office or google docs.  I have a challenge though:  my friend has an AppleWorks 6 database and you can't convert them for use by a pc without it leaving misinterpreted characters.  Love to see a fix :)
+
+(You): true, but I'm hoping to encourage use of my data by making it available in many formats directly, so people won't have to mess w/ convertors (especially if we're talking real time feeds). What format does AppleWorks 6 use? It can't dump to CSV/etc?
+
+(Derek): I wonder if you could find a .net app that could take your database and allow viewing on a website with searchability so people would not have to download.  See if you can import to something like MediaWiki (if u have lots of data).  Otherwise build an IFrame to an online version of it on google DOCS, allow guest viewing an they can download to most formats from docs.
+
+(You): wow, you just said a bunch of words I didn't understand :) I program in Linux. I want to allow downloads, but also let people view online.
+
+
+
+[Vark assigned category: <b>JSON</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 25232
+post_name: whats-the-php-equivalent-of-ruby-on-rails-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 01:44:13 +0000
+post_type: post 
+post_status: publish
+post_title: What's the PHP equivalent of Ruby on Rails?
+
+======================================================
+
+(You): What's the PHP equivalent of Ruby on Rails?
+
+(Timothy): There isn't an exact equivalent.  Rails includes deployment mechanisms not seen in PHP as well as database hooks that don't exist in PHP.  But there are several frameworks that approximate rails, such as zend and cake.
+
+(You): thanks. phpontrax.com claims to be the PHP equivalent of Rails... do you agree?
+
+(Timothy): interesting.  i'm going to pass this around to some colleagues and see if anyone has looked into it
+
+(Timothy): No one here has seen it.  The active record stuff looks promising, but the the rest doesn't look very built out.
+
+----------------------
+
+(Ian): The Symfony framework is probably closest to Rails
+
+
+
+[Vark assigned category: <b>Ruby on Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,22 @@
+
+ID: 22762
+post_name: opinions-on-whether-couchdb-or-mongodb-is-better-or-are-they-about-the-same
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 14 Jun 2011 19:42:12 +0000
+post_type: post 
+post_status: publish
+post_title: Opinions on whether CouchDB or MongoDB is better, or are they about the same?
+
+======================================================
+
+(You): Opinions on whether CouchDB or MongoDB is better, or are they about the same?
+
+(Alexander): i have a bit limited experience with both, couchdb is implemented in erlang, that is a rather strange choice, however this doesn't affect the way you can access the DB, monogodb is implemented in C++, which makes it easier to run the program I think
+
+(Alexander): the access language and the internal representation of the data is different in both, couchdb uses json objects and has an internal query langauge that is based on javascript, mongodb uses json as well and uses their own query language to search for data
+
+
+
+[Vark assigned category: <b>CouchDB</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

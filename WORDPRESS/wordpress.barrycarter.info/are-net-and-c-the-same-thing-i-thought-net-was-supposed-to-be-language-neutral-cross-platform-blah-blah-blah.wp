@@ -1,0 +1,48 @@
+
+ID: 26258
+post_name: are-net-and-c-the-same-thing-i-thought-net-was-supposed-to-be-language-neutral-cross-platform-blah-blah-blah
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 23:55:29 +0000
+post_type: post 
+post_status: publish
+post_title: Are .NET and C# the same thing? I thought .NET was supposed to be language-neutral cross-platform blah blah blah?
+
+======================================================
+
+(You): Are .NET and C# the same thing? I thought .NET was supposed to be language-neutral cross-platform blah blah blah?
+
+(Paul): C# is one of the languages which sits on top of the .NET framework (which is language-neutral)
+
+(You): so could I write .NET programs in Perl on my Unix box and have them run on Windows?
+
+(Paul): Microsoft only provides .NET for windows, but there is Mono: http://www.mono-project.com/Main_Page [http://www.mono-project.com/Main_Page], and there is Perl.NET: http://www.developer.com/lang/perl/article.php/1382961/The-PerlNET-Project.htm [http://www.developer.com/lang/perl/article.php/1382961/The-PerlNET-Project.htm]. But if you're programming in Perl, why even use .NET? Perl is already cross-platform.
+
+(You): goodish point, but only if Perl is installed on Windows. Plus, I was using Perl as an example. For actual graphics stuff, I might need Perl/TK. Basically, I want to create a Windows executable that any Windows user can double click on and get working.
+
+(Paul): http://search.cpan.org/~rschupp/PAR-Packer-1.005/lib/pp.pm [http://search.cpan.org/~rschupp/PAR-Packer-1.005/lib/pp.pm]
+
+(You): thanks! Does it support graphical Perl programs? If so, using Perl/TK or ???
+
+(Paul): No sure. I think it can support any Perl libs. I saw a mention of TK somewhere down the page.
+
+(You): sadly, tkpp is just a TK GUI interface to pp, not a Perl/TK compiler.
+
+(Paul): TK is just a library, right? No reason pp couldn't handle bundling it if it can bundle other libraries.
+
+(You): when you install perltk, doesn't it recompile Perl with tk support or something? And/or used shared libraries? I doubt you could use pp to create an executable that "has TK inside it"?
+
+(Paul): I wouldn't know. I've never used Perl/TK before. It couldn't hurt to try pp with a simple Perl/TK app and see if it works.
+
+(You): good point. However, I'm pretty sure perltk just tells Perl how to talk to TK. It doesn't install TK itself. So, if the Windows system doesn't have TK, I doubt it'll work.
+
+----------------------
+
+(Justin): You're right.  .NET is a p-code engine that translates to machine code as the app is loaded.  C# is a language to create .NET p-code in.  The theory was there would be other p-code languages and that .NET would allow binaries to run on other platforms. The libraries however needed for .NET limit what you can target.
+
+(Justin): Anyway, as such .NET and C# are often miss used terms and made to seem similar. However a .NET runtime engine has nothing to do with C# itself.
+
+
+
+[Vark assigned category: <b>C#</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

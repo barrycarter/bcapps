@@ -1,0 +1,24 @@
+
+ID: 23957
+post_name: some-web-pages-have-streaming-stock-quotes-for-example-how-can-i-record-the-stock-quotes-as-a-movie-or-something-so-i-can-play-it-back-later-and-see-what-the-quotes-were-that-day-wo-having-to-wat
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 17 Oct 2010 07:52:43 +0000
+post_type: post 
+post_status: publish
+post_title: Some web pages have streaming stock quotes (for example). How can I "record" the stock quotes as a movie or something so I can play it back later and see what the quotes were that day wo having to watch them all day? I'm on a Linux machine. I considered doing "xwd -d ..." every minute in cron, but that would still only be a once-a-minute capture. Can I get everything somehow?
+
+======================================================
+
+(You): Some web pages have streaming stock quotes (for example). How can I "record" the stock quotes as a movie or something so I can play it back later and see what the quotes were that day wo having to watch them all day? I'm on a Linux machine. I considered doing "xwd -d ..." every minute in cron, but that would still only be a once-a-minute capture. Can I get everything somehow?
+
+(Rob): Pull up the quotes in Google Finance and you can pick a point in time to see the volume and price data along with any significant news related to the stock at the time that may have contributed to a up/down swing in the volume and/or price.  It even graphs it for you for the time range you're interested in.  Day/Week/Month/Year/Years...
+
+----------------------
+
+(Narendra): first of all save the web page .then open the browser go to file and select work offline .close the web browser then open the saved page it may give you the stock quats.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

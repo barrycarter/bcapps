@@ -1,0 +1,26 @@
+
+ID: 25508
+post_name: how-do-remote-controls-including-wiimotes-work-what-sorts-of-signals-do-they-send-can-i-use-my-computers-rf-port-to-see-these-signals-and-examine-them-i-assume-its-all-just-binary-messages-but
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 17 Jun 2010 18:32:19 +0000
+post_type: post 
+post_status: publish
+post_title: How do remote controls (including Wiimotes) work? What sorts of signals do they send? Can I use my computer's RF port to see these signals and examine them? I assume it's all just binary messages, but what kinds of messages?
+
+======================================================
+
+(You): How do remote controls (including Wiimotes) work? What sorts of signals do they send? Can I use my computer's RF port to see these signals and examine them? I assume it's all just binary messages, but what kinds of messages?
+
+(Joe): They use a combination of IR and motion sensing. Rf is typically used for longer range input
+
+Devices (stereo remote for a nice Bose or high end system)
+
+----------------------
+
+(Simon): Wiimotes use a combination of bluetooth and infrared; infrared for positioning, and bluetooth for communicating with the Wii. Other types of remotes use different things; regular TV remotes use infrared only, and there are also some proprietary RF systems. It's more complex than you realise; there's various different ways of encoding the data, and infrared uses frequency only. I am unsure what you mean by your computer's "RF port", but I assume you mean a TV tuner or similar? If so, it is unlikely to work due to hardware constraints, and even if the hardware supported it, I don't know of any software to use with it. -Simon
+
+
+
+[Vark assigned category: <b>consumer electronics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

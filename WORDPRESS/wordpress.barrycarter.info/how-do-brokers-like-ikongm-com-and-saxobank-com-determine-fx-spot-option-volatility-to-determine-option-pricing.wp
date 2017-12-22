@@ -1,0 +1,48 @@
+
+ID: 26345
+post_name: how-do-brokers-like-ikongm-com-and-saxobank-com-determine-fx-spot-option-volatility-to-determine-option-pricing
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 20:42:45 +0000
+post_type: post 
+post_status: publish
+post_title: How do brokers like ikongm.com and saxobank.com determine FX spot option volatility to determine option pricing?
+
+======================================================
+
+(You): How do brokers like ikongm.com and saxobank.com determine FX spot option volatility to determine option pricing?
+
+(Stephen): I am not sure how they do it.  Option vol tends to be a mix of historical vol and market dictates, though.  I hope this helped.
+
+(You): thanks. When I'm writing long-term options, I need to know how the volatility changes over time and price (Black Scholes says it should be constant, but it's not). Do you know a way of doing this?
+
+(Stephen): part of the problem with Black Scholes are the assumptions.  Mathematically, an increasing rate of degredation makes sense, but other issues effect the vol over time making it less than steady.  You are left with the choice of accepting the flaws in the model and trying to tweak it or creating a probablistic model that will predict spikes in vol.  good luck
+
+(You): or, the way I say it "option buyers are gamblers and greedy and pay more than fair value :)"
+
+(Stephen): exactly
+
+(You): I'm still curious how ikongm and saxobank set their volatilities. With an 8-pip spread, they have to be careful they don't get ripped off and/or someone attempts arbitrage between them.
+
+(Stephen): my guess is they have a certain amount of loss built into the model ie they accept a certain amount of ripping off and search for people arbing them.  Then they game them back.  Purely speculation, though
+
+(You): so there's probably no collusion, but they keep an eye on each other's volatilities you think? Hmmm.
+
+(Stephen): that is what I think.  Collusion is too difficult.
+
+(You): you don't know any way to obtain these numbers easily do you? They'd be really useful in modeling options prices.
+
+(Stephen): I do not.  People tend to hold onto that info pretty tightly
+
+(You): I've noticed :(
+
+----------------------
+
+(Salt): the market sets the price...
+
+(You): well, in this case, the dealers set the price, not the market.
+
+
+
+[Vark assigned category: <b>investing</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

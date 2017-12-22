@@ -1,0 +1,26 @@
+
+ID: 27209
+post_name: how-can-i-send-keystrokes-to-a-running-x11-application-from-the-command-line
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 14 May 2010 20:23:10 +0000
+post_type: post 
+post_status: publish
+post_title: How can I send keystrokes to a running X11 application from the command line?
+
+======================================================
+
+(You): How can I send keystrokes to a running X11 application from the command line?
+
+(Preston): You can probably invoke xvkbd from a terminal to send text to whatever window you like:  http://homepage3.nifty.com/tsato/xvkbd/
+
+----------------------
+
+(David): you might need to use telenet application to talk to the x11 application
+
+(You): do you mean a telnet application? I have one, how would I use it?
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

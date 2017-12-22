@@ -1,0 +1,22 @@
+
+ID: 24192
+post_name: can-i-mount-a-bzipd-tar-file-as-a-read-only-filesystem-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 01 Oct 2010 20:54:02 +0000
+post_type: post 
+post_status: publish
+post_title: Can I mount a bzip'd tar file as a read-only filesystem?
+
+======================================================
+
+(You): Can I mount a bzip'd tar file as a read-only filesystem?
+
+(robsclone): That's a fascinating question. Ever get a response?
+
+(You): unfortunately, I didn't. I'm guessing there's a FUSE system out there somewhere that does it, but I haven't found it yet. I'd write one myself if I knew how to program :)
+
+
+
+[Vark assigned category: <b>filesystem</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,40 @@
+
+ID: 27119
+post_name: if-a-1kg-mass-is-rotating-around-a-pole-at-a-distance-of-1-meter-and-makes-1-revolution-per-second-what-is-the-instantaneous-acceleration
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 16 May 2010 01:27:28 +0000
+post_type: post 
+post_status: publish
+post_title: If a 1kg mass is rotating around a pole at a distance of 1 meter and makes 1 revolution per second, what is the instantaneous acceleration?
+
+======================================================
+
+(You): If a 1kg mass is rotating around a pole at a distance of 1 meter and makes 1 revolution per second, what is the instantaneous acceleration?
+
+(Harrison): m*v^2/r. The velocity is 2pi* radius per second so just 2pi. So the whole thing multiplied is 1kg * (2pi m/2)^2/ 1m. Final result 4pi^2 m/s^2
+
+(Harrison): correction the whole thing multiplied is 1kg * (2pi m/s)^2/ 1 m
+
+(You): I think the kg is unneeded. Acceleration is m/s^2 not kg*m/s^2
+
+(Harrison): Sorry, you are correct. I was thinking the force required on a string to hold the mass. Good catch
+
+(You): great. And since I'm bugging you... if I applied 1000 watts of power to my ball-rotating-around-pole for 100 days, would the velocity be a significant portion of the speed of light? In other words, would the ball actually be in a significantly different time frame?
+
+(Harrison): Thats a tougher one. Let me think about it for a while. I'll get back to you
+
+(You): thanks :) Actually, I'm being lazy -- the kinetic energy is 1/2*m*v^2 so it's just a matter of converting a bunch of units.
+
+----------------------
+
+(Piotr): the acceleration vector is directed towards the axis of rotation and is: a = v^2/r = (2*pi*r/T)^2/r = 4*pi^2 [m/s^2]. It doesn't depend on the mass.
+
+----------------------
+
+(Conrad): v^2/r = (d/t)^2/r = (2*pi*1)^2/1 = 4*pi^2
+
+
+
+[Vark assigned category: <b>physics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

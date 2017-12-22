@@ -1,0 +1,20 @@
+
+ID: 26353
+post_name: in-perl-if-i-use-0
+post_category: uncategorized
+post_author: barrycarter
+post_date_gmt: Thu, 01 Jan 1970 00:00:00 +0000
+post_type: post 
+post_status: publish
+post_title: In Perl, if I use "$0
+
+======================================================
+
+(You): In Perl, if I use "$0='foo';" to change my program's process name, how can people still see the original process name?
+
+(Martin): $0 is a variable that is only pertinent to the internal perl context, the kernel will still have your program on file under it's original name and the kernel considers it a bit of an exploit if you try and change it.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

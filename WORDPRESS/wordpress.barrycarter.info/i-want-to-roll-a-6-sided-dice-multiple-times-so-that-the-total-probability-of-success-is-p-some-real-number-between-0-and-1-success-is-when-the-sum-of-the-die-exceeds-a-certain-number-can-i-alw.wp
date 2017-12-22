@@ -1,0 +1,66 @@
+
+ID: 24529
+post_name: i-want-to-roll-a-6-sided-dice-multiple-times-so-that-the-total-probability-of-success-is-p-some-real-number-between-0-and-1-success-is-when-the-sum-of-the-die-exceeds-a-certain-number-can-i-alw
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 22 Aug 2010 00:38:12 +0000
+post_type: post 
+post_status: publish
+post_title: I want to roll a 6-sided dice multiple times so that the total probability of "success" is p, some real number between 0 and 1. "Success" is when the sum of the die exceeds a certain number. Can I always find a way of rolling dice so that the chance of success is arbitrarily close to p?
+
+======================================================
+
+(You): I want to roll a 6-sided dice multiple times so that the total probability of "success" is p, some real number between 0 and 1. "Success" is when the sum of the die exceeds a certain number. Can I always find a way of rolling dice so that the chance of success is arbitrarily close to p?
+
+(Roberto): Short answer: No. At least no, if you're not using a weighted dice.
+
+(You): thanks.. any mathematical proof or something behind that?
+
+(Roberto): It's actually not necessary. It's just that you can't modify your "way" of rolling the dice and expect a probabilistic result. It's supposed to be pure random.
+
+(You): no, but if you add up several dice, the probabilities are different, no?
+
+(Roberto): Yes, you're right. The probability of getting such number in each dice is multiplied with the rest. For instance, 2/3 of the fist dice * 2/3 of the second * 2/3 of the third.... and so. They'll be obviously slimmer chances, but yes, they're different
+
+(You): right, so the question is-- can I end up w/ any probability I want, or do the probabilities cluster towards certain real numbers?
+
+(Roberto): actually they cluster right on the middle. This is called a normal probability distribution. For instance, using 2 dice the probability of getting a seven is a lot higher than getting a 2
+
+(You): right! Actually, I think that answers my question. If you were to roll enough dice, you would have enough points on the normal distribution to get any probability you wanted. I forgot about the "sum of all distributions tends to normal" theorem.
+
+(Roberto): Yes, that's right. Just remember that every case has different probabilities. ;-)
+
+(Roberto): you can use that in your favor!
+
+(You): yeah yeah :) My goal is to prove that you can generate any desired probability using just a 6 sided dice, and that other-sided dice are really unnecessary.
+
+(You): no I got it. It's easy once you realize it's all normal.
+
+(Roberto): Ok, Good Luck!
+
+(You): thanks. I'm bored w/ the problem since it's obviously solvable :)
+
+----------------------
+
+(Landis): I don't really understand the question the way you have posed it.  You have defined p AS the probability of success, so the probability of success is always equal to p.  What does it mean to "find a way of rolling the dice?" Do you mean a way to define "success?" Also, are you rolling 1, 2, or multiple dice?
+
+(You): thanks. I'm rolling one 6-sided dice many times and want to say "the probability of rolling the dice m times and getting a sum of n or greater is p", where p is the given, and n and m are what I'm trying to find.
+
+(Landis): thanks for the follow up.  This makes more sense.  I believe the answer is yes, if you do not place an upper bound on m.  The precise definition of m and n in terms of p will likely be complicated because of the combinitorics of arbitraily many rolls.  It will probably be easier to prove by contradiction (i.e. assume that you cannot find m and n to achieve the desired p, and find a contradiction).  Hope this helps...
+
+(Landis): Now that I think about it a bit, consider the following: let random variable S_m signify the sum of m rolls.  As m goes to infinity, S_m will approach a Guassian distribution with mean (3.5)m and variance (35/12)m (I think).  Since S_m is Gaussian, for any arbitrary p, you can find n so that Pr[S_m&gt;n] = p.
+
+(Landis): ...forgot to mention. S_m is Gaussian by the central limit theorem: http://en.wikipedia.org/wiki/Central_limit_theorem
+
+(You): thanks :) Actually, someone else pointed out the same thing, so you're right -- the sum of enough rolls is normal so I can get any probability.
+
+----------------------
+
+(Mark): well, i would state it differently, since how can you effectively roll the dice differently? Plus, you've already stated that 'success=p' ? But i think i get you, and your answer is in what number to exceed; on a die numbered 1-6, you would pick 3.49, as being right below the median, since there is no zero. gl
+
+(You): what I mean is that: for any 0 &lt; p &lt; 1 there exists n and m such that the probability of the sum of n rolls of a fair 6-sided exceeding m is arbitrarily close to p (I didn't want to throw in an extra epsilon).
+
+
+
+[Vark assigned category: <b>real number</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

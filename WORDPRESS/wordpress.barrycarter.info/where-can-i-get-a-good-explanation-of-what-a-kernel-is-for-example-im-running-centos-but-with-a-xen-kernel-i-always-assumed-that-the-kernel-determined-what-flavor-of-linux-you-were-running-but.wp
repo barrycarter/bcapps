@@ -1,0 +1,86 @@
+
+ID: 26339
+post_name: where-can-i-get-a-good-explanation-of-what-a-kernel-is-for-example-im-running-centos-but-with-a-xen-kernel-i-always-assumed-that-the-kernel-determined-what-flavor-of-linux-you-were-running-but
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 21:01:56 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I get a good explanation of what a 'kernel' is? For example, I'm running CentOS, but with a Xen kernel. I always assumed that the kernel determined what flavor of Linux you were running, but it doesn't appear to be so.
+
+======================================================
+
+(You): Where can I get a good explanation of what a 'kernel' is? For example, I'm running CentOS, but with a Xen kernel. I always assumed that the kernel determined what flavor of Linux you were running, but it doesn't appear to be so.
+
+(Mike): a person at the apple store explained a kernel like this: it is a unique message sent from applications you run to the processor in your computer. Wish I knew more on this so I will share viewing reponses with you.
+
+(You): thanks. I think I'm hoping for something a little more detailed than what an Apple store employee would say :)
+
+(Mike): I complete understand which is why I'm waiting on responses with you:)
+
+----------------------
+
+(Llewellyn): Barry, The kernel controls what drivers your system will use. In essence if you run the Xen Kernel its a Kernel with drivers and patches that are centric around Virtualization and the Xen software. In essence "The right tool, to do the right job". Differences for kernels are largely based on CPU types, and Specific Programs because most low level enhancements are geared towards just a few programs and more likely CPU architectures.
+
+(You): OK, so would something like fopen() be part of the kernel, or does that sit in a layer above the kernel?
+
+(Llewellyn): Im guessing since it seems like a C call it would be on the gcc level and while that code can interact on the Kernel level and the Kernel will have to make the memory calls to allocate the memory its not apart of the kernel unless its compiled into the kernel as a driver.
+
+(You): so you're saying the kernel is what talks to the hardware. In other words, gcc's fopen() command eventually turns into a "move disk to this track/sector" at the kernel leve?
+
+(Llewellyn): Its more like - C program is compiled with gcc including the fopen syntax - Then you execute the applications, and the kernel alots memory to that command - The kernel also contains the driver for the harddrive which makes it accessible to your operating system. Does that make sense?
+
+(You): sort of. So the kernel is responsible for things like malloc()?
+
+(Llewellyn): Yep, and alot of other stuff, it also controls CPU flow and such - A great book is "Linux Kernel In A Nutshell" by Kroah-Hartman, Published by: O'Reilly , ISBN-10: 0-596-10079-5 or ISBN-13: 978-0-596-10079-7
+
+(You): sadly, I can't read :) Seriously, is there something online that could help?
+
+(Llewellyn): You could actually probably set up a system to read pdf's to you.
+
+(You): LOL! No, I meant: is there a free book online about the Linux kernel. I don't want to make O'Reilly rich
+
+(Llewellyn): The documentation out there is pretty trite im not going to lie - Its worth the $$ if you buy it used on amazon.
+
+(You): I could always steal it from TPB I suppose.
+
+(You): OK, I guess my followup question is: if most Linux distros use the same kernel, how are they different from each other? Fedora, CentOS, Debian, etc?
+
+(Llewellyn): Generally custom patches, artwork, a few utilities, and maybe a few drivers here and there. Honestly Main Stream distro's use alot of the same stuff even Kernel wise.
+
+(You): well, I hear distros say things like "using Linux 1.6.17 kernel", so I'm guessing that's a fixed kernel? You mean the only real difference between distros is cosmetic?
+
+(Llewellyn): Often the difference between Distro's is yes cosmetic however there are some distros that dont follow the curve. Such as slackware, gentoo, centos, RHEL, suse ( somewhat )
+
+(You): what do you mean by don't follow the curve? They don't use the latest kernels?
+
+(Llewellyn): Some times distro's like debian will use older kernels for stability. You essentially in linux have two schools of thought: Bleeding Edge vs Stable
+
+(You): know anything about Xen? My stupid FreeBSD install is failing.
+
+(Llewellyn): Xen is a whole different animal
+
+(Llewellyn): You should do alittle research on it, its ment for alot of virtual machines.
+
+(You): oh, I know what Xen is. Just bugging you because you seem smart and no one else is answering my question. I've used vmware previously.
+
+(Llewellyn): Xen does Virtual Machine management on the Hardware level Vs. Vmware which only does it on the software level
+
+(You): right. I've already installed the Xen kernel and booted into it. It's virt-install that's giving me trouble.
+
+(Llewellyn): Have you read any freebsd howto's for installing Xen?
+
+(You): oh, I installed it on CentOS. I'm trying to install FreeBSD *as* a VM on top of that.
+
+(Llewellyn): You might want to look through the documentation and see if you can install FreeBSD on Xen
+
+(Llewellyn): There is probably a howto out there for it, and it probably requires alittle modification
+
+(You): hmmm, I should be able to. The problem is when I put in "install URL", it totally doesn't recognize it.
+
+(Llewellyn): I would do alittle research on it, it might not be straight forward.
+
+
+
+[Vark assigned category: <b>CentOS</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

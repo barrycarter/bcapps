@@ -1,0 +1,26 @@
+
+ID: 26089
+post_name: in-fedoralinux-what-does-sedispatch-do-and-how-can-i-turn-it-off-if-it-does-nothing-important
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 13 Jun 2010 01:15:59 +0000
+post_type: post 
+post_status: publish
+post_title: In Fedora/Linux, what does sedispatch do and how can I turn it off if it does nothing important?
+
+======================================================
+
+(You): In Fedora/Linux, what does sedispatch do and how can I turn it off if it does nothing important?
+
+(Dvir): I dunno exactly what it does but it's part of the SELinux security model. if you don't need it just disable it and it will probably make sedispatch go away
+
+(You): OK, how do I turn off/disable SElinux?
+
+----------------------
+
+(Tommy): sedispatch is part of the SELINUX facility and is used to route a detected SELINUX violation to its interpreter.  http://danwalsh.livejournal.com/26053.html
+
+
+
+[Vark assigned category: <b></b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

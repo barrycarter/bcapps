@@ -1,0 +1,44 @@
+
+ID: 23378
+post_name: in-firefox-how-do-i-save-documents-in-multiple-tabs-all-at-once-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 29 Nov 2010 23:40:21 +0000
+post_type: post 
+post_status: publish
+post_title: In Firefox, how do I save documents in multiple tabs all at once?
+
+======================================================
+
+(You): In Firefox, how do I save documents in multiple tabs all at once?
+
+(Steve): Download the "Session Manager" add in, from the "Tools&gt;Add-in" menu
+
+(You): thanks, what does Session Manager do?
+
+(Steve): It keeps track of any open windows or tabs. You can set it to invoke automatically on startup or save full session/tabs on command
+
+(You): but it doesn't save tabs as HTML to my hard drive, right?
+
+----------------------
+
+(Daniel): Hi, Barry.  That's a good one.  I know how to save the *tabs*, but you want to be able to save the rendered HTML of each tab as a document?  My guess: it'll take custom extension programming.
+
+(You): that's correct. You can save tabs as bookmarks easily enough, but I want to save the source of what's in the tabs. I'm wondering if there's a GM script out there that does it
+
+(Daniel): Hey, I forgot I'd installed this.  It's not necessarily everything you wanted, but it's probably closer than the likes of Taboo, which only focuses on tab states for the sake of reloading them, rather than accessing them separately from Firefox.  It's called ScrapBook, and I used it to grab stuff from our intranet when I wanted to suggest fixes (turns out it was more horrible than my patience could tolerate):
+
+
+
+https://addons.mozilla.org/en-US/firefox/addon/427/
+
+(You): thanks!
+
+----------------------
+
+(Jeremy): Not entirely sure what "save documents" means, but if you want to bookmark all tabs, you just right-click any tab and select "Bookmark All Tabs"
+
+
+
+[Vark assigned category: <b>the Internet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

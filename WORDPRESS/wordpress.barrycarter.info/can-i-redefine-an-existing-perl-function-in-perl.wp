@@ -1,0 +1,32 @@
+
+ID: 26624
+post_name: can-i-redefine-an-existing-perl-function-in-perl
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 22:12:06 +0000
+post_type: post 
+post_status: publish
+post_title: Can I redefine an existing Perl function in Perl?
+
+======================================================
+
+(You): Can I redefine an existing Perl function in Perl?
+
+(Jack): Sure you can. Just create a function and put the origional one inside it
+
+(You): no that's going the other way. I don't want an alias for an existing function. I want to overwrite an existing function.
+
+(Jack): Oh then sorry, you can't do that. Why not create a similar function though? For example instead of using print(); use _print();
+
+(You): because I have a lot of existing code written, and I've decided that the Perl function I'm using isn't working exactly the way I want. Ruby lets you redefine functions which can be very helpful!
+
+(Jack): Well in that case, sorry but I'm pretty sure you can't do that in perl
+
+----------------------
+
+(Ryan): It's usually better to write your own function. I don't know of a way to easily extend a built in function. You would have to get the source, make the changes and recompile it.
+
+
+
+[Vark assigned category: <b>Perl</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

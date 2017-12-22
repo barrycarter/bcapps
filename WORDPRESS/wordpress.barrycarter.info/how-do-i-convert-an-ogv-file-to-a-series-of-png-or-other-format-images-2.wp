@@ -1,0 +1,26 @@
+
+ID: 23949
+post_name: how-do-i-convert-an-ogv-file-to-a-series-of-png-or-other-format-images-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 17 Oct 2010 20:16:36 +0000
+post_type: post 
+post_status: publish
+post_title: How do I convert an OGV file to a series of PNG (or other format) images?
+
+======================================================
+
+(You): How do I convert an OGV file to a series of PNG (or other format) images?
+
+(Noah): ffmpeg -i *ogv %0d.png
+
+(You): damn you're good! My purpose in converting to png is to gocr a portion of each image... is there a better way to do that? [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Jeremy): I would use a program like ffmpeg to input the ogv file and output the pngs. Like the howto on this page: http://stream0.org/2008/02/howto-extract-images-from-a-vi.html
+
+
+
+[Vark assigned category: <b>PNG</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

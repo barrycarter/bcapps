@@ -1,0 +1,26 @@
+
+ID: 27731
+post_name: is-there-an-x11-app-that-just-flips-a-coin-ideally-with-a-command-line-option-to-let-me-weight-the-coin-i-realize-there-are-tons-of-ways-to-generate-random-numbers-but-when-a-non-computer-friend
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 29 Apr 2010 22:32:39 +0000
+post_type: post 
+post_status: publish
+post_title: Is there an X11 app that just flips a coin (ideally with a command-line option to let me "weight" the coin)? I realize there are tons of ways to generate random numbers, but when a non-computer friend says "let's flip a coin over it", I want to bring up the app to show what a nerd I am (plus, since non-computer people sometimes assume computers are "fair", I can cheat without them knowing!)
+
+======================================================
+
+(You): Is there an X11 app that just flips a coin (ideally with a command-line option to let me "weight" the coin)? I realize there are tons of ways to generate random numbers, but when a non-computer friend says "let's flip a coin over it", I want to bring up the app to show what a nerd I am (plus, since non-computer people sometimes assume computers are "fair", I can cheat without them knowing!)
+
+(Andy): I'm not seeing one quickly for X11, but I see a webapp that does it (fairly): http://www.random.org/coins/
+
+
+
+If you give me about half an hour, I could code a webapp to do the same where you can specify the weight.
+
+(Andy): I could also do something for the command line, just some scripted app. I might even be able to throw in an ASCII animation!
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

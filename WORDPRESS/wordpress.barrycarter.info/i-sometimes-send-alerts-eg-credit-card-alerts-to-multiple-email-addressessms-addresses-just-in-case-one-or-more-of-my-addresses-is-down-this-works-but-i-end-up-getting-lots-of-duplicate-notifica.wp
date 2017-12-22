@@ -1,0 +1,52 @@
+
+ID: 28104
+post_name: i-sometimes-send-alerts-eg-credit-card-alerts-to-multiple-email-addressessms-addresses-just-in-case-one-or-more-of-my-addresses-is-down-this-works-but-i-end-up-getting-lots-of-duplicate-notifica
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 21 Apr 2010 01:45:49 +0000
+post_type: post 
+post_status: publish
+post_title: I sometimes send alerts (eg, credit card alerts) to multiple email addresses/SMS addresses just in case one or more of my addresses is down. This works, but I end up getting lots of duplicate notifications. Is there any clever way to deliver an email to one address and then try other addresses only if the first one fails?
+
+======================================================
+
+(You): I sometimes send alerts (eg, credit card alerts) to multiple email addresses/SMS addresses just in case one or more of my addresses is down. This works, but I end up getting lots of duplicate notifications. Is there any clever way to deliver an email to one address and then try other addresses only if the first one fails?
+
+(Michael): You can try forwarding. Most email providers offer mail forwarding as a setting.
+
+(You): Thanks. I think forwarding only works if that email address is up, right? If the main address is down, it won't get forwarded?
+
+(Michael): I am not too sure about that question. I have several different email providers and do not ever have a problem with their servers being down. Do you mind if I ask what email provider is giving you the most trouble?
+
+(You): I receive mail on my own ISP's mail server, not a big name like google/yahoo.
+
+(Michael): o ok. If it is an issue with the server being down, there really isn't much you can do with it unfortunately. As a suggestion, I always keep a gmail and yahoo email as backup. Wish I could help more.
+
+(You): Thanks. I was thinking something with multiple MX records or something, but not sure how the details would work.
+
+----------------------
+
+(Andrew): Not that I know of , it would require a mail system with suitable scripts to do. Could be written fairly easily with php. It would need to catch the return fail and move to the next address in the list. But what do you mean by fail if you are getting duplicates. It may be easier to set up filters on you clients.
+
+(You): I want to get just one copy of each email -- it should go down a list, and, after the first success, stop sending to the other addresses.
+
+(Andrew): Yes but first it is important to know why it is failing?
+
+(You): every ISP has some down time -- sometimes my gmail account gets so much spam that gmail starts to tempfail my email -- that sort of thing.
+
+(Andrew): Okay with you. The best way would be to have the mail redirected to a mail service and then have the logic on the mail system. Can put you int ouch with a friend who could create it in php.
+
+(You): Thanks, but wouldn't that mean the receiving system would have to be up 100% of the time?
+
+(Andrew): yes afraid so, it could be hosted on your site if you have one. Which may have a sla of 98%. There is no 100% on the web!!
+
+(You): That's my problem! I want very high guarentee that the mail will be delivered to at least one address. I was thinking something with multiple MX records maybe.
+
+(Andrew): That would become pretty complex and the mx records would still point into one al system to deal with the logic. You could have two mail systems and that way get only two duplicates at the same address, the first to succeed.
+
+(You): That might be the way to do it -- multiple MX records pointing to multiple unrelated servers. Thanks!
+
+
+
+[Vark assigned category: <b>the Internet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,32 @@
+
+ID: 25450
+post_name: i-sometimes-do-ssh-userremote-com-mailtouserremote-com-somecommand
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 07:38:00 +0000
+post_type: post 
+post_status: publish
+post_title: I sometimes do "ssh user@remote.com [mailto:user@remote.com] 'somecommand' 
+
+======================================================
+
+(You): I sometimes do "ssh user@remote.com [mailto:user@remote.com] 'somecommand' &". The background process runs fine for a while and the tells me that the job is suspended and requires tty input. Why? Shouldn't an ssh remote command never require tty input if 'somecommand' requires no input (and it doesn't)?
+
+(Alexander): ssh assigns a terminal on the remote side this means that you will require a connected terminal even though it never reads from it. you can turn this off with -T , maybe this will keep the command from hanging
+
+(You): thanks! That'll probably work better than my current hack of "echo | ssh ..."
+
+(Alexander): if you ssh from a pipe, you also disable tty allocation I think
+
+(You): thanks. I'm guessing that's why my hack works. I like your way (the right way) better.
+
+----------------------
+
+(Simon): Possibly the command is sending some output? Try somecommand &gt;&gt; /dev/null
+
+(You): Thanks, Simon. I noticed that "echo | ssh ..." did the trick, but someone else pointed out "ssh -T" is probably the correct solution
+
+
+
+[Vark assigned category: <b>SSH</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

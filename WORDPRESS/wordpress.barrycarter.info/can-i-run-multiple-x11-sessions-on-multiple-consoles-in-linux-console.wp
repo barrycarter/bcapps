@@ -1,0 +1,26 @@
+
+ID: 23195
+post_name: can-i-run-multiple-x11-sessions-on-multiple-consoles-in-linux-console
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 14 Dec 2010 11:49:00 +0000
+post_type: post 
+post_status: publish
+post_title: Can I run multiple X11 sessions on multiple consoles in Linux (console 
+
+======================================================
+
+(You): Can I run multiple X11 sessions on multiple consoles in Linux (console = ctrl-alt-f1 for example)
+
+(Bernard): Yup, go to an unused console and type "startx -- :1"
+
+----------------------
+
+(Andy): Yes.  The default X11 console is ctrl-alt-f7.  Depending on your Linux distro, you should be able to choose to, instead of logging out, to lock the current session and switch users, or something to that effect.  Then, after you log in again, you can use ctrl-alt-f7 and ctrl-alt-f8 to access each X11 instance.
+
+(You): thanks. Just figured that out and it's awesome!
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

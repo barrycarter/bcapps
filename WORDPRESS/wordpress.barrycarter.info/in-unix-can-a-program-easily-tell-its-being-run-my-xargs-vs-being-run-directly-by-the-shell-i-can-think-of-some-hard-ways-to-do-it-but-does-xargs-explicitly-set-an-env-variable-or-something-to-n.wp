@@ -1,0 +1,26 @@
+
+ID: 24254
+post_name: in-unix-can-a-program-easily-tell-its-being-run-my-xargs-vs-being-run-directly-by-the-shell-i-can-think-of-some-hard-ways-to-do-it-but-does-xargs-explicitly-set-an-env-variable-or-something-to-n
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 13 Sep 2010 01:32:47 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, can a program easily tell it's being run my 'xargs' vs being run directly by the shell? I can think of some hard ways to do it, but does xargs explicitly set an ENV variable or something to notify programs how they're being run.
+
+======================================================
+
+(You): In Unix, can a program easily tell it's being run my 'xargs' vs being run directly by the shell? I can think of some hard ways to do it, but does xargs explicitly set an ENV variable or something to notify programs how they're being run.
+
+(Paul): Not that easily , all it can see directly is it's own arg0 and args ... Hence the old trick of xargs grep pattern /dev/null to force display of filenames ... You would need to check the Process ID and it's parent.
+
+(You): thanks. That's sort of what I figured. However, I thought maybe xargs set XARGS_YES=1 or something. What does "xargs grep pattern /dev/null" give you?
+
+----------------------
+
+(Alex): xargs calls you the same way the shell would. So no, no environment variable or anything
+
+
+
+[Vark assigned category: <b>C programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

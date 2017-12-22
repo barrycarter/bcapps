@@ -1,0 +1,32 @@
+
+ID: 28157
+post_name: i-had-a-cool-linux-program-phonewrd-that-converted-telephone-numbers-to-words-whats-the-best-fedora-11-program-that-does-that-i-assume-phonewrd-is-obsolete-now
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 19 Apr 2010 02:33:43 +0000
+post_type: post 
+post_status: publish
+post_title: I had a cool Linux program (phonewrd) that converted telephone numbers to words. What's the best fedora 11 program that does that? I assume phonewrd is obsolete now?
+
+======================================================
+
+(You): I had a cool Linux program (phonewrd) that converted telephone numbers to words. What's the best fedora 11 program that does that? I assume phonewrd is obsolete now?
+
+(John): http://phonespell.org/ this is a decent web based one
+
+(You): Any downloadable ones? I'm not a huge fan of web apps.
+
+----------------------
+
+(Ethan): You can still most likely run that in a command prompt...
+
+(You): True, but I'm wondering if there's a better alternative.
+
+(Ethan): that's kind of a niche program. I don't think I have heard of another that has that function.
+
+(You): True. I thought someone might've amplified it to work with arbitrary number &lt;-&gt; letter translations or something.
+
+
+
+[Vark assigned category: <b>Fedora 11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

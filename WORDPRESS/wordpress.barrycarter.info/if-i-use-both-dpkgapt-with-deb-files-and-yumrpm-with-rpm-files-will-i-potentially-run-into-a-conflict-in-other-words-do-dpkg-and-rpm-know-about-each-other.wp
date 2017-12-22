@@ -1,0 +1,34 @@
+
+ID: 26327
+post_name: if-i-use-both-dpkgapt-with-deb-files-and-yumrpm-with-rpm-files-will-i-potentially-run-into-a-conflict-in-other-words-do-dpkg-and-rpm-know-about-each-other
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 00:15:17 +0000
+post_type: post 
+post_status: publish
+post_title: If I use both dpkg/apt (with .deb files) and yum/rpm (with .rpm files), will I potentially run into a conflict? In other words, do dpkg and rpm know about each other?
+
+======================================================
+
+(You): If I use both dpkg/apt (with .deb files) and yum/rpm (with .rpm files), will I potentially run into a conflict? In other words, do dpkg and rpm know about each other?
+
+(Llewellyn): No, different package management with differing storage DB's. One exception is apt for centos which runs on RPMS and is available via DAG repos.
+
+(You): so, excluding CentOS' apt, it's a bad idea to mix and match rpm's and deb's?
+
+(Llewellyn): Yep, unless you know what your doing and things wont uninstall each other. It is a true pain
+
+(Llewellyn): *thing have a chance of uninstalling each other or even causing conflicts.
+
+----------------------
+
+(Mike): Yes, you can potentially run into a conflict, because no, they don't know about each other.
+
+----------------------
+
+(Pedro): In most systems I guess they don't know about each other... but if it is a modern application the installation will rewrite previously installed files. for instance, google chrome, if you install with a .deb and a .rpm they can go to the same place... so they'll become one
+
+
+
+[Vark assigned category: <b>dpkg</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

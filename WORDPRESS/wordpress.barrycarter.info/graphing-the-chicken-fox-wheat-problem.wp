@@ -1,0 +1,27 @@
+
+ID: 22403
+post_name: graphing-the-chicken-fox-wheat-problem
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Mon, 26 Mar 2012 17:58:26 +0000
+post_type: post 
+post_status: publish
+post_title: Graphing the chicken-fox-wheat problem
+
+======================================================
+
+Below is a reachability graph of the chicken-fox-wheat problem, where 
+"===" represents the bridge, "CFMW===" is the initial state and 
+"===CFMW" is the non-fatal final state (the other final states are 
+fatal). The edge label represents what the man is taking to the other side ("M" means he's just taking himself)
+ 
+Summary: A man (M) has a chicken (C), fox (F), and a bag of wheat 
+(W). He has to cross a bridge, but can carry at most one item with him 
+(but he can also choose to carry no items). If the fox and chicken are 
+left alone, the fox will eat the chicken. If the chicken and the wheat 
+are left alone, the chicken will eat the wheat. 
+ 
+Source code that produced this graph: https://github.com/barrycarter/bcapps/blob/master/bc-chicken-problem.pl 
+
+<a href="http://wordpress.barrycarter.org/wp-content/uploads/2012/03/chickenproblem1.png"><img src="http://wordpress.barrycarter.org/wp-content/uploads/2012/03/chickenproblem1.png" alt="" title="chickenproblem" width="680" height="1064" class="alignnone size-full wp-image-22425" /></a>
+

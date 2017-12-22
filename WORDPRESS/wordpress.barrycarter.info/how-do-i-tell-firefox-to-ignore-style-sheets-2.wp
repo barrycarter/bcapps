@@ -1,0 +1,26 @@
+
+ID: 22934
+post_name: how-do-i-tell-firefox-to-ignore-style-sheets-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 15 Feb 2011 02:58:12 +0000
+post_type: post 
+post_status: publish
+post_title: How do I tell Firefox to ignore style sheets?
+
+======================================================
+
+(You): How do I tell Firefox to ignore style sheets?
+
+(Ben): Use the Prefbar extension:http://prefbar.mozdev.org/ [http://prefbar.mozdev.org/]After installing Prefbar, go tohttp://prefbar.mozdev.org/buttons.html [http://prefbar.mozdev.org/buttons.html]and look for "CSS Checkbox" and install this addon for Prefbar.
+
+----------------------
+
+(Shawn): web developer toolbar allows you to disable stylesheets and also has a keyboard shortcut to do it on the current page (Ctrl+Shift+S). same shortcut to bring them back. http://chrispederick.com/work/web-developer/
+
+(You): thanks! I found another add-on that does this too: https://addons.mozilla.org/de/firefox/addon/prefbar/ [https://addons.mozilla.org/de/firefox/addon/prefbar/]
+
+
+
+[Vark assigned category: <b>Firefox</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

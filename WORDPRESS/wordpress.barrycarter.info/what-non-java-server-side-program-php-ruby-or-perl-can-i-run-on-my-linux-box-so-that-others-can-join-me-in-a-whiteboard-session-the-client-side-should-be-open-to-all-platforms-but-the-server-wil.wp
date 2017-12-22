@@ -1,0 +1,40 @@
+
+ID: 24280
+post_name: what-non-java-server-side-program-php-ruby-or-perl-can-i-run-on-my-linux-box-so-that-others-can-join-me-in-a-whiteboard-session-the-client-side-should-be-open-to-all-platforms-but-the-server-wil
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 06 Sep 2010 09:03:30 +0000
+post_type: post 
+post_status: publish
+post_title: What non-Java server-side program (PHP, Ruby, or Perl) can I run on my Linux box so that others can join me in a whiteboard session? The client side should be open to all platforms, but the server will be on a Linux box.
+
+======================================================
+
+(You): What non-Java server-side program (PHP, Ruby, or Perl) can I run on my Linux box so that others can join me in a whiteboard session? The client side should be open to all platforms, but the server will be on a Linux box.
+
+(Er Galvao): AFAIK the three languages are "cross-platform" although Perl for Windows is maintained by a company called ActiveState and therefore is called "ActivePerl". From these three I'd choose PHP, not only because I'm a PHP programmer, but because I think it's the simpler of the three.
+
+(You): thanks... are there any programs in PHP that already do this?
+
+(Er Galvao): Not that I know of. If I understood correctly you want an environment where all of you could "code together"... Is that it?
+
+(You): oh, no.. I want to share a whiteboard with people, so they can draw stuff and I can draw stuff and we can see each others drawings real time
+
+(Er Galvao): Ah... got it! I know of a site where people can model ER diagrams and share them... I really don't know any "general drawing" tools of that kind tho...
+
+(You): are ER diagrams (I don't know what those are) flexible enough for general drawing?
+
+(Er Galvao): Not really... Those are diagrams that represent Databases (ER = Entity-Relationship)
+
+(You): oh, I get it now.. many-to-many, one-to-many, one-to-one. Hmmm I'll keep looking
+
+(Er Galvao): Good luck!
+
+----------------------
+
+(Randen): try Adobe connect. Free for up to 3 users per session, and it just uses Flash player for the session and whiteboard within it.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,48 @@
+
+ID: 26775
+post_name: i-have-a-program-eternal-lands-that-makes-72025-calls-to-powf-and-only-156-calls-to-other-functions-before-it-crashes-with-a-segmentation-fault-what-might-be-causing-this-the-program-was-running
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 28 May 2010 19:45:06 +0000
+post_type: post 
+post_status: publish
+post_title: I have a program (Eternal Lands) that makes 72025 calls to powf() and only 156 calls to other functions before it crashes with a segmentation fault. What might be causing this? The program was running fine earlier and runs fine for other users.
+
+======================================================
+
+(You): I have a program (Eternal Lands) that makes 72025 calls to powf() and only 156 calls to other functions before it crashes with a segmentation fault. What might be causing this? The program was running fine earlier and runs fine for other users.
+
+(Jeroen): no context whatsoever. Well, somewhere a few bytes well over I think
+
+----------------------
+
+(Yogesh): Segmentation faults cannot be compared to the results of other users.
+
+Segmentation fault means your program is trying to access a space in segment
+
+that is outside the allocated segment space to your program. So the problem
+
+might be on your systems segment size. So try to check that, and if possible
+
+use GDB to check where exactly you are getting segmentation fault. GDB is
+
+the best tool.
+
+Thanks
+
+(You): how would I use gdb to track down this problem? I didn't write the program and it may not have gdb info compiled in.
+
+(Yogesh): gdb is a tool, when you have finished writing your program and compiled it
+
+properly before actually running the program you must run it with gdb just,
+
+see any online tutorials on gdb use, there are many tutorials available.
+
+Thanks
+
+(You): thanks, but this is something someone else wrote.
+
+
+
+[Vark assigned category: <b>segmentation fault</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,60 @@
+
+ID: 27506
+post_name: how-does-zabasearch-comzabainfo-correlate-an-ip-address-to-a-zip-code-all-of-the-geolocation-utilitiesdatabases-ive-seen-online-can-only-get-down-to-the-city-not-the-zipcode
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 03:06:36 +0000
+post_type: post 
+post_status: publish
+post_title: How does zabasearch.com/zabainfo/ correlate an IP address to a zip code? All of the geolocation utilities/databases I've seen online can only get down to the city, not the zipcode.
+
+======================================================
+
+(You): How does zabasearch.com/zabainfo/ correlate an IP address to a zip code? All of the geolocation utilities/databases I've seen online can only get down to the city, not the zipcode.
+
+(Dondre): Easy, cities can have only a certain amount of Zip codes. The tool could simply correlate those zipcodes to a particular city and pick one randomly or based on the part of town the IP originates from. Either way, it is definitely not an exact science with lots of estimation.
+
+(You): That's a possibility, but they hit my zip code exactly, and Albuquerque has 20+ codes. I don't think it's random.
+
+(Dondre): It is random, I just tried it and it was very off. Perhaps your ISP  
+
+has the same zipcode as you which would explain things
+
+(You): Thanks. Are you in the USA? Maybe they just got lucky w/ me (my ISP isn't even in my state) and they're not really that accurate country-wide.
+
+(Dondre): Yeah I'm in the United States and I've also developed my own IP to zip code
+
+web service.
+
+
+
+I can assure you that it is far from an exact science.
+
+(You): Oh, so you're competing w/ zabasearch? May I ask you more about your app?
+
+(Dondre): I am not competing with those guys. My service is for my private personal
+
+usage only. I needed to build it in house because sometimes those sites are
+
+down, slow or they can block your IP for using their service too much.
+
+(You): OK. I'm guessing you don't share your databases.
+
+(Dondre): Lol, possibly but would you know how to work with them?
+
+(You): Send them to me and we'll see :)
+
+----------------------
+
+(Brad): Postal code is one of the features commonly listed in the ARIN database.  http://ws.arin.net/whois/
+
+
+
+You can bet though that it isn't all that accurate.  Nobody's database is better than anyone else's.  ARIN is the source and has the best info, but again, don't rely on it.
+
+(You): I'm familiar with ARIN's WHOIS database, but my provider is Comcast and their HQ is far away (in NJ). The zaba site got my zip code accurately, even though it's not in ARIN WHOIS.
+
+
+
+[Vark assigned category: <b>ZIP code</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

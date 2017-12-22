@@ -1,0 +1,36 @@
+
+ID: 23233
+post_name: on-a-linksys-routers-web-admin-screen-how-do-i-see-the-names-and-dhcp-assigned-ips-of-the-connected-machines-status-doesnt-seem-to-have-it
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 13 Dec 2010 01:23:49 +0000
+post_type: post 
+post_status: publish
+post_title: On a Linksys router's web-admin screen, how do I see the names and DHCP-assigned IPs of the connected machines? "status" doesn't seem to have it
+
+======================================================
+
+(You): On a Linksys router's web-admin screen, how do I see the names and DHCP-assigned IPs of the connected machines? "status" doesn't seem to have it
+
+(Peter): Machines won't have names. You're probably thinking of SMB protocol which the router doesn't need to function.
+
+(You): good point. OK, where can I see the MAC addresses then?
+
+(You): liar :) It shows up under DHCP Reservation.
+
+(Peter): You can try the page where you can assign static IP addresses. That should do it. I think the router should make that information easy to find.
+
+(You): yup... I just found that out.
+
+----------------------
+
+(Lewin): It's normally in the DHCP settings page - because that's the location where you can click on current assignments and make them permanent.
+
+----------------------
+
+(Yaron): That would depend on the model you have. Try looking for something like "network map".
+
+
+
+[Vark assigned category: <b>Linksys</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

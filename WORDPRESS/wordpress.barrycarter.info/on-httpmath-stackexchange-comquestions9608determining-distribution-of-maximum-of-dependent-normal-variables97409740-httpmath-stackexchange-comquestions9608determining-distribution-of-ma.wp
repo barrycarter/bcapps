@@ -1,0 +1,56 @@
+
+ID: 23537
+post_name: on-httpmath-stackexchange-comquestions9608determining-distribution-of-maximum-of-dependent-normal-variables97409740-httpmath-stackexchange-comquestions9608determining-distribution-of-ma
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 11 Nov 2010 01:20:12 +0000
+post_type: post 
+post_status: publish
+post_title: On http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740 [http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740] how do I make my LaTex equations bigger? They seem tiny.
+
+======================================================
+
+(You): On http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740 [http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740] how do I make my LaTex equations bigger? They seem tiny.
+
+(Sarah): Looks like you're using inline formulae instead of display. Notice how the posters above you have their equations centered. This gives more room to expand fractions etc. (specifically display fractions.) Try using $$math stuff $$ instead of $math stuff$. That is, use double $$s on each side.
+
+(You): thanks. Actually, how can I see what the posters above me did? I can 'view source', but that gives me HTML source, not stackexchange source. I was actually trying to cheat and do that, but couldn't.
+
+(Sarah): You can't see if they chose $$ or $$$$ aside from the fact that theirs is centered so called "display math" while yours is text-aligned so called "inline math".
+
+(You): oh, so you were guessing that they used '$$' based on the resulting formatting. You couldn't actually see what they typed in, yes?
+
+(Sarah): Correct. :-)
+
+(You): brilliant! Now I know why some people start off the morning with a Danish ;)
+
+(Sarah): And schnaps! Enjoy math'ing ;)
+
+(You): hey, maybe you can tell me this: what's the situation w/ Greenland?
+
+(Sarah): Wow, I'm surprised that you knew the connection between Greenland and Denmark. Well, there go my prejudice for Americans. ;) What situation are we talking? Political? Geopolitical (oil)? Environmental?
+
+(You): oh, I've long known that Greenland, the world's largest island, is part of Denmark. However, it recently gained some sort of independence, but not really? That's what I'm confused about. Also, us Southwesterners are smarter then the rest of the country. [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Byron): To increase overall equation size, enclose them in standard font-size constructs. For example:
+
+begin{Large}
+
+begin{equation}
+
+  [ Equation goes here. ]
+
+end{equation}
+
+end{Large}
+
+
+
+Can use: Huge, huge,Large,large, small, scriptsize, & tiny also.
+
+
+
+[Vark assigned category: <b>LaTex</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

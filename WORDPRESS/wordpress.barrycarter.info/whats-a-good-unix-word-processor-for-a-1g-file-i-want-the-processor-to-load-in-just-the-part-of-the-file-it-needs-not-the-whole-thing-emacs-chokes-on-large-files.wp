@@ -1,0 +1,44 @@
+
+ID: 24782
+post_name: whats-a-good-unix-word-processor-for-a-1g-file-i-want-the-processor-to-load-in-just-the-part-of-the-file-it-needs-not-the-whole-thing-emacs-chokes-on-large-files
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Jul 2010 22:29:24 +0000
+post_type: post 
+post_status: publish
+post_title: What's a good Unix word processor for a 1G file? I want the processor to load in just the part of the file it needs, not the whole thing. emacs chokes on large files.
+
+======================================================
+
+(You): What's a good Unix word processor for a 1G file? I want the processor to load in just the part of the file it needs, not the whole thing. emacs chokes on large files.
+
+(Tobias): I don't open a lot of files that big, but I suppose I'd try vim next, and/or maybe nano.
+
+(You): I'm pretty sure those load the whole file into memory too. I'm thinking there must be a specially-designed word pro for large files.
+
+(Tobias): I guess there's always head or tail...
+
+(You): true, but you can't edit those -- reading in the middle of a big file isn't tough -- even less will do that. The problem is editing a large file.
+
+----------------------
+
+(Matti): I'm definitely not trying to start a holy war, but (g)vim should work fine.
+
+(You): (g)vim will really handle a 1G file? Does it load the whole thing into memory (which I don't want) or seek() in the file as necessary?
+
+(Matti): Sorry! I thought gvim would work fine (and it does for files of several hundred meg) but I just tried it and it seems it does indeed buffer the whole thing.
+
+(You): rats -- there has to be an editor out there designed to do this, especially as large files are becoming more common. I could almost write one myself.
+
+(Matti): True. It's almost tempting to do this as an emacs plugin. The really annoying thing is that there seem to be many large file editors available for (get this) Windows.
+
+(You): I'm not sure I'm proficient enough in elisp... but a VT100 app wouldn't be hard... Limited functionality, but useful when you need it.
+
+(Matti): Here's the quickest thing I can think of: a script that calls split, then loads the chunks into your editor sequentially, then cat's them back together.
+
+(You): not bad! I just realized something: can you change characters in a file using something like seek()? In other words, write directly to the middle of a file? Of course, if you add or delete even one character, you're hosed.
+
+
+
+[Vark assigned category: <b>word processor</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

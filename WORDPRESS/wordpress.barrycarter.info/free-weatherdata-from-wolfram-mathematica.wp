@@ -1,0 +1,26 @@
+
+ID: 19803
+post_name: free-weatherdata-from-wolfram-mathematica
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Tue, 06 Dec 2011 16:03:09 +0000
+post_type: post 
+post_status: publish
+post_title: Free WeatherData from Wolfram (Mathematica)
+
+======================================================
+
+Mathematica users can use WeatherData[] to obtain Wolfram's weather
+data, but it turns out that Wolfram has made this data freely
+available to others as well. For example:
+
+http://dataserver.wolfram.com/WeatherData/WeatherServlet?function=StationWeather&station=KABQ&fields=period%2Ctemp&startDate=2011-01-01%2000%3A00%3A00&endDate=2011-01-04%2023%3A59%3A59
+
+yields the hourly temperature in Albuquerque for the first few days of
+the year 2011. Notice that no password, license, cookie, etc, is required.
+
+I'm guessing you can use the same technique for other Wolfram data, 
+but most of that data is available elsewhere. Until now, I didn't have 
+a good way of accessing bulk hourly data, and this was really helpful. 
+
+

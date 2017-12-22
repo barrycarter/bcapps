@@ -1,0 +1,30 @@
+
+ID: 23779
+post_name: can-i-use-magicjack-service-with-an-existing-phone-adapter-linksys-sipura-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 27 Oct 2010 04:59:07 +0000
+post_type: post 
+post_status: publish
+post_title: Can i use magicjack service with an existing phone adapter (Linksys Sipura)?
+
+======================================================
+
+(You): Can i use magicjack service with an existing phone adapter (Linksys Sipura)?
+
+(Ken): I've read that you can: http://magicjackhacks.blogspot.com/2007/11/magicjack-sip-info.html
+
+----------------------
+
+(Mark): Technically .....yes ... BUT if you are using it as the backup connection to your VoIP should it go down, then it's a moot point.  MagicJack is VoIP as well, so if your modem goes down, you lose both your primary phone and the MagicJack as they are using the same modem.
+
+(You): thanks. I have a cell phone, but the reception is crappy, so I want to get a "land line", but it turns out those are expensive. VOIP is my compromise between quality and price. I have the phone-to-ethernet device, so all I need is a SIP server. I've tried to find free ones, but those seem unreliable. And the 'real' SIP servers are like $10-$15/month. So MagicJack's price seems good. Do they support these devices?
+
+(Mark): Good luck finding a 'free' lunch.  $10 to $15 bucks a month is nothing if you are trying to do business.  Pony up and get it done.
+
+(You): nah, I believe in saving money whereever possible.
+
+
+
+[Vark assigned category: <b>magicJack</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

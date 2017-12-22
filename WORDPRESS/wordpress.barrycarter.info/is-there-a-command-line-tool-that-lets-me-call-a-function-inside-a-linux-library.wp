@@ -1,0 +1,196 @@
+
+ID: 25448
+post_name: is-there-a-command-line-tool-that-lets-me-call-a-function-inside-a-linux-library
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 18 Jun 2010 19:54:46 +0000
+post_type: post 
+post_status: publish
+post_title: Is there a command line tool that lets me call a function inside a Linux library?
+
+======================================================
+
+(You): Is there a command line tool that lets me call a function inside a Linux library?
+
+(Romain): Not that I know, but python+ctypes fakes it well enough if you need something interactive
+
+(You): cool -- is there a Perl version of that?
+
+(Romain): I have no idea... sorry
+
+(You): I might be misreading, but isn't ctypes for TLS/SSL and not for library calls in general?
+
+(Romain): &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transational//EN"&gt;
+
+
+
+
+
+
+
+No, it is a foreign function interface.See http://python.net/crew/theller/ctypes/tutorial.html
+
+---- Message d'origine ----
+
+De : aardvark@vark.com
+
+?? : rom1@netcourrier.com
+
+Objet : Re: (Aardvark) Question about *Linux*
+
+Date : 18/06/2010 16:10:54 CEST
+
+
+
+
+
+
+
+  
+
+    
+
+  
+
+    
+
+      
+
+    Barry says:
+
+
+
+    
+
+  
+
+    
+
+    
+
+    
+
+      
+
+        
+
+          
+
+          I might be misreading, but isn't ctypes for TLS/SSL and not for library calls in general?
+
+        
+
+        
+
+           
+
+          - Barry C. M / Albuquerque, US 
+
+        
+
+      
+
+    
+
+  
+
+
+
+
+
+
+
+    To respond to Barry, just reply to this email.    
+
+    
+
+    - Aardvark
+
+  
+
+    
+
+    
+
+      
+
+      
+
+    
+
+    
+
+    
+
+    
+
+  See full conversation
+
+Ask a new question
+
+
+
+
+
+      
+
+  
+
+    
+
+  
+
+  
+
+    
+
+      
+
+        Spread Aardvark!
+
+        Just share this link:
+
+        http://vark.com/s/YKZg
+
+      
+
+    
+
+  
+
+
+
+  
+
+
+
+  
+
+    
+
+      
+
+        You can easily control which emails you get from Aardvark.
+
+        Aardvark's offices are located at 138 10th Street, San Francisco, CA 94103.
+
+(You): thanks... you're right, I'm wrong. I was misreading the yum description of it.
+
+----------------------
+
+(Michael): First use vim, then gcc :-)
+
+(You): LOL! Emacs and gcc, hmmm. Fair enough, but since libraries are just collections of functions, why can't I call them from the shell and/or from other programming languages like Perl or Ruby?
+
+(Michael): I think you actually can, at least from Perl. Google says to look at C::DynaLib, XS and XSubs. I have never done it though.
+
+(You): I googled it just now, and the top hit says it's one of the major features Perl lacks?
+
+(Michael): Like I said, I've never done it, but if it's something you need, I'd check out those projects I mentioned. Best of luck!
+
+(You): thanks -- I don't really need it. I'm just curious about stuff, and it seems that a file that contains functions should be runnable easily.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

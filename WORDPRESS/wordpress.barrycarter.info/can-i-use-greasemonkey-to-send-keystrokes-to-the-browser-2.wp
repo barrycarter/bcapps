@@ -1,0 +1,24 @@
+
+ID: 24649
+post_name: can-i-use-greasemonkey-to-send-keystrokes-to-the-browser-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 01 Aug 2010 04:50:37 +0000
+post_type: post 
+post_status: publish
+post_title: Can I use greasemonkey to send keystrokes to the browser?
+
+======================================================
+
+(You): Can I use greasemonkey to send keystrokes to the browser?
+
+(Teemu): I'm not quite sure? What are you trying to achieve with the keypress? Sometimes it's easier to just have the script do what happens after the event rather than simulate the event.
+
+----------------------
+
+(Christophe): I do not think so. Greasemonkey is Javascript so you're limited to JS capabilities.
+
+
+
+[Vark assigned category: <b>Greasemonkey</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,36 @@
+
+ID: 25224
+post_name: i-did-ssh-x-userremote-mailtouserremote-application-to-start-a-remote-x-application-running-locally-it-works-fine-but-the-font-is-really-tiny-how-do-i-fix-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 03:11:31 +0000
+post_type: post 
+post_status: publish
+post_title: I did "ssh -X user@remote [mailto:user@remote] application" to start a remote X application running locally. It works fine, but the font is really tiny. How do I fix this?
+
+======================================================
+
+(You): I did "ssh -X user@remote [mailto:user@remote] application" to start a remote X application running locally. It works fine, but the font is really tiny. How do I fix this?
+
+(Simon): If it's just one application, try whether it has a "-fn" argument to select a different font. Programs like "xfontsel" can be used to explore the fonts installed on the server. If it's a Gtk/Gnome application, you should be able to change the font using Gnome's gconf preference editor mechanism.
+
+(You): thanks. Will xfontsel let me select the default font?
+
+(Simon): no, xfontsel will just let you browse the fonts installed on your X11 display. You can then copy&paste the name of a font that pleases you, and used it with the "-fn" argument to your application. Or can you put it in your X11 resources/preferences (.Xdefaults or similar). As I said, for Gnome applications you'd use Gnome preferences (gconf) instead, and the font system is also different. So it depends on what application you want to fix.
+
+----------------------
+
+(Kishore): Try this ::
+
+Click VIEW,  TEXT SIZE, LARGEST 
+
+at the edit menu of the browser. 
+
+
+
+Hope it should work
+
+
+
+[Vark assigned category: <b>computer networking</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

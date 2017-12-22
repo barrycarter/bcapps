@@ -1,0 +1,38 @@
+
+ID: 27875
+post_name: on-fedora11-every-time-i-click-a-link-in-pidgin-my-mouse-jumps-to-my-running-firefox-in-a-different-fvwm2-window-which-is-annoying-can-i-stop-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 27 Apr 2010 01:47:53 +0000
+post_type: post 
+post_status: publish
+post_title: On fedora11, every time I click a link in Pidgin, my mouse jumps to my running Firefox (in a different FVWM2 window), which is annoying. Can I stop this?
+
+======================================================
+
+(You): On fedora11, every time I click a link in Pidgin, my mouse jumps to my running Firefox (in a different FVWM2 window), which is annoying. Can I stop this?
+
+(Ethan): Yes. You can change the behavior in Preferences.
+
+(You): Preferences in which program?
+
+(Ethan): Pidgin
+
+(You): Just tried that and can't find that option under the browser tab?
+
+(Ethan): then it is under your new window settings in Firefox.
+
+(You): where in about:config do I find those?
+
+(Ethan): It should be under the edit menu, or tools I forget.
+
+----------------------
+
+(Andy): I think Pidgin has a preference for "open links in background," which you should turn on.
+
+(You): I just looked and it doesn't. Two browser options, neither about background
+
+
+
+[Vark assigned category: <b>FVWM2</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

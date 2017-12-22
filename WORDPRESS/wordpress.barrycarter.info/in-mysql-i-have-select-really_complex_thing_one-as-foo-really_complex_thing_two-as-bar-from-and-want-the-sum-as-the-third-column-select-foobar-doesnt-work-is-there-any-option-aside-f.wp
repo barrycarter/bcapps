@@ -1,0 +1,86 @@
+
+ID: 26163
+post_name: in-mysql-i-have-select-really_complex_thing_one-as-foo-really_complex_thing_two-as-bar-from-and-want-the-sum-as-the-third-column-select-foobar-doesnt-work-is-there-any-option-aside-f
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 11 Jun 2010 23:46:14 +0000
+post_type: post 
+post_status: publish
+post_title: In MySQL, I have "SELECT really_complex_thing_one() AS foo, really_complex_thing_two() AS bar FROM ..." and want the sum as the third column. "SELECT foo+bar" doesn't work. Is there any option aside from "SELECT really_complex_thing_one() + really_complex_thing_two()"? The complex things contain subselects and other uglinesses. I realize I could make an ALTER a temporary table, but is there anything cleaner than that?
+
+======================================================
+
+(You): In MySQL, I have "SELECT really_complex_thing_one() AS foo, really_complex_thing_two() AS bar FROM ..." and want the sum as the third column. "SELECT foo+bar" doesn't work. Is there any option aside from "SELECT really_complex_thing_one() + really_complex_thing_two()"? The complex things contain subselects and other uglinesses. I realize I could make an ALTER a temporary table, but is there anything cleaner than that?
+
+(Darren): In a word: No, not in the same statement.  You'd have to do your first statement as a sub-query like this:
+
+ "SELECT *, foo+bar as FooBarSum FROM (SELECT really_complex_thing_one() AS foo, really_complex_thing_two() AS bar FROM ...) as InnerQuery"
+
+(You): that's actually nice! In other words, the aliases don't apply until after the SELECT statement ends?
+
+(You): wait. Doesn't that mean I'd end up typing my WHERE clause twice?
+
+(Darren): no, the where clause already executed once in the inner query you don't have to put a where clause on the outer query.
+
+(Darren): Put differently, the inner query is already filtered, so you don't have to filter it again in the outer query.
+
+(You): I get it now. So I actually have a doubly nested SELECT in there. When I try this, it tells me "Every derived table must have its own alias"?
+
+(You): NM -- I just realized slapping an "AS foo" in front of the subselect does the trick.
+
+(Darren): Right, basically the query processor isn't aware of the alias until it executes ... so the sub-query thing is a good work around because it executes before the outer statement.
+
+
+
+ 
+
+
+
+Darren
+
+----------------------
+
+(Ted): can use server-side Temp table w/ 2nd pass or client-side summation.
+
+(You): thanks! I found that a subselect works too.
+
+(Ted): How did subselect work?
+
+(You): SELECT *, foo.dstotal+foo.cctotal AS diff FROM 
+
+ (SELECT d.date, 
+
+ (SELECT SUM(deposits+withdrawals) FROM dailystatements ds WHERE 
+
+  ds.date&lt;=d.date AND ds.broker IN ('forex.com')) AS dstotal, 
+
+ (SELECT SUM(amount) FROM test.credcardstatements 
+
+   WHERE date&lt;=d.date AND merchant RLIKE 'forex') AS cctotal 
+
+FROM days d WHERE 
+
+ d.date IN (SELECT DISTINCT date FROM credcardbalance) AND 
+
+ d.date IN (SELECT DISTINCT date FROM dailystatements 
+
+            WHERE broker IN ('forex.com')) 
+
+ ) AS foo 
+
+;
+
+(Ted): got it, calculate individual functions & then sum in parent select.  Nice.  Perhaps to go faster avoid IN & DISTINCT but instead use Temp table, GROUP BY and JOIN.  I prefer not to use IN.  Doesn't work w/ composite keys.
+
+(You): not my solution, alas. Someone else suggested it. The temp table was going to be my approach. It's mostly arrogance -- I think single MySQL queries look cooler than multi-step queries.
+
+(Ted): 'look cooler' &lt;&lt; 'reads clearly'.  Also possibly less locking.
+
+----------------------
+
+(Endy): select X.foo, X.bar, X.foo+X.bar from ( select ... as foo, ... as bar from ... ) X
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

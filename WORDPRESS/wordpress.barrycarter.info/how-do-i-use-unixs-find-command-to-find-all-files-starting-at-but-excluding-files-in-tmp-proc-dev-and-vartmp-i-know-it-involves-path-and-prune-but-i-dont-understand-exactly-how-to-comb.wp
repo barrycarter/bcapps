@@ -1,0 +1,70 @@
+
+ID: 24814
+post_name: how-do-i-use-unixs-find-command-to-find-all-files-starting-at-but-excluding-files-in-tmp-proc-dev-and-vartmp-i-know-it-involves-path-and-prune-but-i-dont-understand-exactly-how-to-comb
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 26 Jul 2010 21:22:16 +0000
+post_type: post 
+post_status: publish
+post_title: How do I use Unix's find command to find all files starting at "/" but excluding files in /tmp /proc /dev and /var/tmp ? I know it involves -path and -prune, but I don't understand exactly how to combine them.
+
+======================================================
+
+(You): How do I use Unix's find command to find all files starting at "/" but excluding files in /tmp /proc /dev and /var/tmp ? I know it involves -path and -prune, but I don't understand exactly how to combine them.
+
+(Andy): For this you just "or" the whole mess of things to exclude together, so
+
+something like this:
+
+
+
+
+
+find / -path '/proc' -prune -o -path '/dev' -prune -o -path '/tmp' -o -path
+
+'/var/tmp' -prune -o &lt;whatever you want to do to these files&gt;
+
+
+
+
+
+that says
+
+"if the path is /proc, prune it, or if the path is /dev prune it ..(other
+
+prunes).. or else do whatever"
+
+
+
+This works on Debian linux, find can work a little different from one
+
+platform to the next but this should work OK.
+
+
+
+
+
+-Andy
+
+(You): thanks!
+
+----------------------
+
+(Cristian): This is an example:
+
+ find /  -path /tmp -prune -o -path /var -prune  -o -print
+
+Logic is:
+
+Find from /, but with file that match with /tmp do nothing, or (actually XOR) if file match with /var do nothing or (else!) print file name and descend into.
+
+(You): thanks!
+
+----------------------
+
+(Jeff): I think this tells the answer http://www.unix.com/shell-programming-scripting/122013-how-use-path-prune-find.html
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

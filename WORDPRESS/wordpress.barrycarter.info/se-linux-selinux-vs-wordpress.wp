@@ -1,0 +1,27 @@
+
+ID: 1175
+post_name: se-linux-selinux-vs-wordpress
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Wed, 27 Apr 2011 15:21:27 +0000
+post_type: post 
+post_status: publish
+post_title: SE Linux (selinux) vs WordPress
+
+======================================================
+
+If you repeatedly get a 403 error after installing WordPress, and 
+nothing else you've googled works, the culprit might be selinux. 
+ 
+selinux is devious: it hides its messages in /var/log/messages (not 
+/var/log/secure), *and* its log messages have "audit" in them instead 
+of "selinux". 
+ 
+To disable it until the next reboot: "echo 1 >/selinux/enforce" 
+ 
+Permanently: change "SELINUX=enforcing" to "SELINUX=diabled" in 
+/etc/selinux/config and reboot. 
+ 
+Source: http://www.crypt.gen.nz/selinux/disable_selinux.html 
+
+

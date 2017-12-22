@@ -1,0 +1,34 @@
+
+ID: 23332
+post_name: is-javascript-as-powerful-as-perl-more-specifically-if-i-have-a-server-side-cgi-program-that-does-something-in-perl-can-i-re-write-it-as-a-javascript-program-that-runs-on-the-client-side
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 05 Dec 2010 00:54:36 +0000
+post_type: post 
+post_status: publish
+post_title: Is Javascript as powerful as Perl? More specifically, if I have a server-side CGI program that does something in Perl, can I re-write it as a javascript program that runs on the client side?
+
+======================================================
+
+(You): Is Javascript as powerful as Perl? More specifically, if I have a server-side CGI program that does something in Perl, can I re-write it as a javascript program that runs on the client side?
+
+(Daniel): JavaScript the language would be just as powerful, with the addition of a suitable library of functions.  However, you are asking about JavaScript running on the client side, which can only access things that the browser lets it.  Perl on the server side can access things on the server side that the browser does not have access to.  So the question should really be about the environment, client or server side, not the language.
+
+(You): true, but, ultimately, JS could use JSON to access any data it needs, no? Assuming I'm willing to give out the data. I'm implicitly assuming that the "hard work" the CGI does is mostly math, and not data retrieval (although even that would go faster on the client side).
+
+(Daniel): JSON combined with AJAX to fetch data from the server side, yes. For that type of functionality, JS would be more powerful since the server side does not operate on the client side DOM.  The server side could do DOM-like things with the HTML it generates, but ultimately, it goes out as HTML to be processed on the client side.
+
+----------------------
+
+(Andries): This completely depends on how well you know perl - perl is very good at string processing. I would not suggest using it for CGI, since I think there are better languages for this purpose. In principle, you can do anything in javascript you can do in perl; the limitation being what you can do in a browser. File handling is not quite the same, which is one of the areas where perl really shines. You should do some serious reading up on client-server communication if you wish to do this - the browser usually kills the connection to the server quickly enough. If you want to send data back to the server after the connection has been killed, you need to open a connection back to the server again. If you keep the connection open (this is possible), you use up resources on both the client and the server. The problem you wish to solve also influence this decision - if you need to pass a lot of data around, especially over the net, this is probably not a good idea. If you can separate the server/client computation without too much communication, this could work well, depending on how much client-side cpu you use. DO note: if you hang the browser with this, or use too much client-side cpu, users will figure out which site it is, and simply kill the tab/window. This is probably the most serious objection to using the client's cpu.
+
+(You): thanks. Of course, I'd be using the CPU with the users implicit permission. The idea here is: I know how to do some complex calculation that you don't. I'll "do it for you", but I'll use your CPU's resources, so my server CPU doesn't get overloaded (especially since it gets multiple requests at the same time). What do you suggest for CGI? PHP? I really really love Perl.
+
+(Andries): That depends on the application - many web applications can be solved using some kind of  CMF/CMS such as django or plone (or even wordpress). I prefer python for most applications, perl for some, and html for an interface (it is the most portable). If you need a GUI, I would use java or c++. PHP is a last resort - I do not like the language. It is overly complex with no appreciable gain. If your project is just a quick I-want-to-make-a-site, use perl. If you are looking long term, with users and workflow, use plone or django. You will have to look at maintenance costs as well - most CMSs are rewritten or partially rewritten as coders find better ways of using or constructing the CMF/CMS, which means you may have to learn some new things every now and then and then apply those when upgrading/maintaining your current system. Hope this helps a little
+
+(You): thanks. I ultimately realized that using JS is bad because I'm relying on the client too much. As you point out, it's OK to assume the client can parse HTML, but not that client has JS turned on, the correct version, etc.
+
+
+
+[Vark assigned category: <b>CGI</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

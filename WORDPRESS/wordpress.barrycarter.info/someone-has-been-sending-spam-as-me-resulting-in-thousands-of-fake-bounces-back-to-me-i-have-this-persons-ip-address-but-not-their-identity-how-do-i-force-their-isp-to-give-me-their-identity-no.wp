@@ -1,0 +1,142 @@
+
+ID: 22885
+post_name: someone-has-been-sending-spam-as-me-resulting-in-thousands-of-fake-bounces-back-to-me-i-have-this-persons-ip-address-but-not-their-identity-how-do-i-force-their-isp-to-give-me-their-identity-no
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 13 Apr 2011 09:21:56 +0000
+post_type: post 
+post_status: publish
+post_title: Someone has been sending spam as me, resulting in thousands of fake bounces back to me. I have this person's IP address, but not their identity. How do I force their ISP to give me their identity? No general theories please, I'm looking for a specific, detailed answer, including process of subpoena, who to serve with the subpoena, etc.
+
+======================================================
+
+(You): Someone has been sending spam as me, resulting in thousands of fake bounces back to me. I have this person's IP address, but not their identity. How do I force their ISP to give me their identity? No general theories please, I'm looking for a specific, detailed answer, including process of subpoena, who to serve with the subpoena, etc.
+
+(Neal): get a lawyer.
+
+(You): not funny.
+
+(Neal): the procedures vary greatly depending on your jurisdiction. So getting a lawyer would be the only way to do it correctly.
+
+(You): I don't want to pay someone to do this yet... I want to know if it's even possible. Basically, I was looking for a lawyer (or someone who does legal research) to answer.
+
+(Neal): if you find out, write up an article so that others can find the "easy way" to track down someones identify on the internet. odds are it is impossible to do on your own if you are not a lawyer.
+
+(You): actually, if a lawyer can do it, so can anyone. Lawyers don't have any more power than anyone else, just more knowledge. The point is: what WOULD a lawyer do, so that I can do the same thing.
+
+(Neal): like I said, good luck. Getting someones identity just by having their IP address and some emails will be a very hard sale. Not even the Recording companies can get that kind of information on their own.
+
+(You): right, that's what I was worried about. RIAA vs Verizon established the precedent that RIAA can't get this information. However, it appears they can still subpoena Verizon by filing a "John Doe" suit. That's the information I'm looking for. How does RIAA do it (because, despite RIAA vs Verizon, they still do it).
+
+(Neal): RIAA is persuing DMCA infractions. Not sure but that may be a little bit different than what you want to do.
+
+(You): yes, again you are correct. The DMCA has a specific provision for this. However, the Telecommunication Act of 1996, which protects ISPs as "common carriers" may also have a rule that allows someone to obtain this information, but probably only under specific circumstances.
+
+----------------------
+
+(Sneha): http://www.ipgp.net/
+
+(Sneha): http://www.angryox.com/vaspam/
+
+(You): thanks. I already know how to find his/her ISP. My question is: what do I send them to force them to give me his identity?
+
+(You): in this case, they didn't send me spam; rather, they sent spam AS me, so I can't quite identify them.
+
+(Sneha): BEST POSSIBLE SOLUTION IS TO CALL UP YOUR OWN ISP. THEY WILL TELL YOU EXACT ITS EXACT PROCESS. ITS A BAD ANSWER I KNOW BUT THIS IS WHAT I CAN THINK OF RIGHT NOW. I WILL GET BACK TO U WITH MORE.
+
+(You): thanks. Actually, that's not a bad idea. The main problem is that current precedent seems to show that it's really hard to get these identities.
+
+(Sneha): IF THEY ARE THE ISP OF THE SPAMMER THEN ITS EVEN BETTER. I AM SURE IT WILL WORK OUT. I AM READING VARIOUS Q AND A WEBSITES AND MOST OF THEM SUGGEST THIS. ALL THE BEST
+
+----------------------
+
+(Benny): It is most likely an infected personal computer that is part of a
+
+so called "botnet" that has caused you grief. You will therefore
+
+probably not gain anything whatsoever by going through legal
+
+procedures, the only outcome will be that some PC owner who is
+
+totally oblivious will get in trouble. The true perpetrators are
+
+well hidden behind the botnet's often impenetrable infrastructure.
+
+
+
+What you CAN do however, is to mail the ISP in question, often you
+
+reach their net abuse department through abuse@isp.somewhere. To find
+
+out which ISP owns the netblock in question, google for "whois"
+
+services, there are a bunch of them out there. They might be able to
+
+persuade their customer to use an antivirus program or some other means
+
+to get rid of the malicious software that's probably installed.
+
+
+
+Also, regarding the fact that someone used your mail address as the
+
+sender, that is unfortunate but just something to get used to in the
+
+net environment we live in today, I'm sorry to say. It comes from the
+
+fact that the SMTP protocol, which is used to transport mail across
+
+the net, was not designed from the beginning with security in mind,
+
+and nothing that has been invented or added on since have been able
+
+to gain the widespread use needed to be of much use in practice. There
+
+is simply no techical way today to avoid someone faking your name
+
+and/or mail address in a mail message.
+
+
+
+But to return to your original question, if you do decide to go the
+
+legal route, I'm not sure you're even legally able to get that
+
+information from the ISP, especially if it is an ISP that resides outside
+
+your country, if you are not a law enforcement organization. Relevant
+
+law on this varies greatly between countries also.
+
+
+
+My best recommendation is that you contact your own ISP, explain the
+
+problem to them and ask them to bring the matter up with the ISP that
+
+owns the offending IP address. ISP:s are *much* more likely to listen
+
+to complaints coming from other ISP:s than coming from totally unknown
+
+individuals that are not even their customers. Frankly, it is extremely
+
+unlikely that you will have any success whatsoever trying to "force"
+
+an ISP to reveal customer information. It is simply not done that way,
+
+unless you have copyright claims and are the RIAA or the MPAA or some
+
+similar organization.
+
+
+
+Best regards,
+
+
+
+/Benny
+
+
+
+[Vark assigned category: <b>computer security</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,18 @@
+
+ID: 23517
+post_name: how-do-i-tell-a-specific-git-directory-not-global-config-to-use-specific-options-when-pushing-via-ssh-i-have-multiple-git-directories-that-push-to-different-users-on-github-so-i-need-to-use-ssh
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 12 Nov 2010 00:50:37 +0000
+post_type: post 
+post_status: publish
+post_title: How do I tell a specific GIT directory (not global config) to use specific options when pushing via ssh? I have multiple git directories that push to different users on github, so I need to use "ssh -i something" to push data.
+
+======================================================
+
+(You): How do I tell a specific GIT directory (not global config) to use specific options when pushing via ssh? I have multiple git directories that push to different users on github, so I need to use "ssh -i something" to push data.
+
+
+
+[Vark assigned category: <b>GitHub</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,24 @@
+
+ID: 26480
+post_name: if-i-create-an-index-on-two-fields-in-mysql-create-index-foo-on-tabnamexy-can-mysql-use-that-index-when-i-do-sort-by-x-in-other-words-can-mysql-use-a-multi-field-index-to-sort-by-one-of-the
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 04 Jun 2010 20:17:30 +0000
+post_type: post 
+post_status: publish
+post_title: If I create an index on two fields in MySQL (CREATE INDEX foo on tabname(x,y);), can MySQL use that index when I do "SORT BY x"? In other words, can MySQL use a multi-field index to sort by one of the columns being indexed?
+
+======================================================
+
+(You): If I create an index on two fields in MySQL (CREATE INDEX foo on tabname(x,y);), can MySQL use that index when I do "SORT BY x"? In other words, can MySQL use a multi-field index to sort by one of the columns being indexed?
+
+(Dennis): yes, mysql will use the multi-field index if sorting by the first field of that index.
+
+----------------------
+
+(Adam): Yes. Multi-field indexes are basically just sorted first by x, then by y. You'll be able to get that optimization when you use x, but if you try doing a SORT BY y, you're not going to get that speedup. In other words, the order of indexing (x,y vs y,x) matters when you're only using one field to query.
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

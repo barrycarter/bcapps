@@ -1,0 +1,32 @@
+
+ID: 26343
+post_name: in-centos-whats-the-correct-way-to-turn-off-a-daemon-so-it-doesnt-start-when-the-machine-is-rebooted
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 08 Jun 2010 20:44:42 +0000
+post_type: post 
+post_status: publish
+post_title: In CentOS, what's the correct way to turn off a daemon so it doesn't start when the machine is rebooted?
+
+======================================================
+
+(You): In CentOS, what's the correct way to turn off a daemon so it doesn't start when the machine is rebooted?
+
+(Llewellyn): Theres a few "Proper" ways. The following are those few ways: chkconfig, setup, and manually changing the files.
+
+(You): thanks! chkconfig was the tool I wasn't remembering -- I usually use symlinks in /etc/rcx.d but I knew CentOS had a preferred method
+
+----------------------
+
+(Oscar): chkconfig --list will give you the status of all, look for the service/daemon you want to turn off for the service you're using. Most likely you're running a graphical desktop which is runlevel 5. So you run (in a terminal with root privileges) the following: service chkconfig --list then use that to turn off the service you want. This will prevent the service from starting up but may still be running.
+
+(Oscar): To turn off a service running on your run level 5, you run this: chkconfig --level 5 servicename off
+
+(Oscar): the service will not start upon reboot, but it may still be running in which case you should shut it down gracefully.
+
+(Oscar): more on sysV init runlevels -http://www.centos.org/docs/5/html/Installation_Guide-en-US/s1-boot-init-shutdown-sysv.html [http://www.centos.org/docs/5/html/Installation_Guide-en-US/s1-boot-init-shutdown-sysv.html]
+
+
+
+[Vark assigned category: <b>CentOS</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

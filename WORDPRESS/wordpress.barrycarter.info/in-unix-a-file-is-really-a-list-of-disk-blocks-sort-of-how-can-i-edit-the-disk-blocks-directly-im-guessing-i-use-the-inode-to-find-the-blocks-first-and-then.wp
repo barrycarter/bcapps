@@ -1,0 +1,32 @@
+
+ID: 24776
+post_name: in-unix-a-file-is-really-a-list-of-disk-blocks-sort-of-how-can-i-edit-the-disk-blocks-directly-im-guessing-i-use-the-inode-to-find-the-blocks-first-and-then
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Jul 2010 23:24:02 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, a file is really a list of disk blocks (sort of). How can I edit the disk blocks directly? I'm guessing I use the inode to find the blocks first, and then... ?
+
+======================================================
+
+(You): In Unix, a file is really a list of disk blocks (sort of). How can I edit the disk blocks directly? I'm guessing I use the inode to find the blocks first, and then... ?
+
+(D??): There are HEX-editors, that let you open the disk device-file (e.g. /dev/sdX) and edit it. The disk must be unmounted to do that.
+
+(You): I want to do it while the disk IS mounted -- I want to edit a large file that's too big to load into a conventional editor
+
+(D??): Then you can open this file in the HEX-editor directly.
+
+(You): I think /dev/dsk/xyz is too big to open in a hex editor -- I need to find one that does it a piece at a time
+
+----------------------
+
+(Karthick): You can try using a programming language like C and use system calls like read to get the data.
+
+(You): thanks. I know about seek() and have used Perl to efficiently read chunks of data from a big file. My question now is how to EDIT such a file, ideally efficiently. As in maybe access the disk blocks directly.
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

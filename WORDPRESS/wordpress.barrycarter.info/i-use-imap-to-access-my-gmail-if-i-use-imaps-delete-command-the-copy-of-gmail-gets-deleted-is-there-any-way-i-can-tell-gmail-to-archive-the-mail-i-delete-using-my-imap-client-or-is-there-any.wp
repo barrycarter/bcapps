@@ -1,0 +1,72 @@
+
+ID: 23125
+post_name: i-use-imap-to-access-my-gmail-if-i-use-imaps-delete-command-the-copy-of-gmail-gets-deleted-is-there-any-way-i-can-tell-gmail-to-archive-the-mail-i-delete-using-my-imap-client-or-is-there-any
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 20 Dec 2010 03:32:04 +0000
+post_type: post 
+post_status: publish
+post_title: I use IMAP to access my gmail. If I use IMAP's "delete" command, the copy of gmail gets deleted. Is there any way I can tell gmail to "archive" the mail I delete using my IMAP client? Or is there any way to tell getmail to archive my messages after successfully retrieving them?
+
+======================================================
+
+(You): I use IMAP to access my gmail. If I use IMAP's "delete" command, the copy of gmail gets deleted. Is there any way I can tell gmail to "archive" the mail I delete using my IMAP client? Or is there any way to tell getmail to archive my messages after successfully retrieving them?
+
+(Micah): The iPhone mail app provides an IMAP "Archive" option for Gmail. Other apps probably do not, generally. An alternative approach would be to set up Gmail filters to Forward-and-Archive mail to a different Gmail account - which you then checked through IMAP.
+
+(You): ok, but wouldn't I then run into the same problem on the alternate account? I'm using getmail to check my gmail. [direct gchat: carter.barry@gmail.com]
+
+(Micah): You could delete messages from the alternate account, and it wouldn't delete
+
+them from the primary account.
+
+(You): thanks. I later realized that google IMAP DELETE actually archives by default!
+
+----------------------
+
+(Eric): This should be a function of the client.  Your client should have a setting for whether to leave on server or not.  Personally, I find it much more trouble to use anything other than a browser to access gmail.  If you must have copies of mail locally, try google Gears or just Pop with the settings set to leave on server.
+
+(You): yes, but if I "leave on server", won't they just stay in the INBOX which is what I don't want. I really prefer reading mail in Alpine, it's so much easier and more useful.
+
+(Eric): Move to All Mail folder instead of delete.  That is gmail's way to archive.
+
+(You): ok, but how do I do that using getmail?
+
+(Eric): Hmm, not familiar with Alpine though I am an old Pine user from way back.  Are you a UW employee or something?  Is there a GUI to Alpine or are you using Alpine in a Unix terminal?
+
+(You): no, I'm just a Unix lover. I'm using it VT100 style.
+
+(Eric): Apparently, Alpine already deals with this.  See this post: http://www.ii.com/internet/messaging/pine/pc/#gmailIMAP
+
+(Eric): Have you tried looking in your All Mail folder to see if deleted mail is still there?
+
+(You): no I haven't..... I lied, though. I use getmail to get my mail and Alpine to read it. My bad... however, the URL you pointed me too looks interesting.
+
+(You): whoa, awesomeness! So, IMAP DELETE to google just means "put in All Mail"... it already works the way I want, fantastic. And thanks!
+
+----------------------
+
+(Cody): This all varies per mail client. The iPhone just recently got the ability to archive messages with the 4.0 update. 
+
+
+
+This is a bit dated information, but it may help your mail client if you follow the steps on this Gmail Blog entry:
+
+http://gmailblog.blogspot.com/2009/01/tip-archive-mail-on-your-iphone.html
+
+
+
+
+
+If you're using a desktop client, the only option (I know of) is to move that message to your "All Mail" folder which is the equivalent of hitting "Archive".
+
+(You): I'm using the Unix command line program 'getmail'. So, probably no way to do this?
+
+(Cody): If the iPhone only got it in their 4th revision of their OS, I would feel pretty safe to assume there isn't a way to do it. But I won't begin to say I know anything about Unix :)
+
+(You): ok... so I'm guessing it's some sort of special communication between google and the iPhone that normal programs can't replicate.
+
+
+
+[Vark assigned category: <b>Google</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

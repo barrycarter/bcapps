@@ -1,0 +1,36 @@
+
+ID: 27974
+post_name: i-need-to-receive-email-for-several-domains-and-put-that-email-into-various-varmail-files-is-there-a-better-alternative-than-sendmail-i-sort-of-like-qmail-but-is-there-something-even-simpler
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 24 Apr 2010 21:45:10 +0000
+post_type: post 
+post_status: publish
+post_title: I need to receive email for several domains and put that email into various /var/mail/ files. Is there a better alternative than sendmail? I sort of like qmail, but is there something even simpler?
+
+======================================================
+
+(You): I need to receive email for several domains and put that email into various /var/mail/ files. Is there a better alternative than sendmail? I sort of like qmail, but is there something even simpler?
+
+(Johan): there is a few alternative I personally like  postfix
+
+(Johan): http://www.postfix.org/
+
+(Johan): I have worked with exim as well but prefer postfix for a pure sendmail replacement
+
+(You): Thanks! I'm not sure I need a sendmail replacement, just a simple daemon to receive email. You think postfix is best?
+
+(Johan): I do
+
+(Johan): Hope that helps there documentation is pretty good on the site also there is a ton of HOWTO's on setting it up. Have a good day further
+
+(You): Thanks! I'll give it a shot!
+
+----------------------
+
+(Balazs): I would recommend postfix.
+
+
+
+[Vark assigned category: <b>Sendmail</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

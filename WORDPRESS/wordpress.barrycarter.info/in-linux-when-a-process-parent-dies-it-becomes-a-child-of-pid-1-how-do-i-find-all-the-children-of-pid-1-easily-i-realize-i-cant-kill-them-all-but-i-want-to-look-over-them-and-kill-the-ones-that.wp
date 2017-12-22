@@ -1,0 +1,28 @@
+
+ID: 26622
+post_name: in-linux-when-a-process-parent-dies-it-becomes-a-child-of-pid-1-how-do-i-find-all-the-children-of-pid-1-easily-i-realize-i-cant-kill-them-all-but-i-want-to-look-over-them-and-kill-the-ones-that
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 22:34:49 +0000
+post_type: post 
+post_status: publish
+post_title: In Linux, when a process' parent dies, it becomes a child of PID 1. How do I find all the children of PID 1 easily. I realize I can't kill them all, but I want to look over them and kill the ones that are running pointlessly.
+
+======================================================
+
+(You): In Linux, when a process' parent dies, it becomes a child of PID 1. How do I find all the children of PID 1 easily. I realize I can't kill them all, but I want to look over them and kill the ones that are running pointlessly.
+
+(Jesse): ok, so this is admittedly a hack, but it seems to work fairly well on my system. 'ps -fe | grep "   1 " '
+
+I don't know how comfortable with Linux you are so what we are doing is: we use 'ps -fe' to get a list of all the processes. then we grep (search for a string) of "&lt;space&gt;&lt;space&gt;&lt;space&gt;1&lt;space&gt;" which looks to pretty much only catch the PPid field...
+
+----------------------
+
+(Tarun): ps -p 1 -o comm=
+
+(Tarun): ps --ppid 1 -o comm=
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

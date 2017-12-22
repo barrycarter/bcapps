@@ -1,0 +1,76 @@
+
+ID: 27873
+post_name: whenever-i-run-a-unix-at-job-it-emails-me-with-tput-no-value-for-term-and-no-t-specified-how-do-i-get-rid-of-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 27 Apr 2010 02:23:56 +0000
+post_type: post 
+post_status: publish
+post_title: Whenever I run a Unix at job, it emails me with "tput: No value for $TERM and no -T specified". How do I get rid of this?
+
+======================================================
+
+(You): Whenever I run a Unix at job, it emails me with "tput: No value for $TERM and no -T specified". How do I get rid of this?
+
+(Vladimir): check your cron tasks, try to find $TERM in jobs and fix it =)
+
+(You): This is an 'at' job, not a cron job, and I don't intentionally set TERM anywhere.
+
+----------------------
+
+(Sreekanth): Redirect stderr messages to some junk file......by this you can only print STDOUT messages and not the STDERR messages
+
+(You): I tried sending both stdout AND stderr to /dev/null, but this still happens. It shows up when the at job runs, not when I create the at job.
+
+(Sreekanth): Just googled this and got this. Can you check this out
+
+(Sreekanth): You can always add temporary debug output to /etc/bashrc thus. 
+
+
+
+echo TERM is "$TERM" &gt;&2 
+
+
+
+That prints on std error, not std output.
+
+(Sreekanth): He says just add this to bashrc file and that solves the problem
+
+(You): I couldn't see the link you sent (I'm using this via IM). So just put what into /etc/bashrc to stop this?
+
+(Sreekanth): Hold on a sec...let me send you the right link...
+
+(Sreekanth): Check this out...http://www.euglug.org/pipermail/euglug/2005-January/002583.html
+
+(You): Thanks! Unfortunately, neither my ~/.bashrc not /etc/bashrc have a tput in them.
+
+(Sreekanth): Is that a cron job Barry ?
+
+(You): It's an 'at' job. My cron jobs run fine with no output.
+
+(Sreekanth): Can you tell me the output of this ? echo $TERM
+
+(You): From the terminal where I create the at job? It's "vt100". But, if you do "man at", it says TERM is treated specially.
+
+(Sreekanth): What command are you running in the unix shell script that you suspect is dumping this message ?
+
+----------------------
+
+(Jeremy): The at command is looking for a shell to run the script under. The man page for bash says that the -T argument will cause the commands to be executed in a subshell. Your ant script may wish to set some environment values prior to running.
+
+(You): I tried doing that "TERM=vt100; export TERM" but it didn't help. "man at" specifically says something about ignoring TERM?
+
+(Jeremy): The man page for bash mentions that. Can you provide details of your script?
+
+(You): It's basically "echo command | at time", nothing really fancy.
+
+(Jeremy): You may wish to try telling at which command script to run ... so put the command into a file that's a shell script (ie it starts with #!/bin/sh)
+
+(You): You mean, create a file called command.sh or whatever instead of trying to pipe the whole thing from echo?
+
+(Jeremy): Yes, that might allow you to have the bash environment or other shell setup correctly
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

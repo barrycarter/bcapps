@@ -1,0 +1,40 @@
+
+ID: 23672
+post_name: many-programming-languages-treat-for-while-do-etc-as-hardcoded-language-constructs-you-could-treat-them-as-functions-where-one-argument-is-a-block-of-code-does-any-language-actually-treat-l
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 31 Oct 2010 20:08:53 +0000
+post_type: post 
+post_status: publish
+post_title: Many programming languages treat 'for', 'while', 'do', etc as hardcoded language constructs. You could treat them as functions where one argument is a block of code. Does any language actually treat loops as functions, not independent constructs?
+
+======================================================
+
+(You): Many programming languages treat 'for', 'while', 'do', etc as hardcoded language constructs. You could treat them as functions where one argument is a block of code. Does any language actually treat loops as functions, not independent constructs?
+
+(Roy): I'm not positive this is exactly what you're asking but many languages have constructs such as foreach, map, etc. that accept functions or lambdas as arguments.
+
+(You): that's sort of it, but my question is: are there any languages that don't have looping constructs at all and do everything w/ functions?
+
+(Roy): Ah, that wasn't entirely clear to me.  I'm not sure.  Lisp perhaps?
+
+(You): hmmm, you might be right... Schema/SASL would do that too then. I guess I'm looking more for a "popular" language like Ruby, PHP, Perl, etc. Something people actually use.
+
+(Roy): Most functional languages would have at least one 'static' looping construct.  Maybe R?  I don't know -anything- about it.
+
+----------------------
+
+(Sami): I don't know of any language that treats loops as functions. You should look at function objects (which are a different thing, but useful) http://en.wikipedia.org/wiki/Function_object
+
+(You): thanks.
+
+----------------------
+
+(Stanislav): check out functional languages, i.e. haskell.org
+
+(You): thanks!
+
+
+
+[Vark assigned category: <b>C programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

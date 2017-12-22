@@ -1,0 +1,26 @@
+
+ID: 28322
+post_name: when-i-do-yum-search-x64-on-fedora11-it-returns-nothing-what-repository-should-i-add-to-get-a-commodore-c64-emulator
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 13 Apr 2010 23:44:13 +0000
+post_type: post 
+post_status: publish
+post_title: When I do "yum search x64" on fedora11, it returns nothing. What repository should I add to get a Commodore C64 emulator?
+
+======================================================
+
+(You): When I do "yum search x64" on fedora11, it returns nothing. What repository should I add to get a Commodore C64 emulator?
+
+(Larry): RPM Fusion has a build of Frodo (C64 emulator). http://rpmfusion.org/
+
+(You): how can I tweak my yum.conf to include this repository?
+
+----------------------
+
+(Juan Fernando): http://www.viceteam.org/ elite.linux@gmail.com
+
+
+
+[Vark assigned category: <b>Commodore C64</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

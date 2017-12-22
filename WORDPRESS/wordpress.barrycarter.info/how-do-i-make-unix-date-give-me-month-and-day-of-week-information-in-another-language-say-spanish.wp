@@ -1,0 +1,36 @@
+
+ID: 22742
+post_name: how-do-i-make-unix-date-give-me-month-and-day-of-week-information-in-another-language-say-spanish
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 08 Jul 2011 04:24:23 +0000
+post_type: post 
+post_status: publish
+post_title: How do I make Unix 'date' give me month and day-of-week information in another language, say Spanish?
+
+======================================================
+
+(You): How do I make Unix 'date' give me month and day-of-week information in another language, say Spanish?
+
+(Matias): Are you using PHP to obtain the information about the date? PHP 5 includes localization settings you can use to get the information in a localized language
+
+(You): thanks. I'm using the Unix "date" command from the command line. I'm trying to learn more about localization in Unix.
+
+(Matias): try this link http://stackoverflow.com/questions/1419018/localize-current-time-in-php
+
+----------------------
+
+(Alexander): You need to set LOCALE, LC_ALL or LC_TIME environment variable to name of your locale, i guess for Spanish it will be "es_ES.utf8", or "es_US.utf8", provided you have those locales installed in the system. for example:
+
+
+
+LC_TIME="de_CH.utf8" date +%A
+
+Freitag
+
+(You): thanks!
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

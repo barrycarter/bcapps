@@ -1,0 +1,32 @@
+
+ID: 24352
+post_name: to-back-up-files-in-case-i-accidentally-delete-something-or-change-a-file-by-mistake-not-for-offsite-archival-backups-which-is-best-backintime-rsnapshot-or-pdumpfs
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 27 Aug 2010 22:04:15 +0000
+post_type: post 
+post_status: publish
+post_title: To back up files (in case I accidentally delete something or change a file by mistake, not for offsite archival backups), which is best: backintime, rsnapshot, or pdumpfs?
+
+======================================================
+
+(You): To back up files (in case I accidentally delete something or change a file by mistake, not for offsite archival backups), which is best: backintime, rsnapshot, or pdumpfs?
+
+(Jason): what OS?
+
+(You): Fedora Linux.
+
+----------------------
+
+(Ben): personally, i would spend a little cash and get a 250Gb-2Tb external hard drive..depending on what you need..Seagate makes a lot of hard drives with built in backup programs..i personally like them a lot, and that way you have them on a secure source not connected to your computer
+
+http://www.seagate.com/www/en-us/products/external/external-hard-drive/ or http://www.seagate.com/www/en-us/products/external/freeagent/
+
+(You): thanks. I think I'll do that for long-term backups, but for short-term backups (onsite), I'm not sure that would be a good expense?
+
+(Ben): i see what you are getting at..and i guess it more or less depends on the quantity of data, and what you are backing up..each of the 3 does have certain features the others don't..so i would say, honestly, choose one that seems to apply most to the job or that appeals to you the most..good luck
+
+
+
+[Vark assigned category: <b>computers</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

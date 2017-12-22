@@ -1,0 +1,50 @@
+
+ID: 23911
+post_name: you-can-build-up-any-permutation-in-sn-through-transpositions-but-transpositions-arent-commutative-whats-the-simplest-way-to-build-up-a-given-permutation-using-only-transitive-permutations-group
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 21 Oct 2010 22:14:15 +0000
+post_type: post 
+post_status: publish
+post_title: You can build up any permutation in Sn through transpositions, but transpositions aren't commutative. What's the simplest way to build up a given permutation using only transitive permutations? *group theory*
+
+======================================================
+
+(You): You can build up any permutation in Sn through transpositions, but transpositions aren't commutative. What's the simplest way to build up a given permutation using only transitive permutations? *group theory*
+
+(Peter): If you're limited to transitive permutations, you can't necessarily "reach" every element in Sn. You will instead generate a subgroup of Sn that is, by definition, an Abelian group.
+
+(You): OK, can you do it w/ all commutative permutations PLUS one that's not commutative either at the start or at the end. The idea is to minimize non-commutative permutations. [direct gchat: carter.barry@gmail.com]
+
+(Peter): Let S be a (proper) Abelian subgroup of G. You want to know whether an arbitrary element g of G that is not a member of S will generate the whole group G--in the language of cosets, whether gS or Sg is equal to G. And, in general, I think the answer is no. I'm a bit rusty on this, so I'll have to check into the concept of normal subgroup, and whether S5 (the one central to Galois's proof that there is no general algebraic formula for solving 5th-degree equations) contains a series of nesting Abelian subgroups.
+
+(You): I think you might be right and I think S5 is the smallest counterexample. The words "normal" and Sylow are somehow involved. [direct gchat: carter.barry@gmail.com]
+
+(Peter): Yes A5, the group of even permutations of  five objects, is a subgroup of S5 (evidently!), but it is both simple and non-Abelian. See http://groupprops.wiki-site.com/index.php/Normal_subgroup for more
+
+(You): ok, so you CAN buildup a commutative combination of permutations that yield a non-Abelian group, but even that won't give you all groups, just the Dedekind groups?
+
+(Peter): Well, not sure (and I don't know the term Dedakind subgroup), but A5 is non-Abelian, and it has no non trivial normal subgroups. Give me an example of how you generate A5 from a nontrivial subgroup whose elements commute. Otherwise, you would need all the elements of A5 to build A5.
+
+(You): yeah, I later realized that. If every combination of permutations in my group is commutative, the whole group is obviously commutative. Ach, well, back the drawing board. I'll ask you this offhand before varking it: if you have sets S and T of length s and t, how long (big O) would it take to computer S-T (elements in S not in T)?
+
+(Peter): You mean also that T is a subgroup of S? So your question amounts to finding all the proper subgroups of a given group?
+
+(You): no wait, S and T are just plain old sets, not groups or anything. If I can show you can compute S-T in less than O(s*t) time, I can prove that there's no transformation that meets my original criteria.
+
+(You): http://cstheory.stackexchange.com/questions/2148/intermediate-coding-representation-for-levenshtein-distance/2342#2342 [http://cstheory.stackexchange.com/questions/2148/intermediate-coding-representation-for-levenshtein-distance/2342#2342] if you really want more
+
+(Peter): If S and T have no particular structure at all, it seems to me that, in general, you simply have to compare each element in S with every element in T (hence the time is O(s*t). Impose some structure on S and T and you might find something interesting.
+
+(You): sadly, I can't necessarily think of any structure... I have no idea what the elements might look like.
+
+(Peter): Well, if S Is the set of all regular polygons of less than N sides and T is the set of all prime numbers less than or equal to p, you don't need time O(s*t) to compute that S-T = S. Obviously, you need criteria on S and T that are harder to compare than these, but not so hard that you need time O(s*t) for the comparison. E.g., S is the set of all mountains shorter than Everest and T is the set of all mountains shorter than McKinley. But you still have to be able to prove your theorem.
+
+(You): right, but, remember, my sets will be composed of "instructions" on how to build up a given string. I'm pretty sure many of the elements will be similar, so O(s*t) will be required.
+
+(Peter): In general, I think that's right.
+
+
+
+[Vark assigned category: <b>commutative</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

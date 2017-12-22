@@ -1,0 +1,66 @@
+
+ID: 25159
+post_name: i-want-to-run-two-commands-in-the-shell-bash-or-tcsh-in-a-row-and-not-have-a-newline-printed-between-them-how-can-i-do-this
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 00:14:18 +0000
+post_type: post 
+post_status: publish
+post_title: I want to run two commands in the shell (bash or tcsh) in a row and NOT have a newline printed between them. How can I do this?
+
+======================================================
+
+(You): I want to run two commands in the shell (bash or tcsh) in a row and NOT have a newline printed between them. How can I do this?
+
+(Wojtek): I'm not sure what you mean but in bash you can use && operator so for example one can say:
+
+./configure && make && make install.
+
+(You): I meant in the output. If you run "date && date" the output is on two lines, not one line.
+
+(Wojtek): Googling quickly gives me this:
+
+echo -n -e "r$(date)" && date
+
+(Wojtek): I bet it could be somehow refined though.
+
+(Wojtek): Source: http://mydebian.blogdns.org/?p=246
+
+(You): thanks. In tcsh, the $() becomes `` (backticks)
+
+(Wojtek): You're welcome!
+
+----------------------
+
+(Vincent): pipe their output through sed and write an edit that will delete it.  (Assuming the output actually has a newline in it.)
+
+(You): thanks. I was hoping to avoid Perl, but I guess I need it (I know you said sed, but it means I need something)
+
+(Vincent): I am trying to remember if there is a trivial Unix command (like "yes") that will simply clip the end off output.
+
+(You): someone suggested && -- trying that now.
+
+(You): rats, still gets a newline
+
+(Vincent): if you are sure there are no other newlines, it might be easier to use the "tr" command.
+
+(You): oooh! Not bad!
+
+(Vincent): tr -d 'n'
+
+(You): thanks. I think I'm starting to ask overly trivial questions :)
+
+(Vincent): Been in a M$ shop for far too long.  Answering this question was refreshing.
+
+(Vincent): (or, rather, helping out)
+
+----------------------
+
+(Saravana): write the commands in a script file(.ksh/sh) and run the script file as sh filename.sh
+
+(You): Sarvana, thanks. The output will still have newlines though
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,24 @@
+
+ID: 25204
+post_name: how-do-i-push-a-git-repository-to-github-if-i-want-to-use-a-different-identity-not-sshid_rsa-but-a-different-file
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 23 Jun 2010 22:20:49 +0000
+post_type: post 
+post_status: publish
+post_title: How do I push a git repository to github if I want to use a different identity (not ~/.ssh/id_rsa, but a different file?)
+
+======================================================
+
+(You): How do I push a git repository to github if I want to use a different identity (not ~/.ssh/id_rsa, but a different file?)
+
+(Derk): https://git.wiki.kernel.org/index.php/GitFaq#How_do_I_specify_what_ssh_key_git_should_use.3F
+
+----------------------
+
+(Joshua): Run an ssh-agent and add the other key to the agent using ssh-add.
+
+
+
+[Vark assigned category: <b>GitHub</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

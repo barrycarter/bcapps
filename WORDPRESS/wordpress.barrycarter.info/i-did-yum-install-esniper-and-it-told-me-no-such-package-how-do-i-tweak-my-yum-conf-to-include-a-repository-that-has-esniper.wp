@@ -1,0 +1,42 @@
+
+ID: 27411
+post_name: i-did-yum-install-esniper-and-it-told-me-no-such-package-how-do-i-tweak-my-yum-conf-to-include-a-repository-that-has-esniper
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 05 May 2010 23:16:31 +0000
+post_type: post 
+post_status: publish
+post_title: I did "yum install esniper" and it told me "no such package". How do I tweak my yum.conf to include a repository that has esniper?
+
+======================================================
+
+(You): I did "yum install esniper" and it told me "no such package". How do I tweak my yum.conf to include a repository that has esniper?
+
+(Satish): create a new file in /etc/yum.repos.d such as esniper_repo.repo and add the following contents to it : http://pastebin.org/203519  and save it
+
+(Satish): replace the angular brackets with the correct appropriate information
+
+(You): thanks. I know how to add stuff to yum.conf. I just need the base URL of a repository that has esniper.
+
+(Satish): that I am not sure of, what does the package do ?
+
+(You): it snipes auctions on eBay. I know I can install it from source, but I prefer using packages when possible. Plus, any repository that has esniper probably has other cool stuff too.
+
+(Satish): a preliminary search on google reveals that the rpm fro the package is not easily available, and hence there might not be a repo with the package.
+
+(You): Rats... oh well, it's back to "sh configure && make install" I suppose :)
+
+(Satish): yup and good luck with that :)
+
+----------------------
+
+(Judah): What is a Binary Compulsion Regulator?
+
+(You): did you answer my question with another question?
+
+(Judah): ya sorry I was trying to ask a question myself after I was shown your question, I should have wrote 'new'
+
+
+
+[Vark assigned category: <b>computer security</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

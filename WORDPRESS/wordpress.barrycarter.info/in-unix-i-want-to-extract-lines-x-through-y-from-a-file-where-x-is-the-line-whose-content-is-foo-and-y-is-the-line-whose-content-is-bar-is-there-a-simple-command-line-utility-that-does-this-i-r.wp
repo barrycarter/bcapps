@@ -1,0 +1,30 @@
+
+ID: 24627
+post_name: in-unix-i-want-to-extract-lines-x-through-y-from-a-file-where-x-is-the-line-whose-content-is-foo-and-y-is-the-line-whose-content-is-bar-is-there-a-simple-command-line-utility-that-does-this-i-r
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 07 Aug 2010 23:20:00 +0000
+post_type: post 
+post_status: publish
+post_title: In Unix, I want to extract lines x through y from a file where x is the line whose content is "foo" and y is the line whose content is "bar". Is there a simple command-line utility that does this? I realize I can write a Perl/sed/awk script, but there is a simple solution?
+
+======================================================
+
+(You): In Unix, I want to extract lines x through y from a file where x is the line whose content is "foo" and y is the line whose content is "bar". Is there a simple command-line utility that does this? I realize I can write a Perl/sed/awk script, but there is a simple solution?
+
+(Benjamin): perl has a flip-flop operator that would make this a fairly easy one-liner (sorry, I can't provide that off the top of my head). I don't think there's any standard Unix utility that will do this for you.
+
+(You): thanks. Something like "perl -nle 'if (/startline/) {$MODE=1;} elsif (/endline) {$MODE=0;} else {$MODE && print $_}'" ?
+
+----------------------
+
+(Joyce): Can you use vi?  If so, you can type :# to get the line number when your cursor is on each line.  Having the two line numbers and for illustration purposes lets say the line numbers are 29 and 42.  Then you would type from within vi, :29, 42 w!&gt;&gt;newfilename
+
+That will write the lines 29 through 42 into a new file called whatever you replace newfilename with in the above.
+
+(You): thanks. I'm actually doing this inside a script, and was just wondering if there was a super-clever way of doing it without scripting. vi wouldn't work since I'm in a scripting environment.
+
+
+
+[Vark assigned category: <b>Unix</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,18 @@
+
+ID: 25130
+post_name: when-i-do-host-t-txt-amazon-com-i-get-truncated-retrying-in-tcp-mode-is-amazons-txt-spf-record-finally-so-long-that-it-no-longer-fits-in-a-udp-packet-it-appears-to-be-230-characters-at-th
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 21:31:37 +0000
+post_type: post 
+post_status: publish
+post_title: When I do "host -t txt amazon.com", I get ";; Truncated, retrying in TCP mode." Is Amazon's TXT SPF record finally so long that it no longer fits in a UDP packet? It appears to be 230 characters at the moment.
+
+======================================================
+
+(You): When I do "host -t txt amazon.com", I get ";; Truncated, retrying in TCP mode." Is Amazon's TXT SPF record finally so long that it no longer fits in a UDP packet? It appears to be 230 characters at the moment.
+
+
+
+[Vark assigned category: <b>UDP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

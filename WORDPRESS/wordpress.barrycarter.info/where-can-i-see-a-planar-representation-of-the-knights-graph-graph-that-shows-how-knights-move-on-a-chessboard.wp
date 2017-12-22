@@ -1,0 +1,40 @@
+
+ID: 24485
+post_name: where-can-i-see-a-planar-representation-of-the-knights-graph-graph-that-shows-how-knights-move-on-a-chessboard
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 24 Aug 2010 22:08:28 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I see a planar representation of the Knight's Graph (graph that shows how knights move on a chessboard)?
+
+======================================================
+
+(You): Where can I see a planar representation of the Knight's Graph (graph that shows how knights move on a chessboard)?
+
+Wikipedia and other sites have lots of NON-planar representations, but I couldn't find a planar one. Or, is the Knight's Graph too complex to show as planar (ie, contains K5 K3,3 or an extension thereof)
+
+----------------------
+
+(Kurt): Perhaps this might help. I am assuming that you want to view the plane the fully contains the knight's move (i.e. the chess board). Let me know if this helps.
+
+(You): I'm using vark via IM, so, if you sent a link, I didn't see it. I'm looking for a representation where the edges don't cross if possible.
+
+(Kurt): so the right angle move without the chess board lines (edges)?
+
+(You): ummm, ok, the wikipedia graph has edges intersecting like crazy-- the question is: can you move the nodes around so that the edges (lines) in the graph don't intersect. http://en.wikipedia.org/wiki/Knight%27s_graph [http://en.wikipedia.org/wiki/Knight%27s_graph]
+
+(Kurt): ohhh, I see. Thanks for introducing this graph to me. Now, for your question. Each node is a physical coordinate on the planerepresenting the location of a square on the chessboard. moving the node, that is changing the coordinates on the plane, would invalidate this representation. If that is not of concern, then It "looks" pretty impossible to rearrange the nodes so the edges never crossed, but I don't know how to prove that.
+
+(You): yes, I'm OK w moving the nodes so they no longer form a nice square. If you look at http://upload.wikimedia.org/wikipedia/commons/b/be/3-simplex_graph.svg [http://upload.wikimedia.org/wikipedia/commons/b/be/3-simplex_graph.svg] and http://www4d.wolframalpha.com/Calculate/MSP/MSP69219c2d089646a3gid00002c575hdcge4720cc?MSPStoreType=image/gif&s=28&w=150&h=130 [http://www4d.wolframalpha.com/Calculate/MSP/MSP69219c2d089646a3gid00002c575hdcge4720cc?MSPStoreType=image/gif&s=28&w=150&h=130] you'll see that all 4 nodes connect to each other, but the first one has crossing edges, while the 2nd one doesn't. I'm looking for a knight's graph that looks like version 2, if possible.
+
+----------------------
+
+(Stephen): Is this what you're looking for?http://www.bookrags.com/eb/graph-theory-eb/
+
+(Stephen): it appears K5 is non-planar
+
+
+
+[Vark assigned category: <b>board games</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

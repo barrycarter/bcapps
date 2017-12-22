@@ -1,0 +1,36 @@
+
+ID: 27455
+post_name: where-can-i-find-very-cheap-40month-or-less-colocation
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 04 May 2010 22:23:49 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find very cheap ($40/month or less) colocation?
+
+======================================================
+
+(You): Where can I find very cheap ($40/month or less) colocation?
+
+(Brett): I use rimuhosting.com. They are *fantastic*. Really good support. Really knowledgeable. You can get a VPS for under $40.
+
+
+
+If you know what you are doing, and don't mind getting your hands dirty, you may be interested in something like Amazon's EC2 as well. It's pretty neat.. But on the smaller side, it will likely be more like $65 - $70 or so a month.
+
+(You): I've done dedicated servers and VPS before. This time, I'm really looking to go colo.
+
+(Brett): are you looking for space to colo your own equipment?
+
+(You): Yes! More specifically, I plan to buy a 1U server off eBay and have the seller ship it directly to a colo facility, and get KVM access to setup Xen hypervisor.
+
+----------------------
+
+(Jorge): Colocation for?
+
+(You): For a 1U machine I plan to buy on eBay and ship directly to the colo facility.
+
+
+
+[Vark assigned category: <b>colocation</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

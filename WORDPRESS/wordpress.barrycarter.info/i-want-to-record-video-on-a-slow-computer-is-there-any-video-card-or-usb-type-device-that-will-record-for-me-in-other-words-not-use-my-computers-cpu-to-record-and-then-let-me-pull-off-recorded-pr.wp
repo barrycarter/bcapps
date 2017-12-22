@@ -1,0 +1,68 @@
+
+ID: 26658
+post_name: i-want-to-record-video-on-a-slow-computer-is-there-any-video-card-or-usb-type-device-that-will-record-for-me-in-other-words-not-use-my-computers-cpu-to-record-and-then-let-me-pull-off-recorded-pr
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 30 May 2010 05:53:45 +0000
+post_type: post 
+post_status: publish
+post_title: I want to record video on a slow computer. Is there any video card or USB-type device that will record for me (in other words, not use my computer's CPU to record) and then let me pull off recorded programs to my hard drive, etc? I want the ability to watch something as it's being recorded too (timeshifting).
+
+======================================================
+
+(You): I want to record video on a slow computer. Is there any video card or USB-type device that will record for me (in other words, not use my computer's CPU to record) and then let me pull off recorded programs to my hard drive, etc? I want the ability to watch something as it's being recorded too (timeshifting).
+
+(Dan): Use a TiVo or dvr in series with a tv tuner card
+
+(You): yes, but the TV tuner card would still try to record to my hard drive, not its own drive, right? That could lead to frame drops.
+
+(Dan): Ok, so use a dvr that has a USB plug for direct file transfer
+
+(You): yes, OK, that's what I want. Can you tell me of such a product?
+
+(Dan): I'm not familiar with one that does this function straight out of the box. You generally would need to hack and/or modify and dvr to accomplish this task. May I ask why would wish to do this when most programs are readily available to download already compressed and commercial free?
+
+(You): ah, you're referring to BitTorrent/ThePirateBay or something similar?
+
+(Dan): Yes. There are many sources but that is one option. Otherwise just invest the cash to upgrade your computer.
+
+(You): I'm looking for daily programs like Deal Or No Deal, Chain Reaction, The $25K Pyramid (all from GSN), and other shows that you really can't find on ThePirateBay. Upgrading is an option, but it'd be nice to have a standalone device that does the work for me.
+
+----------------------
+
+(Maurice): The answer is, no, if your computer is slow, it will probably not work. For one thing, video recording has to hit your hard drive pretty hard and a slow computer usually can???t keep up with that. The USB video capture devices only capture the sound and video, but your computer has to still write that to the hard drive and that bottleneck will probably make it a no-go.
+
+
+
+Of course, another thing to do would be putting together an Atom CPU based computer, which often has the CPU incorporated in the motherboard, and at a very good (low) price. I put a home theater PC for about $300 that does the job quite well.
+
+
+
+http://www.newegg.com/Product/ProductList.aspx?Submit=ENE &lt;http://www.newegg.com/Product/ProductList.aspx?Submit=ENE&DEPA=0&Order=BESTMATCH&Description=atom+barebone&x=0&y=0&gt; &DEPA=0&Order=BESTMATCH&Description=atom+barebone&x=0&y=0
+
+
+
+Check out the above link.
+
+
+
+ 
+
+
+
+Good luck.
+
+(You): thanks. I was thinking about a video card that had an onboard hard drive to record to. I could then transfer files as necessary, but not have to use my own hard drive for direct streaming video.
+
+(Maurice): As far as I know, what you describe does not exist. There are many video capture cards out there, often from ATI, but they all use the computer???s hard drive.
+
+(You): thanks, that was my question. Archos and Cirago come close to what I want, but not quite.
+
+----------------------
+
+(Steve): you really need to define slow; therefore, the answer is "no."
+
+
+
+[Vark assigned category: <b>CPU</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

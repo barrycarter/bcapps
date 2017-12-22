@@ -1,0 +1,24 @@
+
+ID: 26803
+post_name: how-can-i-profile-how-x11-is-using-memory-with-an-eye-towards-making-it-use-less-memory-i-realize-i-can-look-at-procpidkmem-or-something-but-i-was-thinking-something-a-little-less-drastic
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 28 May 2010 00:50:08 +0000
+post_type: post 
+post_status: publish
+post_title: How can I profile how X11 is using memory, with an eye towards making it use less memory? I realize I can look at /proc/pid/kmem or something, but I was thinking something a little less drastic.
+
+======================================================
+
+(You): How can I profile how X11 is using memory, with an eye towards making it use less memory? I realize I can look at /proc/pid/kmem or something, but I was thinking something a little less drastic.
+
+(Hemank): http://www.argyllcms.com/doc/ChangesSummary.html
+
+(Hemank): This may help
+
+(You): is Argyle an X11 memory profiler?
+
+
+
+[Vark assigned category: <b>X11</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

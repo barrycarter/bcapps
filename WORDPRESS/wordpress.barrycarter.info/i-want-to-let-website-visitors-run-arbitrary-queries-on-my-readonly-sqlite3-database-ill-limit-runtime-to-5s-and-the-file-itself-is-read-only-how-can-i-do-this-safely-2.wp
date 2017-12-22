@@ -1,0 +1,32 @@
+
+ID: 24248
+post_name: i-want-to-let-website-visitors-run-arbitrary-queries-on-my-readonly-sqlite3-database-ill-limit-runtime-to-5s-and-the-file-itself-is-read-only-how-can-i-do-this-safely-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 17 Sep 2010 05:05:26 +0000
+post_type: post 
+post_status: publish
+post_title: I want to let website visitors run arbitrary queries on my *readonly* SQLite3 database (I'll limit runtime to 5s, and the file itself is read only). How can I do this safely?
+
+======================================================
+
+(You): I want to let website visitors run arbitrary queries on my *readonly* SQLite3 database (I'll limit runtime to 5s, and the file itself is read only). How can I do this safely?
+
+(Anirvan): This isn't a full answer, but issues to consider include preventing excessive concurrent usage, profiling queries for known-problematic cases, and preventing malformed queries.
+
+----------------------
+
+(Abram): Safe in terms of...? Obviously your data won't change. SQLite will return an error if they try an insert or update.
+
+(You): thanks, but things like the "attach" command could let them harm other files. Or even things like ".output" might do damage. If I could think of all the possibilities, I'd compensate for them, but my worry is that someone will think of something clever that I haven't.
+
+(Abram): yeah, that's a bit of a pickle. As you're quite aware, this is far beyond the intended scope of sqlite. one idea: run in in a VM, and reset it frequently.
+
+(You): thanks. Actually, I am running it in a VM, but the VM's doing other stuff too, so rebuilding isn't really an option. And yes, you're right in saying sqlite3 wasn't designed for that, but it seems like a common task: let people get data from your db without changing any data on your system. This must be a solved problem?
+
+(Abram): it sure is for non-embedded database systems. mysql, tsql, mssql, etc. sqlite passes all file handling and configuration to the operating system. You can fix it OS side by replacing the file or something, but I don't think you'll find a good way to do it  within sqlite.
+
+
+
+[Vark assigned category: <b>SQLite3</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

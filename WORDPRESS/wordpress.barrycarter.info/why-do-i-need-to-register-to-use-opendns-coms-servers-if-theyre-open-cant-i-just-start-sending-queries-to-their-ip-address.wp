@@ -1,0 +1,32 @@
+
+ID: 24515
+post_name: why-do-i-need-to-register-to-use-opendns-coms-servers-if-theyre-open-cant-i-just-start-sending-queries-to-their-ip-address
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 24 Aug 2010 00:38:19 +0000
+post_type: post 
+post_status: publish
+post_title: Why do I need to register to use opendns.com's servers? If they're open, can't I just start sending queries to their IP address?
+
+======================================================
+
+(You): Why do I need to register to use opendns.com's servers? If they're open, can't I just start sending queries to their IP address?
+
+(Eddie): More of a security measure on their end and to avoid DOS.
+
+(You): so if I hit it from a non-registered IP, it'll give a recursive answer?
+
+----------------------
+
+(Mark): You don't have to register to use the servers. You need to register to use the ability to filter DNS and track usage from your network. You can use their DNS service by just configuring your DNS resolver to use their IP addresses.
+
+(You): thanks, just did that -- I couldn't find their DNS IP anywhere and thought you had to register to see it.
+
+(Mark): Nope. It's just at the bottom of the main page.
+
+(You): LOL! I was so quick to jump to "see plans", I missed this!
+
+
+
+[Vark assigned category: <b>IP address</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,46 @@
+
+ID: 24968
+post_name: i-have-three-colors-assigned-to-the-3-vertices-of-a-triangle-can-i-use-gouraud-shading-to-color-the-interior-of-the-triangle-naturally
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 15 Jul 2010 01:20:54 +0000
+post_type: post 
+post_status: publish
+post_title: I have three colors assigned to the 3 vertices of a triangle. Can I use Gouraud shading to color the interior of the triangle "naturally"?
+
+======================================================
+
+(You): I have three colors assigned to the 3 vertices of a triangle. Can I use Gouraud shading to color the interior of the triangle "naturally"?
+
+(Will): depends on what you mean by naturally
+
+(You): "in a natural way" :) -- I mean color it so that the coloring is continuous and, as you get closer to the 3 points, you get closer to the original specified color. In this case, all my colors are pure hues (100% brightness/saturation) if that helps.
+
+(Will): perhaps you mean phong shading?
+
+(You): I thought Phong shading was only necessary when you had tight light sources? Isn't Gouraud faster?
+
+(Will): gourad is faster, it's basically just an interpolation between the vertices.  wasn't sure if you needed lighting or what
+
+(You): nope, no lighting -- just need to color a triangle "smoothly". Does Gouraud shading do that? It other words, does it take 3 colors as input and output a triangle shaded correctly?
+
+(Will): yes
+
+(You): cool.. if I'm building an SVG file, how do I incorporate Gouraud? Is there an SVG option for this type of fill?
+
+(Will): I'm not sure how to integrate it with svg
+
+(You): OK, where can I download the algorithm or whatever?
+
+(Will): it's just a standard 3 way interpolation, there are a bunch of websites that have it like this one: http://www.nbb.cornell.edu/neurobio/land/oldstudentprojects/cs490-95to96/guo/report.html
+
+(You): OK, so there's no "magic" way of doing it that's superfast?
+
+(Will): the equations since they are linear lend themselves to incrementalization very easily so that becomes very fast just doing that step
+
+(You): OK. I might be in over my head. I was hoping to use SVG's fill methods to get a nicely colored triangle, but that might be not possible.
+
+
+
+[Vark assigned category: <b>Gouraud shading</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,28 @@
+
+ID: 23539
+post_name: on-httpmath-stackexchange-comquestions9608determining-distribution-of-maximum-of-dependent-normal-variables97409740-httpmath-stackexchange-comquestions9608determining-distribution-of-ma-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 11 Nov 2010 01:01:07 +0000
+post_type: post 
+post_status: publish
+post_title: On http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740 [http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740] how do I make my LaTex equations bigger? They seem tiny.
+
+======================================================
+
+(You): On http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740 [http://math.stackexchange.com/questions/9608/determining-distribution-of-maximum-of-dependent-normal-variables/9740#9740] how do I make my LaTex equations bigger? They seem tiny.
+
+(Johan): Enclose the formulas in begin{large}end{large} You can try Large, LARGE, huge, and Huge. (Possibly HUGE too).
+
+(You): thanks!
+
+(You): I keep getting: "Unknown environment: LARGE" and stuff like that
+
+----------------------
+
+(Lorne): You can try large Large LARGE huge or Huge.  They work on math normally in LaTeX.  I'm not sure if the online thing will support it.  But I'd guess that it would.
+
+
+
+[Vark assigned category: <b>LaTex</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

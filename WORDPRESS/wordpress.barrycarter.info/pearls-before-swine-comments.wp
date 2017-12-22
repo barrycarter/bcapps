@@ -1,0 +1,50 @@
+
+ID: 28572
+post_name: pearls-before-swine-comments
+post_category: programming
+post_author: barrycarter
+post_date_gmt: Wed, 23 Apr 2014 17:26:47 +0000
+post_type: post 
+post_status: publish
+post_title: Pearls Before Swine comments
+
+======================================================
+
+Have you ever commented on an old Pearls Before Swine strip and
+wondered if anyone replied to your comment?
+
+I maintain a queryable database of gocomics comments to help answer
+that question. For example, here are the 100 most recent comments on
+Pearls Before Swine (admittedly, many of them are mine, and most of
+them are on current strips, and there are glitches):
+
+http://db430b043c04b0ab42f24dbb012bd77f.gocomics.db.bcinfo3.barrycarter.info/
+
+Here are the most recent comments on older (non-2014) strips:
+
+http://71d0f253954d5fba089f19f8163e5534.gocomics.db.bcinfo3.barrycarter.info/
+
+If you know SQL, you can create your own queries. If not, email me at
+gocomicsdb@barrycarter.info for help. This works for all gocomics
+comics, not just Pearls Before Swine.
+
+If you're a programmer and can help me with this project, email
+gocomicsdbhelp@barrycarter.info
+
+There's also a Pearls Before Swine wiki (I don't run it) at:
+
+http://pearlsbeforeswine.wikia.com/wiki/Main_Page
+
+which answers some of the more popular comments questions (sort of):
+
+Croc deaths (not all of them):
+http://pearlsbeforeswine.wikia.com/wiki/List_of_Zeeba_Zeeba_Eata_members
+
+Colorization of old strips (page I started):
+http://pearlsbeforeswine.wikia.com/wiki/Colorization
+
+and a couple of other pages I created:
+
+http://pearlsbeforeswine.wikia.com/wiki/Newspaper_mentions
+http://pearlsbeforeswine.wikia.com/wiki/Storylines
+

@@ -1,0 +1,132 @@
+
+ID: 24778
+post_name: how-do-i-search-for-a-phrase-on-wikipedia-if-the-phrase-is-already-an-article-i-dont-want-to-see-just-that-article-i-want-to-see-all-articles-containing-that-phrase
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 30 Jul 2010 22:59:45 +0000
+post_type: post 
+post_status: publish
+post_title: How do I search for a phrase on wikipedia if the phrase is already an article? I don't want to see just that article, I want to see all articles containing that phrase.
+
+======================================================
+
+(You): How do I search for a phrase on wikipedia if the phrase is already an article? I don't want to see just that article, I want to see all articles containing that phrase.
+
+(Andrew): you could try searching google with something like the following: site:wikipedia.org +myterm +"my phrase"
+
+(You): LOL! That's exactly what I ended up doing. I guess my question should've been: how do I do that from wikipedia itself.
+
+(Andrew): Ha ha, well, that's how I would do it. Have you looked through Wikipedia's help documentation to see if their search syntax supports what you're trying to do?
+
+(You): no, I'm too lazy for that. I know that "back in the old days", the search button had two options: search or "goto page".
+
+(Andrew): OK, so another option would be to invent a time machine and go back and use the site before they changed it. Just an idea. ;-)
+
+(You): my time machine's broken, and the tools I need to fix it are in 2217.
+
+(Andrew): I hate it when that happened...
+
+(You): tell me about it. Now I have to wait another 207 years to send the tools back to 2010.
+
+----------------------
+
+(Annie): Type it in the search box and wait for a moment - last line will be "containing &lt;your phrase&gt;".
+
+(You): I typed "Bob" into the search and it took me straight to the Bob page, no line saying "containing" at all.
+
+(Annie): Do not press enter. Wait until suggestions appear below. If suggestions do not appear for you at all, click on the magnifier icon in the search box without typing anything there - it'll take you to the search results page. It searches "containing &lt;search phrase&gt;" by default.
+
+(You): OH! Thank you!
+
+(You): thanks. The magnifying glass trick didn't work, but the waiting and "containing Bob" trick did. I use elinks normally, so I was hoping for something less JavaScript-y, but at least I have a method now.
+
+(Annie): Just out of curiosity, which browser are you using?
+
+(You): I used Firefox to run the test you suggested. I normally use elinks, a text-based browser.
+
+(Annie): Never heard of it before. Live and learn, live and learn :) Thank you.
+
+(You): thank YOU! Someone sent me another answer: click on the magnifying glass WITHOUT typing in any text and it takes you to a search page.
+
+(Annie): Glad it worked!
+
+(You): I really didn't expect an answer to my question until tomorrow... tomorrow ... tomorrow...
+
+----------------------
+
+(Rex): Click on the little "search" icon at the far right of the search box. That will take you to a Search page. If you search "everything" it will provide links to all articles where the phrase appears. Also, here a link you can go to that explains a lot about searching on Wikipedia: http://en.wikipedia.org/wiki/Help:Searching
+
+(You): that worked, thanks!
+
+----------------------
+
+(Aldo): get the right words in the right order, there is no thing such a
+
+phrase, only if you can say it as the author did in his moment or as the
+
+colaborator to Wikipedia did.
+
+
+
+I can remember one, "If at first you don't succeed, try, try again" but I am
+
+not pretty sure if Churchill say it that way. So I use "First" "succeed"
+
+"try" and "again"
+
+
+
+Use the most comprehensive way to express what you are looking for, I'm sure
+
+u will get it.
+
+----------------------
+
+(Stavros): There are a couple of ways you can do this: You can use the Wikipedia search box and type "this is my phrase" in the search box, and click on Search (not Go); or you can go to Google and search for [ site:en.wikipedia.org "this is my phrase" ].
+
+(You): thanks. The problem is that there IS no "search" and "go" box anymore -- there used to be and I used it, which is why I'm now confused how to do it.
+
+(Stavros): That's strange -- I still have them in my layout (Classic).  Maybe some of the other layouts don't have that -- try changing your preferences (http://en.wikipedia.org/wiki/Special:Preferences [http://en.wikipedia.org/wiki/Special:Preferences]) under "Appearance".
+
+(You): oh, I'm not logged in. Could you log out and see if you still see both buttons?
+
+(Stavros): I see what you mean.  It will return an article if there is one with the exact phrase you enter, otherwise the search results.  A trick you can use is to search for [ the "central london" ] instead of [ "central london" ], and it will give you full search results.
+
+(You): I tried entering "Bob" (with quotes) and it still took me to the Bob page, not search results.
+
+(Stavros): Try [the "bob"] or even ["bob""].
+
+(You): yay, [Bob] (without quotes) works!
+
+(Stavros): No, no -- [...] is the way I quote searches (I don't use quotation marks because they can be part of the search.  Search for ["bob""] that is ...       "bob""       (with two final quotation marks)
+
+(You): that works too, but since [bob] works, no point in unbalancing the world's quotation marks.
+
+(Stavros): Using brackets seems to work for some weird reason, but it does not quote phrases, so for example [ [cross charing] ] finds Charing Cross.
+
+(You): but [cross charing] and ["cross charing"] give dramatically different results. [direct gchat: carter.barry@gmail.com]
+
+(Stavros): yes, exactly.
+
+----------------------
+
+(Rens): Hi,
+
+
+
+In google just use: site:www.wikipedia.com "phrase"
+
+
+
+Example: site:www.wikipedia.com "einstein" looks for all articles with
+
+einstein on wikipedia
+
+
+
+Grtz, Patu
+
+
+
+[Vark assigned category: <b>Wikipedia</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

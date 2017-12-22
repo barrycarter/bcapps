@@ -1,0 +1,56 @@
+
+ID: 22946
+post_name: is-voltdb-a-viable-alternative-to-mysql-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 03 Feb 2011 22:14:44 +0000
+post_type: post 
+post_status: publish
+post_title: Is VoltDB a viable alternative to MySQL?
+
+======================================================
+
+(You): Is VoltDB a viable alternative to MySQL?
+
+(Dmitry): it very much depends on your problem set. for "normal", not-very-oltp tasks the superior alternative is Postgres, imho. for very fast oltp, VotlDB must have a significant edge, despite being just out of beta. I'd give it a try. note that it's a product of a very different class than MySql, it's hard to compare directly, but I suppose you'll need nontrivial efforts to make MySql perform comparably in the areas for which VoltDB is created. initial infrastructure investments into VoltDB seem higher, but there's little point in using such a thing inless your business requirements are high (else see Postgres).
+
+(You): are VoltDB's memory requirements really high? Is it impractical to run on a 256M VM?
+
+(Dmitry): no, 256M is totally, utterly impractical. http://voltdb.com/product/systemrequirements  say that *minimum* RAM required to run one node is 4G, and you need two nodes to have high availability features. for in-memory DB VoltDB is, you definitely don't save on RAM.
+
+(You): ah, got it! So the big advantage to traditional dbs is that they use disk, not RAM, and the big advantage to VoltDB is that you can use a cluster of big memory servers to improve speed?
+
+(Dmitry): exactly. if you want very high performance, you take in-memory beasts like volt or even kdb, and give them as much ram as your hardware allows. you get huge performance boost, but it costs you.
+
+(You): ok, so, for us poor people, MySQL or PostgreSQL is still the way to go? (or sqlite3, which I love, but doesn't handle large datasets well)
+
+(Dmitry): for smaller things, you either take a traditional sql database which can run on rather small amount of ram (but always, always can use more), or some small-scale in-ram nosql database if you want low latency but small data volumes.
+
+(You): is nosql just a way of storing VIEWs consisting of JOINs or something? I can't seem to grok it.
+
+(Dmitry): traditional disk-based DBs have great durability, but speed is necessarily limited due to disk access. in-RAM DBs have great speed but need more care to keep data between shutdowns and crashes :) usually only periodic snapshots are made.
+
+http://en.wikipedia.org/wiki/NoSQL [http://en.wikipedia.org/wiki/NoSQL] ??? nosql usually store something key-value-like, where value may be highly structured (document store) or form a network or a tree or a sort of table without fixed columns. it usually does not support joins in relational sense ??? you navigate links yourself. obviously relational integrity is hardly possible in such conditions. scalability is very good though.
+
+(You): so it's like a collection of DBM files?!
+
+(Dmitry): like a well-connected and managed collection :) that is, you have a (big) number of machines on which such a DB runs, and you need not care where a particular 'dbm file' lives, what happens when a particular node dies, etc. though a dbm file or a hashtable is probably the simplest proper 'nosql database' :)
+
+take a look at http://www.mongodb.org/  http://couchdb.apache.org/  http://redis.io/  ??? the hottest nosql DBs that springs to my head, but there are many others.
+
+(Dmitry): http://blog.nahurst.com/visual-guide-to-nosql-systems  contains an insightful chart, zoom to the full version.
+
+(You): thanks! This will be very helpful!
+
+(Dmitry): never mind :)
+
+----------------------
+
+(Diego): I have never heard of it.
+
+What about http://www.postgresql.org/about/ ?
+
+
+
+[Vark assigned category: <b>MySQL</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

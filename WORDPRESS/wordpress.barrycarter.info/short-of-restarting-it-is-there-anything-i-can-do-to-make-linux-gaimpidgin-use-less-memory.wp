@@ -1,0 +1,64 @@
+
+ID: 23308
+post_name: short-of-restarting-it-is-there-anything-i-can-do-to-make-linux-gaimpidgin-use-less-memory
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 08 Dec 2010 08:23:00 +0000
+post_type: post 
+post_status: publish
+post_title: Short of restarting it, is there anything I can do to make Linux Gaim/Pidgin use less memory?
+
+======================================================
+
+(You): Short of restarting it, is there anything I can do to make Linux Gaim/Pidgin use less memory?
+
+(Chris): Gaim/Pidgin uses lib purple for most of its work.  Unfortunately it is very memory hungry, BUT this is not normally and issue as most of it is paged out at any one time.  So ignore its memory footprint unless you start to see swapping issues.  
+
+
+
+Actual answer: Nope, there is no other way other than restarting pidgin to reset its memory footprint.
+
+(You): Johnson, but libpurple would get loaded all at once, no? What would make Gaim/Pidgin's memory increase a lot while it's running. I realize keeping buffers of my convos takes SOME memory, but that can't be it (and, if it was, I could just close tabs to get back memory).
+
+(Chris): Memory usage doesn't work that way.  Under unix there are two different memory methods, the base system is accesses via the "sbrk(2)" system call. this is used to get a new memory level.  But most programs are built on top of the malloc(3) system library call.  When a call to malloc() is made, a search is made for a free block of memory to use.  If no block of memory already given to the process is big enough, then the malloc library calls sbrk(2) to get more space.  What this means is that it is possible to have very *sparse* memory usage.  I.e the block at 1000 is used, the block at 1232 is use, the block at 1388 is used but when you look at memory USAGE it is reported as if all memory is used between 0 and 1388, even though only three blocks are used between 1000 and 1388.
+
+(You): but you can unmalloc() too, right? Don't some programs give back memory chunks they're not using?
+
+(Chris): therefore closing tabs and other things does NOT compact memory usage because it doesn't matter for a system that has full memory mapping capabilities.  As pages are no longer needed, they are "paged out"  I.e. the system writes them to disk for later reading if needed.  BUT there are optimizations that say "If a block is all zero, then we don't have to write it to disk, we just have to note that it is all zeros".  some malloc libraries do this zero function for security and to allow pages to be marked as 'all zeros".
+
+
+
+Now you mentioned that "libpurple" would load all at once.  This is not true.  What actually happens is that a mmap(2) call is made which maps an address space to a file.  When an address is accessed that is in the mapped area, a block is read from the file to memory and then loaded from memory to the cpu.  BUT, because this is a load on need and because the file is "read only", when a block pages out, it just is freed.  When it is needed again, it is read from the original file.  No need for swap space or anything else.
+
+
+
+While this is all very efficent, all memory mapped files count against the process size.
+
+(You): oooh, so that's what a shared lib is ... the program just reads the chunk of the library it needs and swaps it in. In a "fat" binary (static library), the entire library would get loaded in when the program starts?
+
+(Chris): You have to remember that the malloc(3) and free(3) are part of the malloc library calls.  They ONLY increase the size of the memory allocation to the process via the use of the sbrk(2) call.  Note that a (3) means LIBRARY call and (2) means a system call.  [1 is commands, 4 is files, 5 is devices, 6 is games, 7 is (don't remember) 8 is system commands, 9 is kernel internal functions]
+
+(You): oh, so you're saying malloc() and free() are now just wrappers for sbrk()? [direct gchat: carter.barry@gmail.com]
+
+(Chris): The direct didn't work for some reason, not going to worry about it.  free(3) and malloc(3) are "wrappers" for sbrk(1) but it is a shitty way of saying it.  It is sort of like saying that a call to an X11 call to bring a window up is "just a wrapper for ..."   free(3) and malloc(3) add so much that it is no longer a wrapper.
+
+(Chris): The key is the memory management function of Unix.  A modern CPU uses a memory map unit.  (MMU)  this has been standard for a long time on the 8086 platform and on the 68000 since around 1984.
+
+(You): OK, fair enough. What's your gmail chat address? I want to pick your brain a bit more (like forever and all of it).
+
+(Chris): use ctjgeek with AIM please.
+
+(You): oh, you don't have gmail or yahoo?
+
+(Chris): gmail is ctjctj@gmail.com [mailto:ctjctj@gmail.com]
+
+(You): invite sent...
+
+----------------------
+
+(Thomas): pidgin uses more memory depending on how many protocols you're using and how many plugins you're using as well. take a look at which plugins more or less system resources and how many protocols you've got. regardless, the amount it uses should still be fairly negligible.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

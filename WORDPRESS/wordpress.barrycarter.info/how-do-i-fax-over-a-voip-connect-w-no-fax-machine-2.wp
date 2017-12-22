@@ -1,0 +1,70 @@
+
+ID: 23829
+post_name: how-do-i-fax-over-a-voip-connect-w-no-fax-machine-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 23 Oct 2010 22:13:54 +0000
+post_type: post 
+post_status: publish
+post_title: How do I fax over a VOIP connect w/ no fax machine?
+
+======================================================
+
+(You): How do I fax over a VOIP connect w/ no fax machine?
+
+(Josh): You can use your computer to send a fax, just as if it were connected to a regular telephone line.
+
+
+
+Windows:
+
+http://www.microsoft.com/windowsxp/using/setup/hwandprograms/printfaxscan.mspx
+
+
+
+Mac:
+
+http://www.microsoft.com/windowsxp/using/setup/hwandprograms/printfaxscan.mspx
+
+(Josh): Corrected Mac Link: http://docs.info.apple.com/article.html?path=mac/10.4/en/mh1797.html
+
+(You): this would require actually printing the document, no? It should be possible to just fax it using VOIP w/o having to print it. And my computer doesn't have a modem, just a 10-base-T port.
+
+(Josh): It wouldn't require printing, however it would require a modem. You could use a fax via email instead. I have used this one multiple times in the past: https://www.godaddy.com/email/internet-fax.aspx
+
+(You): yes, I've seen many paid services that do it, but I want something free.
+
+(Josh): An internet packet has no way of communicating over the phone system without some conversion. This could happen either at your computer using a modem, or at the fax-via-email company's servers. I would recommend installing a used modem into your computer, either internally or via USB. 
+
+
+
+You can find more info here: http://answers.google.com/answers/threadview/id/126366.html
+
+(You): thanks. Someone recommended faxzero.com which might be the quickest solution. I've heard tpc.int does this too but limits the size o teh fax.
+
+(Josh): That looks like it would work, as long as you don't mind a few advertisements on the cover page. Thanks for the link, and good luck!
+
+(You): yeah, I'm trying to find one w/o ads or cost, but that may not be possible.
+
+----------------------
+
+(Chris): Look for a t.38 fax client for your operating system.
+
+(You): how will that help me?
+
+----------------------
+
+(derf): there are services on the internet to send faxes now. I don't know 1 of the top of my head. tell the person who wants a fax to get with the times and not make you use a 30 year old technology to send the document.
+
+(You): fred, yeah, the "person" who wants that is a division of the US Government. We're lucky they have any technological intelligence at all.
+
+(derf): keep in mind how many times in your life are you ever going to send a fax? if its once in every year, then maybe it's best to just go to a kinkos. I know you mean there are some places that must have a fax in that is quite ridiculous.
+
+(You): well, I might give faxzero.com a shot or even .. blech.. PAY for a fax service. Going to kinkos is unnecessary. The question is: can I do it for free w/ no ads... probably not.
+
+(derf): yeah those do seem like good ideas. But I am not sure as I do not do this myself.
+
+
+
+[Vark assigned category: <b>VOIP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

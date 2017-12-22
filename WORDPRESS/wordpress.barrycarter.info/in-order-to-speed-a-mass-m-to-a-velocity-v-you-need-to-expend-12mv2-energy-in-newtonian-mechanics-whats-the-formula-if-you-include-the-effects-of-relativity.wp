@@ -1,0 +1,24 @@
+
+ID: 27139
+post_name: in-order-to-speed-a-mass-m-to-a-velocity-v-you-need-to-expend-12mv2-energy-in-newtonian-mechanics-whats-the-formula-if-you-include-the-effects-of-relativity
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 15 May 2010 23:50:28 +0000
+post_type: post 
+post_status: publish
+post_title: In order to speed a mass m to a velocity v you need to expend 1/2*m*v^2 energy in Newtonian mechanics. What's the formula if you include the effects of relativity?
+
+======================================================
+
+(You): In order to speed a mass m to a velocity v you need to expend 1/2*m*v^2 energy in Newtonian mechanics. What's the formula if you include the effects of relativity?
+
+(Piotr): Look at http://en.wikipedia.org/wiki/Special_relativity with paragraph "relativistic mechanics"
+
+----------------------
+
+(Hongwan): hullo again, it's (gamma - 1) mc^2, where gamma = 1/sqrt(1 - v^2/c^2).
+
+
+
+[Vark assigned category: <b>Newtonian mechanics</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

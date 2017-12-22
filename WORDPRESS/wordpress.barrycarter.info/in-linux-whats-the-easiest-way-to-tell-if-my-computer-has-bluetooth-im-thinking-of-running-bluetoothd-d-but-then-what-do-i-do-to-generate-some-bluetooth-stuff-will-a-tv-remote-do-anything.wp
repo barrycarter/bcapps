@@ -1,0 +1,46 @@
+
+ID: 28200
+post_name: in-linux-whats-the-easiest-way-to-tell-if-my-computer-has-bluetooth-im-thinking-of-running-bluetoothd-d-but-then-what-do-i-do-to-generate-some-bluetooth-stuff-will-a-tv-remote-do-anything
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 16 Apr 2010 00:14:34 +0000
+post_type: post 
+post_status: publish
+post_title: In Linux, what's the easiest way to tell if my computer has bluetooth? I'm thinking of running "bluetoothd -d", but then what do I do to generate some bluetooth stuff-- will a TV remote do anything?
+
+======================================================
+
+(You): In Linux, what's the easiest way to tell if my computer has bluetooth? I'm thinking of running "bluetoothd -d", but then what do I do to generate some bluetooth stuff-- will a TV remote do anything?
+
+(Rishabh): get a bluetooth transmitter first...as the TV remote control has infra-red (IR) interface.
+
+(You): Is the wiimote a bluetooth transmitter?
+
+(Rishabh): yes..it transmits all actions processed by accelerometers and IR sensors to
+
+Wii console via Bluetooth.
+
+(You): Thanks!
+
+----------------------
+
+(Tai): it will not do anything...tv remote isnt bluetooth, tho ur phone is
+
+(You): Thanks! Is the Wii remote a bluetooth device?
+
+(Tai): cellphone
+
+(You): Yes, I'll try that too, but how about a Wii remote -- that's bluetooth?
+
+(Tai): no.
+
+(Tai): which cellphone do u use? blackberry/iphone/motorolla all have bluetooth definitely
+
+(You): I have an old Kyocera Dorado phone
+
+(You): Thanks. I have a Kyocera Dorado-- I don't think it has bluetooth. Maybe my Wii remote will work?
+
+
+
+[Vark assigned category: <b>Bluetooth</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

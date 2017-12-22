@@ -1,0 +1,24 @@
+
+ID: 26305
+post_name: in-tcsh-how-do-i-keep-command-history-across-reboots-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 09 Jun 2010 20:04:54 +0000
+post_type: post 
+post_status: publish
+post_title: In tcsh, how do I keep command history across reboots?
+
+======================================================
+
+(You): In tcsh, how do I keep command history across reboots?
+
+(John): http://linux.derkeiler.com/Mailing-Lists/Fedora/2008-02/msg02721.html
+
+----------------------
+
+(Rangan): http://unixhelp.ed.ac.uk/shell/tcsh_hist2.html will this help?
+
+
+
+[Vark assigned category: <b>tcsh</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

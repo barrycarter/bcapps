@@ -1,0 +1,44 @@
+
+ID: 25362
+post_name: can-ruby-on-rails-return-values-in-json-format-and-other-non-xmlnon-html-formats
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Mon, 21 Jun 2010 22:39:36 +0000
+post_type: post 
+post_status: publish
+post_title: Can Ruby on Rails return values in JSON format and other non-XML/non-HTML formats?
+
+======================================================
+
+(You): Can Ruby on Rails return values in JSON format and other non-XML/non-HTML formats?
+
+(Jay): render :json =&gt; {:foo =&gt; 'bar', :baz =&gt; [1,2,3]}
+
+(You): I'm looking to cache a call to method(param1,param2) for example, and I'm looking to cache for a web app, so this would be through multiple calls to a ruby script.
+
+(You): can I setup routes.rb so that anything ending in .json is automatically rendered in JSON? It doesn't seem to be a Ruby on Rails default?
+
+(Jay): re caching, you can always keep a hashmap keyed by your params in the background, and clear it in an after_filter.  On the other hand, Rails does a whole lot of caching and smart things for you, so the calculation might not be as expensive as it seems.
+
+(Jay): you'd have to set up JSON responses in the controller, but you can certainly have the controller respond differently to different formats.
+
+(You): ok, but what if I'm doing this on rails, and it's not just a single instance of ruby? As in filesystem caching? Ruby on Rails talks a lot about caching, but I see nothing at all about method caching.
+
+(You): OK. It's weird that Ruby on Rails comes with HTML and XML responses, but not JSON or other formats.
+
+(Jay): if you really want to get into method caching, it wouldn't be that hard to build with Memcached or Redis, but it's not baked in.
+
+(Jay): i wouldn't say Rails "comes with" xml formats; the default scaffold certainly handles them, but it still has to be manually set up.
+
+(You): OK. I've done caching like that before, but was hoping Ruby on Rails had it built in since it's supposed to do lots of cool stuff for you. Also, I had XML working "out of the box" with no setup. [gchat me at carter.barry@gmail.com [mailto:carter.barry@gmail.com] if you prefer, btw]
+
+(Jay): jklol.  http://ryandaigle.com/articles/2008/7/16/what-s-new-in-edge-rails-memoization
+
+----------------------
+
+(Jon): Yes. Google JSON and Ruby on Rails and there are several resources.
+
+
+
+[Vark assigned category: <b>Ruby on Rails</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,50 @@
+
+ID: 23018
+post_name: is-drupals-learning-curve-solely-for-the-person-who-installs-drupal-or-also-for-drupal-end-users
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 31 Dec 2010 01:49:52 +0000
+post_type: post 
+post_status: publish
+post_title: Is Drupal's learning curve solely for the person who installs Drupal, or also for Drupal end users?
+
+======================================================
+
+(You): Is Drupal's learning curve solely for the person who installs Drupal, or also for Drupal end users?
+
+(Ronald): Hello Barry;
+
+
+
+Thanks for the question,  The learning curve for the person that managers the site will be a little higher. The site owner duties can be as simple as cropping images and replacing themes, but most of the really nice customization will require some php knowledge. It just depends on what you want to do.
+
+
+
+Ronald
+
+(You): thanks. So if we set this up as a meta-store for people who sell stuff, they will have to know some stuff to use the site?
+
+----------------------
+
+(Colin): That's a pretty relative question, so here's two specific answers:
+
+
+
+First is from the web development prospective, using the Drupal CMS as a starting point for a client website. I'm very comfortable with Drupal so I can train most clients on how to use their new Drupal site in under an hour. That covers the basics on how to create and edit nodes, add and manage menu items, as well as the basic management of users, taxonomy items, etc. As long as you're comfortable with Drupal and walk yourself through the basics first it's pretty easy to train end users on how to use their site.
+
+
+
+From the every day user/site visitor prospective it's all on how you setup your site design and layout. macworld.com whitehouse.gov and ketknbc.com are all Drupal websites. They all rely on the underlying Drupal user structure but each presents user registration, accounts, comments and contact forms a little differently.
+
+(You): thanks. I think Drupal's great for browsers and totally trust it for that given that big sites use it. My problem: the person who'll be using Drupal to add/remove stuff isn't super bright, but, if most people can learn it in an hour, I'm sure he can pick it up in a few hours.
+
+(Colin): The best thing, just in general with training, is walk them through the steps verbally but let them actually do the steps from their computer, logged in as their user. And if it seems like they didn't really understand something, move on to something else, then come back and have them do it by themselves. See where they get stuck and go back over those steps. Repetition usually fixes most people's mistakes.
+
+
+
+Good luck!
+
+
+
+[Vark assigned category: <b>Drupal</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

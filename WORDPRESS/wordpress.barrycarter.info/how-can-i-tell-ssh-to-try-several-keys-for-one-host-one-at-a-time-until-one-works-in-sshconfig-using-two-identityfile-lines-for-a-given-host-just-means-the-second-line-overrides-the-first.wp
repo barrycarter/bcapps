@@ -1,0 +1,58 @@
+
+ID: 23519
+post_name: how-can-i-tell-ssh-to-try-several-keys-for-one-host-one-at-a-time-until-one-works-in-sshconfig-using-two-identityfile-lines-for-a-given-host-just-means-the-second-line-overrides-the-first
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 12 Nov 2010 00:49:07 +0000
+post_type: post 
+post_status: publish
+post_title: How can I tell ssh to try several keys for one host, one at a time, until one works? In .ssh/config, using two IdentityFile lines for a given host just means the second line overrides the first.
+
+======================================================
+
+(You): How can I tell ssh to try several keys for one host, one at a time, until one works? In .ssh/config, using two IdentityFile lines for a given host just means the second line overrides the first.
+
+(David): I don't think it is possible. Why would you want to do this anyway? You may be able to write a python program to do this easily. I believe you can specify the key to use on commandline.
+
+(You): you can, but I have multiple git directories on github as different users, and I don't know how to tell git to use specific ssh options for a given directory (although I've now asked this as a separate question). It's not worth too much effort (since I can just "#" out one of the lines when needed), but it's be a nice convenience.
+
+----------------------
+
+(Steve): Usually you would use 1 key per username, but this page shows how to do what you want:
+
+http://www.debian-administration.org/articles/503
+
+(You): thanks. I might have missed something, but this appears to be about host keys, not user keys? I'm referring to the keyfile you use when you do "ssh -i file".
+
+(Steve): follup Barry.  Sorry to keep sending you links, but would the "More Keys" section cover your need? Barry.  Sorry to keep sending you links, but would the "More Keys" section cover your need?
+
+(You): OK, I couldn't find "more keys" on http://www.debian-administration.org/articles/503 [http://www.debian-administration.org/articles/503] -- if you sent me another link, I didn't get it (I'm on vark via IM and it sometimes swallows links). I appreciate your help, no need to apologize :) [direct gchat: carter.barry@gmail.com]
+
+(Steve): follup.  Did this come throug:  http://pkeck.myweb.uga.edu/ssh/  Did this come through.  http://pkeck.myweb.uga.edu/ssh/
+
+(You): yes yes, thank thank you :) Actually, what you typed came through twice in one sentence. Reading the link now
+
+(Steve): Barry.  I think the openssh.org site would be the best place to find all this.
+
+(You): thanks. This looks like a good way to give multiple people access *to* your machine, but not *to* github. Unfortunately, I don't have a shell account on github, otherwise, creating an authorized_keys2 file would be the way to go. Other answers have told me what I'm trying to do is probably not possible.
+
+(Steve): I think I misunderstoof you.  You don't have access to GITHUB, but want to try different keys until you can get in.  Is that what you are trying to do?
+
+(You): LOL :) No. I have access to github as a normal GIT user, but I don't have *shell* access to github (I don't think anyone does except the admins). I'm not trying to hack into github :)
+
+(Steve): I know what you are trying to do now.
+
+I would write a shell or expect script to do this.  It would attempt separate ssh sessions with a different key each time
+
+(You): yes, there are lots of harder ways to do it. In fact, it's not a huge deal to go into .ssh/config and change it each time. I was hoping for some magical easier way.
+
+(Steve): Sorry I misunderstood your question until just now.
+
+Unless you script this, you will need to do this manually.
+
+(You): yup, that's sadly what I figured. The only other possibility is to give github another name and use that for one user, hmmm
+
+
+
+[Vark assigned category: <b>SSH</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

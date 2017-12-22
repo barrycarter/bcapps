@@ -1,0 +1,24 @@
+
+ID: 27664
+post_name: is-xen-installed-as-an-os-or-on-top-of-a-host-os-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 01 May 2010 02:55:54 +0000
+post_type: post 
+post_status: publish
+post_title: Is Xen installed as an OS, or on top of a host OS?
+
+======================================================
+
+(You): Is Xen installed as an OS, or on top of a host OS?
+
+(Yaro): I believe it is installed independently of any OS then runs the guest on top.
+
+----------------------
+
+(Galichev): Can be installed as OS.
+
+
+
+[Vark assigned category: <b>Xen</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

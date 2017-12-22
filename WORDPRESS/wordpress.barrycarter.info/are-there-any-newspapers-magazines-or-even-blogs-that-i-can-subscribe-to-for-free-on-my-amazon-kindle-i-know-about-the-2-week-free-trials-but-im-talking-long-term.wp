@@ -1,0 +1,70 @@
+
+ID: 24292
+post_name: are-there-any-newspapers-magazines-or-even-blogs-that-i-can-subscribe-to-for-free-on-my-amazon-kindle-i-know-about-the-2-week-free-trials-but-im-talking-long-term
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 04 Sep 2010 23:57:55 +0000
+post_type: post 
+post_status: publish
+post_title: Are there any newspapers, magazines, or even blogs that I can subscribe to for free on my Amazon Kindle? I know about the 2-week free trials, but I'm talking long-term.
+
+======================================================
+
+(You): Are there any newspapers, magazines, or even blogs that I can subscribe to for free on my Amazon Kindle? I know about the 2-week free trials, but I'm talking long-term.
+
+(David): Take a look at calibre (http://calibre-ebook.com) which will allow you to "screen scrape" from a ton of websites, including news, magazines, blogs, etc., and upload the results to your Kindle. A friend just told me about it so I don't know a lot, but it looks very impressive.
+
+(You): thanks. Actually, there are tons of free e-books for the Kindle, and even a free ebook that "contains" other free e-books. However, I'm trying to find a free *subscription* that comes to my Kindle automatically every morning. That's something I haven't found.
+
+(David): Take a look at the software (which is free, BTW), it will allow for scheduled downloads, so you can "subscribe" to the daily NY Times headlines, for instance.
+
+(You): thanks. I'm checking it out now. I wasn't aware people could push stuff to my Kindle w/o it costing me anything.
+
+(David): If you've got a Kindle 3, it'll use WiFi and it doesn't cost anything to go to your name@free.kindle.com (says the Kindle info on Amazon)
+
+(You): I've got one of the old Kindles, and Amazon says I get charged 10 cents per email. If I'm willing to pay that, I can set up my own "feed". I wonder if kindlefeeder does something magic.
+
+(David): I have a Kindle 1, but my new one is on the way (in a depot in Kentucky at the moment). What you might be able to do with calibre is to have it do the auto-download then not email it to your device, but leave in on your PC. It's pretty quick to sync that way, but I too would prefer it to just 'show up'. You might try a few emails though. I know they say they charge, but I have sent mail to mine in the past and haven't gotten billed.
+
+(You): thanks. I just read on a blog that Amazon is delaying enforcement on the 10c-per-email policy, so you're right. This is more just a curiousity for me. I've created and downloaded ebooks from my own site, and used the USB cable (and SD cards) to get more. The coolness, as you note, would be to get it automatically. Since Amazon has my credit card info, I'd hate to suddenly be hit w/ a fee.
+
+(David): Probably worth trying it a bit with calibre. The fee is pretty cheap, and you could just send a few then wait to see if anything showed up. It's not like you'd get hit with a $100 download fee all of a sudden. I've created my own ebooks as well and typically just use USB, but the fun is to just have it there automagically. Good luck, hope it works out for you.
+
+(You): thanks. True, 10c a day isn't a lot (assuming I do it daily), but finding a "backdoor" thru whispernet would be cooler. Clearly, my kindle has an IP address (maybe dynamic) when I'm using wifi. Maybe if I nmap the address I can find out what port it listens on, hmmm.
+
+(David): If you're using a Kindle 1 (like mine) it doesn't use wifi at all, just Sprint's network. (Newer versions have AT&T). My guess would be that it's got a dynamic address and opens up a connection to a central server, which means you can't just "push" to that address. I think now I'm going to have to do a little research, but I'm guessing that it's non-trivial to hack into the IP on that device, given the lack of articles about doing it. I'd also guess that they use a proprietary protocol with some type of encryption to prevent just this kind of thing.
+
+(You): you're probably right on all counts, except that I'm pretty sure it uses "whispernet" (which may just be overlaid on Sprint). Yes, I worried it was a proxy connection and that they use VPN or other "LAN magic" so only they can push to my Kindle. Interesting thought, though, and maybe worth testing.
+
+(David): Yeah, Whispernet for Kindle 1 & 2 is Sprint, I guess they didn't want to give the vendor name in case it changed (which it did). I found some info about hacking the Kindle 2 (http://arstechnica.com/gadgets/news/2009/03/kindle-2-hacks-bypassing-whispernet.ars and a bunch of links off there) but nothing that seems to work with the oldest models. (Haven't actually tried any of that stuff though).
+
+(You): damn you're good :) Oh well, it looks like I won't have to do the research myself. Of course, kindle is supposedly Linux inside... so, if I can just set up a cron job, I'm golden.
+
+(David): Thanks. :-) Good luck with it. I'm giving my older one to my wife, so I'm not going to mess with it, but sounds like you've got something to keep you busy for a while.
+
+(You): actually, after reading the blog, it seems like it just lets Kindle use your existing Internet connection. It may make nmap'ing easier and means I can store a collection of books locally (vs on an Internet-homed server), but I'm not sure it lets me push stuff to my kindle, hmmm. But that debugging mode sounds interesting. Maybe I can brick my Kindle as an excuse to get an iPad ;)
+
+(David): Might be a starting point though. Anyway, again, good luck with it. Gotta run.
+
+(You): have a good one.
+
+----------------------
+
+(Wally): Check out kindlefeeder.com
+
+(You): thanks. So this actually pushes data to my Kindle?
+
+(Wally): Yes. There is a way to send personal documents to your kindle and kindlefeeder uses it.
+
+(Wally): It may cost for the data though.
+
+(You): thanks. It turns out the email feature they say they charge for is free for now. That's how it does it.
+
+----------------------
+
+(Samson): No. You can however subscribe to A number of blogs for fee if you are in the US
+
+
+
+[Vark assigned category: <b>Amazon Kindle</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

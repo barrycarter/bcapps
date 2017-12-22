@@ -1,0 +1,44 @@
+
+ID: 28236
+post_name: in-tcsh-i-want-to-edit-the-last-command-i-entered-in-emacs-how-2
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Thu, 15 Apr 2010 02:35:43 +0000
+post_type: post 
+post_status: publish
+post_title: In tcsh, I want to edit the last command I entered in emacs. How?
+
+======================================================
+
+(You): In tcsh, I want to edit the last command I entered in emacs. How?
+
+(Douglas): Try M-x command-history
+
+(You): Thanks. I'm in tcsh, not emacs. I just want to edit my previous command, sort of like mysql's e
+
+----------------------
+
+(Vedran): Set $EDITOR to emacs.
+
+(You): Thanks! What's the keystroke in tcsh I use to "edit last command"?
+
+(Vedran): I don't know much about emacs, but I guess you can just press up arrow cursor key.
+
+(You): I think this is more a question about tcsh, not emacs?
+
+(Vedran): I don't know. If vi is my editor, I just press Esc-k, which is cursor up in vi.
+
+(You): you can do that at a shell prompt? Not inside the editor itself.
+
+(Vedran): yes.
+
+(You): and you're using tcsh, not bash or anything?
+
+(You): could you type "bindkey" and tell me what it says for ESC-k?
+
+(Vedran): Subject: Re: (Aardvark) Question about *emacs*
+
+
+
+[Vark assigned category: <b>programming</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

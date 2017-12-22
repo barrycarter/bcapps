@@ -1,0 +1,28 @@
+
+ID: 22792
+post_name: what-linux-program-can-i-use-to-create-a-subtitle-file-for-an-existing-mp4-file-a-program-where-i-can-type-in-words-as-i-hear-them-but-also-go-back-and-forward-etc-to-make-sure-im-syncing-my-word
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 04 Jun 2011 07:48:24 +0000
+post_type: post 
+post_status: publish
+post_title: What Linux program can I use to create a subtitle file for an existing MP4 file? A program where I can type in words as I hear them, but also go back and forward, etc, to make sure I'm syncing my words w/ the video track, and can edit, etc.
+
+======================================================
+
+(You): What Linux program can I use to create a subtitle file for an existing MP4 file? A program where I can type in words as I hear them, but also go back and forward, etc, to make sure I'm syncing my words w/ the video track, and can edit, etc.
+
+(Pradeep): "subtitleeditor" is one option.  If you are using Ubuntu, it is available in the repositories
+
+(You): thanks. I can't get it to read my MP4 files, even after installing a jillion gstreamer plugins.
+
+----------------------
+
+(AB): use ffmpeg and mencoder tools, that should be enough ..  maybed decompose movie into frames and apply overlay images using ImageMagick ...
+
+(You): thanks. I found subtitleeditor which does the trick. My goal was to create SRT files, not image overlays.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

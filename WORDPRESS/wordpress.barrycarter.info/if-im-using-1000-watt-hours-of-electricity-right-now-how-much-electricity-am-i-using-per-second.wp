@@ -1,0 +1,60 @@
+
+ID: 27177
+post_name: if-im-using-1000-watt-hours-of-electricity-right-now-how-much-electricity-am-i-using-per-second
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sat, 15 May 2010 19:12:00 +0000
+post_type: post 
+post_status: publish
+post_title: If I'm using 1000 watt hours of electricity right now, how much electricity am I using per second?
+
+======================================================
+
+(You): If I'm using 1000 watt hours of electricity right now, how much electricity am I using per second?
+
+(Tamvana): Watt-hours are a measurement of Energy. So, you could mean to say, "I'm using 1000 watt hours every day" or some such, in which case, you use 42 Joules each second. Or you could mean to say, "I'm using 1000 Watts" in which case you're using 1000 Joules each second (a Watt is 1 Joule per second). If you want an intuitive sense of what that kind of energy means, then you can think about dropping things: 42 Joules is about the energy you need to throw 14 pounds 1 meter in the air. 1000 Joules is the energy you need to throw 331 pounds the same distance.
+
+(You): thanks. It's always confusing when I tell people an appliance is using "1000 watts" of energy because they invariably ask "1000 watts every hour?". It's difficult to explain that I mean "1000 watt hours per hour". Easiest would be 3.6 megajoules per hour, but that makes things worse. Unrelated question: if I applied 1000 watts of energy to a mass (no other forces), how much would I be accelerating it?
+
+(Tamvana): Once again, 1000 Watts includes the amount of time: you really don't mean watts per hour, and you can't apply 1000 watts of energy to a mass. Measurements of energy are: Joules, watt hours, calories, tons TNT, BTUs, foot-pounds, electronvolts, litre-atmospheres, and foes.
+
+(You): but I can apply 1000 joules to a mass every second, no? If I apply 1000 joules to a 1kg mass, what happens? Or am I still misunderstanding?
+
+(Tamvana): If you apply 1000 Joules to a mass every second, you are applying 1000 Watts (not 1000 Watts per anything), but Joules is the amount of energy: a Watt is a measurement of power, not energy. It gets even more complicated, since the amount of energy needed to accelerate something by a certain amount depends on how fast it's going to begin with, and on highly variable factors like friction. For example, if you were pushing of mass 1 kg against a 1 newton force, you would need to apply 1 newton of force to counteract the force on it. Let's say you push with a force of 1.5 newtons, then you are accelerating the mass by .5 N/1 kg=.5 meters per second per second. To know how much energy that uses, you need to know how far you go. Say you continue for 1 second, then you go a distance of .25 meters, and so you use an energy of .25 m*1.5 N=.375 Joules. But you have to keep in mind that you're accelerating, so if you continue for 2 seconds, you go a distance of 1 meter, and use 1.5 Joules. Then your average power over the first second was .375 W, and over the next second was .75 W. In general, the acceleration of an object is Power/(mass*speed), where speed is measuring only speed in the direction you push, but you can see that this equation doesn't work when the object is at rest: that's because you aren't technically applying power to the object when it is at rest.
+
+(You): wait -- if I apply 1 Joule of energy to an 1 kg mass moving slowly, I get more acceleration than if I apply 1 Joule to a 1kg mass moving quickly???
+
+(You): I'm assuming no friction, etc.
+
+(Tamvana): yes, the energy of the object is dependent on the square of the velocity, so to get twice the velocity at 1 joule, you would need 4 joules, to get thrice the velocity for 1 joule you would need 9 joules, etc.
+
+(You): that doesn't seem to make sense. If I give 1 Joule of energy to an unmoving mass and accelerate it to 1.4 m/s, doesn't every additional Joule speed it up another 1.4 m/s? I mean, the mass doesn't know it's moving so why does it matter?
+
+(Tamvana): so, the mass doesn't know it's moving because it views things in a different reference frame from yours: there are 2 reference frames to look at, yours (the reference frame before it starts moving) and the reference frame of the object after it starts moving. You gave an unmoving mass 1 joule of energy, and it accelerated to 1.4 m/s. That happened in reference frame A. Now, in reference frame B, the object is at rest again, so it has (as far as it knows) 0 energy. So, for starters, we see that the amount of energy you gave it depends on the reference frame: as long as it's not accelerating, it just assumes it has no energy, even if you spent energy on it. But lets say you now give it one joule of energy in frame B, then it's the same as the first case, since it was unmoving again, and it accelerates to 1.4 m/s, and in frame A it's moving at 2.8 m/s, just like you wanted. But that's based on the energy being added in frame B: we already determined that the amount of energy in something depends on your reference frame. So if you add 1 joule of energy in frame A (which is different from 1 Joule in frame B) then it accelerates by a smaller amount: to 1.98 m/s.
+
+(You): is there a real life analogy for this? Without friction, I find it hard to believe that applying the same amount of energy can have different results. I know that, as you approach the speed of light, there are other effects, but we're well in the realm of Newtonian mechanics here.
+
+(Tamvana): It's a little like pre-Galileo conceptions of gravity. The real-life example of the fact that different objects will accelerate the same way as the fall is just dropping two things and watching it happen, but forces like air resistance change that, and interfere with our intuitions about how it will work. Energy is trickier, because in a sense it's not real: we have no actual intuition of what energy is, so I can't really give you an intuitive example. On the other hand, you could try giving a motor different amounts of energy and watch what happens.
+
+(You): let me phrase it another way (assuming I haven't annoyed you too much already): if I apply 1 Newton of force to a 1kg mass for 1 second,  it will speed up by 1m/s, regardless of how fast it was going. Is that correct?
+
+(Tamvana): Yes, but force is not the same as energy. Constant force=constant acceleration, constant power=constant change in energy.
+
+(You): I guess the bottom line is: if I apply 1 Newton of force to 1kg continuously, I expend more Joules in the 5th second than I do in the 3rd second (for example)?
+
+----------------------
+
+(Phil): 0.277 of a watt
+
+----------------------
+
+(Apurva): You are consuming 0.2778 Watt of Electricity per second
+
+----------------------
+
+(Grimaldy): 1000 / 3600 seconds (1 Hour equally to 3600 seconds) equal to 0.277 Watts per second
+
+
+
+[Vark assigned category: <b>Watt</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

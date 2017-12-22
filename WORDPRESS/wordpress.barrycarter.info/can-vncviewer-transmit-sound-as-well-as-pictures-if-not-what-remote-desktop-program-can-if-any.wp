@@ -1,0 +1,26 @@
+
+ID: 23372
+post_name: can-vncviewer-transmit-sound-as-well-as-pictures-if-not-what-remote-desktop-program-can-if-any
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Tue, 30 Nov 2010 21:56:33 +0000
+post_type: post 
+post_status: publish
+post_title: Can vncviewer transmit sound as well as pictures? If not, what remote desktop program can, if any?
+
+======================================================
+
+(You): Can vncviewer transmit sound as well as pictures? If not, what remote desktop program can, if any?
+
+(Robert): I don't believe VNC can transmit sount but Remote Desktop Viewer for windows will transmit system sounds but I do not believe it will transmit music.
+
+(You): thanks. Is there a program that transmits music for either Mac or Windows? I'm on a Linux box myself and DO have rdesktop, but that doesn't transmit music (as you point out).
+
+----------------------
+
+(Henrik): Don't know about vnc, why don't you google it. Windows Remote Desktop handles sound and printers.
+
+
+
+[Vark assigned category: <b>Remote Desktop</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

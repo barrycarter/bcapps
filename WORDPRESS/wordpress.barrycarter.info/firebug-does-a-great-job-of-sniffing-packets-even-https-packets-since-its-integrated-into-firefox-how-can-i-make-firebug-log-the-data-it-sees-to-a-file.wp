@@ -1,0 +1,48 @@
+
+ID: 23594
+post_name: firebug-does-a-great-job-of-sniffing-packets-even-https-packets-since-its-integrated-into-firefox-how-can-i-make-firebug-log-the-data-it-sees-to-a-file
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Wed, 10 Nov 2010 05:19:11 +0000
+post_type: post 
+post_status: publish
+post_title: Firebug does a great job of "sniffing" packets, even https packets (since it's integrated into Firefox). How can I make Firebug log the data it sees to a file?
+
+======================================================
+
+(You): Firebug does a great job of "sniffing" packets, even https packets (since it's integrated into Firefox). How can I make Firebug log the data it sees to a file?
+
+(Vincent): Sadly I've never known it to be able to do that, good luck.
+
+(You): thanks. Googling gave me the same answer, but I was hoping for a hack...
+
+----------------------
+
+(Yaniv): I think it's doable. do you have javascript coding skills?
+
+(You): not really, no.
+
+(Yaniv): I'm not aware of any software that integrates this functionality into firebug, but I can look a bit into it to estimate the difficulty.
+
+(You): thanks, I'd be interested in that, providing it wasn't too expensive.
+
+(Yaniv): I don't think it should be too expensive. How much would you be willing to pay for this?
+
+(You): I was going to ask you for a ballpark first?
+
+(Yaniv): after some delving into it, in the vicinity of $250. I assume that would be too expensive, right?
+
+(You): sorry, but yes. I was thinking $50-$100
+
+(Yaniv): no problem. I am swamped with work anyway. What you could try though is outsource it - you may be able to get a quote in that range.
+
+(You): thanks, may give it a shot. The actual problem I'm trying to solve is a little different.
+
+(Yaniv): don't hesitate to ask me about that problem if you like.
+
+(You): sure thing. I posted it as a vark question too. Basically, I need to record streaming data off a website. Ping me at [direct gchat: carter.barry@gmail.com] for more details.
+
+
+
+[Vark assigned category: <b>Firebug</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

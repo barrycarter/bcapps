@@ -1,0 +1,30 @@
+
+ID: 25156
+post_name: in-gnuplot-how-do-you-specify-a-multi-line-command-putting-at-the-end-of-one-line-doesnt-seem-to-work
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 25 Jun 2010 00:54:02 +0000
+post_type: post 
+post_status: publish
+post_title: In gnuplot, how do you specify a multi-line command? Putting "" at the end of one line doesn't seem to work
+
+======================================================
+
+(You): In gnuplot, how do you specify a multi-line command? Putting "" at the end of one line doesn't seem to work
+
+(Alexander): connecting command lines should work with "" (it's been a while since I have really used gnuplot though)
+
+(Alexander): are you sure you do not have additional chars after the "" ?
+
+(You): I tried that and it failed :(
+
+(Alexander): hm, works for me in gnuplot 4.2 ubuntu
+
+(Alexander): like this: http://paste2.org/p/892097
+
+(You): damn! It turns out when I cut and paste from emacs, I get " ", not "", and that's why it was complaining.
+
+
+
+[Vark assigned category: <b>gnuplot</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

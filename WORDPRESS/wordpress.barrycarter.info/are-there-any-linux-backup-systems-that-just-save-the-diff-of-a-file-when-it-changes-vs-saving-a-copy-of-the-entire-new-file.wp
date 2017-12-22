@@ -1,0 +1,82 @@
+
+ID: 24350
+post_name: are-there-any-linux-backup-systems-that-just-save-the-diff-of-a-file-when-it-changes-vs-saving-a-copy-of-the-entire-new-file
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 27 Aug 2010 22:06:57 +0000
+post_type: post 
+post_status: publish
+post_title: Are there any Linux backup systems that just save the "diff" of a file when it changes vs saving a copy of the entire new file?
+
+======================================================
+
+(You): Are there any Linux backup systems that just save the "diff" of a file when it changes vs saving a copy of the entire new file?
+
+(Metin): depending on what you are trying to do, your best option is called git (if it fits your needs)
+
+(You): thanks. I use git for CVS, but wasn't sure it would work as a backup system. When git "makes a backup" it uses as much space as the files being backed up, yes?
+
+(Metin): Generally it's append-only. To its internal data structure it always appends changes, never dismissing former changes. If you change some big file, it will only store the change, not the two versions of the file. This doesn't work very well for binary files though, so I don't advise you to use it to backup large binary files. I'm using it to backup my /etc directory and works flawlessly.
+
+(You): thanks. I think it can actually 'diff' too, not just append, but you're right about binary files.
+
+(Metin): that's exactly what I'm saying. It diffs and then it appends that diff to its "database" (the .git directory). Git's database is a succession of diffs (called changesets).
+
+(You): ok, I remember the one disadvantage. The first time you make a backup, it makes a copy of all the files, so the backup takes up as much room as the original no?
+
+(Metin): you are right. You will have both git's database and your data. That isn't necessarily true for the server that stores the backups, as it can be a "bare" repository. Bare repositories don't have a working tree (the actuall files). They only have the git database.
+
+(You): so wait, are you saying I don't need double space on my machine or just that I don't need it on the remote server? I was planning on doing local backups only (my offsite backups are quite different)
+
+(Metin): For local backup you do need double space
+
+(You): OK, I've heard some systems use hard links to avoid that.
+
+(Metin): that would be some systems specifically designed for backup. Git does not use hard links.
+
+(You): right, that's what I'm looking for. A system that does backups locally and versioning but uses minimal space.
+
+(Metin): I would be too interested if there existed such a tool. As far as I know there aren't such (good) ones.
+
+(You): the 3 I've found (thru various answers) are backintime pdumpfs rsnapshot
+
+(Metin): I know these tools. For example rsnapshot is less effective than git for backuping text files. For /etc it's much slower, takes up more space and is harder to maintain.
+
+(You): what about pdumpfs -- that looks like it replicates freebsd's snapshot system?
+
+(Metin): I haven't used it extensively, so I can't speak from my experience, but on their site I see that it's not effective on big files that change frequently. And if I have small files (especially text files), I'd use git. It's for sure faster (C vs. Ruby) and much more popular (better supported, easier to install and maintain etc.)
+
+(You): but I have a lot of small files, only some of which change. I don't want the expense of having duplicate copies of everything.
+
+(Metin): well, in that case, you might be well suited for one of these tools.
+
+(You): yup, the only bad I see is that it's limited to daily snapshots, not hourly.
+
+(Metin): when I think now, I'd still use git. Having a backup copy of everything is a nice idea. If you screw some file, it'll be bad, regardless of how fast it changes. If it changes rarely, chances are that you only had a hardlink, and you don't have a copy.
+
+(You): well, pbackupfs does some "magic" that keeps a copy of the hardlink when the "real" link to the file changes (otherwise, it would have nothing to diff against). I really don't want half my HD being a backup for the other half.
+
+(Metin): in that case I'll put some time myself into investigating it :)
+
+(You): oh good! I was worried that I'd have to do it :) Let me know what you find! [direct gchat: carter.barry@gmail.com]
+
+(Metin): regretably, I can't do it right away, because I have some other work to do
+
+(You): pshaw! Actually, I'm using my own homebrew local backup system now, so this is more of a long-term thing for me. [direct gchat: carter.barry@gmail.com]
+
+----------------------
+
+(Simon): If you keep your backups in the form of full copies on a filesystem, e.g. on a USB disk, then you can use "rsync" to make new backups over old ones. Rsync will minimize data transfer using the "diff" technique and others.
+
+(You): thanks, but I want to preserve older versions of the files
+
+----------------------
+
+(Dvir): I think rsync has support for this, plus using some revision control system like SVN or GIT as a backup system also does this, but only for text files.
+
+(You): thanks. I'm trying to do this so that my first backup doesn't take any space at all. It looks like lvm2 might be the way to go.
+
+
+
+[Vark assigned category: <b>Linux</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

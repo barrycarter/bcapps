@@ -1,0 +1,40 @@
+
+ID: 27227
+post_name: are-there-any-command-line-options-for-firefox-that-tell-it-not-to-be-a-memory-hog-ive-already-set-my-memory-cache-to-zero
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Fri, 14 May 2010 06:45:40 +0000
+post_type: post 
+post_status: publish
+post_title: Are there any command-line options for firefox that tell it not to be a memory hog? I've already set my memory cache to zero.
+
+======================================================
+
+(You): Are there any command-line options for firefox that tell it not to be a memory hog? I've already set my memory cache to zero.
+
+(Ratna Dinakar): Disable the add-on's you arent using.
+
+(You): thanks, but I'm very careful re my add-ons -- I only have 3-4 and I use them all.
+
+(Ratna Dinakar): http://www.ghacks.net/2007/02/26/firefox-memory-tweaks/ hope this article rescues you :)
+
+(You): thanks! I didn't realize Firefox was keeping copies of my last 50 pages IN MEMORY!
+
+(Ratna Dinakar): You are welcome
+
+----------------------
+
+(Guy): command-line Im not sure about.  There is an add-on though that lets you pause tabs so they are not using as much memory, which reduces your memory usage all together.
+
+(You): is "pausing a tab" the same thing as hitting 'stop' on the browser bar? It stops animations and Javascripts and stuff?
+
+(Guy): yes, for what is in that tab only. you can then resume it and it will start up.
+
+(You): cool! Where can I find this add-on?
+
+(Guy): The one I was using was called "SaveMemory".  Go to tools &gt;&gt; addons and search for savememory.  It is catogorized under the tabs category in the addons. hope it works for you
+
+
+
+[Vark assigned category: <b>the Internet</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+

@@ -1,0 +1,30 @@
+
+ID: 22788
+post_name: where-can-i-find-a-simple-command-line-soap-client-i-couldnt-get-soapui-working-plus-its-graphical-not-command-line
+post_category: vark2
+post_author: barrycarter
+post_date_gmt: Sun, 05 Jun 2011 20:43:21 +0000
+post_type: post 
+post_status: publish
+post_title: Where can I find a simple command-line SOAP client? I couldn't get soapui working (plus, it's graphical, not command line)?
+
+======================================================
+
+(You): Where can I find a simple command-line SOAP client? I couldn't get soapui working (plus, it's graphical, not command line)?
+
+(Corey): I haven't personally used it but it looks like KSHSOAP might be what you are looking for.
+
+(Corey): http://publib.boulder.ibm.com/infocenter/tivihelp/v15r1/index.jsp?topic=/com.ibm.itm.doc/itm_admin_62164.htm
+
+(You): thanks! Checking it out now.
+
+(You): it looks like kshsoap.exe might be Windows only?
+
+(You): NM, I was looking in the wrong place.
+
+(You): I can't figure out where to download it.. did you see a download here thing?
+
+
+
+[Vark assigned category: <b>SOAP</b>, <a target='_blank' href='http://wordpress.barrycarter.org/index.php/more-details-about-barry-after-vark/'>more details</a>]
+
