@@ -161,10 +161,12 @@ sub handle_pnm {
 
   if ($all =~/([\d\/]+)\s+1 of/) {
     $date = $1;
-  } elsif ($all=~/Bill Date\s+(.*?)\s+/s) {
+#  } elsif ($all=~/Bill Date\s+(.*?)\s+/s) {
+  } elsif ($all=~/Bill (?:Date|Issued:)\s+(.*?)\s+/s) {
     $date = $1;
+    debug("DATE: $date");
   } else {
-    warnlocal("CANNOT PARSE!");
+    warnlocal("CANNOT PARSE PNM!");
     return;
   }
 

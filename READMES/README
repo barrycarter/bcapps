@@ -1,0 +1,7 @@
+This directory contains symlinks to other readme files in my git. When I 
+load multiple README files in emacs, it names the buffers README<n>, where 
+n is a number, with no indication of the directory. Emacs has a buffer 
+naming mode that's supposed to compensate for that, but it doesn't work 
+well for me. Instead, I am giving the various README files different names 
+here and will load them as symlinks from now on
+
