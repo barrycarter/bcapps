@@ -31,8 +31,15 @@ for $i (split(/\n/, `cat /home/barrycarter/BCGIT/db/moon-phases* | fgrep -v 'pha
 my(%data);
 for $year (2009..2024) {
   for $type (0..4) {
+
+
     # 100 day cache, could be even longer
-    my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl?FFX=1&xxy=$year&type=$type&st=NM&place=albuquerque&ZZZ=END'","age=8640000");
+
+    # late 2017, noticed that USNO changed this
+
+    my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl?ID=AA&year=$year&task=$type&state=NM&place=albuquerque'");
+    
+#    my($out,$err,$res) = cache_command2("curl 'http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl?FFX=1&xxy=$year&type=$type&st=NM&place=albuquerque&ZZZ=END'","age=8640000");
 
     # parse result
     for $k (split(/\n/, $out)) {

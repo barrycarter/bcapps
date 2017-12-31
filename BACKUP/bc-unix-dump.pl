@@ -12,6 +12,9 @@ unless ($dir && $name) {die("Usage: $0 <mountpoint> <name>");}
 # if we can't chdir, give up
 dodie("chdir('$dir')");
 
+# renice self
+system("/usr/bin/renice 19 -p $$");
+
 # timing file
 open(A,">$name.log.new")||die("Can't open $name.log.new, $!");
 print A "Starting dump: ",time(),"\n";

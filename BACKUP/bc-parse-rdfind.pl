@@ -273,6 +273,52 @@ sub choose_file {
 
   debug("FILES", @files);
 
+  # if one is in a categorized subdir and the other isn't, kill the
+  # uncategorized one
+
+  for $i ("MUSIC", "WLIIA", "GAMESHOWS", "BIGBROTHER") {
+
+    if ($files[0]=~m%/$i/% && !($files[1]=~m%/$i/%)) {
+    print qq%sudo rm "$files[1]";\necho "keeping $files[0]"\n%;
+  }
+    
+    if ($files[1]=~m%/$i/% && !($files[0]=~m%/$i/%)) {
+    print qq%sudo rm "$files[0]";\necho "keeping $files[1]"\n%;
+  }
+    
+  }
+
+
+return;
+
+  # special case-- if one has a dir path ending in 2 and the other
+  # doesn't, kill the 2 version
+
+  if ($files[0]=~m%2/% && !($files[1]=~m%2/%)) {
+    print qq%sudo rm "$files[0]";\necho "keeping $files[1]"\n%;
+  }
+
+
+  if ($files[1]=~m%2/% && !($files[0]=~m%2/%)) {
+    print qq%sudo rm "$files[1]";\necho "keeping $files[0]"\n%;
+  }
+
+
+
+return;
+
+  # if one has sdrive in path and one doesn't, kill the one that does
+  if ($files[0]=~/$private{sdrive}/ && !($files[1]=~/$private{sdrive}/)) {
+    print qq%sudo rm "$files[0]";\necho "keeping $files[1]"\n%;
+  }
+
+
+  if ($files[1]=~/$private{sdrive}/ && !($files[0]=~/$private{sdrive}/)) {
+    print qq%sudo rm "$files[1]";\necho "keeping $files[0]"\n%;
+  }
+
+return; 
+
   # remove (don't link) the copy on kemptown if only one is on kemptown
   if ($files[0]=~m%/kemptown/% && !($files[1]=~m%/kemptown/%)) {
     print qq%sudo rm "$files[0]";\necho "keeping $files[1]"\n%;

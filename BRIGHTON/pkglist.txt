@@ -255,6 +255,7 @@ pavucontrol
 
 # graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
+xournal
 perl-Image-ExifTool
 # below is flash player
 gnash
@@ -262,6 +263,7 @@ povray
 xpaint
 gif2asc
 ImageMagick
+ImageMagick-devel
 # below is required for feh when compiling
 imlib
 imlib2

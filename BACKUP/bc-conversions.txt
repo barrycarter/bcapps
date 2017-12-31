@@ -9,14 +9,22 @@
 ".tbz" ".tar"
 ".tgz" ".tar"
 
-# backed up on /mnt/sshfs => backed up on /mnt/extdrive
-"/mnt/sshfs/" "/mnt/extdrive/"
+# backed up on /mnt/sshfs => backed up on /mnt/extdrive as of 29 Dec
+# 2017, /mnt/sshfs no longer exists AND
+# /mnt/villa/massbacks-idrive-saopaulo/*.list never mentions it, so
+# the next line can be safely commented out
+
+# "/mnt/sshfs/" "/mnt/extdrive/"
 
 # special case move of XWD directory (double transfer)
-"/mnt/extdrive3/XWD/" "/mnt/extdrive/XWD/"
+# same situation as for /mnt/sshfs on 29 Dec 2017
+
+# "/mnt/extdrive3/XWD/" "/mnt/extdrive/XWD/"
 
 # moved this directory down a level
-"/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG" "/mnt/extdrive5/QUORALOG"
+# 29 Dec 2017: same cleanup as above
+
+# "/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG" "/mnt/extdrive5/QUORALOG"
 
 # moved this directory
 "/mnt/extdrive5/INBOUNDSYMLINKS/sha/" "/usr/local/etc/sha/"

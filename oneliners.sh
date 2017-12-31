@@ -1,3 +1,10 @@
+# unzpaq files unless the target directory exists (even as a file)
+# must use as `ls *.zpaq | oneliners.sh`
+
+perl -le 'while (<>) {s/\.zpaq//; unless (-f $_) {print "zpaq x $_.zpaq"}}'
+
+exit;
+
 # shell one liners
 
 # one off to dump all TED data after some downtime
