@@ -19,7 +19,7 @@ cp /home/user/BCGIT/BACKUP/Makefile .
 # cp exclusions-commented.txt from a previous backup or make wont work
 
 # run make (-j by alias)
-make &
+nice +19 make -j &
 
 # no need to waitpid make since bc-chunk-backup2 xmessages at end
 # sleep 1; bc-waitpid.pl make &

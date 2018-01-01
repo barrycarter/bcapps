@@ -273,6 +273,18 @@ sub choose_file {
 
   debug("FILES", @files);
 
+
+  # remove the copy on kemptown if only one is on kemptown
+  if ($files[0]=~m%/kemptown/% && !($files[1]=~m%/kemptown/%)) {
+    print qq%sudo rm "$files[0]";\necho "keeping $files[1]"\n%;
+  }
+
+  if ($files[1]=~m%/kemptown/% && !($files[0]=~m%/kemptown/%)) {
+    print qq%sudo rm "$files[1]";\necho "keeping $files[0]"\n%;
+  }
+
+return;
+
   # if one is in a categorized subdir and the other isn't, kill the
   # uncategorized one
 

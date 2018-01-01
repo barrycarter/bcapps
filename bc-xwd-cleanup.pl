@@ -38,8 +38,9 @@ unless ($date) {
   debug("USING DATE: $date");
 }
 
-dodie_cmd("mkdir $date");
-dodie_cmd("mv pic.$date:*.png $date");
+# it's ok for these to fail in case it's already been done
+system("mkdir $date");
+system("mv pic.$date:*.png $date");
 dodie("chdir('/home/user/XWD/$date')");
 defaults("xmessage=1");
 
