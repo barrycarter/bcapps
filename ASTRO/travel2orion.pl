@@ -35,6 +35,21 @@ TODO: 0 z is orion specific grumble
 
 TODO: fix my glib NOMAD comment for "I want db w/ distances"
 
+sample star: 
+
+xyz = 51.601106, 256.709905, -37.740051 
+
+dist = 264.5503 (so xyz in parsecs) 
+
+absmag -6.933 and realmag 0.180, so
+
+Log10[264.5503/10]*5
+
+y is into screen
+
+x is decreasing ra
+
+z is increasing dec
 
 =cut
 
@@ -53,12 +68,23 @@ while (<A>) {
 
   for $i (0..$#head) {$hash{$head[$i]} = $vals[$i];};
 
-  unless ($hash{con} eq "Ori" || $hash{con}=~/^\s*$/) {next;}
+  unless ($hash{con} eq "Ori") {next;}
 
-  unless ($hash{con}=~/^\s*$/) {next;}
+  if ($hash{mag}<3) {
+    debug("<HASH>");
+    for $i (sort keys %hash) {
+      debug("$i -> $hash{$i}");
+    }
+    debug("</HASH>");
+
+  }
+    
+# debug("HASH",%hash);}
+
+
 
   # TODO: worry about stars in no constellation
-  debug("$hash{con} $hash{mag} $hash{ra} $hash{dec}");
+#  debug("$hash{con} $hash{mag} $hash{ra} $hash{dec}");
   
 
 #  debug("HASH",%hash);
