@@ -155,3 +155,5 @@ clear which are tweaked and which are original
 
 TODO: consider copying existing questions from a site like quora or
 stackexchange for testing by artificially assigning numbers
+
+TODO: add what tools do you plan to use (esp for math): calculator, computer programming, hand, rule of thumb, chart, etc

@@ -39,6 +39,3 @@ java -cp /tmp Main
   all files have 3 digit numbers in their names-- it magically works
   regardless)
 
-
-
-
