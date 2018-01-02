@@ -35,6 +35,10 @@ TODO: 0 z is orion specific grumble
 
 TODO: fix my glib NOMAD comment for "I want db w/ distances"
 
+TODO: rotate to side view? (circle around orion instead of approach?)
+
+TODO: quote Quixote?
+
 sample star: 
 
 xyz = 51.601106, 256.709905, -37.740051 
@@ -50,6 +54,9 @@ y is into screen
 x is decreasing ra
 
 z is increasing dec
+
+sph coords and then leftwards rotation should suffice (of course, we
+already sort of have that?)
 
 =cut
 
