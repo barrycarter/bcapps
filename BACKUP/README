@@ -34,10 +34,10 @@ sleep 1; bc-waitpid.pl rsync &
 
 # uncompress all files (zpaq does better w/ uncompressed files)
 
-find . -iname '*.bz2' -print0 | xargs -n 1 -0 bunzip2 -v &
-find . -iname '*.tbz' -print0 | xargs -n 1 -0 bunzip2 -v &
-find . -iname '*.gz' -print0 | xargs -n 1 -0 gunzip -v &
-find . -iname '*.tgz' -print0 | xargs -n 1 -0 gunzip -v &
+find . -iname '*.bz2' -print0 | parallel -j 1 -0 bunzip2 -v &
+find . -iname '*.tbz' -print0 | parallel -j 1 -0 bunzip2 -v &
+find . -iname '*.gz' -print0 | parallel -j 1 -0 gunzip -v &
+find . -iname '*.tgz' -print0 | parallel -j 1 -0 gunzip -v &
 
 # if processes above take a while, consider bc-waitpid.pl
 
