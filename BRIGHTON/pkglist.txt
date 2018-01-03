@@ -252,6 +252,12 @@ alsa-utils
 alsa-firmware
 pulseaudio
 pavucontrol
+libsndfile
+libsndfile-devel
+libsamplerate
+libsamplerate-devel
+libmpg123
+libmpg123-devel
 
 # graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
@@ -325,6 +331,7 @@ zbar-devel
 # video
 lsdvd
 ffmpeg
+ffmpeg-devel
 mencoder
 mplayer
 vlc
