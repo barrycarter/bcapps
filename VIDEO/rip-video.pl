@@ -8,10 +8,13 @@ require "/usr/local/lib/bclib.pl";
 # though my own screen resolution is lower)
 
 # 256x144 is 5x5 tiling which really seems nice
+# TODO: do I want frames?
 
 # TODO: create subdir to hold these and more subdir per film
 # TODO: cleanup file names considerably
 # TODO: use xargs for multiples
+
+if ($#ARGV > 0) {die "ERROR: accepts only one argument";}
 
 my($file) = @ARGV;
 
@@ -27,41 +30,13 @@ $filebase=~s%^.*/%%;
 $filebase=~s/\.[^\.]*?$//;
 $filebase=~s/[^\w]+/_/g;
 
-# chdir to the appropriate subdirectory + create subsubdir
+# creating all frames for all things in a single dir is ugly, but I am
+# only doing one frame per second so potentially acceptable
 
-dodie('chdir("$bclib{home}/VIDEOFRAMES")');
-# making the filebase also the dirname is weird but maybe ok
-dodie('mkdir("$filebase")');
+# TODO: maybe check if $filebase_0000001.jpg or whatever exists either
+# in this dir or a subdir and dont run if it does qmark
 
-
-
-debug("FILEBASE: $filebase");
-
-
-die "TESTING";
-
-
-
-# because I do a chdir, I need to get the whole path to the file
-
-unless ($file=~m%^/%) {$file = "$ENV{PWD}/$file";}
-
-debug("FILE: $file");
-
-# snip 1 frame to get "natural" size
-
-# TODO: is first frame the best one to snip?
-
-my($tmpdir) = tmpdir();
-chdir($tmpdir);
-
-debug("TEMPDIR: $tmpdir, NOT DELETING DURING TESTING");
-
-$globopts{keeptemp} = 1;
-
-($out, $err, $res) = cache_command2("ffmpeg -i '$file' -vframes 1 output.jpg");
-
-($out, $err, $res) = cache_command2("identify output.jpg");
+($out, $err, $res) = cache_command2(qq`ffmpeg -i '$file' -vf "select=not(mod(n\\,24)), scale=256:144" -vsync vfr $bclib{home}/VIDEOFRAMES/${filebase}_%08d.jpg`);
 
 debug("OUT: $out, ERR: $err, RES: $res");
 
