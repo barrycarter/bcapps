@@ -42,7 +42,7 @@ dodie("mkdir('$targetdir')");
 # TODO: maybe check if $filebase_0000001.jpg or whatever exists either
 # in this dir or a subdir and dont run if it does qmark
 
-($out, $err, $res) = cache_command2(qq`ffmpeg -i '$file' -vf "select=not(mod(n\\,24)), scale=256:144" -vsync vfr $targetdir/${filebase}_%08d.jpg`);
+($out, $err, $res) = cache_command2(qq`ffmpeg -i "$file" -vf "select=not(mod(n\\,24)), scale=256:144" -vsync vfr $targetdir/${filebase}_%08d.jpg`);
 
 debug("OUT: $out, ERR: $err, RES: $res");
 
