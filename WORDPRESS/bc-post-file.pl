@@ -48,11 +48,15 @@ while ($headers=~s/^(.*?): (.*)$//m) {$hash{$1} = trim($2);}
 
 debug("ALPHA");
 
-# convert categories and authors to integers or integer list (as string)
+# the options for the command
+my(@options);
 
-my($usedcats) = catlist_to_intlist($hash{post_category});
+# push an option for categories if needed
 
-debug("USED CATS: $usedcats");
+push(@options, catlist_to_optstring($hash{post_category}));
+push(@options, author_to_optstring($hash{post_author}));
+
+debug("OPTIONS",@options);
 
 die "TETING";
 
@@ -77,8 +81,6 @@ if ($hash{post_author}) {
 }
 
 # build the options
-
-my(@options);
 
 # special case for post_category and post_author
 
@@ -181,26 +183,49 @@ sub get_users {
   return %hash;
 }
 
-# list of categories to list of integers representing those categories
+# list of categories (a string like "foo,bar,uncategorized") to option
+# string representing numerical values of those categories (eg,
+# "--post-category=1,2")
 
-sub catlist_to_intlist {
+sub catlist_to_optstring {
 
-  debug("ENTERINT");
-  my(%hash);
   my($catlist) = @_;
+  my(%hash);
 
-  for $i ($catlist) {
+  # if catlist is empty, no --post_category option
+  if ($catlist=~/^\s*$/) {return;}
 
-    debug("GOT: $i");
+  for $i (csv($catlist)) {
+
+    # lower case for slug, allow spaces
+    $i = lc(trim($i));
 
     # using a hash here allows us to ignore duplicates
-    if ($cats{$i}) {$hash{$cats{$i}} = 1; next}
+    if ($knowncats{$i}) {$hash{$knowncats{$i}} = 1; next}
 
     # exiting entire prog here seems weird, does Perl throw exceptions?
-    print "\nInvalid category: $i, valid categories are:\n";
-    print "\n",join("\n", sort keys %cats),"\n\n";
-    exit(1);
+    print "\n\nINVALID CATEGORY: $i\nKnown categories: ",join(", ", sort keys %knowncats),"\n\n";
+    exit(1); 
   }
-  return join(",",sort keys %hash);
+  return "--post_category=".join(",",sort keys %hash);
+}
+
+# convert author to option for --post-author
+
+sub author_to_optstring {
+
+  my($author) = @_;
+
+  # normalize
+  $author = lc(trim($author));
+
+  # if no author, no --post-author option (will use default)
+  if ($author eq "") {return;}
+
+  if ($knownusers{$author}) {return "--post-author=$knownusers{$author}";}
+
+  # exiting entire prog here seems weird, does Perl throw exceptions?
+  print "\n\nINVALID AUTHOR: $author\nKnown authors: ",join(", ", sort keys %knownusers),"\n\n";
+  exit(1);
 }
 
