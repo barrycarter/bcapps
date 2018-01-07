@@ -3,8 +3,8 @@
 
 ID: NEW
 post_name: 
-post_category: uncategorized,test
-post_author: barrycarter
+post_category: test , test
+post_author:           
 post_date_gmt: 
 post_type: post 
 post_status: draft

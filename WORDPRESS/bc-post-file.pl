@@ -16,7 +16,7 @@ my($out, $err, $res);
 # these are the headers that are parsed separately so
 # $options/@options below should ignore them
 
-my(%excluded) = ("ID", "post_category", "post_author");
+my(%excluded) = list2hash("ID", "post_category", "post_author");
 
 # TODO: maybe tags too?
 
@@ -24,7 +24,7 @@ my(%excluded) = ("ID", "post_category", "post_author");
 my(%auts);
 my(%cats);
 
-# testing only
+# testing only (creds= credentials)
 # TODO: get from file
 my($creds) = "--ssh=barrycar\@bc4 --path=public_html/test20171209.barrycarter.org";
 
@@ -40,6 +40,9 @@ for $i (split(/\n/, $out)) {
   $cats{$l[3]} = $l[0];
 }
 
+# this is to kill off the header entry
+delete $cats{"slug"};
+
 ($out, $err, $res) = cache_command2("wp $creds user list --format=csv", "age=+Infinity");
 
 for $i (split(/\n/, $out)) {
@@ -47,6 +50,11 @@ for $i (split(/\n/, $out)) {
   # TODO: this is ugly, should really comment or explain assumed headers
   $auts{$l[1]} = $l[0];
 }
+
+# TODO: this is seriously ugly, I can probably use shift or something
+# above to avoid this
+
+delete $auts{"user_login"};
 
 debug("CAT", %cats, "AUT", %auts);
 
@@ -61,15 +69,21 @@ my($headers, $body) = split(/^======================+/m, $content, 2);
 # parse header
 
 my(%hash);
-while ($headers=~s/^(.*?): (.*)$//m) {$hash{$1} = $2;}
+while ($headers=~s/^(.*?): (.*)$//m) {$hash{$1} = trim($2);}
 
 # convert categories and authors to integers
 
-my(@cats); 
+my(@cats);
 
 for $i (csv($hash{post_category})) {
+  # trim and lower case
+  $i = trim($i);
+  $i = lc($i);
   if ($cats{$i}) {push(@cats,$cats{$i}); next}
-  die "BADCAT: $i";
+
+  print "\nInvalid category: $i, valid categories are:\n";
+  print "\n",join("\n", sort keys %cats),"\n\n";
+  exit(1);
 }
 
 my($cats) = join(",", @cats);
@@ -79,19 +93,35 @@ my($cats) = join(",", @cats);
 
 my($author);
 
-$author=$auts{$hash{post_author}}||die("BAD AUTHOR: $hash{post_author}");
+# TODO: allow empty author
 
-debug("AUTHOR: $author, CATS", @cats);
+# TODO: confirm empty cats is ok
 
-die "TESTING";
+if ($hash{post_author}) {
+
+  $author=$auts{$hash{post_author}};
+
+  unless ($author) {
+    print "\nInvalid author: $hash{post_author}, valid authors are:\n";
+    print "\n",join("\n", sort keys %auts),"\n\n";
+    exit(1);
+  }
+}
 
 # build the options
 
 my(@options);
 
+# special case for post_category and post_author
+
+if (@cats) {push(@options, "--post_category=".join(",",@cats));}
+
+if ($author) {push(@options, "--post_author=$author");}
+
 for $i (sort keys %hash) {
   if ($excluded{$i}) {next;}
   if ($hash{$i}=~/^\s*$/) {next;}
+  debug("$i -> $hash{$i}");
   push(@options, "--$i='$hash{$i}'");
 }
 
@@ -107,6 +137,10 @@ write_file($body, $tmpfile);
 # special case for new posts
 
 my($postcommand) = $hash{ID}=~/^\d+/?"update $hash{ID}":"create";
+
+debug("CMD:  post $postcommand $remotetmp $options $creds --debug");
+
+die "TESTING";
 
 # rsync the file over
 # TODO: consider removing the tmp files I'm creating remotely
@@ -145,6 +179,3 @@ debug("OUT: $out", "ERR: $err");
 
 
 debug("HASH", %hash);
-
-
-
