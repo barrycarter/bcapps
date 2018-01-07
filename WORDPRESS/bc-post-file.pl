@@ -3,9 +3,6 @@
 # Given a file (not stream) in the correct format (the output of
 # bc-parse-wxr.pl), post it to my blog (or update) using wp-client
 
-# credentials for testing:
-# wp --ssh=barrycar@bc4 --path=public_html/wordpress (commands)
-
 # NOTE: per https://core.trac.wordpress.org/ticket/38435
 # wp_insert_post() does NOT take category slugs despite what the docs
 # say
@@ -16,13 +13,12 @@ my($out, $err, $res);
 # these are the headers that are parsed separately so
 # $options/@options below should ignore them
 
+
 my(%excluded) = list2hash("ID", "post_category", "post_author");
 
-# TODO: maybe tags too?
-
+# TODO: maybe tags and other taxonomy elements too?
 # authors and categories: slug => id
-my(%auts);
-my(%cats);
+my(%auts, %cats);
 
 # testing only (creds= credentials)
 # TODO: get from file
@@ -32,31 +28,8 @@ my($creds) = "--ssh=barrycar\@bc4 --path=public_html/test20171209.barrycarter.or
 
 # determine list of categories/authors and cache as long as possible
 
-($out, $err, $res) = cache_command2("wp $creds term list category --format=csv", "age=+Infinity");
-
-for $i (split(/\n/, $out)) {
-  my(@l) = csv($i);
-  # TODO: this is ugly, should really comment or explain assumed headers
-  $cats{$l[3]} = $l[0];
-}
-
-# this is to kill off the header entry
-delete $cats{"slug"};
-
-($out, $err, $res) = cache_command2("wp $creds user list --format=csv", "age=+Infinity");
-
-for $i (split(/\n/, $out)) {
-  my(@l) = csv($i);
-  # TODO: this is ugly, should really comment or explain assumed headers
-  $auts{$l[1]} = $l[0];
-}
-
-# TODO: this is seriously ugly, I can probably use shift or something
-# above to avoid this
-
-delete $auts{"user_login"};
-
-debug("CAT", %cats, "AUT", %auts);
+my(%knowncats) = get_categories();
+my(%knownusers) = get_users();
 
 # read file + split into header and body
 
@@ -68,25 +41,20 @@ my($headers, $body) = split(/^======================+/m, $content, 2);
 
 # parse header
 
+debug("ZETO");
+
 my(%hash);
 while ($headers=~s/^(.*?): (.*)$//m) {$hash{$1} = trim($2);}
 
-# convert categories and authors to integers
+debug("ALPHA");
 
-my(@cats);
+# convert categories and authors to integers or integer list (as string)
 
-for $i (csv($hash{post_category})) {
-  # trim and lower case
-  $i = trim($i);
-  $i = lc($i);
-  if ($cats{$i}) {push(@cats,$cats{$i}); next}
+my($usedcats) = catlist_to_intlist($hash{post_category});
 
-  print "\nInvalid category: $i, valid categories are:\n";
-  print "\n",join("\n", sort keys %cats),"\n\n";
-  exit(1);
-}
+debug("USED CATS: $usedcats");
 
-my($cats) = join(",", @cats);
+die "TETING";
 
 # and now, author (singular)
 # TODO: this seems really redundant and ugly
@@ -179,3 +147,60 @@ debug("OUT: $out", "ERR: $err");
 
 
 debug("HASH", %hash);
+
+# program specific subroutine, no perldoc required
+
+sub get_categories {
+
+  my(%hash);
+
+  # NOTE: uses global variables here
+  my($out, $err, $res) = cache_command2("wp $creds term list category --format=csv", "age=+Infinity");
+
+  for $i (split(/\n/, $out)) {
+    my($id, $taxid, $name, $slug, $desc, $parent, $count) = csv($i);
+    if ($id eq "term_id") {next;}
+    $hash{$slug} = $id;
+  }
+  return %hash;
+}
+
+# program specific
+
+sub get_users {
+
+  my(%hash);
+
+  ($out, $err, $res) = cache_command2("wp $creds user list --format=csv", "age=+Infinity");
+
+  for $i (split(/\n/, $out)) {
+    my($id, $login, $name, $email, $registered, $roles) = csv($i);
+    if ($id eq "ID") {next;}
+    $hash{$login} = $id;
+  }
+  return %hash;
+}
+
+# list of categories to list of integers representing those categories
+
+sub catlist_to_intlist {
+
+  debug("ENTERINT");
+  my(%hash);
+  my($catlist) = @_;
+
+  for $i ($catlist) {
+
+    debug("GOT: $i");
+
+    # using a hash here allows us to ignore duplicates
+    if ($cats{$i}) {$hash{$cats{$i}} = 1; next}
+
+    # exiting entire prog here seems weird, does Perl throw exceptions?
+    print "\nInvalid category: $i, valid categories are:\n";
+    print "\n",join("\n", sort keys %cats),"\n\n";
+    exit(1);
+  }
+  return join(",",sort keys %hash);
+}
+

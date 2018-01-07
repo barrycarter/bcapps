@@ -481,9 +481,10 @@ Trims leading/trailing spaces from a string
 =cut
 
 sub trim {
-    $_[0]=~s/^\s+//isg;
-    $_[0]=~s/\s+$//isg;
-    return($_[0]);
+  my($str) = @_;
+  $str=~s/^\s+//isg;
+  $str=~s/\s+$//isg;
+  return $str;
 }
 
 =item min(@list)
