@@ -167,7 +167,9 @@ alias waitpid bc-waitpid.pl
 # alias mirror-referata "bc-mirror-mw.pl --debug --dir=pbs-referata --api=http://pearlsbeforeswine.referata.com/w/api.php \!*"
 # below requires file list and --dryrun=0
 alias mirror-referata "bc-mirror-mw-attr.pl --debug --api=http://pbs3.referata.com/w/api.php \!*"
-alias mirror-wikia "bc-mirror-mw.pl --debug --dir=pbs --api=http://pearls-before-swine-bc.wikia.com/api.php \!*"
+
+# as of 6 jan 2018 (probably WAY before), this is dead
+# alias mirror-wikia "bc-mirror-mw.pl --debug --dir=pbs --api=http://pearls-before-swine-bc.wikia.com/api.php \!*"
 
 # for peanuts
 alias mirror-peanuts "bc-mirror-mw-attr.pl --debug --api=http://peanuts.referata.com/w/api.php \!*"

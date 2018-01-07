@@ -55,13 +55,21 @@ sub process_vids {
 
     # this is seriously inefficient?
     for $i (@vids) {
+
+      # filename for this montaged frame
       my($fname) = "$i/${i}_$count.jpg";
-      if (-f $fname) {$filecount++;}
-      # this push occurs regardless, will cause problems but I understand that
-      push(@frames, "$i/${i}_$count.jpg");
+
+      # if the file exists for a given episode, push it + count it
+      if (-f $fname) {
+	$filecount++;
+	push(@frames, "$i/${i}_$count.jpg");
+      } else {
+	# TODO: choose a much better filler, eg something mentioning me
+	push(@frames, "filler.png");
+      }
     }
 
-    # TODO: something other than return
+    # if no files left (except filler), return
     if ($filecount==0) {return;}
 
     my($frames) = join(" ",@frames);
@@ -69,15 +77,7 @@ sub process_vids {
     my($cmd) = "montage -geometry $geom -tile 5x5 $frames $mfile-$montage-$count.jpg";
 
     print "$cmd\n";
-
-#    die "TESTING";
-
-    debug("FRAMES",@frames);
-
-
-#    debug("COUNT: $count");
   }
-
 }
 
 =item comments

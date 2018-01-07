@@ -657,7 +657,8 @@ qbittorrent-nox
 # Blog
 # this wont really install from yum, just noting it here
 jekyll
-
+# I don't actually use this but want to look at source code
+wordpress
 
 # TODO: update list2sh or whatever to quote package names for * stuff
 

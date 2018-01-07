@@ -4,3 +4,11 @@ referata.com settings (most left at default):
 
 Main/Allow External Images
 Privacy/Editing/Very Closed [since all data comes from pbs.txt]
+
+TODO: consider doing all parsing locally and sending results to
+regular non-semantic mediawiki (or something)
+
+TO RUN: bc-pbs3.pl (seems to do it all?)
+
+and then run "mirror-referata" alias
+

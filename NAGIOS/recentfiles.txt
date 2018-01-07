@@ -18,7 +18,7 @@
 # Confirm bc-getmail is working properly
 # the [^0-9] at end to exclud things like: 
 # oldmail-imap.gmail.com-993-carter.barry-INBOX.tmp.28373
-600 600 "/home/barrycarter/.getmail/oldmail-imap.*[^0-9]"
+600 600 "/home/user/.getmail/oldmail-imap.*[^0-9]"
 
 # Confirm my emacs buffer file is current
 600 1200 "~/.emacs_????"
@@ -49,3 +49,9 @@
 
 # temp down (even after moving to /backups/)
 # 129600 259200 "/usr/local/etc/backups/files/bcunix-*.txt /usr/local/etc/backups/files/bcinfo3-*.[tb][xz][t2]"
+
+# arvixe (hosts bcinfo4 + my blog) should backup my blogs regularly,
+# so this file should be less than two days old
+
+129600 259200 "/home/user/RSYNC/ARVIXE/barrycar/.cpanel/backup_status"
+
