@@ -13,18 +13,13 @@ my($out, $err, $res);
 # these are the headers that are parsed separately so
 # $options/@options below should ignore them
 
-
 my(%excluded) = list2hash("ID", "post_category", "post_author");
 
 # TODO: maybe tags and other taxonomy elements too?
-# authors and categories: slug => id
-my(%auts, %cats);
 
 # testing only (creds= credentials)
 # TODO: get from file
 my($creds) = "--ssh=barrycar\@bc4 --path=public_html/test20171209.barrycarter.org";
-
-# TODO: subroutinize these
 
 # determine list of categories/authors and cache as long as possible
 
@@ -37,57 +32,22 @@ my($content, $file) = cmdfile();
 
 # TODO: how many equals should I put here?
 # NOTE: the "2" below handles the case "=====..." appears in post body
+
 my($headers, $body) = split(/^======================+/m, $content, 2);
 
 # parse header
 
-debug("ZETO");
-
 my(%hash);
 while ($headers=~s/^(.*?): (.*)$//m) {$hash{$1} = trim($2);}
-
-debug("ALPHA");
 
 # the options for the command
 my(@options);
 
-# push an option for categories if needed
-
+# push an option for categories and author if needed
 push(@options, catlist_to_optstring($hash{post_category}));
 push(@options, author_to_optstring($hash{post_author}));
 
-debug("OPTIONS",@options);
-
-die "TETING";
-
-# and now, author (singular)
-# TODO: this seems really redundant and ugly
-
-my($author);
-
-# TODO: allow empty author
-
-# TODO: confirm empty cats is ok
-
-if ($hash{post_author}) {
-
-  $author=$auts{$hash{post_author}};
-
-  unless ($author) {
-    print "\nInvalid author: $hash{post_author}, valid authors are:\n";
-    print "\n",join("\n", sort keys %auts),"\n\n";
-    exit(1);
-  }
-}
-
-# build the options
-
-# special case for post_category and post_author
-
-if (@cats) {push(@options, "--post_category=".join(",",@cats));}
-
-if ($author) {push(@options, "--post_author=$author");}
-
+# the other options
 for $i (sort keys %hash) {
   if ($excluded{$i}) {next;}
   if ($hash{$i}=~/^\s*$/) {next;}
@@ -106,34 +66,33 @@ write_file($body, $tmpfile);
 
 # special case for new posts
 
-my($postcommand) = $hash{ID}=~/^\d+/?"update $hash{ID}":"create";
-
-debug("CMD:  post $postcommand $remotetmp $options $creds --debug");
-
-die "TESTING";
+my($postcommand) = $hash{ID}=~/^\d+$/?"update $hash{ID}":"create";
 
 # rsync the file over
 # TODO: consider removing the tmp files I'm creating remotely
 
 ($out, $err, $res) = cache_command2("rsync $tmpfile barrycar\@bc4:$remotetmp");
 
+# run the command to add/update the post
 ($out, $err, $res) = cache_command2("wp post $postcommand $remotetmp $options $creds --debug");
 
-debug("OUT: $out", "ERR: $err");
+# confirm
+
+unless ($out=~/Success: (.*?) post (\d+)/) {
+  die "POST FAILED: $out";
+}
+
+my($action, $id) = ($1,$2);
+
+debug("ACTION: $action, ID: $id");
 
 # TODO: if new post created, update input file w/ new ID
 
-
-# TODO: check category validity
-
-# options to post command
-
-# wp post update <id> --<field>=<value> where:
+=item comment
 
 # trimmed list of fields from
 # https://developer.wordpress.org/reference/functions/wp_insert_post/
 
-=item comment
         'post_author'
         'post_date_gmt'
         'post_content'
@@ -146,11 +105,7 @@ debug("OUT: $out", "ERR: $err");
         'tax_input'
 =cut
 
-
-
-debug("HASH", %hash);
-
-# program specific subroutine, no perldoc required
+# program specific subroutines, no perldoc required
 
 sub get_categories {
 

@@ -59,3 +59,13 @@ Showcase: none yet, help me create one
 Subject: Misc
 Code URL: https://github.com/barrycarter/bcapps/
 Showcase: none, poke around and see if anything interests you
+
+Subject: Entertainment
+Code URL: https://github.com/barrycarter/bcapps/blob/master/VIDEO/
+Showcase: https://www.youtube.com/watch?v=c5zBq0bPnW8 (but sucks)
+Description: view multiple videos (eg, all episodes of a given series) very rapidly, multiple videos at a time (using tiling), no sound
+TODO: improve showcase
+
+Subject: Astronomy
+Code URL: none yet
+Description: Use the Hipparcos/HYG catalog (the largest one w/ distances) to create video of zooming around the universe; Celestia lets you view from other stars but not sure it allows you to see video of the travel

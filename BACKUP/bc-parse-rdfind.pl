@@ -273,6 +273,16 @@ sub choose_file {
 
   debug("FILES", @files);
 
+  # if one copy is an /MP4/ dir and the other isn't, delete the other
+  if ($files[0]=~m%/MP4/% && !($files[1]=~m%/MP4/%)) {
+    print qq%sudo rm "$files[1]";\necho "keeping $files[0]"\n%;
+  }
+
+  if ($files[1]=~m%/MP4/% && !($files[0]=~m%/MP4/%)) {
+    print qq%sudo rm "$files[0]";\necho "keeping $files[1]"\n%;
+  }
+
+return;
 
   # remove the copy on kemptown if only one is on kemptown
   if ($files[0]=~m%/kemptown/% && !($files[1]=~m%/kemptown/%)) {

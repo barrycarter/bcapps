@@ -34,7 +34,7 @@ sleep 1; bc-waitpid.pl rsync &
 
 # uncompress all files (zpaq does better w/ uncompressed files)
 
-# NOTE: this does NOT uncompress files that don't have the appropriate
+# TODO: this does NOT uncompress files that don't have the appropriate
 # extension, which could be an issue for things like FILESBYSHA1
 
 find . -iname '*.bz2' -print0 | parallel -j 1 -0 bunzip2 -v &
