@@ -263,7 +263,6 @@ sub stat2hash {
   return \%hash;
 }
 
-
 # this subroutine changes every run (TODO: argh!) and decides:
 # 1) which of the two files I want to keep
 # 2) whether to symlink the other file or rm it entirely
@@ -272,6 +271,66 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  # /mnt/villa/user/Downloads is the canonical downloads directory; if
+  # another file is in A download dir (but not this one) and there's a
+  # copy in the canonical version, delete the noncanon
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/mnt/villa/user/Downloads/% && 
+	!($files[1-$i]=~m%/mnt/villa/user/Downloads/%) &&
+       $files[1-$i]=~m%/Downloads?%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+
+return;
+
+  # after making /DVD/ canonical, I can run this step:
+  # if one is in MP4 and the other isnt, toast the one that isnt
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/MP4/% && !($files[1-$i]=~m%/MP4/%) ) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+
+return;
+
+  # if I have two files both in my books dir (LIB2KINDLE, legacy
+  # name), and one is in a single letter subdir, remove that one
+
+  for $i (0,1) {
+    # both must be in lib2 kindle
+    if ( $files[$i]=~m%/LIB2KINDLE/% && $files[1-$i]=~m%/LIB2KINDLE/% &&
+	 $files[$i]=~m%/[A-Z]/% && !($files[1-$i]=~m%/[A-Z]/%) ) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return; 
+
+  # if one copy on DVD restored files, the other not, keep the DVD
+  # version, symlink the other (not sure this is good idea, maybe
+  # backwards would be better?)
+
+  # this is slightly less inefficient but still stupid
+  for $i (0,1) {
+    # TODO: could probably combine these somehow
+    if  (($files[$i]=~m%/DVD/%) && !($files[1-$i]=~m%/DVD/%)) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%sudo ln -s "$files[$i]" "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+
+return;
 
   # if one copy is an /MP4/ dir and the other isn't, delete the other
   if ($files[0]=~m%/MP4/% && !($files[1]=~m%/MP4/%)) {
