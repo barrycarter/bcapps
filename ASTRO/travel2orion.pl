@@ -75,6 +75,8 @@ while (<A>) {
 
   for $i (0..$#head) {$hash{$head[$i]} = $vals[$i];};
 
+
+
   unless ($hash{con} eq "Ori") {next;}
 
   if ($hash{mag}<3) {

@@ -5,7 +5,8 @@
 /mnt/villa villa
 /mnt/lobos lobos
 # kemptown recovered from brighton 11/24/2017ish
-/mnt/kemptown kemptown
+# temporarily disabled 9 Jan 2018
+# /mnt/kemptown kemptown
 / saopaulo
 
 # usb drives

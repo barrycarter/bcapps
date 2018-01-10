@@ -4,15 +4,41 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# array of fields (to avoid getting messed up w/ positions)
+
+my(@fields) = ("hip", "tycho2_id", "solution_id", "source_id", "random_index",
+"ref_epoch", "ra", "ra_error", "dec", "dec_error", "parallax",
+"parallax_error", "pmra", "pmra_error", "pmdec", "pmdec_error",
+"ra_dec_corr", "ra_parallax_corr", "ra_pmra_corr", "ra_pmdec_corr",
+"dec_parallax_corr", "dec_pmra_corr", "dec_pmdec_corr",
+"parallax_pmra_corr", "parallax_pmdec_corr", "pmra_pmdec_corr",
+"astrometric_n_obs_al", "astrometric_n_obs_ac",
+"astrometric_n_good_obs_al", "astrometric_n_good_obs_ac",
+"astrometric_n_bad_obs_al", "astrometric_n_bad_obs_ac",
+"astrometric_delta_q", "astrometric_excess_noise",
+"astrometric_excess_noise_sig", "astrometric_primary_flag",
+"astrometric_relegation_factor", "astrometric_weight_al",
+"astrometric_weight_ac", "astrometric_priors_used",
+"matched_observations", "duplicated_source",
+"scan_direction_strength_k1", "scan_direction_strength_k2",
+"scan_direction_strength_k3", "scan_direction_strength_k4",
+"scan_direction_mean_k1", "scan_direction_mean_k2",
+"scan_direction_mean_k3", "scan_direction_mean_k4", "phot_g_n_obs",
+"phot_g_mean_flux", "phot_g_mean_flux_error", "phot_g_mean_mag",
+"phot_variable_flag", "l", "b", "ecl_lon", "ecl_lat");
+
 while (<>) {
 
   my(@list) = csv($_);
 
-  # I want magnitude, parallax and ra/dec coords (TODO: are galactic coords better?)
+  my(%hash);
 
-  my($mag, $par, $ra, $dec) = @list[53,10,6,8];
+  for $i (0..$#fields) {$hash{$fields[$i]} = $list[$i];}
 
-  debug("MAG: $mag");
+  if ($hash{phot_g_mean_mag} eq "NOT_AVAILABLE") {next;}
+
+  debug("$hash{hip} $hash{ra} $hash{dec} $hash{parallax} $hash{phot_g_mean_mag}");
+
 }
 
 =item comment
@@ -31,10 +57,14 @@ The fields are:
 9 dec_error
 10 parallax
 11 parallax_error
+
+# pm = proper motion
 12 pmra
 13 pmra_error
 14 pmdec
 15 pmdec_error
+
+# correlation coefficients
 16 ra_dec_corr
 17 ra_parallax_corr
 18 ra_pmra_corr
@@ -45,6 +75,9 @@ The fields are:
 23 parallax_pmra_corr
 24 parallax_pmdec_corr
 25 pmra_pmdec_corr
+
+
+
 26 astrometric_n_obs_al
 27 astrometric_n_obs_ac
 28 astrometric_n_good_obs_al
@@ -78,5 +111,13 @@ The fields are:
 56 b
 57 ecl_lon
 58 ecl_lat
+
+parallax is in microarcseconds, so 0.6685584484793923 parallex = 668.558 parsecs or 
+
+query from https://www.aanda.org/articles/aa/full_html/2016/11/aa29512-16/T3.html
+
+[s]elect gaia.source_id, gaia.hip, gaia.phot_g_mean_mag+5*log10(gaia.parallax)-10 as g_mag_abs_gaia, gaia.phot_g_mean_mag+5*log10(hip.plx)-10 as g_mag_abs_hip, hip.b_v from gaiadr1.tgas_source as gaia inner join public.hipparcos_newreduction as hip on gaia.hip = hip.hip where gaia.parallax/gaia.parallax_error >= 5 and hip.plx/hip.e_plx >= 5 and hip.e_b_v > 0.0 and hip.e_b_v <= 0.05 and 2.5/log(10)*gaia.phot_g_mean_flux_error/gaia.phot_g_mean_flux <= 0.05 
+
+
 
 =cut

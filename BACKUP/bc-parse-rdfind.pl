@@ -32,6 +32,8 @@ if ($>) {die("Must be root");}
 # TODO: this should almost definitely be an option
 my($lower) = 1e+6;
 
+# warn "Temporarily only looking at 1g+ files";
+
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
 # $lower = 10000;
@@ -47,6 +49,8 @@ while (<A>) {
   # by limiting the split here, I preserve spaces in the filename
   my($duptype, $id, $depth, $size, $device, $inode, $priority, $name) =
     split(/ /, $_, 8);
+
+  debug("SIZE: $size");
 
 #  debug("NAME: $name");
 
@@ -135,7 +139,8 @@ while (<>) {
   }
 
   # unless names are equal move on
-  unless ($n1 eq $n2) {next;}
+  warn "EQUAL NAME TEST TURNED OFF!";
+#  unless ($n1 eq $n2) {next;}
 
   # do the expensive lstat tests now
   unless (sep_but_equal(@f)) {
@@ -271,6 +276,22 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  # almost sure I will regret this, but if theres a copy in both
+  # SHA1FILES and somewhere else, link the alternate copy
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/mnt/lobos/FILESBYSHA1/% && 
+	!($files[1-$i]=~m%/FILESBYSHA1/%)) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%sudo ln -s "$files[$i]" "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+
+
+return;
 
   # /mnt/villa/user/Downloads is the canonical downloads directory; if
   # another file is in A download dir (but not this one) and there's a
