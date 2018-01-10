@@ -18,6 +18,83 @@ TODO
 
   - Don't forget Fuller House!
 
+  - Other series (I may or may not have):
+
+Full(er) House (have)
+Will and Grace
+All In the Family/Archie Bunker's Place
+The Jeffersons
+Maude
+Golden Girls
+Family Ties
+Mr Belvadere
+Who's The Boss
+It's Your Move
+Cosby Show
+Two Broke Girls
+Happy Days
+Mork & Mindy
+Whose Line (multiple versions)
+Laverne & Shirley
+Too Close For Comfort
+Star Trek (TOS, TAS, TNG, DS9, Voyager, Enterprise, Discovery)
+movies? (including Star Trek movies)
+Growing Pains
+Friends
+Hello Larry
+Diff'rent Strokes
+Moonlighting
+Moon Over Miami(?)
+Alice (and Flo)
+Dukes of Hazard
+porn (but not on youtube?)
+Three's Company (and Three's A Crowd and The Ropers)
+Cheers + spinoffs
+Big Bang Theory
+Episodes
+Britcoms (many)
+music videos (similar to movies)
+Bewitched
+Boy Meets World
+Wonder Years
+Girl Meets World?
+Reading Rainbow?
+Sesame Street?
+Doogie Howser
+Perfect Strangers
+Punky Brewster
+The Partridge Family
+Doctor Who??
+Barney Miller
+Benson
+Car 54, Where Are You
+Family Matters
+Superfriends?
+Empty Nest
+Mary Tyler Moore Show
+Mister Ed
+Rocky Bullwinkle
+The $100,000 Pyramid (+ other game shows?)
+Addams Family
+Munsters
+Muppets Show
+Webster
+Welcome Back Kotter
+Seinfeld
+The Jetsons
+The Flintstones
+WKRP in Cincinnati
+Batman 60's
+Facts of Life
+Gilligan's Island
+
+(check out my personal collections as well)
+
+
+TODO: check list above for reps perhaps by sorting
+
+TODO: play audio theme over fast vids? (copyirght?)
+
 NOTES
 =====
 
@@ -107,10 +184,6 @@ find . -maxdepth 1 -iname 'fh*.avi.*.jpg' | perl -nle '/(\d+)\.jpg$/; print $1' 
 : shows im missing, prob due to bad symlinking
 
 find . -maxdepth 1 -iname 'fh*.avi.1000.jpg' | perl -anle '/fh(\d+)/; print $1' | sort > temp4.txt
-
-
-
-
 
 DISCLAIMER
 ==========

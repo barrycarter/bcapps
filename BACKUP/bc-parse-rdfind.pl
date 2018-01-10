@@ -7,6 +7,10 @@
 # to free up disk space, but ran into issues. This program addresses
 # those issues, which are given in comments
 
+# to run: `$0 < output_of_above > commands_to_run.sh` BUT!!!
+# `tac output_of_above | $0 > commands_to_run.sh may work` better
+# because bigger files may show up first
+
 require "/usr/local/lib/bclib.pl";
 
 # I have privately named drives
@@ -30,9 +34,9 @@ if ($>) {die("Must be root");}
 
 # files below this size are ignored
 # TODO: this should almost definitely be an option
-my($lower) = 1e+6;
+my($lower) = 1e+5;
 
-# warn "Temporarily only looking at 1g+ files";
+warn "Temporarily looking at 100K+ files";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -50,7 +54,7 @@ while (<A>) {
   my($duptype, $id, $depth, $size, $device, $inode, $priority, $name) =
     split(/ /, $_, 8);
 
-  debug("SIZE: $size");
+#  debug("SIZE: $size");
 
 #  debug("NAME: $name");
 
@@ -277,11 +281,77 @@ sub choose_file {
 
   debug("FILES", @files);
 
-  # almost sure I will regret this, but if theres a copy in both
-  # SHA1FILES and somewhere else, link the alternate copy
+  # if both are in tumblr, just link one to other
+  # the 100K limit will prevent trivial linkages
+  # TODO: consider an even lower limit for tumblr
+  # note there is no loop here
+
+  # also, neither file can be a .txt file OR be in /OLD/
+
+  # some files are references as //mnt/villa/... grumble
+  if (
+      $files[0]=~m%^/+mnt/villa/user/TUMBLR/% &&
+      $files[1]=~m%^/+mnt/villa/user/TUMBLR/% &&
+      !($files[0]=~m%(/OLD/|\.txt)%) &&
+      !($files[1]=~m%(/OLD/|\.txt)%)
+     ) {
+      print qq%sudo rm "$files[0]"\n%;
+      print qq%sudo ln -s "$files[1]" "$files[0]"\n%;
+      print qq%echo keeping "$files[1]"\n%;
+    }
+
+return;
+
+
+  # if one copy's in //mnt/lobos/extdrive2/mysql/ and the other's not,
+  # nuke the one in //mnt/lobos/extdrive2/mysql/ (which I no longer
+  # use)
+
+  for $i (0,1) {
+    if  (($files[$i]=~m%/mnt/lobos/extdrive2/mysql/%) && 
+	 !($files[1-$i]=~m%/mnt/lobos/extdrive2/mysql/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
+  # if one copy's in /ISO/ and the other's not, nuke the one that's not
+
+  for $i (0,1) {
+    if  (($files[$i]=~m%/ISO/%) && !($files[1-$i]=~m%/ISO/%)) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+
+
+
+
+return;
+
+  # if one copy's in FROMBRIGHTON + the other isn't, the other is canon
+
+  for $i (0,1) {
+    # TODO: could probably combine these somehow
+    if  (($files[$i]=~m%/FROMBRIGHTON/%) && !($files[1-$i]=~m%/FROMBRIGHTON/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
+  # if there's a copy in UNGPG and FILESBYSHA1, the latter wins
 
   for $i (0,1) {
     if ($files[$i]=~m%/mnt/lobos/FILESBYSHA1/% && 
+	$files[1-$i]=~m%/UNGPG/% &&
 	!($files[1-$i]=~m%/FILESBYSHA1/%)) {
       print qq%sudo rm "$files[1-$i]"\n%;
       print qq%sudo ln -s "$files[$i]" "$files[1-$i]"\n%;
