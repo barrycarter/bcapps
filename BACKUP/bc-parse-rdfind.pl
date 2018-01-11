@@ -34,9 +34,9 @@ if ($>) {die("Must be root");}
 
 # files below this size are ignored
 # TODO: this should almost definitely be an option
-my($lower) = 1e+5;
+my($lower) = 1e+6;
 
-warn "Temporarily looking at 100K+ files";
+# warn "Temporarily looking at 100K+ files";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -281,6 +281,111 @@ sub choose_file {
 
   debug("FILES", @files);
 
+  # DVD trumps LIB2KINDLE w symlink
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%^//mnt/extdrive5/$private{edrive}/LIB2KINDLE/% &&
+	 $files[1-$i]=~m%^//mnt/lobos/DVD/%) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return; 
+
+  # nothing in a /TORRENTS/ dir is canonical
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%/TORRENTS/% &&
+	 !($files[1-$i]=~m%/TORRENTS/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
+  # canonical SCANS dir beats old SCANS dir
+  
+  for $i (0,1) {
+    if  ($files[$i]=~m%^//mnt/extdrive5/$private{edrive}/SCANS/% &&
+	 $files[1-$i]=~m%^//mnt/villa/user/SCANS/%) {
+      print qq%sudo rm "$files[$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
+  # MP4 vs DVD, resolve in favor of DVD
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%^//mnt/extdrive5/$private{edrive}/MP4/% &&
+	 $files[1-$i]=~m%^//mnt/lobos/DVD/%) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return; 
+
+  # if one is in the correct WEATHER directory and other is in bad
+  # /data dir, remove the /data version
+
+  # note these conditions are mutually exclusive
+  for $i (0,1) {
+    if  ($files[$i]=~m%^//mnt/extdrive5/$private{edrive}/WEATHER/% &&
+	 $files[1-$i]=~m%^//mnt/lobos/extdrive2/data/%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+return;
+
+  # /MAXTOR/ is an ancient drive; anything not on it wins
+  for $i (0,1) {
+    if  ($files[$i]=~m%/MAXTOR/% &&
+	 !($files[1-$i]=~m%/MAXTOR/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return; 
+
+  # if there's a copy in UNGPG and DVD, the latter wins
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/mnt/lobos/DVD/% && 
+	$files[1-$i]=~m%/UNGPG/% &&
+	!($files[1-$i]=~m%/DVD/%)) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%sudo ln -s "$files[$i]" "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+return;
+
+  # if one is in known old dir and other isnt, delete the old version
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%/20140131.on.$private{pdrive}/% &&
+	 !($files[1-$i]=~m%/20140131.on.$private{pdrive}/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
   # if both are in tumblr, just link one to other
   # the 100K limit will prevent trivial linkages
   # TODO: consider an even lower limit for tumblr
@@ -327,9 +432,6 @@ return;
       print qq%echo keeping "$files[$i]"\n%;
     }
   }
-
-
-
 
 
 return;
