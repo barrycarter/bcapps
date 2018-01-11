@@ -1,66 +1,89 @@
 #!/bin/perl
 
-# Given a list of videos on the STDIN, ultimately creates a video that
-# shows 25 subvideos per screen at 24 times the regular speed
+# selectively rips a video (one frame per second) to display it faster
 
 require "/usr/local/lib/bclib.pl";
 
-# get the name and create a subdir to store files
+# make sure the ripped frames exist (or at least their dir)
+
 my($name) = @ARGV;
 unless ($name) {die "Usage: $0 name";}
 if ($#ARGV > 0) {die "ERROR: exactly one argument required";}
 my($targetdir) = "$bclib{home}/VIDEOFRAMES/$name";
-unless (-d $targetdir) {dodie("mkdir('$targetdir')");}
-# TODO: this is an awful way to make <> now be STDIN
-@ARGV = ();
+unless (-d $targetdir) {die "TARGETDIR $targetdir does not exist";}
 
-# TODO: make this flexible?
-my($size) = "256:144";
+# will put the montage in this subdir
+unless (-d "$targetdir/MONTAGE") {dodie("mkdir('$targetdir/MONTAGE')");}
+# TODO: allow this to vary?
+my($geom) = "256x144";
 
-open(A, ">$targetdir/rip.sh")||die("Can't open rip.sh, $!");
+# see files in dir to determine how many montages and max frames for
+# each montage
 
-# the commands I will run (or at least print)
-my(@cmds);
+my(%hash);
 
-# TODO: require an existing subdir for writing
+# TODO: add sanity checking here?
 
-# montage = one for every 25 videos (M)
-# video = one for every video (V)
-# frame = one for every second of every video (F)
+my(@files) = `ls $targetdir`;
 
-my($montage);
-my($video);
+# debug("FILES", @files);
 
-my($out, $err, $res);
+for $i (@files) {
 
-while (<>) {
+  chomp($i);
 
-  chomp;
+  # ignore shell files and the MONTAGE dir itslef
+  if ($i=~/\.sh$/ || $i eq "MONTAGE") {next;}
 
-  unless (-f $_) {die "STDIN: $_ is not a file";}
-
-  # if 25 limit (or first run), reached, next montage
-  if ($video%25 == 0) {
-    $montage = sprintf("%08d",++$montage);
-    $video = 0;
-  }
-
-  # increment video, but keep in %04d form
-  $video = sprintf("%04d",++$video);
-
-
-  # break this video in "one second" chunks (assuming 24 frames = one second)
-  # TODO: better way to do this w/o assuming it's 24 fps?
-  push(@cmds, qq{ffmpeg -i "$_" -vf "select=not(mod(n\\,24)), scale=$size" -vsync vfr $targetdir/M${montage}V${video}F%08d.jpg});
-
+  # specific format required
+  unless ($i=~/^M(\d{8})V(\d{4})F(\d{8})\.jpg$/) {die "BAD FILE: $i";}
+  my($m, $v, $f) = ($1,$2,$3);
+  # note that $v will always run from 1-25
+  $hash{$m}{$f} = 1;
 }
 
-print A join("\n", @cmds),"\n";
+# the commands I will run, possibly in parallel
+my(@cmds);
+
+# and now, the frame by frame montages
+
+# list of frames for ffmpeg
+open(B,">$targetdir/MONTAGE/frames.txt");
+
+for $i (sort keys %hash) {
+  for $j (sort keys %{$hash{$i}}) {
+    debug("MONTAGE: $i, FRAME: $j");
+    my(@frames) = ();
+    for $k ("0001".."0025") {
+
+      # ffmpeg needs absolute frame numbers, so we symlink these
+      $absframe = sprintf("%09d", $absframe+1);
+
+      my($fname) = "$targetdir/M${i}V${k}F$j.jpg";
+#      debug("FNAME: $fname");
+
+      if (-f $fname) {
+	push(@frames, $fname);
+      } else {
+	# TODO: make blank frames more interesting? (ie, rotation?)
+	push(@frames, "$bclib{home}/VIDEOFRAMES/blank.jpg");
+      }
+    }
+
+    my($frames) = join(" ",@frames);
+    push(@cmds, "montage -geometry $geom -tile 5x5 $frames $targetdir/MONTAGE/M${i}F${j}.jpg");
+    print B "$targetdir/MONTAGE/M${i}F${j}.jpg\n";
+
+  }
+}
+
+close(B);
+open(A, ">$targetdir/MONTAGE/commands.sh");
+print A join("\n",@cmds),"\n";
 close(A);
 
-
-
 die "TESTING";
+
 
 
 # thin wrapper around montage
@@ -69,10 +92,8 @@ die "TESTING";
 # JPGs in them, create 5x5 montages, but using a blank frame so that
 # each "episode" in the directory maintains its place
 
-# TODO: allow this to vary?
 
 # this is 1/5th in each dir
-my($geom) = "256x144";
 
 my(@vids) = ();
 

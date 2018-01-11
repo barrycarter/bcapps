@@ -10,40 +10,67 @@ require "/usr/local/lib/bclib.pl";
 # 256x144 is 5x5 tiling which really seems nice
 # TODO: do I want frames?
 
-# TODO: create subdir to hold these and more subdir per film
-# TODO: cleanup file names considerably
-# TODO: use xargs for multiples
+# TODO: use parallel for multiples
 
-# since I use parallel and xargs this doublechecks I'm doing it right
-if ($#ARGV > 0) {die "ERROR: accepts only one argument";}
+# get the name and create a subdir to store files
+my($name) = @ARGV;
+unless ($name) {die "Usage: $0 name";}
+if ($#ARGV > 0) {die "ERROR: exactly one argument required";}
+my($targetdir) = "$bclib{home}/VIDEOFRAMES/$name";
+unless (-d $targetdir) {dodie("mkdir('$targetdir')");}
+# TODO: this is an awful way to make <> now be STDIN
+@ARGV = ();
 
-my($file) = @ARGV;
+# TODO: make this flexible?
+my($size) = "256:144";
+
+open(A, ">$targetdir/rip.sh")||die("Can't open rip.sh, $!");
+
+# the commands I will run (or at least print)
+my(@cmds);
+
+# montage = one for every 25 videos (M)
+# video = one for every video (V)
+# frame = one for every second of every video (F)
+
+my($montage);
+my($video);
 
 my($out, $err, $res);
 
-# the output file base, cleanedup version of name
+print "Reading data from STDIN...\n";
 
-my($filebase) = $file;
+while (<>) {
 
-# just the tail + strip extension + convert nonalpha to underscore
+  chomp;
 
-$filebase=~s%^.*/%%;
-$filebase=~s/\.[^\.]*?$//;
-$filebase=~s/[^\w]+/_/g;
+  unless (-f $_) {die "STDIN: $_ is not a file";}
 
-# target dir
-my($targetdir) = "$bclib{home}/VIDEOFRAMES/$filebase";
+  # if 25 limit (or first run), reached, next montage
+  if ($video%25 == 0) {
+    $montage = sprintf("%08d",++$montage);
+    $video = 0;
+  }
 
-dodie("mkdir('$targetdir')");
-
-# creating all frames for all things in a single dir is ugly, but I am
-# only doing one frame per second so potentially acceptable
-
-# TODO: maybe check if $filebase_0000001.jpg or whatever exists either
-# in this dir or a subdir and dont run if it does qmark
-
-($out, $err, $res) = cache_command2(qq`ffmpeg -i "$file" -vf "select=not(mod(n\\,24)), scale=256:144" -vsync vfr $targetdir/${filebase}_%08d.jpg`);
-
-debug("OUT: $out, ERR: $err, RES: $res");
+  # increment video, but keep in %04d form
+  $video = sprintf("%04d",++$video);
 
 
+  # break this video in "one second" chunks (assuming 24 frames = one second)
+  # TODO: better way to do this w/o assuming it's 24 fps?
+  push(@cmds, qq{ffmpeg -hide_banner -loglevel panic -i "$_" -vf "select=not(mod(n\\,24)), scale=$size" -vsync vfr $targetdir/M${montage}V${video}F%08d.jpg 1> /dev/null 2> /dev/null});
+
+}
+
+print A join("\n", @cmds),"\n";
+close(A);
+print "Run or parallel run $targetdir/rip.sh\n";
+
+=item notes
+
+
+
+
+
+
+=cut
