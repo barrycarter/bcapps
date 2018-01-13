@@ -24,6 +24,9 @@ unless (-d $targetdir) {dodie("mkdir('$targetdir')");}
 # TODO: make this flexible?
 my($size) = "256:144";
 
+# warn "TESTING LOWER RESOLUTION";
+# $size = "128:72";
+
 open(A, ">$targetdir/rip.sh")||die("Can't open rip.sh, $!");
 
 # the commands I will run (or at least print)
@@ -68,9 +71,15 @@ print "Run or parallel run $targetdir/rip.sh\n";
 
 =item notes
 
+w/o parallel
 
+2018-01-11 14:03:43.040278739 -0700 = latest for muppets tiny frames
+2018-01-11 13:37:29.575183985 -0700 = first for muppets tiny frames
 
+or 26m 13.465094754s = 1573.465094754s
 
+(but system under unreliable load)
 
+197756 total, so about 125.6818474456 per second
 
 =cut
