@@ -1,0 +1,29 @@
+# for some reason, I feel compelled to share my feh keymappings
+# TODO: make + - do same thing (can't same function to two keys?)
+zoom_in z
+zoom_out Z
+# "r" for "reset"
+zoom_fit r
+
+# "R" for "random" (sort of a convention for me)
+# toggle_caption 
+jump_random R
+
+# TODO: this doesn't appear to work?
+action_8 v
+toggle_fullscreen f
+
+# "action_9" isn't actually defined (in my case), but I don't want 'x'
+# closing windows; I may want to define some actions later, so using
+# action_9 not action_0
+# TODO: maybe this should popup an xmessage with "press q to quit"?
+action_9 x
+
+
+quit q
+# these appear to be defaults
+scroll_left Left
+scroll_right Right
+scroll_up Up
+scroll_down Down
+

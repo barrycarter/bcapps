@@ -11,6 +11,13 @@
 # `tac output_of_above | $0 > commands_to_run.sh may work` better
 # because bigger files may show up first
 
+# the output is a shell script you should check and run (probably
+# redirect output just to catch mistakes)
+
+# See which files are biggest remaining duplicates:
+# tac fix-everything-again.sh | sudo ~user/BCGIT/BACKUP/bc-parse-rdfind.pl
+# --debug | & grep -A 2 '^FILES' | & less
+
 require "/usr/local/lib/bclib.pl";
 
 # I have privately named drives
@@ -41,8 +48,6 @@ my($lower) = 1e+6;
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
 # $lower = 10000;
-
-# warn "Name equality test turned off";
 
 open(A,"results.txt.srt")||die("Can't open results.txt.srt, $!");
 
@@ -280,6 +285,38 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  # remove the copy NOT in /SPICE/GAIA/
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/SPICE/GAIA/GaiaSource% &&
+	!($files[1-$i]=~m%/SPICE/GAIA/GaiaSource%)) {
+      print qq%sudo rm "$files[1-$i]";\necho "keeping $files[$i]"\n%;
+    }
+  }
+
+return;
+
+  # remove the copy on the archived version of an old drive
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/$private{cdrive}/% && 
+    !($files[1-$i]=~m%/$private{cdrive}/%)) {
+      print qq%sudo rm "$files[$i]";\necho "keeping $files[1-$i]"\n%;
+    }
+  }
+
+return;
+
+  # remove the copy on kemptown if only one is on kemptown
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/kemptown/% && !($files[1-$i]=~m%/kemptown/%)) {
+      print qq%sudo rm "$files[$i]";\necho "keeping $files[1-$i]"\n%;
+    }
+  }
+
+return;
 
   # DVD trumps LIB2KINDLE w symlink
 
