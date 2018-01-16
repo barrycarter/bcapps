@@ -253,7 +253,9 @@ alias scanit "bc-scan-pic-brighton.pl"
 # qbittorrent is more of a network suck than a CPU suck, but useful to
 # stop it when things are going haywire
 
-alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract qbittorrent"
+# 16 Jan 2018: changed mind about qbittorrent
+
+alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
 # start mathematica with the <formula(s)> section of given file; useful
 # for reloads (note careful avoidance of $)

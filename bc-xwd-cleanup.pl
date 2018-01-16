@@ -66,8 +66,8 @@ for $i (glob "*.png") {
 close(A);
 
 # and move tesseract files out of the way
-dodie_cmd("mkdir /home/user/XWD2OCR/$date");
-dodie_cmd("mv *.txt /home/user/XWD2OCR/$date/");
+system("mkdir /home/user/XWD2OCR/$date");
+system("mv *.txt /home/user/XWD2OCR/$date/");
 
 # TODO: add zpaq'ing
 
