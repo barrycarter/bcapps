@@ -20,9 +20,11 @@ my($data) = $zip->memberNamed("index.htm");
 my($mtime) = strftime("%Y%m%d.%H%M%S", gmtime($data->lastModTime()));
 my($contents) = $data->contents();
 
+debug("CONTENTS: $contents");
+
 # this is ugly in case FB decides other links
 
-unless ($contents=~s%http://www.facebook.com/(.*?)\"%%) {die "NO USERNAME";}
+unless ($contents=~s%https?://www.facebook.com/(.*?)\"%%) {die "NO USERNAME";}
 
 my($sn) = $1;
 

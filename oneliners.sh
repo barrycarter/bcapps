@@ -1,3 +1,17 @@
+# find all _1280 image files in my TUMBLR directory, using "latest"
+# afad.txt from backup program (this will change with each run)
+
+# I alias fgrep (bad idea), so use \fgrep below
+# because afad.txt contains nulls, grep considers it a binary file, thus "-a"
+
+\fgrep -a _1280. /mnt/villa/massbacks/20180118.210856/afad.txt | \egrep -a '^/mnt/villa/user/TUMBLR/' | \fgrep -av /OLD/ | fgrep -av /.xvpics/ | perl -pnle 's/\0.*$//' > /tmp/tumblr.txt
+
+# untested: sort tumblr subdirs by # of 1280 size pics
+
+perl -nle 'm%/TUMBLR/(.*?)/%; print $1' /tmp/tumblr.txt | sort | uniq -c | sort -nr > /tmp/tumblr2.txt
+
+exit;
+
 # unzpaq files unless the target directory exists (even as a file)
 # must use as `ls *.zpaq | oneliners.sh`
 

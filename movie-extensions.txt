@@ -1,0 +1,13 @@
+# useful for fgrep -f, list of extensions for movies/videos
+.avi
+.mp4
+.mkv
+.flv
+.wmv
+.m4v
+.asf
+.webm
+.divx
+.mpg
+.mpeg
+.mov
