@@ -6,10 +6,20 @@ github w/ useless crap.
 TODO
 ====
 
-  - montage uses first available images, which is bad so longest ep
+  - Brief titles before each episode?
+
+  - Make each episode a fixed number of frames (only approximately
+  24x) so we don't have case of one show in a season running over? 
+  Example: reduce each show to one minute exactly
+
+  - Handle double length shows better, perhaps by splitting them into
+  two smaller length shows
+
+  - FIXED: montage uses first available images, which is bad so longest ep
   migrates to top left at end of film
 
-  - Create frames larger than 1024x768?
+  - DONE: Create frames larger than 1024x768? (using 1280x720 now, a
+  "native" youtube size)
 
   - Do I want changes resolutions when hitting Fuller House or squish?
 

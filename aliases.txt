@@ -257,6 +257,9 @@ alias scanit "bc-scan-pic-brighton.pl"
 
 alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
+# stopnet stops network intensive processes
+alias stopnet "sudo killall -STOP qbittorrent wget curl"
+
 # start mathematica with the <formula(s)> section of given file; useful
 # for reloads (note careful avoidance of $)
 

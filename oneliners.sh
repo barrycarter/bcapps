@@ -4,7 +4,7 @@
 # I alias fgrep (bad idea), so use \fgrep below
 # because afad.txt contains nulls, grep considers it a binary file, thus "-a"
 
-\fgrep -a _1280. /mnt/villa/massbacks/20180118.210856/afad.txt | \egrep -a '^/mnt/villa/user/TUMBLR/' | \fgrep -av /OLD/ | fgrep -av /.xvpics/ | perl -pnle 's/\0.*$//' > /tmp/tumblr.txt
+\fgrep -a _1280. /mnt/villa/massbacks/20180118.210856/afad.txt | \egrep -a '^/mnt/villa/user/TUMBLR/' | \fgrep -av /OLD/ | \fgrep -av /.xvpics/ | perl -pnle 's/\0.*$//' > /tmp/tumblr.txt
 
 # untested: sort tumblr subdirs by # of 1280 size pics
 
