@@ -1,3 +1,12 @@
+# in villa-converted.txt, list cases where original filename and
+# standardized filename are identical-- for debugging purposes (I
+# believe some files are being converted improperly)
+
+perl -F'\0' -anle 'if ($F[0] ne $F[2]) {print "\n$F[2]\n$F[0]\n"}' villa-converted.txt | less
+
+
+exit;
+
 # find all _1280 image files in my TUMBLR directory, using "latest"
 # afad.txt from backup program (this will change with each run)
 

@@ -3,6 +3,9 @@
 
 TODO:
 
+  - For new posts, just create blank post to get id and then edit
+  (using wp create or whatever)
+
   - Extract tips from personal files
 
   - Convert wondertwin-powers remote plugin to local to the extent possible

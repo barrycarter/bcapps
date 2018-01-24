@@ -41,9 +41,9 @@ if ($>) {die("Must be root");}
 
 # files below this size are ignored
 # TODO: this should almost definitely be an option
-my($lower) = 1e+6;
 
-# warn "Temporarily looking at 100K+ files";
+my($lower) = 1e+5;
+warn "Temporarily looking at 100K+ files";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -148,8 +148,8 @@ while (<>) {
   }
 
   # unless names are equal move on
-  warn "EQUAL NAME TEST TURNED OFF!";
-#  unless ($n1 eq $n2) {next;}
+#  warn "EQUAL NAME TEST TURNED OFF!";
+  unless ($n1 eq $n2) {next;}
 
   # do the expensive lstat tests now
   unless (sep_but_equal(@f)) {
@@ -286,6 +286,97 @@ sub choose_file {
 
   debug("FILES", @files);
 
+
+  # tumblr thing twice because, in one instance, it's
+  # /home/user/TUMBLR, in another its //mnt/villa/user/TUMBLR sigh
+
+  # if both are in tumblr, just link one to other
+  # the 100K limit will prevent trivial linkages
+  # TODO: consider an even lower limit for tumblr
+  # note there is no loop here
+
+  # also, neither file can be a .txt file OR be in /OLD/
+
+  if (
+      $files[0]=~m%^/home/user/TUMBLR/% &&
+      $files[1]=~m%^/home/user/TUMBLR/% &&
+      !($files[0]=~m%(/OLD/|\.txt)%) &&
+      !($files[1]=~m%(/OLD/|\.txt)%)
+     ) {
+      print qq%sudo rm "$files[0]"\n%;
+      print qq%sudo ln -s "$files[1]" "$files[0]"\n%;
+      print qq%echo keeping "$files[1]"\n%;
+    }
+
+return;
+
+  # if both are in tumblr, just link one to other
+  # the 100K limit will prevent trivial linkages
+  # TODO: consider an even lower limit for tumblr
+  # note there is no loop here
+
+  # also, neither file can be a .txt file OR be in /OLD/
+
+  # some files are references as //mnt/villa/... grumble
+  if (
+      $files[0]=~m%^/+mnt/villa/user/TUMBLR/% &&
+      $files[1]=~m%^/+mnt/villa/user/TUMBLR/% &&
+      !($files[0]=~m%(/OLD/|\.txt)%) &&
+      !($files[1]=~m%(/OLD/|\.txt)%)
+     ) {
+      print qq%sudo rm "$files[0]"\n%;
+      print qq%sudo ln -s "$files[1]" "$files[0]"\n%;
+      print qq%echo keeping "$files[1]"\n%;
+    }
+
+return;
+
+  # if one copy is an /MP4/ dir and the other isn't, delete the other
+  for $i (0,1) {
+    if ($files[$i]=~m%/MP4/% && !($files[1-$i]=~m%/MP4/%)) {
+      print qq%sudo rm "$files[1-$i]";\necho "keeping $files[$i]"\n%;
+    }
+  }
+
+return;
+
+
+  # remove the copy on kemptown if only one is on kemptown
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/kemptown/% && !($files[1-$i]=~m%/kemptown/%)) {
+      print qq%sudo rm "$files[$i]";\necho "keeping $files[1-$i]"\n%;
+    }
+  }
+
+return;
+
+  # if one has sdrive in path and one doesn't, kill the one that does
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%$private{sdrive}% &&
+	 !($files[1-$i]=~m%$private{sdrive}%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return; 
+
+  # DVD trumps EROTICA w symlink
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%^//mnt/extdrive5/$private{edrive}/EROTICA/% &&
+	 $files[1-$i]=~m%^//mnt/lobos/DVD/%) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
   # remove the copy NOT in /SPICE/GAIA/
 
   for $i (0,1) {
@@ -302,16 +393,6 @@ return;
   for $i (0,1) {
     if ($files[$i]=~m%/$private{cdrive}/% && 
     !($files[1-$i]=~m%/$private{cdrive}/%)) {
-      print qq%sudo rm "$files[$i]";\necho "keeping $files[1-$i]"\n%;
-    }
-  }
-
-return;
-
-  # remove the copy on kemptown if only one is on kemptown
-
-  for $i (0,1) {
-    if ($files[$i]=~m%/kemptown/% && !($files[1-$i]=~m%/kemptown/%)) {
       print qq%sudo rm "$files[$i]";\necho "keeping $files[1-$i]"\n%;
     }
   }
@@ -422,28 +503,6 @@ return;
   }
 
 return;
-
-  # if both are in tumblr, just link one to other
-  # the 100K limit will prevent trivial linkages
-  # TODO: consider an even lower limit for tumblr
-  # note there is no loop here
-
-  # also, neither file can be a .txt file OR be in /OLD/
-
-  # some files are references as //mnt/villa/... grumble
-  if (
-      $files[0]=~m%^/+mnt/villa/user/TUMBLR/% &&
-      $files[1]=~m%^/+mnt/villa/user/TUMBLR/% &&
-      !($files[0]=~m%(/OLD/|\.txt)%) &&
-      !($files[1]=~m%(/OLD/|\.txt)%)
-     ) {
-      print qq%sudo rm "$files[0]"\n%;
-      print qq%sudo ln -s "$files[1]" "$files[0]"\n%;
-      print qq%echo keeping "$files[1]"\n%;
-    }
-
-return;
-
 
   # if one copy's in //mnt/lobos/extdrive2/mysql/ and the other's not,
   # nuke the one in //mnt/lobos/extdrive2/mysql/ (which I no longer
