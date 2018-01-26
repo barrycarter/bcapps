@@ -1,6 +1,100 @@
 (*
 
+<docs>
 
+Caveats: we assume fixed ra, dec, lat, lon
+
+Measurement units: km, radians
+
+Time units used:
+
+  - mjd: modified Julian date [number of days since 2000 January 1, at 12h UT]
+  - gmst: Greenwich mean sidereal time (radians)
+  - lst: local sidereal time (radians)
+  - time: sidereal time (radians) [2*pi ~ 23h56m clock time]
+
+Ellipse properties:
+
+  - smajor: length of semimajor axis (km)
+  - sminor: length semiminor axis (km)
+  - ecc: eccentricity (unitless)
+
+Orbit properties (elliptical, assumes fixed ecliptic):
+
+  - incl: inclination to the ecliptic (radians)
+  - peri: periapsis distance (km)
+  - apo: apoapsis distance (km)
+  - periarg: argument of the periapsis (radians)
+  - ascnode: longitude of the ascending node (radians)
+  - meananom: mean anomaly (radians) 
+  - trueanom: true anomaly (radians)
+
+TODO: https://en.wikipedia.org/wiki/File:Orbit1.svg
+
+TODO: move todos to one place
+ 
+
+Celestial position:
+
+  - ra: right ascension (radians)
+  - dec: declination (radians)
+  - ha: hour angle (radians) [sidereal hours since culmination]
+  - az: azimuth (radians) [0 = north, pi/2 = east]
+  - alt: altitude (radians) [not to be confused with geographic altitude]
+
+Geographic position:
+
+  - lat: latitude (radians)
+  - lon: longitude (radians)
+  - rad: distance from center of Earth (km)
+  - el: elevation (km) above the reference ellipsoid (Earth)
+
+Other numbers:
+
+  - ecl: inclination of the ecliptic to the equator (radians)
+
+Modifier:
+
+  - rise: object rises
+  - set: object sets
+  - culm: object culminates (highest altitude)
+  - distang: angular distance
+  - distlen: length distance
+  - cons: this value when treated as a constant
+  
+</docs>
+
+<formulas>
+
+
+
+</formulas>
+
+<sources>
+
+
+</sources>
+
+<work>
+
+(* derive formulas here, place in formulas section *)
+
+</work>
+
+TODO: include my other greek weirdness thing and reference it
+
+TODO: 5 of 7 gives other 2 (but do I care) [would give 21 formulas, eg]
+
+TODO: disclaim everything incl incomplete + not 100% accurate,
+community wiki, encourage others to add but contact me; use your libs when possible, this is more for meta
+
+TODO: ellipse stuff, r^3/t^2, Niawem -> orbit position
+
+TODO: note translation to languages is not necessary just conv
+
+NOTE: formulas are interesting because closed form, unlike libs-- but use libs when possible
+
+TODO: source formulas individually?
 
 Hopefully canonical-at-last astronomical formulas, simple ones
 building up. Coventions:
@@ -11,33 +105,20 @@ functions are camel cased on each side with "2" representing "to"
 
 Modules only permitted with "="
 
+TODO: distinguish altitude/elevation once and for all
+
 TODO: rationalization is used to preserve accuracy (but does not imply
 infinite accuracy)
 
-see bc-astro.dot for adjacency graph
+TODO: rosetta-fy
 
-date - number of days since 2000 January 1, at 12h UT (Unix second
-946728000 = JD 2451545)
-
-gmst - Greenwich mean sidereal time (radians)
-
-lst - local sidereal time (radians)
-
-ra - right ascension (radians)
-
-dec - declination (radians)
-
-lat - latitude (radians)
-
-lon - longitude (radians)
+TODO: see bc-astro.dot for adjacency graph (build this up)
 
 ha - hour angle (radians)
 
 haSet - local hour angle setting time
 
 haRise - local hour angle rising time
-
-earthRadius - radius of the Earth (varies with latitude)
 
 xyzAltAz - the xyz coordinates for a given altitude and azimuth
 (virtual sphere of radius 1)

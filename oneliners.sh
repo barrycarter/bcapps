@@ -1,9 +1,22 @@
+# given the output of:
+
+# find . -iname '*.mkv' -o -iname '*.avi' -o -iname '*.mp4' -print0 |
+# xargs -n 1 -0 ffprobe -v quiet -show_format > ffprobe2.txt &
+
+# egrep '^filename=|^duration=' ffprobe2.txt > ffprobe3.txt
+
+# print the duration and filename on a single line
+
+perl -le 'while (<>) {$foo = <>; $foo=~s/\n//; $foo=~s/duration=//; s/filename=//; print "$foo $_"}' ffprobe3.txt 
+
+exit;
+
+
 # in villa-converted.txt, list cases where original filename and
 # standardized filename are identical-- for debugging purposes (I
 # believe some files are being converted improperly)
 
 perl -F'\0' -anle 'if ($F[0] ne $F[2]) {print "\n$F[2]\n$F[0]\n"}' villa-converted.txt | less
-
 
 exit;
 

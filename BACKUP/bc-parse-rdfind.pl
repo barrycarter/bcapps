@@ -42,8 +42,8 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 1e+5;
-warn "Temporarily looking at 100K+ files";
+my($lower) = 1e+6;
+# warn "Temporarily looking at 100K+ files";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -287,6 +287,19 @@ sub choose_file {
   debug("FILES", @files);
 
 
+  # nothing in a /TORRENTS/ dir is canonical
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%/TORRENTS/% &&
+	 !($files[1-$i]=~m%/TORRENTS/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
   # tumblr thing twice because, in one instance, it's
   # /home/user/TUMBLR, in another its //mnt/villa/user/TUMBLR sigh
 
@@ -411,19 +424,6 @@ return;
   }
 
 return; 
-
-  # nothing in a /TORRENTS/ dir is canonical
-
-  for $i (0,1) {
-    if  ($files[$i]=~m%/TORRENTS/% &&
-	 !($files[1-$i]=~m%/TORRENTS/%)) {
-      print qq%sudo rm "$files[$i]"\n%;
-#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
-      print qq%echo keeping "$files[1-$i]"\n%;
-    }
-  }
-
-return;
 
   # canonical SCANS dir beats old SCANS dir
   
