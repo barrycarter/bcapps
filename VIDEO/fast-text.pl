@@ -26,8 +26,7 @@ for $i (@kelly) {
 
 debug(@kelly);
 
-die "TESTING";
-
+# TODO: actually use Kelly color (char per char)
 
 # silly values to force instant new frame
 ($y, $f) = (720,-1);
