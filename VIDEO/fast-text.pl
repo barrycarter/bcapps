@@ -17,6 +17,9 @@ my($buf);
 '604E97', 'F6A600', 'B3446C', 'DCD300', '882D17', '8DB600', '654522',
 'E25822', '2B3D26');
 
+# can't use white, since I'm using it for background
+shift(@kelly);
+
 # converted to fly format ("$r,$g,$b" as string)
 
 for $i (@kelly) {
@@ -39,11 +42,17 @@ while (sysread(STDIN, $buf, 256)) {
     $f++;
     $y=0;
     open(A, ">frame$f.fly");
-    print A "new\nsize 1280,720\nsetpixel 0,0,255,255,255\n";
+#    print A "new\nsize 1280,720\nsetpixel 0,0,255,255,255\n";
+    print A "new\nsize 1280,720\nsetpixel 0,0,0,0,0\n";
     if ($f>2) {die "TESTING";}
   }
 
-  print A "string 255,0,0,0,$y,tiny,$buf\n";
+  for ($x=0; $x<1280; $x+=5) {
+    my($char) = substr($buf,$x/5,1);
+    print A "string $kelly[$char],$x,$y,tiny,$char\n";
+  }
+
+#  print A "string 255,0,0,0,$y,tiny,$buf\n";
   $y+=8;
 
   debug("GOT: $buf");
@@ -68,3 +77,7 @@ white
 
 
 =cut
+
+# TODO: use letter freqs when doing text and maybe do wrap to 256 chars
+
+# TODO: generalize code a bit, too ugly and overly tight
