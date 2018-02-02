@@ -13,6 +13,12 @@ Time units used:
   - lst: local sidereal time (radians)
   - time: sidereal time (radians) [2*pi ~ 23h56m clock time]
 
+Angular units used:
+
+  - rad: radians
+  - deg: degrees
+  - hour: hours (1h = 15 degrees = pi/12 radians)
+
 Ellipse properties:
 
   - smajor: length of semimajor axis (km)
@@ -32,7 +38,30 @@ Orbit properties (elliptical, assumes fixed ecliptic):
 TODO: https://en.wikipedia.org/wiki/File:Orbit1.svg
 
 TODO: move todos to one place
- 
+
+TODO: this solves the following questions (some solved) (doublecheck some):
+
+https://astronomy.stackexchange.com/questions/240/how-does-moonrise-moonset-azimuth-vary-with-time 
+
+https://astronomy.stackexchange.com/questions/24598/how-to-calculate-the-maximum-and-minimum-solar-azimuth-at-a-given-location
+
+https://earthscience.stackexchange.com/questions/13032/how-much-of-one-day-can-be-considered-nighttime-on-average
+
+https://astronomy.stackexchange.com/questions/24304/expression-for-length-of-sunrise-sunset-as-function-of-latitude-and-day-of-year
+
+https://astronomy.stackexchange.com/questions/24195/finding-hour-angle-altitude
+
+https://astronomy.stackexchange.com/questions/24121/is-the-shortest-day-duration-constant
+
+https://astronomy.stackexchange.com/questions/24119/computing-the-average-hours-of-sunshine-at-given-locationorientation
+
+https://astronomy.stackexchange.com/questions/24094/what-should-be-the-declination-of-a-star-to-be-marginally-circumpolar-given-the
+
+https://astronomy.stackexchange.com/questions/24632/how-do-i-adjust-the-sunrise-equation-to-account-for-elevation
+
+https://astronomy.stackexchange.com/questions/24431/will-time-that-moon-crosses-meridian-always-be-periodic (maybe)
+
+https://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-rise-transit-and-set-time (re-answers this)
 
 Celestial position:
 
@@ -76,6 +105,31 @@ Modifier:
 </sources>
 
 <work>
+
+conds={0 <= lst <= 2*Pi, 0 <= ra <= 2*Pi, -Pi <= dec <= Pi, -Pi <= lat <= Pi};
+
+(* simplifications that dont always apply but can be useful *)
+
+simptan = {ArcTan[x_,y_] -> ArcTan[y/x]}
+
+FullSimplify[HADecLat2azEl[lst-ra, dec, lat],conds]
+
+lstRaDecLatLon2azEl[lst_, ra_, dec_, lat_, lon_] = 
+{ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[lst - ra]*Sin[lat], 
+  -(Cos[dec]*Sin[lst - ra])], 
+ ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[lst - ra]*Sin[lat])^2 + 
+    Cos[dec]^2*Sin[lst - ra]^2], Cos[dec]*Cos[lat]*Cos[lst - ra] + 
+   Sin[dec]*Sin[lat]]}
+
+Solve[lstRaDecLatLon2azEl[lst,ra,dec,lat,lon][[2]] == 0, lst]
+
+
+lstRaDecLatLon2azEl[lst, lst, dec, lat, lon]
+
+ignore corner cases
+
+two arg form or arctan, not error checked for simplification, not mod 2*Pi for simplication
+
 
 (* derive formulas here, place in formulas section *)
 

@@ -7,6 +7,8 @@ efibootmgr
 
 # system tools
 
+dvdisaster
+ddrescue
 smartmontools
 hddtemp
 lm_sensors
@@ -329,6 +331,7 @@ qrencode-devel
 zbar-devel
 
 # video
+vcdimager
 lsdvd
 ffmpeg
 ffmpeg-devel
