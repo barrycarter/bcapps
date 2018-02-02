@@ -10,7 +10,6 @@ Time units used:
 
   - mjd: modified Julian date [number of days since 2000 January 1, at 12h UT]
   - gmst: Greenwich mean sidereal time (radians)
-  - lst: local sidereal time (radians)
   - time: sidereal time (radians) [2*pi ~ 23h56m clock time]
 
 Angular units used:
@@ -87,6 +86,9 @@ Modifier:
   - rise: object rises
   - set: object sets
   - culm: object culminates (highest altitude)
+  - up: object is above horizon
+  - above: object's altitude is above given parameter
+  - below: object's altitude is below given parameter
   - distang: angular distance
   - distlen: length distance
   - cons: this value when treated as a constant
@@ -95,7 +97,31 @@ Modifier:
 
 <formulas>
 
+raDecLatLonGMST2azEl[ra_, dec_, lat_, lon_, gmst_] = 
+ {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
+  -(Cos[dec]*Sin[gmst + lon - ra])], 
+ ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
+    Cos[dec]^2*Sin[gmst + lon - ra]^2], 
+  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
 
+raDecLatLon2GMSTRise[ra_, dec_, lat_, lon_] = 
+ -lon + ra - ArcCos[-(Tan[dec] Tan[lat])]
+
+raDecLatLon2GMSTSet[ra_, dec_, lat_, lon_] = 
+ -lon + ra + ArcCos[-(Tan[dec] Tan[lat])]
+
+raLon2GMSTCulm[ra_, lon_] = -lon + ra
+
+decLat2TimeUp[dec_, lat_] = 2*ArcCos[-(Tan[dec] Tan[lat])]
+
+decLatAlt2TimeAbove[dec_, lat_, alt_] = 
+ 2*ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
+
+raDecLatLonAlt2GMSTRiseAbove[ra_, dec_, lat_, lon_, alt_] = 
+ ra - lon -  ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
+
+raDecLatLonAlt2GMSTSetBelow[ra_, dec_, lat_, lon_, alt_] = 
+ ra - lon +  ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
 
 </formulas>
 
@@ -106,7 +132,10 @@ Modifier:
 
 <work>
 
-conds={0 <= lst <= 2*Pi, 0 <= ra <= 2*Pi, -Pi <= dec <= Pi, -Pi <= lat <= Pi};
+conds = {-Pi <= {ra, lon, gmst, az} <= Pi, -Pi/2 <= {dec, lat, alt} <= Pi/2}
+
+(* conds={0 <= gmst <= 2*Pi, 0 <= ra <= 2*Pi, -Pi <= dec <= Pi, -Pi <=
+lat <= Pi, -Pi/2 <= alt <= Pi/2, }; *)
 
 (* simplifications that dont always apply but can be useful *)
 
@@ -121,17 +150,68 @@ raDecLatLonGMST2azEl[ra_, dec_, lat_, lon_, gmst_] =
     Cos[dec]^2*Sin[gmst + lon - ra]^2], 
   Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
 
+Solve[raDecLatLonGMST2azEl[ra,dec,lat,lon,gmst][[2,2]]==0, gmst]
 
-TODO: below doesnt use lon and should -- gmst not lst
+raDecLatLon2GMSTRise[ra_, dec_, lat_, lon_] = 
+ -lon + ra - ArcCos[-(Tan[dec] Tan[lat])]
 
-lstRaDecLatLon2azEl[lst_, ra_, dec_, lat_, lon_] = 
-{ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[lst - ra]*Sin[lat], 
-  -(Cos[dec]*Sin[lst - ra])], 
- ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[lst - ra]*Sin[lat])^2 + 
-    Cos[dec]^2*Sin[lst - ra]^2], Cos[dec]*Cos[lat]*Cos[lst - ra] + 
-   Sin[dec]*Sin[lat]]}
+raDecLatLon2GMSTSet[ra_, dec_, lat_, lon_] = 
+ -lon + ra + ArcCos[-(Tan[dec] Tan[lat])]
 
-Solve[lstRaDecLatLon2azEl[lst,ra,dec,lat,lon][[2]] == 0, lst]
+raLon2GMSTCulm[ra_, lon_] = -lon + ra
+
+decLat2TimeUp[dec_, lat_] = 2*ArcCos[-(Tan[dec] Tan[lat])]
+
+raDecLatLonGMST2azEl[ra,dec,lat,lon,gmst][[2]]
+
+s1542 = 
+ Solve[(raDecLatLonGMST2azEl[ra,dec,lat,lon,gmst][[2]] /. simptan) == alt, 
+ gmst]
+
+FullSimplify[(gmst /. s1542[[1]]) + lon - ra, conds]
+
+s1559 = (gmst /. s1542[[1]]) + lon - ra
+
+FullSimplify[s1559[[2,1]],conds]
+
+s1603 = FullSimplify[s1559[[2,1]],conds] /. Sign[Cos[dec]*Cos[lat]] -> 1
+
+s1605= Expand[s1603 /. Sqrt[Sec[alt]^2*Tan[alt]^2] -> Sec[alt]*Tan[alt]]
+
+s1609 = s1605+Tan[dec]*Tan[lat]
+
+(* TODO: test below due to sign [not sine] weirdness *)
+
+decLatAlt2TimeAbove[dec_, lat_, alt_] = 
+ 2*ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
+
+decLatAlt2TimeAbove[dec_, lat_, alt_] = 
+ 2*ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
+
+
+
+-23*Degree, 35*Degree, 0.]/Pi*12
+
+decLatAlt2TimeAbove[-23*Degree, 35*Degree, -6.*Degree]/Pi*12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 lstRaDecLatLon2azEl[lst, lst, dec, lat, lon]
