@@ -112,7 +112,17 @@ conds={0 <= lst <= 2*Pi, 0 <= ra <= 2*Pi, -Pi <= dec <= Pi, -Pi <= lat <= Pi};
 
 simptan = {ArcTan[x_,y_] -> ArcTan[y/x]}
 
-FullSimplify[HADecLat2azEl[lst-ra, dec, lat],conds]
+FullSimplify[HADecLat2azEl[gmst+lon-ra, dec, lat],conds]
+
+raDecLatLonGMST2azEl[ra_, dec_, lat_, lon_, gmst_] = 
+ {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
+  -(Cos[dec]*Sin[gmst + lon - ra])], 
+ ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
+    Cos[dec]^2*Sin[gmst + lon - ra]^2], 
+  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
+
+
+TODO: below doesnt use lon and should -- gmst not lst
 
 lstRaDecLatLon2azEl[lst_, ra_, dec_, lat_, lon_] = 
 {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[lst - ra]*Sin[lat], 

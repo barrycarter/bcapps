@@ -70,13 +70,14 @@ for $i (sort keys %hash) {
     }
 
     my($frames) = join(" ",@frames);
-    push(@cmds, "montage -geometry $geom -tile 5x5 $frames $targetdir/MONTAGE/M${i}F${j}.jpg");
+    push(@cmds, "/usr/bin/nice -n 19 montage -geometry $geom -tile 5x5 $frames $targetdir/MONTAGE/M${i}F${j}.jpg");
     push(@cmds, "ln -s $targetdir/MONTAGE/M${i}F${j}.jpg $targetdir/MONTAGE/frame$absframe.jpg");
   }
 }
 
 open(A, ">$targetdir/MONTAGE/commands.sh");
 print A join("\n",@cmds),"\n";
+print A "xmessage $0 has finished\n";
 close(A);
 
 =item comments

@@ -61,11 +61,13 @@ while (<>) {
 
   # break this video in "one second" chunks (assuming 24 frames = one second)
   # TODO: better way to do this w/o assuming it's 24 fps?
-  push(@cmds, qq{ffmpeg -hide_banner -loglevel panic -i "$_" -vf "select=not(mod(n\\,24)), scale=$size" -vsync vfr $targetdir/M${montage}V${video}F%08d.jpg 1> /dev/null 2> /dev/null});
+  # /usr/bin/nice here forces non-shell version whose args I know
+  push(@cmds, qq{/usr/bin/nice -n 19 ffmpeg -hide_banner -loglevel panic -i "$_" -vf "select=not(mod(n\\,24)), scale=$size" -vsync vfr $targetdir/M${montage}V${video}F%08d.jpg 1> /dev/null 2> /dev/null});
 
 }
 
 print A join("\n", @cmds),"\n";
+print A "xmessage $0 has finished\n";
 close(A);
 print "Run or parallel run $targetdir/rip.sh\n";
 
