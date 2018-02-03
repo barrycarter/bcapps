@@ -97,31 +97,28 @@ Modifier:
 
 <formulas>
 
-raDecLatLonGMST2azEl[ra_, dec_, lat_, lon_, gmst_] = 
+raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
   -(Cos[dec]*Sin[gmst + lon - ra])], 
  ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
     Cos[dec]^2*Sin[gmst + lon - ra]^2], 
   Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
 
-raDecLatLon2GMSTRise[ra_, dec_, lat_, lon_] = 
- -lon + ra - ArcCos[-(Tan[dec] Tan[lat])]
+raDecLatLonAlt2GMST[ra_, dec_, lat_, lon_, alt_] = {
+ -lon + ra + ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]],
+ -lon + ra - ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]]
+};
 
-raDecLatLon2GMSTSet[ra_, dec_, lat_, lon_] = 
- -lon + ra + ArcCos[-(Tan[dec] Tan[lat])]
+decLatAlt2TimeAboveAlt[dec_, lat_, alt_] = 
+ 2*ArcCos[Sec[dec]*Sec[lat]*Sin[alt] - Tan[dec]*Tan[lat]]
 
-raLon2GMSTCulm[ra_, lon_] = -lon + ra
+conds = {-Pi <= {ra, lon, gmst, az} <= Pi, -Pi/2 <= {dec, lat, alt} <= Pi/2}
 
-decLat2TimeUp[dec_, lat_] = 2*ArcCos[-(Tan[dec] Tan[lat])]
+(* simplifications that dont always apply but can be useful *)
 
-decLatAlt2TimeAbove[dec_, lat_, alt_] = 
- 2*ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
+simptan = {ArcTan[x_,y_] -> ArcTan[y/x]}
 
-raDecLatLonAlt2GMSTRiseAbove[ra_, dec_, lat_, lon_, alt_] = 
- ra - lon -  ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
-
-raDecLatLonAlt2GMSTSetBelow[ra_, dec_, lat_, lon_, alt_] = 
- ra - lon +  ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
+conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
 
 </formulas>
 
@@ -132,25 +129,19 @@ raDecLatLonAlt2GMSTSetBelow[ra_, dec_, lat_, lon_, alt_] =
 
 <work>
 
-conds = {-Pi <= {ra, lon, gmst, az} <= Pi, -Pi/2 <= {dec, lat, alt} <= Pi/2}
-
 (* conds={0 <= gmst <= 2*Pi, 0 <= ra <= 2*Pi, -Pi <= dec <= Pi, -Pi <=
 lat <= Pi, -Pi/2 <= alt <= Pi/2, }; *)
 
-(* simplifications that dont always apply but can be useful *)
+FullSimplify[HADecLat2azAlt[gmst+lon-ra, dec, lat],conds]
 
-simptan = {ArcTan[x_,y_] -> ArcTan[y/x]}
-
-FullSimplify[HADecLat2azEl[gmst+lon-ra, dec, lat],conds]
-
-raDecLatLonGMST2azEl[ra_, dec_, lat_, lon_, gmst_] = 
+raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
   -(Cos[dec]*Sin[gmst + lon - ra])], 
  ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
     Cos[dec]^2*Sin[gmst + lon - ra]^2], 
   Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
 
-Solve[raDecLatLonGMST2azEl[ra,dec,lat,lon,gmst][[2,2]]==0, gmst]
+Solve[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[2,2]]==0, gmst]
 
 raDecLatLon2GMSTRise[ra_, dec_, lat_, lon_] = 
  -lon + ra - ArcCos[-(Tan[dec] Tan[lat])]
@@ -162,10 +153,10 @@ raLon2GMSTCulm[ra_, lon_] = -lon + ra
 
 decLat2TimeUp[dec_, lat_] = 2*ArcCos[-(Tan[dec] Tan[lat])]
 
-raDecLatLonGMST2azEl[ra,dec,lat,lon,gmst][[2]]
+raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[2]]
 
 s1542 = 
- Solve[(raDecLatLonGMST2azEl[ra,dec,lat,lon,gmst][[2]] /. simptan) == alt, 
+ Solve[(raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[2]] /. simptan) == alt, 
  gmst]
 
 FullSimplify[(gmst /. s1542[[1]]) + lon - ra, conds]
@@ -187,6 +178,8 @@ decLatAlt2TimeAbove[dec_, lat_, alt_] =
 
 decLatAlt2TimeAbove[dec_, lat_, alt_] = 
  2*ArcCos[Sin[alt]/Cos[dec]/Cos[lat] - Tan[dec]*Tan[lat]]
+
+NOTE: decLatAlt2TimeAboveAlt is geometric rise/set for alt = 0
 
 
 
@@ -214,7 +207,7 @@ decLatAlt2TimeAbove[-23*Degree, 35*Degree, -6.*Degree]/Pi*12
 
 
 
-lstRaDecLatLon2azEl[lst, lst, dec, lat, lon]
+lstRaDecLatLon2azAlt[lst, lst, dec, lat, lon]
 
 ignore corner cases
 
@@ -315,7 +308,7 @@ decHaLat2xyzAltAz[dec_,ha_,lat_] = Module[{sh,sd,sl,ch,cd,cl},
 
 (* Mathematica convention: ArcTan[x,y] ~ ArcTan[x/y] *)
 
-decHaLat2azEl[dec_,ha_,lat_] = Module[{r,x,y,z},
+decHaLat2azAlt[dec_,ha_,lat_] = Module[{r,x,y,z},
  {x,y,z} = decHaLat2xyzAltAz[dec,ha,lat];
  r = Sqrt[1-z^2];
  {ArcTan[x,y],ArcTan[r,z]}
@@ -328,5 +321,151 @@ decLat2haSet[dec_,lat_] = ArcCos[-Tan[dec]*Tan[lat]]
 
 latLst2xyzEarth[lat_,lst_] = 
  lat2earthRadius[lat]*{Sin[lat]*Cos[lst],Sin[lat]*Sin[lst],Cos[lat]}
+
+raDecLatLonAlt2GMST[ra_, dec_, lat_, lon_, alt_] = {
+ -lon + ra + ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]],
+ -lon + ra - ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]]
+};
+
+
+raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst]
+
+test1912[ra_, dec_, lat_, lon_, gmst_] = 
+ raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[2]];
+
+test1913[gmst_] = 
+ raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[2]];
+
+
+
+
+raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst]
+
+(* Mathematica takes forever to try to solve this *)
+
+s1717 = Solve[raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[1]] == az, gmst]
+
+(* Mathematica can solve it w/ changing two arg tan to one arg tan *)
+
+s1751 = Solve[
+ (raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[1]] /. simptan) == az, 
+ gmst]
+
+(* the first solution, without conditional expression, and no C[1] *)
+
+s1753 = s1751[[1,1,2,1]] /. C[1] -> 0
+
+(* as above, with arctan two arg to one arg again, removing lon and
+ra, and taking tan; answer is now ArcTan[result]-lon+ra *)
+
+s1756 = Simplify[Tan[s1753+lon-ra /. simptan],conds]
+
+s1806 = s1756 /. {Sqrt[Cos[dec]^4*x_] -> Cos[dec]^2*Sqrt[x]}
+
+s1808 = FullSimplify[s1806 /. {Sin[lat] -> slat, Sin[dec] -> sdec,
+          Cos[lat] -> clat, Cos[dec] -> cdec,
+          Tan[lat] -> slat/clat, Tan[dec] -> sdec/cdec, Tan[az] -> taz,
+          Sec[lat] -> 1/clat, Sec[dec] -> 1/cdec
+         }]
+
+s1753/Pi*12 /. 
+ {ra -> 0, dec -> 0, lat -> 35*Degree, lon -> 0, az -> 180.*Degree}
+
+(* silly random testing *)
+
+test0 := Module[{ra, dec, lat, lon, alt, gmst, res0, res1},
+ {ra, lon} = Table[Random[Real,{-Pi,Pi}], {i,1,2}];
+ {dec, lat, alt} = Table[Random[Real,{-Pi/2,Pi/2}], {i,1,3}];
+ gmst = raDecLatLonAlt2GMST[ra, dec, lat, lon, alt];
+ res0 = raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst[[1]]][[2]];
+ res1 = raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst[[2]]][[2]];
+(* Return[Chop[{alt, res0, res1}]]; *)
+ Return[Chop[{alt-res0, alt-res1, res0-res1}] == {0,0,0}]
+]
+
+test0 := Module[{ra, dec, lat, lon, alt, az, gmst0, res0, res1},
+ {ra, lon, az} = Table[Random[Real,{-Pi,Pi}], {i,1,3}];
+ {dec, lat, alt} = Table[Random[Real,{-Pi/2,Pi/2}], {i,1,3}];
+ gmst0 = 
+
+-lon + ra + ArcTan[(Cos[dec]*Cos[lat]*Sin[dec]*Sin[lat]*Tan[az]^2 - 
+    Sqrt[Cos[dec]^4 - Cos[dec]^2*Cos[lat]^2*Sin[dec]^2*Tan[az]^2 + 
+      Cos[dec]^4*Sin[lat]^2*Tan[az]^2])/(Cos[dec]^2 + 
+    Cos[dec]^2*Sin[lat]^2*Tan[az]^2), 
+  Sec[dec]*(-(Cos[lat]*Sin[dec]*Tan[az]) + 
+    (Cos[dec]^2*Cos[lat]*Sin[dec]*Sin[lat]^2*Tan[az]^3)/
+     (Cos[dec]^2 + Cos[dec]^2*Sin[lat]^2*Tan[az]^2) - 
+    (Cos[dec]*Sin[lat]*Tan[az]*Sqrt[Cos[dec]^4 - Cos[dec]^2*Cos[lat]^2*
+         Sin[dec]^2*Tan[az]^2 + Cos[dec]^4*Sin[lat]^2*Tan[az]^2])/
+     (Cos[dec]^2 + Cos[dec]^2*Sin[lat]^2*Tan[az]^2))]
+;
+
+ res0 = raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst0][[1]];
+ Return[{res0, az}];
+]
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+Cos[lat] -> clat, Sin[dec] -> sdec, Sec[dec] -> 1/cdec,
+ 
+
+
+
+
+
+
+s1723 = Solve[{
+ (raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[1]] == az) && conds}, 
+ gmst, Reals]
+
+s1710 = Solve[
+ (raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[1]] /. simptan) == az, 
+ gmst]
+
+s1730 = Simplify[
+raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[1]] /. simptan, conds]
+
+s1735 = Simplify[Solve[Tan[s1730] == taz, gmst], conds]
+
+s1736 = Simplify[s1735 /. simptan,conds]
+
+s1737 = Simplify[s1736 /. Sqrt[Cos[dec]^4*x_] -> Cos[dec]^2*Sqrt[x],conds]
+
+Simplify[s1737 /. {C[1] -> 0, taz -> Tan[az]},conds]
+
+
+
+
+
+
+
+s1714 = Simplify[s1710[[1,1,2,1]] /. simptan, conds]
+
+s1714 /. {C[1] -> 0, Sqrt[Cos[dec]^4*x_] -> Cos[dec]^2*Sqrt[x]}
+
+
+
+
+s1659 = raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[1]] /. simptan
+
+s1700 = s1659[[2,1]]
+
+FullSimplify[Solve[s1700 == taz, gmst] /. simptan,conds]
+
+TODO: min az/max az, trivial culm, max el, min el, then az2el and vv
+
+
+
 
 
