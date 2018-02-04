@@ -40,7 +40,7 @@ TODO: move todos to one place
 
 TODO: this solves the following questions (some solved) (doublecheck some):
 
-https://astronomy.stackexchange.com/questions/240/how-does-moonrise-moonset-azimuth-vary-with-time 
+https://astronomy.stackexchange.com/questions/240/how-does-moonrise-moonset-azimuth-vary-with-time
 
 https://astronomy.stackexchange.com/questions/24598/how-to-calculate-the-maximum-and-minimum-solar-azimuth-at-a-given-location
 
@@ -128,6 +128,124 @@ conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
 </sources>
 
 <work>
+
+raDec2azAltMat[lat_, lon_, gmst_] = 
+{{-(Cos[gmst + lon]*Sin[lat]), -(Sin[lat]*Sin[gmst + lon]), Cos[lat]}, 
+ {-Sin[gmst + lon], Cos[gmst + lon], 0}, {Cos[lat]*Cos[gmst + lon], 
+  Cos[lat]*Sin[gmst + lon], Sin[lat]}}
+
+azAlt2raDecMat[lat_, lon_, gmst_] = 
+ FullSimplify[Inverse[raDec2azAltmat[lat,lon,gmst]], conds]
+
+raDec2azAltMat[lat,lon,gmst].sph2xyz[{ra,dec,1}] ==
+ {Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]}
+
+tempGMST2az[gmst_] = raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]]
+
+
+
+Solve[(mat[lat,lon,gmst].sph2xyz[{ra,dec,1}])[[3]]==0, gmst, Reals]
+
+
+
+xim = FullSimplify[sph2xyz[Flatten[{Apply[raDecLatLonGMST2azAlt, 
+ Flatten[{Take[xyz2sph[{1,0,0}],2], lat, lon, gmst}]],
+1}]],conds]
+
+yim = FullSimplify[sph2xyz[Flatten[{Apply[raDecLatLonGMST2azAlt, 
+ Flatten[{Take[xyz2sph[{0,1,0}],2], lat, lon, gmst}]],
+1}]],conds]
+
+zim = FullSimplify[sph2xyz[Flatten[{Apply[raDecLatLonGMST2azAlt, 
+ Flatten[{0, Pi/2, lat, lon, gmst}]],
+1}]],conds]
+
+mat = Transpose[{xim,yim,zim}];
+
+s1833 = Take[FullSimplify[xyz2sph[mat.sph2xyz[{ra,dec,1}]], conds],2]
+
+s1834 = raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst]
+
+s1833-s1834 is {0,0} as desired!
+
+
+
+
+
+
+
+
+
+
+
+
+using raDecLatLonGMST2azAlt
+
+ra/dec 
+
+{0,0} = {1,0,0} -> 
+
+s1228 = raDecLatLonGMST2azAlt[0,0,lat,lon,gmst]
+
+FullSimplify[sph2xyz[s1228[[1]], s1228[[2]], 1], conds]
+
+xim = FullSimplify[sph2xyz[s1228[[1]], s1228[[2]], 1], conds]
+
+s1230 = raDecLatLonGMST2azAlt[0,90*Degree,lat,lon,gmst]
+
+zim = FullSimplify[sph2xyz[s1230[[1]], s1230[[2]], 1], conds]
+
+s1232 = raDecLatLonGMST2azAlt[Pi/2,0,lat,lon,gmst]
+
+yim = FullSimplify[sph2xyz[s1232[[1]], s1232[[2]], 1], conds]
+
+mat = 
+{{-(Cos[gmst + lon]*Sin[lat]), -Sin[gmst + lon], Cos[lat]*Cos[gmst + lon]}, 
+ {-(Sin[lat]*Sin[gmst + lon]), Cos[gmst + lon], Cos[lat]*Sin[gmst + lon]}, 
+ {Cos[lat], 0, Sin[lat]}};
+
+s1235 = FullSimplify[xyz2sph[mat.sph2xyz[{ra,dec,1}]],conds]
+
+s1236 = raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst]
+
+Take[s1235,2] - s1236
+
+res1749 = FullSimplify[Take[xyz2sph[mat.sph2xyz[{ra,dec,1}]],2],conds]
+res1750 = raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst]
+
+
+
+
+
+
+
+trying matrix approach
+
+north pole first
+
+{ra, dec} -> {az, el}
+
+{0, 90} = {0,0,1} -> {0, lat} -> {Cos[lat], 0, Sin[lat]}
+
+{0, 0} = {1,0,0} -> 
+
+{gmst+lon, 0} = {Cos[gmst + lon], Sin[gmst + lon], 0} -> 
+
+
+{0, 90} -> {0, lat}
+
+{gmst+lon, 0} -> {180, 90-lat}
+
+{0,0,1} -> {Cos[lat], 0, Sin[lat]}
+
+{Cos[gmst + lon], Sin[gmst + lon], 0} -> {-Sin[lat], 0, Cos[lat]}
+
+again using HA sigh
+
+
+
+
+
 
 (* conds={0 <= gmst <= 2*Pi, 0 <= ra <= 2*Pi, -Pi <= dec <= Pi, -Pi <=
 lat <= Pi, -Pi/2 <= alt <= Pi/2, }; *)
@@ -466,6 +584,33 @@ FullSimplify[Solve[s1700 == taz, gmst] /. simptan,conds]
 TODO: min az/max az, trivial culm, max el, min el, then az2el and vv
 
 
+temp0514 = raDecLatLonAlt2GMST[ra, dec, lat, lon, alt][[1]]
+temp0515 = raDecLatLonAlt2GMST[ra, dec, lat, lon, alt][[2]]
 
+raDecLatLonGMST2azAlt[ra, dec, lat, lon, temp0514][[1]]
+raDecLatLonGMST2azAlt[ra, dec, lat, lon, temp0515][[1]]
+
+temp0518 = FullSimplify[raDecLatLonAlt2GMST[ra, dec, lat, lon, 0], conds]
+
+FullSimplify[raDecLatLonGMST2azAlt[ra, dec, lat, lon, temp0518[[1]]][[1]], 
+ conds]
+
+AstronomicalData["Moon", {"Declination", {2018,2,4}}]
+
+Plot[AstronomicalData["Moon", {"Declination", unix2date[t]}], 
+ {t, 1420070400, 1735689600}]
+
+t0533 = Table[AstronomicalData["Moon", {"Declination", unix2Date[t]}],
+ {t, 1420070400, 1735689600, 86400}];
+
+t0533 = Table[AstronomicalData["Moon", {"Declination", unix2Date[t]}],
+ {t, 1514764800, 1546300800, 86400/24}];
+
+ 
+
+
+
+
+TODO: based on lat alt conflict, should I use el instead?
 
 

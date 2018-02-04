@@ -69,7 +69,7 @@ debug("Frames: $nframes", "Seconds: ".$nframes/24, "Minutes: ".$nframes/24/60);
 
 for ($f=0; $f<=$nframes; $f++) {
 
-  if ($f>10) {die "TESTNG";}
+#  if ($f>10) {die "TESTNG";}
 
   # new frame
   my($name) = sprintf("%09d", $f);
