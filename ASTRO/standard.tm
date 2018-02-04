@@ -1,8 +1,5 @@
 12 Dec 2016: cleaned up, it appears ECLIPDATE is now part of CSPICE directly
 
-04 Feb 2018: removed '/home/user/SPICE/KERNELS/earth_720101_070426.bpc', not found (curious)
-
-
 \begindata
 
 KERNELS_TO_LOAD = (
@@ -21,6 +18,7 @@ KERNELS_TO_LOAD = (
 '/home/barrycarter/SPICE/KERNELS/pck00010.tpc',
 '/home/barrycarter/SPICE/KERNELS/naif0012.tls',
 '/home/barrycarter/BCGIT/ASTRO/iss.bsp',
+'/home/user/SPICE/KERNELS/earth_720101_070426.bpc',
 '/home/user/SPICE/KERNELS/earth_070425_370426_predict.bpc',
 '/home/user/SPICE/KERNELS/earth_000101_160314_151222.bpc',
 '/home/user/SPICE/KERNELS/earth_latest_high_prec.bpc',
