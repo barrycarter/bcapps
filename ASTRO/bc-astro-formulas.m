@@ -42,7 +42,7 @@ TODO: this solves the following questions (some solved) (doublecheck some):
 
 https://astronomy.stackexchange.com/questions/240/how-does-moonrise-moonset-azimuth-vary-with-time
 
-https://astronomy.stackexchange.com/questions/24598/how-to-calculate-the-maximum-and-minimum-solar-azimuth-at-a-given-location
+https://astronomy.stackexchange.com/questions/24598/how-to-calculate-the-maximum-and-minimum-solar-azimuth-at-a-given-location [TODO: azimuth at rise/set equation here may be better than mine]
 
 https://earthscience.stackexchange.com/questions/13032/how-much-of-one-day-can-be-considered-nighttime-on-average
 
@@ -112,7 +112,9 @@ raDecLatLonAlt2GMST[ra_, dec_, lat_, lon_, alt_] = {
 decLatAlt2TimeAboveAlt[dec_, lat_, alt_] = 
  2*ArcCos[Sec[dec]*Sec[lat]*Sin[alt] - Tan[dec]*Tan[lat]]
 
-conds = {-Pi <= {ra, lon, gmst, az} <= Pi, -Pi/2 <= {dec, lat, alt} <= Pi/2}
+(* the strict less thans here allow better simplification *)
+
+conds = {-Pi < {ra, lon, gmst, az} < Pi, -Pi/2 < {dec, lat, alt} < Pi/2}
 
 (* simplifications that dont always apply but can be useful *)
 
@@ -128,6 +130,39 @@ conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
 </sources>
 
 <work>
+
+raDecLatLonGMST2azAlt[ra, dec, lat, lon,
+ raDecLatLonAlt2GMST[ra,dec,lat,lon,0][[1]]][[1]]
+
+TODO: use Cos vs two arg ArcTan almost works sometimes
+
+FullSimplify[raDecLatLonGMST2azAlt[ra, dec, lat, lon,
+ raDecLatLonAlt2GMST[ra,dec,lat,lon,alt][[1]]][[1]], conds]
+
+FullSimplify[raDecLatLonGMST2azAlt[ra, dec, lat, lon,
+ raDecLatLonAlt2GMST[ra,dec,lat,lon,alt][[2]]][[1]], conds]
+
+
+
+
+
+FullSimplify[Cos[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]]],conds]
+
+above is not nice
+
+FullSimplify[ArcCos[Cos[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]]]],
+ conds]
+
+
+
+FullSimplify[Cos[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[2]]],conds]
+
+also not that great
+
+for arccos, it's +- the value given
+
+
+
 
 raDec2azAltMat[lat_, lon_, gmst_] = 
 {{-(Cos[gmst + lon]*Sin[lat]), -(Sin[lat]*Sin[gmst + lon]), Cos[lat]}, 
@@ -605,6 +640,17 @@ t0533 = Table[AstronomicalData["Moon", {"Declination", unix2Date[t]}],
 
 t0533 = Table[AstronomicalData["Moon", {"Declination", unix2Date[t]}],
  {t, 1514764800, 1546300800, 86400/24}];
+
+
+(* moon declinations *)
+
+t0649 = ReadList["/home/user/20180204/decs.txt"]
+
+t0654 = ReadList["/home/user/20180204/ras.txt"]
+
+t0655 = Mod[difference[t0654], 2*Pi]
+
+t0655 = difference[Take[t0654,8000]];
 
  
 

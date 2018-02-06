@@ -121,7 +121,9 @@ alias ccextractor "/root/build/ccextractor.0.67/linux/ccextractor"
 
 # show me my "at" jobs with some details
 # TODO: this doesnt match up jobs to events
-alias atsee "atq; sudo find /var/spool/at -maxdepth 1 -type f | fgrep -v '/.SEQ' | sudo xargs tail -n 1"
+# on saopaulo, "at -c <job>" does this + below fails, so replacing
+# alias atsee "atq; sudo find /var/spool/at -maxdepth 1 -type f | fgrep -v '/.SEQ' | sudo xargs tail -n 1"
+alias atsee "echo 'use at -c <job number>' instead"
 
 # in theory, xephem should work regardless of where it's started; in
 # reality, this:

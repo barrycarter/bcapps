@@ -500,6 +500,7 @@ stella
 wine
 # NOTE: must specify version here, else fail
 VirtualBox-5.1
+qemu-kvm
 WolframCDFPlayer
 abiword
 
