@@ -9,8 +9,10 @@ Measurement units: km, radians
 Time units used:
 
   - mjd: modified Julian date [number of days since 2000 January 1, at 12h UT]
+         (equal to unix time 946728000, true JD 2451545.0)
   - gmst: Greenwich mean sidereal time (radians)
   - time: sidereal time (radians) [2*pi ~ 23h56m clock time]
+  - doy: day of year (0-366), days since Jan 1 0h UT
 
 Angular units used:
 
@@ -110,11 +112,29 @@ raDecLatLonAlt2GMST[ra_, dec_, lat_, lon_, alt_] = {
 };
 
 decLatAlt2TimeAboveAlt[dec_, lat_, alt_] = 
- 2*ArcCos[Sec[dec]*Sec[lat]*Sin[alt] - Tan[dec]*Tan[lat]]
+ 2*ArcCos[Sec[dec]*Sec[lat]*Sin[alt] - Tan[dec]*Tan[lat]];
+
+decLatAlt2az[dec_, lat_, alt_] = {
+ ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]],
+ -ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]};
+
+(* inclination of ecliptic treated as a fixed constant + as func of mjd *)
+
+eclipticFixed[] = 23.4393*Degree;
+
+mjd2ecliptic[mjd_] = 23.4393*Degree- 0.0000004*mjd;
+
+(* per wikipedia, very approx *)
+
+(* this does NOT WORK !!!! *)
+(* conds = {-Pi < {ra, lon, gmst, az} < Pi, -Pi/2 < {dec, lat, alt} < Pi/2} *)
 
 (* the strict less thans here allow better simplification *)
 
-conds = {-Pi < {ra, lon, gmst, az} < Pi, -Pi/2 < {dec, lat, alt} < Pi/2}
+conds = {
+ -Pi < ra < Pi, -Pi < lon < Pi, -Pi < gmst < Pi, -Pi < az < Pi,
+ -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2
+};
 
 (* simplifications that dont always apply but can be useful *)
 
@@ -131,6 +151,17 @@ conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
 
 <work>
 
+decLatAlt2az[eclipticFixed[], lat, -5/6*Degree]/Degree
+
+Plot[decLatAlt2az[eclipticFixed[], lat*Degree, -5/6*Degree][[1]]/Degree,
+ {lat, -60, 60}]
+
+Plot[decLatAlt2az[eclipticFixed[], lat*Degree, -5/6*Degree][[2]]/Degree,
+ {lat, -60, 60}]
+
+decLatAlt2az[eclipticFixed[], lat, -5/6*Degree]
+
+
 raDecLatLonGMST2azAlt[ra, dec, lat, lon,
  raDecLatLonAlt2GMST[ra,dec,lat,lon,0][[1]]][[1]]
 
@@ -139,8 +170,20 @@ TODO: use Cos vs two arg ArcTan almost works sometimes
 FullSimplify[raDecLatLonGMST2azAlt[ra, dec, lat, lon,
  raDecLatLonAlt2GMST[ra,dec,lat,lon,alt][[1]]][[1]], conds]
 
-FullSimplify[raDecLatLonGMST2azAlt[ra, dec, lat, lon,
- raDecLatLonAlt2GMST[ra,dec,lat,lon,alt][[2]]][[1]], conds]
+FullSimplify[Cos[raDecLatLonGMST2azAlt[ra, dec, lat, lon,
+ raDecLatLonAlt2GMST[ra,dec,lat,lon,alt][[1]]][[1]]], conds]
+
+Sec[alt] Sec[lat] Sin[dec] - Tan[alt] Tan[lat]
+
+FullSimplify[Cos[raDecLatLonGMST2azAlt[ra, dec, lat, lon,
+ raDecLatLonAlt2GMST[ra,dec,lat,lon,alt][[2]]][[1]]], conds]
+
+Sec[alt] Sec[lat] Sin[dec] - Tan[alt] Tan[lat]
+
+raDecLatLonGMST2azAlt[ra, dec, lat, lon,
+ raDecLatLonAlt2GMST[ra,dec,lat,lon,alt]][[2]]
+
+raDecLatLonGMST2azAlt[ra, dec, 
 
 
 
@@ -659,4 +702,64 @@ t0655 = difference[Take[t0654,8000]];
 
 TODO: based on lat alt conflict, should I use el instead?
 
+
+ArcSin[0.39799*Cos[0.98565*Degree(doy+10) + 1.914*Degree*Sin[0.98565*(doy-2)]]]
+
+Plot[0.98565*(doy+10) + 1.914* Sin[0.98565*(doy-2)], {doy,0,10}]
+
+
+t2027 = ReadList["/home/user/20180205/slist.txt"];
+
+1st entry really is 1 hour after mjd 0 2000 01 01 12 UT
+
+ListPlot[superleft[t2027,2]]
+
+Fit[t2027, {1,x}, x]
+
+t2043 = ReadList["/home/user/20180205/slist2.txt"];
+
+946728000+(i-1)*86400
+
+unix2Date[946728000][[2]]
+
+dayOfYear[date_] := 1+DayCount[{date[[1]], 1, 1}, Take[date,3]]
+
+doy[unix_] := dayOfYear[unix2Date[unix]]
+
+i2Unix[i_] = 946728000+(i-1)*86400
+
+t2053 = Table[{doy[i2Unix[i]], t2043[[i]]}, {i,1,Length[t2043]}];
+
+t2054 = Gather[t2053, #1[[1]] == #2[[1]] &];
+
+Table[dayDec[Transpose[t2054[[i]]][[1,1]]] = Transpose[t2054[[i]]][[2]],
+ {i, 1, Length[t2054]}]
+
+Table[dayDecAvg[i] = Mean[dayDec[i]], {i,1,366}]
+
+means = Table[Mean[dayDec[i]], {i,1,366}];
+
+Fit[means, {1,x}, x]
+
+fmeans[x_] = Interpolation[means][x]
+
+f2109[x_] = Fit[means, {1, Sin[x/366*2*Pi], Cos[x/366*2*Pi]}, x]
+
+Plot[f2109[x]-fmeans[x], {x,1,366}]
+
+f2111[x_] = Fit[means, {1, Sin[x/366*2*Pi], Cos[x/366*2*Pi],
+ Sin[x/183*2*Pi], Cos[x/183*2*Pi]}, x]
+
+Plot[f2111[x]-fmeans[x], {x,1,366}]
+
+0.2 degree variation in declination
+
+Table[range[x] = Max[dayDec[x]]-Min[dayDec[x]], {x,1,366}]
+
+f2124[x_] = Fit[means, {1, Sin[x/366*2*Pi], Cos[x/366*2*Pi],
+ Sin[x/183*2*Pi], Cos[x/183*2*Pi], Cos[x/122*2*Pi], Sin[x/122*2*Pi]}, x]
+
+Plot[(f2124[x]-fmeans[x])/Degree, {x,1,366}, PlotRange -> All]
+
+0.05 degrees 0.00087 radians
 

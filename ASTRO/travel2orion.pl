@@ -22,6 +22,8 @@ precession!
 
 proper motion?
 
+blue shift
+
 if using js3d or whatever, size increases as square, perhaps not ideal?
 
 =cut
@@ -39,11 +41,11 @@ TODO: rotate to side view? (circle around orion instead of approach?)
 
 TODO: quote Quixote?
 
-sample star: 
+sample star:
 
-xyz = 51.601106, 256.709905, -37.740051 
+xyz = 51.601106, 256.709905, -37.740051
 
-dist = 264.5503 (so xyz in parsecs) 
+dist = 264.5503 (so xyz in parsecs)
 
 absmag -6.933 and realmag 0.180, so
 
@@ -99,6 +101,8 @@ while (<A>) {
 #  debug("HASH",%hash);
 
 #  debug("CON: $hash{con}");
+
+  plot_star(0,0,0,0,0,0,\%hash);
 
   next;
 
@@ -157,4 +161,57 @@ sub equ2ecl {
   return xyz2sph($xyz2[0][0],$xyz2[1][0],$xyz2[2][0]);
 }
 
+# program specific: given your xyz position, nosecone point vector,
+# and star information, determine how to plot the star
 
+sub plot_star {
+
+  my($x, $y, $z, $vx, $vy, $vz, $hashref) = @_;
+  my(%star) = %{$hashref};
+
+  # TODO: this is just a fixed mapping from Earth for now
+
+  debug("GOT:",%star);
+
+  # spherical coordinates
+  my($th, $ph, $r) = xyz2sph($star{x}, $star{y}, $star{z}, "degrees=1");
+
+  # visual magnitude
+  my($vm) = 5*log($r)/log(10)-5+$star{absmag};
+
+
+
+  debug("TH/PH/R/VM: $th, $ph, $r, $vm");
+
+  die "TESTING";
+}
+
+=item comment
+
+spectral class colors from http://www.vendian.org/mncharity/dir3/starcolor/
+
+O5(V) 157 180 255 #9db4ff
+B1(V) 162 185 255 #a2b9ff
+B3(V) 167 188 255 #a7bcff
+B5(V) 170 191 255 #aabfff
+B8(V) 175 195 255 #afc3ff
+A1(V) 186 204 255 #baccff
+A3(V) 192 209 255 #c0d1ff
+A5(V) 202 216 255 #cad8ff
+F0(V) 228 232 255 #e4e8ff
+F2(V) 237 238 255 #edeeff
+F5(V) 251 248 255 #fbf8ff
+F8(V) 255 249 249 #fff9f9
+G2(V) 255 245 236 #fff5ec
+G5(V) 255 244 232 #fff4e8
+G8(V) 255 241 223 #fff1df
+K0(V) 255 235 209 #ffebd1
+K4(V) 255 215 174 #ffd7ae
+K7(V) 255 198 144 #ffc690
+M2(V) 255 190 127 #ffbe7f
+M4(V) 255 187 123 #ffbb7b
+M6(V) 255 187 123 #ffbb7b
+
+TODO: see also http://www.isthe.com/chongo/tech/astro/HR-temp-mass-table-byhrclass.html?
+
+=cut
