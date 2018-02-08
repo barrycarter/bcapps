@@ -79,7 +79,7 @@ while (<A>) {
 
 
 
-  unless ($hash{con} eq "Ori") {next;}
+#  unless ($hash{con} eq "Ori") {next;}
 
   if ($hash{mag}<3) {
     debug("<HASH>");
@@ -179,11 +179,23 @@ sub plot_star {
   # visual magnitude
   my($vm) = 5*log($r)/log(10)-5+$star{absmag};
 
+  # TODO: allow dimmer mags
+#  if ($vm > 5) {return;}
 
+  my($size) = floor(5.5-$vm);
 
-  debug("TH/PH/R/VM: $th, $ph, $r, $vm");
+  if ($size < 1) {return;}
 
-  die "TESTING";
+  my($sx) = round(400 + 400*$th/360);
+  my($sy) = round(300 + 300*$ph/180);
+
+  if ($vm < 5 && $ph > 0) {
+    print "fcircle $sx,$sy,$size,255,255,255\n";
+  }
+
+  debug("TH/PH/R/VM/SPECT: $th, $ph, $r, $vm, $star{spect}");
+
+#  die "TESTING";
 }
 
 =item comment

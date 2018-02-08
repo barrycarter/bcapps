@@ -18,6 +18,10 @@
 # tac fix-everything-again.sh | sudo ~user/BCGIT/BACKUP/bc-parse-rdfind.pl
 # --debug | & grep -A 2 '^FILES' | & less
 
+# NOTE: for ~/TUMBLR, ok to disable same name test-- some blogs use
+# the same media but TUMBLR assigns it different names-- as long as
+# I'm symlinking this shouldn't be an issue
+
 require "/usr/local/lib/bclib.pl";
 
 # I have privately named drives
