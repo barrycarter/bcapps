@@ -38,12 +38,23 @@ after it culminates, where all angles are in radians. Notes:
 
   - If the value inside the arc-cosine function is greater than 1 or less than -1, the object never reaches the given altitude.
 
-  - Setting 
+  - The Sun starts setting when it's lower limb touches the horizon and finishes setting when  it's upper limb sinks below the horizon.
+
+  - The Sun's angular radius is 16 minutes of arc, so it starts setting when the center of the Sun has angular altitude of 16 minutes and finishes setting when the altitude of the Sun's center is -16 minutes.
+
+  - Because of refraction, the Sun appears 34 minutes of arc higher than it's geometric position. The actual value of refraction varies with atmospheric conditions (and this variation can be considerable), but 34 minutes is the accepted value for computing sunrise and sunset. Therefore, the Sun starts setting when it's geometric center is at 16-34 or -18 minutes of arc, and finishes setting when it's at -16-34 or -50 minutes of arc.
+
+  - To find how long it takes to set, we subtract the time when it's geometric position is -18 minutes of arc from when it's geometric position is at -50 minutes of arc. Combining this with the declination formula above, this yields:
+
+
 
 TODO: twilights
 
+sidereal
 
+TODO: refraction not contcats
 
+TODO: west of GMT
 
 
 TODO: time in radians
@@ -71,3 +82,58 @@ mention bc-astro-formulas.m mention
 
 
 dec avg is not 0!
+
+<formula>
+
+
+raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
+ {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
+  -(Cos[dec]*Sin[gmst + lon - ra])], 
+ ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
+    Cos[dec]^2*Sin[gmst + lon - ra]^2], 
+  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
+
+raDecLatLonAlt2GMST[ra_, dec_, lat_, lon_, alt_] = {
+ -lon + ra + ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]],
+ -lon + ra - ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]]
+};
+
+decLatAlt2TimeAboveAlt[dec_, lat_, alt_] = 
+ 2*ArcCos[Sec[dec]*Sec[lat]*Sin[alt] - Tan[dec]*Tan[lat]];
+
+decLatAlt2az[dec_, lat_, alt_] = {
+ ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]],
+ -ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]};
+
+(* inclination of ecliptic treated as a fixed constant + as func of mjd *)
+
+eclipticFixed[] = 23.4393*Degree;
+
+mjd2ecliptic[mjd_] = 23.4393*Degree- 0.0000004*mjd;
+
+(* solar declination at 12h UT on nth day of year, 2000-2099 *)
+
+doy2decSun[doy_] = 
+0.005767978633879778 - 0.4003158126006976*Cos[(doy*Pi)/183] - 
+ 0.006087303223362971*Cos[(2*doy*Pi)/183] - 0.002399606972263487*
+  Cos[(doy*Pi)/61] + 0.06974587377531068*Sin[(doy*Pi)/183] + 
+ 0.0005293173364751269*Sin[(2*doy*Pi)/183] + 
+ 0.0013197353309006461*Sin[(doy*Pi)/61];
+
+(* this does NOT WORK !!!! *)
+(* conds = {-Pi < {ra, lon, gmst, az} < Pi, -Pi/2 < {dec, lat, alt} < Pi/2} *)
+
+(* the strict less thans here allow better simplification *)
+
+conds = {
+ -Pi < ra < Pi, -Pi < lon < Pi, -Pi < gmst < Pi, -Pi < az < Pi,
+ -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2
+};
+
+(* simplifications that dont always apply but can be useful *)
+
+simptan = {ArcTan[x_,y_] -> ArcTan[y/x]}
+
+conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
+
+</formula>

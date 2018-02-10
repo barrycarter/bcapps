@@ -1,3 +1,23 @@
+<function name="raDecLatLonGMST2azAlt">
+<active>1</active>
+<nice>raDecLatLonGMST2azAlt(ra,dec,lat,lon,gmst)</nice>
+<vars>ra,dec,lat,lon,gmst</vars>
+<desc>Given the right ascension and declination of a celestial object, the latitude and longitude of an observer, and the Greenwich mean sidereal time, return the objects azimuth and altitude. All angles and times must be given in radians</desc>
+<body>
+ List[ArcTan[Plus[Times[Cos[lat], Sin[dec]], 
+ Times[-1, Cos[dec], Cos[Plus[gmst, lon, Times[-1, ra]]], Sin[lat]]], 
+ Times[-1, Cos[dec], Sin[Plus[gmst, lon, Times[-1, ra]]]]], 
+ ArcTan[Power[Plus[Power[Plus[Times[Cos[lat], Sin[dec]], 
+ Times[-1, Cos[dec], Cos[Plus[gmst, lon, Times[-1, ra]]], Sin[lat]]], 
+ 2], Times[Power[Cos[dec], 2], 
+ Power[Sin[Plus[gmst, lon, Times[-1, ra]]], 2]]], Rational[1, 2]], 
+ Plus[Times[Cos[dec], Cos[lat], Cos[Plus[gmst, lon, Times[-1, ra]]]], 
+ Times[Sin[dec], Sin[lat]]]]]
+</body>
+<argtest>3.34048, 0.941824, 1.34573, -0.398355, 0.816371</argtest>
+<answer>0.171079, 0.72093</answer>
+</function>
+
 <function name="rad2Hour">
 <active>1</active>
 <nice>rad2Hour(rad)</nice>

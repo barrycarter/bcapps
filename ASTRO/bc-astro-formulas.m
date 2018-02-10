@@ -124,8 +124,6 @@ eclipticFixed[] = 23.4393*Degree;
 
 mjd2ecliptic[mjd_] = 23.4393*Degree- 0.0000004*mjd;
 
-(* per wikipedia, very approx *)
-
 (* this does NOT WORK !!!! *)
 (* conds = {-Pi < {ra, lon, gmst, az} < Pi, -Pi/2 < {dec, lat, alt} < Pi/2} *)
 

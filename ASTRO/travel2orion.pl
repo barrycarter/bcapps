@@ -184,6 +184,8 @@ sub plot_star {
 
   my($size) = floor(5.5-$vm);
 
+  # azimuth determines distance from center
+
   if ($size < 1) {return;}
 
   my($sx) = round(400 + 400*$th/360);
