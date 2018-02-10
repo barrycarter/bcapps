@@ -2,6 +2,7 @@
 
 (* not sure this is a good idea *)
 
+$TimeZone = 0;
 $UnitSystem = "Metric";
 
 (* per http://mathematica.stackexchange.com/questions/109010/texform-of-absan-is-not-valid-tex-known-error/109016#109016 *)

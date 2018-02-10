@@ -1,5 +1,38 @@
 TODO: answer here!
 
+temp1044 = ReadList["/mnt/villa/user/20180205/solar.txt", "Number"];
+
+temp1044 = ReadList["/mnt/villa/user/20180205/solar.txt", "Number",
+ "RecordLists" -> True];
+
+doy[jd_] := Module[{temp1},
+ temp1 = Take[FromJulianDate[Rationalize[jd,0]][[1]],4];
+ Return[Rationalize[1/2+DateDifference[{temp1[[1]], 1, 1}, temp1][[1]]]];
+];
+
+temp1108 = Table[{doy[i[[2]]], i[[4]]}, {i, temp1044}];
+
+
+ 
+
+
+
+
+ RecordLists -> True,  WordSeparators -> {" "}, TokenWords -> {" "}];
+
+
+temp1044 = ReadList["/mnt/villa/user/20180205/solar.txt", "Record", 
+ RecordLists -> True,  WordSeparators -> {" "}, TokenWords -> {" "}];
+
+
+
+, RecordLists -> True,
+
+
+
+
+
+
 To an accuracy of $0.05 {}^{\circ}$, the Sun's average declination at 12h UT on the nth day of the year for the years 2000-2099 inclusive is:
 
 $
@@ -48,6 +81,7 @@ after it culminates, where all angles are in radians. Notes:
 
 
 
+
 TODO: twilights
 
 sidereal
@@ -83,8 +117,7 @@ mention bc-astro-formulas.m mention
 
 dec avg is not 0!
 
-<formula>
-
+<formulas>
 
 raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
@@ -105,13 +138,9 @@ decLatAlt2az[dec_, lat_, alt_] = {
  ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]],
  -ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]};
 
-(* inclination of ecliptic treated as a fixed constant + as func of mjd *)
-
-eclipticFixed[] = 23.4393*Degree;
-
-mjd2ecliptic[mjd_] = 23.4393*Degree- 0.0000004*mjd;
-
 (* solar declination at 12h UT on nth day of year, 2000-2099 *)
+
+
 
 doy2decSun[doy_] = 
 0.005767978633879778 - 0.4003158126006976*Cos[(doy*Pi)/183] - 
@@ -120,20 +149,4 @@ doy2decSun[doy_] =
  0.0005293173364751269*Sin[(2*doy*Pi)/183] + 
  0.0013197353309006461*Sin[(doy*Pi)/61];
 
-(* this does NOT WORK !!!! *)
-(* conds = {-Pi < {ra, lon, gmst, az} < Pi, -Pi/2 < {dec, lat, alt} < Pi/2} *)
-
-(* the strict less thans here allow better simplification *)
-
-conds = {
- -Pi < ra < Pi, -Pi < lon < Pi, -Pi < gmst < Pi, -Pi < az < Pi,
- -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2
-};
-
-(* simplifications that dont always apply but can be useful *)
-
-simptan = {ArcTan[x_,y_] -> ArcTan[y/x]}
-
-conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
-
-</formula>
+</formulas>
