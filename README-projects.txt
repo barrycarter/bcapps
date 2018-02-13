@@ -69,3 +69,8 @@ TODO: improve showcase
 Subject: Astronomy
 Code URL: none yet
 Description: Use the Hipparcos/HYG catalog (the largest one w/ distances) to create video of zooming around the universe; Celestia lets you view from other stars but not sure it allows you to see video of the travel
+
+Subject: Astronomy
+Code URL: https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-astro-formulas.m
+Description: Closed form formulas for astronomy (useful when doing "meta astronomy" and not numerically precise astronomy)
+

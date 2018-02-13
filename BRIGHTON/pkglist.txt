@@ -142,6 +142,7 @@ xearth
 calendar
 
 # programming languages (or related)
+gcc-gfortran
 # TODO: mathematica (not free)
 npm
 # below is lisp

@@ -19,11 +19,26 @@ toggle_fullscreen f
 # TODO: maybe this should popup an xmessage with "press q to quit"?
 action_9 x
 
-
 quit q
-# these appear to be defaults
+
+# these appear to be defaults (not really, Left and Right scroll to
+# next/prev image, grrrr)
+
+# per man feh "When binding an action to a new key (or mouse button),
+# make sure to unbind it from its previous action, if present"
+
+# these actions were assigned to Left and Right
+prev_img
+next_img
+
+# do allow space and backspace
+prev_img BackSpace
+next_img space
+
 scroll_left Left
 scroll_right Right
 scroll_up Up
 scroll_down Down
+
+
 

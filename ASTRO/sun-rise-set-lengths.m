@@ -1,16 +1,65 @@
 TODO: answer here!
 
-temp1044 = ReadList["/mnt/villa/user/20180205/solar.txt", "Number"];
+
+
+temp0939[dec_, lat_] = (decLatAlt2TimeAboveAlt[dec,lat,-50/60*Degree] - 
+decLatAlt2TimeAboveAlt[dec,lat,-18/60*Degree])/2;
+
+temp0946[dec_, lat_] = D[temp0939[dec,lat], lat];
+
+Plot3D[temp0939[dec,lat], {dec,-23*Degree,23*Degree}, {lat,
+-60*Degree, 60*Degree}]
+
+Plot[temp0939[23*Degree, lat],{lat,-60*Degree, 60*Degree}]
+
+Plot[temp0939[-23*Degree, lat],{lat,-60*Degree, 60*Degree}]
+
+Plot[temp0939[0*Degree, lat],{lat,-60*Degree, 60*Degree}]
+
+Plot3D[temp0946[dec,lat], {dec,-23*Degree,23*Degree}, {lat,
+-60*Degree, 60*Degree}]
+
+Plot[temp0946[23*Degree, lat],{lat,-60*Degree, 60*Degree}]
+
+
+
+
+
+
 
 temp1044 = ReadList["/mnt/villa/user/20180205/solar.txt", "Number",
  "RecordLists" -> True];
+
+temp0917 = Transpose[temp1044][[4]];
+
+x = number of hours since 11am on 1 Jan 2000 (hmmmm)
+
+
+
+FromDate[FromJulianDate[jd][[1]]]
+
+doy[jd_] := Module[{temp1},
+ temp1 = FromJulianDate[jd][[1]];
+ Return[Round[(FromDate[temp1] - FromDate[{temp1[[1]], 1, 1}])/86400, 1/24]];
+]
+
+temp1108 = Table[{doy[i[[2]]], i[[4]]}, {i, temp1044}];
+
+temp0912 = Gather[temp1108, #1[[1]] == #2[[1]] &];
+
+
+
+
+ temp1 = Take[FromJulianDate[Rationalize[jd,0]][[1]],4];
+ Return[Rationalize[1/2+DateDifference[{temp1[[1]], 1, 1}, temp1][[1]]]];
+];
 
 doy[jd_] := Module[{temp1},
  temp1 = Take[FromJulianDate[Rationalize[jd,0]][[1]],4];
  Return[Rationalize[1/2+DateDifference[{temp1[[1]], 1, 1}, temp1][[1]]]];
 ];
 
-temp1108 = Table[{doy[i[[2]]], i[[4]]}, {i, temp1044}];
+
 
 
  
@@ -140,13 +189,16 @@ decLatAlt2az[dec_, lat_, alt_] = {
 
 (* solar declination at 12h UT on nth day of year, 2000-2099 *)
 
-
-
 doy2decSun[doy_] = 
 0.005767978633879778 - 0.4003158126006976*Cos[(doy*Pi)/183] - 
  0.006087303223362971*Cos[(2*doy*Pi)/183] - 0.002399606972263487*
   Cos[(doy*Pi)/61] + 0.06974587377531068*Sin[(doy*Pi)/183] + 
  0.0005293173364751269*Sin[(2*doy*Pi)/183] + 
  0.0013197353309006461*Sin[(doy*Pi)/61];
+
+conds = {
+ -Pi < ra < Pi, -Pi < lon < Pi, -Pi < gmst < Pi, -Pi < az < Pi,
+ -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2
+};
 
 </formulas>
