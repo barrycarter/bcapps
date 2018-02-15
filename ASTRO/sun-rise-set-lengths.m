@@ -1,9 +1,100 @@
 TODO: answer here!
 
+temp1942[doy_, lat_] = 
+ N[(decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -5/6*Degree] -
+ decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -18/60*Degree])/Pi*12*3600];
+
+Plot[temp1942[doy,60*Degree],{doy,0.5,366.5}]
+
+tab2009[lat_] := tab2009[lat] = 
+ Table[{doy, temp1942[doy, lat*Degree]}, {doy, 0.5, 366.5, 1/24}]
+
+int2009[lat_] := int2009[lat] = Interpolation[tab2009[lat]]
+
+est2009[lat_] := est2009[lat] = Function[ x, 
+ Evaluate[Fit[tab2009[lat],{1, Sin[x/183*2*Pi], Cos[x/183*2*Pi]}, x]]]
+
+Plot[int2009[40][x] - est2009[40][x], {x,0.5,366.5}]
+
+Plot[int2009[30][x] - est2009[30][x], {x,0.5,366.5}]
+
+Plot[int2009[64][x] - est2009[64][x], {x,0.5,366.5}]
 
 
-temp0939[dec_, lat_] = (decLatAlt2TimeAboveAlt[dec,lat,-50/60*Degree] - 
-decLatAlt2TimeAboveAlt[dec,lat,-18/60*Degree])/2;
+
+
+
+
+
+dec[n_] := dec[n] = Mean[Table[AstronomicalData["Sun", {"Declination", 
+ DatePlus[{y, 1, 1}, n-1]}], {y,2001,2036}]][[1]]*Degree
+
+
+temp0939[dec_, lat_] =
+((decLatAlt2TimeAboveAlt[dec,lat*Degree,-50/60*Degree] -
+decLatAlt2TimeAboveAlt[dec,lat*Degree,-18/60*Degree])/2)/Pi*12*3600;
+
+temp0904[dec_, lat_] = N[Normal[Series[
+ Normal[Series[temp0939[dec,lat],{dec,0,6}]],
+{lat,0,6}
+]]]
+
+temp0924[n_, lat_] = N[Normal[Series[
+ Normal[Series[temp0939[doy2decSun[n],lat],{n,0,3}]],
+{lat,0,3}
+]]]
+
+temp0924[n_, lat_] = N[Normal[Series[
+ Normal[Series[temp0939[doy2decSun[n],lat],{n,183,16}]],
+{lat,0,16}
+]]]
+
+
+
+Plot3D[temp0939[dec,lat], {dec,-24*Degree,24*Degree}, {lat,
+-60*Degree, 60*Degree}]
+
+Plot3D[temp0904[dec,lat], {dec,-24*Degree,24*Degree}, {lat,
+-60*Degree, 60*Degree}]
+
+Plot3D[temp0904[dec,lat]-temp0939[dec,lat], {dec,-24*Degree,24*Degree}, {lat,
+-90*Degree, 90*Degree}]
+
+ContourPlot[temp0904[dec,lat]-temp0939[dec,lat], {dec,-24*Degree,24*Degree},
+ {lat, -90, 90}, PlotLegends -> True, ColorFunction -> Hue,
+ Contours -> 64]
+
+ContourPlot[temp0924[n,lat]-temp0939[doy2decSun[n],lat], 
+ {lat,-90,90},
+ {n, 0.5, 366.5}, PlotLegends -> True, ColorFunction -> Hue,
+ Contours -> 64]
+
+ContourPlot[temp0924[n,lat],
+ {n, 0.5, 366.5},  {lat,-90,90}, PlotLegends -> True, ColorFunction -> Hue,
+ Contours -> 64]
+
+
+
+
+
+
+f0850[lat_] = (decLatAlt2TimeAboveAlt[dec[1], lat, -50/60*Degree] -
+ decLatAlt2TimeAboveAlt[dec[1], lat, -18/60*Degree])/2
+
+
+
+tab0830 = Table[{lat, decLatAlt2TimeAboveAlt[dec[1], lat, -50/60*Degree]},
+ {lat,-90*Degree,90*Degree,0.1*Degree}]
+
+
+
+
+temp1523 = Table[{n,dec[n]},{n, 1/2, 366+1/2, 1/24}];
+temp1523 = Table[{n,dec[n]},{n, 1/2, 366+1/2, 1/12}];
+
+
+Plot[temp0939[dec, 40*Degree], {dec,-24*Degree,24*Degree}]
+
 
 temp0946[dec_, lat_] = D[temp0939[dec,lat], lat];
 
@@ -25,9 +116,9 @@ Plot[temp0946[23*Degree, lat],{lat,-60*Degree, 60*Degree}]
 
 
 
+(* solar3 is trimmed for 2001-2036 inclusive; solar4 from 2017-2020 *)
 
-
-temp1044 = ReadList["/mnt/villa/user/20180205/solar.txt", "Number",
+temp1044 = ReadList["/mnt/villa/user/20180205/solar4.txt", "Number",
  "RecordLists" -> True];
 
 temp0917 = Transpose[temp1044][[4]];
@@ -40,13 +131,36 @@ FromDate[FromJulianDate[jd][[1]]]
 
 doy[jd_] := Module[{temp1},
  temp1 = FromJulianDate[jd][[1]];
- Return[Round[(FromDate[temp1] - FromDate[{temp1[[1]], 1, 1}])/86400, 1/24]];
+ Return[1/2+
+ Round[(FromDate[temp1] - FromDate[{temp1[[1]], 1, 1}])/86400, 1/24]];
 ]
 
 temp1108 = Table[{doy[i[[2]]], i[[4]]}, {i, temp1044}];
 
 temp0912 = Gather[temp1108, #1[[1]] == #2[[1]] &];
 
+Table[temp0918[Transpose[i][[1,1]]] = Mean[Transpose[i][[2]]], {i, temp0912}];
+
+temp1925 = Table[{Transpose[i][[1,1]], Mean[Transpose[i][[2]]]}, {i,temp0912}];
+
+temp1926[x_] = Interpolation[temp1925][x]
+
+f1928[x_] = Fit[temp1925, {1, Sin[x/366*2*Pi], Cos[x/366*2*Pi]}, x]
+
+Plot[{temp1926[x], f1928[x]}, {x,0.5,366.5}]
+
+Plot[{temp1926[x]-f1928[x]}, {x,0.5,366.5}]
+
+f1931[x_] = Fit[temp1925, {1, x, Sin[x/366*2*Pi], Cos[x/366*2*Pi],
+ Sin[x/183*2*Pi], Cos[x/183*2*Pi]}, x]
+
+f1934[x_] = Fit[temp1925, {1, Sin[x/366*2*Pi], Cos[x/366*2*Pi],
+ Sin[x/183*2*Pi], Cos[x/183*2*Pi]}, x]
+
+f1934[x_] = Fit[temp1925, {1, Sin[x/366*2*Pi], Cos[x/366*2*Pi],
+ Sin[x/183*2*Pi], Cos[x/183*2*Pi], Sin[x/122*2*Pi], Cos[x/122*2*Pi]}, x]
+
+Plot[{temp1926[x]-f1934[x]}, {x,0.5,366.5}]
 
 
 
@@ -166,14 +280,33 @@ mention bc-astro-formulas.m mention
 
 dec avg is not 0!
 
+(* solar declination at 12h UT on nth day of year, 2000-2099 *)
+
+doy2decSun[doy_] = 
+0.005767978633879778 - 0.4003158126006976*Cos[(doy*Pi)/183] - 
+ 0.006087303223362971*Cos[(2*doy*Pi)/183] - 0.002399606972263487*
+  Cos[(doy*Pi)/61] + 0.06974587377531068*Sin[(doy*Pi)/183] + 
+ 0.0005293173364751269*Sin[(2*doy*Pi)/183] + 
+ 0.0013197353309006461*Sin[(doy*Pi)/61];
+
 <formulas>
+
+(* solar declination hour by hour for 2017-2020, 1 = Jan 1 12h UT *)
+
+doy2decSun[doy_] = 
+0.005782961777094692 - 0.4001419318234436*Cos[0.017167172970436028*doy] - 
+ 0.0060922154967620835*Cos[0.034334345940872056*doy] - 
+ 0.002387468786938206*Cos[0.05150151891130809*doy] + 
+ 0.0711242550022214*Sin[0.017167172970436028*doy] + 
+ 0.0005863132618294766*Sin[0.034334345940872056*doy] + 
+ 0.0013462049383894524*Sin[0.05150151891130809*doy];
 
 raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
   -(Cos[dec]*Sin[gmst + lon - ra])], 
  ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
     Cos[dec]^2*Sin[gmst + lon - ra]^2], 
-  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
+  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]};
 
 raDecLatLonAlt2GMST[ra_, dec_, lat_, lon_, alt_] = {
  -lon + ra + ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]],
@@ -187,18 +320,10 @@ decLatAlt2az[dec_, lat_, alt_] = {
  ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]],
  -ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]};
 
-(* solar declination at 12h UT on nth day of year, 2000-2099 *)
-
-doy2decSun[doy_] = 
-0.005767978633879778 - 0.4003158126006976*Cos[(doy*Pi)/183] - 
- 0.006087303223362971*Cos[(2*doy*Pi)/183] - 0.002399606972263487*
-  Cos[(doy*Pi)/61] + 0.06974587377531068*Sin[(doy*Pi)/183] + 
- 0.0005293173364751269*Sin[(2*doy*Pi)/183] + 
- 0.0013197353309006461*Sin[(doy*Pi)/61];
-
 conds = {
  -Pi < ra < Pi, -Pi < lon < Pi, -Pi < gmst < Pi, -Pi < az < Pi,
- -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2
+ -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2,
+ 0.5 < doy < 366.5
 };
 
 </formulas>
