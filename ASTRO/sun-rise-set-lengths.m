@@ -1,8 +1,71 @@
 TODO: answer here!
 
+(* from https://mathematica.stackexchange.com/questions/165903/how-to-approximate-specific-2-dimensional-function-general-tips?noredirect=1#comment438453_165903 *)
+
+f[lat_] = {1, lat^2, lat^4}
+
+g[n_] = {1, Cos[2*Pi*n/183], Sin[2*Pi*n/183]}
+
+f[lat_] = {1, Exp[lat]}
+
+g[n_] = {1, Cos[2*Pi*n/183], Sin[2*Pi*n/183], Cos[2*Pi*n/366], Sin[2*Pi*n/366],
+ Sin[2*Pi*n/122], Cos[2*Pi*n/122]}
+
+f[lat_] = Table[lat^i,{i,0,2}]
+
+g[n_] = Table[n^i, {i,0,2}]
+
+h = Flatten[Outer[Times, f[lat], g[n]]]
+
+M = NIntegrate[Outer[Times, h, h], {n, 0, 366}, {lat,
+-Pi/3,Pi/3},PrecisionGoal -> 5, AccuracyGoal -> 4]
+
+r = NIntegrate[h temp1942[n, lat], {n, 0, 366}, {lat,
+-Pi/3,Pi/3},PrecisionGoal -> 5, AccuracyGoal -> 4]
+
+c=Inverse[M].r
+
+temp0829[n_, lat_] = c.h
+
+ContourPlot[temp0829[n,lat*Degree] - temp1942[n,lat*Degree],
+{n,0.5,366.5},{lat,-60,60}, ImageSize -> {800,600},
+Contours -> 64, ColorFunction -> Hue, PlotLegends -> True]
+
+ContourPlot[
+(temp1942[n,lat*Degree] - temp0829[n,lat*Degree])/temp1942[n,lat*Degree],
+{n,0.5,366.5},{lat,-60,60}, ImageSize -> {800,600},
+Contours -> 64, ColorFunction -> Hue, PlotLegends -> True]
+
+(* length of sunrise/sunset, in minutes *)
+
 temp1942[doy_, lat_] = 
  N[(decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -5/6*Degree] -
- decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -18/60*Degree])/Pi*12*3600];
+ decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -18/60*Degree])/Pi*12*3600/2];
+
+(* length of day, in hours *)
+
+temp2159[doy_, lat_] = 
+ N[decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -5/6*Degree]]/Pi*12
+
+(* length of civil twilight, in minutes *)
+
+temp2200[doy_, lat_] = 
+ N[(decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -6*Degree] -
+ decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -5/6*Degree])/Pi*12*60/2];
+
+(* length of nautical twilight, in minutes *)
+
+temp2201[doy_, lat_] = 
+ N[(decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -12*Degree] -
+ decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -6*Degree])/Pi*12*60/2];
+
+(* length of astronomical twilight, in minutes *)
+
+temp2202[doy_, lat_] = 
+ N[(decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -18*Degree] -
+ decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -12*Degree])/Pi*12*60/2];
+
+
 
 Plot[temp1942[doy,60*Degree],{doy,0.5,366.5}]
 
@@ -12,13 +75,42 @@ tab2009[lat_] := tab2009[lat] =
 int2009[lat_] := int2009[lat] = Interpolation[tab2009[lat]]
 
 est2009[lat_] := est2009[lat] = Function[ x, 
- Evaluate[Fit[tab2009[lat],{1, Sin[x/183*2*Pi], Cos[x/183*2*Pi]}, x]]]
+ Evaluate[Fit[tab2009[lat],
+ {1, Sin[x/183*2*Pi], Cos[x/183*2*Pi], Sin[x/366*2*Pi], Cos[x/366*2*Pi]}, 
+ x]]]
 
 Plot[int2009[40][x] - est2009[40][x], {x,0.5,366.5}]
 
 Plot[int2009[30][x] - est2009[30][x], {x,0.5,366.5}]
 
 Plot[int2009[64][x] - est2009[64][x], {x,0.5,366.5}]
+
+const2009[lat_] := NIntegrate[temp1942[doy, lat*Degree], {doy, 0.5, 366.5}]/366
+
+cosconst2009[lat_] := NIntegrate[
+ (temp1942[doy, lat*Degree]-const2009[lat])*
+ Cos[doy/183*2*Pi], {doy, 0.5, 366.5}]/366
+
+sinconst2009[lat_] := NIntegrate[
+ (temp1942[doy, lat*Degree]-const2009[lat])*
+ Sin[doy/183*2*Pi], {doy, 0.5, 366.5}]/366
+
+power2009[doy_, lat_] = 
+ Normal[N[Series[Normal[N[Series[temp1942[doy,lat], {lat,0,4}]] ],
+ {doy,183,4}]]]
+
+derv2009[doy_, lat_] = D[temp1942[doy,lat], doy]
+
+derv2009d2[doy_, lat_] = D[temp1942[doy,lat], doy, doy]
+
+derv2009d3[doy_, lat_] = D[temp1942[doy,lat], doy, doy, doy]
+
+ContourPlot[temp1942[doy,lat*Degree],{doy,0.5,366.5}, 
+ {lat,-60, 60}, ImageSize -> {800,600}, Contours -> 64, ColorFunction -> Hue,
+ PlotLegends -> True]
+
+
+
 
 
 
@@ -327,3 +419,112 @@ conds = {
 };
 
 </formulas>
+
+(*
+
+Subject: How to approximate specific 2 dimensional function + general tips?
+
+<pre><code>
+
+(* this formula yields the length of sunrise/sunset on the nth day of
+the year (0.5 <= n <= 366.5) for latitude lat, where lat is measured
+in radians *)
+
+temp1942[n_, lat_] = 
+
+6875.493541569879*
+ (2.*ArcCos[-0.014543897651582656*Sec[lat]*Sec[0.005782961777094692 - 
+        0.4001419318234436*Cos[0.017167172970436028*n] - 
+        0.0060922154967620835*Cos[0.034334345940872056*n] - 
+        0.002387468786938206*Cos[0.05150151891130809*n] + 
+        0.0711242550022214*Sin[0.017167172970436028*n] + 
+        0.0005863132618294766*Sin[0.034334345940872056*n] + 
+        0.0013462049383894524*Sin[0.05150151891130809*n]] - 
+     1.*Tan[lat]*Tan[0.005782961777094692 - 0.4001419318234436*
+         Cos[0.017167172970436028*n] - 0.0060922154967620835*
+         Cos[0.034334345940872056*n] - 0.002387468786938206*
+         Cos[0.05150151891130809*n] + 0.0711242550022214*
+         Sin[0.017167172970436028*n] + 0.0005863132618294766*
+         Sin[0.034334345940872056*n] + 0.0013462049383894524*
+         Sin[0.05150151891130809*n]]] - 
+  2.*ArcCos[-0.00523596383141958*Sec[lat]*Sec[0.005782961777094692 - 
+        0.4001419318234436*Cos[0.017167172970436028*n] - 
+        0.0060922154967620835*Cos[0.034334345940872056*n] - 
+        0.002387468786938206*Cos[0.05150151891130809*n] + 
+        0.0711242550022214*Sin[0.017167172970436028*n] + 
+        0.0005863132618294766*Sin[0.034334345940872056*n] + 
+        0.0013462049383894524*Sin[0.05150151891130809*n]] - 
+     1.*Tan[lat]*Tan[0.005782961777094692 - 0.4001419318234436*
+         Cos[0.017167172970436028*n] - 0.0060922154967620835*
+         Cos[0.034334345940872056*n] - 0.002387468786938206*
+         Cos[0.05150151891130809*n] + 0.0711242550022214*
+         Sin[0.017167172970436028*n] + 0.0005863132618294766*
+         Sin[0.034334345940872056*n] + 0.0013462049383894524*
+         Sin[0.05150151891130809*n]]])
+
+(* it is 184 terms long in TreeForm *)
+
+In[158]:= LeafCount[TreeForm[temp1942[n,lat]]]
+
+Out[158]= 184
+
+(*
+
+I'm looking for an approximation that is significantly shorter, and
+still reasonably accurate for -Pi/3 <= lat <= Pi/3; the function blows
+up as Abs[lat] approaches Pi/2, so the approximation need not be
+accurate when Abs[lat] > Pi/3
+
+The approximation should not be a Piecewise function (like FindFormula
+tends to yield, and which Interpolate generates by design), and should
+be a reasonably easy to calculate "rule of thumb".
+
+The (extremely ugly) work I've done so far is at:
+
+https://github.com/barrycarter/bcapps/blob/master/ASTRO/sun-rise-set-lengths.m
+
+https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-astro-formulas.m
+
+I'm also looking for general tips on how to approximate a 2
+dimensional function that I can evaluate at any point. I've looked
+at most of the functions listed on
+http://reference.wolfram.com/language/FunctionApproximations/tutorial/FunctionApproximations.html
+by fixing one value in my function (usually 'n'), and then trying to
+find a pattern to the approximating functions. This does not work
+well.
+
+My goal with this specific function is to answer
+https://astronomy.stackexchange.com/questions/24304/expression-for-length-of-sunrise-sunset-as-function-of-latitude-and-day-of-year
+more succinctly than the current answer, but more generally to provide
+good approximations to other (mostly astronomical) formulas that have
+no closed form.
+
+*)
+
+https://astronomy.stackexchange.com/questions/12824/how-long-does-a-sunrise-or-sunset-take
+
+(*
+
+EDIT: This is to reply to @ulrich-neumann but is too long to be a comment:
+
+To explain my confusion, I'll use a simpler example (and use simpler, non-Mathematica, notation):
+
+  - I want to approximate a given g(x) from x=0 to x=1 by three given functions f1, f2, and f3.
+
+  - In other words, I believe `g(x) ~ a1 f1(x) + a2 f2(x) + a3 f3(x)`, for constants a1, a2, and a3.
+
+  - Ideally, I'd minimize the integral of `|g(x) - (a1 f1(x) + a2 f2(x) + a3 f3(x))|` from 0 to 1.
+
+  - However, if I consider bigger differences to be proportionally more important, and to make things simpler, I'll minimize the square of the difference, `(g(x) - (a1 f1(x) + a2 f2(x) + a3 f3(x)))^2`, although [this will yield a different answer](https://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared)
+
+  - A big advantage of using the square of the difference is that I can refactor it as: `g(x)^2 - 2g(x)(a1 f1(x) + a2 f2(x) + a3 f3(x)) + (a1 f1(x) + a2 f2(x) + a3 f3(x))^2` and then integrate term by term.
+
+  - If we allow `a = {a1,a2,a3}` and `f = {f1[x], f2[x], f3[x]}`, we have `a.f = a1 f1(x) + a2 f2(x) + a3 f3(x)` and 
+
+ can see that `a1 f1(x) + a2 f2(x) + a3 f3(x)` has a very "matrixy" feel, 
+
+
+
+In[20]:= f[x_] = a1*f1[x] + a2*f2[x] + a3*f3[x]
+
+

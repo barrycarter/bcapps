@@ -49,6 +49,10 @@ find . -iname '*.tgz' -print0 | parallel -j 1 -0 gunzip -v &
 
 find ROOT -type f -print0 | xargs -0 sha1sum > sha1sums.txt &
 
+# experimental, may help w something someday
+
+find ROOT -type f -print0 | xargs -0 file > filetypes.txt &
+
 # note that $zpaq_password should be set for this to work
 
 nice +19 zpaq -method 510 -threads 0 add "massback-$DATE.1" ROOT -key $zpaq_password -index "massback-$DATE.0" |& tee zpaq.log &
