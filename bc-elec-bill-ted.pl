@@ -85,6 +85,8 @@ for $i (split(/\n/, $hourly)) {
 
   my(@vals) = map($_=ord($_), split(//, decode_base64($i)));
 
+  debug("VALS",@vals);
+
   # per TED5000-API-R330.pdf (TODO: find full URL)
   # TODO: this is different for minute and second
   my($yr, $mo, $da, $ho) = @vals[0..3];

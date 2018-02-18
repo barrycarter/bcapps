@@ -152,8 +152,8 @@ while (<>) {
   }
 
   # unless names are equal move on
-  warn "EQUAL NAME TEST TURNED OFF!";
-#  unless ($n1 eq $n2) {next;}
+#  warn "EQUAL NAME TEST TURNED OFF!";
+  unless ($n1 eq $n2) {next;}
 
   # do the expensive lstat tests now
   unless (sep_but_equal(@f)) {
@@ -289,6 +289,20 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  # if one is in ~/MP3 and other isnt, link the other copy
+
+  for $i (0,1) {
+    if  ($files[1-$i]=~m%/mnt/extdrive5/$private{edrive}/MP3/% &&
+	 !($files[$i]=~m%/mnt/extdrive5/$private{edrive}/MP3/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return; 
+
 
 
   # tumblr thing twice because, in one instance, it's
