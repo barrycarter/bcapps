@@ -91,6 +91,10 @@ for $i (glob("/home/barrycarter/ERR/*.err")) {
     # for suppression, we ignore the PID, if any
     # TODO: add this text to @info too
     my($suptext) = $j;
+
+    # check the whole string for suppression if we ARE including PID
+    if ($suppress{$suptext}) {next;}
+
     $suptext=~s/\s*\(\d+\)\s*$//;
     debug("SUPTEXT: $suptext");
 

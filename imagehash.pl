@@ -7,23 +7,23 @@
 
 require "/usr/local/lib/bclib.pl";
 use Phash::FFI;
-use Linux::UserXAttr;
 
 for $i (@ARGV) {
 
   # TODO: consider tying attribute to mtime since mtime change could
   # mean whole thing has changed
 
-  # phashing takes a while, so store it in an extended file attribute
-  my($hash) = Linux::UserXAttr::getxattr($i, "dctImageHash");
+  # do i have phash already
+  my($out, $err, $res) = cache_command2("attr -qg dctImageHash $i");
+  $hash = $out;
+  debug("ALPHA: $hash");
 
-  # take hash in normal case that I havent set it already + store it
   unless ($hash) {
     debug("$i: taking hash, not already known");
     $hash = Phash::FFI::dct_imagehash($i);
-    Linux::UserXAttr::setxattr($i, "dctImageHash", $hash);
+    ($out, $err, $res) = cache_command2("attr -s dctImageHash -V $hash $i");
   }
 
-  printf("%x $i\n", $hash);
+  printf("%0.16x $i\n", $hash);
 }
 
