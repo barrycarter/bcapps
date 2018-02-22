@@ -1,3 +1,9 @@
+# given a list of my accounts, schedule to download data 1 per day
+# (the initial order is random, but remains the same once chosen)
+# it's ugly that I have to know there are 51 accounts, grumble
+
+exit; 
+
 # given the output of:
 
 # find . -iname '*.mkv' -o -iname '*.avi' -o -iname '*.mp4' -print0 |
@@ -6,6 +12,8 @@
 # egrep '^filename=|^duration=' ffprobe2.txt > ffprobe3.txt
 
 # print the duration and filename on a single line
+
+# TODO: make duration an extended file attribute
 
 perl -le 'while (<>) {$foo = <>; $foo=~s/\n//; $foo=~s/duration=//; s/filename=//; print "$foo $_"}' ffprobe3.txt 
 
