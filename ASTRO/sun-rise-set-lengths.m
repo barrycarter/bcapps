@@ -237,6 +237,42 @@ temp1925 = Table[{Transpose[i][[1,1]], Mean[Transpose[i][[2]]]}, {i,temp0912}];
 
 temp1926[x_] = Interpolation[temp1925][x]
 
+temp2120=Total[Table[(a0+a1*Cos[a2*i[[1]]-a3] - i[[2]])^2, {i,temp1925}]]
+
+f2134[x_] = a0 + a1*Cos[x/366*2*Pi-a2] + a3*Cos[x/183*2*Pi-a4]
+
+temp2135 = Total[Table[(f2134[i[[1]]] - i[[2]])^2, {i, temp1925}]]
+
+temp2136 = NMinimize[temp2135, {a0, a1, a2, a3, a4}]
+
+f2136[x_] = f2134[x] /. temp2136[[2]]
+
+Plot[{temp1926[x], f2136[x]}, {x,0.5,366.5}]
+
+good to 0.003 radians or 0.17 degrees
+
+f2138[x_] = a0 + a1*Cos[x/366*2*Pi-a2] + a3*Cos[x/183*2*Pi-a4] + 
+ a5*Cos[x/122*2*Pi-a6]
+
+temp2138 = Total[Table[(f2138[i[[1]]] - i[[2]])^2, {i, temp1925}]]
+
+temp2139 = NMinimize[temp2138, {a0, a1, a2, a3, a4, a5, a6}]
+
+f2140[x_] = f2138[x] /. temp2139[[2]]
+
+Plot[{temp1926[x], f2140[x]}, {x,0.5,366.5}]
+
+temp2125=Total[Table[(a0+a1*Cos[i[[1]]/366*2*Pi-a3] - i[[2]])^2, {i,temp1925}]]
+
+temp2121 = NMinimize[temp2125, {a0,a1,a3}]
+
+f2118[x_] = a0+a1*Cos[x/366*2*Pi-a3] /. temp2121[[2]]
+
+Plot[{temp1926[x], f2118[x]}, {x,0.5,366.5}]
+
+
+
+
 f1928[x_] = Fit[temp1925, {1, Sin[x/366*2*Pi], Cos[x/366*2*Pi]}, x]
 
 Plot[{temp1926[x], f1928[x]}, {x,0.5,366.5}]
@@ -288,7 +324,7 @@ temp1044 = ReadList["/mnt/villa/user/20180205/solar.txt", "Record",
 
 
 
-To an accuracy of $0.05 {}^{\circ}$, the Sun's average declination at 12h UT on the nth day of the year for the years 2000-2099 inclusive is:
+To an accuracy of $0.05 {}^{\circ}$, the Sun's average declination at 12h UT on the nth day of the year for the years 2000-2099 (*** NO LONGER TRUE) inclusive is:
 
 $
   0.0697459 \sin \left(\frac{\pi  n}{183}\right)+0.000529317 \sin \left(\frac{2
@@ -507,6 +543,10 @@ https://astronomy.stackexchange.com/questions/12824/how-long-does-a-sunrise-or-s
 
 EDIT: This is to reply to @ulrich-neumann but is too long to be a comment:
 
+***edit wording above
+
+
+
 To explain my confusion, I'll use a simpler example (and use simpler, non-Mathematica, notation):
 
   - I want to approximate a given g(x) from x=0 to x=1 by three given functions f1, f2, and f3.
@@ -526,5 +566,112 @@ To explain my confusion, I'll use a simpler example (and use simpler, non-Mathem
 
 
 In[20]:= f[x_] = a1*f1[x] + a2*f2[x] + a3*f3[x]
+
+
+another attempt to figure out re linear combos
+
+temp1647 = 
+Flatten[Outer[Times,{1, lat^2, lat^4},{1, Cos[2*Pi*n/183], Sin[2*Pi*n/183]}]]
+
+temp1648[n_,lat_] = Total[Table[a[i]*temp1647[[i]],{i,1,Length[temp1647]}]]
+
+temp1649[n_,lat_] = (temp1942[n,lat]-temp1648[n,lat])^2
+
+temp1707 = Expand[(temp1942[n,lat]-temp1648[n,lat])^2]
+
+temp1711[i_] := temp1711[i] = Integrate[temp1707[[i]], {n, 0.5,
+366.5}, {lat, -60*Degree, 60*Degree}]
+
+t2031 = Flatten[Table[{doy, lat, temp1942[doy,lat]}, {doy,0.5, 366.5,
+0.5},{lat, -60*Degree, 60*Degree, 1*Degree}],1];
+
+Fit[t2031, temp1647, {n, lat}]
+
+
+temp1708 = 
+Table[Integrate[temp1707[[i]], {n, 0.5, 366.5}, {lat, -60*Degree, 60*Degree}],
+ {i, 1, Length[temp1707]}]
+
+Integrate[temp1649[n,lat], {n,0.5,366.5}, {lat, -60*Degree, 60*Degree}]
+
+
+
+Integrate[(temp1942[n,lat] - temp1648[n,lat])^2,
+ {n,0.5,366.5}, {lat, -60*Degree, 60*Degree}]
+
+
+Subject: How to tell NIntegrate to use linearity for constants?
+
+I'm performing a definite integral on a sum of 66 fairly complicated
+terms. Sample term + integral (`a[2]` is a constant):
+
+<pre><code>
+
+temp1733[n_, lat_] = 
+-27501.974166279517*a[2]*
+ ArcCos[-0.014543897651582656*Sec[lat]*
+   Sec[0.005782961777094692 - 0.4001419318234436*Cos[0.017167172970436028*n] - 
+      0.0060922154967620835*Cos[0.034334345940872056*n] - 
+      0.002387468786938206*Cos[0.05150151891130809*n] + 
+      0.0711242550022214*Sin[0.017167172970436028*n] + 
+      0.0005863132618294766*Sin[0.034334345940872056*n] + 
+      0.0013462049383894524*Sin[0.05150151891130809*n]] - 
+   1.*Tan[lat]*Tan[0.005782961777094692 - 0.4001419318234436*
+       Cos[0.017167172970436028*n] - 0.0060922154967620835*
+       Cos[0.034334345940872056*n] - 0.002387468786938206*
+       Cos[0.05150151891130809*n] + 0.0711242550022214*
+       Sin[0.017167172970436028*n] + 0.0005863132618294766*
+       Sin[0.034334345940872056*n] + 0.0013462049383894524*
+       Sin[0.05150151891130809*n]]]*Cos[(2*n*Pi)/183]
+
+temp1734 = Integrate[temp1733[n,lat], {n, 0.5, 366.5}, {lat,
+ -60*Degree, 60*Degree}]
+
+</code></pre>
+
+On my machine, the definite integral above times out. Since almost all my values are numerical, I'd like to use `NIntegrate`, but can't, because `a[2]` isn't a numerical value. Of course, in this case, I can simply do:
+
+<pre><code>
+
+a[2]*NIntegrate[temp1733[n,lat]/a[2], {n, 0.5, 366.5}, {lat, 
+ -60*Degree, 60*Degree}] 
+
+</code></pre>
+
+to get the answer (it happens to be `-18229.40312917879*a[2]` in this case).
+
+However, I don't want to have to look at each of my terms to factor out the constants.
+
+Is there any way I can tell `NIntegrate` to use linearity of integration for constants? I understand why `NIntegrate` can't handle more deeply nested constants (see https://mathematica.stackexchange.com/questions/159243/), but it seems constants used in a purely linear way should work.
+
+I did try things like `Coefficient` and `CoefficientList`, but they won't work in my case because the function I'm using isn't a polynomial in my constants. Even if I can't coerce `NIntegrate` to handle my functions, there must be a way to separate out and then rejoin the constant parts?
+
+This question is a followup of sorts to the answer https://mathematica.stackexchange.com/a/165937/1722 which shows a more complicated (in my opinion) way to solve a similar problem.
+
+(Sum[a[i]*f[i], {i,1,5}]-f)^2
+
+(Sum[a[i]*f[i], {i,1,n}]-f)^2 - 
+Sum[a[i]*a[j]*f[i]*f[j], {i,1,n}, {j,1,n}] -
+-2*Sum[f*a[i]*f[i], {i,1,n}] - f^2
+
+(f[x]- Sum[a[i]*f[i], {i,1,n}])^2 
+
+TODO: note using single variable here, could be any region
+
+Integrate[(f[x]- Sum[a[i]*f[i][x], {i,1,n}])^2, x]
+
+Integrate[Sum[a[i]*a[j]*f[i][x]*f[j][x], {i,1,n}, {j,1,n}], x]
+
+
+
+
+((Sum[a[i]*f[i], {i,1,n}]-f)^2 - Sum[a[i]*a[j]*f[i]*f[j], {i,1,n}, {j,1,n}]) /.
+ n -> 5
+
+Fit[x^2 + y^2, {Sqrt[x], Sqrt[y]}, {x,y}]
+
+
+t2058 = Collect[(f - Sum[a[i]*f[i],{i,1,4}])^2, _a]
+
 
 

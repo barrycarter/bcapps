@@ -7,6 +7,7 @@ efibootmgr
 
 # system tools
 
+symlinks
 libattr-devel
 xfsprogs-devel
 xfsprogs
@@ -270,6 +271,7 @@ libmpg123-devel
 
 # graphics incl scanning and fonts
 # some of these may be installed by a groupinstall
+mtpaint
 xournal
 perl-Image-ExifTool
 # below is flash player

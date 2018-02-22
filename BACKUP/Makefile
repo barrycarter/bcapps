@@ -11,18 +11,18 @@ all: filelist.txt
 # afad = all files, all directories
 
 afad.txt: ${converted}
-	sort ${converted} > afad.txt
+	nice -n 19 sort ${converted} > afad.txt
 
 # everything previously backed up, sorted
 # TODO: assuming the *.exclude files are up-to-date, but should check for that
 
 previouslydone.txt.srt:
-	sort -t '\0' -k2nr /root/massbacks-idrive-saopaulo/*.exclude | sort -t '\0' -k1,1 -u > previouslydone.txt.srt
+	nice -n 19 sort -t '\0' -k2nr /root/massbacks-idrive-saopaulo/*.exclude | nice -n 19 sort -t '\0' -k1,1 -u > previouslydone.txt.srt
 
 # the files bc-chunk-backup2 uses to determine what to back up
 
 backup0.txt: afad.txt previouslydone.txt.srt
-	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | sort -t '\0' -k2nr > backup0.txt
+	nice -n 19 join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | nice -n 19 sort -t '\0' -k2nr > backup0.txt
 
 # create exclusions egrep file from annotated file
 exclusions.txt: exclusions-commented.txt
@@ -30,6 +30,6 @@ exclusions.txt: exclusions-commented.txt
 
 # bc-chunk-backup2 creates statlist.txt and filelist.txt just usign one
 filelist.txt: exclusions.txt backup0.txt
-	egrep -avf exclusions.txt backup0.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
+	nice -n 19 egrep -avf exclusions.txt backup0.txt | nice -n 19 bc-join-backup.pl | nice -n 19 bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
 
 # TODO: write up the meta-procedure for using this Makefile
