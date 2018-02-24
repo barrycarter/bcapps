@@ -36,7 +36,15 @@ ContourPlot[
 {n,0.5,366.5},{lat,-60,60}, ImageSize -> {800,600},
 Contours -> 64, ColorFunction -> Hue, PlotLegends -> True]
 
-(* length of sunrise/sunset, in minutes *)
+ContourPlot[temp1942[n,lat*Degree],
+{n,0.5,366.5},{lat,-60,60}, ImageSize -> {800,600},
+Contours -> 64, ColorFunction -> Hue, PlotLegends -> True]
+
+ContourPlot[temp1942[n,lat*Degree],
+{n,0.5,366.5},{lat,-65,65}, ImageSize -> {800,600},
+Contours -> 64, ColorFunction -> Hue, PlotLegends -> True]
+
+(* length of sunrise/sunset, in seconds *)
 
 temp1942[doy_, lat_] = 
  N[(decLatAlt2TimeAboveAlt[doy2decSun[doy], lat, -5/6*Degree] -
@@ -422,12 +430,10 @@ doy2decSun[doy_] =
 (* solar declination hour by hour for 2017-2020, 1 = Jan 1 12h UT *)
 
 doy2decSun[doy_] = 
-0.005782961777094692 - 0.4001419318234436*Cos[0.017167172970436028*doy] - 
- 0.0060922154967620835*Cos[0.034334345940872056*doy] - 
- 0.002387468786938206*Cos[0.05150151891130809*doy] + 
- 0.0711242550022214*Sin[0.017167172970436028*doy] + 
- 0.0005863132618294766*Sin[0.034334345940872056*doy] + 
- 0.0013462049383894524*Sin[0.05150151891130809*doy];
+0.0057829543264974964 - 0.40641386702350013*
+  Cos[0.17591034793235705 + (doy*Pi)/183] - 0.006120371238861089*
+  Cos[0.09594426510756572 + (2*doy*Pi)/183] - 
+ 0.0027408604099180994*Cos[0.5134241402204166 + (doy*Pi)/61]
 
 raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 

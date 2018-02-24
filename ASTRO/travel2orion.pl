@@ -69,6 +69,7 @@ open(A,"zcat $bclib{githome}/ASTRO/hygdata_v3.csv.gz|");
 my(@head) = split(/,/,<A>);
 
 # ignore sun
+# TODO: don't ignore sun
 <A>;
 
 while (<A>) {

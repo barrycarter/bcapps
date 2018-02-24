@@ -1,0 +1,8 @@
+# attempt to create a display for travel2orion.pl
+new
+size 1280,720
+setpixel 0,0,0,0,0
+circle 320,360,640,0,0,255
+circle 960,360,640,0,0,255
+circle 640,180,120,0,0,255
+circle 640,60,120,0,0,255

@@ -4,7 +4,7 @@
 # STDIN), create a download schedule, one per day
 
 # note that randomization is intentionally one time only
-# My usage: grep -v '^#' ~/myaccounts.txt | sort -R | sched-downloads.pl
+# My usage: grep -v '^#' ~/myaccounts.txt | sched-downloads.pl
 
 require "/usr/local/lib/bclib.pl";
 
