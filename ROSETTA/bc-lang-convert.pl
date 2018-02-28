@@ -108,7 +108,7 @@ for $i (sort keys %lang) {
     # everything
     debug("CURFUND: $curfunc{body}");
     # TODO: this is probably broken now, fix
-    $curfunc{body}=~s/[^\.\d](\d+)([^\.])/$1.0$2/g;
+    $curfunc{body}=~s/([^\.\d])(\d+)([^\.])/$1$2.0$3/g;
 
     debug("FAMMA: $curfunc{body}");
 
