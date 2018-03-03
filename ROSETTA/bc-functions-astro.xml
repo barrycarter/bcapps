@@ -1,6 +1,6 @@
 <function name="raDecLatLonGMST2azAlt">
 <active>1</active>
-<nice>raDecLatLonGMST2azAlt(ra,dec,lat,lon,gmst)</nice>
+<nice>raDecLatLonGMST2azAlt(ra, dec, lat, lon, gmst)</nice>
 <vars>ra,dec,lat,lon,gmst</vars>
 <desc>Given the right ascension and declination of a celestial object, the latitude and longitude of an observer, and the Greenwich mean sidereal time, return the objects azimuth and altitude. All angles and times must be given in radians</desc>
 <body>
@@ -18,6 +18,77 @@
 <answer>0.171079, 0.72093</answer>
 </function>
 
+<function name="raDecLatLonAlt2GMST">
+<active>1</active>
+<nice>raDecLatLonAlt2GMST(ra, dec, lat, lon, alt)</nice>
+<vars>ra,dec,lat,lon,alt>
+<desc>Given an object's right ascension and declination, an observer's latitude and longitude, and a target altitude alt, return the two daily sidereal times (in radians) at which the object will have altitude alt</desc>
+<body>
+  List[Plus[Times[-1, lon], ra, 
+ ArcCos[Plus[Times[Sec[dec], Sec[lat], Sin[alt]],
+ Times[-1, Tan[dec], Tan[lat]]]]],
+ Plus[Times[-1, lon], ra, Times[-1,
+ ArcCos[Plus[Times[Sec[dec], Sec[lat], Sin[alt],
+ Times[-1, Tan[dec], Tan[lat]]]]]]]
+</body>
+</function>
+
+<function name="decLatAlt2TimeAboveAlt">
+<active>1</active>
+<nice>decLatAlt2TimeAboveAlt(dec, lat, alt)</nice>
+<vars>dec,lat,alt</vars>
+<desc>Given an object's declination, a viewer's latitude, and a target altitude, return the amount of time (in sidereal radians) that the object is above the given altitude per sidereal day</desc>
+<body>
+ Times[2, ArcCos[Plus[Times[Sec[dec], Sec[lat], Sin[alt]],
+ Times[-1, Tan[dec], Tan[lat]]]]]
+</body>
+</function>
+
+<function name="decLatAlt2az">
+<active>1</active>
+<nice>decLatAlt2az(dec, lat, alt></nice>
+<vars>dec,lat,alt</vars>
+<desc>Given an object's declination, an observer's latitude, and a target altitude alt, return the two azimuths at which the object has altitude alt; these values will be positive/negative of each other</desc>
+<body>
+ List[ArcCos[Plus[Times[Sec[alt], Sec[lat], Sin[dec]], 
+ Times[-1, Tan[alt], Tan[lat]]]], 
+ Times[-1, ArcCos[Plus[Times[Sec[alt], Sec[lat], Sin[dec]], 
+ Times[-1, Tan[alt], Tan[lat]]]]]]
+</body>
+</function>
+
+<function name="decLatAlt2azAbs">
+<active>1</active>
+<nice>decLatAlt2azAbs(dec, lat, alt)</nice>
+<vars>dec,lat,alt</vars>
+<desc>Given an object's declination, a viewer's latitude, and a target altitudealt, return the absolute value of the azimuth position when the object's altitude is alt; the actual azimuth is plus or minus this value</desc>
+<body>
+ Abs[ArcCos[Plus[Times[Sec[alt], Sec[lat], Sin[dec]], 
+ Times[-1, Tan[alt], Tan[lat]]]]]
+</body>
+</function>
+
+TODO: note that alt = 0 -> geometric rise/set -> simpler formula -> formula guy comes up w/ in other answer
+
+
+
+
+<function name="vectorAngle">
+<active>1</active>
+<nice>vectorAngle(th1, ph1, th2, ph2)</nice>
+<vars>th1,ph1,th2,ph2</vars>
+<desc>The angular distance between spherical coordinates {th1, ph1} and {th2, ph2}, all in radians</desc>
+<body>
+ ArcCos[Plus[Times[Cos[ph1], Cos[ph2], Cos[Plus[th1, Times[-1, th2]]]], 
+ Times[Sin[ph1], Sin[ph2]]]]
+</body>
+<argtest>5.86779, -5.7952, -0.940277, 1.73298</argtest>
+<answer>1.22466</answer>
+</function>
+
+
+
+
 TODO: reactivate functions I've temporarily deactivated
 
 <function name="rad2Hour">
@@ -32,3 +103,7 @@ TODO: reactivate functions I've temporarily deactivated
     6.2831853071795864769252867665590057684`20.]
 </body>
 </function>
+
+TODO: all observer -> viewer
+
+TODO: have an entire section for tests of all functions, not per function testing

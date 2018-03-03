@@ -118,6 +118,9 @@ decLatAlt2az[dec_, lat_, alt_] = {
  ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]],
  -ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]};
 
+decLatAlt2azAbs[dec_, lat_, alt_] = 
+ Abs[ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]]
+
 (* inclination of ecliptic treated as a fixed constant + as func of mjd *)
 
 eclipticFixed[] = 23.4393*Degree;
@@ -148,6 +151,40 @@ conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
 </sources>
 
 <work>
+
+decLatAlt2azAbs[dec,lat,alt]
+
+In[78]:= Simplify[Solve[decLatAlt2az[dec,lat,alt][[1]] == az, alt],conds][[1,1,2
+,1]]                                                                            
+
+
+Solve[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]] == az, gmst]
+
+Solve[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]] == az, gmst]
+
+ (gmst /. FullSimplify[Solve[Tan[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gm
+st][[1]]] == Tan[az], gmst],conds][[1]])[[1]]     
+
+Solve[Tan[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]]] == tanaz, gmst]
+
+sols =
+FullSimplify[Solve[Tan[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]]]
+== tanaz, gmst] , conds] /. C[1] -> 0
+
+sols2 =
+Solve[Tan[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]]]==Tan[az],
+gmst] /. C[1] -> 0
+
+sols2[[1,1,2]]
+sols2[[2,1,2]]
+
+FullSimplify[sols2[[1,1,2]],conds]
+
+FullSimplify[Tan[sols2[[1,1,2]]+lon-ra],conds]
+
+
+
+
 
 decLatAlt2az[eclipticFixed[], lat, -5/6*Degree]/Degree
 
@@ -211,7 +248,7 @@ raDec2azAltMat[lat_, lon_, gmst_] =
   Cos[lat]*Sin[gmst + lon], Sin[lat]}}
 
 azAlt2raDecMat[lat_, lon_, gmst_] = 
- FullSimplify[Inverse[raDec2azAltmat[lat,lon,gmst]], conds]
+ FullSimplify[Inverse[raDec2azAltMat[lat,lon,gmst]], conds]
 
 raDec2azAltMat[lat,lon,gmst].sph2xyz[{ra,dec,1}] ==
  {Cos[az] Cos[el], Cos[el] Sin[az], Sin[el]}

@@ -124,8 +124,10 @@ for $i (sort keys %lang) {
     debug("CURFUNC PRE", %curfunc);
 
     while ($curfunc{body}=~s/([a-z0-9]+)\[([^\[\]]*?)\]/multiline_parse($1,$2,$i)/ie) {}
-    while ($curfunc{body}=~s/var(\d+)/$hash{$1}/g) {}
-
+    while ($curfunc{body}=~s/var(\d+)/$hash{$1}/g) {
+      debug("MULTI: var$1 = $hash{$1}");
+    }
+    
     # this is ugly, since we're defining into a function hash
     # TODO: the trim here is seriously ugly, but python needs it
     $curfunc{body} = trim($curfunc{body});
