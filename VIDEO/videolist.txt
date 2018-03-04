@@ -1,0 +1,224 @@
+A list of TV shows that I may or may not fastify. The [CODE] meanings:
+
+  - [DONE]: Already "fastified" and available at
+  https://www.youtube.com/watch?v=YDT-gV1lHjk&list=PLQiTKaefaTLoH9qlVCh7G091FD7d4IYm1
+  -- may be available at
+  http://www.dailymotion.com/dm_c8e4c905d2914a1e635acb339eab9138 but I
+  am having trouble with dailymotion.com
+
+  - [GETTING]: I am in the process of obtaining these series
+
+  - [CANTGET]: Series that I am currently unable to obtain
+
+  - [DONTWANT]: Series I am aware of that vaguely fit my "sitcoms from
+  the 70s and 80s" rule, but that I do not plan to fastify.
+
+  - [SPECIAL]: Special case with explanation following in brackets
+
+  - [STILLGOING]: Series that are still in progress that I probably
+  won't fastify until they end or I run out of other series; however,
+  note the word "probably"
+
+  - (no tag): Has not yet been sorted into one of the categories above
+
+Shows are in case-insensitive alphabetical order (TODO: automatically
+generate lists for each tag)
+
+227
+30 Rock [DONE]
+8 Simple Rules [DONTWANT]
+A Different World
+A Fine Romance
+A Fine Romance [GETTING]
+Addams Family
+AfterMASH
+ALF [DONE]
+Alfred Hitchcock Presents [DONE]
+Alice
+All in the Family [GETTING]
+Always Sunny in Philadelphia
+Amen
+Archie Bunker's Place [GETTING]
+Are You Being Served?
+As Time Goes By [GETTING]
+Babylon 5 [DONE]
+Barney Miller [GETTING]
+Batman 60's
+Benson
+Bewitched [GETTING]
+Big Bang Theory
+Big Brother (various) [GETTING]
+Blackadder [DONE]
+Blossom
+Boy Meets World
+Brady Bunch [GETTING]
+Buck Rogers in the 25th Century [DONE]
+Car 54, Where Are You
+Carol Burnett Show
+Charles in Charge [GETTING]
+Cheers
+Coupling [DONE]
+Courtship Of Eddie's Father
+curb your enthusiasm [STILLGOING]
+Degrassi High
+Degrassi Junior High
+Designing Women [GETTING]
+Diff'rent Strokes [GETTING]
+Dilbert [DONE]
+Doctor Who??
+Doogie Howser
+Dukes of Hazard
+Eight Is Enough [GETTING]
+Empty Nest [GETTING]
+Enterprise
+Episodes [GETTING]
+Everybody Hates Chris [DONTWANT]
+Everyone Loves Raymond [DONTWANT]
+Extras
+Facts of Life
+Family Guy
+Family Matters
+Family Ties [GETTING]
+Fawlty Towers [GETTING]
+Fernwood Tonight
+Ferris bueller
+Flo
+Frasier [DONE]
+Fresh Prince of Bel-Air
+Friends [DONE]
+Full House [DONE]
+Full(er) House [STILLGOING]
+Gilligan's Island [GETTING]
+Gimme a Break!
+Girl Meets World [DONTWANT]
+Golden Girls [GETTING]
+Gomer Pyle, USMC [GETTING]
+Good Times
+Green Acres [GETTING]
+Growing Pains
+Hangin' with Mister Cooper [DONTWANT]
+Happy Days
+Head of the Class
+Hee Haw
+Hi Honey, I'm Home
+Home Improvement [DONT WANT]
+How I Met Your Mother
+I Dream of Jeannie [DONE]
+It's Your Move
+Jeeves and Wooster [DONE]
+Joey [DONE]
+Kate & Allie
+Kids in the Hall [DONE]
+King of Queens
+King of the Hill
+Knight Rider [GETTING]
+Laverne & Shirley [GETTING]
+Leave It To Beaver [GETTING]
+Love American Style
+Mad About You
+Malcolm inthe Middle
+Mama's Family [GETTING]
+Married.. with Children [DONE]
+Martin
+Mary Hartman, Mary Hartman
+Mary Tyler Moore [GETTING]
+MASH
+Maude [CANTGET]
+Misfits Of Science [DONTWANT]
+Mister Ed [GETTING]
+modern family
+Moon Over Miami [DONTWANT]
+Moonlighting [DONE]
+Mork and Mindy [DONE]
+Mr Belvadere [GETTING]
+Munsters
+Muppet Babies
+murphy brown
+My Name is Earl [DONTWANT]
+My Three Sons [DONTWANT]
+My Two Dads
+Newhart [GETTING]
+Newsradio
+Night Court [DONE]
+Not Going Out [GETTING] (is this still in progress?)
+Out Of This World [CANTGET]
+Parker Lewis Can't Lose
+Parks and Recreation
+Perfect Strangers [GETTING]
+Punky Brewster [GETTING]
+Reading Rainbow
+Reba [GETTING]
+Rhoda
+Rocky and Bullwinkle Show [GETTING]
+Roseanne
+Rules of Engagement [GETTING] (still in progress?)
+Sanford and Son
+Saturday Night Live [GETTING] (still in progress, special case?)
+Saved by the Bell
+Scrubs
+Seinfeld [GETTING]
+Sesame Street [STILLGOING] (still in progress, special case?)
+Sex and the City [DONTWANT]
+She's The Sherrif
+Silver Spoons [GETTING]
+Sister Kate
+Sledge Hammer! [DONE]
+Small Wonder [GETTING]
+Soap [GETTING]
+Spin City [DONTWANT]
+Square Pegs [DONTWANT]
+Star Trek (original series) [DONE]
+Star Trek: Deep Space Nine
+Star Trek: Discover [STILLGOING]
+Star Trek: The Animated Series
+Star Trek: The Next Generation
+Star Trek: Voyager [DONE]
+Step by Step
+Suite Life+ followup
+Superfriends?
+Tales From the Crypt [DONE]
+Taxi
+That 70's Show [GETTING]
+That 80;s Show
+That's So Raven [DONTWANT]
+The Bob Newhart Show
+The Charmings
+The Cosby Show [GETTING]
+The Dick Van Dyke Show [GETTING]
+The Drew Carey Show [DONE]
+The Dukes of Hazzard [GETTING]
+The Flintstones [DONE]
+The IT Crowd
+The Jeffersons [SPECIAL] [no source for seasons 4+]
+The Jetsons [DONE]
+The Larry Sanders Show [DONE]
+The Many Loves of Dobie Gillis [GETTING]
+The Monkees [GETTING]
+The Muppet Show [DONE]
+The Nanny [DONTWANT]
+The Odd Couple [DONTWANT]
+The Office [DONE]
+The Outer Limits [DONE]
+The Partridge Family [DONTWANT]
+The Patty Duke Show [GETTING]
+The Simpsons [STILLGOING]
+The Tortellis
+The Twilight Zone [DONE]
+The Wonder Years [DONE]
+Third Rock From the Sun [DONE]
+Three's A Crowd and The Ropers
+Three's Company [DONE]
+Tiny Toon Adventures [DONE]
+Too Close For Comfort
+Two Broke Girls
+Webster [CANTGET]
+Welcome Back Kotter [GETTING]
+What's Happening!! [DONE]
+Who's the Boss [CANTGET]
+Whose Line Is It Anyway? (multiple versions)
+Will and Grace [STILLGOING]
+Wings [DONTWANT]
+WKRP in Cincinnati [GETTING]
+Wodehouse Playhouse [GETTING]
+You Can't Do That On Television
+
