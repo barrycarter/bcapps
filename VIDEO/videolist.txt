@@ -28,7 +28,6 @@ generate lists for each tag)
 30 Rock [DONE]
 8 Simple Rules [DONTWANT]
 A Different World
-A Fine Romance
 A Fine Romance [GETTING]
 Addams Family
 AfterMASH
@@ -50,6 +49,7 @@ Big Bang Theory
 Big Brother (various) [GETTING]
 Blackadder [DONE]
 Blossom
+Bosom Buddies
 Boy Meets World
 Brady Bunch [GETTING]
 Buck Rogers in the 25th Century [DONE]
@@ -59,7 +59,7 @@ Charles in Charge [GETTING]
 Cheers
 Coupling [DONE]
 Courtship Of Eddie's Father
-curb your enthusiasm [STILLGOING]
+Curb Your Enthusiasm [STILLGOING]
 Degrassi High
 Degrassi Junior High
 Designing Women [GETTING]
@@ -82,12 +82,13 @@ Family Ties [GETTING]
 Fawlty Towers [GETTING]
 Fernwood Tonight
 Ferris bueller
+Fish
 Flo
 Frasier [DONE]
 Fresh Prince of Bel-Air
 Friends [DONE]
 Full House [DONE]
-Full(er) House [STILLGOING]
+Fuller House [STILLGOING]
 Gilligan's Island [GETTING]
 Gimme a Break!
 Girl Meets World [DONTWANT]
@@ -97,7 +98,7 @@ Good Times
 Green Acres [GETTING]
 Growing Pains
 Hangin' with Mister Cooper [DONTWANT]
-Happy Days
+Happy Days [SPECIAL] (versions I have contain commercials)
 Head of the Class
 Hee Haw
 Hi Honey, I'm Home
@@ -106,6 +107,7 @@ How I Met Your Mother
 I Dream of Jeannie [DONE]
 It's Your Move
 Jeeves and Wooster [DONE]
+Joanie Loves Chaci
 Joey [DONE]
 Kate & Allie
 Kids in the Hall [DONE]
@@ -115,14 +117,15 @@ Knight Rider [GETTING]
 Laverne & Shirley [GETTING]
 Leave It To Beaver [GETTING]
 Love American Style
+Love Boat
 Mad About You
-Malcolm inthe Middle
+Malcolm in the Middle [DONTWANT]
 Mama's Family [GETTING]
 Married.. with Children [DONE]
 Martin
 Mary Hartman, Mary Hartman
 Mary Tyler Moore [GETTING]
-MASH
+MASH [DONE]
 Maude [CANTGET]
 Misfits Of Science [DONTWANT]
 Mister Ed [GETTING]
@@ -133,7 +136,7 @@ Mork and Mindy [DONE]
 Mr Belvadere [GETTING]
 Munsters
 Muppet Babies
-murphy brown
+Murphy Brown
 My Name is Earl [DONTWANT]
 My Three Sons [DONTWANT]
 My Two Dads
@@ -141,6 +144,7 @@ Newhart [GETTING]
 Newsradio
 Night Court [DONE]
 Not Going Out [GETTING] (is this still in progress?)
+One Day At A Time
 Out Of This World [CANTGET]
 Parker Lewis Can't Lose
 Parks and Recreation
@@ -163,6 +167,7 @@ She's The Sherrif
 Silver Spoons [GETTING]
 Sister Kate
 Sledge Hammer! [DONE]
+Sliders
 Small Wonder [GETTING]
 Soap [GETTING]
 Spin City [DONTWANT]
@@ -174,12 +179,12 @@ Star Trek: The Animated Series
 Star Trek: The Next Generation
 Star Trek: Voyager [DONE]
 Step by Step
-Suite Life+ followup
+Suite Life+ [need to get name here]
 Superfriends?
 Tales From the Crypt [DONE]
 Taxi
 That 70's Show [GETTING]
-That 80;s Show
+That 80's Show
 That's So Raven [DONTWANT]
 The Bob Newhart Show
 The Charmings
@@ -206,11 +211,13 @@ The Tortellis
 The Twilight Zone [DONE]
 The Wonder Years [DONE]
 Third Rock From the Sun [DONE]
-Three's A Crowd and The Ropers
+Three's A Crowd
+The Ropers
 Three's Company [DONE]
 Tiny Toon Adventures [DONE]
 Too Close For Comfort
 Two Broke Girls
+Unhappily Ever After [SPECIAL] (I want to watch this before fastifying it)
 Webster [CANTGET]
 Welcome Back Kotter [GETTING]
 What's Happening!! [DONE]
@@ -221,4 +228,3 @@ Wings [DONTWANT]
 WKRP in Cincinnati [GETTING]
 Wodehouse Playhouse [GETTING]
 You Can't Do That On Television
-
