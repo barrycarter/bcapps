@@ -45,7 +45,7 @@ Barney Miller [GETTING]
 Batman 60's
 Benson
 Bewitched [GETTING]
-Big Bang Theory
+Big Bang Theory [STILLGOING]
 Big Brother (various) [GETTING]
 Blackadder [DONE]
 Blossom
@@ -56,9 +56,9 @@ Buck Rogers in the 25th Century [DONE]
 Car 54, Where Are You
 Carol Burnett Show
 Charles in Charge [GETTING]
-Cheers
+Cheers [GETTING]
 Coupling [DONE]
-Courtship Of Eddie's Father
+Courtship Of Eddie's Father [GETTING]
 Curb Your Enthusiasm [STILLGOING]
 Degrassi High
 Degrassi Junior High
@@ -70,18 +70,18 @@ Doogie Howser
 Dukes of Hazard
 Eight Is Enough [GETTING]
 Empty Nest [GETTING]
-Enterprise
+Enterprise [GETTING]
 Episodes [GETTING]
 Everybody Hates Chris [DONTWANT]
 Everyone Loves Raymond [DONTWANT]
 Extras
-Facts of Life
+Facts of Life [GETTING]
 Family Guy
-Family Matters
+Family Matters [GETTING]
 Family Ties [GETTING]
 Fawlty Towers [GETTING]
 Fernwood Tonight
-Ferris bueller
+Ferris Bueller
 Fish
 Flo
 Frasier [DONE]
@@ -103,7 +103,7 @@ Head of the Class
 Hee Haw
 Hi Honey, I'm Home
 Home Improvement [DONT WANT]
-How I Met Your Mother
+How I Met Your Mother [GETTING]
 I Dream of Jeannie [DONE]
 It's Your Move
 Jeeves and Wooster [DONE]
@@ -156,7 +156,7 @@ Rhoda
 Rocky and Bullwinkle Show [GETTING]
 Roseanne
 Rules of Engagement [GETTING] (still in progress?)
-Sanford and Son
+Sanford and Son [GETTING]
 Saturday Night Live [GETTING] (still in progress, special case?)
 Saved by the Bell
 Scrubs
@@ -173,10 +173,10 @@ Soap [GETTING]
 Spin City [DONTWANT]
 Square Pegs [DONTWANT]
 Star Trek (original series) [DONE]
-Star Trek: Deep Space Nine
+Star Trek: Deep Space Nine [GETTING]
 Star Trek: Discover [STILLGOING]
 Star Trek: The Animated Series
-Star Trek: The Next Generation
+Star Trek: The Next Generation [GETTING]
 Star Trek: Voyager [DONE]
 Step by Step
 Suite Life+ [need to get name here]
@@ -228,3 +228,13 @@ Wings [DONTWANT]
 WKRP in Cincinnati [GETTING]
 Wodehouse Playhouse [GETTING]
 You Can't Do That On Television
+Two and a Half Men [GETTING]
+Community [GETTING]
+Hey Dude! [GETTING]
+Mind of Mencia [GETTING]
+Robot Chicken [GETTING]
+Tabitha [GETTING]
+The Good Place [STILLGOING]
+The Orville [STILLGOING]
+Tracey Ullman Show [GETTING]
+Future Man [STILLGOING]

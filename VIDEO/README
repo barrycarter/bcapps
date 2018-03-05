@@ -55,6 +55,10 @@ TODO: categories of shows I want:
 NOTES
 =====
 
+  - To find what I am downloading currently, go to INCOMPLETE torrents diretory and do something like this:
+
+ls -d */* | perl -pnle 's%^.*?/%%' | sort -f | less
+
   - For seasons 1-8, images are 640x480, scale ratio 4:3
 
   - For seasons 9-10 ("Fuller House"), images are 1280x720, 16:9 ratio
