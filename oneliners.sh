@@ -1,3 +1,10 @@
+# query the foods database for items whose carb:servingsizeingrams
+# ratio is fairly low
+
+sqlite3 dfoods.db "SELECT UPC,Name,servingsizeingrams,totalcarbohydrate,dietaryfiber FROM foods LIMIT 20"
+
+exit;
+
 # given a list of my accounts, schedule to download data 1 per day
 # (the initial order is random, but remains the same once chosen)
 # it's ugly that I have to know there are 51 accounts, grumble
