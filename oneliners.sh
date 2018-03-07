@@ -1,7 +1,7 @@
 # query the foods database for items whose carb:servingsizeingrams
 # ratio is fairly low
 
-sqlite3 dfoods.db "SELECT UPC,Name,servingsizeingrams,totalcarbohydrate,dietaryfiber FROM foods LIMIT 20"
+sqlite3 dfoods.db "SELECT ROUND((totalcarbohydrate-dietaryfiber)/servingsizeingrams, 3) AS carbspergram,Name,UPC FROM foods WHERE carbspergram>=0 ORDER BY carbspergram,Name" > carbspergram.txt
 
 exit;
 
