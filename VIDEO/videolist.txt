@@ -19,6 +19,10 @@ A list of TV shows that I may or may not fastify. The [CODE] meanings:
   won't fastify until they end or I run out of other series; however,
   note the word "probably"
 
+  - [NOT24]: Fewer than 24 episodes total exist of this series, which
+  means it won't fill up even one screen; I am currently undecided re
+  my followup for these series
+
   - (no tag): Has not yet been sorted into one of the categories above
 
 Shows are in case-insensitive alphabetical order (TODO: automatically
@@ -175,7 +179,7 @@ Square Pegs [DONTWANT]
 Star Trek (original series) [DONE]
 Star Trek: Deep Space Nine [GETTING]
 Star Trek: Discover [STILLGOING]
-Star Trek: The Animated Series
+Star Trek: The Animated Series [NOT24]
 Star Trek: The Next Generation [GETTING]
 Star Trek: Voyager [DONE]
 Step by Step
@@ -225,7 +229,7 @@ Who's the Boss [CANTGET]
 Whose Line Is It Anyway? (multiple versions)
 Will and Grace [STILLGOING]
 Wings [DONTWANT]
-WKRP in Cincinnati [GETTING]
+WKRP in Cincinnati [DONE]
 Wodehouse Playhouse [GETTING]
 You Can't Do That On Television
 Two and a Half Men [GETTING]
@@ -238,3 +242,4 @@ The Good Place [STILLGOING]
 The Orville [STILLGOING]
 Tracey Ullman Show [GETTING]
 Future Man [STILLGOING]
+New WKRP in Cincinnati

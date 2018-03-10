@@ -7,6 +7,13 @@ efibootmgr
 
 # system tools
 
+exfat-utils
+exfat-utils-debuginfo
+fuse-exfat
+fuse-exfat-debuginfo
+testdisk
+squashfs-tools
+squashfuse
 bluez
 symlinks
 libattr-devel
@@ -117,6 +124,7 @@ mtr
 ncftp
 ftp
 p7zip
+p7zip-plugins
 parallel
 iputils
 procps

@@ -29,7 +29,9 @@ exclusions.txt: exclusions-commented.txt
 	egrep -v '^\#|^ *$$' exclusions-commented.txt | perl -pnle 's/\$$/\0/' > exclusions.txt
 
 # bc-chunk-backup2 creates statlist.txt and filelist.txt just usign one
+# temporarily changed to 100G for bulk backup to idrive express drive
+# (also renamed massbacks-idrive-saopaulo and started fresh)
 filelist.txt: exclusions.txt backup0.txt
-	nice -n 19 egrep -avf exclusions.txt backup0.txt | nice -n 19 bc-join-backup.pl | nice -n 19 bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
+	nice -n 19 egrep -avf exclusions.txt backup0.txt | nice -n 19 bc-join-backup.pl | nice -n 19 bc-chunk-backup2.pl --checkfile --limit=100,000,000,000 --debug
 
 # TODO: write up the meta-procedure for using this Makefile
