@@ -7,6 +7,8 @@ backup; using tar and symmetric encryption, not zpaq
 
 # pipe below to shell
 cd /root/massback-bulk
+
+# TODO: generate the list of backed up files from tar toc
 \ls massback*.list | perl -nle 'unless (-s "$_.exclude") {print "bc-format2altformat2.pl --zpaqlist $_>$_.exclude"}'
 
 # do this once to timestamp the backup, create a directory for this
@@ -27,14 +29,12 @@ nice +19 make -j &
 
 echo look over big-by-*
 
-# TODO: must be in bash for complicatedish redirection
-
 # once the filelist looks ok, tar it and encrypt it
 
 # NOTE: $passphrase must be set to pass phrase, and $spec must be set
 # to subdirectory name
 
-(nice +19 tar --bzip -T filelist.txt -cvf - | 
+(nice +19 tar -T filelist.txt -cvf - | 
  nice +19 gpg --batch --passphrase $passphrase -c -o 
   /mnt/idrive/$spec/idrive-$DATE.gpg) >& idrive-$DATE.out &
 
