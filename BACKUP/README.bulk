@@ -44,7 +44,19 @@ sleep 1; bc-waitpid.pl gpg &
 
 # after gpg step done:
 
-gpg -d idrive-$DATE.gpg | tar --bzip -jtvf - > idrive-$DATE.toc
+gpg --batch --passphrase PUT_PHRASE_HERE -d 
+ /mnt/idrive/$spec/idrive-$DATE.gpg | tar -jtvf - >! idrive-$DATE.toc
+
+# bc-waitpid.pl above as desired
+
+# copy plaintext TOC to /mnt/villa/massbacks-idrive-saopaulo
+
+cp idrive-$DATE.toc /mnt/villa/massbacks-idrive-saopaulo
+
+# and encrypted copy to /mnt/idrive/$spec
+
+gpg --batch --passphrase $passphrase -c -o /tmp/test.txt idrive-$DATE.toc
+
 
 # testing
 
