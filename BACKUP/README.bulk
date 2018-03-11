@@ -31,26 +31,30 @@ echo look over big-by-*
 
 # once the filelist looks ok, tar it and encrypt it
 
-tar --bzip -T test10k.txt -cvf - | 
- gpg --batch --passphrase foo -c -o idrive-$DATE.gpg >& idrive-$DATE.out
+# NOTE: $passphrase must be set to pass phrase, and $spec must be set
+# to subdirectory name
+
+(nice +19 tar --bzip -T filelist.txt -cvf - | 
+ nice +19 gpg --batch --passphrase $passphrase -c -o 
+  /mnt/idrive/$spec/idrive-$DATE.gpg) >& idrive-$DATE.out &
+
+# TODO: this will watch gpg-agent if it exists so be careful
 
 sleep 1; bc-waitpid.pl gpg &
 
-gpg -d idrive-$DATE.gpg | tar --bzip -tf - > idrive-$DATE.toc
+# after gpg step done:
+
+gpg -d idrive-$DATE.gpg | tar --bzip -jtvf - > idrive-$DATE.toc
 
 # testing
 
-find ~user/BCGIT/BCINFO3 -type f | tee testfiles.txt
+# find ~user/BCGIT/BCINFO3 -type f | tee testfiles.txt
 
-time (nice -n 19 tar -jT testfiles.txt -cvf - | 
- nice -n 19 gpg --batch --passphrase nanaheyhey -c -o 
-  idrive-$DATE.gpg) >& idrive-$DATE.out &
+# time (nice -n 19 tar -jT testfiles.txt -cvf - | 
+# nice -n 19 gpg --batch --passphrase nanaheyhey -c -o 
+#  idrive-$DATE.gpg) >& idrive-$DATE.out &
 
-(nice +19 tar --bzip -T testfiles.txt -cvf - | 
- nice +19 gpg --batch --passphrase nanaheyhey -c -o 
-  idrive-$DATE.gpg) >& idrive-$DATE.out &
-
-gpg -d idrive-$DATE.gpg | tar -jvtf - | less
+# gpg -d idrive-$DATE.gpg | tar -jvtf - | less
 
 
 # TODO: save contents files encrypted safely too!
