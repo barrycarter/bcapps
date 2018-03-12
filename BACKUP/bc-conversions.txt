@@ -12,6 +12,10 @@
 "\.tgz$" ".tar"
 
 
+# 12 Mar 2018: restarting backups, so commenting out all conversions
+# below (the ones above are still needed)
+
+
 # ".bz2" ""
 # ".gz" ""
 # ".tbz" ".tar"
@@ -35,17 +39,17 @@
 # "/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG" "/mnt/extdrive5/QUORALOG"
 
 # moved this directory
-"/mnt/extdrive5/INBOUNDSYMLINKS/sha/" "/usr/local/etc/sha/"
+# "/mnt/extdrive5/INBOUNDSYMLINKS/sha/" "/usr/local/etc/sha/"
 
 # dullon files should be treated as though they appear at root
-"/DULLON" ""
+# "/DULLON" ""
 
 # QUORALOG repitition
-"/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG/" "/mnt/villa/user/QUORA/QUORALOG/"
+# "/mnt/extdrive5/INBOUNDSYMLINKS/QUORALOG/" "/mnt/villa/user/QUORA/QUORALOG/"
 
 # /mnt/extdrive2 was copied to /mnt/lobos as it (extdrive2) failed
-"/mnt/lobos/extdrive2/" "/mnt/extdrive2/"
+# "/mnt/lobos/extdrive2/" "/mnt/extdrive2/"
 
 # VMs from brighton should already be copied over
-"/mnt/extdrive5/FROMBRIGHTON/mnt/extdrive7/root/VirtualBox VMs/" "/root/VirtualBox VMs/"
+# "/mnt/extdrive5/FROMBRIGHTON/mnt/extdrive7/root/VirtualBox VMs/" "/root/VirtualBox VMs/"
 
