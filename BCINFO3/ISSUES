@@ -1,0 +1,57 @@
+Known issues as of 11 Mar 2018:
+
+  - Both the MySQL and SQLite3 versions of the astronomical
+  conjunctions database are missing or broken, which affects:
+
+    - http://astro.db.mysql.barrycarter.info/
+
+    - many pages linked from http://search.astro.barrycarter.info/
+
+    - and probably more
+
+  - http://test.barrycarter.info/ASTRO/ is missing in its
+  entirety. This contained:
+
+    - List of all conjunctions in CSV(?) format
+
+  -
+  http://wordpress.barrycarter.org/index.php/voronoi-temperature-map/
+  is broken; the page itself is on bcinfo4, but its broken because
+  http://data.barrycarter.info/current-voronoi.kmz is the KML file;
+  analogous situation with
+  http://wordpress.barrycarter.org/index.php/delaunay-temperature-map/; consider running both of these directly on bcinfo4 as possible fix
+
+  - Use log files to find which bcinfo3 pages were most popular
+  (perhaps excluding bots) and prioritize fixing those
+
+  - Restore either the SQLite3 or MySQL version of the gocomics
+  comments database
+
+  - Resume scraping comments from gocomics regularly, if possible
+  (however, format has changed, so this may no longer be possible)
+
+  - For any of these, consider moving to bcinfo4 or an "app container"
+  like thing from Amazon S3 or similar
+
+  - Have bcinfo3 create a daily filelist that I backup locally to help
+  w/ potential future crashes
+
+  - If doing above, consider adding filelist to bc-rev-search.pl
+
+  - See if I'm still using PHP anywhere, (and uninstall it if not?)
+
+  - Autorotate web logs, currently have monthly scheduled event to do
+  so manually
+
+  - Move away from SQLite3 and make all dbs MySQL; however, note that
+  MySQL appears more "crashy" and tends to corrupt tables more(?)
+
+  - See if I still use the 'madis' MySQL table, and stop updating it
+  (and delete it) if not
+
+  - Look at errors in web log error file to see if anything is wrong
+  (or make minor corrections if all errors are "cosmetic")
+
+  - Does bcinfo3 receive mail (either from local programs or via
+  SMTP), and, if so, where does it/should it go? [at one point, I set
+  up /var/pmail for this, but that appears to be long gone]

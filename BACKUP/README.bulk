@@ -9,7 +9,7 @@ backup; using tar and symmetric encryption, not zpaq
 cd /root/massback-bulk
 
 # TODO: generate the list of backed up files from tar toc
-\ls massback*.list | perl -nle 'unless (-s "$_.exclude") {print "bc-format2altformat2.pl --zpaqlist $_>$_.exclude"}'
+\ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {print "bc-tar2exclude.pl $_ > $_.exclude"}'
 
 # do this once to timestamp the backup, create a directory for this
 # backup, and copy the Makefile to this directory
@@ -17,7 +17,7 @@ cd /root/massback-bulk
 setenv DATE `date +%Y%m%d.%H%M%S`
 mkdir /root/massbacks/$DATE
 cd /root/massbacks/$DATE
-cp /home/user/BCGIT/BACKUP/Makefile .
+cp /home/user/BCGIT/BACKUP/Makefile.bulk Makefile
 
 # cp exclusions-commented.txt from a previous backup or make wont work
 
@@ -44,222 +44,22 @@ sleep 1; bc-waitpid.pl gpg &
 
 # after gpg step done:
 
-gpg --batch --passphrase PUT_PHRASE_HERE -d 
- /mnt/idrive/$spec/idrive-$DATE.gpg | tar -jtvf - >! idrive-$DATE.toc
+gpg --batch --passphrase PUT_PHRASE_HERE -d /mnt/idrive/$spec/idrive-$DATE.gpg|
+  tar --full-time --utc -tvf - >! idrive-$DATE.toc
 
 # bc-waitpid.pl above as desired
 
-# copy plaintext TOC to /mnt/villa/massbacks-idrive-saopaulo
+# copy plaintext TOC to /root/massback-bulk
 
-cp idrive-$DATE.toc /mnt/villa/massbacks-idrive-saopaulo
+cp idrive-$DATE.toc /root/massback-bulk
 
 # and encrypted copy to /mnt/idrive/$spec
 
-gpg --batch --passphrase $passphrase -c -o /tmp/test.txt idrive-$DATE.toc
+gpg --batch --passphrase $passphrase -c -o 
+ /mnt/idrive/$spec/idrive-$DATE.toc.gpg idrive-$DATE.toc
 
+# remove files we longer need
 
-# testing
-
-# find ~user/BCGIT/BCINFO3 -type f | tee testfiles.txt
-
-# time (nice -n 19 tar -jT testfiles.txt -cvf - | 
-# nice -n 19 gpg --batch --passphrase nanaheyhey -c -o 
-#  idrive-$DATE.gpg) >& idrive-$DATE.out &
-
-# gpg -d idrive-$DATE.gpg | tar -jvtf - | less
-
-
-# TODO: save contents files encrypted safely too!
-
-rsync it over to a subdir called root
-mkdir ROOT
-sudo rsync -Pvzlpt / --files-from=filelist.txt ROOT/ >& rsync-outerr.txt &
-: bc-waitpid.pl for above to finish
-sleep 1; bc-waitpid.pl rsync &
-
-# uncompress all files (zpaq does better w/ uncompressed files)
-
-# TODO: this does NOT uncompress files that don't have the appropriate
-# extension, which could be an issue for things like FILESBYSHA1
-
-find . -iname '*.bz2' -print0 | parallel -j 1 -0 bunzip2 -v &
-find . -iname '*.tbz' -print0 | parallel -j 1 -0 bunzip2 -v &
-find . -iname '*.gz' -print0 | parallel -j 1 -0 gunzip -v &
-find . -iname '*.tgz' -print0 | parallel -j 1 -0 gunzip -v &
-
-# if processes above take a while, consider bc-waitpid.pl
-
-# might as well have sha1sums of everything I'm backing up (doesn't
-# take much more time)
-
-find ROOT -type f -print0 | xargs -0 sha1sum > sha1sums.txt &
-
-# experimental, may help w something someday
-
-find ROOT -type f -print0 | xargs -0 file > filetypes.txt &
-
-# note that $zpaq_password should be set for this to work
-
-nice +19 zpaq -method 510 -threads 0 add "massback-$DATE.1" ROOT -key $zpaq_password -index "massback-$DATE.0" |& tee zpaq.log &
-bc-waitpid.pl zpaq & 
-
-# create a list from the main file
-zpaq list massback-$DATE.1 -key $zpaq_password > massback-$DATE.list
-
-# look at list to make sure it looks ok
-less massback-$DATE.list
-
-: update /tmp/files.txt (may need to create) for idevsutil
-\ls $cwd/*.? >! /tmp/files.txt
-
-: check above
-less /tmp/files.txt
-
-echo run idevs/idrive commands here
-
-# send to idrive instructions are private, incl username/pw
-
-# after idrive step completed...
-mv massback-$DATE.0 massback-$DATE.list /root/massbacks-idrive-saopaulo
-
-: remove root and .1 files locally (and optionally others)
-
-rm -rf massback-$DATE.1 ROOT &
 rm -f backup0.txt afad.txt previouslydone.txt.srt &
 
-: check if it's time for weekly backup! (and update date in shell file)
-
-grep weekly ~user/.annoytab | grep latest | grep backup
-
-BACKUP PROCESS:
-
-Compile null-separated lists of all files on each of my hard drives,
-with the following fields:
-
-  - Canonical name: when I move entire directories around, files end
-  up with new paths, but I don't want to back them up again;
-  canonizing the name lets me match against existing backups properly
-
-  - mtime: if file is already backed up, back it up again if this
-  mtime is greater than backup mtime
-
-  - file's actual (noncanonical) name: when we actually perform the
-  backup, we will need the file's actual name.
-
-  - size: when we backup, we count bytes to make sure backup doesn't
-  get too large.
-
-To create these lists, we use bc-format2altformat2.pl on the file lists.
-
-Because two different files (not necessarily on the same drive) may
-have the same canonized name, we have to remove duplicates. If the
-duplicates have different timestamps, we choose the most recent
-timestamp:
-
-sort -t '\0' -k2nr *-converted.txt | sort -t '\0' -k1,1 -u > afad.txt
-
-The first sort orders the files by most recent mtime first.
-
-The second sort orders by filename, but eliminates duplicates. Since
-the most recent mtime for each file comes first, we now have the most
-recent mtime for each file.
-
-We now do something similar with files we've already backed up, except
-we don't need the canoncial name (since the backup name *is* the
-canonical name), or the size.
-
-To do this, we first run "bc-format2altformat2.pl --zpaqlist" on each
-individual backup file list, and then combine them as follows:
-
-sort -t '\0' -k2nr backuplists | sort -t '\0' -k1,1 -u > previouslydone.txt.srt
-
-[note that this step is NOT performed in the Makefile, I do it separately]
-
-As with the previous sort commands, this gives us the most recent
-mtime for each backed-up file.
-
-We now want to compare the mtimes of files on our drives with the
-mtimes of the same files when they were backed up. If the backup time
-is more recent (which shouldn't normally happen, but does due to
-oddnesses), we don't backup the file. If the backup time is older or
-the file has never been backed up at all, we back it up. We'll
-ultimately want to back up in reverse time order, so we sort here (the
-remaining steps preserve the sort)
-
-join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | sort -t '\0' -k2nr > backup0.txt
-
-Note that backup0.txt has these null-separated fields:
-
-  - File's canonical name
-
-  - File's current mtime
-
-  - File's actual (non-canon) name
-
-  - File's size
-
-  - If the file has been backed up previously, the mtime of the most
-  recent backup; if the file has not been backed up previously, this
-  field is blank
-  
-There are some files we never want to backup. For these, we have a
-list of regular expressions in exclusions.txt. To filter out these
-files:
-
-egrep -avf exclusions.txt backup0.txt > backup1.txt
-
-It's convenient that backup0.txt has both the actual file name AND the
-canonical file name, so that exclusions.txt can exclude by either one.
-
-We now run backup1.txt through bc-join-backup.pl to compare current
-mtimes to backup mtimes and to see which files have never been backed up:
-
-bc-join-backup.pl backup1.txt > backup2.txt
-
-Note that backup2.txt contains these null-separated fields:
-
-  - The file's modification time
-
-  - The file's actual (not canon) name
-
-  - The file's size
-
-We now feed the results to bc-chunk-backup2.pl so it can choose the
-25G (or whatever) worth of most recently changed files to backup.
-
-In Makefile2.backup, some of these steps are combined via pipes.
-
-BACKUP FORMATS:
-
-For storing file lists (to restore perms, etc):
-
-1st field: modify time in Unix seconds
-2nd field: size in bytes
-3rd field: inode [may drop this later]
-4th field: permissions in octal
-5th field: file type (like "ls -l")
-6th field: group name or id
-7th field: username or id
-8th field: device number
-remainder: filename followed by newline
-
-For GNU find (which is gfind on Mac), this is:
-
-find [...] -printf "%T@ %s %i %m %y %g %u %D %p\n" 
-
-Standard format for all file lists involving backups:
-
-TODO: allow additional fields provided they use prefixes or something
-TODO: preserving the inode number is probably useless and potentially bad?
-
-1st field: modify time in Unix seconds
-2nd field: size in bytes
-remainder: filename (not quoted, since it runs to end of line)
-
-[1] see "man 2 stat" section "The following flags are defined for the
-st_mode field" for details
-
-(note that the option flags are different below, -c vs -f)
-
-On cygwin/Unix: stat -c "%Y %s %i %f %g %u %d %n"
-On MacOSX: stat -f "%m %z %i %p %g %u %d %N"
+# repeat
