@@ -1,7 +1,9 @@
-# I am assuming the list files are up-to-date; in theory could check dates
+# I am assuming the converted files are up-to-date; in theory could
+# check them against the *-files.txt files but don't want to rerun
+# portions of bc-unix-dump.pl unnecessarily
 
-# for bulk version, just use regular file list, not converted
-converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-files.txt"')
+# converted file lists on all drives I recognize
+converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
 
 # filelist.txt is the end product of all this
 all: filelist.txt

@@ -76,3 +76,11 @@ set history=10000
 # better format for history
 
 set history= (10000 "%h\t%W/%D/%Y %T\t%R\n")
+
+# useful environmental variables for grep
+
+# images, with possible garbage at end of filename
+setenv imagegrep "\.png|\.gif|\.jpg|\.bmp|\.jpeg|\.tif|\.xif|\.svg|\.ppm|\.pgm|\.pbm|\.pnm"
+
+# images, no extra garbage
+setenv imagegrep2 '\.png$|\.gif$|\.jpg$|\.bmp$|\.jpeg$|\.tif$|\.xif$|\.svg$|\.ppm$|\.pgm$|\.pbm$|\.pnm$'

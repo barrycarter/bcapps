@@ -1,6 +1,27 @@
 For astronomy stuff.
 
-Understanding some of the values in header.430_572:
+SECTION: SPICE coordinates in Mathematica
+
+To get SPICE coordinates (Chebyshev) into Mathematica, follow these steps:
+
+  - bc-dump-cheb.pl ascp1950.430.bz2
+  --planets=mercury,venus,earthmoon,moongeo,mars,jupiter,saturn,uranus,sun (or
+  any subset)
+  (ftp://ssd.jpl.nasa.gov/pub/eph/planets/ascii/de436/ to get similar
+  files, but check higher level dirs as well)
+
+  - math -initfile ascp1950.430.bz2.mercury,venus,earthmoon,moongeo,mars,jupiter,saturn,uranus,sun.mx
+
+  - Now, the info[] area will give meta information about the planets.
+
+  - The following documented bclib.m functions will now work: posxyz,
+  earthvector
+
+  - Note that `rotationMatrix[x,-ecliptic].{fvar1[0], fvar2[0], fvar3[0]}` will convert VSOP coordinates to comparable barycentric SPICE coordinates
+
+See also https://mathematica.stackexchange.com/questions/92774/finding-planetary-conjunctions-with-mathematica-project-level
+
+SECTION: Understanding some of the values in header.430_572:
 
 MASSES (planets)
 ================
@@ -506,7 +527,8 @@ different format (for DE405, not DE430/431)
 
 bc-hyg2db.pl generates eclipticlong3.txt
 
-TODO: SPICE does NOT compile everything after I switch to x86_64 (saopaulo)-- fix miscompiles as needed
+TODO: SPICE does NOT compile everything after I switch to x86_64
+(saopaulo)-- fix miscompiles as needed
 
 NASA FILES
 ==========

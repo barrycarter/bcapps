@@ -13,6 +13,14 @@ xrandr --size 1024x768 --rate 60
 # bg image won't render properly unless I do this
 /home/user/BCGIT/CALENDAR/bc-calendar.pl
 
+# kill any existing walkaround processes (since they'll lock future
+# ones) and delete lock files
+pkill bc-walkaround
+rm /usr/local/etc/locks/bc-walkaround.pl
+
+# TODO: consider running bc-walkaround right at start as a "just
+# started X" thing
+
 # CentOS defaults to emulate 3button off for some weird reason; this fixes it
 # TODO: this seems kludgey, especially if I change mouses/trackballs
 xinput set-prop "Logitech USB Trackball" "Evdev Middle Button Emulation" 1
@@ -44,9 +52,10 @@ xset b off
 # not sure if the below should really be here or if I should start
 # them manually...
 
-# startup two firefoxes with different profiles
+# startup three firefoxes with different profiles
 firefox -P olddefault &
 firefox -P Second &
+firefox -P Three &
 
 # stickly digital xclock in lower right hand corner
 # TODO: nanoseconds (%N doesn't work after -strftime)

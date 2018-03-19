@@ -266,3 +266,16 @@ alias stopnet "sudo killall -STOP qbittorrent wget curl"
 # for reloads (note careful avoidance of $)
 
 alias math2 "perl -0777 -ple 's%^(.*?)<formulas>%%s; s%</formulas>.*%%s' \!* | tee /tmp/mathstart.m; math -initfile /tmp/mathstart.m"
+
+# the -i is probably a bad idea (but at least I'm not tweaking the now
+# deprecated GREP_OPTIONS); also, it overrides aliases in
+# /etc/profile.d/colorgrep.csh
+
+alias grep "grep -ia"
+alias fgrep "fgrep -ia"
+alias egrep "egrep -ia"
+
+# I don't want these aliase from /etc/profile.d/colorgrep.csh
+unalias ls
+unalias ll
+unalias l.

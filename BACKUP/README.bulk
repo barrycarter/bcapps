@@ -11,6 +11,9 @@ cd /root/massback-bulk
 # TODO: generate the list of backed up files from tar toc
 \ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {print "bc-tar2exclude.pl $_ > $_.exclude"}'
 
+# check to see how full drive is, I want to fill maybe 4 out of 5TB
+df -kh /mnt/idrive/
+
 # do this once to timestamp the backup, create a directory for this
 # backup, and copy the Makefile to this directory
 
@@ -34,9 +37,13 @@ echo look over big-by-*
 # NOTE: $passphrase must be set to pass phrase, and $spec must be set
 # to subdirectory name
 
+# BE SURE TO WAITPID BELOW!!!
+
 (nice +19 tar -T filelist.txt -cvf - | 
  nice +19 gpg --batch --passphrase $passphrase -c -o 
   /mnt/idrive/$spec/idrive-$DATE.gpg) >& idrive-$DATE.out &
+
+# BE SURE TO WAITPID ABOVE!!!!
 
 # TODO: this will watch gpg-agent if it exists so be careful
 
@@ -44,8 +51,10 @@ sleep 1; bc-waitpid.pl gpg &
 
 # after gpg step done:
 
+# ACTUALLY PUT PASS PHRASE BELOW
+
 gpg --batch --passphrase PUT_PHRASE_HERE -d /mnt/idrive/$spec/idrive-$DATE.gpg|
-  tar --full-time --utc -tvf - >! idrive-$DATE.toc
+  tar --full-time --utc -tvf - >! idrive-$DATE.toc &
 
 # bc-waitpid.pl above as desired
 

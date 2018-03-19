@@ -325,9 +325,11 @@ http://aa.usno.navy.mil/faq/docs/GAST.php *)
 gmst[d_] = 
   ((-452506800334363673497 + 41299464944756238*d)*Pi)/20593349747540136;
 
-(* Convert Unix time to Mathematica date object *)
+(* Convert Unix time to Mathematica date object, and others *)
 
 unix2Date[t_] := ToDate[t+2208988800]
+
+unix2jd[t_] = t/86400+2440587+1/2
 
 (* Brent method of FindRoot improved *)
 
