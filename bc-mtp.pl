@@ -27,6 +27,40 @@ write_file($out, "/tmp/mtp-folders.txt");
 
 write_file($out, "/tmp/mtp-filetree.txt");
 
+# it turns out mtp-filetree.txt is the only one I need, but the others
+# provide useful info
+
+# debug("OUT: $out");
+
+my(@parents);
+
+for $i (split(/\n/, $out)) {
+
+  # delete spaces, but count them first (2 spaces = one depth level), find name
+
+  $i=~m/^(\s*)(\d+)\s+(.*)$/;
+  my($depth, $id, $name) = (length($1)/2, $2, $3);
+
+#  debug("D: $depth, I: $id, N: $name");
+
+  # compare depth level to list of parents dirs
+
+  # if depth is greater, push new parent and do nothing else
+  if ($depth > $#parents) {push(@parents, $name); next;}
+
+  # if depth is less, pop off last parent, but continue
+  if ($depth < $#parents) {pop(@parents);}
+
+  debug("I: $i, PARENTS ($#parents):",@parents);
+
+  # all other cases, dir level remains the same, do nothing
+  # print name in all cases
+
+#  print join("/", @parents),"/$name\n";
+
+}
+
+
 die "TESTING";
 
 my(@files) = split(/^File ID: /m, $out);
