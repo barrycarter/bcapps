@@ -7,6 +7,8 @@ efibootmgr
 
 # system tools
 
+grive2
+jmtpfs
 libmtp-examples
 exfat-utils
 exfat-utils-debuginfo
@@ -40,6 +42,7 @@ libfsntfs-tools
 stunnel
 vtun
 inotify-tools
+incron
 # TODO: had to remove below because of conflict-- reinstall correctly later
 arp-scan
 scons

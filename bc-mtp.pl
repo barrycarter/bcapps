@@ -38,25 +38,32 @@ for $i (split(/\n/, $out)) {
 
   # delete spaces, but count them first (2 spaces = one depth level), find name
 
-  $i=~m/^(\s*)(\d+)\s+(.*)$/;
+  unless ($i=~m/^(\s*)(\d+)\s+(.*)$/) {next;}
   my($depth, $id, $name) = (length($1)/2, $2, $3);
+
+  # set $parents[$depth] to $name, and truncate anything lower than
+  # me, since Ive --popped out-- of it
+
+  debug("SETTING: parents[$depth] to $name");
+  $parents[$depth] = $name;
+  $#parents = $depth;
 
 #  debug("D: $depth, I: $id, N: $name");
 
   # compare depth level to list of parents dirs
 
   # if depth is greater, push new parent and do nothing else
-  if ($depth > $#parents) {push(@parents, $name); next;}
+#  if ($depth > $#parents) {push(@parents, $name); next;}
 
   # if depth is less, pop off last parent, but continue
-  if ($depth < $#parents) {pop(@parents);}
+#   if ($depth < $#parents) {pop(@parents);}
 
-  debug("I: $i, PARENTS ($#parents):",@parents);
+#  debug("I: $i, PARENTS ($#parents):",@parents);
 
   # all other cases, dir level remains the same, do nothing
   # print name in all cases
 
-#  print join("/", @parents),"/$name\n";
+  print "$id ",join("/", @parents),"\n";
 
 }
 

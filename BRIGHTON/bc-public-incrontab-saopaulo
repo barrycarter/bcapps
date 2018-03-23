@@ -1,0 +1,15 @@
+#my incrontab file, currently very minimal
+
+#whenever I snapshot VLC, I want to bring up feh so I can annotate
+#what I just snapshotted
+
+#TODO: consider auto-image-hashing anything that gets added here
+/home/user/VLC/ IN_CREATE env DISPLAY=:0.0 feh -F -d --draw-tinted -K . -G $@/$#
+
+#if I myself change, re incrontab me
+
+/home/user/BCGIT/BRIGHTON/bc-public-incrontab-saopaulo IN_MODIFY incrontab $@
+
+#TODO: if I ever use a private incrontab file, test above must be changed
+
+#TODO: consider autoimagehashing in other dirs such as TUMBLR
