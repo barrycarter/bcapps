@@ -1,0 +1,191 @@
+Q202444 = given name
+
+P31 = instance of
+
+SELECT ?nameLabel ?langLabel WHERE {
+ ?name wdt:P31* wd:Q202444.
+ ?name wdt:P407 ?lang
+
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".} 
+}
+
+P407 = lang
+
+SELECT ?nameLabel ?typeLabel ?langLabel WHERE {
+ ?type wdt:P279* wd:Q202444 .
+ ?name wdt:P31 ?type .
+ ?name wdt:P407 ?lang
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".} 
+}
+
+http://tinyurl.com/y9t44r59
+
+https://opendata.stackexchange.com/questions/12573/looking-for-databases-with-gender-of-names-and-ethnicity-information/12594#12594
+
+
+and now
+
+
+https://opendata.stackexchange.com/questions/12499/search-for-people-without-timeout-with-specifics-conditions-in-wikidata-or-sugge
+
+SELECT ?name ?nameLabel ?type ?typeLabel ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?name wdt:P31 ?type .
+ ?name wdt:P569 ?birth
+ OPTIONAL {?name wdt:P570 ?death}
+ FILTER {?birth > "1900-12-31T00:00:00Z"^^xsd:dateTime}
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+SELECT ?name ?nameLabel ?type ?typeLabel ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?name wdt:P31 ?type .
+ ?name wdt:P569 ?birth .
+ OPTIONAL {?name wdt:P570 ?death}.
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+SELECT ?name ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?name wdt:P31 ?type .
+ ?name wdt:P569 ?birth .
+ OPTIONAL {?name wdt:P570 ?death}.
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 10
+
+(above works)
+
+
+SELECT ?name ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?name wdt:P31 ?type .
+ ?name wdt:P569 ?birth .
+ OPTIONAL {?name wdt:P570 ?death}.
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 100000
+
+(above works)
+
+
+SELECT ?person ?givenName ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?person wdt:P31 ?type .
+ ?person wdt:P569 ?birth .
+ ?person wdt:P735 ?givenName .
+ OPTIONAL {?name wdt:P570 ?death}.
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 10
+
+SELECT ?nameLabel ?typeLabel ?langLabel WHERE {
+ ?type wdt:P279* wd:Q202444 .
+ ?name wdt:P31 ?type .
+ ?name wdt:P407 ?lang
+ FILTER (STRSTARTS(?nameLabel, "art"))
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es".} 
+}
+
+
+
+https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial#Expressions,_FILTER_and_BIND (example of something that doesn't work)
+
+avoid using service:wikilabel
+
+SELECT ?person ?personLabel ?personLabelType ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?person wdt:P31 ?type .
+ ?person wdt:P569 ?birth .
+ ?person rdfs:label ?personLabel .
+ ?person wdt:P31 ?personalLabelType
+ OPTIONAL {?name wdt:P570 ?death} .
+ FILTER (STRSTARTS(?personLabel, "art"))
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 10
+
+SELECT ?person ?personLabel ?personLabelType ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?person wdt:P31 ?type .
+ ?person wdt:P569 ?birth .
+ ?person rdfs:label ?personLabel .
+ OPTIONAL {?name wdt:P570 ?death} .
+ FILTER (STRSTARTS(LCASE(?personLabel), "art"))
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 10
+
+SELECT ?person ?personLabel ?personLabelType ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?person wdt:P31 ?type .
+ ?person wdt:P569 ?birth .
+ ?person rdfs:label ?personLabel .
+ ?personLabel wdt:P31 ?personLabelType .
+ OPTIONAL {?name wdt:P570 ?death} .
+ FILTER (STRSTARTS(LCASE(?personLabel), "art"))
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 1
+
+(the above freezes)
+
+SELECT ?item ?itemLabel ?itemLabelType WHERE {
+ ?item rdfs:label ?itemLabel .
+ ?itemLabel wdt:P31 ?itemLabelType .
+}
+LIMIT 1
+
+(TODO: above times out and is minimal)
+
+
+TODO: does not includ alias
+
+SELECT DISTINCT ?person ?personLabel ?birth ?death WHERE {
+ ?person wdt:P31 wd:Q5 .
+ ?person wdt:P569 ?birth .
+ ?person rdfs:label ?personLabel .
+ OPTIONAL {?name wdt:P570 ?death} .
+ FILTER (STRSTARTS(LCASE(?personLabel), "art"))
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 500000
+
+above works w/ limit 200000 
+
+SELECT ?person ?personLabel ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?person wdt:P31 ?type .
+ ?person wdt:P569 ?birth .
+ ?person rdfs:label ?personLabel .
+ OPTIONAL {?name wdt:P570 ?death} .
+ FILTER (STRSTARTS(LCASE(?personLabel), "art"))
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 1
+
+SELECT ?person ?personLabel ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?person wdt:P31 ?type .
+ ?person wdt:P569 ?birth .
+ ?person rdfs:label ?personLabel .
+ OPTIONAL {?name wdt:P570 ?death} .
+ FILTER (STRSTARTS(LCASE(?personLabel), "art"))
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 200000 OFFSET 0
+ 
+
+SELECT DISTINCT ?person ?personLabel ?type ?birth ?death WHERE {
+ ?type wdt:P279* wd:Q5 .
+ ?person wdt:P31 ?type .
+ ?person wdt:P569 ?birth .
+ ?person rdfs:label ?personLabel .
+ OPTIONAL {?name wdt:P570 ?death} .
+ FILTER (STRSTARTS(LCASE(?personLabel), "art"))
+ FILTER (?birth > '1900-12-31T00:00:00Z'^^xsd:dateTime)
+}
+LIMIT 20000 OFFSET 1189000
+ 
+(above for example)
