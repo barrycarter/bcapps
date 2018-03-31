@@ -102,8 +102,8 @@ MAILTO="daemon"
 17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl
 
 # Obtain my Capital One credit card transactions in the "middle of the night"
-
-17 4 * * * /home/user/BCGIT/bc-create-capone-iim.pl
+# disabled 27 Mar 2018: hasn't worked for ages
+# 17 4 * * * /home/user/BCGIT/bc-create-capone-iim.pl
 
 # Refresh my craigslist ads every 6 hours (which I believe is the
 # minimum allowed interval) so they always appear near the top
@@ -255,7 +255,10 @@ MAILTO="daemon"
 # new version saves audio and video too, disabled until I mass dl
 # audio/video so -i flag won't cause problems
 
-25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
+# commented out 3/26/18 as I approach my bandwidth cap; have scheduled
+# to resume 1 Apr
+
+# 25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
 
 # cleanup tmp files daily
 

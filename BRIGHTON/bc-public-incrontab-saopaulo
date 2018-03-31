@@ -13,3 +13,13 @@
 #TODO: if I ever use a private incrontab file, test above must be changed
 
 #TODO: consider autoimagehashing in other dirs such as TUMBLR
+
+# temporary test (failed)
+# /home/user/20180329/MP3/vol_9.zip IN_CREATE env DISPLAY=:0.0 xmessage file creation complete
+
+# other test (also failed, but for other reason)
+
+# /home/user/20180329/EPUB/epub9.zip IN_MODIFY env DISPLAY=:0.0 xmessage file creation complete
+
+# other test
+/mnt/villa/user/20180329/PDF/pdf9.zip IN_MODIFY env DISPLAY=:0.0 xmessage file creation complete

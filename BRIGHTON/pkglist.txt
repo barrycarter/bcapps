@@ -7,6 +7,8 @@ efibootmgr
 
 # system tools
 
+dirsplit
+usbutils
 grive2
 jmtpfs
 libmtp-examples

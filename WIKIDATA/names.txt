@@ -189,3 +189,14 @@ SELECT DISTINCT ?person ?personLabel ?type ?birth ?death WHERE {
 LIMIT 20000 OFFSET 1189000
  
 (above for example)
+
+SELECT DISTINCT ?item ?label WHERE {
+  ?type wdt:P279* wd:Q202444 .
+  ?item wdt:P31 ?type .
+  ?item rdfs:label ?label .
+  FILTER (STRSTARTS(LCASE(?label), "art"))
+  FILTER (LANG(?label) = "en")
+}
+
+(above works!)
+
