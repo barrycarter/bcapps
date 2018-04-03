@@ -1,0 +1,26 @@
+<html><head></head><body>
+
+Just draws a lot of dots fast
+
+<canvas id="dots" width="800" height="600"></canvas>
+
+
+<script>
+
+var i=0;
+window.requestAnimationFrame(f);
+
+c = document.getElementById("dots");
+ctx = c.getContext("2d");
+
+function f() {
+  ctx.clearRect(0,0,800,600);
+  i++;
+  ctx.fillRect(i,i,10,10);
+  requestAnimationFrame(f);
+}
+
+</script>
+
+
+</body></html>

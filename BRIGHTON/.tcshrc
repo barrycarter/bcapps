@@ -84,3 +84,7 @@ setenv imagegrep "\.png|\.gif|\.jpg|\.bmp|\.jpeg|\.tif|\.xif|\.svg|\.ppm|\.pgm|\
 
 # images, no extra garbage
 setenv imagegrep2 '\.png$|\.gif$|\.jpg$|\.bmp$|\.jpeg$|\.tif$|\.xif$|\.svg$|\.ppm$|\.pgm$|\.pbm$|\.pnm$'
+
+# videos, no extra garbage
+setenv videogrep2 '\.mp4$|\.mkv$|\.avi$'
+

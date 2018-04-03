@@ -73,7 +73,7 @@ Doctor Who??
 Doogie Howser
 Dukes of Hazard
 Eight Is Enough [GETTING]
-Empty Nest [GETTING]
+Empty Nest [GETTING] (have seasons 1-6, but not 7, as of 3 Apr 2018)
 Enterprise [GETTING]
 Episodes [GETTING]
 Everybody Hates Chris [DONTWANT]
@@ -244,3 +244,4 @@ Tracey Ullman Show [GETTING]
 Future Man [STILLGOING]
 New WKRP in Cincinnati
 Gavin and Stacey [NOT24]
+Dear John

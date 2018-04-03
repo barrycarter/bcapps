@@ -1,6 +1,16 @@
 For astronomy stuff.
 
-SECTION: SPICE coordinates in Mathematica
+Programs
+========
+
+bc-equator-dump.c: dump hourly equatorial coordinates of object as
+viewed from Earth, can be fed to bc-equator-map.pl
+
+bc-eclip-dump.c: dump hourly ecliptic coordinates of object as viewed
+from Earth, can be fed to bc-ecliptic-map.pl
+
+SPICE coordinates in Mathematica
+================================
 
 To get SPICE coordinates (Chebyshev) into Mathematica, follow these steps:
 
@@ -21,10 +31,11 @@ To get SPICE coordinates (Chebyshev) into Mathematica, follow these steps:
 
 See also https://mathematica.stackexchange.com/questions/92774/finding-planetary-conjunctions-with-mathematica-project-level
 
-SECTION: Understanding some of the values in header.430_572:
+Understanding some of the values in header.430_572
+==================================================
 
 MASSES (planets)
-================
+----------------
 
 Planetary masses are given as "mass parameters" in AU^3/day^2 per
 http://ilrs.gsfc.nasa.gov/docs/2014/196C.pdf
@@ -51,7 +62,7 @@ GM9: 0.217844105197418000D-11 mass of Pluto
 GMS: 0.295912208285591100D-03 mass of Sun
 
 MASSES (asteroids)
-==================
+------------------
 
 In same odd units as above.
 
@@ -400,7 +411,7 @@ MA1171: 0.624856870846376100D-16 mass of 1171 Rusthawelia
 MA1467: 0.111528013303481700D-15 mass of 1467 Mashona
 
 POSITIONS + VELOCITY
-====================
+--------------------
 
 For below, the epoch is 1969-Jun-28 00:00:00.0000 UTC = Julian day
 2440400.500000000 = Unix second -16156800 = Unix day -187
@@ -482,7 +493,7 @@ YDC: 0.000000000000000000D+00 DY of Ceres (asteroid) at epoch (unused)
 ZDC: 0.000000000000000000D+00 DZ of Ceres (asteroid) at epoch (unused)
 
 LIBRATIONS
-==========
+----------
 
 The "wobble" of the moon (I don't fully understand what these values
 are telling us)
@@ -495,7 +506,7 @@ OMEGAY: -0.218986174567294900D-05 Libration value of omega y, in radians/day
 OMEGAZ: 0.229944860189922500D+00 Libration value of omega z, in radians/day
 
 MISC
-====
+----
 
 JDEPOC: 0.244040050000000000D+07 The Julian date of the epoch (as above)
 CLIGHT: 0.299792458000000000D+06 Speed of light in a vacuum, in km/s
@@ -520,7 +531,7 @@ TAUE1: -0.439999999999999900D-01 time-lag for the Earth's tidal deformation (day
 TAUE2: -0.100000000000000000D+00 time-lag for the Earth's rotational deformation (days)
 
 NOTES
-=====
+-----
 
 These are all in http://iau-comm4.jpl.nasa.gov/XSChap8.pdf but a
 different format (for DE405, not DE430/431)
