@@ -14,9 +14,14 @@ c = document.getElementById("dots");
 ctx = c.getContext("2d");
 
 function f() {
+
   ctx.clearRect(0,0,800,600);
-  i++;
-  ctx.fillRect(i,i,10,10);
+
+  for (i=0; i<=240000; i++) {
+    x = Math.floor(Math.random()*800);
+    y = Math.floor(Math.random()*600);
+    ctx.fillRect(x,y,1,1);
+  }
   requestAnimationFrame(f);
 }
 

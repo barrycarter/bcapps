@@ -561,6 +561,7 @@ yaz
 geomview
 
 # IDEs
+anjuta
 netbeans
 eclipse
 

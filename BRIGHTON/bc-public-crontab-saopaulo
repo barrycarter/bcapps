@@ -76,6 +76,7 @@ MAILTO="daemon"
 */5 * * * * rsync -e "ssh -i /home/user/.ssh/id_rsa.bc" -Pqaz "root@bcinfo3.barrycarter.info:/root/ERR/*.err" "root@bcinfo3.barrycarter.info:/home/user/ERR/*.err" /home/user/ERR/
 
 # Reminds me to walkaround every 20m or so (pomodoro method?)
+# devnulling annoying "gtk-message" stderr
 0,20,40 * * * * /home/user/BCGIT/bc-walkaround.pl
 
 # In my time zone (MST7MDT), gocomics updates comics at 2310; if I
@@ -262,7 +263,7 @@ MAILTO="daemon"
 
 # cleanup tmp files daily
 
-27 2 * * * sudo tmpwatch -vv 2d /tmp /var/tmp
+27 2 * * * sudo tmpwatch 2d /tmp /var/tmp
 
 # nightly, dump ALL firefox bookmarks w/ relevant information to home dir file
 57 1 * * * ls /home/user/.mozilla/firefox/*/places.sqlite | xargs -IXXX -n 1 sqlite3 XXX "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u >! /home/user/all-firefox-bookmarks.txt

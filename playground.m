@@ -1,3 +1,28 @@
+(* arb rotation spherical to spherical *)
+
+conds = {0 <= gamma <= 2*Pi, 0 <= beta <= 2*Pi, 0 <= alpha <= 2*Pi,
+	 0 <= th <= 2*Pi, 0<= ph <= 2*Pi}
+
+temp1902 = xyz2sph[
+ rotationMatrix[z,gamma].
+  rotationMatrix[y,beta].
+   rotationMatrix[x,alpha].
+    sph2xyz[th,ph,1]
+];
+
+
+temp1903 = FullSimplify[temp1902, conds]
+
+temp1903 /. ArcTan[x_, y_] -> ArcTan[y/x]
+
+
+
+
+
+
+
+
+
 (* NMinimize and http://stackoverflow.com/questions/4463481/ *)
 
 (* the data *)

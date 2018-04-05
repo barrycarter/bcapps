@@ -25,7 +25,8 @@ if ($globopts{nosms}) {
   $smc = "bc-call-func.pl sendmail $private{email2}{from} $private{email2}{sms} '$msg' '$msg'";
 }
 
-open(A,"|at -v $time")||die("Can't open at command, $!");
+# I can't receive mail from at jobs, so -M below
+open(A,"|at -M -v $time")||die("Can't open at command, $!");
 # TODO: is TERM setting below necessary?
 print A "DISPLAY=:0.0; export DISPLAY; TERM=vt100; export TERM; xmessage -geometry 1024 $msg & $smc &";
 close(A);

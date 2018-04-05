@@ -34,7 +34,9 @@ for (;;) {
   # Style "*sticky*" NoTitle, NoHandles, Sticky
   # TODO: make this out/err/res style so I can ignore ugly error:
   # "Gtk-Message: GtkDialog mapped without a transient parent. This is discouraged."
-  $res = `zenity --entry --text "$msg" --width 1024 --title stickymessage`;
+  # hate doing "2> /dev/null" here but "GtkDialog mapped without a
+  # transient parent. This is discouraged." is freaking annoying
+  $res = `zenity --entry --text "$msg" --width 1024 --title stickymessage 2> /dev/null`;
   if ($res=~/\S/) {last;}
   $msg .= " [reply cannot be blank]";
 }
