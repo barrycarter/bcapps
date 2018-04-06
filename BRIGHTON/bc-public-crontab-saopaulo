@@ -161,17 +161,17 @@ MAILTO="daemon"
 # remote system so I can't genercize it, and that I keep my weblogs in
 # a special subdirectory
 
-46 22 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pvzrlpt barrycar@wordpress.barrycarter.info:/home/barrycar/tmp barrycar@wordpress.barrycarter.info:/home/barrycar/logs barrycar@wordpress.barrycarter.info:/usr/local/apache/domlogs/barrycar /home/user/html/weblogs/ARVIXE/
+46 22 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pqzrlpt barrycar@wordpress.barrycarter.info:/home/barrycar/tmp barrycar@wordpress.barrycarter.info:/home/barrycar/logs barrycar@wordpress.barrycarter.info:/usr/local/apache/domlogs/barrycar /home/user/html/weblogs/ARVIXE/
 
 # TODO: the below rsysnc EVERYTHING on arvixe (since I know create
 # stuff there via uploads perhaps), obviating the above (or does it? 
 # note some dirs there are NOT inside /home/barrycar!
 
-17 2 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pvzrlpt barrycar@bcinfo4:/home/barrycar /home/user/RSYNC/ARVIXE/
+17 2 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -Pqzrlpt barrycar@bcinfo4:/home/barrycar /home/user/RSYNC/ARVIXE/
 
 # and from bcinfo3
 
-49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -az "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
+49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -qaz "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
 
 # check that the correct procs are running and not running
 # --debug turned on briefly 25 Aug 2017; removed 7 Oct 2017
