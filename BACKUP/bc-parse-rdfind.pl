@@ -74,7 +74,7 @@ while (<A>) {
   # TODO: we could record more about the file here
   # TODO: we could do file safety checks here instead of later(?)
 
-#  debug("ASSIGNING $name to size $size");
+  debug("ASSIGNING $name to size $size");
 
   $size{$name} = $size;
 }
@@ -95,7 +95,9 @@ while (<>) {
   # " to " HAS to be one space because some of my filenames end in spaces
   # <h>How bad is your life going if you filenames ending in spaces?</h>
 
-  unless (/symlink\s*(.*?) to (.*)$/) {next;}
+  # TODO: this can break if either filename has the word "to" in it
+  # The "/" below helps but is still imperfect
+  unless (/symlink\s*(.*?) to (\/.*)$/) {next;}
 
   # using array here probably doesnt help much
 
@@ -104,7 +106,11 @@ while (<>) {
   # <h>"my bad".. get it?</h>
   my($bad) = 0;
 
+  debug("ALPHA",@f);
+
   for $i (@f) {
+
+    debug("BETA: $i, $size{$i}");
 
     # recsize = size as recorded by results.txt.srt above
 #    debug("FILE: $i, RECSIZE: $size{$i}");
@@ -116,6 +122,8 @@ while (<>) {
 #      debug("RSIZE($i) == $size{$i} <= $lower");
       $bad=1; last;
     }
+
+    debug("GAMMA: $i");
 
     # TODO: should this be somewhere else?
     unless ($i=~/[ -~]/) {
@@ -139,7 +147,7 @@ while (<>) {
 
   # my restriction: the filename itself must match (because otherwise
   # you get all sorts of weird random links)
-  
+
   my($n1, $n2) = @f;
   $n1=~s%^.*/%%;
   $n2=~s%^.*/%%;
@@ -289,6 +297,32 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+
+  # if one copy on edrive the other on kemptown, delete the kemptown copy
+
+  for $i (0,1) {
+    if  ($files[1-$i]=~m%//mnt/kemptown/% &&
+	 $files[$i]=~m%//mnt/extdrive5/$private{edrive}/%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+return;
+
+
+  # if one copy on edrive the other on sdrive, delete the sdrive copy
+
+  for $i (0,1) {
+    if  ($files[1-$i]=~m%//mnt/extdrive5/$private{sdrive}/% &&
+	 $files[$i]=~m%//mnt/extdrive5/$private{edrive}/%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+    }
+  }
+
+return;
 
   # tumblr thing twice because, in one instance, it's
   # /home/user/TUMBLR, in another its //mnt/villa/user/TUMBLR sigh

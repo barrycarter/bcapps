@@ -42,6 +42,9 @@ xrdb ~/.Xresources
 xset -dpms
 xset r rate 250 25
 
+# this turns off screensaver too, which appears to be different from DPMS
+xset s off off
+
 # per
 # http://unix.stackexchange.com/questions/39518/turn-off-beep-of-xorg
 # there may not actually be an option for this in xorg.conf, so doing

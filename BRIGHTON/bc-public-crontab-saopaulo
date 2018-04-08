@@ -283,3 +283,12 @@ MAILTO="daemon"
 
 # been having issues w/ "thermal events", so report hourly temperatures to CRON
 */5 * * * * sensors; hddtemp
+
+# "subliminally" pop up a message every 7 minutes or so (but 11m gap
+# at turn of hour); using 7m schedule to avoid interfering w/ GUAWA
+*/7 * * * * xmessage `sort -R /home/user/subliminal.txt | head -1` -timeout  1 -nearmouse -buttons ""
+
+# nightly, cleanup (ie, tesseract and put into dirs) XWD snaps from
+# previous day (doing this twice just in case I fall behind a day)
+
+17 2 * * * /home/user/BCGIT/bc-xwd-cleanup.pl --debug; /home/user/BCGIT/bc-xwd-cleanup.pl --debug
