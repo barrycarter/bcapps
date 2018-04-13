@@ -59,7 +59,7 @@ MAILTO="daemon"
 # the files then belong to root, not user; however, I am unhappy about
 # this
 
-* * * * * sudo /home/user/BCGIT/bc-bg2.pl
+* * * * * sudo /home/user/BCGIT/bc-bg2.pl > /dev/null
 
 # snapshot my screen every minute
 # TODO: restore this, it saves to an external drive that isn't there yet

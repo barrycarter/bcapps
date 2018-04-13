@@ -74,7 +74,7 @@ while (<A>) {
   # TODO: we could record more about the file here
   # TODO: we could do file safety checks here instead of later(?)
 
-  debug("ASSIGNING $name to size $size");
+#  debug("ASSIGNING $name to size $size");
 
   $size{$name} = $size;
 }
@@ -106,11 +106,11 @@ while (<>) {
   # <h>"my bad".. get it?</h>
   my($bad) = 0;
 
-  debug("ALPHA",@f);
+#  debug("ALPHA",@f);
 
   for $i (@f) {
 
-    debug("BETA: $i, $size{$i}");
+#    debug("BETA: $i, $size{$i}");
 
     # recsize = size as recorded by results.txt.srt above
 #    debug("FILE: $i, RECSIZE: $size{$i}");
@@ -123,7 +123,7 @@ while (<>) {
       $bad=1; last;
     }
 
-    debug("GAMMA: $i");
+#    debug("GAMMA: $i");
 
     # TODO: should this be somewhere else?
     unless ($i=~/[ -~]/) {

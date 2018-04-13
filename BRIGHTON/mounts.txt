@@ -6,6 +6,8 @@
 /mnt/lobos lobos
 # kemptown recovered from brighton 11/24/2017ish
 # temporarily disabled 9 Jan 2018 (restored 11 Jan 2018, fixed)
+# temp disabled 12 Apr 2018 as I move this drive contents to lobos
+# restored 13 Apr 2018
 /mnt/kemptown kemptown
 / saopaulo
 

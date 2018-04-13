@@ -53,3 +53,8 @@
 # VMs from brighton should already be copied over
 # "/mnt/extdrive5/FROMBRIGHTON/mnt/extdrive7/root/VirtualBox VMs/" "/root/VirtualBox VMs/"
 
+# moved VirtualBox VMs from /mnt/villa to /mnt/lobos to free up space
+"/mnt/lobos/VirtualBox VMs/" "/mnt/villa/VirtualBox VMs/"
+
+# moved CDRs from SSD to lobos
+"/mnt/lobos/CDR/" "/CDR/"

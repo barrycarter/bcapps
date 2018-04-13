@@ -88,3 +88,5 @@ setenv imagegrep2 '\.png$|\.gif$|\.jpg$|\.bmp$|\.jpeg$|\.tif$|\.xif$|\.svg$|\.pp
 # videos, no extra garbage
 setenv videogrep2 '\.mp4$|\.mkv$|\.avi$'
 
+# never log me out/time me out
+unset autologout

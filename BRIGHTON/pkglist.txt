@@ -355,6 +355,7 @@ qrencode-devel
 zbar-devel
 
 # video
+obs-studio
 vcdimager
 lsdvd
 ffmpeg
