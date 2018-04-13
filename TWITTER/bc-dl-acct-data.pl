@@ -25,14 +25,14 @@ for $i (split(/\n/, $out)) {
 
   # TODO: testing for three regexs here (twitter/facebook share) ugly
 
-  my($date);
+  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {next;}
+  my($site, $acct, $date) = ($1, $2, $3);
 
-  if ($i=~m/(\d{8}\.\d{6})\.zip/) {$date = $1;}
-  elsif ($i=~m/Complete_LinkedInDataExport_(\d{2}\-\d{2}\-\d{4})\.zip/) {$date=$1;}
-  elsif ($i=~m/takeout\-(\d{8}T\d{6}Z)/) {$date = $1;}
-  else {next;}
+  # ignore "dates" that come from files like where
+  # Complete_LinkedInDataExport_03-08-2018.zip yields a "date" of 2018
+#  if (length($date) < 8) {next;}
 
-  debug("I: $i, date is: $date");
+  debug("$site,$acct,$date from:", $i);
 }
 
 # TODO: remember to look at ~/myaccounts.txt for accounts that have
@@ -40,14 +40,14 @@ for $i (split(/\n/, $out)) {
 
 =item comment
 
-Sample file names:
+Sample file names AFTER I run bc-*-zip.pl:
 
-LINKEDIN/Complete_LinkedInDataExport_03-08-2018.zip
+LINKEDIN/linkedin@barrycarter.info-20180308.083352.zip 
 
-TWITTER/barrycarter-20180130.223052.zip
+TWITTER/barrycarter-20180225.151142.zip
 
 FACEBOOK/barry.carter.121-20180127.080552.zip
 
-GOOGLE/takeout-20180320T144223Z-001.zip
+GOOGLE/carter.barry@gmail.com-20180401T181753Z.zip
 
 =cut
