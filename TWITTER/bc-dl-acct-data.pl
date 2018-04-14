@@ -20,14 +20,15 @@ my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 # hash to keep latest save for each account
 my(%latest);
 
-# list of all my accounts; set time to 0 here just in case they've
-# never been backed up
+# list of all my accounts; set time to "0" here just in case they've
+# never been backed up (actually setting to "1" because stardate()
+# treats 0 as "now"
 
 ($out, $err, $res) = cache_command2("egrep -v '^#' $bclib{home}/myaccounts.txt");
 
 for $i (split(/\n/, $out)) {
   unless ($i=~m%^(.*?):(\S+)%) {warn "BAD LINE: $i"; next;}
-  $latest{$1}{$2} = 0;
+  $latest{lc("$1:$2")} = 1;
 }
 
 # TODO: dont cache in production?
@@ -39,7 +40,11 @@ for $i (split(/\n/, $out)) {
 
 for $i (split(/\n/, $out)) {
 
-  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {next;}
+  
+#  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {next;}
+
+  # alt form allows notes or whatever after date
+  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+).*?\.zip$%) {next;}
   my($site, $acct, $date) = (lc($1), lc($2), $3);
 
   # convert "stardate" to form that makes str2time happy
@@ -49,10 +54,14 @@ for $i (split(/\n/, $out)) {
   $date = str2time($date);
 
   debug("$site/$acct/$date");
-  $latest{$site}{$acct} = max($latest{$site}{$acct}, $date);
+  $latest{"$site:$acct"} = max($latest{"$site:$acct"}, $date);
 }
 
-debug(var_dump("latest",\%latest));
+for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
+  print stardate($latest{$i})," $i\n";
+}
+
+# debug(var_dump("latest",\%latest));
 
 # TODO: remember to look at ~/myaccounts.txt for accounts that have
 # perhaps never been backedup
