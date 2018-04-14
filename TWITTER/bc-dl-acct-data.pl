@@ -15,25 +15,25 @@ my($out, $err, $res);
 # TODO: this is serious overkill, most aren't even backups
 
 my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE");
-
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # TODO: dont cache in production?
 ($out, $err, $res) = cache_command2("find $dirspec -type f", "age=3600");
 
+# hash to keep latest save for each account
+my(%latest);
+
 for $i (split(/\n/, $out)) {
 
-  # TODO: testing for three regexs here (twitter/facebook share) ugly
-
-  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {next;}
+  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {
+    debug("FAILREGEX: $i"); next;}
   my($site, $acct, $date) = ($1, $2, $3);
 
-  # ignore "dates" that come from files like where
-  # Complete_LinkedInDataExport_03-08-2018.zip yields a "date" of 2018
-#  if (length($date) < 8) {next;}
-
-  debug("$site,$acct,$date from:", $i);
+  debug("$site/$acct/$date");
+  $latest{$site}{$acct} = max($latest{$site}{$acct}, $date);
 }
+
+debug("LATEST", %latest);
 
 # TODO: remember to look at ~/myaccounts.txt for accounts that have
 # perhaps never been backedup
