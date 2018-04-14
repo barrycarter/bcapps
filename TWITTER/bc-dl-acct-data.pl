@@ -17,25 +17,42 @@ my($out, $err, $res);
 my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
-# TODO: dont cache in production?
-# NOTE: bc-*-zip.pl creates symlinks, thus "-type l"
-# however, can also be files, so -o
-($out, $err, $res) = cache_command2("find $dirspec -type l -o -type f", "age=3600");
-
 # hash to keep latest save for each account
 my(%latest);
 
+# list of all my accounts; set time to 0 here just in case they've
+# never been backed up
+
+($out, $err, $res) = cache_command2("egrep -v '^#' $bclib{home}/myaccounts.txt");
+
+for $i (split(/\n/, $out)) {
+  unless ($i=~m%^(.*?):(\S+)%) {warn "BAD LINE: $i"; next;}
+  $latest{$1}{$2} = 0;
+}
+
+# TODO: dont cache in production?
+# NOTE: bc-*-zip.pl creates symlinks, thus "-type l"
+# however, can also be files, so -o
+# TODO: try to add -iname '*.zip' to this w/o breaking OR condition
+
+($out, $err, $res) = cache_command2("find $dirspec -type l -o -type f", "age=3600");
+
 for $i (split(/\n/, $out)) {
 
-  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {
-    debug("FAILREGEX: $i"); next;}
-  my($site, $acct, $date) = ($1, $2, $3);
+  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {next;}
+  my($site, $acct, $date) = (lc($1), lc($2), $3);
+
+  # convert "stardate" to form that makes str2time happy
+  $date=~s/(\d{4})(\d{2})(\d{2})\.(\d{2})(\d{2})(\d{2})/$1-$2-$3 $4:$5:$6/;
+
+  debug("DATE: $date");
+  $date = str2time($date);
 
   debug("$site/$acct/$date");
   $latest{$site}{$acct} = max($latest{$site}{$acct}, $date);
 }
 
-debug("LATEST", %latest);
+debug(var_dump("latest",\%latest));
 
 # TODO: remember to look at ~/myaccounts.txt for accounts that have
 # perhaps never been backedup
