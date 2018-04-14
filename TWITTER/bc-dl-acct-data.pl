@@ -18,7 +18,9 @@ my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # TODO: dont cache in production?
-($out, $err, $res) = cache_command2("find $dirspec -type f", "age=3600");
+# NOTE: bc-*-zip.pl creates symlinks, thus "-type l"
+# however, can also be files, so -o
+($out, $err, $res) = cache_command2("find $dirspec -type l -o -type f", "age=3600");
 
 # hash to keep latest save for each account
 my(%latest);
