@@ -46,8 +46,8 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 1e+4;
-warn "Temporarily looking at 10K+ files";
+my($lower) = 1e+6;
+# warn "Temporarily looking at 1M+ files";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -298,6 +298,52 @@ sub choose_file {
 
   debug("FILES", @files);
 
+  # a little ugly, but if one test succeeds, no others can run
+  if (dvd_trumps_all(@files)) {return;}
+  if (tumblr_fix(@files)) {return;}
+  if (mp4vstorrents(@files)) {return;}
+
+return;
+
+  # trivial fix for duplicate Will/Grace dl
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%MP4/WILLGRACE/8__2005_/% &&
+	 $files[1-$i]=~m%8 \(2005\)%) {
+      print qq%sudo rm "$files[$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return;
+
+  # if one has sdrive in path and one doesn't, kill the one that does
+
+  for $i (0,1) {
+    if  ($files[$i]=~m%$private{sdrive}% &&
+	 !($files[1-$i]=~m%$private{sdrive}%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+#      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+return; 
+
+  # I have two collections of Star Trek movies, delete the copy in
+  # smaller collection
+
+  for $i (0,1) {
+    if  ($files[1-$i]=~m%//mnt/kemptown/DELUGE-TORRENTS/Star Trek - All 13 Movies Collection 1979-2016% &&
+	 $files[$i]=~m%//mnt/kemptown/DELUGE-TORRENTS/Star Trek 12 Movies Collection 1979-2013%) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+    }
+  }
+
+
+return;
 
   # if one copy on edrive the other on kemptown, delete the kemptown copy
 
@@ -375,27 +421,6 @@ return;
 
 return;
 
-  # if both are in tumblr, just link one to other
-  # the 100K limit will prevent trivial linkages
-  # TODO: consider an even lower limit for tumblr
-  # note there is no loop here
-
-  # also, neither file can be a .txt file OR be in /OLD/
-
-  # some files are references as //mnt/villa/... grumble
-  if (
-      $files[0]=~m%^/+mnt/villa/user/TUMBLR/% &&
-      $files[1]=~m%^/+mnt/villa/user/TUMBLR/% &&
-      !($files[0]=~m%(/OLD/|\.txt)%) &&
-      !($files[1]=~m%(/OLD/|\.txt)%)
-     ) {
-      print qq%sudo rm "$files[0]"\n%;
-      print qq%sudo ln -s "$files[1]" "$files[0]"\n%;
-      print qq%echo keeping "$files[1]"\n%;
-    }
-
-return;
-
   # if one copy is an /MP4/ dir and the other isn't, delete the other
   for $i (0,1) {
     if ($files[$i]=~m%/MP4/% && !($files[1-$i]=~m%/MP4/%)) {
@@ -415,19 +440,6 @@ return;
   }
 
 return;
-
-  # if one has sdrive in path and one doesn't, kill the one that does
-
-  for $i (0,1) {
-    if  ($files[$i]=~m%$private{sdrive}% &&
-	 !($files[1-$i]=~m%$private{sdrive}%)) {
-      print qq%sudo rm "$files[$i]"\n%;
-      print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
-      print qq%echo keeping "$files[1-$i]"\n%;
-    }
-  }
-
-return; 
 
   # DVD trumps EROTICA w symlink
 
@@ -656,23 +668,6 @@ return;
 
 return; 
 
-  # if one copy on DVD restored files, the other not, keep the DVD
-  # version, symlink the other (not sure this is good idea, maybe
-  # backwards would be better?)
-
-  # this is slightly less inefficient but still stupid
-  for $i (0,1) {
-    # TODO: could probably combine these somehow
-    if  (($files[$i]=~m%/DVD/%) && !($files[1-$i]=~m%/DVD/%)) {
-      print qq%sudo rm "$files[1-$i]"\n%;
-      print qq%sudo ln -s "$files[$i]" "$files[1-$i]"\n%;
-      print qq%echo keeping "$files[$i]"\n%;
-    }
-  }
-
-
-return;
-
   # if one copy is an /MP4/ dir and the other isn't, delete the other
   if ($files[0]=~m%/MP4/% && !($files[1]=~m%/MP4/%)) {
     print qq%sudo rm "$files[1]";\necho "keeping $files[0]"\n%;
@@ -793,5 +788,66 @@ return;
     print qq%sudo rm "$files[1]"\necho "keeping $files[0]"\n%;
   } else {
     print qq%sudo rm "$files[0]"\necho "keeping $files[1]"\n%;
+  }
+}
+
+# subroutinizing some of the more important stuff
+
+sub dvd_trumps_all {
+  my(@files) = @_;
+
+  # if one copy on DVD restored files, the other not, keep the DVD
+  # version, symlink the other (not sure this is good idea, maybe
+  # backwards would be better?)
+
+  # this is slightly less inefficient but still stupid
+  for $i (0,1) {
+    # TODO: could probably combine these somehow
+    if  (($files[$i]=~m%/DVD/%) && !($files[1-$i]=~m%/DVD/%)) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%sudo ln -s "$files[$i]" "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+      return 1;
+    }
+  }
+}
+
+sub tumblr_fix {
+  my(@files) = @_;
+
+  # if both are in tumblr, just link one to other
+  # the 100K limit will prevent trivial linkages
+  # TODO: consider an even lower limit for tumblr
+  # note there is no loop here
+
+  # also, neither file can be a .txt file OR be in /OLD/
+
+  # some files are references as //mnt/villa/... grumble
+  if (
+      $files[0]=~m%^/+mnt/villa/user/TUMBLR/% &&
+      $files[1]=~m%^/+mnt/villa/user/TUMBLR/% &&
+      !($files[0]=~m%(/OLD/|\.txt)%) &&
+      !($files[1]=~m%(/OLD/|\.txt)%)
+     ) {
+      print qq%sudo rm "$files[0]"\n%;
+      print qq%sudo ln -s "$files[1]" "$files[0]"\n%;
+      print qq%echo keeping "$files[1]"\n%;
+      return 1;
+    }
+
+}
+
+# MP4 trumps DELUGE-TORRENTS
+
+sub mp4vstorrents {
+  my(@files) = @_;
+
+  for $i (0,1) {
+    if ($files[$i]=~m%/MP4/% &&
+	$files[1-$i]=~m%/DELUGE\-TORRENTS/%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+      return 1;
+    }
   }
 }

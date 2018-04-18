@@ -47,6 +47,9 @@ for $i (split(/\n/, $out)) {
   unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+).*?\.zip$%) {next;}
   my($site, $acct, $date) = (lc($1), lc($2), $3);
 
+  # ignore raw forms of google and linkedin outputs
+  if ($acct=~/^complete_linkedindataexport/ || $acct eq "takeout") {next;}
+
   # convert "stardate" to form that makes str2time happy
   $date=~s/(\d{4})(\d{2})(\d{2})\.(\d{2})(\d{2})(\d{2})/$1-$2-$3 $4:$5:$6/;
 
@@ -54,6 +57,11 @@ for $i (split(/\n/, $out)) {
   $date = str2time($date);
 
   debug("$site/$acct/$date");
+
+  unless ($latest{"$site:$acct"}) {
+    warn "$site:$acct not in ~/myaccounts.txt, possible error";
+  }
+
   $latest{"$site:$acct"} = max($latest{"$site:$acct"}, $date);
 }
 
