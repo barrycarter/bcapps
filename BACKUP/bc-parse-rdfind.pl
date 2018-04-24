@@ -46,8 +46,8 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 1e+6;
-# warn "Temporarily looking at 1M+ files";
+my($lower) = 1e+4;
+warn "Temporarily looking at 10K+ files";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -302,6 +302,7 @@ sub choose_file {
   if (dvd_trumps_all(@files)) {return;}
   if (tumblr_fix(@files)) {return;}
   if (mp4vstorrents(@files)) {return;}
+  if (xwdcanon(@files)) {return;}
 
 return;
 
@@ -845,6 +846,24 @@ sub mp4vstorrents {
   for $i (0,1) {
     if ($files[$i]=~m%/MP4/% &&
 	$files[1-$i]=~m%/DELUGE\-TORRENTS/%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+      return 1;
+    }
+  }
+}
+
+# All XWD files should be in //mnt/villa/user/XWD/ not other /XWD/ dirs
+
+sub xwdcanon {
+
+  my(@files) = @_;
+
+  # the file to delete must be in *a* /XWD/ dir but not the main one
+  for $i (0,1) {
+    if ($files[$i]=~m%//mnt/villa/user/XWD/% &&
+	!($files[1-$i]=~m%//mnt/villa/user/XWD/%) &&
+	$files[1-$i]=~m%/XWD/%) {
       print qq%sudo rm "$files[1-$i]"\n%;
       print qq%echo keeping "$files[$i]"\n%;
       return 1;

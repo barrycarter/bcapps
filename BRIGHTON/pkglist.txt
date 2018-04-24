@@ -530,6 +530,15 @@ VirtualBox-5.1
 qemu-kvm
 WolframCDFPlayer
 abiword
+virt-manager
+libvirt-client
+libvirt-daemon
+qemu
+qemu-kvm-tools
+bridge-utils
+libvirt-daemon-driver-qemu
+device-mapper-libs
+libvirt
 
 # editors + text utilities
 texlive
