@@ -1,60 +1,37 @@
 (*
 
- attempts to solve https://astronomy.stackexchange.com/questions/26167/how-far-out-can-the-sun-keep-celestial-objects-revolving
+ attempts to solve
+ https://astronomy.stackexchange.com/questions/26167/how-far-out-can-the-sun-keep-celestial-objects-revolving
 
 *)
 
-
-(* mathematica is too slow, so using HYG db *)
-
-data = Import["!zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", "CSV"];
-
-(* data[[1]] tells me which fields I need *)
-
-(* hyg doesnt have mass argh! *)
+(* note: the export only needs to be done once *)
 
 a = AstronomicalData["Star"];
 
-data = Table[{
- AstronomicalData[s, Name],
- AstronomicalData[s, "Mass"]/kilograms,
- AstronomicalData[s, "Position"]
-}, {s, Take[a,20]}]
-
-data = Table[{
-
-(* this is the sun *)
+(* a[[1]] is the sun *)
 
 solarMass = AstronomicalData[a[[1]], "Mass"]
 lightYear = UnitConvert["light year", "m"]
 
-(* TODO: consider writing this to file, Mathematica is terribly slow *)
+data = Table[{
+ AstronomicalData[s, "Name"],
+ AstronomicalData[s, "Mass"]/solarMass,
+ AstronomicalData[s, "Position"]/lightYear
+}, {s, a}];
 
-mass[s_] := mass[s] = AstronomicalData[s, "Mass"]/solarMass
-pos[s_] := pos[s] = AstronomicalData[s, "Position"]/lightYear
+Export["starnamemasspos.csv", data];
 
-(* just to get the memoization done *)
+data = Import["!bzcat /home/user/BCGIT/ASTRO/starnamemasspos.csv.bz2", "CSV"];
 
-tab = Table[{mass[s], pos[s]}, {s, a}];
+(* force exerted on given point in light years by the ith star *)
 
-temp1845 = Read["!zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", String]
-
-AstronomicalData[a[[2]],"Mass"]/solarMass
-AstronomicalData[a[[2]],"Position"]/lightYear
+force[x_, y_, z_, i_] := data[[i,2]]/Norm[data[[i,3]]-{x,y,z}]^2
 
 
-AstronomicalData[a[[1]], "Properties"]
 
-Mass
-Position
 
-AstronomicalData[a[[1]], "Position"]
-
-9460730472580800 meters = light year 
-
-(* force exerted on given point in light years by given star *)
-
-force[x_, y_, z_, s_] := (AstronomicalData[s, "Mass"]/solarMass)/
+(AstronomicalData[s, "Mass"]/solarMass)/
 Norm[AstronomicalData[s, "Position"]/lightYear - {x,y,z}]^2
 
 Table[force[10,10,10,s], {s,a}]
