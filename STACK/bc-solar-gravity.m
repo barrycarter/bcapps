@@ -14,10 +14,14 @@ a = AstronomicalData["Star"];
 solarMass = AstronomicalData[a[[1]], "Mass"]
 lightYear = UnitConvert["light year", "m"]
 
+(* having x y z separately is ugly, but only way to export to CSV *)
+
 data = Table[{
  AstronomicalData[s, "Name"],
  AstronomicalData[s, "Mass"]/solarMass,
- AstronomicalData[s, "Position"]/lightYear
+ AstronomicalData[s, "Position"][[1]]/lightYear,
+ AstronomicalData[s, "Position"][[2]]/lightYear,
+ AstronomicalData[s, "Position"][[3]]/lightYear
 }, {s, a}];
 
 Export["starnamemasspos.csv", data];
