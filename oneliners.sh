@@ -1,3 +1,9 @@
+# spits out every week starting now to 2030-01-01
+
+perl -le 'use Date::Parse; use POSIX; for ($i=time();$i<=1893481200; $i+=86400*7) {print strftime("%Y%m%d", localtime($i));}'
+
+exit;
+
 # query the foods database for items whose carb:servingsizeingrams
 # ratio is fairly low
 

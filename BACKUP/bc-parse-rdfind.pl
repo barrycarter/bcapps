@@ -299,6 +299,7 @@ sub choose_file {
   debug("FILES", @files);
 
   # a little ugly, but if one test succeeds, no others can run
+  if (weathercanon(@files)) {return;}
   if (dvd_trumps_all(@files)) {return;}
   if (tumblr_fix(@files)) {return;}
   if (mp4vstorrents(@files)) {return;}
@@ -870,3 +871,22 @@ sub xwdcanon {
     }
   }
 }
+
+# canonize WEATHER files
+
+sub weathercanon {
+
+  my(@files) = @_;
+
+  # the one on private edrive trumps
+  for $i (0,1) {
+    if ($files[$i]=~m%/mnt/extdrive5/$private{edrive}/WEATHER/% &&
+      !($files[$1-i]=~m%/mnt/extdrive5/$private{edrive}/WEATHER/%) &&
+	$files[1-$i]=~m%/WEATHER/%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+      return 1;
+    }
+  }
+}
+

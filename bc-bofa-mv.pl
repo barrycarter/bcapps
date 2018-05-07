@@ -17,6 +17,10 @@ for $i (@ARGV) {
   unless (-f "$i.txt") {warnlocal("NO TEXT VERSION: $i"); next;}
   $all = read_file("$i.txt");
 
+  # TODO: should add check that txt is more recent than PDF
+
+#  debug("ALL: $all");
+
   # switch based on pdf or txt contents
   if ($all=~/CenturyLink/s) {
     $fname = handle_centurylink($all);
@@ -136,15 +140,29 @@ sub handle_nmefcu {
 
 sub handle_paypal {
   my($all) = @_;
+  my($date, $email);
 
-  if ($all=~/Statement period:.*?\-\s*(.*)$/m) {
+  debug("ALL HERE: $all");
+
+  # testing
+#  if ($all=~/Statement period:\n?.*?-\s*(.*)$/im) {debug("1 is: $1");}
+
+  if ($all=~/Statement period:\n?.*?\-\s*(.*)$/im) {
     $date = $1;
   } else {
     warnlocal("CANNOT PARSE PAYPAL DATE");
     return;
   }
 
-  return strftime("paypal-%m-%d-%Y.pdf", gmtime(str2time($date)+43200));
+  # because I have multiple accounts now...
+  if ($all=~/Email \(PayPal Account ID\): (.*?)$/im) {
+    $email = $1;
+  } else {
+    warnlocal("CANNOT PARSE EMAIL ADDR");
+    return;
+  }
+
+  return strftime("paypal-$email-%m-%d-%Y.pdf", gmtime(str2time($date)+43200));
 }
 
 sub handle_vanguard {

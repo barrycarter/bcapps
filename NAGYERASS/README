@@ -1,0 +1,26 @@
+This is "nagyerass take two", a replacement for nagios, after I've
+used nagios for a while and understand what I dislike about it.
+
+bc-run-nya-test.pl: This program will do the following:
+
+  - log that a test is about to be run
+
+  - run a test that is either a raw Unix command (including possibly a
+  test that's part of the nagios suite) or a subroutine found in
+  bc-run-nya-test.pl itself
+
+  - a test may contain subtests, which will be run as separate forked processes
+
+  - log the results of the test
+
+  - print to ~/ERR the results of the test
+
+
+
+
+
+
+
+
+
+TODO: test may contain subtests

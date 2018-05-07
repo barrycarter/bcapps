@@ -26,8 +26,11 @@ my(%latest);
 
 ($out, $err, $res) = cache_command2("egrep -v '^#' $bclib{home}/myaccounts.txt");
 
+# list of errors to print at end so they are not lost
+my(@errors);
+
 for $i (split(/\n/, $out)) {
-  unless ($i=~m%^(.*?):(\S+)%) {warn "BAD LINE: $i"; next;}
+  unless ($i=~m%^(.*?):(\S+)%) {push(@errors,"BAD LINE: $i"); next;}
   $latest{lc("$1:$2")} = 1;
 }
 
@@ -59,7 +62,7 @@ for $i (split(/\n/, $out)) {
   debug("$site/$acct/$date");
 
   unless ($latest{"$site:$acct"}) {
-    warn "$site:$acct not in ~/myaccounts.txt, possible error";
+    push(@errors,"$site:$acct not in ~/myaccounts.txt, possible error");
   }
 
   $latest{"$site:$acct"} = max($latest{"$site:$acct"}, $date);
@@ -68,6 +71,8 @@ for $i (split(/\n/, $out)) {
 for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
   print stardate($latest{$i})," $i\n";
 }
+
+for $i (@errors) {print "ERROR: $i\n";}
 
 # debug(var_dump("latest",\%latest));
 

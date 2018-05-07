@@ -16,7 +16,9 @@ $zip->read($file);
 
 # find data/js/user_details.js, mtime, and contents (for username)
 
-my($data) = $zip->memberNamed("index.htm");
+# my($data) = $zip->memberNamed("index.htm");
+# fb changes to index.html ~ Apr 2018
+my($data) = $zip->memberNamed("index.html");
 my($mtime) = strftime("%Y%m%d.%H%M%S", gmtime($data->lastModTime()));
 my($contents) = $data->contents();
 
@@ -24,7 +26,7 @@ debug("CONTENTS: $contents");
 
 # this is ugly in case FB decides other links
 
-unless ($contents=~s%https?://www.facebook.com/(.*?)\"%%) {die "NO USERNAME";}
+unless ($contents=~s%https?://www.facebook.com/([^\?].*?)\"%%) {die "NO USERNAME";}
 
 my($sn) = $1;
 
