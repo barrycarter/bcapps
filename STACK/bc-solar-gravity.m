@@ -28,9 +28,21 @@ Export["starnamemasspos.csv", data];
 
 data = Import["!bzcat /home/user/BCGIT/ASTRO/starnamemasspos.csv.bz2", "CSV"];
 
+(* get rid of missing masses and positions *)
+
+data2 = Select[data, NumericQ[#[[2]]]&&NumericQ[#[[3]]]&];
+
+
+
 (* force exerted on given point in light years by the ith star *)
 
-force[x_, y_, z_, i_] := data[[i,2]]/Norm[data[[i,3]]-{x,y,z}]^2
+force[x_, y_, z_, i_] := data2[[i,2]]/Norm[Take[data2[[i]], {3,5}]-{x,y,z}]^2
+
+Table[{i, force[1,1,1,i]}, {i, Length[data2]}]
+
+Table[force[1,1,1,i], {i, Length[data2]}]
+
+
 
 
 

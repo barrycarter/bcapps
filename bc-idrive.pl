@@ -11,7 +11,9 @@ require "/usr/local/lib/bclib.pl";
 debug(%globopts);
 
 # had to change this for saopaulo
-my($cmd) = "/root/build/idevsutil_linux64/idevsutil.old";
+# my($cmd) = "/root/build/idevsutil_linux64/idevsutil.old";
+# changed again as idrive stops supporting idevsutil but still sort of does
+my($cmd) = "/home/user/bin/idevsutil_dedup";
 
 
 my(@accts) = split(/\n/, read_file("$homedir/idrive-accounts.txt"));

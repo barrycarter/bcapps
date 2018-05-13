@@ -294,4 +294,5 @@ MAILTO="daemon"
 # previous day (doing this twice just in case I fall behind a day)
 
 # off again on 18 Apr 2018 for more cleanup
-# 17 2 * * * /home/user/BCGIT/bc-xwd-cleanup.pl --debug; /home/user/BCGIT/bc-xwd-cleanup.pl --debug
+# back on 11 May 2018
+17 2 * * * /home/user/BCGIT/bc-xwd-cleanup.pl --debug; /home/user/BCGIT/bc-xwd-cleanup.pl --debug
