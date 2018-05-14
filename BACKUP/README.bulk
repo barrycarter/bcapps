@@ -37,11 +37,15 @@ echo look over big-by-*
 # NOTE: $passphrase must be set to pass phrase, and $spec must be set
 # to subdirectory name
 
-# BE SURE TO WAITPID BELOW!!!
+# BE SURE TO WAITPID BELOW!!! (new command after idrive filled)
 
 (nice +19 tar -T filelist.txt -cvf - | 
  nice +19 gpg --batch --passphrase $passphrase -c -o 
-  /mnt/idrive/$spec/idrive-$DATE.gpg) >& idrive-$DATE.out &
+ idrive-$DATE.gpg) >& idrive-$DATE.out &
+
+# (nice +19 tar -T filelist.txt -cvf - | 
+# nice +19 gpg --batch --passphrase $passphrase -c -o 
+#  /mnt/idrive/$spec/idrive-$DATE.gpg) >& idrive-$DATE.out &
 
 # BE SURE TO WAITPID ABOVE!!!!
 
