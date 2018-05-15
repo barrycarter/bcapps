@@ -1,18 +1,15 @@
-This is the bulk backup process for when idrive sends me a ~5TB drive
-to fill up and return to them: it starts out as a copy of README in
-this dir, but the steps change after I determine the list of files to
-backup; using tar and symmetric encryption, not zpaq
+# NOTE TO SELF: as of mid May 2018, I change this file a lot to
+# represent regular network backups (not the mass backup to a 5TB
+# drive), so use older versions of this file to see notes for the 5TB
+# backup
 
 # make sure the exclude files are up to date (from oneliners.sh)
 
-# pipe below to shell
 cd /root/massback-bulk
 
-# TODO: generate the list of backed up files from tar toc
+# this generates the list of backed up files from tar toc
+# pipe below to shell
 \ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {print "bc-tar2exclude.pl $_ > $_.exclude"}'
-
-# check to see how full drive is, I want to fill maybe 4 out of 5TB
-df -kh /mnt/idrive/
 
 # do this once to timestamp the backup, create a directory for this
 # backup, and copy the Makefile to this directory
@@ -43,6 +40,8 @@ echo look over big-by-*
  nice +19 gpg --batch --passphrase $passphrase -c -o 
  idrive-$DATE.gpg) >& idrive-$DATE.out &
 
+bc-waitpid.pl `pgrep -f $passphrase` &
+
 # (nice +19 tar -T filelist.txt -cvf - | 
 # nice +19 gpg --batch --passphrase $passphrase -c -o 
 #  /mnt/idrive/$spec/idrive-$DATE.gpg) >& idrive-$DATE.out &
@@ -51,13 +50,18 @@ echo look over big-by-*
 
 # TODO: this will watch gpg-agent if it exists so be careful
 
-sleep 1; bc-waitpid.pl gpg &
+# sleep 1; bc-waitpid.pl gpg &
 
 # after gpg step done:
 
-# ACTUALLY PUT PASS PHRASE BELOW
+# ACTUALLY PUT PASS PHRASE BELOW as a check to make sure i didnt set
+# the env var wrong
 
-gpg --batch --passphrase PUT_PHRASE_HERE -d /mnt/idrive/$spec/idrive-$DATE.gpg|
+# new cmd for local backups
+gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
+  tar --full-time --utc -tvf - >! idrive-$DATE.toc &
+
+# gpg --batch --passphrase PUT_PHRASE_HERE -d /mnt/idrive/$spec/idrive-$DATE.gpg|
   tar --full-time --utc -tvf - >! idrive-$DATE.toc &
 
 # bc-waitpid.pl above as desired
@@ -68,11 +72,30 @@ cp idrive-$DATE.toc /root/massback-bulk
 
 # and encrypted copy to /mnt/idrive/$spec
 
+# keep encrypted copy local to upload to idrive
+
 gpg --batch --passphrase $passphrase -c -o 
- /mnt/idrive/$spec/idrive-$DATE.toc.gpg idrive-$DATE.toc
+ idrive-$DATE.toc.gpg idrive-$DATE.toc
+
+
+# gpg --batch --passphrase $passphrase -c -o 
+# /mnt/idrive/$spec/idrive-$DATE.toc.gpg idrive-$DATE.toc
+
+# upload the files to idrive
+
+# which files to upload
+
+ls $cwd/*.gpg >! /home/user/bin/IDrive_for_Linux/idrive/user_profile/*/Backup/Manual/BackupsetFile.txt
+
+perl ~user/bin/IDrive_for_Linux/scripts/Backup_Script.pl
+
+# do this in other window if needed
+
+bc-waitpid.pl idevs &
 
 # remove files we longer need
 
 rm -f backup0.txt afad.txt previouslydone.txt.srt &
+rm idrive-$DATE.gpg idrive-$DATE.toc*
 
 # repeat
