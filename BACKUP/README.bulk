@@ -21,38 +21,20 @@ cp /home/user/BCGIT/BACKUP/Makefile.bulk Makefile
 
 # cp exclusions-commented.txt from a previous backup or make wont work
 
-# run make (-j by alias)
+# run make (-j by alias), no need to waitpid since bc-chunk-backup2 xmessages
 nice +19 make -j &
-
-# no need to waitpid make since bc-chunk-backup2 xmessages at end
-# sleep 1; bc-waitpid.pl make &
 
 echo look over big-by-*
 
 # once the filelist looks ok, tar it and encrypt it
 
-# NOTE: $passphrase must be set to pass phrase, and $spec must be set
-# to subdirectory name
-
-# BE SURE TO WAITPID BELOW!!! (new command after idrive filled)
+# NOTE: $passphrase must be set to passphrase
 
 (nice +19 tar -T filelist.txt -cvf - | 
  nice +19 gpg --batch --passphrase $passphrase -c -o 
  idrive-$DATE.gpg) >& idrive-$DATE.out &
 
 bc-waitpid.pl `pgrep -f $passphrase` &
-
-# (nice +19 tar -T filelist.txt -cvf - | 
-# nice +19 gpg --batch --passphrase $passphrase -c -o 
-#  /mnt/idrive/$spec/idrive-$DATE.gpg) >& idrive-$DATE.out &
-
-# BE SURE TO WAITPID ABOVE!!!!
-
-# TODO: this will watch gpg-agent if it exists so be careful
-
-# sleep 1; bc-waitpid.pl gpg &
-
-# after gpg step done:
 
 # ACTUALLY PUT PASS PHRASE BELOW as a check to make sure i didnt set
 # the env var wrong
@@ -61,28 +43,18 @@ bc-waitpid.pl `pgrep -f $passphrase` &
 gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
   tar --full-time --utc -tvf - >! idrive-$DATE.toc &
 
-# gpg --batch --passphrase PUT_PHRASE_HERE -d /mnt/idrive/$spec/idrive-$DATE.gpg|
-  tar --full-time --utc -tvf - >! idrive-$DATE.toc &
-
-# bc-waitpid.pl above as desired
+bc-waitpid.pl `pgrep -f $passphrase` &
 
 # copy plaintext TOC to /root/massback-bulk
 
 cp idrive-$DATE.toc /root/massback-bulk
-
-# and encrypted copy to /mnt/idrive/$spec
 
 # keep encrypted copy local to upload to idrive
 
 gpg --batch --passphrase $passphrase -c -o 
  idrive-$DATE.toc.gpg idrive-$DATE.toc
 
-
-# gpg --batch --passphrase $passphrase -c -o 
-# /mnt/idrive/$spec/idrive-$DATE.toc.gpg idrive-$DATE.toc
-
 # upload the files to idrive
-
 # which files to upload
 
 ls $cwd/*.gpg >! /home/user/bin/IDrive_for_Linux/idrive/user_profile/*/Backup/Manual/BackupsetFile.txt

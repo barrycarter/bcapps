@@ -46,8 +46,8 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 1e+4;
-warn "Temporarily looking at 10K+ files";
+my($lower) = 1;
+warn "Temporarily looking at ALL files for WEATHER";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -300,10 +300,11 @@ sub choose_file {
 
   # a little ugly, but if one test succeeds, no others can run
   if (weathercanon(@files)) {return;}
-  if (dvd_trumps_all(@files)) {return;}
-  if (tumblr_fix(@files)) {return;}
-  if (mp4vstorrents(@files)) {return;}
-  if (xwdcanon(@files)) {return;}
+
+#  if (dvd_trumps_all(@files)) {return;}
+#  if (tumblr_fix(@files)) {return;}
+#  if (mp4vstorrents(@files)) {return;}
+#  if (xwdcanon(@files)) {return;}
 
 return;
 
