@@ -9,8 +9,10 @@ nagios tests I need to add:
   is mentioned here) to the actual sizes from bc-idrive.pl
 
   - grep -L '^2029' ~/annoytab.d/*.txt should show all automated
-  events go through at least 2029 (at which point I have a meta-event
-  to update further, in the highly unlikely event I am still alive)
+  events (except leap day, arg!) go through at least 2029 (at which
+  point I have a meta-event to update further, in the highly unlikely
+  event I am still alive)
 
   - above MAY apply to ~/calendar.d/*.txt as well, but may not
 
+  - make sure local weather on bc-bg is not too old

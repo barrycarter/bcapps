@@ -114,7 +114,9 @@ for $i (glob("/home/barrycarter/ERR/*.inf")) {
 }
 
 # local weather (below info, above TZ = not great)
-($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ80'", "age=120");
+# 21 May 2018: temp change while Brian's station down
+# ($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ80'", "age=120");
+($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ361'", "age=120");
 
 # create hash + strip trailing .0
 while ($out=~s%<(.*?)>([^<>]*?)</\1>%%is) {

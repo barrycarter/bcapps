@@ -27,6 +27,9 @@ require "/usr/local/lib/bclib.pl";
 # I have privately named drives
 require "/home/user/bc-private.pl";
 
+# can take a while to run, so alert
+defaults("xmessage=1");
+
 # for permissions purposes (ugly!)
 if ($>) {die("Must be root");}
 
@@ -47,7 +50,7 @@ if ($>) {die("Must be root");}
 # TODO: this should almost definitely be an option
 
 my($lower) = 1;
-warn "Temporarily looking at ALL files for WEATHER";
+warn "Temporarily looking at ALL files for XWD";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -299,12 +302,12 @@ sub choose_file {
   debug("FILES", @files);
 
   # a little ugly, but if one test succeeds, no others can run
-  if (weathercanon(@files)) {return;}
+#  if (weathercanon(@files)) {return;}
 
 #  if (dvd_trumps_all(@files)) {return;}
 #  if (tumblr_fix(@files)) {return;}
 #  if (mp4vstorrents(@files)) {return;}
-#  if (xwdcanon(@files)) {return;}
+  if (xwdcanon(@files)) {return;}
 
 return;
 

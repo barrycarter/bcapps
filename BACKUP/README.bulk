@@ -40,7 +40,7 @@ bc-waitpid.pl `pgrep -f $passphrase` &
 # the env var wrong
 
 # new cmd for local backups
-gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
+nice +19 gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
   tar --full-time --utc -tvf - >! idrive-$DATE.toc &
 
 bc-waitpid.pl `pgrep -f $passphrase` &
