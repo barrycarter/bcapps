@@ -216,7 +216,9 @@ alias quiksortcheck "bc-fastrand.pl --n=100 \!* | sort -c"
 # an odd dir (removed cd later, since bc-alarm.pl does this now anyway
 
 alias alarm "/home/barrycarter/BCGIT/bc-alarm.pl \!*"
-alias alarm2 "pushd .; cd ; /home/barrycarter/BCGIT/bc-alarm.pl \!*; popd"
+
+# as of 5/31, making this --nosms by default with warning
+alias alarm2 "pushd .; cd ; echo nosms is now default, use bc-alarm directly for SMS; /home/barrycarter/BCGIT/bc-alarm.pl --nosms \!*; popd"
 
 # long form of ps that provides more info, as used by bc-daemon-checker2.pl
 alias pslong "ps -wwweo 'pid ppid etime rss vsz stat args' \!*"
@@ -260,7 +262,7 @@ alias scanit "bc-scan-pic-brighton.pl"
 alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
 # stopnet stops network intensive processes
-alias stopnet "sudo killall -STOP qbittorrent wget curl"
+alias stopnet "sudo killall -STOP qbittorrent wget curl idevs; xmessage consider pausing firefox/etc downloads &"
 
 # start mathematica with the <formula(s)> section of given file; useful
 # for reloads (note careful avoidance of $)

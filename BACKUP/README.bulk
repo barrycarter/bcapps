@@ -9,7 +9,8 @@ cd /root/massback-bulk
 
 # this generates the list of backed up files from tar toc
 # pipe below to shell
-\ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {print "bc-tar2exclude.pl $_ > $_.exclude"}'
+\ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {
+ print "bc-tar2exclude.pl $_ > $_.exclude"}'
 
 # do this once to timestamp the backup, create a directory for this
 # backup, and copy the Makefile to this directory
@@ -30,9 +31,9 @@ echo look over big-by-*
 
 # NOTE: $passphrase must be set to passphrase
 
-(nice +19 tar -T filelist.txt -cvf - | 
- nice +19 gpg --batch --passphrase $passphrase -c -o 
- idrive-$DATE.gpg) >& idrive-$DATE.out &
+ (nice +19 tar -T filelist.txt -cvf - | 
+ nice +19 gpg --batch --passphrase $passphrase -c -o  idrive-$DATE.gpg) >& 
+ idrive-$DATE.out &
 
 bc-waitpid.pl `pgrep -f $passphrase` &
 
@@ -41,7 +42,7 @@ bc-waitpid.pl `pgrep -f $passphrase` &
 
 # new cmd for local backups
 nice +19 gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
-  tar --full-time --utc -tvf - >! idrive-$DATE.toc &
+  nice +19 tar --full-time --utc -tvf - >! idrive-$DATE.toc &
 
 bc-waitpid.pl `pgrep -f $passphrase` &
 
@@ -68,6 +69,10 @@ bc-waitpid.pl idevs &
 # remove files we longer need
 
 rm -f backup0.txt afad.txt previouslydone.txt.srt &
-rm idrive-$DATE.gpg idrive-$DATE.toc*
+rm -f idrive-$DATE.gpg idrive-$DATE.toc* &
+
+# do weekly backup if necessary
+
+grep -h 'weekly backup' ~user/annoytab.d/*.txt
 
 # repeat

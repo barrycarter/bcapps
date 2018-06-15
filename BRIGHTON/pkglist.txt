@@ -7,6 +7,9 @@ efibootmgr
 
 # system tools
 
+hwinfo
+yum-plugin-copr
+epel-release
 curlftpfs
 dirsplit
 usbutils
@@ -403,6 +406,8 @@ telnet
 squid
 pidgin
 pidgin-devel
+pidgin-discord
+purple-discord
 jabberd
 prosody
 finch

@@ -7,6 +7,7 @@
 # version 2 is for brighton, where "chvt" breaks things badly
 
 require "/home/barrycarter/BCGIT/bclib.pl";
+require "/home/barrycarter/bc-private.pl";
 
 # lock
 unless (mylock("bc-bg.pl","murder")) {die("Locked");}
@@ -114,9 +115,18 @@ for $i (glob("/home/barrycarter/ERR/*.inf")) {
 }
 
 # local weather (below info, above TZ = not great)
-# 21 May 2018: temp change while Brian's station down
+
+# TODO: if I were clever, I'd 'hunt' for the nearest station if
+# obvious one down (but may kill API calls because I do it every ~2m)
+
+# 21 May 2018: temp change while Brian's station down; fixed same day
 # ($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ80'", "age=120");
-($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ361'", "age=120");
+# ($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ361'", "age=120");
+
+# station much closer to me, so keeping it private
+($out, $err, $res) = cache_command2("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=$private{wstation}'", "age=120");
+
+debug("OUT: $out, ERR: $err");
 
 # create hash + strip trailing .0
 while ($out=~s%<(.*?)>([^<>]*?)</\1>%%is) {
