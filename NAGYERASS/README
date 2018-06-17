@@ -15,6 +15,7 @@ bc-run-nya-test.pl: This program will do the following:
 
   - print to ~/ERR the results of the test
 
+TODO: make it an error for test results to be too old
 
 
 

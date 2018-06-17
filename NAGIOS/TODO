@@ -16,3 +16,8 @@ nagios tests I need to add:
   - above MAY apply to ~/calendar.d/*.txt as well, but may not
 
   - make sure local weather on bc-bg is not too old
+
+  - CCPAY and PAYMENT should be in right tables [this item makes sense
+  only to me]
+
+
