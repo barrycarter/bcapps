@@ -1,0 +1,26 @@
+# find all TV shows with brief additional info
+
+SELECT ?showLabel WHERE {
+  ?show wdt:P31 ?type .
+  ?type wdt:P279* wd:Q11578774
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".}
+}
+
+# original query above works and is saved (133559 results)
+
+SELECT ?showLabel WHERE {
+  ?show rdfs:label ?showLabel .
+  ?show wdt:P31 ?type .
+  ?type wdt:P279* wd:Q11578774
+}
+
+# 410638 above but getting multi labels
+
+SELECT ?showLabel ?genreLabel WHERE {
+  ?show wdt:P31 ?type .
+  ?type wdt:P279* wd:Q11578774 .
+  ?show rdfs:label ?showLabel .
+  OPTIONAL {?show wdt:P136* ?genre} .
+  OPTIONAL {?genre rdfs:label ?genreLabel} .
+}
+

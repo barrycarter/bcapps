@@ -24,3 +24,15 @@ Aug 29, 2016 - Sep 13, 2016
 Monday, Aug. 31, through Sunday, Sept. 13. 2015
 August 20 - [for 2017]
 
+# moving all birthdays to this format
+00000704 USA (1776)
+00001225 Jesus Christ (1)
+00000420 Adolf Hitler (1889)
+00000215 Susan B Anthony (1820)
+00000718 Nelson Mandela (1918)
+00000421 Queen Elizabeth II (1926)
+00000529 JFK (1917)
+
+# TODO: could move all events in bc-imp-dates.pl to here
+# TODO: makes sure notes from impdates.html survive
+# TODO: if not above, restore to bc-imp-dates.pl w/ parenthetical birthdays
