@@ -20,4 +20,6 @@ nagios tests I need to add:
   - CCPAY and PAYMENT should be in right tables [this item makes sense
   only to me]
 
+  - confirm that orders from mario's and walmart, etc, have order
+  numbers, times, and other information I sometimes forget to enter
 
