@@ -71,8 +71,6 @@
 TODO: note that alt = 0 -> geometric rise/set -> simpler formula -> formula guy comes up w/ in other answer
 
 
-
-
 <function name="vectorAngle">
 <active>1</active>
 <nice>vectorAngle(th1, ph1, th2, ph2)</nice>
@@ -85,9 +83,6 @@ TODO: note that alt = 0 -> geometric rise/set -> simpler formula -> formula guy 
 <argtest>5.86779, -5.7952, -0.940277, 1.73298</argtest>
 <answer>1.22466</answer>
 </function>
-
-
-
 
 TODO: reactivate functions I've temporarily deactivated
 

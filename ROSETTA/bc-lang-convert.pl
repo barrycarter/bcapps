@@ -72,6 +72,10 @@ while ($funcs=~s%<function name="(.*?)">(.*?)</function>%%s) {
 
   # special case for php (and possibly others)
   $func{$name}{dvars}=join(",",map($_="\$$_",split(/\,/,$func{$name}{vars})));
+
+  # special case for mathics (and Mathematica itself?)
+  $func{$name}{mvars}=join(",",map($_="$_\_",split(/\,/,$func{$name}{vars})));
+
 }
 
 debug(dump_var("func", \%func));
