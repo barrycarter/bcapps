@@ -102,8 +102,9 @@ sub handle_comcast {
 
   # TODO: editing so this works w/ current bills, but should retroact
   # TODO: this is now bill date, not due date
-  $all=~m%Bill date\s*(.*?)$%m;
-  my($date) = $1;
+  $all=~m%(Bill|Billing) [Dd]ate\s*(.*?)\n%s;
+  my($date) = $2;
+  debug("DATE: $date");
 
   return strftime("comcast-%m-%d-%Y.pdf", gmtime(str2time($date)+43200));
 

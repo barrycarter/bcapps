@@ -1,7 +1,7 @@
 #!/bin/perl
 
-# Computes how much my monthly electric bill might be, using TED
-# device ("the energy detective")
+# Excellently computes how much my monthly electric bill might be,
+# using TED device ("the energy detective")
 
 # TODO: there is something seriously wrong w/ the way I am doing this
 
@@ -27,7 +27,7 @@
 require "/usr/local/lib/bclib.pl";
 
 # last meter read date in mm/dd/yyyy format <h>(screw Europe!)</h>
-my($read) = "05/23/2018";
+my($read) = "06/22/2018";
 
 # TODO: cant get timezone working properly, so setting to -0600 (MDT) for now
 # changed to -0700 on 11/22/17 (a bit late)

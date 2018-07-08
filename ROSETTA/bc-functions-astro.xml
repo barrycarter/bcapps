@@ -21,7 +21,7 @@
 <function name="raDecLatLonAlt2GMST">
 <active>1</active>
 <nice>raDecLatLonAlt2GMST(ra, dec, lat, lon, alt)</nice>
-<vars>ra,dec,lat,lon,alt>
+<vars>ra,dec,lat,lon,alt</vars>
 <desc>Given an object's right ascension and declination, an observer's latitude and longitude, and a target altitude alt, return the two daily sidereal times (in radians) at which the object will have altitude alt</desc>
 <body>
   List[Plus[Times[-1, lon], ra, 
@@ -29,7 +29,7 @@
  Times[-1, Tan[dec], Tan[lat]]]]],
  Plus[Times[-1, lon], ra, Times[-1,
  ArcCos[Plus[Times[Sec[dec], Sec[lat], Sin[alt],
- Times[-1, Tan[dec], Tan[lat]]]]]]]
+ Times[-1, Tan[dec], Tan[lat]]]]]]]]
 </body>
 </function>
 
@@ -70,15 +70,16 @@
 
 TODO: note that alt = 0 -> geometric rise/set -> simpler formula -> formula guy comes up w/ in other answer
 
+TODO: allow variables to have numbers at end, that currently breaks bc-lang-convert.pl because it converts ph1 to ph1.0
 
 <function name="vectorAngle">
 <active>1</active>
-<nice>vectorAngle(th1, ph1, th2, ph2)</nice>
-<vars>th1,ph1,th2,ph2</vars>
-<desc>The angular distance between spherical coordinates {th1, ph1} and {th2, ph2}, all in radians</desc>
+<nice>vectorAngle(thone, ph_one, thtwo, ph_two)</nice>
+<vars>thone,ph_one,thtwo,ph_two</vars>
+<desc>The angular distance between spherical coordinates {thone, ph_one} and {thtwo, ph_two}, all in radians</desc>
 <body>
- ArcCos[Plus[Times[Cos[ph1], Cos[ph2], Cos[Plus[th1, Times[-1, th2]]]], 
- Times[Sin[ph1], Sin[ph2]]]]
+ ArcCos[Plus[Times[Cos[ph_one], Cos[ph_two], Cos[Plus[thone, Times[-1, thtwo]]]], 
+ Times[Sin[ph_one], Sin[ph_two]]]]
 </body>
 <argtest>5.86779, -5.7952, -0.940277, 1.73298</argtest>
 <answer>1.22466</answer>

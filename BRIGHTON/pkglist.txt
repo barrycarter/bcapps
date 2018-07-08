@@ -7,6 +7,10 @@ efibootmgr
 
 # system tools
 
+gtkglext-libs-1.2.0-21.el7
+alien
+# no longer available
+# teamviewer
 hwinfo
 yum-plugin-copr
 epel-release
@@ -166,10 +170,24 @@ rdate
 xearth
 calendar
 
+
+# TODO: formally add
+# https://download.mono-project.com/repo/centos7-vs/ as noted on
+# https://www.monodevelop.com/download/#fndtn-download-lin-centos
+
 # programming languages (or related)
+
+monodevelop-devel
+python34-jupyter-core
+python34-jupyroot
+python34-nbformat
+root-notebook
+jasmine
 gcc-gfortran
 # TODO: mathematica (not free)
+# NOTE: "npm install -g jasmine" for jasmine
 npm
+nodejs
 # below is lisp
 golang
 sbcl

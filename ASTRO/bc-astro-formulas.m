@@ -104,7 +104,13 @@ raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] =
   -(Cos[dec]*Sin[gmst + lon - ra])], 
  ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
     Cos[dec]^2*Sin[gmst + lon - ra]^2], 
-  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]}
+  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]]};
+
+raDecLatLonGMST2Az[ra_, dec_, lat_, lon_, gmst_] = 
+ raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[1]];
+
+raDecLatLonGMST2Alt[ra_, dec_, lat_, lon_, gmst_] = 
+ raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst][[2]];
 
 raDecLatLonAlt2GMST[ra_, dec_, lat_, lon_, alt_] = {
  -lon + ra + ArcCos[Sec[dec] Sec[lat] Sin[alt] - Tan[dec] Tan[lat]],
@@ -119,7 +125,7 @@ decLatAlt2az[dec_, lat_, alt_] = {
  -ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]};
 
 decLatAlt2azAbs[dec_, lat_, alt_] = 
- Abs[ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]]
+ Abs[ArcCos[Sec[alt]*Sec[lat]*Sin[dec] - Tan[alt]*Tan[lat]]];
 
 (* inclination of ecliptic treated as a fixed constant + as func of mjd *)
 
@@ -139,9 +145,9 @@ conds = {
 
 (* simplifications that dont always apply but can be useful *)
 
-simptan = {ArcTan[x_,y_] -> ArcTan[y/x]}
+simptan = {ArcTan[x_,y_] -> ArcTan[y/x]};
 
-conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
+conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2};
 
 </formulas>
 
@@ -151,6 +157,11 @@ conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2}
 </sources>
 
 <work>
+
+formulas = {
+ az == raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]],
+ alt == raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[2]]
+}
 
 decLatAlt2azAbs[dec,lat,alt]
 
