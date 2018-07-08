@@ -28,7 +28,7 @@ Caveats and nitpicks:
 
   - I assume there are 86400 seconds between successive noons. This is incorrect for two reasons:
 
-    - The time between noons is not exactly one day. The cumulative difference forms the [Equation of Time](https://en.wikipedia.org/wiki/Equation_of_time) but the day to day difference is quite small.
+    - The time between noons is not exactly one day. The cumulative difference forms the [Equation of Time](https://en.wikipedia.org/wiki/Equation_of_time) but the day to day difference is quite small
 
     - The Earth's day is slightly longer than 86400 seconds, which is why we need [leap seconds](https://en.wikipedia.org/wiki/Leap_second)
 
@@ -36,23 +36,15 @@ Caveats and nitpicks:
 
   - I assume the Sun's altitude doesn't change while it's transiting. While this is a good approximation, the altitude does change slightly
 
-  - I assume the Sun's declination doesn't change while it's transiting. The change in declination is very small, so this is a reasonable assumption.
+  - I assume the Sun's declination doesn't change while it's transiting. The change in declination is very small, so this is a reasonable assumption
+
+  - There are probably other assumptions I made implicitly that I am not noting here.
 
   - Refraction is not an issue, since the motion we are discussing is azimuthal and not in altitude.
 
   - I used the "one over cosine" form above to make things easier for non-mathematicians. The more compact form would use "secant".
 
   - The calculations I did for this problem are disorganized, but available at: https://github.com/barrycarter/bcapps/blob/master/STACK/bc-solar-transit.m
-
-  
-
-TODO: note this file, radius, i know 1/cos is sec, assumptions, approx 1st derv, constant dec, ang diam varies, refraction not an isssue, 86400
-
-
-
-
-
-
 
 </writeup>
 
