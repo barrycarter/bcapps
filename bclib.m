@@ -15,7 +15,7 @@ $UnitSystem = "Metric";
 
 showit := Module[{file},
  file = "/tmp/math"<>ToString[RunThrough["date +%Y%m%d%H%M%S", ""]]<>".gif";
- Export[file ,%];
+ Export[file ,%, ImageSize -> {800, 600}];
  Run["display -update 1 "<>file<>"&"];
  Return[file];
 ];
@@ -40,6 +40,11 @@ Applications/Frequency Identification, modified for non-zero-mean data.
 
 If mode=1, return coefficients as a list, not a function
 
+NOTE: corrected on 10 Jul 2018 (and notified Wolfram) because the pos=
+statement below (even as its been modified on Wolfram's site) can give
+the wrong value-- it can give List[data]-n instead (since DFT is
+symmetric for real numbers)
+
 *)
 
 superfourier[data_,mode_:0] :=
@@ -47,7 +52,7 @@ Module[{n,m,pdata,f,fr,pos,frpos,freq,phase,b,d},
  n = Length[data];
  m = Mean[data];
  pdata = data-m;
- f = Abs[Fourier[pdata]];
+ f = Take[Abs[Fourier[pdata]], Floor[Length[pdata]/2]];
  pos = Ordering[-f, 1][[1]];
  fr = Abs[Fourier[pdata*Exp[2*Pi*I*(pos-2)*N[Range[0, n - 1]]/n],
  FourierParameters -> {0, 2/n}]];
