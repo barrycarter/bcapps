@@ -43,7 +43,9 @@ StarData["Sun", EntityProperty["Star", "TransitTime",
 
 Uses the output of:
 
-bc-equator-dump-2 10 399 2012 2023
+bc-equator-dump-2 10 399 1999 2037
+
+(and filter to 2000-2036)
 
 to find an approx formula for solar right ascension and declination
 using equitorial coordinates of date
@@ -52,11 +54,26 @@ using equitorial coordinates of date
 
 data = Import["/home/barrycarter/20180708/sun-ra-dec.txt", "Data"];
 
+data2 = Select[data, #[[2]] >= JulianDate[{2000,1,1}] &&
+ #[[2]] < JulianDate[{2037,1,1}] &];
+
+
+
 decs = Transpose[data][[4]];
 
 f1054[x_] = superfour[decs, 1][x]
 
 t1122 = Table[{n, Max[Abs[superleft[decs,n]]]/Degree}, {n,1,10}]
+
+3 or 6 or 8
+
+int[x_] = Interpolation[decs][x]
+
+Plot[{int[x], f1054[x]}, {x, 1, Length[decs]}]
+
+Plot[{int[x]-f1054[x]}, {x, 1, Length[decs]}]
+
+
 
 
 
