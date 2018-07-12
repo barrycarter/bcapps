@@ -26,3 +26,5 @@ p3'[z] ==
 p2'[z]*p1[z]-8*p2'[z]-8*p1'[z]/p0[z]+8*p1[z]*p0'[z]/p0[z]^2-
 p0'[z]*p3[z])/p0[z]
 
+(* and then DSolve above *)
+
