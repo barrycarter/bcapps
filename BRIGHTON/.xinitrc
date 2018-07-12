@@ -88,6 +88,10 @@ rxvt -geometry 165x52+0+2339 -T WIDESCREEN -n WIDESCREEN &
 # TODO: this should NOT be necessary
 sudo chmod -R 777 /dev/snd/
 
+# some things I have to do or check manually (sort of)
+
+xmessage -geometry 1024 check STARTUP NOTES FOR SAOPAULO &
+
 # vidalia, like Generalisimo Francisco Franco, is still dead :(
 
 # The exec below replaces the xinit process (which is no longer

@@ -23,3 +23,8 @@ nagios tests I need to add:
   - confirm that orders from mario's and walmart, etc, have order
   numbers, times, and other information I sometimes forget to enter
 
+  - user crontab is not empty (sometimes gets wiped at reboot)
+
+  - make sure bc-getmail is NOT running as root (because: "Delivery
+  error (mboxrd delivery 32763 error (127, mbox delivery process
+  failed (refuse to deliver mail as root)))")
