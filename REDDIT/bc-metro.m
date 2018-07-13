@@ -8,30 +8,31 @@ https://www.reddit.com/r/geography/comments/8qzl3p/if_we_redrew_us_state_lines_b
 
 metrosAll = EntityList["MetropolitanArea"];
 
-props = {"Name", "Population", "Position", "Country"}
+tab = Table[{i, i["Name"], i["Population"], i["Position"], i["Country"]},
+ {i, metrosAll}]
 
-(* the Print[i] is just so I can watch progress *)
-
-tab = Table[{i[p], Print[i]}, {i, metrosAll}, {p, props}];
-
-tab = Table[i[p], {i, metrosAll}, {p, props}];
-
-
-
-
+tab >> ~/BCGIT/REDDIT/metro-area-data.m
 
 (* end run these commands first *)
 
-(* speed up some slow processes *)
-
-SetSystemOptions[SystemOptions["DataOptions"] /. True -> False]    
-
 (* find US metro areas *)
 
-metrosAll = EntityList["MetropolitanArea"];
+metrosAll = << ~/BCGIT/REDDIT/metro-area-data.m
 
 metrosUSA = Select[metrosAll, 
- #["Country"] == Entity["Country", "UnitedStates"]&];
+ #[[5]] == Entity["Country", "UnitedStates"]&];
+
+(* top 50 by pop *)
+
+metrosUSASorted = Sort[metrosUSA, #1[[3]] > #2[[3]] &]
+
+metrosUSATop = Take[metrosUSASorted, 50];
+
+geopos = Transpose[metrosUSATop][[4]]
+
+In[50]:= Nearest[Table[i[[4]] -> i[[1]], {i, metrosUSATop}], metrosUSASorted[[55
+5,4]]]                                                                          
+above works
 
 (* table of important values, including XYZ pos for distance *)
 
