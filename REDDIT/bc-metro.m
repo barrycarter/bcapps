@@ -28,7 +28,28 @@ metrosUSASorted = Sort[metrosUSA, #1[[3]] > #2[[3]] &]
 
 metrosUSATop = Take[metrosUSASorted, 50];
 
-geopos = Transpose[metrosUSATop][[4]]
+(* form usable to Mathematica *)
+
+geopos = Table[i[[4]] -> i, {i, metrosUSATop}];
+
+closestMetroTab = Table[{i, Nearest[geopos, i[[4]]]}, {i, metrosUSASorted}];
+
+(* this is just for printing *)
+
+printTab = Table[{i[[1,2]], i[[2,1,2]]}, {i, closestMetroTab}]
+
+closestMetros = Gather[closestMetroTab, #1[[2]] == #2[[2]] &];
+
+Nearest[Take[geopos, 50], geopos[[66]]]
+
+example:
+
+closestMetros[[7,2]]
+
+closestMetros[[7,2,1,3]] gives population of includer
+
+
+
 
 In[50]:= Nearest[Table[i[[4]] -> i[[1]], {i, metrosUSATop}], metrosUSASorted[[55
 5,4]]]                                                                          
