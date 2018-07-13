@@ -9,6 +9,7 @@
 
 CREATE TABLE geonames (
  geonameid INTEGER PRIMARY KEY,
+ asciiname TEXT,
  latitude DOUBLE,
  longitude DOUBLE,
  feature_code TEXT,

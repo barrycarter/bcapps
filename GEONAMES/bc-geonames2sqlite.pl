@@ -86,7 +86,11 @@ while (<A>) {
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
 
   # cleanup (TODO: really need to this quite a bit better)
+  my($asc_original) = $asciiname;
   $asciiname = cleanup($asciiname);
+
+  # on 7/13/18, restored adding asciiname to main table-- the way I
+  # put it in altnames is more for searching, not printing
 
   # ASCII name written ONLY to altnames, geonames will no longer have ANY names
   # the artificial altnameid is -1*geonameid
@@ -106,7 +110,7 @@ while (<A>) {
 
   # whatever $admintest ends up as will be the adminstring
 
-  print C join("\t", $geonameid, $latitude, $longitude,
+  print C join("\t", $geonameid, $asc_original, $latitude, $longitude,
   $featurecode, $admin[0], $admin[4], $admin[3], $admin[2],
   $admin[1], $admintest, $population, $timezone, $elevation)."\n";
 }
@@ -119,15 +123,15 @@ close(C);
 sub cleanup {
   my($name) = @_;
 
-  debug("GOT: $name");
+#  debug("GOT: $name");
 
   # unidecode the whole thing first, lower case, despace
   $name = lc(unidecode($name));
-  debug("BETA: $name");
+#  debug("BETA: $name");
 
   # "county" is a designation, not a name
   $name=~s/\s+county$//isg;
-  debug("GAMMA: $name");
+#  debug("GAMMA: $name");
 
   # remove spaces
   $name=~s/\s//isg;
