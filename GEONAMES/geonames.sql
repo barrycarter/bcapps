@@ -1,12 +1,17 @@
 -- creates the geonames sqlite3 tables after running bc-geonames2sqlite.pl
 
+-- To use: "sqlite3 -init ~/BCGIT/GEONAMES/geonames.sql geonames.db"
+
 .separator "\t"
+
+-- feature_code and timezone are really strings, so fixing below (but
+-- consider creating join tables)
 
 CREATE TABLE geonames (
  geonameid INTEGER PRIMARY KEY,
  latitude DOUBLE,
  longitude DOUBLE,
- feature_code INT,
+ feature_code TEXT,
  admin0_code INT,
  admin4_code INT,
  admin3_code INT,
@@ -14,7 +19,7 @@ CREATE TABLE geonames (
  admin1_code INT,
  adminstring TEXT,
  population INT,
- timezone INT,
+ timezone TEXT,
  elevation INT
 );
 

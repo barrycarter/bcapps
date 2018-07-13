@@ -12,6 +12,8 @@
 
 # TODO: this entire code seems really ugly
 
+# TODO: create tables for featurecode and timezones
+
 use utf8;
 use Text::Unidecode;
 use Math::Round;

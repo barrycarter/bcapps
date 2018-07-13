@@ -28,3 +28,14 @@ nagios tests I need to add:
   - make sure bc-getmail is NOT running as root (because: "Delivery
   error (mboxrd delivery 32763 error (127, mbox delivery process
   failed (refuse to deliver mail as root)))")
+
+  - check last line of getmail logs to make sure they are all ok (on
+  11 Jul 2018, I set all logging to verbose, so log lines are
+  generated even when 0 messages are downloaded)... ALSO check that
+  timestamp on log is fairly recent
+
+  - I briefly used a set of temporary "MERGEME" mail folders because
+  saving to large existing folders was taking too long-- I've now
+  stopped this, but need to confirm all MERGEME folders remain empty
+  (since some were accessed by automated processes)
+
