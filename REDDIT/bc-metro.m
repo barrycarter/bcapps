@@ -48,7 +48,10 @@ closestMetros[[7,2]]
 
 closestMetros[[7,2,1,3]] gives population of includer
 
+Transpose[Transpose[closestMetros[[7]]][[1]]][[3]] is just pops
 
+NOTE: can't use census blockgroups -- for 2017, their data only goes
+down to cities + micro/metro politans, not blockgroups
 
 
 In[50]:= Nearest[Table[i[[4]] -> i[[1]], {i, metrosUSATop}], metrosUSASorted[[55
