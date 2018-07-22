@@ -809,3 +809,32 @@ Plot[(f2124[x]-fmeans[x])/Degree, {x,1,366}, PlotRange -> All]
 
 0.05 degrees 0.00087 radians
 
+based on an idea from Reuben Criddle
+
+below is start of year 2000-01-01 0h GMT in mathematica
+
+s2000 = 3155673600;
+s2100 = 6311433600-86400;
+
+f[y_, m_, d_] = Rationalize[
+ s2000 + 86400*((y-2000)*365.2425 + (m-1)*365.2425/12 + (d-1)), 0]
+
+dates = Table[ToDate[i], {i, s2000, s2100, 86400}];
+
+diffs = Table[f[i[[1]], i[[2]], i[[3]]] - FromDate[i], {i, dates}];
+
+dates2 = Table[{i[[1]], i[[2]], i[[3]], FromDate[i]}, {i, dates}];
+
+
+FindFit[dates2, c1 + c2*y + c3*m + c4*d, {c1,c2,c3,c4}, {y,m,d}]
+
+g[y_,m_,d_] = c1 + c2*y + c3*m + c4*d /. %
+
+diffs2 = Table[Apply[g, Take[i, 3]] - i[[4]], {i, dates2}]
+
+
+
+
+
+
+

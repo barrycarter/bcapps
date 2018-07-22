@@ -397,6 +397,7 @@ blender
 pitivi
 
 # email
+nmh
 mutt
 alpine
 getmail
