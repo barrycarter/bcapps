@@ -11,6 +11,12 @@ require "/usr/local/lib/bclib.pl";
 
 my($out, $err, $res);
 
+# extra reminders for some sites
+
+my(%extra) = (
+ "facebook" => "(also dl activity log + dta on log)"
+);
+
 # find all files in dirs where I backup stuff
 # TODO: this is serious overkill, most aren't even backups
 
@@ -69,7 +75,12 @@ for $i (split(/\n/, $out)) {
 }
 
 for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
-  print stardate($latest{$i})," $i\n";
+
+  # print extra reminders based on site (this is ugly)
+  my($site) = $i;
+  $site=~s/:.*$//;
+
+  print stardate($latest{$i})," $i $extra{$site}\n";
 }
 
 for $i (@errors) {print "ERROR: $i\n";}
