@@ -100,6 +100,96 @@ ContourPlot[RegionDistance[usapoly, {x,y}], {x,-90,90},
 {y,-90,90}, PlotLegends -> True, ColorFunction -> Hue, Contours -> 64,
 ContourLines -> False]
 
+usadist = RegionDistance[Polygon[CountryData["UnitedStates",
+"Polygon"][[1,1,1]]]];
+
+ContourPlot[usadist[{x,y}], {x,-180,180},
+{y,-180,180}, PlotLegends -> True, ColorFunction -> Hue, Contours -> 64,
+ContourLines -> False]
+
+
+usa[[1,1,1]]
+
+usasph = Table[sph2xyz[i[[2]]*Degree, i[[1]]*Degree, 1], {i, usa[[1,1,1]]}]
+
+Graphics3D[Polygon[usasph]]
+
+usasphdist = RegionDistance[Polygon[usasph]];
+
+dist[long_, lat_] :=
+ ArcSin[usasphdist[sph2xyz[long*Degree, lat*Degree, 1]]/2]/Pi;
+
+
+ContourPlot[dist[long,lat], {long, -180, 180}, {lat, -90, 90}, 
+ PlotLegends -> True, ColorFunction -> Hue, Contours -> 64,
+ ContourLines -> False]
+
+
+
+
+
+ContourPlot3D[usasphdist[{x,y,z}], {x, -1, 1}, {y, -1, 1}, {z, -1, 1},
+PlotLegends -> True, ColorFunction -> Hue, Contours -> 64]
+
+
+
+In[43]:= ConicHullRegion[Table[sph2xyz[i[[2]]*Degree, i[[1]]*Degree, 1], {i, usa
+[[1,1,1]]}]]                                                                    
+Graphics3D[Polygon[usasph]]
+
+Graphics3D[{Polygon[usasph], Sphere[{0,0,0}]}]
+
+world = CountryData["World", "Polygon"];
+
+worldsph = Table[sph2xyz[i[[2]]*Degree, i[[1]]*Degree, 1], {i, usa[[1,1,1]]}]
+
+worldsph = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, world[[1,1]], 2];
+
+worldsph = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, world[[1,1]], 2];
+
+world2 = Map[Polygon[#] &, worldsph, 1]
+
+Graphics3D[{world2, Sphere[{0,0,0}]}]
+
+Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, world[[1,1]], 2]
+
+In[173]:= Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, world[[1,1,5]]]       
+t2112 = Table[Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, i], 
+ {i, world[[1,1]]}];
+
+Graphics3D[Polygon[t2112]]
+
+Graphics3D[{Polygon[t2112], Sphere[{0,0,0}]}]
+
+Graphics3D[{Polygon[t2112], RGBColor[{0,0,1}], Sphere[{0,0,0}]}]
+
+worlddist = RegionDistance[Polygon[t2112]];
+
+ContourPlot3D[worlddist[{x,y,z}], {x, -1, 1}, {y, -1, 1}, {z, -1, 1},
+PlotLegends -> True, ColorFunction -> Hue, Contours -> 64]
+
+
+usasphdist[{x,y,z}], {x, -1, 1}, {y, -1, 1}, {z, -1, 1},
+PlotLegends -> True, ColorFunction -> Hue, Contours -> 64]
+
+geobounds
+
+GeoGraphics[GeoCircle[{0, 0}, 500000]]
+
+flatworld = Flatten[world[[1,1]],1];
+
+worldd[lon_, lat_] = 2*ArcSin[
+ worlddist[sph2xyz[lon*Degree, lat*Degree, 1]]/2
+ ]*rad[0]
+
+ContourPlot[worldd[long,lat], {long, -180, 180}, {lat, -90, 90}, 
+ PlotLegends -> True, ColorFunction -> Hue, Contours -> 64,
+ ContourLines -> False]
+
+
+
+
+
 
 
 
