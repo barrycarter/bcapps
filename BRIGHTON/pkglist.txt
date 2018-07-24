@@ -177,6 +177,7 @@ calendar
 
 # programming languages (or related)
 
+rust
 monodevelop-devel
 python34-jupyter-core
 python34-jupyroot
