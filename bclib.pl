@@ -4903,7 +4903,41 @@ sub jd2mixed_ymdhms {
   return jd2proleptic_gregorian_ymdhms($jd);
 }
 
+=item mysqlhashlist($query,$db,$user)
 
+Run $query (should be a SELECT statement) on $db as $user, and return
+list of hashes, one for each row
+
+NOTE: return array first index is 1, not 0
+
+TODO: add error checking
+
+=cut
+
+sub mysqlhashlist {
+  my($query,$db,$user) = @_;
+  unless ($user) {$user="''";}
+  my(@res,$row);
+  chdir(tmpdir());
+
+  write_file($query,"query");
+
+  # TODO: this is a terrible way to get a temp file name
+  my($temp) = `date +%N`;
+  chomp($temp);
+  debug("TEMP: $temp");
+  # TODO: for large resultsets, loading entire output may be bad
+  my($out,$err,$res) = cache_command2("mysql -w -u $user -E $db < query","salt=$query&cachefile=/tmp/cache.$temp");
+
+  # go through results
+  for $i (split(/\n/,$out)) {
+    # new row
+    if ($i=~/^\*+\s*(\d+)\. row\s*\*+$/) {$row = $1; $res[$row]={}; next;}
+    unless ($i=~/^\s*(.*?):\s*(.*)/) {warn("IGNORING: $_"); next;}
+    $res[$row]->{$1}=$2;
+  }
+  return @res;
+}
 
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
