@@ -252,7 +252,7 @@ close(A);
 system("cp bg.fly /tmp/");
 
 # also copy file since I will need it on other machines
-system("fly -q -i bg.fly -o bg.gif; composite -geometry +250+100 /usr/local/etc/calendar.gif bg.gif /tmp/bgimage.gif; xv +noresetroot -root -quit /tmp/bgimage.gif");
+system("fly -q -i bg.fly -o bg.gif; composite -geometry +250+50 /usr/local/etc/calendar.gif bg.gif /tmp/bgimage.gif; xv +noresetroot -root -quit /tmp/bgimage.gif");
 
 # call bc-get-astro.pl for next minute (calling it after generatinv
 # the bg image avoids race condition); must restore timezone

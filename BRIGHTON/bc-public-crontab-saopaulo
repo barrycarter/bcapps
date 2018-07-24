@@ -105,8 +105,12 @@ MAILTO="daemon"
 # Update calendar (for background image) hourly
 
 # the new params are for 1600x900 + likely to change
+
 # 17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl
-17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=700 --eventsize=giant --font1=large
+
+# 17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=700 --eventsize=giant --font1=large
+
+17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=800 --eventsize=giant --font1=giant --datesize=giant --monthsize=small
 
 # Obtain my Capital One credit card transactions in the "middle of the night"
 # disabled 27 Mar 2018: hasn't worked for ages

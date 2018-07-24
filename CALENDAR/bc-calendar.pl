@@ -9,14 +9,14 @@
 
 require "/usr/local/lib/bclib.pl";
 
-defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant");
+defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant&monthsize=tiny");
 
-# font heights
+# font heights and widths for fly
 # TODO: put in bclib.pl?
 
-%fht = ("tiny" => 8, "small" => 12, "medium" => 13, "large" => 16,
-"giant" => 15);
+%fht = ("tiny" => 8, "small" => 12, "medium" => 13, "large" => 16, "giant" => 15);
 
+%fwd = ("tiny" => 5, "small" => 6, "medium" => 7, "large" => 8, "giant" => 9);
 
 # read events file
 for $i (`grep -hv '^#' /home/barrycarter/calendar.d/*.txt`) {
@@ -85,7 +85,8 @@ my($gridcolor) = "0,0,255";
 # event spacing/etc
 my($eventspacing) = 15;
 my($eventcolor) = "255,128,128";
-my($eventystart) = 35;
+# below replaced with $yprint
+# my($eventystart) = 35;
 
 # putting image on background uses up too much colormap, -colors 128 fixes
 open(A,"|tee /tmp/calfly.txt|fly -q|convert - -colors 128 /tmp/cal0.gif");
@@ -120,6 +121,10 @@ for $week (-1..$globopts{weeks}-1) {
     # bottom left of where day is printed
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
+    # testing putting date as far right as possible
+    # 2.5 gives it a half character spacing from the blue grid line
+    $dx = $x1+$xwid-2.5*$fwd{$globopts{datesize}};
+
     # sidereal time
     print A join(",", "string",64,64,64,$x1+4,$y1+$ywid-9,$globopts{font1},$sd),"\n";
     # JD bottom right (do I really want this?)
@@ -141,10 +146,21 @@ for $week (-1..$globopts{weeks}-1) {
     }
 
     # print stuff
-    print A "string $datecolor,",$dx-20,",$dy,$globopts{font1},$month\n";
-    print A "string $datecolor,",$x1+5,",$dy,$globopts{font1},$hash{$stardate}{SR}-$hash{$stardate}{SS}\n";
-    print A "string $datecolor,",$x1+5,",",$dy+$fht{$globopts{font1}},",$globopts{font1},$hash{$stardate}{CTS}-$hash{$stardate}{CTE}\n";
-    print A "string 255,255,255,",$x1+5,",",$dy+2*$fht{$globopts{font1}},",$globopts{font1},$moonstr\n";
+    my($yprint) = $dy;
+    # put month to left of date
+#    print A "string $datecolor,",$dx-20,",$yprint,$globopts{font1},$month\n";
+    print A "string $datecolor,",$dx-2.5*$fwd{$globopts{datesize}}-0*$fwd{$globopts{monthsize}},",$yprint,$globopts{monthsize},$month\n";
+    print A "string $datecolor,",$x1+5,",$yprint,$globopts{font1},$hash{$stardate}{SR}-$hash{$stardate}{SS}\n";
+
+    $yprint += $fht{$globopts{font1}};
+
+    print A "string $datecolor,",$x1+5,",",$yprint,",$globopts{font1},$hash{$stardate}{CTS}-$hash{$stardate}{CTE}\n";
+
+    $yprint += $fht{$globopts{font1}};
+
+    print A "string 255,255,255,",$x1+5,",",$yprint,",$globopts{font1},$moonstr\n";
+
+    $yprint += $fht{$globopts{font1}};
 
     # highlight date if today
     if ($stardate == $now) {
@@ -175,6 +191,7 @@ for $week (-1..$globopts{weeks}-1) {
       if ($count > 2) {warn "More than 3 events for $stardate!";}
 
       my($eventy) = $y1+$eventystart+$eventspacing*$count;
+      my($eventy) = $yprint+$eventspacing*$count;
       my($eventx) = $x1+5;
       # different color for "?" events
       if ($events[$i]=~s/^\?//) {
