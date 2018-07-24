@@ -4,10 +4,19 @@
 # Options:
 # xsize/ysize - size of calendar (default 800x600) [really 801x601]
 # weeks - number of weeks to show (default 5)
+# font1 - size for all "fixed" text on calendar excl date
+# eventsize - size for events
 
 require "/usr/local/lib/bclib.pl";
 
-defaults("xsize=800&ysize=600&weeks=7");
+defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant");
+
+# font heights
+# TODO: put in bclib.pl?
+
+%fht = ("tiny" => 8, "small" => 12, "medium" => 13, "large" => 16,
+"giant" => 15);
+
 
 # read events file
 for $i (`grep -hv '^#' /home/barrycarter/calendar.d/*.txt`) {
@@ -67,7 +76,6 @@ my($ywid) = $globopts{ysize}/$globopts{weeks};
 my($xpos) = .8;
 my($ypos) = .05;
 my($datecolor) = "255,255,0";
-my($datesize) = "giant";
 my($dateformat) = "%d";
 
 # grid color
@@ -76,7 +84,6 @@ my($gridcolor) = "0,0,255";
 # TODO: make these all params
 # event spacing/etc
 my($eventspacing) = 15;
-my($eventsize) = "small";
 my($eventcolor) = "255,128,128";
 my($eventystart) = 35;
 
@@ -114,18 +121,18 @@ for $week (-1..$globopts{weeks}-1) {
     my($dx, $dy) = ($x1+$xpos*$xwid, $y1+$ypos*$ywid);
 
     # sidereal time
-    print A join(",", "string",64,64,64,$x1+4,$y1+$ywid-9,"tiny",$sd),"\n";
+    print A join(",", "string",64,64,64,$x1+4,$y1+$ywid-9,$globopts{font1},$sd),"\n";
     # JD bottom right (do I really want this?)
-    print A join(",", "string",64,64,64,$x1+$xwid-35,$y1+$ywid-9,"tiny",$jd), "\n";
+    print A join(",", "string",64,64,64,$x1+$xwid-35,$y1+$ywid-9,$globopts{font1},$jd), "\n";
     # Unix date (seconds/86400 for most of day)
-    print A join(",", "string",64,64,64,$x1+$xwid-70,$y1+$ywid-9,"tiny", sprintf("%d", $date/86400)), "\n";
+    print A join(",", "string",64,64,64,$x1+$xwid-70,$y1+$ywid-9,$globopts{font1}, sprintf("%d", $date/86400)), "\n";
 #    debug("DATE",sprintf("%d", $date/86400));
 
     # must come before red box to avoid overlap
     print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";
 
     if ($hash{$stardate}{moonstamp}) {
-      print A "string ",join(",", $datecolor, $x1+71, $y1+20, tiny, $hash{$stardate}{moonstamp}),"\n";
+      print A "string ",join(",", $datecolor, $x1+71, $y1+20, $globopts{font1}, $hash{$stardate}{moonstamp}),"\n";
     }
 
     my($moonstr)="SR: $hash{$stardate}{MS}-$hash{$stardate}{MR}";
@@ -134,17 +141,17 @@ for $week (-1..$globopts{weeks}-1) {
     }
 
     # print stuff
-    print A "string $datecolor,",$dx-20,",$dy,tiny,$month\n";
-    print A "string $datecolor,",$x1+5,",$dy,tiny,$hash{$stardate}{SR}-$hash{$stardate}{SS}\n";
-    print A "string $datecolor,",$x1+5,",",$dy+10,",tiny,$hash{$stardate}{CTS}-$hash{$stardate}{CTE}\n";
-    print A "string 255,255,255,",$x1+5,",",$dy+20,",tiny,$moonstr\n";
+    print A "string $datecolor,",$dx-20,",$dy,$globopts{font1},$month\n";
+    print A "string $datecolor,",$x1+5,",$dy,$globopts{font1},$hash{$stardate}{SR}-$hash{$stardate}{SS}\n";
+    print A "string $datecolor,",$x1+5,",",$dy+$fht{$globopts{font1}},",$globopts{font1},$hash{$stardate}{CTS}-$hash{$stardate}{CTE}\n";
+    print A "string 255,255,255,",$x1+5,",",$dy+2*$fht{$globopts{font1}},",$globopts{font1},$moonstr\n";
 
     # highlight date if today
     if ($stardate == $now) {
       print A "frect,",$dx-1,",",$y1+5,",",$x2-5,",",$dy+15,",255,0,0\n";
-      print A "string 255,255,255,$dx,$dy,$datesize,$day\n";
+      print A "string 255,255,255,$dx,$dy,$globopts{datesize},$day\n";
     } else {
-      print A "string $datecolor,$dx,$dy,$datesize,$day\n";
+      print A "string $datecolor,$dx,$dy,$globopts{datesize},$day\n";
     }
 
     # events for this day
@@ -171,9 +178,9 @@ for $week (-1..$globopts{weeks}-1) {
       my($eventx) = $x1+5;
       # different color for "?" events
       if ($events[$i]=~s/^\?//) {
-	print A "string 64,64,64,$eventx,$eventy,$eventsize,$events[$i]\n";
+	print A "string 64,64,64,$eventx,$eventy,$globopts{eventsize},$events[$i]\n";
       } else {
-	print A "string $eventcolor,$eventx,$eventy,$eventsize,$events[$i]\n";
+	print A "string $eventcolor,$eventx,$eventy,$globopts{eventsize},$events[$i]\n";
       }
     }
 

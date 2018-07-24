@@ -60,7 +60,9 @@ MAILTO="daemon"
 # this
 
 # errors occur occasionally and are ignorable
-* * * * * sudo /home/user/BCGIT/bc-bg2.pl >& /dev/null
+# changed to bc-bg3 when testing 1600x900 resolution
+# * * * * * sudo /home/user/BCGIT/bc-bg2.pl >& /dev/null
+* * * * * sudo /home/user/BCGIT/bc-bg3.pl >& /dev/null
 
 # snapshot my screen every minute
 # TODO: restore this, it saves to an external drive that isn't there yet
@@ -102,7 +104,9 @@ MAILTO="daemon"
 
 # Update calendar (for background image) hourly
 
-17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl
+# the new params are for 1600x900 + likely to change
+# 17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl
+17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=700 --eventsize=giant --font1=large
 
 # Obtain my Capital One credit card transactions in the "middle of the night"
 # disabled 27 Mar 2018: hasn't worked for ages
