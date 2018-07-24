@@ -110,7 +110,7 @@ MAILTO="daemon"
 
 # 17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=700 --eventsize=giant --font1=large
 
-17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=800 --eventsize=giant --font1=giant --datesize=giant --monthsize=small
+17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=800 --eventsize=giant --font1=giant --datesize=giant --monthsize=small --moonstampfont=small --moonstampcolor=0,255,0
 
 # Obtain my Capital One credit card transactions in the "middle of the night"
 # disabled 27 Mar 2018: hasn't worked for ages

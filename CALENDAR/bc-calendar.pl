@@ -9,7 +9,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant&monthsize=tiny");
+defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant&monthsize=medium&moonstampfont=medium&moonstampcolor=255,0,0");
 
 # font heights and widths for fly
 # TODO: put in bclib.pl?
@@ -134,15 +134,23 @@ for $week (-1..$globopts{weeks}-1) {
 #    debug("DATE",sprintf("%d", $date/86400));
 
     # must come before red box to avoid overlap
-    print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";
+#    print A "copy ",join(",", $x1+70, $y1+15, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";
 
-    if ($hash{$stardate}{moonstamp}) {
-      print A "string ",join(",", $datecolor, $x1+71, $y1+20, $globopts{font1}, $hash{$stardate}{moonstamp}),"\n";
-    }
+    # better positioning based on params
+     print A "copy ",join(",", $x1+$xwid-4*$fwd{$globopts{datesize}}, $y1+15+$fht{$globopts{datesize}}, 0, 0, 21, 21, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";
+
+    # resize attempt to preserve ratio
+#    print A "copy ",join(",", $x1+$xwid-4*$fwd{$globopts{datesize}}, $y1+15+$fht{$globopts{datesize}}, 0, 0, 21/800*$globopts{xsize}, 21/600*$globopts{ysize}, "/home/barrycarter/20140716/m$moonage.gif.temp"),"\n";
 
     my($moonstr)="SR: $hash{$stardate}{MS}-$hash{$stardate}{MR}";
     if ($hash{$stardate}{MR} < $hash{$stardate}{MS}) {
       $moonstr="RS: $hash{$stardate}{MR}-$hash{$stardate}{MS}";
+    }
+
+    # printing stamp first helps? (no, much worse)
+    if ($hash{$stardate}{moonstamp}) {
+#      print A "string ",join(",", $datecolor, $x1+71, $y1+20, $globopts{font1}, $hash{$stardate}{moonstamp}),"\n";
+      print A "string ",join(",", $globopts{moonstampcolor}, $x1+$xwid-4*$fwd{$globopts{datesize}}+1, $y1+20+$fht{$globopts{datesize}}, $globopts{moonstampfont}, $hash{$stardate}{moonstamp}),"\n";
     }
 
     # print stuff
