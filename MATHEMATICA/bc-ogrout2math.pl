@@ -23,9 +23,8 @@ while (<>) {
 
   # listify each coordinate
   s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/g;
-  debug("FID: $fid");
 
-  print "poly[$fid] = {$_};\n";
+#  print "poly[$fid] = {$_};\n";
 
   # the form above appears to crash (too many regexs?), this might be
   # slower but should work better
