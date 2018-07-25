@@ -13,9 +13,55 @@ while (<>) {
   unless (s/^\s*polygon\s*\(\((.*?)\)\)\s*$/$1/i) {next;}
 
   # listify each coordinate
-  s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/g;
+#  s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/g;
+
+  # the form above appears to crash (too many regexs?), this might be
+  # slower but should work better
+  # below is too slow!
+#  while (s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/) {}
+
+  # something's wrong, so only printing some polygons
+  $count++;
+
+  if ($count < 148985) {next;}
+  if ($count > 148995) {last;}
 
   print "{$_},\n";
 }
 
 print "}\n";
+
+=item notes
+
+10000: ok
+
+100K: ok
+
+1M:
+
+Syntax::sntx: Invalid syntax in or before 
+    "                                                                           
+                                                     <<115420283>>              
+                                                    ^"
+     (line 148988 of
+     "/home/user/20180724/land-polygons-complete-4326/land_polygons.m").
+
+150K: same error as above
+
+140-150K:
+
+     (line 8989 of
+     "/home/user/20180724/land-polygons-complete-4326/land_polygons.m").
+
+148900-149000: 
+
+Syntax::sntx: Invalid syntax in or before 
+    "                                                                           
+                                                   <<115420286>>                
+                                                 ^"
+     (line 89 of
+     "/home/user/20180724/land-polygons-complete-4326/land_polygons.m").
+
+148985-148995
+
+=cut

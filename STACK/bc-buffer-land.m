@@ -202,6 +202,8 @@ Out[42]= 4.00005
 
 so, yes, it works
 
+a1 = << /home/user/20180724/land-polygons-complete-4326/land_polygons.m;
+
 
 
 
