@@ -202,7 +202,25 @@ Out[42]= 4.00005
 
 so, yes, it works
 
-a1 = << /home/user/20180724/land-polygons-complete-4326/land_polygons.m;
+<< /home/user/20180724/land-polygons-complete-4326/land_polygons.m;
+
+In[2]:= Length[DownValues[poly]]                                                
+
+Out[2]= 148986
+
+ok, poly[148985] defined, but poly[148986] is not
+
+Syntax::sntx: Invalid syntax in or before "13.0678091}),"
+                                                       ^
+     (line 9767682 of
+     "/home/user/20180724/land-polygons-complete-4326/temp2.txt").
+
+{80.2906779,
+13.0678091}),
+({48.0258669,
+
+spurios parens?
+
 
 
 

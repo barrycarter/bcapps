@@ -5,15 +5,27 @@
 
 require "/usr/local/lib/bclib.pl";
 
-print "{\n";
+# print "{\n";
+
+my($fid);
 
 while (<>) {
 
-  # just the polygons
+  # keep track of fid to make things easier
+  if (/^\s*fid\s*\(.*?\)\s*\=\s*(\d+)/i) {$fid = $1;}
+
+  # aside from that, just the polygons
   unless (s/^\s*polygon\s*\(\((.*?)\)\)\s*$/$1/i) {next;}
 
+  if (/\(/ || /\)/) {
+    warn("ROW: $fid contains internal parens");
+  }
+
   # listify each coordinate
-#  s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/g;
+  s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/g;
+  debug("FID: $fid");
+
+  print "poly[$fid] = {$_};\n";
 
   # the form above appears to crash (too many regexs?), this might be
   # slower but should work better
@@ -21,15 +33,14 @@ while (<>) {
 #  while (s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/) {}
 
   # something's wrong, so only printing some polygons
-  $count++;
+#  $count++;
 
-  if ($count < 148985) {next;}
-  if ($count > 148995) {last;}
+#  if ($count < 148985) {next;}
+#  if ($count > 148995) {last;}
 
-  print "{$_},\n";
 }
 
-print "}\n";
+# print "}\n";
 
 =item notes
 
