@@ -186,6 +186,22 @@ ContourPlot[worldd[long,lat], {long, -180, 180}, {lat, -90, 90},
  PlotLegends -> True, ColorFunction -> Hue, Contours -> 64,
  ContourLines -> False]
 
+useful tests:
+
+a = Polygon[{{-90, -45}, {-90, 45}, {90, 45}, {90, -45}}]
+
+b = Polygon[GeoPosition[{{-90, -45}, {-90, 45}, {90, 45}, {90, -45}}]]
+
+GeoArea[b] // InputForm
+
+Out[39]//InputForm= Quantity[1.27516405429623*^8, "Kilometers"^2]
+
+In[42]:= CountryData["World", "Area"]/GeoArea[b]                                
+
+Out[42]= 4.00005
+
+so, yes, it works
+
 
 
 
