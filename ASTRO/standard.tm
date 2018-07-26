@@ -6,11 +6,8 @@ TEMP REMOVED:
 '/home/user/SPICE/KERNELS/earth_000101_160314_151222.bpc',
 '/home/user/SPICE/KERNELS/earth_070425_370426_predict.bpc',
 
-\begindata
+REMOVED FOR TESTING:
 
-KERNELS_TO_LOAD = (
-'/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp',
-'/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp',
 '/home/barrycarter/SPICE/KERNELS/de432s.bsp',
 '/home/barrycarter/SPICE/KERNELS/de433.bsp',
 '/home/barrycarter/SPICE/KERNELS/de434.bsp',
@@ -21,9 +18,15 @@ KERNELS_TO_LOAD = (
 '/home/barrycarter/SPICE/KERNELS/sat365.bsp',
 '/home/barrycarter/SPICE/KERNELS/ura111.bsp',
 '/home/barrycarter/SPICE/KERNELS/nep081.bsp',
+'/home/barrycarter/BCGIT/ASTRO/iss.bsp',
+
+\begindata
+
+KERNELS_TO_LOAD = (
+'/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp',
+'/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp',
 '/home/barrycarter/SPICE/KERNELS/pck00010.tpc',
 '/home/barrycarter/SPICE/KERNELS/naif0012.tls',
-'/home/barrycarter/BCGIT/ASTRO/iss.bsp',
 '/home/user/SPICE/KERNELS/earth_latest_high_prec.bpc',
 '/home/user/SPICE/KERNELS/earth_070425_370426_predict-alt-source.bpc',
 '/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf',

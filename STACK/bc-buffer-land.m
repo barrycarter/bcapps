@@ -4,6 +4,81 @@ world = CountryData["World", "FullPolygon"];
 
 ListPlot[world[[1,1,5]]]
 
+In[14]:= RegionQ[Polygon[world[[1,1]]]]                                         
+t2333 = RegionIntersection[ Polygon[world[[1,1]]],
+ Polygon[{ {30, -180}, {30, 180}, {40, 180}, {40, -180}}]];
+
+
+countries = CountryData[];
+
+CountryData[countries[[7]], "LandArea"]
+
+CountryData[countries[[7]], "FullPolygon"]
+
+t2355 = Table[{
+ CountryData[i, "Name"], 
+ UnitConvert[CountryData[i, "Area"]][[1]], 
+ UnitConvert[GeoArea[CountryData[i, "FullPolygon"]]][[1]]
+}, 
+ {i, countries}];
+
+t2356 = Table[Join[i, {i[[3]]/i[[2]]}], {i, t2355}];
+
+t0001 = Sort[t2356, #1[[4]] < #2[[4]] &];
+
+using the 55M JPEG I downloaded w/ 1km resolution
+
+ImageTake[im, {10000,10001}]
+
+im = Import["/home/user/Downloads/world_shaded_43k.jpg"];
+
+imdata = ImageData[im];
+
+imdata2 = Flatten[imdata,1];
+
+write to file testing (1 line per list item)
+
+str = OpenWrite["/tmp/imdata2.txt"];
+Table[WriteLine[str, ToString[i]], {i,imdata2}];
+Close[str];
+
+str = OpenWrite["/tmp/test2.txt"]
+Table[WriteLine[str, Prime[i]], {i,1,10}];
+Close[str];
+
+imdata3 = Gather[imdata2];
+
+
+
+11,10,50 is ocean color BUT 11,9,50 may be too yikes
+
+In[17]:= DeleteDuplicates[imdata[[5]]]                                          
+
+Out[17]= {{0.0431373, 0.0392157, 0.196078}}
+
+In[26]:= Length[test]                                                           
+
+Out[26]= 933120000
+
+test2 = DeleteDuplicates[test];
+
+In[28]:= Length[test2]                                                          
+
+Out[28]= 798798
+
+test3 = Gather[test];
+
+TODO: what zoom level do I need to get this from googlemaps/OSM
+
+appears to be level 7
+
+
+
+
+
+
+
+
 
 worldbm = BoundaryMesh[world[[1,1]]];
 
@@ -204,6 +279,26 @@ so, yes, it works
 
 << /home/user/20180724/land-polygons-complete-4326/land_polygons.m;
 
+ugly hack to avoid the missing poly
+
+poly1 = Table[poly[i], {i,0,148985}];
+poly2 = Table[poly[i], {i,148987,625999}];
+
+poly3 = Join[poly1,poly2];
+
+poly4 = GeoPosition[poly3];
+
+poly5 = Polygon[poly4];
+
+GeoArea[poly5]
+
+Quantity[9.845573885094109*^7, "Kilometers"^2]
+
+Quantity[1.4894*^8, "Kilometers"^2] is accepted value
+
+only .661043
+
+
 In[2]:= Length[DownValues[poly]]                                                
 
 Out[2]= 148986
@@ -221,11 +316,15 @@ Syntax::sntx: Invalid syntax in or before "13.0678091}),"
 
 spurios parens?
 
+imdata2.txt freq occurring pixels
 
+596233046 {0.0431373, 0.0392157, 0.196078}
 
+breaking into smaller images for review
 
+world_shaded_43k.jpg JPEG 43200x21600 43200x21600+0+0 8-bit DirectClass 55.3MB 0.000u 0:00.000
 
+testing:
 
-
-
+convert -crop 1600x800+0+0 world_shaded_43k.jpg test.jpg
 

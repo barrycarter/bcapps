@@ -17,29 +17,19 @@ while (<>) {
   # aside from that, just the polygons
   unless (s/^\s*polygon\s*\(\((.*?)\)\)\s*$/$1/i) {next;}
 
+  # only row FID 148986 has this error, and I ignore it
+  # TODO: don't ignore it
   if (/\(/ || /\)/) {
     warn("ROW: $fid contains internal parens");
+    next;
   }
 
   # listify each coordinate
-  s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/g;
+  # TODO: make sure flipping here is correct
+  s/([0-9\.\-]+) ([0-9\.\-]+)/{$2,$1}/g;
 
-#  print "poly[$fid] = {$_};\n";
-
-  # the form above appears to crash (too many regexs?), this might be
-  # slower but should work better
-  # below is too slow!
-#  while (s/([0-9\.\-]+) ([0-9\.\-]+)/{$1,$2}/) {}
-
-  # something's wrong, so only printing some polygons
-#  $count++;
-
-#  if ($count < 148985) {next;}
-#  if ($count > 148995) {last;}
-
+  print "poly[$fid] = {$_};\n";
 }
-
-# print "}\n";
 
 =item notes
 
