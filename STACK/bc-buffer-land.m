@@ -2,6 +2,134 @@ https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary
 
 world = CountryData["World", "FullPolygon"];
 
+world2 = Polygon[world[[1,1]]];
+
+world1715 = Polygon[world[[1,1,1]]]
+
+RegionMember[world1715, {x,y}]
+
+the above works!
+
+ContourPlot[RegionDistance[world1715, {x,y}], {x,-180, 180}, {y,-180,180}]
+
+
+
+t1717 = ImplicitRegion[RegionMember[world1715, {ArcTan[x, y]/Degree,
+ArcTan[Sqrt[x^2 + y^2]/Degree]}] && x^2 + y^2 + z^2 == 1, {x,y,z}];
+
+t1728 = ImplicitRegion[x^2 + y^2 + z^2 == 1, {x,y,z}]
+
+t1733 = RegionDistance[t1728]
+
+ContourPlot3D[t1733[{x,y,z}], {x,-1,1}, {y,-1,1}, {z,-1,1}]
+
+t1744 = ImplicitRegion[RegionMember[world1715, {x,y}], {x,y,z}]
+
+
+
+
+
+
+
+RegionMember[world2, {x,y}]
+
+worldsph = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, world[[1,1]], 2];
+
+worldsphreg = Polygon[worldsph];
+
+worldsph1 = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, world[[1,1,1]], 1];
+
+testing w/ just 1 poly
+
+t1451 = Polygon[world[[1,1,1]]]
+
+
+
+t1452 = TransformedRegion[t1451, 
+ sph2xyz[#[[1]]*Degree, #[[2]]*Degree, 1] &];
+
+
+
+test1251 = TransformedRegion[world2, 
+ sph2xyz[#[[1]]*Degree, #[[2]]*Degree, 1] &];
+
+correct form is below
+
+test1251 = TransformedRegion[world2, 
+ sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &];
+
+
+t1311 = Table[sph2xyz[i[[1]]*Degree, i[[2]]*Degree, 1], {i, world[[1,1,7]]}]
+
+t1313 = ConicHullRegion[t1311]
+
+t1327 = Table[i/i[[3]], {i, t1311}]
+
+Prepend[Append[t1311, {0,0,0}], {0,0,0}]
+
+test w/ USA
+
+usa = CountryData["UnitedStates", "FullPolygon"];
+
+usa1617 = Polygon[usa[[1,1]]];
+
+usa1623 = RegionMember[usa1617]
+
+RegionPlot[usa1623[{y,x}], {y,-180,180}, {x,-90,90}]
+
+
+usa2 = Table[sph2xyz[i[[2]]*Degree, i[[1]]*Degree, 1], {i, usa[[1,1,1]]}];
+
+Graphics3D[Polygon[usa2]]
+
+usa3 = Polygon[usa2];
+
+RegionPlot3D[RegionMember[usa3, {x,y,z}], {x,-1,1}, {y,-1,1}, {z,-1,1}]
+
+usa4 = DiscretizeRegion[usa3];
+
+RegionPlot3D[RegionMember[usa4, {x,y,z}], {x,-1,1}, {y,-1,1}, {z,-1,1}]
+
+t1501 = TransformedRegion[usa3, 
+ {Indexed[#,1], Indexed[#,2], Indexed[#,3]}/
+ Norm[{Indexed[#,1], Indexed[#,2], Indexed[#,3]}] &];
+
+RegionMember[t1501]
+
+RegionPlot[RegionMember[usa4, {x,y,z}], {x,-1,1}, {y,-1,1}, {z,-1,1}]
+
+
+
+mindist = RegionDistance[Polygon[usa2], {0,0,0}]
+
+usa3 = usa2/mindist*2;
+
+Graphics3D[{Sphere[{0,0,0}], Polygon[usa3]}];
+
+usa4 = Prepend[Append[usa3, {0,0,0}], {0,0,0}];
+
+Graphics3D[{Sphere[{0,0,0}], Polygon[usa4]}];
+
+usa5 = RegionIntersection[Sphere[{0,0,0}], Polygon[usa4]]
+
+RegionPlot3D[RegionMember[usa5, {x,y,z}], {x,-1,1}, {y,-1,1}, {z,-1,1}]
+
+Graphics3D[{Polygon[usa4]}]
+Graphics3D[{Polygon[usa4], Sphere[{0,0,0}]}]
+
+usa1440 = Polygon[usa[[1,1,1]]];
+
+usa1435 = TransformedRegion[usa1440, 
+ sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &];
+
+
+
+
+
+
+
+
+
 ListPlot[world[[1,1,5]]]
 
 In[14]:= RegionQ[Polygon[world[[1,1]]]]                                         
@@ -327,4 +455,66 @@ world_shaded_43k.jpg JPEG 43200x21600 43200x21600+0+0 8-bit DirectClass 55.3MB 0
 testing:
 
 convert -crop 1600x800+0+0 world_shaded_43k.jpg test.jpg
+
+working thru https://mathematica.stackexchange.com/questions/78705/plot-a-partition-of-the-sphere-given-vertices-of-polygons
+
+origin = {0, 0, 0};
+points = {
+  {-0.9207, -0.3896, 0.0091},
+  {-0.8272,  0.5077, -0.2399},
+  {0.2544, -0.3511, 0.901},
+  {0.351, 0.6527, 0.6712},
+  {0.5436, -0.6326, -0.5513},
+  {0.6016, 0.2317, -0.7643}
+};
+fs = {{1, 3, 5}, {1, 2, 4, 3}, {1, 2, 6, 5}, {3, 4, 6, 5}, {2, 4, 6}};
+faces = points[[#]] & /@ fs;
+colours = RandomColor[5];
+
+    my($c1) = cos($x)*cos($y)*cos($u)*cos($v);
+    my($c2) = cos($x)*sin($y)*cos($u)*sin($v);
+    my($c3) = sin($x)*sin($u);
+    return ($EARTH_RADIUS*acos($c1+$c2+$c3));
+
+c1 = Cos[x]*Cos[y]*Cos[u]*Cos[v];
+c2 = Cos[x]*Sin[y]*Cos[u]*Sin[v];
+c3 = Sin[x]*Sin[u];
+ArcCos[c1+c2+c3];
+
+conds = {0 <= x <= 2*Pi, 0 <= y <= 2*Pi, 0 <= u <= 2*Pi, 0 <= v <= 2*Pi};
+
+FullSimplify[ArcCos[c1+c2+c3], conds]
+
+order below is lat/lon from http://williams.best.vwh.net/avform.htm
+
+gcd[x_, y_, u_, v_] = ArcCos[Cos[u]*Cos[x]*Cos[v - y] + Sin[u]*Sin[x]]
+
+result is in earth radii
+
+Solve[gcd[lat1, lon1, lat2, lon2] == c, Reals]
+
+Solve[gcd[lat1, lon1, lat2, lon2] == c, lon2, Reals]
+
+
+
+conds = {-Pi/2 <= lat1 <= Pi/2, -Pi/2 <= lat2 <= Pi/2,
+         -Pi <= lon1 <= Pi, -Pi <= lon2 <= Pi,
+         0 <= c <= 2*Pi};
+
+moreconds = { 0 <= lat1 <= Pi/2, 0 <= lat2 <= Pi/2, 
+              0 <= lon1 <= Pi, 0 <= lon2 <= Pi,
+              0 <= c <= 2*Pi};
+
+FullSimplify[Solve[gcd[lat1, lon1, lat2, lon2] == c, lon2, Reals],conds]
+
+FullSimplify[Solve[gcd[lat1, lon1, lat2, lon2] == c, lon2, Reals],moreconds]
+
+GeoBoundsRegion = latitude/longitude rectangle
+
+
+
+
+
+
+
 
