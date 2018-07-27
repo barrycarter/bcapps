@@ -39,6 +39,18 @@ t1908= Table[{i,
 
 t1916 = Sort[t1908, #1[[2]] > #2[[2]] &];
 
+t2018 = Entity["Country", "World"]["Polygon"];
+
+t2019= Table[{i, 
+ UnitConvert[GeoArea[Polygon[GeoPosition[
+ t2018[[1,1,i]]]]]][[1]]},
+ {i, 1, Length[t2018[[1,1]]]}];
+
+t2020 = Sort[t2019, #1[[2]] > #2[[2]] &];
+
+
+
+
 ListLogPlot[Transpose[t1916][[2]]]
 
 Subject: Itsy-Bitsy Teeny-Weeny Little Polka Dot Island in CountryData
