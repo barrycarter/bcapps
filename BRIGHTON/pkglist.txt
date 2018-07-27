@@ -457,6 +457,7 @@ libzip
 libzip-devel
 
 # math/science tools
+gdal-python
 xplanet
 units
 mathics

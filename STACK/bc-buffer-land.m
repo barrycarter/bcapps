@@ -1,5 +1,13 @@
 https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary-around-all-land-on-earth
 
+temporary def of show it for larger screen
+
+showit := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %, ImageSize -> {1200, 600}]; 
+     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+
+
 world = CountryData["World", "FullPolygon"];
 
 world1834 = world[[1,1]];
@@ -659,10 +667,49 @@ FullSimplify[Solve[gcd[lat1, lon1, lat2, lon2] == c, lon2, Reals],moreconds]
 
 GeoBoundsRegion = latitude/longitude rectangle
 
+yet another try on 27 Jul 2018, using largest areas first
+
+world = CountryData["World", "FullPolygon"];
+
+world2 = world[[1,1]];
+
+worldpoly = Table[{i, 
+ UnitConvert[GeoArea[Polygon[GeoPosition[world2[[i]]]]]][[1]]}, 
+ {i, 1, Length[world2]}];
+
+worldpoly2 = Sort[worldpoly, #1[[2]] > #2[[2]] &];
+
+worlds worst way to reverse 2D coords
+
+revcoords[list_] := Transpose[Reverse[Transpose[list]]]
+
+let's plot 10 largest
+
+t1332 = Transpose[Take[worldpoly2, 10]][[1]]
+
+t1333 = Table[Polygon[revcoords[world2[[i]]]], {i, t1332}];
+
+
+
+
+Apply[Take[world2, #] &, Transpose[Take[worldpoly2, 10]][[1]]]
+
+
+
+Polygon[Apply[revcoords[world2[[#]]]] &, 
+ Transpose[Take[worldpoly2, 10]][[1]]]];
+
+
+Polygon[Apply[revcoords[Take[world2, #]] &,
+ Transpose[Take[worldpoly2, 10]][[1]]]];
+
+Apply[revcoords[world2[[#]]], Transpose[Take[worldpoly2, 10]][[1]]]
 
 
 
 
 
 
+GeoGraphics[Polygon[Transpose[Reverse[Transpose[world2[[19972]]]]]]]
 
+Transpose[worldpoly2][[2]]
