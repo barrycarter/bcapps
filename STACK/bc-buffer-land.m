@@ -2,6 +2,95 @@ https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary
 
 world = CountryData["World", "FullPolygon"];
 
+world1834 = world[[1,1]];
+
+worldsph = Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&,world1834, {2,2}];
+
+worldsph2 = Map[Line, worldsph];
+
+worldreg = Apply[RegionUnion, worldsph2];
+
+worlddist = RegionDistance[worldreg];
+
+lower res but worksable?
+
+world2 = CountryData["World", "Polygon"];
+
+world1834 = world2[[1,1]];
+
+worldsph = Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&,world1834, {2,2}];
+
+worldsph2 = Map[Line, worldsph];
+
+worldreg = Apply[RegionUnion, worldsph2];
+
+worlddist = RegionDistance[worldreg];
+
+ignoring smaller islands ... for now
+
+world = CountryData["World", "FullPolygon"];
+
+GeoArea[Polygon[GeoPosition[world[[1,1,6]]]]] for example
+
+t1908= Table[{i, 
+ UnitConvert[GeoArea[Polygon[GeoPosition[
+ world[[1,1,i]]]]]][[1]]},
+ {i, 1, Length[world[[1,1]]]}];
+
+t1916 = Sort[t1908, #1[[2]] > #2[[2]] &];
+
+ListLogPlot[Transpose[t1916][[2]]]
+
+Subject: Itsy-Bitsy Teeny-Weeny Little Polka Dot Island in CountryData
+
+I'm probably misunderstanding something, but:
+
+temp = CountryData["World", "FullPolygon"][[1,1,15737]]
+
+{{2.08158, 109.645}, {2.08158, 109.645}, {2.08158, 109.645}}
+
+GeoArea[Polygon[GeoPosition[temp]]]
+
+0.0000444087 meters squared
+
+As nearly as I can tell, Mathematica is listing an island that's less than 1 cm^2, which is probably an error. Notes:
+
+  - `CountryData["World", "FullPolygon"]` is a one element list that itself contains only a one-element list, so it's not like I'm going too deep.
+
+  - Of the 24967 polygons total, 8173 are less than 1 km^2 in size, and 248 are less than 100 m^2 (the size of a small room).
+
+This sort of thing is particularly annoying given https://mathematica.stackexchange.com/questions/178833/area-of-countries-given-by-geoboundaries-does-not-equal-area-in-database where I show the total land area of Mathematica's polygons is only about 92% of the actual land area.
+
+Am I missing something or is this just bad data?
+
+
+
+. For example, the largest entry, `CountryData["World", "FullPolygon"][[1,1,19972]]` has an area of `1.65199*10^7 kilometers squared`, 
+
+
+
+
+
+
+
+In[17]:= temp = Map[f[#1[[1]],#1[[2]]] &, world1834, 2];                        
+
+
+sphtemp[{x_,y_}] = sph2xyz[y*Degree, x*Degree, 1];
+
+t1844 = Table[world1834[[i,j]], {i, 1, Length[world1834]}
+ {j, 1, Length[world1834[[i]]]}];
+
+
+worlsph = Map[sphtemp, world1834, 2];
+
+worldsph = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, world1834, 2];
+
+worldsph2 = Map[Line[#] &, worldsph];
+
+
+
+
 world2 = Polygon[world[[1,1]]];
 
 world1715 = Polygon[world[[1,1,1]]]
