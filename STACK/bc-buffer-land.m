@@ -12,6 +12,53 @@ the above works!
 
 ContourPlot[RegionDistance[world1715, {x,y}], {x,-180, 180}, {y,-180,180}]
 
+same thing w usa now?
+
+usa = CountryData["UnitedStates", "FullPolygon"];
+
+usa2 = Polygon[usa[[1,1,1]]]
+
+usa3 = RegionDistance[usa2]
+
+ContourPlot[usa3[{x,y}], {x,0,90}, {y,-180,0}, PlotPoints -> 2]
+
+
+ContourPlot[usa3[{x,y}], {x,24,50}, {y,-125,-66}, PlotPoints -> 2]
+
+memoize inclusion
+
+member1803[x_, y_] := member1803[x,y] = RegionMember[usa2, {x,y}];
+
+t1802 = ImplicitRegion[member1803[x,y], {x,y,z}];
+
+can we do it with lines?
+
+usaline = Line[usa[[1,1,1]]];
+
+ContourPlot[RegionDistance[usaline,{x,y}], {x,24,50}, {y,-125,-66}]
+
+t1821 = ImplicitRegion[
+ RegionMember[usaline, {ArcTan[x, y]/Degree, ArcTan[Sqrt[x^2 + y^2]]/Degree}],
+ {x,y,z}]
+
+t1822 = RegionDistance[t1821];
+
+usa1sph = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, usa[[1,1,1]]];
+
+usa1828 = Line[usa1sph]
+
+usa1829 = RegionDistance[usa1828];
+
+ContourPlot[usa1829[sph2xyz[th, ph, 1]], {th, -Pi, Pi}, {ph, -Pi/2, Pi/2}]
+
+ContourPlot[usa1829[sph2xyz[th, ph, 1]], {th, -Pi, Pi}, {ph, -Pi/2, Pi/2},
+ ColorFunction -> Hue, Contours -> 64]
+
+
+
+
+
+
 
 
 t1717 = ImplicitRegion[RegionMember[world1715, {ArcTan[x, y]/Degree,
