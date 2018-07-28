@@ -1,14 +1,41 @@
 https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary-around-all-land-on-earth
 
-temporary def of show it for larger screen
+
+<formulas>
+
+(* this doesn't actually work, for some reason can't import data at load *)
+
+(* temporary def of show it for larger screen *)
+
+world = CountryData["World", "FullPolygon"];
+
+worldPolyList = world[[1,1]];
+
+(* the UnitConvert and [[1]] below assure this is in meters *)
+
+worldPolyListAreaSorted = Sort[Table[{i, 
+ UnitConvert[GeoArea[Polygon[GeoPosition[worldPolyList[[i]]]]]][[1]]},
+ {i, 1, Length[worldPolyList]}], #1[[2]] > #2[[2]] &];
+
+worldPolyBiggestN[n_] := Table[worldPolyList[[i]], 
+ {i, Transpose[Take[worldPolyListAreaSorted, n]][[1]]}];
+
+(* the append below attaches the last point back to the first *)
+
+poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
+ Append[list, list[[1]]]]
 
 showit := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
      Export[file, %, ImageSize -> {1200, 600}]; 
-     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file];];
 
 
-world = CountryData["World", "FullPolygon"];
+</formulas>
+
+approach 20180728 starts here
+
+
 
 world1834 = world[[1,1]];
 
@@ -455,6 +482,10 @@ usa = CountryData["UnitedStates", "Polygon"]
 
 usapoly = Polygon[CountryData["UnitedStates", "Polygon"][[1,1,1]]];
 
+discs = Table[GeoDisk[i, Quantity[100, "km"]], {i, usapoly[[1]]}];
+
+
+
 ContourPlot[RegionDistance[usapoly, {x,y}], {x,-90,90},
 {y,-90,90}, PlotLegends -> True, ColorFunction -> Hue, Contours -> 64,
 ContourLines -> False]
@@ -689,27 +720,156 @@ t1332 = Transpose[Take[worldpoly2, 10]][[1]]
 
 t1333 = Table[Polygon[revcoords[world2[[i]]]], {i, t1332}];
 
+poly2d2poly3d[list_] := 
+ Line[Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, list]]
+
+t1343 = poly2d2poly3d[world2[[19972]]];
+
+RegionQ[t1343]
+
+RegionDistance[t1343, {0,0,0}]
+
+not quite on the unit sphere but 0.999962
+
+t1948 = RegionDistance[t1343]
+
+ContourPlot[t1948[sph2xyz[th*Degree,ph*Degree,1]],
+ {th, -180, 180}, {ph, -90, 90}]
+
+ContourPlot[t1948[sph2xyz[th*Degree,ph*Degree,1]],
+ {th, -180, 180}, {ph, -90, 90}, ColorFunction -> Hue, Contours -> 64,
+ ContourLines -> False]
+
+ContourPlot[t1948[sph2xyz[th*Degree,ph*Degree,1]],
+ {th, -180, 180}, {ph, -90, 90}, ColorFunction -> Hue, Contours -> 256,
+ ContourLines -> False]
 
 
+ContourPlot[t1948[sph2xyz[th*Degree,ph*Degree,1]] == 0,
+ {th, -180, 180}, {ph, -90, 90}, ColorFunction -> Hue, Contours -> 256,
+ ContourLines -> False]
+
+ContourPlot[t1948[sph2xyz[th*Degree,ph*Degree,1]] == 0,
+ {th, -180, 180}, {ph, -90, 90}]
+
+ContourPlot[t1948[sph2xyz[th*Degree,ph*Degree,1]] == 0.01,
+ {th, -180, 180}, {ph, -90, 90}]
+
+ContourPlot3D[t1948[{x,y,z}], {x,-1,1}, {y,-1,1}, {z,-1,1}]
 
 Apply[Take[world2, #] &, Transpose[Take[worldpoly2, 10]][[1]]]
 
-
-
 Polygon[Apply[revcoords[world2[[#]]]] &, 
  Transpose[Take[worldpoly2, 10]][[1]]]];
-
 
 Polygon[Apply[revcoords[Take[world2, #]] &,
  Transpose[Take[worldpoly2, 10]][[1]]]];
 
 Apply[revcoords[world2[[#]]], Transpose[Take[worldpoly2, 10]][[1]]]
 
-
-
-
-
-
 GeoGraphics[Polygon[Transpose[Reverse[Transpose[world2[[19972]]]]]]]
 
 Transpose[worldpoly2][[2]]
+
+an approach that definitely doesn't work, but is interesting?
+
+Table[GeoDistance[{0,0}, x], {x, world2[[1]]}]
+
+t2049[y_] := Min[Table[GeoDistance[y, x], {x, world2[[19972]]}]]
+
+t2058[x_,y_,z_] = {x,y,z}/Norm[{x,y,z}];
+
+t2059 = TransformedRegion[t1343, t2058]
+
+Drop[Table[{Cos[theta], Sin[theta]}, {theta, 0, 360*Degree, 360*Degree/5}],1]
+
+an ugly pentagon
+
+t2109 = 90*N[Drop[
+ Table[{Cos[theta], Sin[theta]}, {theta, 0, 360*Degree,360*Degree/5}],
+1]]
+
+poly2d2poly3d[t2109]
+
+RegionDistance[poly2d2poly3d[t2109], {0,0,0}]
+
+t2115[x_] = FractionalPart[x]*t2109[[Floor[x]]] +
+ 1-FractionalPart[x]*t2109[[Floor[x]+1]]
+
+t2115[x_] := Module[{}, 
+ FractionalPart[x]*t2109[[Floor[x]]] +
+ (1-FractionalPart[x])*t2109[[Floor[x]+1]]
+];
+
+ParametricPlot[t2115[x],{x,1,5}]                                      
+
+t2122[x_] := Module[{}, 
+ Append[Degree*(FractionalPart[x]*t2109[[Floor[x]]] +
+ (1-FractionalPart[x])*t2109[[Floor[x]+1]]), 1]
+];
+
+t2124[x_] := Module[{}, 
+ sph2xyz[Append[Degree*(FractionalPart[x]*t2109[[Floor[x]]] +
+ (1-FractionalPart[x])*t2109[[Floor[x]+1]]), 1]]
+];
+
+GeoNearest[Entity["Country"], {0,0}]
+
+ImplicitRegion[GeoDistance[{lat,lon}, {0,0}] < 100000, {lat, lon}]
+
+bd = DiscretizeRegion[RegionBoundary[poly], MaxCellMeasure -> {1 -> .1}];
+
+bd = DiscretizeRegion[RegionBoundary[Polygon[world2[[1]]]], 
+ MaxCellMeasure -> {1 -> .1}]
+
+MeshCoordinates[bd]
+
+bd = DiscretizeRegion[Line[world2[[1]]],  MaxCellMeasure -> {1 -> .1}]
+
+MeshCoordinates[bd]
+
+bd = DiscretizeRegion[Line[world2[[1]]]]
+
+t2344 = poly2d2poly3d[world2[[19972]]];
+
+t2345 = DiscretizeRegion[poly2d2poly3d[world2[[19972]]],
+ MaxCellMeasure -> {"Length" -> .001}];
+
+MeshCoordinates[t2345]
+
+t2347 = DiscretizeRegion[poly2d2poly3d[world2[[19972]]],
+ MaxCellMeasure -> {"Length" -> 10^-6}];
+
+Length[world2[[19972]]]
+
+t2349 = DiscretizeRegion[Line[world2[[19972]]], MaxCellMeasure -> {"Length" ->
+10^-3}]
+
+t2358 = poly2d2poly3d[MeshCoordinates[t2349]];                        
+
+poly2d2poly3d[list_] := 
+ Line[Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
+ Append[list, list[[1]]]]]
+
+t2358 = DiscretizeRegion[Line[world2[[19972]]], MaxCellMeasure -> {"Length" ->
+10^-2}]
+
+t2359 = poly2d2poly3d[MeshCoordinates[t2358]];                        
+
+map1[lat_, lon_] = {lon*Cos[lat], lat}
+
+
+map1[lat1,lon1] - map1[lat2,lon2]
+
+t0022 = Table[poly2d2poly3d[i], {i,world2}];
+
+poly2d2poly3d[list_] := 
+Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
+ Append[list, list[[1]]]]
+
+t0024 = Table[poly2d2poly3d[i], {i,world2}];
+
+Graphics3D[Line[t0024]]
+
+t0026 = RegionDistance[Line[t0024]];
+
