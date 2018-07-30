@@ -1,11 +1,8 @@
 https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary-around-all-land-on-earth
 
+<stuff>
 
-<formulas>
-
-(* this doesn't actually work, for some reason can't import data at load *)
-
-(* temporary def of show it for larger screen *)
+(* stuff defined in countrydata.mx that Mathematica can't run on init *)
 
 world = CountryData["World", "FullPolygon"];
 
@@ -17,6 +14,20 @@ worldPolyListAreaSorted = Sort[Table[{i,
  UnitConvert[GeoArea[Polygon[GeoPosition[worldPolyList[[i]]]]]][[1]]},
  {i, 1, Length[worldPolyList]}], #1[[2]] > #2[[2]] &];
 
+(* this probably the worst possible way to reverse coords *)
+
+rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]]
+
+</stuff>
+
+
+<formulas>
+
+(* this ugliness required because Mathematica apparently can't load
+data properly at run time, see <stuff> section above *)
+
+Get["/home/user/BCGIT/STACK/countrydata.mx"];
+
 worldPolyBiggestN[n_] := Table[worldPolyList[[i]], 
  {i, Transpose[Take[worldPolyListAreaSorted, n]][[1]]}];
 
@@ -24,6 +35,8 @@ worldPolyBiggestN[n_] := Table[worldPolyList[[i]],
 
 poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
  Append[list, list[[1]]]]
+
+(* temporary def of show it for larger screen *)
 
 showit := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
@@ -34,6 +47,108 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
 </formulas>
 
 approach 20180728 starts here
+
+t1017 = Table[poly2D23D[i], {i,worldPolyBiggestN[100]}];
+
+Graphics3D[Line[t1017]]
+
+above works
+
+GeoGraphics[Polygon[GeoPosition[worldPolyBiggestN[100]]], 
+ ImageSize -> {1600,900}]
+
+above works, most world not antarctica covered
+
+t1023 = RegionDistance[Line[t1017]];
+
+above takes too long, lets do it 10 polys at a time?
+
+t1026 = Table[poly2D23D[i], {i,worldPolyBiggestN[10]}];
+
+Graphics3D[Line[t1026]]
+
+above works
+
+GeoGraphics[Polygon[GeoPosition[worldPolyBiggestN[10]]], 
+ ImageSize -> {1600,900}]
+
+above works quite a bit of world covered
+
+t1027 = RegionDistance[Line[t1026]];
+
+t1027 = RegionDistance[Line[t1026]];                                    
+
+t1027[{0,0,0}]
+
+above ALSO takes too long, so it's one poly at a time <h>(maybe
+Valerie Bertanelli will show up)</h>
+
+n = 1;
+
+t1030 = worldPolyList[[worldPolyListAreaSorted[[n,1]]]];
+
+t1036 = 
+
+t1031 = poly2D23D[t1030];
+
+Graphics3D[Line[t1031]]
+
+above works
+
+GeoGraphics[Polygon[GeoPosition[t1030]], ImageSize -> {1600,900}]
+
+above works
+
+t1032 = RegionDistance[Line[t1031]];
+
+t1032[{0,0,0}]
+
+yields 0.999962 but works
+
+t1035 = ContourPlot[t1032[sph2xyz[lon*Degree, lat*Degree, 1]] == 0.0156, 
+ {lon, -180, 180}, {lat, -90, 90}]
+
+Show[{t1035, Graphics[Line[rectifyCoords[t1030]]]}]
+
+RegionPlot[t1032[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.0156, 
+ {lon, -180, 180}, {lat, -90, 90}]
+
+t1044 = ImplicitRegion[t1032[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.0156,  
+ {{lon, -180, 180}, {lat, -90, 90}}];
+
+t1047 = 
+ RegionPlot[RegionMember[t1044, {lon, lat}], {lon, -180, 180}, {lat, -90, 90}];
+
+t1048 = 
+ RegionPlot[RegionMember[t1044, {lon, lat}], {lon, 0, 180}, {lat, 40, 80}];
+
+Show[{t1048, Graphics[Line[rectifyCoords[t1030]]]}]
+
+t1050 = DiscretizeRegion[t1044];
+
+above fails, region is multipolygonal
+
+a gap near 120-150 and 45-55 hmmm
+
+t1048 = 
+ RegionPlot[RegionMember[t1044, {lon, lat}], {lon, 120, 150}, {lat, 45, 55}];
+
+Show[{t1048, Graphics[Line[rectifyCoords[t1030]]]}]
+
+Show[{t1048, Graphics[Polygon[rectifyCoords[t1030]]]}]
+
+t1048 = 
+ RegionPlot[RegionMember[t1044, {lon, lat}], {lon, 120, 151}, {lat, 45, 46}];
+
+Show[{t1048, Graphics[Polygon[rectifyCoords[t1030]]]}]
+
+
+
+
+
+
+
+
 
 
 

@@ -37,7 +37,7 @@ Addams Family (and Adult Wednesday?)
 AfterMASH
 ALF [DONE]
 Alfred Hitchcock Presents [DONE]
-Alice
+Alice (and Flo)
 All in the Family [GETTING]
 Always Sunny in Philadelphia
 Amen
@@ -45,7 +45,7 @@ Archie Bunker's Place [GETTING]
 Are You Being Served?
 As Time Goes By [GETTING]
 Babylon 5 [DONE]
-Barney Miller [GETTING]
+Barney Miller (and Fish) [GETTING]
 Batman 60's
 Benson
 Bewitched [GETTING]
@@ -86,8 +86,6 @@ Family Ties [GETTING]
 Fawlty Towers [GETTING]
 Fernwood Tonight
 Ferris Bueller
-Fish
-Flo
 Frasier [DONE]
 Fresh Prince of Bel-Air
 Friends [DONE]
@@ -178,7 +176,7 @@ Spin City [DONTWANT]
 Square Pegs [DONTWANT]
 Star Trek (original series) [DONE]
 Star Trek: Deep Space Nine [DONE]
-Star Trek: Discover [STILLGOING]
+Star Trek: Discovery [STILLGOING]
 Star Trek: The Animated Series [NOT24]
 Star Trek: The Next Generation [DONE]
 Star Trek: Voyager [DONE]

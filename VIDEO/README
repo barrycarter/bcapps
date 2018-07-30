@@ -146,10 +146,27 @@ find . -maxdepth 1 -iname 'fh*.avi.*.jpg' | perl -nle '/(\d+)\.jpg$/; print $1' 
 
 find . -maxdepth 1 -iname 'fh*.avi.1000.jpg' | perl -anle '/fh(\d+)/; print $1' | sort > temp4.txt
 
+: to create a new mp4
+
+cd ~/VIDEOFRAMES
+rip-video.pl BRADYBUNCH < bradybunch0.txt
+cd BRADYBUNCH
+sh rip.sh &
+: above will automatically alert when ready
+cd MONTAGE
+montagify.pl BRADYBUNCH
+: follow instruction
+: above will alert when done
+ffmpeg -i frame%09d.jpg output.mp4
+: below just to check
+vlc output.mp4
+mv output.mp4 ../../NAME.mp4
+: update status in videolist.txt
+
+
 DISCLAIMER
 ==========
 
   - This idea isn't original: someone did it w/ Friends (in a slightly
   different way) WITH audio
-
 
