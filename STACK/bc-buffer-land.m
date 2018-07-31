@@ -16,8 +16,6 @@ worldPolyListAreaSorted = Sort[Table[{i,
 
 (* this probably the worst possible way to reverse coords *)
 
-rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]]
-
 </stuff>
 
 
@@ -43,6 +41,8 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
      Export[file, %, ImageSize -> {1200, 600}]; 
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file];];
 
+
+rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]]
 
 </formulas>
 
@@ -86,8 +86,6 @@ Valerie Bertanelli will show up)</h>
 n = 1;
 
 t1030 = worldPolyList[[worldPolyListAreaSorted[[n,1]]]];
-
-t1036 = 
 
 t1031 = poly2D23D[t1030];
 
@@ -133,14 +131,16 @@ a gap near 120-150 and 45-55 hmmm
 t1048 = 
  RegionPlot[RegionMember[t1044, {lon, lat}], {lon, 120, 150}, {lat, 45, 55}];
 
-Show[{t1048, Graphics[Line[rectifyCoords[t1030]]]}]
+t1049 = Show[{t1048, Graphics[Line[rectifyCoords[t1030]]]}]
 
-Show[{t1048, Graphics[Polygon[rectifyCoords[t1030]]]}]
+Export["/tmp/temp.png", t1049, ImageSize -> {8000, 6000}]
 
 t1048 = 
  RegionPlot[RegionMember[t1044, {lon, lat}], {lon, 120, 151}, {lat, 45, 46}];
 
 Show[{t1048, Graphics[Polygon[rectifyCoords[t1030]]]}]
+
+subproblem 7/30/18: why are polygons so twisty?
 
 
 
@@ -191,12 +191,27 @@ t1916 = Sort[t1908, #1[[2]] > #2[[2]] &];
 
 t2018 = Entity["Country", "World"]["Polygon"];
 
+Transpose[Flatten[t2018[[1,1]], 1]]
+
+Min[Transpose[Flatten[t2018[[1,1]], 1]] [[1]]]
+
+confirms antarctica is not included
+
 t2019= Table[{i, 
  UnitConvert[GeoArea[Polygon[GeoPosition[
  t2018[[1,1,i]]]]]][[1]]},
  {i, 1, Length[t2018[[1,1]]]}];
 
 t2020 = Sort[t2019, #1[[2]] > #2[[2]] &];
+
+t1910 = t2018[[1,1,1612]];
+
+4310 length above
+
+t1911 = Graphics[Line[Take[t1910,1000]]]
+
+t1912 = Export["/tmp/temp.png", t1911, ImageSize -> {8000, 6000}]
+
 
 
 
