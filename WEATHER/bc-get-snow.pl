@@ -78,3 +78,53 @@ QFLAG31    268-268   Character
 SFLAG31    269-269   Character
 
 =cut
+
+=item answer
+
+TODO: ANSWER HERE!!!
+
+I decided to use ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ (I have a slightly outdated version, but that shouldn't be an issue) to find a canonical answer. Notes:
+
+  - GHCN has data for a total of 100,749 weather stations
+
+  - Of these, 59,097 have some snowfall data.
+
+TODO: more here, use abs lat to sort after join
+
+why imperfect, so check against alt sources (TODO: actually do that)
+
+snowfall is in mm
+
+calc 10mm/365.2425 = .0273790700
+
+14225 = no snow, ends at WQW00041606
+
+USC00415113 152 5553 0.0273725913920403 = line 15909
+USC00020671 8 292 0.0273972602739726 = line 15910
+
+CIW00054701 -41.4667  -72.8167   11.3    PUERTO MONTT B = southernmost
+
+CA002403833  81.1667  -91.8167   72.0 NU SVARTEVAEG                             71872
+
+https://en.wikipedia.org/wiki/Puerto_Montt
+
+SVARTEVAEG uninhabited
+
+MEIGHEN ISLAND uninhabited
+
+yellowknife: 
+
+CA1NT000002  62.4612 -114.3513  158.2 NT YELLOWKNIFE 1.2 NE - GNWT                   
+chevak, alaska ftw? nope!
+
+perl -anle 'if ($F[3] <= .0273790700 && $F[2] >= 366 ) {print $_}' snowfalls.txt.srt | less
+
+perl -anle 'if ($F[3] <= .0273790700 && $F[2] >= 366 ) {print $F[0]}' snowfalls.txt.srt | sort | tee smallsnow.txt
+
+fgrep -f smallsnow.txt ghcnd-stations.txt | sort -k2n > smallsnow.txt.srt
+
+
+
+
+
+=cut
