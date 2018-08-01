@@ -1003,3 +1003,78 @@ Graphics3D[Line[t0024]]
 
 t0026 = RegionDistance[Line[t0024]];
 
+approach on 30 Jul 2018 using entity data
+
+t2214 = Entity["Country", "World"]["Polygon"];
+t2215 = Entity["Country", "Antarctica"]["Polygon"];
+
+GeoGraphics[{t2214,2215}]
+
+1851 + 25 polygons
+
+t2219 = Join[t2214[[1,1]],t2215[[1,1]],1];
+
+t2221 = Map[poly2D23D, t2219];
+
+Graphics3D[Polygon[t2221]]
+
+the above works!
+
+Graphics3D[Line[t2221]]
+
+the above also works
+
+RegionQ[Line[t2221]]
+
+t2223 = RegionDistance[Polygon[t2221]];
+
+above works, but gets too far from surface
+
+t2224 = RegionDistance[Line[t2221]];
+
+above is too slow
+
+polygon by polygon?
+
+t2227 = t2219[[1]];
+
+t2227 is any poly
+
+n = 1;
+
+t2228 = RegionDistance[Line[poly2D23D[t2219[[n]]]]];
+
+ContourPlot[t2228[sph2xyz[lon*Degree, lat*Degree, 1]], {lon, -180,
+180}, {lat, -90, 90}, ColorFunction -> Hue, ContourLines -> False,
+Contours -> 16];
+
+t2229 = ImplicitRegion[t2228[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.0156,
+  {{lon, -180, 180}, {lat, -90, 90}}];
+
+RegionPlot[RegionMember[t2229,{lon,lat}], {lon, -180, 180}, {lat, -90, 90}]
+
+general function for given polygon and distance (need to clean stuff
+up, but still)
+
+region[n_, d_] := Module[{rdf},
+ rdf = RegionDistance[Line[poly2D23D[t2219[[n]]]]];
+ Return[ImplicitRegion[rdf[sph2xyz[lon*Degree, lat*Degree, 1]] <= d,
+  {{lon, -180, 180}, {lat, -90, 90}}]]
+]
+
+t2243 = Table[region[n, 0.1], {n,1,200}];
+
+t2244 = RegionUnion[t2243];
+
+RegionPlot[RegionMember[t2244,{lon,lat}], {lon, -180, 180}, {lat, -90, 90}]
+ 
+t2247 = Table[region[n, 0.1], {n,1,Length[t2219]}];
+
+
+
+
+
+
+
+
+
