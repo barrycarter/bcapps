@@ -73,6 +73,7 @@ scene.add(sphere);
 
 function update () {
  renderer.render(scene, camera);
+ sphere.position.z++;
  requestAnimationFrame(update);
 }
 

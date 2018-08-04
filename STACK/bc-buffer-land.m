@@ -614,6 +614,22 @@ usapoly = Polygon[CountryData["UnitedStates", "Polygon"][[1,1,1]]];
 
 discs = Table[GeoDisk[i, Quantity[100, "km"]], {i, usapoly[[1]]}];
 
+t1844 = GeoDisk[{35.05, -106.5}, Quantity[100, "km"]]
+
+GeoGraphics[{RGBColor["Red"], Opacity[1, "Red"], t1844}];
+showit;
+
+GeoGraphics[{GeoStyling[None], t1844}];
+GeoGraphics[{GeoStyling[None], discs}, ImageSize -> {8000,6000}];
+Export["/tmp/test.png", %, ImageSize -> {8000,6000}];
+showit;
+
+GeoServer::maxtl: Number of requested tiles, 1904, is too large.
+
+GeoGraphics::wdata: 
+   Unable to download data for ranges {{18.2462, 55.553}, {-143.061, -48.7063}}
+     and zoom level 8 from the Wolfram geo server.
+
 
 
 ContourPlot[RegionDistance[usapoly, {x,y}], {x,-90,90},
@@ -1016,6 +1032,24 @@ t2219 = Join[t2214[[1,1]],t2215[[1,1]],1];
 
 t2221 = Map[poly2D23D, t2219];
 
+t2024 = Table[RegionDistance[Line[i]], {i, t2221}];
+
+Table[f[{0,0,0}]-1, {f, t2024}]
+
+Table[f[sph2xyz[{25*Degree, 5*Degree,1}]], {f, t2024}]
+
+t2029[lon_, lat_] := 
+ Min[Table[f[sph2xyz[lon*Degree, lat*Degree, 1]], {f, t2024}]];
+
+ContourPlot[t2029[lon,lat], {lon, -180, 180}, {lat, -90, 90}]
+
+f[t_] = {x1, y1, z1} + t*{x2-x1, y2-y1, z2-z1}
+
+{x3, y3, z3} - f[t]
+
+
+
+
 Graphics3D[Polygon[t2221]]
 
 the above works!
@@ -1070,11 +1104,88 @@ RegionPlot[RegionMember[t2244,{lon,lat}], {lon, -180, 180}, {lat, -90, 90}]
  
 t2247 = Table[region[n, 0.1], {n,1,Length[t2219]}];
 
+02 Aug 2018 using true geodesics (assuming spherical)
+
+three d geodesic from p to q, assumed to be three 3d points, parameter t
+
+geoDesic3D[p_, q_, t_] = (p + t*(q-p))/Norm[p+ t*(q-p)];
+
+regLine[p_, q_, t_] = p+t*(q-p)
+
+Norm[sph2xyz[lon3, lat3, 1] -
+ regLine[sph2xyz[lon1, lat1, 1], sph2xyz[lon2, lat2, 1], t]]
+
+conds = {-Pi < lon1 < Pi, -Pi < lon2 < Pi, -Pi < lon3 < Pi,
+         -Pi/2 < lat1 < Pi/2, -Pi/2 < lat2 < Pi/2, -Pi/2 < lat3 < Pi/2, 
+        0 < t < 1};
+
+FullSimplify[geoDesic3D[sph2xyz[th1, ph1, 1], sph2xyz[th2, ph2, 1], t], conds]
 
 
 
 
+geoDesic3D[sph2xyz[{0,0,1}], sph2xyz[{25*Degree, 55*Degree,1}], t]
 
+t1935 = ParametricPlot3D[
+ geoDesic3D[sph2xyz[{0,0,1}], sph2xyz[{25*Degree, 55*Degree,1}], t],
+ {t,0,1}]
 
+t1936 = Graphics3D[{Sphere[{0,0,0}]}];
 
+Show[{t1936, t1935}]
+
+conds = {-Pi < lon1 < Pi, -Pi < lon2 < Pi, -Pi < lon3 < Pi,
+         -Pi/2 < lat1 < Pi/2, -Pi/2 < lat2 < Pi/2, -Pi/2 < lat3 < Pi/2, 
+        0 < t < 1};
+
+geoDesic3D[sph2xyz[{lon1, lat1, 1}], sph2xyz[{lon2, lat2, 1}], t]
+
+t1946[t_] = Simplify[VectorAngle[
+ geoDesic3D[sph2xyz[{lon1, lat1, 1}], sph2xyz[{lon2, lat2, 1}], t],
+ sph2xyz[{lon3, lat3, 1}]], conds]
+
+Solve[GeoDistance[{35, -106}, {x,y}] == Quantity[1000, "km"], {x,y}]
+
+GeoDesic3D[sph2xyz[{-110*Degree, 40*Degree, 1}],
+           sph2xyz[{-90*Degree, 30*Degree, 1}], t]
+
+VectorAngle[
+ geoDesic3D[sph2xyz[{-110*Degree, 40*Degree, 1}],
+           sph2xyz[{-90*Degree, 30*Degree, 1}], t],
+ sph2xyz[-106.5*Degree, 35*Degree, 1]]
+
+t2004 = ParametricRegion[
+GeoDesic3D[sph2xyz[{-110*Degree, 40*Degree, 1}],
+           sph2xyz[{-90*Degree, 30*Degree, 1}], t],
+{t,0,1}];
+
+t2004 = ParametricRegion[
+geoDesic3D[sph2xyz[{-110*Degree, 40*Degree, 1}],
+           sph2xyz[{-90*Degree, 30*Degree, 1}], t],
+{{t,0,1}}];
+
+t2009 = RegionDistance[t2004];
+
+03 aug 2018 comparing country entity to world entity
+
+t1727 = Entity["Country", "UnitedStates"]["Polygon"];
+
+counts = Entity["Country"];
+
+t1734 = EntityList["Country"];
+
+t1734[[1]]["Polygon"]
+
+In[40]:= Length[t1734[[1]]["Polygon"] ]                                         
+
+Out[40]= 1
+
+In[41]:= Length[t1734[[1]]["Polygon"][[1]]]                                     
+
+Out[41]= 1
+
+In[42]:= Length[t1734[[1]]["Polygon"][[1,1]]]                                   
+t1734[[1]]["Polygon"][[1,1,1]]
+
+GeoArea[Polygon[GeoPosition[t1734[[2]]["Polygon"][[1,1,1]]]]]
 

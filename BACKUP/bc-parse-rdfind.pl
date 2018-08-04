@@ -302,12 +302,12 @@ sub choose_file {
   debug("FILES", @files);
 
   # a little ugly, but if one test succeeds, no others can run
-#  if (weathercanon(@files)) {return;}
+  if (weathercanon(@files)) {return;}
 
 #  if (dvd_trumps_all(@files)) {return;}
 #  if (tumblr_fix(@files)) {return;}
 #  if (mp4vstorrents(@files)) {return;}
-  if (xwdcanon(@files)) {return;}
+#  if (xwdcanon(@files)) {return;}
 
 return;
 
