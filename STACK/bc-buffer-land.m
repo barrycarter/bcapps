@@ -1,38 +1,35 @@
 https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary-around-all-land-on-earth
 
-<stuff>
+<oneoff>
 
-(* stuff defined in countrydata.mx that Mathematica can't run on init *)
+(* things I did one off and then saved to bc-buffer-load.m.bz2 *)
 
-world = CountryData["World", "FullPolygon"];
+worldpoly = Entity["Country", "World"]["Polygon"]; 
+antpoly = Entity["Country", "Antarctica"]["Polygon"];
 
-worldPolyList = world[[1,1]];
+{
+ {"worldpoly", worldpoly},
+ {"antpoly", antpoly}
+} >> bc-buffer-load.m
 
-(* the UnitConvert and [[1]] below assure this is in meters *)
-
-worldPolyListAreaSorted = Sort[Table[{i, 
- UnitConvert[GeoArea[Polygon[GeoPosition[worldPolyList[[i]]]]]][[1]]},
- {i, 1, Length[worldPolyList]}], #1[[2]] > #2[[2]] &];
-
-(* this probably the worst possible way to reverse coords *)
-
-</stuff>
-
+</oneoff>
 
 <formulas>
 
 (* this ugliness required because Mathematica apparently can't load
-data properly at run time, see <stuff> section above *)
+data properly at run time, see <oneoff> section above *)
 
-Get["/home/user/BCGIT/STACK/countrydata.mx"];
+load = <<"!bzcat /home/barrycarter/BCGIT/STACK/bc-buffer-load.m.bz2";
 
-worldPolyBiggestN[n_] := Table[worldPolyList[[i]], 
- {i, Transpose[Take[worldPolyListAreaSorted, n]][[1]]}];
+worldpoly = load[[1,2]];
+antpoly = load[[2,2]];
+
+allpoly = Join[worldpoly[[1,1]],antpoly[[1,1]],1];
 
 (* the append below attaches the last point back to the first *)
 
 poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
- Append[list, list[[1]]]]
+ Append[list, list[[1]]]];
 
 (* temporary def of show it for larger screen *)
 
@@ -41,10 +38,326 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
      Export[file, %, ImageSize -> {1200, 600}]; 
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file];];
 
+(* this probably the worst possible way to reverse coords *)
 
-rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]]
+rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]];
 
 </formulas>
+
+approach 20180804 is to rationalize coords for more accuracy
+
+allpoly2 = Rationalize[allpoly, 0];
+
+t1227 = Table[Line[poly2D23D[i]], {i, allpoly2}];
+
+t1233 = Graphics3D[t1227]
+
+above hangs forever when I do "showit"
+
+t1232 = Table[Line[poly2D23D[i]], {i, allpoly}];
+
+Export["/tmp/test.png", t1233, ImageSize -> {8000, 6000}]
+
+t1238 = RegionUnion[t1227];
+
+t1239 = RegionDistance[t1238];
+
+above takes forever... let's see what went wrong with older approaches?
+
+t1242 = Table[Line[poly2D23D[i]], {i, allpoly}]; 
+
+t1243 = RegionUnion[t1242];
+
+t1244 = RegionDistance[t1243];
+
+above takes forever, so we instead do...
+
+t1245 = Table[RegionDistance[i], {i, t1242}];
+
+t1248[lon_, lat_] := 
+ Min[Table[f[sph2xyz[lon*Degree, lat*Degree, 1]], {f, t1245}]];
+
+t1249 = RegionPlot[t1248[lon, lat] <= 0.01, {lon, -180, 180}, {lat, -90, 90}];
+
+takes forever above
+
+t1249 = RegionPlot[t1248[lon, lat] <= 0.01, {lon, -120, -90}, {lat,
+30, 60}];
+
+t2209 = ContourPlot[t1248[lon, lat], {lon, -180, 180}, {lat, -90, 90}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+t1906 = Table[rectifyCoords[i], {i, allpoly}];
+
+t2212 = Show[{t2209, Graphics[Line[t1906]]}]
+
+Export["/tmp/test.png", t2212, ImageSize -> {8192, 4096}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+let's find a small coast to break it
+
+t2209 = ContourPlot[t1248[lon, lat], {lon, -98.4375, -95.625}, 
+ {lat, 27.059, 29.535}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+t2212 = Show[{t2209, Graphics[Polygon[t1906]]}]
+
+Export["/tmp/test.png", t2212, ImageSize -> {8192, 4096}]
+
+t1305 = Table[
+ {Point[{lon, lat}], Text[ToString[{lon, lat, t1248[lon, lat]}], {lon, lat}]},
+ {lon, -98.4375, -95.625, 0.1}, {lat, 27.059, 29.535, 0.1}];
+
+t1306 = Show[{t2209, Graphics[t1305], Graphics[Line[t1906]]}]
+
+Export["/tmp/test.png", t1306, ImageSize -> {8192, 4096}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t1526 = RegionPlot[t1248[lat, lon] <= 0.01/8, {lon, -98.4375, -95.625}, 
+ {lat, 27.059, 29.535}];
+
+t1527 = Show[{t1526, Graphics[t1305], Graphics[Line[t1906]]}]
+
+Export["/tmp/test.png", t1527, ImageSize -> {8192, 4096}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+approach 20180803 starts here
+
+t1842 = Table[Line[poly2D23D[i]], {i, allpoly}];
+
+t1843 = RegionUnion[t1842];
+
+t1844 = RegionDistance[t1843];
+
+t1845 = Table[RegionDistance[i], {i, t1842}];
+
+(* rectify coords *)
+
+t1906 = Table[rectifyCoords[i], {i, allpoly}];
+
+Table[f[{0,0,0}], {f, t1845}]
+
+(* below runs fast *)
+
+In[48]:= Table[t1845[[1]][sph2xyz[lon*Degree, lat*Degree, 1]], {lon, -180, 180, 
+10}, {lat, -90, 90, 10}]                                                        
+In[48]:= Timing[Table[t1845[[1]][sph2xyz[lon*Degree, lat*Degree, 1]], {lon, -180
+, 180, 1}, {lat, -90, 90, 1}]];                                                 
+above runs in 3 seconds
+
+In[51]:= Timing[Table[t1845[[1]][sph2xyz[lon*Degree, lat*Degree, 1]],
+{lon, -180 , 180, 0.5}, {lat, -90, 90, 0.5}]];
+
+above is 5.73 secs
+
+In[54]:= Timing[Table[sph2xyz[lon*Degree, lat*Degree, 1], {lon, -180 ,
+180, 0.5} , {lat, -90, 90, 0.5}]];
+
+In[55]:= %[[1]]
+
+Out[55]= 1.08844
+
+t2200 = Table[sph2xyz[lon*Degree, lat*Degree, 1], {lon, -180 , 180,
+0.5} , {lat, -90, 90, 0.5}];
+
+t2201 = Flatten[t2200,1];
+
+Timing[Map[t1845[[1]], t2201]];
+
+4.33322 seconds above
+
+In[69]:= Timing[Map[t1845[[3]], t2201]];                                        
+
+In[70]:= %[[1]]                                                                 
+
+Out[70]= 3.63952
+
+what if we do it one poly at a time instead of the min (will that help?) prob not, same numbers
+
+t1848[lon_, lat_] := 
+ Min[Table[f[sph2xyz[lon*Degree, lat*Degree, 1]], {f, t1845}]];
+
+t2209 = ContourPlot[t1848[lon, lat], {lon, -180, 180}, {lat, -90, 90}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8000, 4000}]
+
+Export["/tmp/test.png", t2209, ImageSize -> {8000, 6000}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t2212 = Show[{t2209, Graphics[Polygon[t1906]]}]
+
+Export["/tmp/test.png", t2212, ImageSize -> {8000, 6000}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t2218 = RegionPlot[t1848[lon, lat] <= 0.01, {lon, -180, 180}, {lat, -90, 90}];
+
+t2219 = Show[{t2218, Graphics[Polygon[t1906]]}]
+
+Export["/tmp/test.png", t2219, ImageSize -> {8000, 6000}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t2316=RegionPlot[t1848[lon, lat] <= 0.01/8, {lon, -180, 180}, {lat, -90, 90}];
+
+t2317 = Show[{t2316, Graphics[Polygon[t1906]]}]
+
+Export["/tmp/test.png", t2317, ImageSize -> {8000, 6000}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+
+
+
+ContourPlot[t1848[lon, lat], {lon, -150, -60}, {lat, 20, 50}]
+
+t1852 = ContourPlot[t1848[lon, lat], {lon, -150, -60}, {lat, 20, 50}, 
+ ColorFunction -> Hue, Contours -> 64]
+
+Export["/tmp/test.png", t1852, ImageSize -> {8000, 6000}]
+
+t1856 = ContourPlot[t1848[lon, lat], {lon, -150, -60}, {lat, 20, 50}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8000, 4000}]
+
+t1856 = ContourPlot[t1848[lon, lat], {lon, -150, -60}, {lat, 20, 50}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, PlotPoints -> 100, ImageSize -> {8000, 4000}]
+
+t1857 = Show[{t1856, Graphics[Line[t1906]]}]
+
+t1858 = Show[{t1856, Graphics[Polygon[t1906]]}]
+
+Export["/tmp/test.png", t1858, ImageSize -> {8000, 4000}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t1916 = RegionPlot[t1848[lon, lat] <= 0.01, {lon, -150, -60}, {lat, 20, 50}];
+
+t1917 = Show[{t1916, Graphics[Polygon[t1906]]}]
+
+Export["/tmp/test.png", t1917, ImageSize -> {8000, 4000}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+accuracy is an issue here... line by line?
+
+Table[Length[i], {i, allpoly}]
+
+325783 lines total (approx)
+
+t2054 = allpoly[[1,1]]
+t2055 = allpoly[[1,2]]
+
+poly2D23D[Take[allpoly[[1]], 2]]
+
+third pt is now redundant
+
+t2057 = Line[Take[poly2D23D[Take[allpoly[[1]], 2]],2]]
+
+t2100 = RegionDistance[t2057]
+
+t2101 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, -180, 180}, {lat, -90, 90}]
+
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, -180, 180}, {lat, -90, 90}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+Export["/tmp/test.png", t2102, ImageSize -> {8000, 4000}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 0, 90}, {lat, 0, 90}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 45, 90}, {lat, 0, 45}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 60, 90}, {lat, 0, 30}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 55, 65}, {lat, 25, 35}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+above works at regular size
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01/4,
+ {lon, 55, 65}, {lat, 25, 35}, AspectRatio -> 1/2, 
+ ImageSize -> {8192, 4096}]
+
+above works at regular size... but is 7 sided polygon 
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01/8,
+ {lon, 55, 65}, {lat, 25, 35}, AspectRatio -> 1/2, 
+ ImageSize -> {8192, 4096}]
+
+above fails even in bigger size
+
+Export["/tmp/test.png", t2102, ImageSize -> {8192, 4096}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01/10,
+ {lon, 55, 65}, {lat, 25, 35}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01/10,
+ {lon, 55, 65}, {lat, 25, 35}, AspectRatio -> 1/2, 
+ ImageSize -> {65536, 32768}]
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 60, 61}, {lat, 29, 30}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+above works even when 0.01 -> 0.01/10
+
+Show[{t2102, Graphics[Line[rectifyCoords[{t2054, t2055}]]]}]
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 45, 75}, {lat, 15, 45}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 0, 45}, {lat, 45, 90}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+
+t2102 = RegionPlot[t2100[sph2xyz[lon*Degree, lat*Degree, 1]] <= 0.01,
+ {lon, 29.8, 29.9}, {lat, 60.8, 60.9}, AspectRatio -> 1/2, 
+ ImageSize -> {8000, 4000}]
+
+t2108= ContourPlot[t1848[lon, lat], {lon, 60, 61}, {lat, 29, 30}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8000, 4000}]
+
+
+
+
+region[n_, d_] := Module[{rdf},
+ rdf = RegionDistance[Line[poly2D23D[allpolys[[n]]]]];
+ Return[ImplicitRegion[rdf[sph2xyz[lon*Degree, lat*Degree, 1]] <= d,
+  {{lon, -180, 180}, {lat, -90, 90}}]]
+]
+
+
+
+
 
 approach 20180728 starts here
 
@@ -1188,4 +1501,150 @@ In[42]:= Length[t1734[[1]]["Polygon"][[1,1]]]
 t1734[[1]]["Polygon"][[1,1,1]]
 
 GeoArea[Polygon[GeoPosition[t1734[[2]]["Polygon"][[1,1,1]]]]]
+
+TODO: country data might be better
+
+using vector angles to find min dist to geodesic
+
+
+f[t_] = {x1, y1, z1} + t*{x2-x1, y2-y1, z2-z1}
+
+dot product div by norm, p3 is on sphere
+
+dp = f[t].{x3,y3,z3}/Norm[f[t]]
+
+dp2[t_] = (f[t].{x3,y3,z3}/Norm[f[t]])^2
+
+D[dp2[t], t]
+
+Solve[D[dp2[t], t] == 0, t]
+
+sol = (x1*x3 + y1*y3 + z1*z3)/(x1*x3 - x2*x3 + y1*y3 - y2*y3 + z1*z3 - z2*z3)
+
+dp2[sol]
+
+g[t_] = t*{1,0,0}
+
+dp2[t_] = (g[t].{x3,y3,z3}/Norm[g[t]])^2
+
+lets use some real pts to figure this out
+
+pt1 = {0.848898, 0.108727, 0.517253};
+
+pt2 = {0.589858, 0.0921671, 0.80223};
+
+t1417[t_] = pt1 + t*(pt2-pt1);
+
+pt3 = {0.600849, 0.0211775, 0.799082};
+
+conds = {Element[t, Reals]}
+
+Plot[t1417[t].pt3, {t,0,1}]
+
+Plot[t1417[t].pt3/Norm[t1417[t]], {t,0,1}]
+
+dp2[t_] = Simplify[(t1417[t].pt3/Norm[t1417[t]])^2, Element[t, Reals]]
+
+Plot[dp2[t], {t,0,1}]
+
+Plot[dp2[t], {t,0,2}]
+
+t1421[t_] = D[dp2[t], t]
+
+Plot[t1421[t], {t,0,2}]
+
+Solve[t1421[t] == 0, t]
+
+same thing w/ vars now
+
+pt1 = {x1, y1, z1}
+
+pt2 = {x2, y2, z2}
+
+t1417[t_] = pt1 + t*(pt2-pt1);
+
+pt3 = {x3, y3, z3};
+
+conds = {Element[{t, x1, y1, z1, x2, y2, z2, x3, y3, z3}, Reals]}
+
+dp2[t_] = Simplify[(t1417[t].pt3/Norm[t1417[t]])^2, conds]
+
+t1421[t_] = D[dp2[t], t]
+
+t1430 = Solve[t1421[t] == 0, t];
+
+t1431 = t1430[[2,1,2]]
+
+t1431 /. {x1 -> Cos[ph1] Cos[th1], y1 -> Cos[ph1] Sin[th1], z1 -> Sin[ph1],
+          x2 -> Cos[ph2] Cos[th2], y2 -> Cos[ph2] Sin[th2], z2 -> Sin[ph2],
+          x3 -> Cos[ph3] Cos[th3], y3 -> Cos[ph3] Sin[th3], z3 -> Sin[ph3]
+}
+
+
+
+t1431 /. z1^2 -> 1-x1^2-y1^2
+
+t1431 /. {z1^2 -> 1-x1^2-y1^2, z2^2 -> 1-x2^2-y2^2, z3^2 -> 1-x3^2-y3^2}
+
+now lets find all points w/ a given distance
+
+Solve[dp2[t] < v, t]
+
+dp2[t1431]
+
+Solve[dp2[x] <= v, {x3, y3, z3}]
+
+this time using sins/etc
+
+pt1 = sph2xyz[{th1, ph1, 1}]
+
+pt2 = sph2xyz[{th2, ph2, 1}]
+
+t1417[t_] = pt1 + t*(pt2-pt1);
+
+pt3 = sph2xyz[{th3, ph3, 1}];
+
+conds = {Element[{t, th1, ph1, th2, ph2, th3, ph3}, Reals]}
+
+dp2[t_] = Simplify[(t1417[t].pt3/Norm[t1417[t]])^2, conds]
+
+t1421[t_] = Simplify[D[dp2[t], t], conds]
+
+t1430 = Solve[t1421[t] == 0, t, Reals];
+
+t1431 = t1430[[2,1,2]]
+
+t1431 /. z1^2 -> 1-x1^2-y1^2
+
+t1431 /. {z1^2 -> 1-x1^2-y1^2, z2^2 -> 1-x2^2-y2^2, z3^2 -> 1-x3^2-y3^2}
+
+distance from a point less than equal to something p3 is on sphere
+
+conds = Element[{x1, y1, z1, x3, y3, z3}, Reals];
+
+dp2 = (({x1, y1, z1}.{x3, y3, z3})/Norm[{x1,y1,z1}])^2
+
+Solve[dp2 == x, {x3, y3, z3}]
+
+t1500=Simplify[Solve[{dp2 == x, x3^2 + y3^2 + z3^2 == 1}, {x3, y3, z3}],conds]
+
+if we assume x1, y1, z1 also on sphere
+
+dp2 = {x1, y1, z1}.{x3, y3, z3}
+
+Solve[dp2 == x, {x3, y3, z3}]
+
+
+t1507=Simplify[Solve[{dp2 == x, x3^2 + y3^2 + z3^2 ==1}, {x3, y3, z3}],conds]
+
+
+
+
+
+
+
+
+
+
+
 
