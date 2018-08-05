@@ -44,6 +44,35 @@ rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]];
 
 </formulas>
 
+approach 20180804.16 is to see if using points makes it easier
+
+t1625 = Flatten[allpoly, 1];
+
+t1628 = Map[sph2xyz[#[[1]], #[[2]], 1]&, t1625];
+
+t1629 = Point[t1628];
+
+Graphics3D[{PointSize[0.01], t1629}];
+
+Graphics3D[{PointSize[0.0001], t1629}];
+
+the above is still a big ugly
+
+Graphics3D[{PointSize[0.000001], t1629}];
+
+ugly, but not relevant, so....
+
+t1630 = RegionDistance[t1629];
+
+t1633 = Table[GeoDistance[t1628[[i-1]], t1628[[i]]],
+ {i, 2, Length[t1628]}];
+
+
+
+
+
+
+
 approach 20180804 is to rationalize coords for more accuracy
 
 allpoly2 = Rationalize[allpoly, 0];
@@ -120,11 +149,28 @@ Run["display -geometry 800x600 /tmp/test.png &"]
 t1526 = RegionPlot[t1248[lat, lon] <= 0.01/8, {lon, -98.4375, -95.625}, 
  {lat, 27.059, 29.535}];
 
-t1527 = Show[{t1526, Graphics[t1305], Graphics[Line[t1906]]}]
+t1527 = Show[{t1526, Graphics[t1305], Graphics[Polygon[t1906]]}]
 
 Export["/tmp/test.png", t1527, ImageSize -> {8192, 4096}]
 
 Run["display -geometry 800x600 /tmp/test.png &"]
+
+t1526 = RegionPlot[t1248[lat, lon] <= 0.01/8, {lon, -97, -96}, 
+ {lat, 27, 28}, ImageSize -> {8192, 4096}];
+
+t1527 = Show[{t1526, Graphics[t1305], Graphics[Polygon[t1906]]}]
+
+Export["/tmp/test.png", t1527, ImageSize -> {8192, 4096}]
+
+Run["display -geometry 800x600 /tmp/test.png &"]
+
+t1553 = ImplicitRegion[t1248[lat, lon] <= 0.01/8, {{lon, -180, 180},
+{lat, -90, 90}}]
+
+t1554 = RegionPlot[RegionMember[t1553, {lon, lat}], {lon, -98.4375, -95.625}, 
+ {lat, 27.059, 29.535}];
+
+t1601 = Show[{t1554, Graphics[Polygon[t1906]]}]
 
 approach 20180803 starts here
 
@@ -172,12 +218,20 @@ Timing[Map[t1845[[1]], t2201]];
 4.33322 seconds above
 
 In[69]:= Timing[Map[t1845[[3]], t2201]];                                        
-
 In[70]:= %[[1]]                                                                 
-
 Out[70]= 3.63952
 
-what if we do it one poly at a time instead of the min (will that help?) prob not, same numbers
+t1619 = Table[sph2xyz[lon*Degree, lat*Degree, 1], {lon, -180 , 180,
+0.1} , {lat, -90, 90, 0.1}];
+
+t1620 = Flatten[t1619, 1];
+
+t1621 = Timing[Map[t1845[[1]], t1620]];
+
+104.77 seconds
+
+what if we do it one poly at a time instead of the min (will that
+help?) prob not, same numbers
 
 t1848[lon_, lat_] := 
  Min[Table[f[sph2xyz[lon*Degree, lat*Degree, 1]], {f, t1845}]];
@@ -1637,14 +1691,61 @@ Solve[dp2 == x, {x3, y3, z3}]
 
 t1507=Simplify[Solve[{dp2 == x, x3^2 + y3^2 + z3^2 ==1}, {x3, y3, z3}],conds]
 
+<question>
+
+Subject: Buffering world polygons and using RegionPlot/ContourPlot works poorly
+
+I wanted to show how clever I was by solving https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary-around-all-land-on-earth using Mathematica, but it turns out I'm not that clever after all and thus asking for help.
+
+**Goal**: Find the area of water that is less than n km from land
+
+I think my approach is correct, but that I need to tweak some default values, possibly those relating to precision and accuracy.
+
+<pre><code>
+
+(* load the polygons that make up the World, ignoring Antarctica for now *)
+
+worldpoly0 = Entity["Country", "World"]["Polygon"]; 
+
+(* worldpoly0 has head "Polygon" and worldpoly[[1]] has head
+"GeoPosition"; to get to the actual lists of points, we need
+worldpoly[[1,1]] *)
+
+worldpoly = worldpoly0[[1,1]];
+
+(* the list of points for each polygon is in {latitude, longitude}
+format; poly2D23D converts such a list to 3 dimensions and joins the
+last point to the first point to close the now 3-dimensional list of points
+*)
+
+poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
+ Append[list, list[[1]]]];
+
+(* this applies poly2D23D to every point in worldpoly, and then turns
+each collection of points into a line; we could use Polygon here
+instead, but I'm going to use Region functions shortly and Polygons
+make them much slower *)
+
+worldlines3d = Line[Table[poly2D23D[i], {i, worldpoly}]];
+
+(* to make sure everything looks OK, lets plot the results in 3D *)
+
+worldlines3dg = Graphics3D[worldlines3d];
+
+</code></pre>
+
+[[image41.gif]]
+
+It looks a little ugly because it's transparent, but otherwise accurate.
+
+<pre><code>
 
 
 
 
 
+</code></pre>
 
 
-
-
-
+keyword: gis
 
