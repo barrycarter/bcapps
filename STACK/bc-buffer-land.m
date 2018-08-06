@@ -26,10 +26,32 @@ antpoly = load[[2,2]];
 
 allpoly = Join[worldpoly[[1,1]],antpoly[[1,1]],1];
 
+(* for spherical Earth, this is about as good as it gets *)
+
+earthRadius = 6371.0326914755643871;
+
 (* the append below attaches the last point back to the first *)
 
 poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
  Append[list, list[[1]]]];
+
+(* given the straight line distance between two points on Earth in
+Earth radii, convert to distance in km assuming spherical Earth *)
+
+lineDist2geoDist[x_] = 2*ArcSin[x/2]*earthRadius;
+
+geoDist2LineDist[x_] = 2*Sin[x/earthRadius/2];
+
+(* the delta of longitudes at lat2 which are with distance d (given in
+Earth radii) of lat, lon where lon is any longitude *)
+
+lonRange[lat_, lat2_, d_] = ArcCos[Cos[d]*Sec[lat]*Sec[lat2] - 
+     Tan[lat]*Tan[lat2]]
+
+(* friendlier version using km and degrees *)
+
+lonRange2[lat_, lat2_, d_] = lonRange[lat*Degree, lat2*Degree,
+d/earthRadius]/Degree;
 
 (* temporary def of show it for larger screen *)
 
@@ -42,7 +64,58 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
 
 rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]];
 
+showit2 := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %, ImageSize -> {8192, 4096}]; 
+     Run[StringJoin["display -geometry 800x600 -update 1 ", file, "&"]]; 
+    Return[file];];
+
 </formulas>
+
+approach 20180805.12 is to use polygon after all (I gave up on it earlier)
+
+t1211 = Polygon[Table[poly2D23D[i], {i, allpoly}]];
+
+Graphics3D[t1211];
+
+t1213 = RegionDistance[t1211];
+
+t1214 = ContourPlot[
+ t1213[sph2xyz[lon*Degree, lat*Degree, 1]], {lon, -180, 180}, {lat, -90, 90}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+t1215 = Table[rectifyCoords[i], {i, allpoly}];
+
+t1216 = Show[{t1214, Graphics[Polygon[t1215]]}];
+
+t1226[lon_, lat_] := t1213[sph2xyz[{lon*Degree, lat*Degree, 1}]];
+
+t1227 = RegionPlot[t1226[lon, lat] <= 0.01/8, {lon, -180, 180},
+{lat, -90, 90}, AspectRatio -> 1/2];
+
+t1227 = RegionPlot[t1226[lon, lat] <= 0.01, {lon, -180, 180},
+{lat, -90, 90}, AspectRatio -> 1/2];
+
+t1230 = Show[{t1227, Graphics[Polygon[t1215]]}];
+
+t1240 = RegionPlot[t1226[lon, lat] <= 0.01/8, {lon,  -98.4375, -95.625},
+{lat, 27.059, 29.535}, AspectRatio -> 1/2];
+
+t1240 = RegionPlot[t1226[lon, lat] <= 0.01/8, {lon,  -98.4375, -95.625},
+{lat, 27.059, 29.535}, AspectRatio -> 1/2, Mesh -> 20];
+
+t1240 = RegionPlot[t1226[lon, lat] <= 0.01/8, {lon,  -99, -95},
+{lat, 27, 31}, AspectRatio -> 1/2, Mesh -> 40];
+
+t1243 = Show[{t1240, Graphics[Line[t1215]]}];
+
+
+
+
+
+
+
 
 approach 20180804.16 is to see if using points makes it easier
 
@@ -66,11 +139,6 @@ t1630 = RegionDistance[t1629];
 
 t1633 = Table[GeoDistance[t1628[[i-1]], t1628[[i]]],
  {i, 2, Length[t1628]}];
-
-
-
-
-
 
 
 approach 20180804 is to rationalize coords for more accuracy
@@ -1721,8 +1789,28 @@ last point to the first point to close the now 3-dimensional list of points
 poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
  Append[list, list[[1]]]];
 
-(* this applies poly2D23D to every point in worldpoly, and then turns
-each collection of points into a line; we could use Polygon here
+(* 
+
+This applies poly2D23D to every point in worldpoly, and then turns the
+whole thing into a list of multilines.
+
+There are at least two other ways to do this:
+
+worldlines3d = Line[Table[poly2D23D[i], {i, worldpoly}]];
+
+This makes worldlines3d a *single* Line object (that contains several
+multilines). However, when I use RegionDistance[] with the above, it
+takes forever to create the function and again forever to evaluate it
+at any point.
+
+Another approach:
+
+worldlines3d = Polygon[Table[poly2D23D[i], {i, worldpoly}]];
+
+[TODO: finish this, the approach above might work despite the sinking polygon issue]
+
+
+I could use Polygon here
 instead, but I'm going to use Region functions shortly and Polygons
 make them much slower *)
 
@@ -1740,6 +1828,11 @@ It looks a little ugly because it's transparent, but otherwise accurate.
 
 <pre><code>
 
+(* RegionQ confirms worldlines3d is a region, so we can apply
+RegionDistance to it *)
+
+coastDistance = RegionDistance[worldlines3d];
+
 
 
 
@@ -1748,4 +1841,133 @@ It looks a little ugly because it's transparent, but otherwise accurate.
 
 
 keyword: gis
+
+
+tried many, polys instead of lines, one mujltiline at time even one line at a time, mention this file
+
+TODO: Sticky poly problem
+
+approach w/ for a given lat...
+
+conds = Element[{lon1, lat1, lon2, lat2, d}, Reals];
+
+t1612 = Simplify[
+ Solve[sph2xyz[{lon1, lat1, 1}].sph2xyz[{lon2, lat2, 1}] == d, lon2], 
+ conds];
+
+t1612[[1,1,2]] /. C[1] -> 0
+t1612[[2,1,2]] /. C[1] -> 0
+
+
+t1612[[1]] /. C[1] -> 0
+
+t1612[[1,1,2]] /. C[1] -> 0
+
+t1621[lon1_, lat1_, lat2_, d_] = Simplify[t1612[[1,1,2]] /. C[1] -> 0, conds]
+
+t1621[-106.5*Degree, 35*Degree, 40*Degree, 0.1]
+
+
+
+t1614 = Solve[sph2xyz[{-106, 35, 1}].sph2xyz[{lon2, lat2, 1}] == 0.1, lon2]
+
+(* the list of longitudes at a given latitude whose geodesic distance from lat, lon is d in km *)
+
+(* TODO: Earth circum not exacly 40K km *)
+
+lonRange1[lat_, lon_, lat2_, d_] = 
+       Simplify[Solve[sph2xyz[{lon*Degree, lat*Degree, 1}].
+                      sph2xyz[{lon2*Degree, lat2*Degree, 1}] == 
+             Cos[d*2*Pi/40000], lon2][[1,1,2]] /. C[1] -> 0, conds];
+
+
+lonRange2[lat_, lon_, lat2_, d_] = 
+       Simplify[Solve[sph2xyz[{lon*Degree, lat*Degree, 1}].
+                      sph2xyz[{lon2*Degree, lat2*Degree, 1}] == 
+             Cos[d*2*Pi/40000], lon2][[2,1,2]] /. C[1] -> 0, conds];
+
+(* distance central longitude, which is indep on central lon *)
+
+lonRange[lat_, lat2_, d_] = 
+       Simplify[Solve[sph2xyz[{0*Degree, lat*Degree, 1}].
+                      sph2xyz[{lon2*Degree, lat2*Degree, 1}] == 
+             Cos[d*2*Pi/40000], lon2][[2,1,2]] /. C[1] -> 0, conds];
+
+lonRange[lat_, lat2_, d_] = 
+       Simplify[Solve[sph2xyz[{0, lat, 1}].
+                      sph2xyz[{lon2, lat2, 1}] == 
+             Cos[d*2*Pi/40000], lon2][[2,1,2]] /. C[1] -> 0, conds];
+
+
+lonRange[lat_, lat2_, d_] = 
+       Simplify[Solve[sph2xyz[{0, lat, 1}].
+                      sph2xyz[{lon2, lat2, 1}] == 
+             Cos[d], lon2][[2,1,2]] /. C[1] -> 0, conds];
+
+
+
+lonRange[35, -106.5, 37, 500]
+
+
+lonRange[35, -106.5, 39.5, 500]
+
+
+t1646[t_] = 
+ sph2xyz[lon1, lat1, 1] + t*(sph2xyz[lon2, lat2, 1]-sph2xyz[lon1, lat1, 1]);
+
+Solve[VectorAngle[t1646[t], sph2xyz[lon3, lat3, 1]] == d]
+
+
+
+Plot[lonRange[35, -106.5, lat, 500], {lat, 30, 40}]
+
+
+Plot[lonRange2[35, lat, 500], {lat, 30.5, 39.5}]
+
+geoDesic[lon1_, lat1_, lon2_, lat2_, t_] = 
+ Take[xyz2sph[
+ sph2xyz[lon1, lat1, 1] + t*(sph2xyz[lon2, lat2, 1]-sph2xyz[lon1, lat1, 1])],
+ 2];
+
+ParametricPlot[geoDesic[-106.5*Degree, 35*Degree, -90*Degree,
+40*Degree , t]/Degree, {t,0,1}]
+
+t1738[t_, lat_] := Module[{pos, range}, 
+ pos = geoDesic[-106.5*Degree, 35*Degree, -90*Degree, 40*Degree , t]/Degree;
+ range = lonRange2[pos[[2]], lat, 500];
+ If[Abs[Im[range]] > 0, Return[]];
+ Return[{pos[[1]] + lonRange2[pos[[2]], lat, 500], pos[[2]]}];
+];
+
+ParametricPlot[t1738[t,lat], {t,0,1}, {lat,20,60}]
+
+t1754 = Table[t1738[t, lat], {t, 0, 1, 0.1}, {lat, 20, 60, 1}];
+
+
+t1755[lon_, lat_, lat2_] = Line[{
+ {lon - lonRange2[lat, lat2, 500], lat2},
+ {lon + lonRange2[lat, lat2, 500], lat2}
+}];
+
+Table[t1755[-106.5, 35, x], {x,30.5,39.5, 0.1}]
+
+plot[lon_, lat_, d_] :=
+ ParametricPlot[{x,y}, {x, lon-lonRange2[y, t, d], lon+lonRange2[y, t]},
+ {t, -90, 90}];
+
+plot[lon_, lat_, d_] :=
+ ParametricPlot[{x,y}, {y, lat-0.056505753059732318391*d, 
+  lat+0.056505753059732318391*d}, 
+ {x, lon-lonRange2[lat, y, d], lon+lonRange2[lat, y, d]}];
+
+plot[lon_, lat_, d_] :=
+ ParametricPlot[{x,y}, 
+ {x, lon-lonRange2[lat, y, d], lon+lonRange2[lat, y, d]},
+{y, lat-0.056505753059732318391*d, lat+0.056505753059732318391*d}
+];
+
+
+
+
+
 
