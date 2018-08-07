@@ -72,6 +72,105 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
 
 </formulas>
 
+TODO: add the antarctica -90 poly
+
+approach 20180806.21 is to use contour plot on 10x10 deg rectangles,
+may actually work
+
+t1242 = Table[Line[poly2D23D[i]], {i, allpoly}]; 
+
+t1245 = Table[RegionDistance[i], {i, t1242}];
+
+t1248[lon_, lat_] := 
+ Min[Table[f[sph2xyz[lon*Degree, lat*Degree, 1]], {f, t1245}]];
+
+t1215 = Table[rectifyCoords[i], {i, allpoly}];
+
+t2126 = Graphics[Polygon[t1215]];
+
+huey[h_] = Hue[h*7/8];
+
+contours = Table[geoDist2LineDist[i], {i, 25, 25*64, 25}];
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 10}, {lat, 0, 10}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 10}, {lat, 0, 10}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> contours, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 10}, {lat, 0, 10}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> contours, 
+ ImageSize -> {8192, 4096}]
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 10}, {lat, 0, 10}, 
+ AspectRatio -> 1/2, ColorFunction -> huey, Contours -> contours, 
+ ImageSize -> {8192, 4096}, Frame -> False, PlotRangePadding -> 0]
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 10}, {lat, 0, 10}, 
+ AspectRatio -> 1/2, ColorFunction -> huey, Contours -> contours, 
+ ImageSize -> {8192, 4096}, Frame -> False, PlotRangePadding -> 0,
+ ContourLines -> False]
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 10}, {lat, 0, 10}, 
+ AspectRatio -> 1/2, ColorFunction -> huey, Contours -> contours, 
+ ImageSize -> {8192, 4096}, Frame -> False, PlotRangePadding -> 0,
+ ContourLines -> False, ContourLabels -> True]
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 20}, {lat, 0, 20}, 
+ AspectRatio -> 1/2, ColorFunction -> huey, Contours -> contours, 
+ ImageSize -> {8192*2, 4096*2}, Frame -> False, PlotRangePadding -> 0,
+ ContourLines -> False, ContourLabels -> True]
+
+Export["/tmp/test.png", t2127, ImageSize -> {8192*2, 4096*2}]
+
+Rasterize::bigraster: Not enough memory available to rasterize Cell expression.
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 11.25}, {lat, 0, 11.25}, 
+ AspectRatio -> 1/2, ColorFunction -> huey, Contours -> contours, 
+ ImageSize -> {8192*2, 4096*2}, Frame -> False, PlotRangePadding -> 0,
+ ContourLines -> False, ContourLabels -> True]
+
+
+t2127 = ContourPlot[
+ t1248[lon, lat], {lon, 0, 11.25}, {lat, 0, 11.25}, 
+ AspectRatio -> 1/2, ColorFunction -> huey, Contours -> contours, 
+ ImageSize -> {8192, 4096}, Frame -> False, PlotRangePadding -> 0,
+ ContourLines -> False]
+
+latlon= Flatten[Table[
+ {lon, lat}, {lon, -180, 179.99, 11.25}, {lat, -90, 89.99, 11.25}
+], 1]
+
+
+lons = Drop[Table[i, {i, -180, 180, 11.25}], -1]
+lats = Drop[Table[i, {i, -90, 90, 11.25}], -1]
+
+
+Show[{t2127, t2126}]
+Timing[Export["/tmp/test.png", %, ImageSize -> {8192, 4096}]]
+
+showit
+
+drawMap[lon_, lat_, delta_] := drawMap[lon, lat, delta] = 
+ ContourPlot[
+ t1248[lng, lati], {lng, lon, lon+delta}, {lati, lat, lat+delta}, 
+ AspectRatio -> 1/2, ColorFunction -> huey, Contours -> contours, 
+ ImageSize -> {8192, 4096}, Frame -> False, PlotRangePadding -> 0,
+ ContourLines -> False];
+
+
+
+
 approach 20180805.12 is to use polygon after all (I gave up on it earlier)
 
 t1211 = Polygon[Table[poly2D23D[i], {i, allpoly}]];
