@@ -457,6 +457,8 @@ libzip
 libzip-devel
 
 # math/science tools
+proj-devel
+gdal-devel
 gdal-python
 xplanet
 units
@@ -464,6 +466,10 @@ mathics
 yacas
 octave
 qgis
+qgis-devel
+qgis-grass
+qgis-python
+qgis-server
 qhull
 sagemath
 pyephem

@@ -1781,18 +1781,33 @@ worldpoly[[1,1]] *)
 
 worldpoly = worldpoly0[[1,1]];
 
+(* the Earth's average radius in km, since we'll need it later *)
+
+earthRadius = 6371;
+
 (* the list of points for each polygon is in {latitude, longitude}
 format; poly2D23D converts such a list to 3 dimensions and joins the
 last point to the first point to close the now 3-dimensional list of points
 *)
 
+sph2xyz[th_, ph_, r_] = {r*Cos[ph]*Cos[th], r*Cos[ph]*Sin[th], r*Sin[ph]}
+ 
+sph2xyz[l_] := sph2xyz @@ l
+
 poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
  Append[list, list[[1]]]];
 
+worldlines3d = Table[Line[poly2D23D[i]], {i, worldpoly}];
+
 (* 
 
-This applies poly2D23D to every point in worldpoly, and then turns the
-whole thing into a list of multilines.
+The line above applies poly2D23D to every point in worldpoly, one
+polygon at a time, creating a list of multilines.
+
+Note: even though the endpoints of the multilines are on the sphere,
+the lines connecting these points are not. These are standard
+Euclidean lines (not geodesics) and are below the Earth's surface. I
+will show later below that the error introduced here is small.
 
 There are at least two other ways to do this:
 
@@ -1807,14 +1822,12 @@ Another approach:
 
 worldlines3d = Polygon[Table[poly2D23D[i], {i, worldpoly}]];
 
-[TODO: finish this, the approach above might work despite the sinking polygon issue]
+This creates polygons instead of multilines, but the "below the
+Earth's surface" problem becomes much more serious. Since only the
+polygon's vertices are on the sphere, the polygon's themselves can get
+quite a bit below the Earth's surface.
 
-
-I could use Polygon here
-instead, but I'm going to use Region functions shortly and Polygons
-make them much slower *)
-
-worldlines3d = Line[Table[poly2D23D[i], {i, worldpoly}]];
+*)
 
 (* to make sure everything looks OK, lets plot the results in 3D *)
 
@@ -1828,13 +1841,83 @@ It looks a little ugly because it's transparent, but otherwise accurate.
 
 <pre><code>
 
-(* RegionQ confirms worldlines3d is a region, so we can apply
-RegionDistance to it *)
+(* worldlines3d is itself not a region, but each of its individual
+elements are; we now create RegionDistance functions for each element
+*)
 
-coastDistance = RegionDistance[worldlines3d];
+distFunctions = Table[RegionDistance[i], {i, worldlines3d}];
 
+(* the distance from a point to the coast is the minimum of the
+distFunctions above; this seems like a very inefficient way to compute
+coastal distance, but every other method I tried is even slower *)
 
+coastDistance[p_] := Min[Table[f[p], {f, distFunctions}]];
 
+(* how far below the surface are these lines? let's find how close the
+region is to the origin; since we are treating the Earth as a unit
+sphere, we multiply by the Earth's average radius *)
+
+coastDistance[{0,0,0}]*earthRadius
+
+(* 
+
+The answer is 6370.76, showing that the lines remain within 0.24km or
+240 meters of the Earth's surface, so the resulting error should be
+negligible.
+
+Note the distances we measure here are straight line Euclidean
+distances, since RegionDistance[] doesn't compute
+geodesics. Fortunately, there's a formula to convert between straight
+line and geodesic distances by computing the angle formed by the
+straight line. The reverse formula is also useful:
+
+*)
+
+lineDist2geoDist[x_] = 2*ArcSin[x/2]*earthRadius;
+
+geoDist2LineDist[x_] = 2*Sin[x/earthRadius/2];
+
+(* the coordinates Mathematica gives for world polygons are in {lat,
+lon} format; this converts them to {lon, lat}, which I will be using
+for plotting *)
+
+(* this probably the worst possible way to reverse coords *)
+
+rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]];
+
+worldpolyRectified = Table[rectifyCoords[i], {i, worldpoly}];
+
+(* now, let's plot coastDistance on a world map with polygons to see
+if it's reasonable; the large image size renders faster, but I shrunk
+it down using ImageMagick to upload here *)
+
+plot2 = ContourPlot[
+ lineDist2geoDist[coastDistance[sph2xyz[lon*Degree, lat*Degree, 1]]],
+ {lon, -180, 180}, {lat, -90, 90}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+Show[{plot2, Graphics[Polygon[worldpolyRectified]]}]
+
+lineDist2geoDist[coastDistance[sph2xyz[0, 0, 1]]]
+
+TODO: note inside the polygons too
+
+plot3 = ContourPlot[
+ lineDist2geoDist[coastDistance[sph2xyz[lon*Degree, lat*Degree, 1]]],
+ {lon, -81, -80}, {lat, 25, 26}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+Show[{plot3, Graphics[Polygon[worldpolyRectified]]}]
+
+plot3 = ContourPlot[
+ lineDist2geoDist[coastDistance[sph2xyz[lon*Degree, lat*Degree, 1]]],
+ {lon, -98.4375, -95.625}, {lat, 27.059, 29.535}, 
+ AspectRatio -> 1/2, ColorFunction -> Hue, Contours -> 64, 
+ PlotLegends -> True, ImageSize -> {8192, 4096}]
+
+Show[{plot3, Graphics[Polygon[worldpolyRectified]]}]
 
 
 </code></pre>
@@ -1929,6 +2012,9 @@ geoDesic[lon1_, lat1_, lon2_, lat2_, t_] =
  sph2xyz[lon1, lat1, 1] + t*(sph2xyz[lon2, lat2, 1]-sph2xyz[lon1, lat1, 1])],
  2];
 
+geoDesic2[lon1_, lat1_, lon2_, lat2_, t_] = 
+ geoDesic[lon1*Degree, lat1*Degree, lon2*Degree, lat2*Degree, t]/Degree;
+
 ParametricPlot[geoDesic[-106.5*Degree, 35*Degree, -90*Degree,
 40*Degree , t]/Degree, {t,0,1}]
 
@@ -1956,15 +2042,66 @@ plot[lon_, lat_, d_] :=
  {t, -90, 90}];
 
 plot[lon_, lat_, d_] :=
- ParametricPlot[{x,y}, {y, lat-0.056505753059732318391*d, 
-  lat+0.056505753059732318391*d}, 
+ ParametricPlot[{x,y}, {y, lat-0.008993169912586387879*d, 
+  lat+0.008993169912586387879*d}, 
  {x, lon-lonRange2[lat, y, d], lon+lonRange2[lat, y, d]}];
 
-plot[lon_, lat_, d_] :=
+t1832[lon_, lat_, d_] :=
  ParametricPlot[{x,y}, 
- {x, lon-lonRange2[lat, y, d], lon+lonRange2[lat, y, d]},
-{y, lat-0.056505753059732318391*d, lat+0.056505753059732318391*d}
-];
+ {y, geoDesic2[-106.5, 35, -90, 40, t][[2]]-0.009*d, 
+     geoDesic2[-106.5, 35, -90, 40, t][[2]]+0.009*d},
+ {x, geoDesic2[-106.5, 35, -90, 40, t][[1]]-
+      lonRange2[geoDesic2[-106.5, 35, -90, 40, t][[2]], y, d], 
+     geoDesic2[-106.5, 35, -90, 40, t][[1]] + 
+       lonRange2[geoDesic2[-106.5, 35, -90, 40, t][[2]], y, d]},
+ {t, 0, 1}];
+
+ParametricPlot[{x,y}, {x, 0, 10}, {y, 0, 10}]
+
+ParametricPlot[{x+t,y+t}, {x, 0, 10}, {y, 0, 10}, {t, 0, 1}]
+
+ParametricPlot[{x,y}, {x, 0, t}, {y, 0, t}, {t, 0, 1}]
+
+t1843[lon1_, lat1_, lon2_, lat2_] := 
+ t1843[lon1, lat1, lon2, lat2] = GeoDistance[{lat1, lon1}, {lat2, lon2}];
+
+RegionPlot[t1843[0,0,x,y] < 500, {x,-180, 180}, {y, -90, 90}]
+
+t1850 = Table[plot[i[[1]], i[[2]], 500], {i, allpoly[[1]]}];
+
+Show[Graphics[Rectangle[{{-180,-90}, {180,90}}], t1850]]
+
+Show[{Graphics[Rectangle[{-180,-90}, {180,90}]], t1850}];
+
+t1857 = Table[rectifyCoords[i], {i, allpoly}];
+
+Show[{Graphics[Line[t1857]], t1850}];
+
+Show[{t1850, Graphics[Line[t1857]]}];
+
+t1905 = Timing[Table[plot[i[[1]], i[[2]], 50], {i, allpoly[[2]]}]];
+
+this takes.... 62+ seconds
+
+Show[{t1905[[2]], Graphics[Line[t1857]]}];
+
+Show[{Graphics[Line[t1857]], t1905[[2]]}];
+
+20180806 figuring out contour plot which may work better than region plot
+
+t1013 = ContourPlot[x+y, {x,0,1}, {y,0,1}, ColorFunction -> Hue, Contours ->
+64, PlotLegends -> True]
+
+
+t1015 = ContourPlot[x+y, {x,0,1}, {y,0,1}, ColorFunction -> Hue,
+PlotLegends -> True, Contours -> {0.5, 1, 1.5}]
+
+althue[h_] = Hue[h*7/8];
+
+t1015 = ContourPlot[x+y, {x,0,1}, {y,0,1}, ColorFunction -> althue,
+PlotLegends -> True, Contours -> {0.5, 1, 1.5}]
+
+
 
 
 
