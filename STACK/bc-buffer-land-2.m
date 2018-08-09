@@ -6,14 +6,9 @@ https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary
 
 using https://oceancolor.gsfc.nasa.gov/docs/distfromcoast/ (signed version)
 
-*)
-
-(* head just for testing:
-
-bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2 | head -n 500 >
- /tmp/test.m
-
-t1256 = ReadList["/tmp/test.m", {Number, Number, Number}];
+Mathematica surprisingly disappointed me so I wrote and ran
+bc-buffer-land.pl and put the results in land-by-coast-dist.txt.bz2,
+and I use that file below
 
 *)
 
@@ -29,15 +24,30 @@ earthRadius = Entity["Planet", "Earth"]["Radius"]/Quantity[1,"km"];
 
 </formulas>
 
-t1258 = ReadList[
-"!bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2", 
-{Number, Number, Number}];
+(* this is really clever, but not actually that efficient *)
 
-(* about 34.65 seconds *)
+t = ReadString[
+"!bzcat /home/barrycarter/BCGIT/STACK/land-by-coast-dist.txt.bz2"];
+
+(* more efficient *)
+
+Run["bzcat /home/barrycarter/BCGIT/STACK/land-by-coast-dist.txt.bz2 > /tmp/output.txt"];
+
+t1258 = ReadList["/tmp/output.txt", {Number, Number, Number}];
+
+Length[t1258] (* is 4727612 *)
+
+t0955 = Table[{i[[1]], i[[3]]}, {i, t1258}];
+
+ListPlot[t0955];
+
+
 
 (* this has some inherent interest *)
 
 t1736 = Sort[t1258, #1[[3]] < #2[[3]] &];
+
+t1805 = Gather[t1736, #1[[3]] == #2[[3]] &];
 
 (* to do: find number of coast line points? *)
 
@@ -67,14 +77,19 @@ t1709 = ContourPlot[t1705[lon,lat], {lon, -180, 180}, {lat, -90, 90},
 
 t1722 = Gather[t1717, #1[[2]] == #2[[2]] &];
 
+<answer>
+
+*** PUT GRAPH HERE ***
 
 
 
+The file *** makes this problem trivial, since it lists coastal distances both on land (given as negative numbers) and water (given as positive numbers). Brief notes:
+
+  - 
+
+
+TODO: note text file
 
 
 
-
-
-
-
-
+</answer>
