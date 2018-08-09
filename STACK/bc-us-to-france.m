@@ -30,14 +30,6 @@ usacities2 = Table[{i["Name"],
  i["Longitude"]/Quantity[1,"degree"], i["Latitude"]/Quantity[1,"degree"]}, 
 {i, usacities}];
 
-Table[Graphics[Point
-
-
-
-
-
-
-
 (* the main polygons *)
 
 usa2 = usa[[1,1,1]];
@@ -51,9 +43,20 @@ france3 = poly2D23D[france2];
 usa4 = RegionDistance[Line[usa3]];
 france4 = RegionDistance[Line[france3]];
 
+
+
 t2302 = ContourPlot[usa4[sph2xyz[lon*Degree, lat*Degree, 1]], {lon,
 -124.733, -66.9498}, {lat, 25.1246, 49.3845}, AspectRatio -> 1/2,
 ColorFunction -> Hue, Contours -> 64, ImageSize -> {8192, 4096}];
+
+Maximize[usa4[sph2xyz[lon*Degree, lat*Degree, 1]],
+Element[sph2xyz[lon, lat, 1]], RegionMember[usa3, sph2xyz[lon*Degree,
+lat*Degree, 1]]]
+
+
+
+https://www.wolfram.com/mathematica/new-in-10/entity-based-geocomputation/find-the-most-interior-point-in-the-united-states.html is stupid
+
 
 
 
