@@ -17,7 +17,7 @@ tab >> ~/BCGIT/REDDIT/metro-area-data.m
 
 (* find US metro areas *)
 
-metrosAll = << ~/BCGIT/REDDIT/metro-area-data.m
+metrosAll = << ~/BCGIT/REDDIT/metro-area-data.m;
 
 metrosUSA = Select[metrosAll, 
  #[[5]] == Entity["Country", "UnitedStates"]&];
@@ -125,3 +125,34 @@ https://mathematica.stackexchange.com/questions/56172/speed-of-curated-data-call
 optimization (do NOT set `$AllowInternet = False`, that breaks stuff)
 
 Take[Sort[a2328, #1[[2]] > #2[[2]] &],10]
+
+working thru mathematica example
+
+data = Table[
+   Reverse[CityData[c, "Coordinates"]] -> CityData[c, "Name"], {c, 
+    CityData[{Large, "Italy"}]}];
+
+city = Nearest[data];
+
+approach of 20180809 (and using Entity not CityData)
+
+top 50 cities
+
+t1323 = Take[Entity["Country", "UnitedStates"]["LargestCities"], 50];
+
+t1330 = Table[GeoPosition[i] -> i, {i, t1323}]
+
+t1328[x_, y_] := GeoDistance[x, GeoPosition[y]];
+
+t1324 = Nearest[t1323, DistanceFunction -> t1328];
+
+
+
+
+
+
+
+
+
+
+

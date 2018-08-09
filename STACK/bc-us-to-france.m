@@ -6,8 +6,15 @@ Solves https://mathematica.stackexchange.com/questions/178316/project-map-to-a-p
 
 <formulas>
 
-poly2D23D[list_] := Map[sph2xyz[#1[[2]]*Degree, #1[[1]]*Degree, 1]&, 
- Append[list, list[[1]]]];
+(* convert degree longitude/latitude to 3D point *)
+
+lonLatDeg2XYZ[lon_, lat_] = sph2xyz[lon*Degree, lat*Degree, 1];
+
+lonLatDeg2XYZ[l_] := lonLatDeg2XYZ @@ l;
+
+poly2D23D[list_] := Map[lonLatDeg2XYZ, Append[list, list[[1]]]];
+
+(* because Mathematica's polygons are "backwards" *)
 
 rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]];
 
@@ -17,37 +24,48 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
      Run[StringJoin["display -geometry 800x600 -update 1 ", file, "&"]]; 
     Return[file];];
 
+(* main polygons only *)
+
+usa = Entity["Country", "UnitedStates"]["Polygon"][[1,1,1]];
+france = Entity["Country", "France"]["Polygon"][[1,1,1]];
+
+(* in 2D, lon/lat form *)
+
+usa2d = rectifyCoords[usa];
+france2d = ectifyCoords[france];
+
+(* in 3D *)
+
+usa3d = poly2D23D[usa];
+france3d = poly2D23D[france];
+
+(* region distance functions (from coast) *)
+
+usard = RegionDistance[Line[usa3d]];
+francerd = RegionDistance[Line[france3d]];
+
+(* region distance as lon/lat *)
+
+usard2d[lon_, lat_] := usard[lonLatDeg2XYZ[lon, lat]];
+francerd2d[lon_, lat_] := francerd[lonLatDeg2XYZ[lon, lat]];
+
 </formulas>
 
-usa = Entity["Country", "UnitedStates"]["Polygon"];
-france = Entity["Country", "France"]["Polygon"];
+t1249 = RegionBounds[Line[usa2d]];
 
-(* largest cities *)
+t2302 = ContourPlot[usard2d[lon, lat], {lon, t1249[[1,1]], t1249[[1,2]]}, 
+{lat, t1249[[2,1]], t1249[[2,2]]}, AspectRatio -> 1/2,
+ColorFunction -> Hue, Contours -> 64, ImageSize -> {8192, 4096}];
+
+TODO: note imprecision because using lines (sag below globe)
+
+(* TODO: largest cities to make things more interesting *)
 
 usacities = Entity["Country", "UnitedStates"]["LargestCities"];
 
 usacities2 = Table[{i["Name"], 
  i["Longitude"]/Quantity[1,"degree"], i["Latitude"]/Quantity[1,"degree"]}, 
 {i, usacities}];
-
-(* the main polygons *)
-
-usa2 = usa[[1,1,1]];
-france2 = france[[1,1,1]];
-
-(* projected to 3d *)
-
-usa3 = poly2D23D[usa2];
-france3 = poly2D23D[france2];
-
-usa4 = RegionDistance[Line[usa3]];
-france4 = RegionDistance[Line[france3]];
-
-
-
-t2302 = ContourPlot[usa4[sph2xyz[lon*Degree, lat*Degree, 1]], {lon,
--124.733, -66.9498}, {lat, 25.1246, 49.3845}, AspectRatio -> 1/2,
-ColorFunction -> Hue, Contours -> 64, ImageSize -> {8192, 4096}];
 
 Maximize[usa4[sph2xyz[lon*Degree, lat*Degree, 1]],
 Element[sph2xyz[lon, lat, 1]], RegionMember[usa3, sph2xyz[lon*Degree,
