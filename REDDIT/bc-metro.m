@@ -23,8 +23,6 @@ tab >> ~/BCGIT/REDDIT/metro-area-data.m
 
 $AllowInternet = False;
 
-(* end run these commands first *)
-
 (* find US metro areas *)
 
 metrosAll = << ~/BCGIT/REDDIT/metro-area-data.m;
@@ -57,6 +55,26 @@ Nearest[Take[geopos, 50], geopos[[66]]]
 (* reallow Internet after Mathematica stops being stupid *)
 
 $AllowInternet = True;
+
+t1131 = Nearest[geopos];
+
+
+
+regions = Table[
+ RegionPlot[t1131[GeoPosition[{lat,lon}]] == t1131[i[[1]]],
+ {lon, -180, 180}, {lat, -90, 90}], {i, geopos}];
+
+regions = Table[
+ RegionPlot[t1131[GeoPosition[{lat,lon}]] == t1131[i[[1]]],
+ {lon, -124.733, -66.9498}, {lat, 25.1246, 49.3845}], {i, geopos}];
+
+
+
+
+
+
+
+
 
 
 
