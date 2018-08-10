@@ -4,6 +4,8 @@ https://www.reddit.com/r/geography/comments/8qzl3p/if_we_redrew_us_state_lines_b
 
 *)
 
+<oneoff>
+
 (* run these commands first to build caches *)
 
 metrosAll = EntityList["MetropolitanArea"];
@@ -12,6 +14,14 @@ tab = Table[{i, i["Name"], i["Population"], i["Position"], i["Country"]},
  {i, metrosAll}]
 
 tab >> ~/BCGIT/REDDIT/metro-area-data.m
+
+</oneoff>
+
+<formulas>
+
+(* Mathematica is being cocksucky w/ forced updates *)
+
+$AllowInternet = False;
 
 (* end run these commands first *)
 
@@ -41,6 +51,14 @@ printTab = Table[{i[[1,2]], i[[2,1,2]]}, {i, closestMetroTab}]
 closestMetros = Gather[closestMetroTab, #1[[2]] == #2[[2]] &];
 
 Nearest[Take[geopos, 50], geopos[[66]]]
+
+</formulas>
+
+(* reallow Internet after Mathematica stops being stupid *)
+
+$AllowInternet = True;
+
+
 
 example:
 
@@ -142,9 +160,48 @@ t1323 = Take[Entity["Country", "UnitedStates"]["LargestCities"], 50];
 
 t1330 = Table[GeoPosition[i] -> i, {i, t1323}]
 
-t1328[x_, y_] := GeoDistance[x, GeoPosition[y]];
+(* just the positions for Voronoi mesh.. *)
 
-t1324 = Nearest[t1323, DistanceFunction -> t1328];
+t1336 = Table[GeoPosition[i], {i, t1323}];
+
+(* this is in lat, lon format *)
+
+t1324 = Nearest[t1330];
+
+t1334 = VoronoiMesh[t1330];
+
+
+pts = RandomReal[{-1, 1}, {50, 2}];
+
+test = VoronoiMesh[pts];
+
+RegionPlot[t1324[GeoPosition[{lat, lon}]] == 
+ t1324[GeoPosition[{34, 105}]], {lon, -120, 70}, {lat, 30, 50}]
+
+RegionPlot[t1324[GeoPosition[{lat, lon}]] == 
+ t1330[[5,2]], {lon, -120, 70}, {lat, 30, 50}]
+
+t1418 = RegionPlot[t1324[GeoPosition[{lat, lon}]] == 
+ t1324[t1330[[5,1]]], {lon, -120, -70}, {lat, 30, 50}]
+
+t1418 = RegionPlot[t1324[GeoPosition[{lat, lon}]] == 
+ t1324[t1330[[5,1]]], {lon, -120, -70}, {lat, 30, 50}, PlotStyle -> Red]
+
+t1418 = RegionPlot[t1324[GeoPosition[{lat, lon}]] == 
+ t1324[t1330[[5,1]]], {lon, -120, -70}, {lat, 30, 50}, PlotStyle -> Red,
+ ImageSize -> {8192, 4096}]
+
+t1418 = RegionPlot[t1324[GeoPosition[{lat, lon}]] == 
+ t1324[t1330[[10,1]]], {lon, -120, -70}, {lat, 30, 50}, PlotStyle -> Red,
+ ImageSize -> {8192, 4096}]
+
+rc = RandomColor[50];
+
+Show[{Graphics[rc[[1]]], t1418}];
+
+
+
+
 
 
 
