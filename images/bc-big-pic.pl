@@ -6,6 +6,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# better? colors: ROYG for land, green = innermost
+# BIV for water, violet = innermost
+
+# hue = 0 to 0.4 for land
+# hue = 0.5 to 0.8 for water
+
 # now lets try the "real" map, coastline distance
 
 # lowest inland value is -2513.32
