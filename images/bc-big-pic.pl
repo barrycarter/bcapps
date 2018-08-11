@@ -22,10 +22,10 @@ for ($i=0.5; $i<0.8-0.3/256; $i+=0.3/128) {
   push(@water, hsv2rgb($i, 1, 1, "format=decimal"));
 }
 
-debug(@land, scalar(@land));
-debug(@water, scalar(@water));
+# special cases for decimal sloppiness
+push(@land, $land[0]);
+push(@water, $water[0]);
 
-die "TESTING";
 
 # now lets try the "real" map, coastline distance
 
@@ -48,17 +48,20 @@ my($x,$y) = (0,0,0);
 while (<>) {
 
   my($lon, $lat, $dist) = split(/\s+/, $_);
-  # h will be the value of the opposing colors
-  my($h);
 
   # determine color
-  if ($dist < 0) {
-    $h = ceil(127-127*$dist/-2513.32);
-    print "setpixel $x,$y,255,$h,$h\n";
+  my($c);
+
+  # special case
+  if ($dist == 0) {
+    $c = "0,0,0";
+  } elsif ($dist < 0) {
+    $c = $land[128-floor(128*$dist/-2513.32)];
   } else {
-    $h = floor(127*$dist/2694.96);
-    print "setpixel $x,$y,$h,$h,255\n";
+    $c = $water[floor(128*$dist/2694.96)];
   }
+
+  print "setpixel $x,$y,$c\n";
 
   # counting here may be faster than computing from lat/lon each time
   if (++$x == 9000) {$x=0; $y++;}
