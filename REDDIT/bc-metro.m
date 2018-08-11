@@ -38,17 +38,39 @@ metrosUSATop = Take[metrosUSASorted, 50];
 
 (* form usable to Mathematica *)
 
-geopos = Table[i[[4]] -> i, {i, metrosUSATop}];
+(* geopos = Table[i[[4]] -> i, {i, metrosUSATop}]; *)
 
-closestMetroTab = Table[{i, Nearest[geopos, i[[4]]]}, {i, metrosUSASorted}];
+(* geopos = Table[GeoPositionXYZ[i[[4]]][[1]] -> i, {i, metrosUSATop}]; *)
+
+(* geopos = Table[ GeoPositionXYZ[metrosUSATop[[i,4]]][[1]] -> i,
+ {i, 1, Length[metrosUSATop]}] *)
+
+(* lonLatDeg2XYZ[lon_, lat_] := GeoPositionXYZ[GeoPosition[{lat, lon}]][[1]]; *)
+
+lonLatDeg2XYZ[lon_, lat_] = sph2xyz[lon*Degree, lat*Degree, 1];
+
+lonLatDeg2XYZ[l_] := lonLatDeg2XYZ @@ l;
+
+geopos = Table[lonLatDeg2XYZ[metrosUSATop[[i,4,1]]] -> i, {i, 1,
+Length[metrosUSATop]}]
+
+showit2 := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %, ImageSize -> {8192, 4096}]; 
+     Run[StringJoin["display -geometry 800x600 -update 1 ", file, "&"]]; 
+    Return[file];];
+
+(* closestMetroTab = Table[{i, Nearest[geopos, i[[4]]]}, {i, metrosUSASorted}]; *)
+
+rectifyCoords[list_] := Transpose[Reverse[Transpose[list]]];
 
 (* this is just for printing *)
 
-printTab = Table[{i[[1,2]], i[[2,1,2]]}, {i, closestMetroTab}]
+(* printTab = Table[{i[[1,2]], i[[2,1,2]]}, {i, closestMetroTab}] *)
 
-closestMetros = Gather[closestMetroTab, #1[[2]] == #2[[2]] &];
+(* closestMetros = Gather[closestMetroTab, #1[[2]] == #2[[2]] &]; *)
 
-Nearest[Take[geopos, 50], geopos[[66]]]
+Print["Using spherical, NOT ELLIPTICAL, coordinates"];
 
 </formulas>
 
@@ -57,6 +79,55 @@ Nearest[Take[geopos, 50], geopos[[66]]]
 $AllowInternet = True;
 
 t1131 = Nearest[geopos];
+
+t1953 = ImplicitRegion[t1131[{x,y,z}] == {1}, {{x,-1,1},{y,-1,1},{z,-1,1}}];
+
+t1131[lonLatDeg2XYZ[lon, lat]] == {1},
+ { {lon, -180, 180}, {lat, -90, 90}}];
+
+
+
+
+t1131[lonLatDeg2XYZ[-106, 35]]
+
+t1131[GeoPositionXYZ[GeoPosition[{35, -106}]][[1]]]
+
+t1131[lonLatDeg2XYZ[-106, 35]];
+
+t1257 = RegionPlot[t1131[lonLatDeg2XYZ[lon, lat]] == {1},
+ {{lon, -180, 180}, {lat, -90, 90}}];
+
+t1257 = RegionPlot[t1131[lonLatDeg2XYZ[lon, lat]] == {1},
+ {lon, -75, -70}, {lat, 40, 41}];
+
+t1302 = Table[
+ RegionPlot[t1131[lonLatDeg2XYZ[lon, lat]] == {i},
+ {lon, -180, 180}, {lat, -90, 90}], {i, 1, 50}];
+
+t1302 = Table[
+ RegionPlot[t1131[lonLatDeg2XYZ[lon, lat]] == {i},
+ {lon, -124.733, -66.9498}, {lat, 25.1246, 49.3845}, 
+ ImageSize -> {8192, 4096}], 
+ {i, 1, 50}];
+
+t1308 =
+Graphics[Line[rectifyCoords[Entity["Country","USA"]["Polygon"][[1,1,1]]
+]]]
+
+
+Show[{t1302, t1308}, AspectRatio -> 1/2]
+
+
+
+
+
+
+
+RegionPlot[t1131[lonLatDeg2XYZ[-106, 35]] == {1}, 
+ {lon, -124.733, -66.9498}, {lat, 25.1246, 49.3845}, 
+ ImageSize -> {8192, 4096}];
+
+
 
 
 
@@ -217,16 +288,624 @@ rc = RandomColor[50];
 
 Show[{Graphics[rc[[1]]], t1418}];
 
+approach 20180810
+
+Solve[Norm[{x,y,z} - {0,0,0}]^2 < Norm[{x,y,z} - {1,2,3}]^2, Reals]
+
+t2041 = Table[RandomReal[1,3], {i,1,10}]
+
+t2043 = Table[Norm[{x,y,z}-t2041[[1]]]^2 < Norm[{x,y,z}-t2041[[i]]]^2,
+ {i, 2, Length[t2041]}];
+
+ImplicitRegion[Norm[{x,y,z}-t2041[[1]]]^2 < Norm[{x,y,z}-t2041[[2]]]^2,
+ {{x,-1,1}, {y,-1,1}, {z,-1,1}}]
+
+norm2[{x_,y_,z_}, {a_,b_,c_}] = (x-a)^2 + (y-b)^2 + (z-c)^2
+
+norm2[{x,y,z},t2041[[1]]] < norm2[{x,y,z},t2041[[2]]]
+
+t2051 = Table[norm2[{x,y,z}, t2041[[1]]] < norm2[{x,y,z}, t2041[[i]]],
+ {i, 2, Length[t2041]}];
+
+
+Norm[{x,y,z}-t2041[[1]]]^2 < Norm[{x,y,z}-t2041[[i]]]^2,
+
+any 2 points a,b,c and d,e,f
+
+closer[{x_, y_, z_}, {a_, b_, c_}, {d_, e_, f_}] = 
+
+Simplify[Reduce[norm2[{x,y,z},{a,b,c}] < norm2[{x,y,z},{d,e,f}], Reals],
+ Element[{x,y,z,a,b,c,d,e,f}, Reals]]
+
+t2100 = Table[RandomReal[1,3],{i,3}];
+
+closer[t2100[[1]], t2100[[2]], t2100[[3]]];
+
+returns quickly, hmmm
+
+t2103 = Table[closer[{x, y, z}, t2041[[1]], t2041[[i]]], {i, 2, Length[t2041]}]
+
+t2104[x_, y_, z_] = Apply[And, t2103]
+
+t2105 = ImplicitRegion[t2104[x,y,z], { {x,-1,1}, {y,-1,1}, {z,-1,1} }];
+
+t2106 = RegionPlot3D[t2105]
+
+t2108 = Map[Point, t2041]
+
+Show[{t2106, Graphics3D[t2108]}]
+
+example of 20180810.21
+
+norm2[{x_,y_,z_}, {a_,b_,c_}] = (x-a)^2 + (y-b)^2 + (z-c)^2
+
+closer[{x_, y_, z_}, {a_, b_, c_}, {a_, b_, c_}] = True;
+
+closer[{x_, y_, z_}, {a_, b_, c_}, {d_, e_, f_}] = 
+Simplify[Reduce[norm2[{x,y,z},{a,b,c}] < norm2[{x,y,z},{d,e,f}], Reals],
+ Element[{x,y,z,a,b,c,d,e,f}, Reals]]
+
+(a < 0 && 
+  ((b < 0 && 
+    ((c < 0 && ((f < 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+     (c == 0 && ((a == d && 
+        ((((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] > 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y))) && 
+          (b == e || a^2 + b^2 + 2*d*x + 2*e*y == d^2 + e^2 + 2*a*x + 
+             2*b*y)) || (b != e && (f != 0 || a^2 + b^2 + 2*d*x + 2*e*y < 
+            d^2 + e^2 + 2*a*x + 2*b*y) && (f == 0 || 
+           a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+             2*b*y) && a^2 + b^2 + 2*d*x + 2*e*y != d^2 + e^2 + 2*a*x + 
+            2*b*y))) || (b == e && ((a != d && (a^2 + b^2 - d^2 - e^2)/
+            (a - d) == 2*x && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 
+               2*b*y + 2*e*y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))) || (f == 0 && a != d && 
+          a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x) || 
+         (a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y && a != d && ((d^2 + e^2 + 2*a*x < a^2 + b^2 + 2*d*x && 
+            f != 0) || a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x)))) || 
+       (b != e && a != d && ((a^2 + b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*a*x + 
+            2*b*y && (f == 0 || a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < 
+            d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || (f != 0 && 
+          a^2 + b^2 + 2*d*x + 2*e*y > d^2 + e^2 + 2*a*x + 2*b*y && 
+          a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y) || ((a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x)/(b - e) == 
+           2*y && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*
+                y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))))))) || 
+     (c > 0 && ((f > 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))))) || 
+   (b == 0 && 
+    ((c < 0 && ((a == d && ((c == f && ((Sqrt[a^2 - d^2] < e && 
+            e*(a^2 + 2*d*x + 2*e*y) < e*(d^2 + e^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2] > e && e*(a^2 + 2*d*x + 2*e*y) > 
+             e*(d^2 + e^2 + 2*a*x)))) || (a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z && (c < f || 
+           (c > f && f < 0))))) || (c == f && 
+        ((e == 0 && ((a < d && a + d > 2*x) || (a > d && a + d < 2*x))) || 
+         (a != d && e != 0 && f < 0 && a^2 + 2*d*x + 2*e*y < 
+           d^2 + e^2 + 2*a*x))) || ((c < f || (c > f && f < 0)) && 
+        ((a != d && e == 0 && a^2 + c^2 + 2*d*x + 2*f*z < d^2 + f^2 + 2*a*x + 
+            2*c*z) || (e != 0 && a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z))))) || 
+     (c == 0 && ((e != 0 && ((a != d && ((a^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x && (f == 0 || a^2 + 2*d*x + 2*e*y + 2*f*z < 
+              d^2 + e^2 + f^2 + 2*a*x)) || (f != 0 && a^2 + 2*d*x + 2*e*y > 
+             d^2 + e^2 + 2*a*x && a^2 + 2*d*x + 2*e*y + 2*f*z < 
+             d^2 + e^2 + f^2 + 2*a*x) || ((-a^2 + d^2 + 2*a*x - 2*d*x + e*
+                (e - 2*y))/e == 0 && ((Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 
+                 2*e*y] > f && f*(a^2 + 2*(d*x + e*y + f*z)) > f*
+                (d^2 + e^2 + f^2 + 2*a*x)) || (Sqrt[a^2 - d^2 - e^2 - 2*a*x + 
+                 2*d*x + 2*e*y] < f && f*(a^2 + 2*(d*x + e*y + f*z)) < f*
+                (d^2 + e^2 + f^2 + 2*a*x)))))) || (a == d && 
+          a^2 + 2*d*x + 2*e*y == d^2 + e^2 + 2*a*x && 
+          ((Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] < f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) < f*(d^2 + e^2 + f^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] > f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) > f*(d^2 + e^2 + f^2 + 2*a*
+                x)))))) || (e == 0 && ((a != d && a + d == 2*x && 
+          ((Sqrt[(a - d)*(a + d - 2*x)] < f && f*(a^2 + 2*d*x + 2*f*z) < 
+             f*(d^2 + f^2 + 2*a*x)) || (Sqrt[(a - d)*(a + d - 2*x)] > f && 
+            f*(a^2 + 2*d*x + 2*f*z) > f*(d^2 + f^2 + 2*a*x)))) || 
+         (f == 0 && ((a < d && a + d > 2*x) || (a > d && a + d < 2*x))) || 
+         (a^2 + 2*d*x + 2*f*z < d^2 + f^2 + 2*a*x && 
+          ((f != 0 && ((a < d && a + d < 2*x) || (a > d && a + d > 2*x))) || 
+           (a < d && a + d > 2*x) || (a > d && a + d < 2*x))))) || 
+       (a == d && ((Sqrt[a^2 - d^2] == e && 
+          ((Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] < f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) < f*(d^2 + e^2 + f^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] > f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) > f*(d^2 + e^2 + f^2 + 2*a*x)))) || 
+         (f == 0 && ((Sqrt[a^2 - d^2] < e && e*(a^2 + 2*d*x + 2*e*y) < 
+             e*(d^2 + e^2 + 2*a*x)) || (Sqrt[a^2 - d^2] > e && 
+            e*(a^2 + 2*d*x + 2*e*y) > e*(d^2 + e^2 + 2*a*x)))) || 
+         (Sqrt[a^2 - d^2] != e && f != 0 && e*(a^2 + 2*d*x + 2*e*y) != 
+           e*(d^2 + e^2 + 2*a*x) && a^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x))))) || 
+     (c > 0 && ((a == d && ((c == f && ((Sqrt[a^2 - d^2] < e && 
+            e*(a^2 + 2*d*x + 2*e*y) < e*(d^2 + e^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2] > e && e*(a^2 + 2*d*x + 2*e*y) > 
+             e*(d^2 + e^2 + 2*a*x)))) || (a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z && (c > f || 
+           (c < f && f > 0))))) || (c == f && 
+        ((e == 0 && ((a < d && a + d > 2*x) || (a > d && a + d < 2*x))) || 
+         (a != d && e != 0 && f > 0 && a^2 + 2*d*x + 2*e*y < 
+           d^2 + e^2 + 2*a*x))) || ((c > f || (c < f && f > 0)) && 
+        ((a != d && e == 0 && a^2 + c^2 + 2*d*x + 2*f*z < d^2 + f^2 + 2*a*x + 
+            2*c*z) || (e != 0 && a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z))))))) || 
+   (b > 0 && 
+    ((c < 0 && ((f < 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+     (c == 0 && ((a == d && 
+        ((((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] > 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y))) && 
+          (b == e || a^2 + b^2 + 2*d*x + 2*e*y == d^2 + e^2 + 2*a*x + 
+             2*b*y)) || (b != e && (f != 0 || a^2 + b^2 + 2*d*x + 2*e*y < 
+            d^2 + e^2 + 2*a*x + 2*b*y) && (f == 0 || 
+           a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+             2*b*y) && a^2 + b^2 + 2*d*x + 2*e*y != d^2 + e^2 + 2*a*x + 
+            2*b*y))) || (b == e && ((a != d && (a^2 + b^2 - d^2 - e^2)/
+            (a - d) == 2*x && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 
+               2*b*y + 2*e*y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))) || (f == 0 && a != d && 
+          a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x) || 
+         (a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y && a != d && ((d^2 + e^2 + 2*a*x < a^2 + b^2 + 2*d*x && 
+            f != 0) || a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x)))) || 
+       (b != e && a != d && ((a^2 + b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*a*x + 
+            2*b*y && (f == 0 || a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < 
+            d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || (f != 0 && 
+          a^2 + b^2 + 2*d*x + 2*e*y > d^2 + e^2 + 2*a*x + 2*b*y && 
+          a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y) || ((a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x)/(b - e) == 
+           2*y && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*
+                y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))))))) || 
+     (c > 0 && ((f > 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))))))) || 
+ (a == 0 && 
+  ((b < 0 && ((c < 0 && ((c == f && (((b != e || b^2 + 2*d*x < d^2 + e^2) && 
+          (b == e || b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*b*y) && d != 0 && 
+          f < 0) || (d == 0 && ((b < e && b + e > 2*y) || 
+           (b > e && b + e < 2*y))))) || ((c < f || (c > f && f < 0)) && 
+        ((d == 0 && b^2 + c^2 + 2*e*y + 2*f*z < e^2 + f^2 + 2*b*y + 2*c*z) || 
+         (d != 0 && b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+            2*b*y + 2*c*z))))) || (c == 0 && 
+      ((d < 0 && ((e < b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y) || ((b^2 - d^2 - e^2 + 2*d*x)/(b - e) == 2*y && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)))) || (b == e && ((d*(-b^2 + d^2 + e^2 - 2*d*x) > 0 && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y) || (x == (-b^2 + d^2 + e^2)/(2*d) && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (d*(-b^2 + d^2 + e^2 - 2*d*x) < 0 && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)))) || (e > b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/
+              (2*b - 2*e) && (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < 
+              d^2 + e^2 + f^2 + 2*b*y)) || ((b^2 - d^2 - e^2 + 2*d*x)/
+              (b - e) == 2*y && ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 
+                 2*e*y] && f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 
+                 2*e*y - 2*f*z) < 0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 
+                 2*b*y + 2*e*y] && f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 
+                 2*b*y - 2*e*y - 2*f*z) > 0))) || 
+           (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && f != 0 && 
+            b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*y))))) || 
+       (d == 0 && ((((Sqrt[(b - e)*(b + e - 2*y)] < f && 
+            f*(b^2 + 2*e*y + 2*f*z) < f*(e^2 + f^2 + 2*b*y)) || 
+           (Sqrt[(b - e)*(b + e - 2*y)] > f && f*(b^2 + 2*e*y + 2*f*z) > 
+             f*(e^2 + f^2 + 2*b*y))) && (b == e || b + e == 2*y)) || 
+         (f == 0 && ((b + e > 2*y && b < e) || (b > e && b + e < 2*y))) || 
+         (b^2 + 2*e*y + 2*f*z < e^2 + f^2 + 2*b*y && 
+          ((((b < e && b + e < 2*y) || (b > e && b + e > 2*y)) && f != 0) || 
+           (b + e > 2*y && b < e) || (b > e && b + e < 2*y))))) || 
+       (d > 0 && ((e < b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y) || ((b^2 - d^2 - e^2 + 2*d*x)/(b - e) == 2*y && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)))) || (b == e && ((d*(-b^2 + d^2 + e^2 - 2*d*x) > 0 && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)) || (x == (-b^2 + d^2 + e^2)/(2*d) && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (d*(-b^2 + d^2 + e^2 - 2*d*x) < 0 && f != 0 && 
+            b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*y))) || 
+         (e > b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)) || ((b^2 - d^2 - e^2 + 2*d*x)/(b - e) == 2*y && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y))))))) || (c > 0 && 
+      ((c == f && (((b != e || b^2 + 2*d*x < d^2 + e^2) && 
+          (b == e || b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*b*y) && d != 0 && 
+          f > 0) || (d == 0 && ((b < e && b + e > 2*y) || 
+           (b > e && b + e < 2*y))))) || ((c > f || (c < f && f > 0)) && 
+        ((d == 0 && b^2 + c^2 + 2*e*y + 2*f*z < e^2 + f^2 + 2*b*y + 2*c*z) || 
+         (d != 0 && b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+            2*b*y + 2*c*z))))))) || 
+   (b == 0 && 
+    ((d != 0 && ((e != 0 && ((c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*c*z && ((c > f && (c > 0 || 
+             (c < 0 && f < 0))) || (c < f && (c < 0 || (c > 0 && 
+              f > 0))))) || (c == f && d^2 + e^2 - 2*e*y > 2*d*x && 
+          ((c > 0 && f > 0) || (c < 0 && f < 0))))) || 
+       (e == 0 && c^2 + 2*d*x + 2*f*z < d^2 + f^2 + 2*c*z && 
+        ((c > f && (c > 0 || (c < 0 && f < 0))) || 
+         (c < f && (c < 0 || (c > 0 && f > 0))))))) || 
+     (e != 0 && ((d == 0 && ((c^2 + 2*e*y + 2*f*z < e^2 + f^2 + 2*c*z && 
+          ((c > f && (c > 0 || (c < 0 && f < 0))) || (c < f && 
+            (c < 0 || (c > 0 && f > 0))))) || (c == 0 && e == 2*y && 
+          ((Sqrt[-(e*(e - 2*y))] > f && f*(e^2 + f^2) < 2*f*(e*y + f*z)) || 
+           (Sqrt[-(e*(e - 2*y))] < f && f*(e^2 + f^2) > 
+             2*f*(e*y + f*z)))))) || (c == 0 && d != 0 && 
+        ((d^2 + e^2 - 2*e*y > 2*d*x && (f == 0 || d^2 + e^2 + f^2 > 
+            2*(d*x + e*y + f*z))) || (f != 0 && d^2 + e*(e - 2*y) < 2*d*x && 
+          d^2 + e^2 + f^2 > 2*(d*x + e*y + f*z)) || 
+         (d^2/e + e == 2*((d*x)/e + y) && 
+          ((Sqrt[-d^2 - e^2 + 2*d*x + 2*e*y] > f && f*(d^2 + e^2 + f^2) < 
+             2*f*(d*x + e*y + f*z)) || (Sqrt[-d^2 - e^2 + 2*d*x + 2*e*y] < 
+             f && f*(d^2 + e^2 + f^2) > 2*f*(d*x + e*y + f*z)))))))) || 
+     (d == 0 && ((c == 0 && ((e == 0 && ((f < 0 && f < 2*z) || 
+           (f > 0 && f > 2*z))) || (f == 0 && ((e < 0 && e < 2*y) || 
+           (e > 0 && e > 2*y))) || (e != 0 && f != 0 && e != 2*y && 
+          e^2 + f^2 - 2*f*z > 2*e*y))) || (c != 0 && 
+        ((c == f && ((e < 0 && e < 2*y) || (e > 0 && e > 2*y))) || 
+         (e == 0 && ((c + f > 2*z && c < f) || (c > f && 
+            c + f < 2*z))))))) || (e == 0 && 
+      ((c != 0 && c == f && ((d > 0 && d > 2*x) || (d < 0 && d < 2*x))) || 
+       (c == 0 && ((d == 2*x && d != 0 && ((Sqrt[-(d*(d - 2*x))] > f && 
+            f*(d^2 + f^2) < 2*f*(d*x + f*z)) || 
+           (f*(d^2 + f^2) > 2*f*(d*x + f*z) && Sqrt[-(d*(d - 2*x))] < f))) || 
+         (f == 0 && ((d < 0 && d < 2*x) || (d > 0 && d > 2*x))) || 
+         (d^2 + f^2 - 2*f*z > 2*d*x && ((((d > 2*x && d < 0) || 
+             (d > 0 && d < 2*x)) && f != 0) || (d < 0 && d < 2*x) || 
+           (d > 0 && d > 2*x))))))))) || 
+   (b > 0 && ((c < 0 && ((c == f && (((b != e || b^2 + 2*d*x < d^2 + e^2) && 
+          (b == e || b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*b*y) && d != 0 && 
+          f < 0) || (d == 0 && ((b < e && b + e > 2*y) || 
+           (b > e && b + e < 2*y))))) || ((c < f || (c > f && f < 0)) && 
+        ((d == 0 && b^2 + c^2 + 2*e*y + 2*f*z < e^2 + f^2 + 2*b*y + 2*c*z) || 
+         (d != 0 && b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+            2*b*y + 2*c*z))))) || (c == 0 && 
+      ((d < 0 && ((e < b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y) || ((b^2 - d^2 - e^2 + 2*d*x)/(b - e) == 2*y && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)))) || (b == e && ((d*(-b^2 + d^2 + e^2 - 2*d*x) > 0 && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y) || (x == (-b^2 + d^2 + e^2)/(2*d) && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (d*(-b^2 + d^2 + e^2 - 2*d*x) < 0 && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)))) || (e > b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/
+              (2*b - 2*e) && (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < 
+              d^2 + e^2 + f^2 + 2*b*y)) || ((b^2 - d^2 - e^2 + 2*d*x)/
+              (b - e) == 2*y && ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 
+                 2*e*y] && f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 
+                 2*e*y - 2*f*z) < 0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 
+                 2*b*y + 2*e*y] && f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 
+                 2*b*y - 2*e*y - 2*f*z) > 0))) || 
+           (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && f != 0 && 
+            b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*y))))) || 
+       (d == 0 && ((((Sqrt[(b - e)*(b + e - 2*y)] < f && 
+            f*(b^2 + 2*e*y + 2*f*z) < f*(e^2 + f^2 + 2*b*y)) || 
+           (Sqrt[(b - e)*(b + e - 2*y)] > f && f*(b^2 + 2*e*y + 2*f*z) > 
+             f*(e^2 + f^2 + 2*b*y))) && (b == e || b + e == 2*y)) || 
+         (f == 0 && ((b + e > 2*y && b < e) || (b > e && b + e < 2*y))) || 
+         (b^2 + 2*e*y + 2*f*z < e^2 + f^2 + 2*b*y && 
+          ((((b < e && b + e < 2*y) || (b > e && b + e > 2*y)) && f != 0) || 
+           (b + e > 2*y && b < e) || (b > e && b + e < 2*y))))) || 
+       (d > 0 && ((e < b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y) || ((b^2 - d^2 - e^2 + 2*d*x)/(b - e) == 2*y && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)))) || (b == e && ((d*(-b^2 + d^2 + e^2 - 2*d*x) > 0 && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)) || (x == (-b^2 + d^2 + e^2)/(2*d) && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (d*(-b^2 + d^2 + e^2 - 2*d*x) < 0 && f != 0 && 
+            b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*y))) || 
+         (e > b && ((y < (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            (f == 0 || b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*b*
+                y)) || ((b^2 - d^2 - e^2 + 2*d*x)/(b - e) == 2*y && 
+            ((f < Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) < 
+               0) || (f > Sqrt[b^2 - d^2 - e^2 + 2*d*x - 2*b*y + 2*e*y] && 
+              f*(-b^2 + d^2 + e^2 + f^2 - 2*d*x + 2*b*y - 2*e*y - 2*f*z) > 
+               0))) || (y > (b^2 - d^2 - e^2 + 2*d*x)/(2*b - 2*e) && 
+            f != 0 && b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+              2*b*y))))))) || (c > 0 && 
+      ((c == f && (((b != e || b^2 + 2*d*x < d^2 + e^2) && 
+          (b == e || b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*b*y) && d != 0 && 
+          f > 0) || (d == 0 && ((b < e && b + e > 2*y) || 
+           (b > e && b + e < 2*y))))) || ((c > f || (c < f && f > 0)) && 
+        ((d == 0 && b^2 + c^2 + 2*e*y + 2*f*z < e^2 + f^2 + 2*b*y + 2*c*z) || 
+         (d != 0 && b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 
+            2*b*y + 2*c*z))))))))) || 
+ (a > 0 && 
+  ((b < 0 && 
+    ((c < 0 && ((f < 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+     (c == 0 && ((a == d && 
+        ((((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] > 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y))) && 
+          (b == e || a^2 + b^2 + 2*d*x + 2*e*y == d^2 + e^2 + 2*a*x + 
+             2*b*y)) || (b != e && (f != 0 || a^2 + b^2 + 2*d*x + 2*e*y < 
+            d^2 + e^2 + 2*a*x + 2*b*y) && (f == 0 || 
+           a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+             2*b*y) && a^2 + b^2 + 2*d*x + 2*e*y != d^2 + e^2 + 2*a*x + 
+            2*b*y))) || (b == e && ((a != d && (a^2 + b^2 - d^2 - e^2)/
+            (a - d) == 2*x && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 
+               2*b*y + 2*e*y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))) || (f == 0 && a != d && 
+          a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x) || 
+         (a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y && a != d && ((d^2 + e^2 + 2*a*x < a^2 + b^2 + 2*d*x && 
+            f != 0) || a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x)))) || 
+       (b != e && a != d && ((a^2 + b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*a*x + 
+            2*b*y && (f == 0 || a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < 
+            d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || (f != 0 && 
+          a^2 + b^2 + 2*d*x + 2*e*y > d^2 + e^2 + 2*a*x + 2*b*y && 
+          a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y) || ((a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x)/(b - e) == 
+           2*y && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*
+                y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))))))) || 
+     (c > 0 && ((f > 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))))) || 
+   (b == 0 && 
+    ((c < 0 && ((a == d && ((c == f && ((Sqrt[a^2 - d^2] < e && 
+            e*(a^2 + 2*d*x + 2*e*y) < e*(d^2 + e^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2] > e && e*(a^2 + 2*d*x + 2*e*y) > 
+             e*(d^2 + e^2 + 2*a*x)))) || (a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z && (c < f || 
+           (c > f && f < 0))))) || (c == f && 
+        ((e == 0 && ((a < d && a + d > 2*x) || (a > d && a + d < 2*x))) || 
+         (a != d && e != 0 && f < 0 && a^2 + 2*d*x + 2*e*y < 
+           d^2 + e^2 + 2*a*x))) || ((c < f || (c > f && f < 0)) && 
+        ((a != d && e == 0 && a^2 + c^2 + 2*d*x + 2*f*z < d^2 + f^2 + 2*a*x + 
+            2*c*z) || (e != 0 && a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z))))) || 
+     (c == 0 && ((e != 0 && ((a != d && ((a^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x && (f == 0 || a^2 + 2*d*x + 2*e*y + 2*f*z < 
+              d^2 + e^2 + f^2 + 2*a*x)) || (f != 0 && a^2 + 2*d*x + 2*e*y > 
+             d^2 + e^2 + 2*a*x && a^2 + 2*d*x + 2*e*y + 2*f*z < 
+             d^2 + e^2 + f^2 + 2*a*x) || ((-a^2 + d^2 + 2*a*x - 2*d*x + e*
+                (e - 2*y))/e == 0 && ((Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 
+                 2*e*y] > f && f*(a^2 + 2*(d*x + e*y + f*z)) > f*
+                (d^2 + e^2 + f^2 + 2*a*x)) || (Sqrt[a^2 - d^2 - e^2 - 2*a*x + 
+                 2*d*x + 2*e*y] < f && f*(a^2 + 2*(d*x + e*y + f*z)) < f*
+                (d^2 + e^2 + f^2 + 2*a*x)))))) || (a == d && 
+          a^2 + 2*d*x + 2*e*y == d^2 + e^2 + 2*a*x && 
+          ((Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] < f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) < f*(d^2 + e^2 + f^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] > f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) > f*(d^2 + e^2 + f^2 + 2*a*
+                x)))))) || (e == 0 && ((a != d && a + d == 2*x && 
+          ((Sqrt[(a - d)*(a + d - 2*x)] < f && f*(a^2 + 2*d*x + 2*f*z) < 
+             f*(d^2 + f^2 + 2*a*x)) || (Sqrt[(a - d)*(a + d - 2*x)] > f && 
+            f*(a^2 + 2*d*x + 2*f*z) > f*(d^2 + f^2 + 2*a*x)))) || 
+         (f == 0 && ((a < d && a + d > 2*x) || (a > d && a + d < 2*x))) || 
+         (a^2 + 2*d*x + 2*f*z < d^2 + f^2 + 2*a*x && 
+          ((f != 0 && ((a < d && a + d < 2*x) || (a > d && a + d > 2*x))) || 
+           (a < d && a + d > 2*x) || (a > d && a + d < 2*x))))) || 
+       (a == d && ((Sqrt[a^2 - d^2] == e && 
+          ((Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] < f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) < f*(d^2 + e^2 + f^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2 - e^2 - 2*a*x + 2*d*x + 2*e*y] > f && 
+            f*(a^2 + 2*(d*x + e*y + f*z)) > f*(d^2 + e^2 + f^2 + 2*a*x)))) || 
+         (f == 0 && ((Sqrt[a^2 - d^2] < e && e*(a^2 + 2*d*x + 2*e*y) < 
+             e*(d^2 + e^2 + 2*a*x)) || (Sqrt[a^2 - d^2] > e && 
+            e*(a^2 + 2*d*x + 2*e*y) > e*(d^2 + e^2 + 2*a*x)))) || 
+         (Sqrt[a^2 - d^2] != e && f != 0 && e*(a^2 + 2*d*x + 2*e*y) != 
+           e*(d^2 + e^2 + 2*a*x) && a^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x))))) || 
+     (c > 0 && ((a == d && ((c == f && ((Sqrt[a^2 - d^2] < e && 
+            e*(a^2 + 2*d*x + 2*e*y) < e*(d^2 + e^2 + 2*a*x)) || 
+           (Sqrt[a^2 - d^2] > e && e*(a^2 + 2*d*x + 2*e*y) > 
+             e*(d^2 + e^2 + 2*a*x)))) || (a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z && (c > f || 
+           (c < f && f > 0))))) || (c == f && 
+        ((e == 0 && ((a < d && a + d > 2*x) || (a > d && a + d < 2*x))) || 
+         (a != d && e != 0 && f > 0 && a^2 + 2*d*x + 2*e*y < 
+           d^2 + e^2 + 2*a*x))) || ((c > f || (c < f && f > 0)) && 
+        ((a != d && e == 0 && a^2 + c^2 + 2*d*x + 2*f*z < d^2 + f^2 + 2*a*x + 
+            2*c*z) || (e != 0 && a^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*c*z))))))) || 
+   (b > 0 && 
+    ((c < 0 && ((f < 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+     (c == 0 && ((a == d && 
+        ((((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] > 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y))) && 
+          (b == e || a^2 + b^2 + 2*d*x + 2*e*y == d^2 + e^2 + 2*a*x + 
+             2*b*y)) || (b != e && (f != 0 || a^2 + b^2 + 2*d*x + 2*e*y < 
+            d^2 + e^2 + 2*a*x + 2*b*y) && (f == 0 || 
+           a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+             2*b*y) && a^2 + b^2 + 2*d*x + 2*e*y != d^2 + e^2 + 2*a*x + 
+            2*b*y))) || (b == e && ((a != d && (a^2 + b^2 - d^2 - e^2)/
+            (a - d) == 2*x && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 
+               2*b*y + 2*e*y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))) || (f == 0 && a != d && 
+          a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x) || 
+         (a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y && a != d && ((d^2 + e^2 + 2*a*x < a^2 + b^2 + 2*d*x && 
+            f != 0) || a^2 + b^2 + 2*d*x < d^2 + e^2 + 2*a*x)))) || 
+       (b != e && a != d && ((a^2 + b^2 + 2*d*x + 2*e*y < d^2 + e^2 + 2*a*x + 
+            2*b*y && (f == 0 || a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < 
+            d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || (f != 0 && 
+          a^2 + b^2 + 2*d*x + 2*e*y > d^2 + e^2 + 2*a*x + 2*b*y && 
+          a^2 + b^2 + 2*d*x + 2*e*y + 2*f*z < d^2 + e^2 + f^2 + 2*a*x + 
+            2*b*y) || ((a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x)/(b - e) == 
+           2*y && ((Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*
+                y] > f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) > 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)) || 
+           (Sqrt[a^2 + b^2 - d^2 - e^2 - 2*a*x + 2*d*x - 2*b*y + 2*e*y] < 
+             f && f*(a^2 + b^2 + 2*(d*x + e*y + f*z)) < 
+             f*(d^2 + e^2 + f^2 + 2*a*x + 2*b*y)))))))) || 
+     (c > 0 && ((f > 0 && ((c == f && ((b == e && a^2 + b^2 + 2*d*x < 
+             d^2 + e^2 + 2*a*x && a != d) || (a^2 + b^2 + 2*d*x + 2*e*y < 
+             d^2 + e^2 + 2*a*x + 2*b*y && b != e))) || 
+         (c < f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+           d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z))) || 
+       (c > f && a^2 + b^2 + c^2 + 2*d*x + 2*e*y + 2*f*z < 
+         d^2 + e^2 + f^2 + 2*a*x + 2*b*y + 2*c*z)))))))
+
+t2120 = Table[RandomReal[1,3], {i,1,500}]
+
+t2125 = Apply[And,Table[closer[{x,y,z}, t2120[[7]], i], {i, t2120}]];
+
+t2126[x_, y_, z_] = t2125
+
+ImplicitRegion[t2126[x,y,z], {{x,0,1}, {y,0,1}, {z,0,1}}]
+
+approach 20180811 two d points on surface of sphere
+
+t0931 = Table[{Random[]*360-180, Random[]*180-90}, {i,1,100}];
+
+t0932 = Map[lonLatDeg2XYZ,t0931];
+
+convert back
+
+Table[f[t0932[[i]]] = i, {i, 1, Length[t0932]}]
+
+these points do form a region, so
+
+t0933 = Point[t0932]
+
+RegionNearest[t0933, {0,0,0}];
+
+ContourPlot[f[RegionNearest[t0933, lonLatDeg2XYZ[lon, lat]]], 
+ {lon, -180, 180}, {lat, -90, 90}]
+
+t0954 = ContourPlot[f[RegionNearest[t0933, lonLatDeg2XYZ[lon, lat]]], 
+ {lon, -180, 180}, {lat, -90, 90}, Contours -> 100, ColorFunction -> Hue]
+
+t0942 = Graphics[Point[t0931]]
+
+Show[{t0954, t0942}];
 
 
 
+t0944 = ImplicitRegion[RegionNearest[t0933, lonLatDeg2XYZ[lon, lat]] ==
+RegionNearest[t0933, {0,0,0}], { {lon, -180, 180}, {lat, -90, 90}}];
 
+ContourPlot[Sign[x]*Sign[y], {x,-1,1}, {y,-1,1}]
 
+above worked well
 
+ContourPlot[Floor[x]*Floor[y], {x,1,10}, {y,1,10}]
 
-
-
-
+ContourPlot[Floor[x]*Floor[y], {x,1,100}, {y,1,100}]
 
 
 
