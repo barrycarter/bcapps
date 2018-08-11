@@ -12,6 +12,21 @@ require "/usr/local/lib/bclib.pl";
 # hue = 0 to 0.4 for land
 # hue = 0.5 to 0.8 for water
 
+my(@land, @water);
+
+for ($i=0; $i<0.4-0.4/256; $i+=0.4/128) {
+  push(@land, hsv2rgb($i, 1, 1, "format=decimal"));
+}
+
+for ($i=0.5; $i<0.8-0.3/256; $i+=0.3/128) {
+  push(@water, hsv2rgb($i, 1, 1, "format=decimal"));
+}
+
+debug(@land, scalar(@land));
+debug(@water, scalar(@water));
+
+die "TESTING";
+
 # now lets try the "real" map, coastline distance
 
 # lowest inland value is -2513.32
