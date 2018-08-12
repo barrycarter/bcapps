@@ -23,8 +23,8 @@ for ($i=0.5; $i<0.8-0.3/256; $i+=0.3/128) {
 }
 
 # special cases for decimal sloppiness
-push(@land, $land[0]);
-push(@water, $water[0]);
+push(@land, $land[-1]);
+push(@water, $water[-1]);
 
 
 # now lets try the "real" map, coastline distance

@@ -51,8 +51,10 @@ lonLatDeg2XYZ[lon_, lat_] = sph2xyz[lon*Degree, lat*Degree, 1];
 
 lonLatDeg2XYZ[l_] := lonLatDeg2XYZ @@ l;
 
-geopos = Table[lonLatDeg2XYZ[metrosUSATop[[i,4,1]]] -> i, {i, 1,
-Length[metrosUSATop]}]
+(* MUST USE "Reverse" if doing lonLatDeg2XYZ *)
+
+geopos = Table[lonLatDeg2XYZ[Reverse[metrosUSATop[[i,4,1]]]], {i,
+1,Length[metrosUSATop]}];
 
 showit2 := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
@@ -77,6 +79,117 @@ Print["Using spherical, NOT ELLIPTICAL, coordinates"];
 (* reallow Internet after Mathematica stops being stupid *)
 
 $AllowInternet = True;
+
+approach of 20180811.17 below
+
+rc = Table[RandomReal[1,3], {i,1,50}];
+
+(* assign colors to each area *)
+
+Table[f[geopos[[i]]] = rc[[i]], {i, 1, Length[geopos]}];
+
+usapoly = rectifyCoords[Entity["Country","USA"]["Polygon"][[1,1,1]]];
+
+t1712 = RegionNearest[Point[geopos]];
+
+t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]],
+ {lon,-180,180,1}, {lat,-90,90,1}];
+
+t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]], {lat,25,55,.1},
+ {lon,-120,-70,.1}]
+
+t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]], {lat,25,55,30/4096},
+ {lon,-120,-70,50/8192}];
+
+t1809 = Table[{(i[[1]]+120)/.1, (i[[2]]-25)/.1}, {i, usapoly}]
+
+Graphics[{Raster[t1716], Line[usapoly]}, Axes -> True]
+
+
+Graphics[{
+ Scale[Raster[t1716], {1/10,1/10}, {0,0}], Line[usapoly]}, Axes -> True]
+
+
+Graphics[{
+ Translate[Scale[Raster[t1716], {1/10,1/10}, {0,0}], {-120, 25}], Line[usapoly]
+}, Axes -> True]
+
+t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]], {lat,25,50,.02},
+ {lon,-125,-66,.02}];
+
+t1854 = Graphics[{
+ Translate[Scale[Raster[t1716], {1/50,1/50}, {0,0}], {-125, 25}], Line[usapoly]
+}, Axes -> True, AspectRatio -> 1/2];
+
+
+t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]], {lat,40,41,1/256},
+ {lon,-90,-89,1/256}];
+
+t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]], {lat,40,41,1/1024},
+ {lon,-90,-89,1/1024}];
+
+Graphics[Raster[t1716], Frame -> False, PlotRangePadding -> 0];
+Export["/tmp/temp.jpg", %, ImageSize -> {1024,1024}]
+
+Offset and Scaled
+
+Grid[Table[Hue[h,s,1], {h,0,1,1/16}, {s,0,1,1/16}]];
+
+Grid[Table[Hue[h,s,s], {h,0,1,1/16}, {s,1/2,1,1/16}]];
+
+Grid[Table[LABColor[1,a,b], {a,0,1,1/16}, {b,0,1,1/16}]];
+
+
+
+
+
+
+
+
+
+
+
+Translate[Raster[t1716], {-120, 25}]
+
+Graphics[{Translate[Raster[t1716], {-120, 25}], Line[usapoly]}]
+
+Graphics[{
+ Scale[Translate[Raster[t1716], {-120, 25}], {1/10, 1/10}], Line[usapoly]}]
+
+
+Graphics[{
+ Translate[Scale[Raster[t1716], {1/10, 1/10}], {-120, 25}], Line[usapoly]}]
+
+Graphics[{
+ Scale[Raster[t1716], {1/10, 1/10}], Line[usapoly]}]
+
+
+
+raster vs squares w/ position?
+
+t1751 = Table[{RandomColor[], Rectangle[{x,y}, {x+1,y+1}]}, 
+ {x, 1, 100}, {y, 1, 100}];
+
+t1751 = Table[{RandomColor[], Rectangle[{x,y}, {x+1,y+1}]}, 
+ {x, 1, 8192}, {y, 1, 4096}];
+
+t1804 = Raster[Table[{x, y, 0}, {x, 0, 1, 0.1}, {y, 0, 1, 0.1}]]
+
+Show[{Graphics[t1804], Graphics[Circle[{0,0}, 5]]}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 t1131 = Nearest[geopos];
 
@@ -313,7 +426,6 @@ Norm[{x,y,z}-t2041[[1]]]^2 < Norm[{x,y,z}-t2041[[i]]]^2,
 any 2 points a,b,c and d,e,f
 
 closer[{x_, y_, z_}, {a_, b_, c_}, {d_, e_, f_}] = 
-
 Simplify[Reduce[norm2[{x,y,z},{a,b,c}] < norm2[{x,y,z},{d,e,f}], Reals],
  Element[{x,y,z,a,b,c,d,e,f}, Reals]]
 
@@ -888,13 +1000,12 @@ ContourPlot[f[RegionNearest[t0933, lonLatDeg2XYZ[lon, lat]]],
  {lon, -180, 180}, {lat, -90, 90}]
 
 t0954 = ContourPlot[f[RegionNearest[t0933, lonLatDeg2XYZ[lon, lat]]], 
- {lon, -180, 180}, {lat, -90, 90}, Contours -> 100, ColorFunction -> Hue]
+ {lon, -180, 180}, {lat, -90, 90}, Contours -> 100, ColorFunction -> Hue,
+ ImageSize -> {8192, 4096}]
 
 t0942 = Graphics[Point[t0931]]
 
 Show[{t0954, t0942}];
-
-
 
 t0944 = ImplicitRegion[RegionNearest[t0933, lonLatDeg2XYZ[lon, lat]] ==
 RegionNearest[t0933, {0,0,0}], { {lon, -180, 180}, {lat, -90, 90}}];
@@ -907,6 +1018,40 @@ ContourPlot[Floor[x]*Floor[y], {x,1,10}, {y,1,10}]
 
 ContourPlot[Floor[x]*Floor[y], {x,1,100}, {y,1,100}]
 
+lets see if point by point works
+
+t1441 = Table[Point[{x,y}], {x,1,1000}, {y,1,1000}];
+
+t1441 = Table[Point[{x,y}], {x,1,100}, {y,1,100}];
+
+t1445 = Table[RandomReal[1,3], {i, 1, 10}, {j, 1, 10}];
+
+Raster[t1445]
+
+t1447 = Table[RandomReal[1,3], {i, 1, 1000}, {j, 1, 1000}];
+
+above works nice and fast
+
+ult test
+
+t1448 = Table[RandomReal[1,3], {x, 1, 8192}, {y, 1, 4096}];
+
+Graphics[Raster[t1448]]
+
+very nice!!!
+
+t1445 = Table[Prime[i*10+j], {i, 1, 10}, {j, 1, 10}];
+
+fails miserably as expected!
+
+
+t1445 = Table[RandomReal[1,3], {x, 1, 10}, {y, 1, 10}, {z, 1, 10}];
+
+t1445 = Table[RandomReal[1,4], {x, 1, 10}, {y, 1, 10}, {z, 1, 10}];
+
+t1445 = Table[RandomReal[1,4], {x, 1, 100}, {y, 1, 100}, {z, 1, 100}];
+
+t1445 = Table[RandomReal[1,4], {x, 1, 1000}, {y, 1, 1000}, {z, 1, 1000}];
 
 
 
