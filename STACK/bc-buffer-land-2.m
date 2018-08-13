@@ -14,6 +14,10 @@ and I use that file below
 
 <formulas>
 
+(* to stop Mathematica stupidity *)
+
+$AllowInternet = False;
+
 showit2 := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
      Export[file, %, ImageSize -> {8192, 4096}]; 
@@ -24,22 +28,46 @@ earthRadius = Entity["Planet", "Earth"]["Radius"]/Quantity[1,"km"];
 
 </formulas>
 
-(* this is really clever, but not actually that efficient *)
+(* restore Internet *)
 
-t = ReadString[
-"!bzcat /home/barrycarter/BCGIT/STACK/land-by-coast-dist.txt.bz2"];
+$AllowInternet = True;
 
-(* more efficient *)
+(* must determine Earth's radius w/ Internet on, grumble *)
 
-Run["bzcat /home/barrycarter/BCGIT/STACK/land-by-coast-dist.txt.bz2 > /tmp/output.txt"];
+earthRadius = Entity["Planet", "Earth"]["Radius"]/Quantity[1,"km"];
 
-t1258 = ReadList["/tmp/output.txt", {Number, Number, Number}];
+(* read NASA file *)
 
-Length[t1258] (* is 4727612 *)
+nasaFile = "/home/barrycarter/20180807/dist2coast.signed.txt.bz2";
 
-t0955 = Table[{i[[1]], i[[3]]}, {i, t1258}];
+(* TODO: using a fixed filename for output here is bad *)
 
-ListPlot[t0955];
+Run["bzcat "<>nasaFile<>" > /tmp/output.txt"];
+
+coast0 = ReadList["/tmp/output.txt", {Number, Number, Number}];
+
+(* fixing the raw version by turning the distance into meters *)
+
+coast = Table[{i[[1]], i[[2]], Round[i[[3]]*1000]}, {i, coast0}];
+
+(* the area of a cell at the equator, .04 degree x .04 degree *)
+
+maxarea = (earthRadius*2*Pi/360/25)^2
+
+(* the amount of area for each distance *)
+
+(* TODO: there must be a better way to do this, but Gather[] is too slow *)
+
+Clear[f];
+f[x_] = 0;
+
+Table[f[i[[3]]] = f[i[[2]]] + maxarea*Cos[i[[2]]*Degree], {i, 
+ Take[coast, 5000]}];
+
+
+Table[f[i[[3]]] = f[i[[2]]] + maxarea*Cos[i[[2]]*Degree], {i, coast}];
+
+
 
 
 
@@ -81,6 +109,7 @@ t1722 = Gather[t1717, #1[[2]] == #2[[2]] &];
 
 *** PUT GRAPH HERE ***
 
+using https://oceancolor.gsfc.nasa.gov/docs/distfromcoast/ (signed version)
 
 
 The file *** makes this problem trivial, since it lists coastal distances both on land (given as negative numbers) and water (given as positive numbers). Brief notes:
