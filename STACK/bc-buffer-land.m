@@ -70,9 +70,102 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
      Run[StringJoin["display -geometry 800x600 -update 1 ", file, "&"]]; 
     Return[file];];
 
+earthRadius = Entity["Planet", "Earth"]["Radius"]/Quantity[1,"km"];
+
 </formulas>
 
+giving mathematica another chance NOT to disappoint me on 20180812
+
+Run["bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2 >  /tmp/output.txt"];
+
+t1258 = Timing[ReadList["/tmp/output.txt", {Number, Number, Number}]];
+
+(* only took 28 seconds, what was I whining about? *)
+
+t1045 = t1258[[2]];
+
+dists = Transpose[t1045][[3]];
+
+Min[dists] (* is -2513.32 *)
+Max[dists] (* is 2694.96 *)
+
+dists2 = (dists - Min[dists])/(Max[dists]-Min[dists]);
+
+360/.04
+
+(* I happen to know this is a 9000 x 4500 array, and reversing so high lats are higher on screen, north pointing *)
+
+dists3 = Reverse[Partition[dists2, 9000]];
+
+Graphics[Raster[dists3]];
+
+look correctish, but with no 0 value, a bit odd
+
+Graphics[Raster[dists3, ColorFunction -> Hue]];
+
+Graphics[Raster[dists3, ColorFunction -> Hue, PlotLegend -> True]];
+
+distsp = Select[dists, # > 0 &];
+
+t1102 = Quantile[distsp, Table[i, {i,0,1,1/16}]];
+
+timesout: QuantilePlot[dists3]
+
+# hue = 0 to 0.4 for land (most inland = red = 0)
+# hue = 0.5 to 0.8 for water (furthest out = 0.8 = violetish)
+
+t1156 = Quantile[distsp, Table[i, {i,0,1,1/100}]];
+
+above is wrong, adjust for size of grid first
+
+4.4478 km = 0.4 deg
+
+19.7829 km^2 for equator cell
+
+maxarea = (earthRadius*2*Pi/360/25)^2
+
+Table[{maxarea*Cos[i[[2]]*Degree], i[[3]]}, {i, Take[t1045,500]}]
+
+t1210 = Table[{maxarea*Cos[i[[2]]*Degree], i[[3]]}, {i, t1045}];
+
+t1212 = Gather[t1210, #1[[2]] == #2[[2]] &];
+
+Clear[f];
+f[x_] = 0;
+Table[f[i[[2]]] = f[i[[2]]] + i[[1]], {i, Take[t1210, 50]}]
+
+Clear[f];
+f[x_] = 0;
+Table[f[i[[2]]] = f[i[[2]]] + i[[1]], {i, t1210}];
+
+df = DownValues[f];
+
+exoeriment w/ smaller
+
+Table[g[i] = i^2,  {i, 1, 10}]
+
+ReleaseHold[DownValues[g][[4,1]] /. g -> q][[1]]
+
+-156.34 57.18   -0.000100205
+-52.18  65.02   0.000872067
+
+nm precision, so do round some
+
+
+
+
+
+
+
+
+
+
 TODO: add the antarctica -90 poly
+
+TODO: disclaim lakes, quote caspian sea directly
+
+TODO: link to higher level shoreliness (lakes, islands in lakes, ponds
+in islands in lakes)
 
 approach 20180806.21 is to use contour plot on 10x10 deg rectangles,
 may actually work

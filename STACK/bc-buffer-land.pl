@@ -40,7 +40,3 @@ for $i (sort {$a <=> $b} keys %dist) {
   $accum += $dist{$i};
   print "$i $dist{$i} $accum\n";
 }
-
-
-
-
