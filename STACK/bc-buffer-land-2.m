@@ -46,9 +46,9 @@ Run["bzcat "<>nasaFile<>" > /tmp/output.txt"];
 
 coast0 = ReadList["/tmp/output.txt", {Number, Number, Number}];
 
-(* fixing the raw version by turning the distance into meters *)
+(* rounding distance to nearest km *)
 
-coast = Table[{i[[1]], i[[2]], Round[i[[3]]*1000]}, {i, coast0}];
+coast = Table[{i[[1]], i[[2]], Round[i[[3]]]}, {i, coast0}];
 
 (* the area of a cell at the equator, .04 degree x .04 degree *)
 
@@ -60,12 +60,16 @@ maxarea = (earthRadius*2*Pi/360/25)^2
 
 Clear[f];
 f[x_] = 0;
-
-Table[f[i[[3]]] = f[i[[2]]] + maxarea*Cos[i[[2]]*Degree], {i, 
- Take[coast, 5000]}];
-
-
 Table[f[i[[3]]] = f[i[[2]]] + maxarea*Cos[i[[2]]*Degree], {i, coast}];
+
+(* 2309431 different values *)
+
+dists = DeleteDuplicates[Sort[Transpose[coast][[3]]]];
+
+ListPlot[Table[{i, f[i]}, {i, dists}]];
+
+
+
 
 
 
@@ -119,6 +123,11 @@ The file *** makes this problem trivial, since it lists coastal distances both o
 
 TODO: note text file
 
+rounded to nearest kn
+
+two other approaches: GeoDistance and 3D projection
+
+points only not vectors
 
 
 </answer>
