@@ -12,6 +12,26 @@ and I use that file below
 
 *)
 
+(* 
+
+data notes:
+
+-2509.97 = given to two digits for min to ...
+
+-999.999 = three digits to ...
+
+-99.9998 = four digits to ...
+
+-9.99994 = five digits to ...
+
+-0.999988 = six digits to ...
+
+-0.0999988 = seven digits to ...
+
+-0.00998305 = eight digits to ...
+
+-0.000997388 = nine digits to end
+
 <formulas>
 
 (* to stop Mathematica stupidity *)
@@ -23,8 +43,6 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
      Export[file, %, ImageSize -> {8192, 4096}]; 
      Run[StringJoin["display -geometry 800x600 -update 1 ", file, "&"]]; 
     Return[file];];
-
-earthRadius = Entity["Planet", "Earth"]["Radius"]/Quantity[1,"km"];
 
 </formulas>
 
@@ -48,7 +66,18 @@ coast0 = ReadList["/tmp/output.txt", {Number, Number, Number}];
 
 (* rounding distance to nearest km *)
 
-coast = Table[{i[[1]], i[[2]], Round[i[[3]]]}, {i, coast0}];
+(* rounding to nearest km = sharp spike in graph + 0s get messed up,
+so rounding to nearest m instead *)
+
+coast = Table[{i[[1]], i[[2]], Round[i[[3]]*1000]}, {i, coast0}];
+
+(*  different values, 2.3M when rounded to nearest m *)
+
+dists = DeleteDuplicates[Sort[Transpose[coast][[3]]]];
+
+(* TODO: maybe dist vs number of points, though irrelevant *)
+
+(* TODO: level 4 data incl ponds on islands in seas *)
 
 (* the area of a cell at the equator, .04 degree x .04 degree *)
 
@@ -62,7 +91,7 @@ pointsByDist = Gather[coast, #1[[3]] == #2[[3]] &];
 
 (* create a function to make things easier (?) *)
 
-Table[dist2Points[i[[1,3]]] = i 
+(* Table[dist2Points[i[[1,3]]] = i  *)
 
 distTotal = Sort[Table[{i[[1,3]], 
  maxarea*Total[Map[Cos[#*Degree] &, Transpose[i][[2]]]]},
@@ -78,10 +107,6 @@ ListPlot[distTotal, PlotRange -> All, PlotJoined -> True]
 Clear[f];
 f[x_] = 0;
 Table[f[i[[3]]] = f[i[[3]]] + maxarea*Cos[i[[2]]*Degree], {i, coast}];
-
-(*  different values *)
-
-dists = DeleteDuplicates[Sort[Transpose[coast][[3]]]];
 
 ListPlot[Table[{i, f[i]}, {i, dists}], PlotJoined -> True];
 
