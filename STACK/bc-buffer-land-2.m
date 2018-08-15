@@ -56,17 +56,35 @@ maxarea = (earthRadius*2*Pi/360/25)^2
 
 (* the amount of area for each distance *)
 
+(* Gather was too slow when I didn't round should be ok now *)
+
+pointsByDist = Gather[coast, #1[[3]] == #2[[3]] &];
+
+(* create a function to make things easier (?) *)
+
+Table[dist2Points[i[[1,3]]] = i 
+
+distTotal = Sort[Table[{i[[1,3]], 
+ maxarea*Total[Map[Cos[#*Degree] &, Transpose[i][[2]]]]},
+ {i, pointsByDist}], #1[[1]] < #2[[1]] &];
+
+ListPlot[distTotal, PlotRange -> All, PlotJoined -> True]
+
+
+
+
 (* TODO: there must be a better way to do this, but Gather[] is too slow *)
 
 Clear[f];
 f[x_] = 0;
-Table[f[i[[3]]] = f[i[[2]]] + maxarea*Cos[i[[2]]*Degree], {i, coast}];
+Table[f[i[[3]]] = f[i[[3]]] + maxarea*Cos[i[[2]]*Degree], {i, coast}];
 
-(* 2309431 different values *)
+(*  different values *)
 
 dists = DeleteDuplicates[Sort[Transpose[coast][[3]]]];
 
-ListPlot[Table[{i, f[i]}, {i, dists}]];
+ListPlot[Table[{i, f[i]}, {i, dists}], PlotJoined -> True];
+
 
 
 
@@ -129,5 +147,16 @@ two other approaches: GeoDistance and 3D projection
 
 points only not vectors
 
+tides and coastline paradox
+
+see bc-buffer-land.m for other version
+
+also solve the antipode problem
+
+compare to known total area and known water/land area
+
+note spherical
+
+color kode and key [prob 25km/color for 64 colors and top out]
 
 </answer>
