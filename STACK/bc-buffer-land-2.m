@@ -32,6 +32,8 @@ data notes:
 
 -0.000997388 = nine digits to end
 
+*)
+
 <formulas>
 
 (* to stop Mathematica stupidity *)
@@ -64,14 +66,19 @@ Run["bzcat "<>nasaFile<>" > /tmp/output.txt"];
 
 coast0 = ReadList["/tmp/output.txt", {Number, Number, Number}];
 
-(* rounding distance to nearest km *)
+(* rounding distance to nearest 10m because least precise data is that
+precise, except when close to 0, to preserve sign *)
 
-(* rounding to nearest km = sharp spike in graph + 0s get messed up,
-so rounding to nearest m instead *)
+round2[x_] = If[Round[x,0.01] == 0, Sign[x]*0.01, Round[x,0.01]];
 
-coast = Table[{i[[1]], i[[2]], Round[i[[3]]*1000]}, {i, coast0}];
+(* special case small neg/pos; using precise numbers slows Mathematica
+down so the "0.01" above is intentionally not 1/100 *)
 
-(*  different values, 2.3M when rounded to nearest m *)
+coast = Table[{i[[1]], i[[2]], round2[i[[3]]]}, {i, coast0}];
+
+(*  different values, 509997 when rounded to nearest 10m, 509996 once I get rid of the 0's *)
+
+(* there were 1031 0s per Select[coast, #[[3]] == 0 &] *)
 
 dists = DeleteDuplicates[Sort[Transpose[coast][[3]]]];
 
@@ -109,6 +116,38 @@ f[x_] = 0;
 Table[f[i[[3]]] = f[i[[3]]] + maxarea*Cos[i[[2]]*Degree], {i, coast}];
 
 ListPlot[Table[{i, f[i]}, {i, dists}], PlotJoined -> True];
+
+TODO: discretize
+
+TODO: use the word "discretize" as much as possible
+
+100km hue plot
+
+hue[x_] = If[x>0, Min[0.8,0.5 + 0.3/1000*x], Max[0.4+0.4/1000*x, 0]]
+
+t1330 = Partition[Transpose[coast][[3]], 9000];
+
+t1331 = Map[hue, t1330, {2}];
+
+t1332 = Raster[t1331, ColorFunction -> Hue];
+
+Graphics[t1332]
+
+testing...
+
+
+t1348 = Raster[Take[t1331,500], ColorFunction -> Hue];
+
+Graphics[t1348]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -155,6 +194,8 @@ t1722 = Gather[t1717, #1[[2]] == #2[[2]] &];
 <answer>
 
 *** PUT GRAPH HERE ***
+
+why de[ck]ameter
 
 using https://oceancolor.gsfc.nasa.gov/docs/distfromcoast/ (signed version)
 
