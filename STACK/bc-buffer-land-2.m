@@ -123,9 +123,12 @@ TODO: use the word "discretize" as much as possible
 
 100km hue plot
 
-hue[x_] = If[x>0, Min[0.8,0.5 + 0.3/1000*x], Max[0.4+0.4/1000*x, 0]]
+hue[x_] = Round[If[x>0, Min[0.7,0.5 + 0.2/1600*x], Max[0.2+0.2/1600*x, 0]],
+ .2/16]
 
-t1330 = Partition[Transpose[coast][[3]], 9000];
+Plot[hue[x],{x,-2000,2000}]
+
+t1330 = Reverse[Partition[Transpose[coast][[3]], 9000]];
 
 t1331 = Map[hue, t1330, {2}];
 
