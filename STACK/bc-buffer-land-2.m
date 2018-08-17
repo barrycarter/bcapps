@@ -66,6 +66,96 @@ Run["bzcat "<>nasaFile<>" > /tmp/output.txt"];
 
 coast0 = ReadList["/tmp/output.txt", {Number, Number, Number}];
 
+(* hesitant about using a function here, plus this is the wrong thing
+to do for Interpolation *)
+
+Table[distCoast[i[[1]],i[[2]]] = i[[3]], {i, coast0}];
+
+(* there are better ways to do this, since I know the grid, but... *)
+
+lats = Sort[DeleteDuplicates[Transpose[coast0][[2]]]];
+lons = Sort[DeleteDuplicates[Transpose[coast0][[1]]]];
+dists = Sort[DeleteDuplicates[Transpose[coast0][[3]]]];
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> Hue, Contours -> 31,
+ContourLabels -> True]
+
+0 - .434 = 14/32 seems good for land (but keep green inland)
+
+.465 - .713 seems good for water (green closest to land) 15/32 to 23/32
+
+Graphics[Raster[Table[{i,j}, {j,0,16}, {i, 0, 14/32, 14/32/16}], 
+ ColorFunction -> Hue]]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction ->
+ColorData["CoffeeTones"], Contours -> 15, ContourLabels -> True]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction ->
+ColorData["SandyTerrain"], Contours -> 15, ContourLabels -> True]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction ->
+ColorData["DeepSeaColors"], Contours -> 15, ContourLabels -> True]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction ->
+ColorData["GreenBrownTerrain"], Contours -> 15, ContourLabels -> True]
+
+(* colordata automatically truncates! *)
+
+landfunc = ColorData["CoffeeTones"]
+waterfunc = ColorData["DeepSeaColors"]
+
+distance2Color[d_] = If[d>0, landfunc[1-Round[-d/1600,1/16]],
+ waterfunc[1-Round[d/1600,1/16]]];
+
+Table[landfunc[i], {i, 0, 1, 1/10}, {j, 0, 10}]
+
+raster can't take pure colors grrr
+
+Table[Apply[List, landfunc[i]], {i, 0, 1, 1/10}, {j, 0, 10}]
+
+Raster[Table[Apply[List, landfunc[i]], {i, 0, 1, 1/10}, {j, 0, 10}],
+ ColorFunction -> RGBColor]
+
+t1258 = Table[
+ Apply[distance2Color[distCoast[lon, lat]], List], 
+ {lon, Take[lons,500]}, {lat, Take[lats,500]}
+]
+t1258 = Table[
+ Apply[List, distance2Color[distCoast[lon, lat]]],
+ {lon, Take[lons,500]}, {lat, Take[lats,500]}
+]
+
+t1258 = Table[
+ Apply[List, distance2Color[distCoast[lon, lat]]],
+ {lon, lons}, {lat, Take[lats,500]}
+];
+
+t1258 = Table[
+ Apply[List, distance2Color[distCoast[lon, lat]]],
+ {lon, Take[lons,500]}, {lat, Take[lats,500]}
+];
+
+t1258 = Table[
+ Apply[List, distance2Color[distCoast[lon, lat]]],
+ {lon, lons}, {lat, Take[lats,500]}
+];
+
+t1258 = Table[
+ Apply[List, distance2Color[distCoast[lon, lat]]],
+ {lon, lons}, {lat, lats}
+];
+
+Graphics[Raster[t1258]]
+showit
+
+
+
+
+
+
+
+
+
 (* rounding distance to nearest 10m because least precise data is that
 precise, except when close to 0, to preserve sign *)
 
@@ -135,6 +225,8 @@ t1331 = Map[hue, t1330, {2}];
 t1332 = Raster[t1331, ColorFunction -> Hue];
 
 Graphics[t1332]
+
+
 
 testing...
 
