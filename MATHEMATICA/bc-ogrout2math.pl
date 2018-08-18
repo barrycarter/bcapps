@@ -17,6 +17,7 @@ while (<>) {
   # aside from that, just the polygons
   unless (s/^\s*polygon\s*\(\((.*?)\)\)\s*$/$1/i) {next;}
 
+  # this may not be an error, it may be the Caspian Sea
   # only row FID 148986 has this error, and I ignore it
   # TODO: don't ignore it
   if (/\(/ || /\)/) {

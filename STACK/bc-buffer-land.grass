@@ -1,0 +1,20 @@
+# use grass74, do not background, need command line
+
+# let's see if I can get this in grass
+
+# used new location wizard to create new location from GSHHS_c_L1.shp
+# in the downloaded coastline files
+
+# this will create it, do NOT use "d.mon start"
+d.mon wx0
+
+# if no argument, will bring up select (if using GUI)
+
+d.vect GSHHS_c_L1@PERMANENT
+
+# above displays the vector region
+
+testpt1="-106.5,35.1"
+
+
+

@@ -27,6 +27,40 @@ SELECT ST_Distance(PointFromText(@a), PolygonFromText(@g));
 
 above works!!!
 
+SELECT ST_Distance(
+ PointFromText('POINT(-106 35)'),
+ PointFromText('POINT(-105 35)')
+);
+
+SELECT ST_Distance(
+ PointFromText('POINT(-106 90)'),
+ PointFromText('POINT(-105 90)')
+);
+
+both above are 1, hmmmmm, suggesting 2D
+
+SELECT ST_Distance(
+ ST_TRANSFORM(PointFromText('POINT(-106 35)'), 4269),
+ ST_TRANSFORM(PointFromText('POINT(-105 35)'), 4269)
+);
+
+
+
+So far the SRID property is just a dummy in MySQL, it is stored as part of a geometries meta data but all actual calculations ignore it and calculations are done assuming Euclidean (planar) geometry.
+
+So ST_Transform would not really do anything at this point anyway.
+
+I think the same is still true for MariaDB, at least the knowldege base page for the SRID() function still says so:
+
+https://mariadb.com/kb/en/mariadb/documentation/gis-functionality/geometry-properties/srid/
+
+    # Geographic Functions #
+
+(* and now... postgresql/postgis *)
+
+
+
+
 
 
 
