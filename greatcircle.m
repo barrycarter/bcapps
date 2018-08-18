@@ -188,4 +188,3 @@ p2:={Cos[lon2]*Cos[lat2], Sin[lon2]*Cos[lat2], Sin[lat2]}
 v1[t_] := p1*Cos[t*Pi/2]+p2*Sin[t*Pi/2]
 v[t_] := v1[t]/Norm[v1[t]]
 
-

@@ -66,6 +66,40 @@ Run["bzcat "<>nasaFile<>" > /tmp/output.txt"];
 
 coast0 = ReadList["/tmp/output.txt", {Number, Number, Number}];
 
+(* rounding distance to nearest 10m because least precise data is that
+precise, except when close to 0, to preserve sign *)
+
+round2[x_] = If[Round[x,0.01] == 0, Sign[x]*0.01, Round[x,0.01]];
+
+(* special case small neg/pos; using precise numbers slows Mathematica
+down so the "0.01" above is intentionally not 1/100 *)
+
+coast = Table[{i[[1]], i[[2]], round2[i[[3]]]}, {i, coast0}];
+
+(* colordata automatically truncates! *)
+
+landfunc = ColorData["CoffeeTones"]
+waterfunc = ColorData["DeepSeaColors"]
+
+(* this also removes the RGB header that Raster can't handle *)
+
+Clear[distance2Color];
+distance2Color[d_] := distance2Color[d] = 
+Apply[List, If[d>0, waterfunc[1-Floor[d/1600,1/16]],
+ landfunc[1-Floor[-d/1600,1/16]]]];
+
+coastDists = Transpose[coast][[3]];
+
+coastColors = Map[distance2Color, coastDists];
+
+coastColorsArray = Partition[coastColors, 9000];
+
+Graphics[Raster[coastColorsArray, ColorFunction -> RGBColor]]
+
+
+
+
+
 (* hesitant about using a function here, plus this is the wrong thing
 to do for Interpolation *)
 
@@ -98,14 +132,6 @@ ColorData["DeepSeaColors"], Contours -> 15, ContourLabels -> True]
 
 ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction ->
 ColorData["GreenBrownTerrain"], Contours -> 15, ContourLabels -> True]
-
-(* colordata automatically truncates! *)
-
-landfunc = ColorData["CoffeeTones"]
-waterfunc = ColorData["DeepSeaColors"]
-
-distance2Color[d_] = If[d>0, landfunc[1-Round[-d/1600,1/16]],
- waterfunc[1-Round[d/1600,1/16]]];
 
 Table[landfunc[i], {i, 0, 1, 1/10}, {j, 0, 10}]
 
@@ -155,16 +181,6 @@ showit
 
 
 
-
-(* rounding distance to nearest 10m because least precise data is that
-precise, except when close to 0, to preserve sign *)
-
-round2[x_] = If[Round[x,0.01] == 0, Sign[x]*0.01, Round[x,0.01]];
-
-(* special case small neg/pos; using precise numbers slows Mathematica
-down so the "0.01" above is intentionally not 1/100 *)
-
-coast = Table[{i[[1]], i[[2]], round2[i[[3]]]}, {i, coast0}];
 
 (*  different values, 509997 when rounded to nearest 10m, 509996 once I get rid of the 0's *)
 
