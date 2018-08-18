@@ -14,7 +14,69 @@ d.vect GSHHS_c_L1@PERMANENT
 
 # above displays the vector region
 
-testpt1="-106.5,35.1"
+# this is for tcsh, for bash see
+# https://grass.osgeo.org/grass72/manuals/m.measure#examples
+
+# this has nothing to do w/ grass, this is an env variable in your shell
+setenv testpt1 "-106.5,35.1"
+
+v.distance from=GSHHS_c_L1@PERMANENT to=testpt1
+
+# above not working as planned, so running "grass74 -text" (pure text!)
+
+setenv Bonn_DE "7.09549,50.73438"
+setenv Philadelphia_US "-75.16379,39.95233"
+
+m.measure coordinates="$Bonn_DE,$Philadelphia_US" units=kilometers 
+
+# the above worked!
+
+setenv file "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L1.shp"
+
+v.in.ogr $file
+
+# for me, this already existed, hmmm
+
+# below failBs because GSHHS_c_L1 is a vect?
+# m.measure coordinates="$Bonn_DE,GSHHS_c_L1" units=kilometers 
+
+# add a column to my geometry
+v.db.addcolumn map=GSHHS_c_L1 columns='distance DOUBLE PRECISION'
+
+# money shot
+
+setenv Philadelphia_US "-75.16379,39.95233"
+v.distance from=$Philadelphia_US to=GSHHS_c_L1 upload=cat column=distance
+
+# other money shot
+v.buffer input=GSHHS_c_L1 output=dist100 distance=100
+
+v.distance from=GSHHS_c_L1 to=$Bonn_DE
+
+# useful info commands
+
+g.list type=all
+v.info GSHHS_c_L1
+g.region -p
+
+# your sqlite3 dbs related to a given project
+db.databases
+
+# list all db tables
+db.tables
+
+# all columns in a table
+db.columns GSHHS_c_L1
+
+# display commands
+
+# creates a popup window even from shell
+d.mon wx0
+
+d.vect GSHHS_c_L1
 
 
+# getting rid of stuff
+# must use -f to actually do it
+g.remove type=vector name=dist100
 

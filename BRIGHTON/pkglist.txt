@@ -457,6 +457,10 @@ libzip
 libzip-devel
 
 # math/science tools
+geos
+geos-devel
+geos-python
+geos-php
 proj-devel
 gdal-devel
 gdal-python
@@ -612,6 +616,8 @@ eclipse
 # required for fly
 gd-devel
 freetype-devel
+# below needed for grass74
+python-freetype
 
 # required for abiword source compile
 libpng-devel
