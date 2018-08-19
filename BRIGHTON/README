@@ -405,7 +405,7 @@ mount -t overlay overlay -o lowerdir=/mnt/kemptown/dullon-root/lib,upperdir=/usr
 
  /usr /opt /var (becomes readonly = bad) /etc (dangerous!) 
 
-but must be done "revrse" so copy on kemptown is immutable (can't do
+but must be done "reverse" so copy on kemptown is immutable (can't do
 during testing, NFS not supported by overlay)
 
 %% TODO: consider programmatically symlinking instead (for all of / ?!?!)
@@ -667,3 +667,9 @@ no LVM needed then "mount /dev/mapper/villa /mnt/villa/" for example
 cryptsetup luksFormat /dev/sdc1; do this after partioning
 
 %% TODO: sshfs mount dullon, very useful
+
+% NOTE: I later manually removed grass 6 to install grass 7 from
+source (grass isn't in pkglist.txt but I think qgis-grass installs
+it?)
+
+
