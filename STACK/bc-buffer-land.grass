@@ -48,8 +48,32 @@ v.db.addcolumn map=GSHHS_c_L1 columns='distance DOUBLE PRECISION'
 setenv Philadelphia_US "-75.16379,39.95233"
 v.distance from=$Philadelphia_US to=GSHHS_c_L1 upload=cat column=distance
 
-# other money shot
-v.buffer input=GSHHS_c_L1 output=dist100 distance=100
+# other money shot (--overwrite to overwrite)
+v.buffer --overwrite input=GSHHS_c_L1 output=dist100 distance=10
+
+v.buffer --overwrite input=GSHHS_c_L1 output=dist100 distance=10 type=area
+
+v.buffer --overwrite input=GSHHS_c_L1 output=dist100 distance=10 method=geodesic
+
+# extrude to 3d?
+
+v.extrude --overwrite input=GSHHS_c_L1 output=extruded height=1
+
+v.buffer --overwrite input=extruded output=extext distance=10 
+
+# create a new vector grid
+
+# this is wrong, it creates lines
+# v.mkgrid --overwrite map=mygrid box=10,10
+
+v.mkgrid --overwrite type=point map=mygrid box=10,10
+v.db.addcolumn map=mygrid columns='distance DOUBLE PRECISION'
+
+v.out.ascii input=mygrid output=/tmp/foo.txt
+
+v.distance from=mygrid to=GSHHS_c_L1 upload=dist column=distance
+
+
 
 v.distance from=GSHHS_c_L1 to=$Bonn_DE
 
@@ -79,4 +103,7 @@ d.vect GSHHS_c_L1
 # getting rid of stuff
 # must use -f to actually do it
 g.remove type=vector name=dist100
+
+# TODO: tell to install GEOS, and click/unclick render, it's always slow
+
 
