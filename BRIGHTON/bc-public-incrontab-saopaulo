@@ -22,4 +22,8 @@
 # /home/user/20180329/EPUB/epub9.zip IN_MODIFY env DISPLAY=:0.0 xmessage file creation complete
 
 # other test
-/mnt/villa/user/20180329/PDF/pdf9.zip IN_MODIFY env DISPLAY=:0.0 xmessage file creation complete
+# /mnt/villa/user/20180329/PDF/pdf9.zip IN_MODIFY env DISPLAY=:0.0 xmessage file creation complete
+
+# test w/ symlink
+
+/home/user/mail/myphonebox IN_MODIFY env DISPLAY=:0.0 xmessage myphonebox has changed
