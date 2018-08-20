@@ -196,3 +196,29 @@ w = Cross[Cross[u,v], u]
 pos[t_] = u*Cos[t] + w*Sin[t]
 
 
+given sph coords fine dist from th3,th3 to line from ph1,th1 to ph2,th2
+
+conds = {-Pi < th1 < Pi, -Pi/2 < ph1 < Pi/2, 
+         -Pi < th2 < Pi, -Pi/2 < ph2 < Pi/2, 
+         -Pi < th3 < Pi, -Pi/2 < ph3 < Pi/2, 
+         0 < t < 1};
+
+line[t_] = sph2xyz[th1, ph1, 1] +  
+ t*(sph2xyz[th2, ph2, 1] - sph2xyz[th1, ph1, 1]);
+
+dp[t_] = Simplify[sph2xyz[th3, ph3, 1].line[t]/Norm[line[t]], conds]
+
+derv[t_] = Simplify[D[dp[t], t], conds]
+
+sol0 = Simplify[Solve[D[dp[t], t] == 0, t], conds]
+
+sol = Simplify[Solve[Simplify[D[dp[t], t]] == 0, t][[1,1,2]],conds]
+
+doinmg parsing derv[t] into its form helps... its a product
+
+Head[derv[t]]
+
+derv[t][[1]] has no sols
+
+Solve[derv[t][[2]] == 0, t][[1,1,2]]
+
