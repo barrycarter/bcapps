@@ -488,36 +488,194 @@ Take[Chop[xyz2sph[t2224.sph2xyz[nyc[[1]], nyc[[2]], 1]]],2]/Degree
 
 34.2195 degs which is the right number
 
-Chop[xyz2sph[t2224.sph2xyz[nyc[[1]], nyc[[2]], 1]]]/Degree
+now 1 degree away parallels first
 
-puts it at longitude 137.608
+t2235[t_] = Take[xyz2sph[Inverse[t2224].sph2xyz[t, 1*Degree, 1]],2]/Degree
+t2236[t_] = Take[xyz2sph[Inverse[t2224].sph2xyz[t, 0, 1]], 2]/Degree
+t2237[t_] = Take[xyz2sph[Inverse[t2224].sph2xyz[t, -1*Degree, 1]], 2]/Degree
+t2238[t_] = t2236[t] + {0, 1}
 
-test = {-118.243667974691, 35.0522226126327}*Degree
+ParametricPlot[Take[t2235[t], 2]/Degree, {t, 0, 34.2195*Degree}]
 
-t2229 = matrix[lax[[1]], lax[[2]], test[[1]], test[[2]]]
+p1 = ParametricPlot[t2235[t], {t, 0, 34.2195*Degree}]
+p2 = ParametricPlot[t2236[t], {t, 0, 34.2195*Degree}]
+p3 = ParametricPlot[t2237[t], {t, 0, 34.2195*Degree}]
+p4 = ParametricPlot[t2238[t], {t, 0, 34.2195*Degree}]
 
-t2229.sph2xyz[test[[1]], test[[2]], 1]
-
-this worked fine
-
-ok i had messed up the coord order doing again
-
-
-
-
+Show[{p1, p4}]
 
 
 
+conds = {-Pi < th1 < Pi, -Pi < th2 < Pi, -Pi/2 < ph1 < Pi/2, -Pi/2 <
+ph2 < Pi/2};
+
+FullSimplify[mat, conds]
+
+in general
+
+Take[xyz2sph[Inverse[mat].sph2xyz[t, n*Degree, 1]],2]
+
+QUESTION FOR MATHEMATICA BELOW
+
+Subject: Simplify closed formula for distance-preserving great circle spherical coordinate parametrization
+
+Short version: can the formula (*** PUT FUNCTION NAME) below be simplified based on the conditions below?
+
+*** PUT FORMULA HERE ***
+
+
+Long version: I am trying to find a closed-form parametrization of a great circle through two points on the unit sphere. I will refer to these points as `{lon1, lat1}` and `{lon2, lat2}` since my ultimate goal for this formula involves GIS and I'm OK with assuming the Earth is spherical. Just to be clear (since some people use different forms of spherical cooardinates), the XYZ coordinates of my two points are: `{Cos[lat1] Cos[lon1], Cos[lat1] Sin[lon1], Sin[lat1]}` and `{Cos[lat2] Cos[lon2], Cos[lat2] Sin[lon2], Sin[lat2]}`.
+
+The parametrization should have the following properties:
+
+  - It should refer only to lon1, lat1, lon2, lat2, and the parameter itself. It should not make any reference to XYZ coordinates.
+
+  - The parametrization should be "distance preserving" in the sense that the great circle distance between two parametrized points should be proportional to the change in the parameter.
+
+I'm sure someone has already done this, so, if someone can point me to a URL, please ignore the rest of this question.
+
+I've found a version myself, but it's extremely ugly, and I'm confident it can be simplified, but that Mathematica either can't simplify it, or needs some help in simplifying it.
+
+My approach:
+
+  - Rotate the great circle line so that `{lon1, lat1}` becomes `{0,0}` (geographically, the intersection of the equator and the prime meridian), and `{lon2, lat2}` maps to `{x, 0}` where the value of x is the spherical distance between the two points.
+
+  - Create the trivial parametrization '{t*x, 0}` on the rotated coordinates.
+
+  - Apply the inverse rotation to the parametrization.
+
+And here we go...
+
+<pre><code>
+
+(*
+
+First, I need a few helper functions to convert between XYZ and
+spherical coordinates, and for rotations around the three axes; for
+convenience, the XYZ to spherical formulas can take a list of multiple
+parameters. I also add some conditions for my coordinates.
+
+*)
+
+sph2xyz[th_, ph_, r_] = {r*Cos[ph]*Cos[th], r*Cos[ph]*Sin[th], r*Sin[ph]};
+sph2xyz[l_] := sph2xyz @@ l;
+
+xyz2sph[x_, y_, z_] = {ArcTan[x, y], ArcTan[Sqrt[x^2 + y^2], z], 
+ Sqrt[Abs[x]^2 + Abs[y]^2 + Abs[z]^2]};
+xyz2sph[l_] := xyz2sph @@ l;
+
+rotationMatrix[x, theta_] = {{1, 0, 0}, {0, Cos[theta], Sin[theta]}, 
+    {0, -Sin[theta], Cos[theta]}};
+ 
+rotationMatrix[y, theta_] = {{Cos[theta], 0, -Sin[theta]}, {0, 1, 0}, 
+    {Sin[theta], 0, Cos[theta]}};
+ 
+rotationMatrix[z, theta_] = {{Cos[theta], -Sin[theta], 0}, 
+    {Sin[theta], Cos[theta], 0}, {0, 0, 1}};
+
+(* Strictly speaking, these should be <= not <, but Mathematica
+sometimes finds better and equally accurate simplifications when the
+corner cases are omitted *)
+
+conds = {-Pi < lon1 < Pi, -Pi/2 < lat1 < Pi/2, 
+         -Pi < lon2 < Pi, -Pi/2 < lat2 < Pi/2};
+
+(* To get {lon1, lat1} to {0, 0} we rotate by -lon1 around the z axis
+and then -lat1 around the y axis *)
+
+mat0 = rotationMatrix[y,-lat1].rotationMatrix[z, -lon1];
+
+(* this yields {0,0,1} in spherical coordinates as expected *)
+
+Simplify[xyz2sph[mat0.sph2xyz[{lon1, lat1, 1}]]]
+
+(* 
+
+I now need a rotation around the x axis to bring `{lon2, lat2}` to the
+"equator" (note that rotating around the x axis won't change the
+rotated location of `{lon1, lat1}`, which is good since this is
+already in the correct position). Since I couldn't find a simple
+formula, I "brute forced" it, using `psi` as my parameter.
+
+*)
+
+psiTest = rotationMatrix[x, psi].mat0;
+
+(*
+
+Ideally, Mathematica would solve this directly, but it doesn't, so
+I've commented it out (adding the "Reals" parameter doesn't help: it
+just makes Solve fail faster):
+
+Solve[(xyz2sph[psiTest.sph2xyz[{lon2, lat2, 1}]])[[2]] == 0, psi]
+
+Instead, we note we just need the rotation of `{lon2, lat2}` to have z
+value of 0. Note that adding the "Reals" parameter to the Solve below
+makes it fail. That has nothing to do with this question, but I find
+it annoying.
+
+*)
+
+psiSol = Simplify[Solve[(psiTest.sph2xyz[{lon2, lat2, 1}])[[3]] == 0,
+psi], conds];
+
+(*
+
+There are two fairly hideous solutions above. I arbitrarily choose the
+first one (probably a bad idea, but it seems to work), and clean it up
+a bit.
+
+*)
+
+psiSolChosen = Simplify[psiSol[[1,1,2]] /. C[1] -> 0, conds];
+
+(*
+
+The InputForm of the result is:
+
+ArcTan[-((Cos[lat2]*Sin[lon1 - lon2])/
+   Sqrt[-(Cos[lat2]^2*(-6 + 2*Cos[2*lat1] + 2*Cos[2*lon1 - 2*lon2] + 
+         Cos[2*(lat1 + lon1 - lon2)] + Cos[2*(lat1 - lon1 + lon2)]))/8 - 
+     Cos[lat2]*Cos[lon1 - lon2]*Sin[2*lat1]*Sin[lat2] + 
+     Cos[lat1]^2*Sin[lat2]^2]), (-(Cos[lat2]*Cos[lon1 - lon2]*Sin[lat1]) + 
+   Cos[lat1]*Sin[lat2])/
+  Sqrt[-(Cos[lat2]^2*(-6 + 2*Cos[2*lat1] + 2*Cos[2*lon1 - 2*lon2] + 
+        Cos[2*(lat1 + lon1 - lon2)] + Cos[2*(lat1 - lon1 + lon2)]))/8 - 
+   Cos[lat2]*Cos[lon1 - lon2]*Sin[2*lat1]*Sin[lat2] + Cos[lat1]^2*Sin[lat2]^2]]
+
+This seems really ugly, especially since the numbers 6 and 8 seem to
+have come out of nowhere. However, I can't find a way to Mathematica
+make it simplify it any further.
+
+TODO: rewrite above... replacing two arg ArcTan w/ single arg helps a lot!
+
+psiSolChosen2 = psiSolChosen /. ArcTan[x_, y_] -> ArcTan[x/y];
+
+matFinal = Simplify[rotationMatrix[x, psiSolChosen2].mat0, conds]
+
+
+
+Just as a comment, the fact the numbers 6 and 8 appear in psi seems
+odd to me, almost like I'm expanding a power series.
 
 
 
 
 
 
+tODO: run w/o initfile to make sure this works for all
+
+
+TODO: does my final matrix preserve my first point? yikes, maybe not!
+
+TODO: note hidden assumption of rotation
+
+
+TODO: mention buffering and this file
+
+FOUND IT!
 
 
 
-
-
-
-
+SURP NOT EXIST? WHERE?
+TODO: SPELL CHECK
