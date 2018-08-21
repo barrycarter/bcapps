@@ -431,3 +431,93 @@ lon+dth[d, lat, lat2]/2}, {lat2, lat-d, lat+d, i}]
 
 t1236[d_, lon1_, lat1_, lon2_, lat2_, i1_, i2_] := 
  Table[t1235[d, lon1+
+
+using lin transforms
+
+sph2xyz[th1, ph1, 1]
+
+sph2xyz[th2, ph2, 1]
+
+sph2xyz[0,0,1] == {1,0,0}
+
+sph2xyz[x,0,1] == {Cos[x], Sin[x], 0}
+
+mat = rotationMatrix[x,psi1].rotationMatrix[y,psi2].rotationMatrix[z,psi3];
+
+Solve[mat.sph2xyz[th1, ph1, 1] == {1,0,0}, Reals]
+
+rotationMatrix[z, -th1].sph2xyz[th1, ph1, 1]
+
+rotationMatrix[y,-ph1].rotationMatrix[z, -th1].sph2xyz[th1, ph1, 1]
+
+above yields {1, 0, 0} as desired!
+
+mat0 = rotationMatrix[y,-ph1].rotationMatrix[z, -th1]
+
+mat0.sph2xyz[th2, ph2, 1]
+
+rotationMatrix[x, psi].mat0.sph2xyz[th2, ph2, 1]
+
+t2208 = Simplify[Solve[(rotationMatrix[x, psi].mat0.sph2xyz[th2, ph2,
+1])[[3]] == 0, psi], Element[{ph1, th1, ph2, th2, psi}, Reals]]
+
+t2210 = t2208[[1,1,2,1]] /. C[1] -> 0
+
+mat = rotationMatrix[x, t2210].mat0;
+
+Simplify[mat.sph2xyz[th1, ph1, 1]]
+
+t2214 = Simplify[mat.sph2xyz[th2, ph2, 1]]
+
+Simplify[t2214[[1]]^2 + t2214[[2]]^2] (is 1 as expected)
+
+Simplify[ArcCos[t2214[[1]]]]
+
+t2218 = Simplify[Inverse[mat], Element[{th1,th2,ph1,ph2}, Reals]]      
+
+matrix[th1_, ph1_, th2_, ph2_] = mat;
+
+lax = {-118.243667974691, 34.0522226126327}*Degree
+
+nyc = {-75.4998967349468, 43.0003513694019}*Degree
+
+t2224 = matrix[lax[[1]], lax[[2]], nyc[[1]], nyc[[2]]]
+
+Take[Chop[xyz2sph[t2224.sph2xyz[lax[[1]], lax[[2]], 1]]],2]
+Take[Chop[xyz2sph[t2224.sph2xyz[nyc[[1]], nyc[[2]], 1]]],2]/Degree
+
+34.2195 degs which is the right number
+
+Chop[xyz2sph[t2224.sph2xyz[nyc[[1]], nyc[[2]], 1]]]/Degree
+
+puts it at longitude 137.608
+
+test = {-118.243667974691, 35.0522226126327}*Degree
+
+t2229 = matrix[lax[[1]], lax[[2]], test[[1]], test[[2]]]
+
+t2229.sph2xyz[test[[1]], test[[2]], 1]
+
+this worked fine
+
+ok i had messed up the coord order doing again
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

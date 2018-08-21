@@ -1,18 +1,21 @@
-#my incrontab file, currently very minimal
+# this may or may not work
+MAILTO=daemon
 
-#whenever I snapshot VLC, I want to bring up feh so I can annotate
-#what I just snapshotted
+# my incrontab file, currently very minimal
 
-#TODO: consider auto-image-hashing anything that gets added here
+# whenever I snapshot VLC, I want to bring up feh so I can annotate
+# what I just snapshotted
+
+# TODO: consider auto-image-hashing anything that gets added here
 /home/user/VLC/ IN_CREATE env DISPLAY=:0.0 feh -F -d --draw-tinted -K . -G $@/$#
 
-#if I myself change, re incrontab me
+# if I myself change, re incrontab me
 
 /home/user/BCGIT/BRIGHTON/bc-public-incrontab-saopaulo IN_MODIFY incrontab $@
 
-#TODO: if I ever use a private incrontab file, test above must be changed
+# TODO: if I ever use a private incrontab file, test above must be changed
 
-#TODO: consider autoimagehashing in other dirs such as TUMBLR
+# TODO: consider autoimagehashing in other dirs such as TUMBLR
 
 # temporary test (failed)
 # /home/user/20180329/MP3/vol_9.zip IN_CREATE env DISPLAY=:0.0 xmessage file creation complete
@@ -24,6 +27,6 @@
 # other test
 # /mnt/villa/user/20180329/PDF/pdf9.zip IN_MODIFY env DISPLAY=:0.0 xmessage file creation complete
 
-# test w/ symlink
+# test w/ symlink (works, but need to seriously improve)
 
-/home/user/mail/myphonebox IN_MODIFY env DISPLAY=:0.0 xmessage myphonebox has changed
+# /home/user/mail/myphonebox IN_MODIFY echo test of output from incrontab
