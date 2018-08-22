@@ -538,11 +538,11 @@ I've found a version myself, but it's extremely ugly, and I'm confident it can b
 
 My approach:
 
-  - Rotate the great circle line so that `{lon1, lat1}` becomes `{0,0}` (geographically, the intersection of the equator and the prime meridian), and `{lon2, lat2}` maps to `{x, 0}` where the value of x is the spherical distance between the two points.
+  - Rotate the great circle line so that `{lon1, lat1}` becomes `{0,0}` (geographically, the intersection of the equator and the prime meridian), and `{lon2, lat2}` maps to `{lon3, 0}` where the value of x is the spherical distance between the two points.
 
-  - Create the trivial parametrization '{t*x, 0}` on the rotated coordinates.
+  - Create the trivial parametrization '{t*lon3, 0}` on the rotated coordinates.
 
-  - Apply the inverse rotation to the parametrization.
+  - Apply the inverse rotation to the parametrization, and convert back to spherical coordinates.
 
 And here we go...
 
@@ -575,10 +575,10 @@ rotationMatrix[z, theta_] = {{Cos[theta], -Sin[theta], 0},
 
 (* Strictly speaking, these should be <= not <, but Mathematica
 sometimes finds better and equally accurate simplifications when the
-corner cases are omitted *)
+corner cases are omitted; t is a parameter I plan to use later *)
 
 conds = {-Pi < lon1 < Pi, -Pi/2 < lat1 < Pi/2, 
-         -Pi < lon2 < Pi, -Pi/2 < lat2 < Pi/2};
+         -Pi < lon2 < Pi, -Pi/2 < lat2 < Pi/2, 0 < t < 1};
 
 (* To get {lon1, lat1} to {0, 0} we rotate by -lon1 around the z axis
 and then -lat1 around the y axis *)
@@ -617,17 +617,112 @@ it annoying.
 *)
 
 psiSol = Simplify[Solve[(psiTest.sph2xyz[{lon2, lat2, 1}])[[3]] == 0,
-psi], conds];
+         psi], conds];
 
 (*
 
-There are two fairly hideous solutions above. I arbitrarily choose the
-first one (probably a bad idea, but it seems to work), and clean it up
-a bit.
+To simplify the above, I take two invalid (but hopefully reasonable) steps:
+
+  - I use only the first solution
+
+  - I replace the two argument form of `ArcTan` with the less accurate one argument version.
+
+I also replace the constant term with 0, but that step is valid.
 
 *)
 
-psiSolChosen = Simplify[psiSol[[1,1,2]] /. C[1] -> 0, conds];
+psiSolChosen = Simplify[
+ psiSol[[1,1,2]] /. {C[1] -> 0, ArcTan[x_, y_] -> ArcTan[y/x]},
+conds];
+
+(*
+
+I now construct the final matrix and apply it to `{lon2, lat2}` to
+find the lon3 I mention earlier. This should be equal to the angular
+distance between `{lon1, lat1}` and `{lon2, lat2}`
+
+*)
+
+matFinal = Simplify[rotationMatrix[x, psiSolChosen].mat0, conds];
+
+(*
+
+We find all three spherical coordinates of the rotated point just to
+double check everything is OK
+
+*)
+
+other checks:
+
+t1929 = Simplify[xyz2sph[matFinal.sph2xyz[{lon2,lat2,1}]], conds]
+
+t1929 /. {lon1 -> RandomReal[2*Pi], lat1 -> RandomReal[Pi], 
+          lon2 -> RandomReal[2*Pi], lat2 -> RandomReal[Pi]}
+
+matInverse = Simplify[Inverse[matFinal], conds]
+
+Simplify[xyz2sph[matInverse.sph2xyz[{0,0,1}]], conds]
+Simplify[xyz2sph[matInverse.sph2xyz[{t,0,1}]], conds]
+
+d = ArcCos[sph2xyz[{lon1, lat1, 1}].sph2xyz[{lon2, lat2, 1}]]
+
+Simplify[xyz2sph[matInverse.sph2xyz[{d,0,1}]], conds]
+
+fTest[lon1_, lat1_, lon2_, lat2_, t_] = 
+ Take[xyz2sph[matInverse.sph2xyz[{t*d,0,1}]], 2];
+
+
+
+
+
+
+
+
+
+
+lon3pt = Simplify[xyz2sph[matFinal.sph2xyz[{lon2, lat2, 1}]], conds]
+
+(*
+
+We can confirm `lon3pt[[2]]` yields 0 as expected.
+
+Interestingly, `Simplify[lon3pt[[3]], conds]` does NOT yield "1", even
+though that's the value of the radius, since we're on the unit sphere.
+
+
+
+We now extract `lon3pt[[1]]`, which is lon3, and c
+
+*)
+
+lon3 = Simplify[lon3pt[[1]] /. ArcTan[x_,y_] -> ArcTan[y/x], conds];
+
+
+
+
+
+  -
+
+TODO: whine about parameters (ie, that I'm not using functions where I should)
+
+below is incorrect, need inverse
+
+latLonfake[t_] = 
+ Simplify[xyz2sph[Simplify[matFinal.sph2xyz[{t, 0, 1}], conds]], conds]
+
+t1449 = Simplify[matFinal.sph2xyz[{t, 0, 1}], conds]
+
+Simplify[Det[matFinal], conds] yields 1
+
+t1452 = Simplify[xyz2sph[t1449] /. ArcTan[x_,y_] -> ArcTan[y/x], conds];
+
+
+
+
+
+latLonParam[t_] = 
+ Simplify[xyz2sph[Simplify[matFinal.sph2xyz[{t*x, 0, 1}], conds]], conds]
+
 
 (*
 
