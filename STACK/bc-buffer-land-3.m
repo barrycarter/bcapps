@@ -515,20 +515,118 @@ in general
 
 Take[xyz2sph[Inverse[mat].sph2xyz[t, n*Degree, 1]],2]
 
-QUESTION FOR MATHEMATICA BELOW
+<question>
 
 Subject: Simplify closed formula for distance-preserving great circle spherical coordinate parametrization
 
-Short version: can the formula (*** PUT FUNCTION NAME) below be simplified based on the conditions below?
+Short version: can the function `paramLonLat` defined below be simplified given the conditions `conds` below? Note that the return value of `paramLonLat` is a two element list.
 
-*** PUT FORMULA HERE ***
+<pre><code>
 
+conds = {-Pi < lon1 < Pi, -Pi/2 < lat1 < Pi/2, -Pi < lon2 < Pi, -Pi/2
+< lat2 < Pi/2, 0 < t < 1}
 
-Long version: I am trying to find a closed-form parametrization of a great circle through two points on the unit sphere. I will refer to these points as `{lon1, lat1}` and `{lon2, lat2}` since my ultimate goal for this formula involves GIS and I'm OK with assuming the Earth is spherical. Just to be clear (since some people use different forms of spherical cooardinates), the XYZ coordinates of my two points are: `{Cos[lat1] Cos[lon1], Cos[lat1] Sin[lon1], Sin[lat1]}` and `{Cos[lat2] Cos[lon2], Cos[lat2] Sin[lon2], Sin[lat2]}`.
+paramLonLat[lon1_, lat1_, lon2_, lat2_, t_] = 
+{ArcTan[Cos[lat1]*Cos[lon1]*
+    Cos[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+        Sin[lat1]*Sin[lat2]]] + (32*Cos[lat2]^2*Sin[lon1 - lon2]^2*
+     Sin[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+         Sin[lat1]*Sin[lat2]]]*
+     Sqrt[1 + (Cot[lon1 - lon2]*Sin[lat1] - Cos[lat1]*Csc[lon1 - lon2]*
+          Tan[lat2])^2]*(Cos[lon2]*Csc[lon1 - lon2]*Sin[lat1]^2 + 
+      Cos[lat1]*(Cos[lat1]*Sin[lon1] - Cos[lon1]*Csc[lon1 - lon2]*Sin[lat1]*
+         Tan[lat2])))/(-20 - 4*Cos[2*lat1] + 6*Cos[2*lat1 - 2*lat2] - 
+     4*Cos[2*lat2] + 6*Cos[2*(lat1 + lat2)] + 4*Cos[2*lon1 - 2*lon2] + 
+     2*Cos[2*(lat1 + lon1 - lon2)] + 4*Cos[2*lat1 - 2*lat2 + lon1 - lon2] + 
+     Cos[2*(lat1 - lat2 + lon1 - lon2)] + 2*Cos[2*(lat2 + lon1 - lon2)] + 
+     Cos[2*(lat1 + lat2 + lon1 - lon2)] - 
+     4*Cos[2*lat1 + 2*lat2 + lon1 - lon2] + 2*Cos[2*(lat1 - lon1 + lon2)] + 
+     4*Cos[2*lat1 - 2*lat2 - lon1 + lon2] + 
+     Cos[2*(lat1 - lat2 - lon1 + lon2)] + 2*Cos[2*(lat2 - lon1 + lon2)] + 
+     Cos[2*(lat1 + lat2 - lon1 + lon2)] - 
+     4*Cos[2*lat1 + 2*lat2 - lon1 + lon2]), 
+  Cos[lat1]*Cos[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+        Sin[lat1]*Sin[lat2]]]*Sin[lon1] - 
+   (32*Cos[lat2]^2*Sin[lon1 - lon2]^2*
+     Sin[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+         Sin[lat1]*Sin[lat2]]]*(Cos[lat1]^2*Cos[lon1] - 
+      Csc[lon1 - lon2]*Sin[lat1]^2*Sin[lon2] + Cos[lat1]*Csc[lon1 - lon2]*
+       Sin[lat1]*Sin[lon1]*Tan[lat2])*
+     Sqrt[1 + (Cot[lon1 - lon2]*Sin[lat1] - Cos[lat1]*Csc[lon1 - lon2]*
+          Tan[lat2])^2])/(-20 - 4*Cos[2*lat1] + 6*Cos[2*lat1 - 2*lat2] - 
+     4*Cos[2*lat2] + 6*Cos[2*(lat1 + lat2)] + 4*Cos[2*lon1 - 2*lon2] + 
+     2*Cos[2*(lat1 + lon1 - lon2)] + 4*Cos[2*lat1 - 2*lat2 + lon1 - lon2] + 
+     Cos[2*(lat1 - lat2 + lon1 - lon2)] + 2*Cos[2*(lat2 + lon1 - lon2)] + 
+     Cos[2*(lat1 + lat2 + lon1 - lon2)] - 
+     4*Cos[2*lat1 + 2*lat2 + lon1 - lon2] + 2*Cos[2*(lat1 - lon1 + lon2)] + 
+     4*Cos[2*lat1 - 2*lat2 - lon1 + lon2] + 
+     Cos[2*(lat1 - lat2 - lon1 + lon2)] + 2*Cos[2*(lat2 - lon1 + lon2)] + 
+     Cos[2*(lat1 + lat2 - lon1 + lon2)] - 
+     4*Cos[2*lat1 + 2*lat2 - lon1 + lon2])], 
+ ArcTan[
+  Sqrt[(Cos[lat1]*Cos[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+           Sin[lat1]*Sin[lat2]]]*Sin[lon1] - 
+      (32*Cos[lat2]^2*Sin[lon1 - lon2]^2*
+        Sin[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+            Sin[lat1]*Sin[lat2]]]*(Cos[lat1]^2*Cos[lon1] - 
+         Csc[lon1 - lon2]*Sin[lat1]^2*Sin[lon2] + Cos[lat1]*Csc[lon1 - lon2]*
+          Sin[lat1]*Sin[lon1]*Tan[lat2])*
+        Sqrt[1 + (Cot[lon1 - lon2]*Sin[lat1] - Cos[lat1]*Csc[lon1 - lon2]*
+             Tan[lat2])^2])/(-20 - 4*Cos[2*lat1] + 6*Cos[2*lat1 - 2*lat2] - 
+        4*Cos[2*lat2] + 6*Cos[2*(lat1 + lat2)] + 4*Cos[2*lon1 - 2*lon2] + 
+        2*Cos[2*(lat1 + lon1 - lon2)] + 
+        4*Cos[2*lat1 - 2*lat2 + lon1 - lon2] + 
+        Cos[2*(lat1 - lat2 + lon1 - lon2)] + 2*Cos[2*(lat2 + lon1 - lon2)] + 
+        Cos[2*(lat1 + lat2 + lon1 - lon2)] - 
+        4*Cos[2*lat1 + 2*lat2 + lon1 - lon2] + 
+        2*Cos[2*(lat1 - lon1 + lon2)] + 
+        4*Cos[2*lat1 - 2*lat2 - lon1 + lon2] + 
+        Cos[2*(lat1 - lat2 - lon1 + lon2)] + 2*Cos[2*(lat2 - lon1 + lon2)] + 
+        Cos[2*(lat1 + lat2 - lon1 + lon2)] - 
+        4*Cos[2*lat1 + 2*lat2 - lon1 + lon2]))^2 + 
+    (Cos[lat1]*Cos[lon1]*Cos[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+           Sin[lat1]*Sin[lat2]]] + (32*Cos[lat2]^2*Sin[lon1 - lon2]^2*
+        Sin[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+            Sin[lat1]*Sin[lat2]]]*Sqrt[1 + (Cot[lon1 - lon2]*Sin[lat1] - 
+            Cos[lat1]*Csc[lon1 - lon2]*Tan[lat2])^2]*
+        (Cos[lon2]*Csc[lon1 - lon2]*Sin[lat1]^2 + 
+         Cos[lat1]*(Cos[lat1]*Sin[lon1] - Cos[lon1]*Csc[lon1 - lon2]*
+            Sin[lat1]*Tan[lat2])))/(-20 - 4*Cos[2*lat1] + 
+        6*Cos[2*lat1 - 2*lat2] - 4*Cos[2*lat2] + 6*Cos[2*(lat1 + lat2)] + 
+        4*Cos[2*lon1 - 2*lon2] + 2*Cos[2*(lat1 + lon1 - lon2)] + 
+        4*Cos[2*lat1 - 2*lat2 + lon1 - lon2] + 
+        Cos[2*(lat1 - lat2 + lon1 - lon2)] + 2*Cos[2*(lat2 + lon1 - lon2)] + 
+        Cos[2*(lat1 + lat2 + lon1 - lon2)] - 
+        4*Cos[2*lat1 + 2*lat2 + lon1 - lon2] + 
+        2*Cos[2*(lat1 - lon1 + lon2)] + 
+        4*Cos[2*lat1 - 2*lat2 - lon1 + lon2] + 
+        Cos[2*(lat1 - lat2 - lon1 + lon2)] + 2*Cos[2*(lat2 - lon1 + lon2)] + 
+        Cos[2*(lat1 + lat2 - lon1 + lon2)] - 
+        4*Cos[2*lat1 + 2*lat2 - lon1 + lon2]))^2], 
+  Cos[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + Sin[lat1]*Sin[lat2]]]*
+    Sin[lat1] - (32*Cos[lat1]*Cos[lat2]^2*Sin[lon1 - lon2]*
+     Sin[t*ArcCos[Cos[lat1]*Cos[lat2]*Cos[lon1 - lon2] + 
+         Sin[lat1]*Sin[lat2]]]*(Cos[lon1 - lon2]*Sin[lat1] - 
+      Cos[lat1]*Tan[lat2])*Sqrt[1 + (Cot[lon1 - lon2]*Sin[lat1] - 
+         Cos[lat1]*Csc[lon1 - lon2]*Tan[lat2])^2])/
+    (-20 - 4*Cos[2*lat1] + 6*Cos[2*lat1 - 2*lat2] - 4*Cos[2*lat2] + 
+     6*Cos[2*(lat1 + lat2)] + 4*Cos[2*lon1 - 2*lon2] + 
+     2*Cos[2*(lat1 + lon1 - lon2)] + 4*Cos[2*lat1 - 2*lat2 + lon1 - lon2] + 
+     Cos[2*(lat1 - lat2 + lon1 - lon2)] + 2*Cos[2*(lat2 + lon1 - lon2)] + 
+     Cos[2*(lat1 + lat2 + lon1 - lon2)] - 
+     4*Cos[2*lat1 + 2*lat2 + lon1 - lon2] + 2*Cos[2*(lat1 - lon1 + lon2)] + 
+     4*Cos[2*lat1 - 2*lat2 - lon1 + lon2] + 
+     Cos[2*(lat1 - lat2 - lon1 + lon2)] + 2*Cos[2*(lat2 - lon1 + lon2)] + 
+     Cos[2*(lat1 + lat2 - lon1 + lon2)] - 
+     4*Cos[2*lat1 + 2*lat2 - lon1 + lon2])]}
+
+</code></pre>
+
+Long version: I am trying to find a "simple" closed-form parametrization of a great circle through two points on the unit sphere. I will refer to these points as `{lon1, lat1}` and `{lon2, lat2}` since my ultimate goal for this formula involves GIS (I'm OK with assuming the Earth is spherical). Just to be clear (since some people use different notations), the XYZ coordinates of my two points are: `{Cos[lat1] Cos[lon1], Cos[lat1] Sin[lon1], Sin[lat1]}` and `{Cos[lat2] Cos[lon2], Cos[lat2] Sin[lon2], Sin[lat2]}`.
 
 The parametrization should have the following properties:
 
-  - It should refer only to lon1, lat1, lon2, lat2, and the parameter itself. It should not make any reference to XYZ coordinates.
+  - It should refer only to lon1, lat1, lon2, lat2, and t (the parameter) itself. It should not make any reference to XYZ coordinates.
 
   - The parametrization should be "distance preserving" in the sense that the great circle distance between two parametrized points should be proportional to the change in the parameter.
 
@@ -538,13 +636,13 @@ I've found a version myself, but it's extremely ugly, and I'm confident it can b
 
 My approach:
 
-  - Rotate the great circle line so that `{lon1, lat1}` becomes `{0,0}` (geographically, the intersection of the equator and the prime meridian), and `{lon2, lat2}` maps to `{lon3, 0}` where the value of x is the spherical distance between the two points.
+  - Rotate the great circle line so that `{lon1, lat1}` becomes `{0,0}` (geographically, the intersection of the equator and the prime meridian), and `{lon2, lat2}` maps to `{lon3, 0}` where the value of lon3 is the spherical distance between the two points.
 
   - Create the trivial parametrization '{t*lon3, 0}` on the rotated coordinates.
 
   - Apply the inverse rotation to the parametrization, and convert back to spherical coordinates.
 
-And here we go...
+And here I go...
 
 <pre><code>
 
@@ -573,15 +671,23 @@ rotationMatrix[y, theta_] = {{Cos[theta], 0, -Sin[theta]}, {0, 1, 0},
 rotationMatrix[z, theta_] = {{Cos[theta], -Sin[theta], 0}, 
     {Sin[theta], Cos[theta], 0}, {0, 0, 1}};
 
-(* Strictly speaking, these should be <= not <, but Mathematica
-sometimes finds better and equally accurate simplifications when the
-corner cases are omitted; t is a parameter I plan to use later *)
+(*
+
+Strictly speaking, these should be <= not <, but Mathematica sometimes
+finds better and equally accurate simplifications when the corner
+cases are omitted; t is a parameter I plan to use later
+
+*)
 
 conds = {-Pi < lon1 < Pi, -Pi/2 < lat1 < Pi/2, 
          -Pi < lon2 < Pi, -Pi/2 < lat2 < Pi/2, 0 < t < 1};
 
-(* To get {lon1, lat1} to {0, 0} we rotate by -lon1 around the z axis
-and then -lat1 around the y axis *)
+(*
+
+To get {lon1, lat1} to {0, 0} I rotate by -lon1 around the z axis and
+then -lat1 around the y axis
+
+*)
 
 mat0 = rotationMatrix[y,-lat1].rotationMatrix[z, -lon1];
 
@@ -604,15 +710,15 @@ psiTest = rotationMatrix[x, psi].mat0;
 (*
 
 Ideally, Mathematica would solve this directly, but it doesn't, so
-I've commented it out (adding the "Reals" parameter doesn't help: it
+I've commented it out below (adding the "Reals" parameter doesn't help: it
 just makes Solve fail faster):
 
 Solve[(xyz2sph[psiTest.sph2xyz[{lon2, lat2, 1}]])[[2]] == 0, psi]
 
-Instead, we note we just need the rotation of `{lon2, lat2}` to have z
-value of 0. Note that adding the "Reals" parameter to the Solve below
-makes it fail. That has nothing to do with this question, but I find
-it annoying.
+Instead, I note that the rotation of `{lon2, lat2}` must have a z
+value of 0 (note that adding the "Reals" parameter to the Solve below
+makes it fail; that has nothing to do with this question, but I find
+it annoying)
 
 *)
 
@@ -625,7 +731,9 @@ To simplify the above, I take two invalid (but hopefully reasonable) steps:
 
   - I use only the first solution
 
-  - I replace the two argument form of `ArcTan` with the less accurate one argument version.
+  - I replace the two argument form of `ArcTan` with the less accurate
+  one argument version (I do this later as well, since Mathematica
+  does a terrible job simplifying the two argument from of `ArcTan`)
 
 I also replace the constant term with 0, but that step is valid.
 
@@ -637,140 +745,51 @@ conds];
 
 (*
 
-I now construct the final matrix and apply it to `{lon2, lat2}` to
-find the lon3 I mention earlier. This should be equal to the angular
-distance between `{lon1, lat1}` and `{lon2, lat2}`
+I now construct the final matrix and find its inverse. Both are ugly.
 
 *)
 
 matFinal = Simplify[rotationMatrix[x, psiSolChosen].mat0, conds];
 
+matInverse = Simplify[Inverse[matFinal], conds];
+
 (*
 
-We find all three spherical coordinates of the rotated point just to
-double check everything is OK
+I could apply matFinal to `{lon2, lat2}` to find the lon3 I mention
+earlier, but I also know it's the angular distance between `{lon1,
+lat1}` and `{lon2, lat2}` and thus the arc-cosine of the dot product:
 
 *)
 
-other checks:
-
-t1929 = Simplify[xyz2sph[matFinal.sph2xyz[{lon2,lat2,1}]], conds]
-
-t1929 /. {lon1 -> RandomReal[2*Pi], lat1 -> RandomReal[Pi], 
-          lon2 -> RandomReal[2*Pi], lat2 -> RandomReal[Pi]}
-
-matInverse = Simplify[Inverse[matFinal], conds]
-
-Simplify[xyz2sph[matInverse.sph2xyz[{0,0,1}]], conds]
-Simplify[xyz2sph[matInverse.sph2xyz[{t,0,1}]], conds]
-
-d = ArcCos[sph2xyz[{lon1, lat1, 1}].sph2xyz[{lon2, lat2, 1}]]
-
-Simplify[xyz2sph[matInverse.sph2xyz[{d,0,1}]], conds]
-
-fTest[lon1_, lat1_, lon2_, lat2_, t_] = 
- Take[xyz2sph[matInverse.sph2xyz[{t*d,0,1}]], 2];
-
-
-
-
-
-
-
-
-
-
-lon3pt = Simplify[xyz2sph[matFinal.sph2xyz[{lon2, lat2, 1}]], conds]
+lon3 = Simplify[ArcCos[sph2xyz[{lon1, lat1, 1}].sph2xyz[{lon2, lat2,
+1}]], conds];
 
 (*
 
-We can confirm `lon3pt[[2]]` yields 0 as expected.
-
-Interestingly, `Simplify[lon3pt[[3]], conds]` does NOT yield "1", even
-though that's the value of the radius, since we're on the unit sphere.
-
-
-
-We now extract `lon3pt[[1]]`, which is lon3, and c
+I now apply matInverse to the earlier parametrization and convert back
+to spherical coordinates. The third coordinate is just the radius (and
+thus 1 on the unit sphere), so I only take the first two coordinates,
+the latitude and the longitude.
 
 *)
 
-lon3 = Simplify[lon3pt[[1]] /. ArcTan[x_,y_] -> ArcTan[y/x], conds];
+paramLonLat[lon1_, lat1_, lon2_, lat2_, t_] = 
+ Simplify[Take[xyz2sph[matInverse.sph2xyz[t*lon3, 0, 1]], 2], conds]
 
+</code></pre>
 
+Some other notes:
 
+  - I tried `FullSimplify` instead of `Simplify` in the cases above, but it just hangs.
 
+  - The value of `paramLonLat` depends only on `lon2-lon1`, not lon1 and lon2 individually. However, the formula is more useful with lon1 and lon2 given as separate values.
 
-  -
+  - I'm somewhat sloppy about providing function parameters. In many cases, the values I calculate are functions of other values, but I treat the calculated values as "constants".
 
-TODO: whine about parameters (ie, that I'm not using functions where I should)
+  - One reason I came up with my "own" method is because I am looking into parametrizing "buffer zones" around geodesic paths. With my method, a 1/4 radian buffer around a given geodesic is mostly just the inverse transform of the spherical coordinates `{t*lon3, 1/4}` and `{t*lon3, -1/4}`. There's a little more to it, but all other methods I found to parametrize geodesic buffers either involve two variables or rasterization.
 
-below is incorrect, need inverse
+  - My calculations are also available on github: https://github.com/barrycarter/bcapps/blob/master/STACK/bc-buffer-land-3.m
 
-latLonfake[t_] = 
- Simplify[xyz2sph[Simplify[matFinal.sph2xyz[{t, 0, 1}], conds]], conds]
+</question>
 
-t1449 = Simplify[matFinal.sph2xyz[{t, 0, 1}], conds]
-
-Simplify[Det[matFinal], conds] yields 1
-
-t1452 = Simplify[xyz2sph[t1449] /. ArcTan[x_,y_] -> ArcTan[y/x], conds];
-
-
-
-
-
-latLonParam[t_] = 
- Simplify[xyz2sph[Simplify[matFinal.sph2xyz[{t*x, 0, 1}], conds]], conds]
-
-
-(*
-
-The InputForm of the result is:
-
-ArcTan[-((Cos[lat2]*Sin[lon1 - lon2])/
-   Sqrt[-(Cos[lat2]^2*(-6 + 2*Cos[2*lat1] + 2*Cos[2*lon1 - 2*lon2] + 
-         Cos[2*(lat1 + lon1 - lon2)] + Cos[2*(lat1 - lon1 + lon2)]))/8 - 
-     Cos[lat2]*Cos[lon1 - lon2]*Sin[2*lat1]*Sin[lat2] + 
-     Cos[lat1]^2*Sin[lat2]^2]), (-(Cos[lat2]*Cos[lon1 - lon2]*Sin[lat1]) + 
-   Cos[lat1]*Sin[lat2])/
-  Sqrt[-(Cos[lat2]^2*(-6 + 2*Cos[2*lat1] + 2*Cos[2*lon1 - 2*lon2] + 
-        Cos[2*(lat1 + lon1 - lon2)] + Cos[2*(lat1 - lon1 + lon2)]))/8 - 
-   Cos[lat2]*Cos[lon1 - lon2]*Sin[2*lat1]*Sin[lat2] + Cos[lat1]^2*Sin[lat2]^2]]
-
-This seems really ugly, especially since the numbers 6 and 8 seem to
-have come out of nowhere. However, I can't find a way to Mathematica
-make it simplify it any further.
-
-TODO: rewrite above... replacing two arg ArcTan w/ single arg helps a lot!
-
-psiSolChosen2 = psiSolChosen /. ArcTan[x_, y_] -> ArcTan[x/y];
-
-matFinal = Simplify[rotationMatrix[x, psiSolChosen2].mat0, conds]
-
-
-
-Just as a comment, the fact the numbers 6 and 8 appear in psi seems
-odd to me, almost like I'm expanding a power series.
-
-
-
-
-
-
-tODO: run w/o initfile to make sure this works for all
-
-
-TODO: does my final matrix preserve my first point? yikes, maybe not!
-
-TODO: note hidden assumption of rotation
-
-
-TODO: mention buffering and this file
-
-FOUND IT!
-
-
-
-SURP NOT EXIST? WHERE?
 TODO: SPELL CHECK

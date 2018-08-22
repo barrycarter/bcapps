@@ -39,6 +39,9 @@ data notes:
 (* to stop Mathematica stupidity *)
 
 $AllowInternet = False;
+$AllowInternet = True;
+
+earthRadius = Entity["Planet", "Earth"]["Radius"]/Quantity[1,"km"];
 
 showit2 := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
@@ -47,14 +50,6 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
     Return[file];];
 
 </formulas>
-
-(* restore Internet *)
-
-$AllowInternet = True;
-
-(* must determine Earth's radius w/ Internet on, grumble *)
-
-earthRadius = Entity["Planet", "Earth"]["Radius"]/Quantity[1,"km"];
 
 (* read NASA file *)
 
@@ -93,6 +88,12 @@ coastDists = Transpose[coast][[3]];
 coastColors = Map[distance2Color, coastDists];
 
 coastColorsArray = Partition[coastColors, 9000];
+
+(* the above take a while, so I'm saving the result in an mx file,
+even though this is a bad idea overall; the result is only about 80M! 
+*)
+
+DumpSave["/home/user/20180807/coastcolorsarray.mx", coastColorsArray];
 
 Graphics[Raster[coastColorsArray, ColorFunction -> RGBColor]]
 

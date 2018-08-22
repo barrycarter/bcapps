@@ -73,8 +73,6 @@ v.out.ascii input=mygrid output=/tmp/foo.txt
 
 v.distance from=mygrid to=GSHHS_c_L1 upload=dist column=distance
 
-
-
 v.distance from=GSHHS_c_L1 to=$Bonn_DE
 
 # useful info commands
@@ -105,5 +103,29 @@ d.vect GSHHS_c_L1
 g.remove type=vector name=dist100
 
 # TODO: tell to install GEOS, and click/unclick render, it's always slow
+
+# second attempt below uses rasterization which I really don't want to do, wahh
+
+setenv file "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L1.shp"
+v.in.ogr $file
+
+# look at it as vector file first
+d.mon wx0
+d.vect GSHHS_c_L1
+
+# rasterize
+
+v.to.rast input=GSHHS_c_L1 output=GSHHS_c_L1_rast use=val val=1
+
+# confirm rasterization is using lat/lon values, not arb grid
+
+r.info GSHHS_c_L1_rast
+
+r.buffer --overwrite units=kilometers input=GSHHS_c_L1_rast 
+ output=test1 distances=100,200,300
+
+
+
+
 
 
