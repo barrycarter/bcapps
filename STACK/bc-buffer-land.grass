@@ -125,6 +125,44 @@ r.buffer --overwrite units=kilometers input=GSHHS_c_L1_rast
  output=test1 distances=100,200,300
 
 
+v.transform --overwrite input=GSHHS_c_L1 output=test zscale=10
+v.info test
+
+g.region rows=1000 cols=1000
+
+
+v.to.rast --overwrite input=GSHHS_c_L1 output=GSHHS_c_L1_rast use=val val=1
+
+d.rast GSHHS_c_L1_rast
+
+# load multiple maps and overlay
+
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L1.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L2.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L3.shp"
+# TODO: why is there no L4?
+# v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L4.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L5.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L6.shp"
+
+g.list type=all
+
+v.patch input=GSHHS_c_L1,GSHHS_c_L2,GSHHS_c_L3,GSHHS_c_L5,GSHHS_c_L6 
+ output=GSHHS_c
+
+# TODO: still no antarctica?
+
+g.region rows=10000 cols=5000
+
+v.to.rast --overwrite input=GSHHS_c output=GSHHS_c_rast use=val val=1
+
+r.buffer --overwrite units=kilometers input=GSHHS_c_rast 
+ output=test1 distances=100,200,300,400,500,600,700,800,900,1000
+
+# above looks nice, how do I output it
+
+d.out.file output=temp.png size=8192,4096
+
 
 
 
