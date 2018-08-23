@@ -163,6 +163,86 @@ r.buffer --overwrite units=kilometers input=GSHHS_c_rast
 
 d.out.file output=temp.png size=8192,4096
 
+# and now with highest level zooms
+
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L1.shp"
+
+db.columns GSHHS_c_L2
+
+db.select "SELECT cat FROM GSHHS_c_L2 LIMIT 20"
+
+v.out.ascii input=GSHHS_c_L2 output="/tmp/test.txt"
+
+v.to.db map=GSHHS_c_L2 option=start -p
+
+v.to.db map=GSHHS_c_L2 option=coor -p
+
+v.to.db type=centroid map=GSHHS_c_L2 option=coor -p
+
+v.to.db type=line map=GSHHS_c_L2 option=start -p
+
+r.to.db type=point map=test
+
+# to create a fresh grass location:
+# dirs will be created as needed
+# grass74 -text -c EPSG:4326 /home/user/GRASS/coastline
+
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/c/GSHHS_c_L1.shp"
+db.columns table=GSHHS_c_L1
+db.select "SELECT * FROM GSHHS_c_L1 LIMIT 20"
+
+# below outputs a list of centroids of polygons
+v.out.ascii input=GSHHS_c_L1 output="/tmp/coast.txt"
+
+v.mkgrid --overwrite type=point map=mygrid box=1,1 coordinates=-180,-90 
+ position=coor grid=180,360
+
+v.db.addcolumn map=mygrid columns="lon DOUBLE PRECISION, lat DOUBLE PRECISION"
+v.to.db type=point map=mygrid option=coor columns=lon,lat
+
+v.db.addcolumn map=mygrid columns="distance DOUBLE PRECISION"
+v.db.addcolumn map=mygrid columns="z DOUBLE PRECISION"
+v.distance from=mygrid to=GSHHS_c_L1 upload=dist column=distance
+
+v.distance from=mygrid to=GSHHS_c_L1 upload=dist column=z
+
+# perl command
+# bzcat dist2coast.signed.txt.bz2 | perl -anle 'if ($F[1]=~/\.5$/ &&
+# $F[0]=~/\.5$/) {print $_}'
+
+# to erase the current graphics monitor
+d.erase
+
+g.region rows=10000 cols=5000
+
+v.to.rast --overwrite input=GSHHS_c_L1 output=GSHHS_c_L1_rast use=val val=1
+
+d.rast GSHHS_c_L1_rast
+
+g.region n=90 s=-90 w=-180 e=180
+
+r.buffer --overwrite units=kilometers input=GSHHS_c_L1_rast 
+ output=distance 
+ distances=100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500
+
+# how to get 'inner' distance?, below fails
+
+r.buffer --overwrite units=kilometers input=GSHHS_c_L1_rast 
+ output=distance 
+ distances=100,200,300,400,500,-100,-200,-300,-400,-500
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
