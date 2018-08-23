@@ -213,6 +213,16 @@ g.list type=all
 v.patch input=GSHHS_f_L1,GSHHS_f_L2,GSHHS_f_L3,GSHHS_f_L4,GSHHS_f_L5,GSHHS_f_L6
  output=GSHHS_f
 
+db.select "SELECT * FROM mygrid LIMIT 20"
+
+v.db.addcolumn map=mygrid columns="lon DOUBLE PRECISION, lat DOUBLE PRECISION"
+v.to.db type=point map=mygrid option=coor columns=lon,lat
+
+
+v.db.addcolumn map=mygrid columns="distance DOUBLE PRECISION"
+v.distance from=mygrid to=GSHHS_c_L1 upload=dist column=distance
+
+
 # TODO: note L4 is Antarctica (after confirming)
 
 # TODO: note just shell extension

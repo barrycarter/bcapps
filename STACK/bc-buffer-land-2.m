@@ -105,15 +105,51 @@ Graphics[Raster[Reverse[coastColorsArray], ColorFunction -> RGBColor]]
 
 (* lets get a raster to plot w/ no boundaries *)
 
-t0953 = Table[RandomReal[1,3], {i, 1, 600}, {j, 1, 800}];
+t0953 = Table[If[i==1 || i==600 || j==1 || j==800, {1,0,0}, RandomReal[1,3]], 
+ {i, 1, 600}, {j, 1, 800}];
 
 t0954 = Graphics[Raster[t0953], PlotRangePadding -> 0];
 
 (* above still has one line padding, grumble *)
 
-Export["/tmp/nopad.gif", t0954, ImageSize -> {800,600}]
+Export["/tmp/nopad.gif", t0954, ImageSize -> {801,601}]
 
 Run["display -update 1 /tmp/nopad.gif &"];
+
+(* demonstrating problem below *)
+
+t1024 = Table[If[i==1 || i==50 || j==1 || j==50, {1,0,0}, RandomReal[1,3]], 
+ {i, 1, 50}, {j, 1, 50}];
+
+t1025 = Graphics[Raster[t1024], PlotRangePadding -> 0];
+
+Export["/tmp/nopad.gif", t1025, ImageSize -> {50,50}]
+
+Run["display -update 1 /tmp/nopad.gif &"];
+
+Subject: `PlotRangePadding -> 0` still leaves 1 pixel border
+
+The following should create a 50x50 image named `/tmp/nopad.gif` with mostly random colors and a red border:
+
+<pre><code>
+t1024 = Table[If[i==1 || i==50 || j==1 || j==50, {1,0,0}, RandomReal[1,3]], 
+ {i, 1, 50}, {j, 1, 50}];
+t1025 = Graphics[Raster[t1024], PlotRangePadding -> 0];
+Export["/tmp/nopad.gif", t1025, ImageSize -> {50,50}]
+</code></pre>
+
+Here's the image: [[/tmp/nopad.gif]]
+
+It's hard to tell directly, but if you load the image into ImageMagick's display and use the magnify feature, you'll see a one pixel white border at the right and bottom edges:
+
+[[/tmp/pad.png]]
+
+Note that display counts starting at 0, so the highlighted white pixel is the 50th pixel in both the x and y directions.
+
+As nearly as I can tell, setting `ImageSize -> {51,51}` and then trimming the result is a workaround, but is there a better way to get rid of this border?
+
+As a note, I realize I could've just loaded the image back into Mathematica to confirm it has a border, but, hopefully, the above is convincing enough.
+
 
 
 
