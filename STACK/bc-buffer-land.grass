@@ -197,6 +197,27 @@ v.out.ascii input=GSHHS_c_L1 output="/tmp/coast.txt"
 v.mkgrid --overwrite type=point map=mygrid box=1,1 coordinates=-180,-90 
  position=coor grid=180,360
 
+# this is the grid we really want
+v.mkgrid --overwrite type=point map=mygrid box=0.04,0.04 coordinates=-180,-90 
+ position=coor grid=4500,9000
+
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L1.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L2.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L3.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L4.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L5.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L6.shp"
+
+g.list type=all
+
+v.patch input=GSHHS_f_L1,GSHHS_f_L2,GSHHS_f_L3,GSHHS_f_L4,GSHHS_f_L5,GSHHS_f_L6
+ output=GSHHS_f
+
+# TODO: note L4 is Antarctica (after confirming)
+
+# TODO: note just shell extension
+
+
 v.db.addcolumn map=mygrid columns="lon DOUBLE PRECISION, lat DOUBLE PRECISION"
 v.to.db type=point map=mygrid option=coor columns=lon,lat
 

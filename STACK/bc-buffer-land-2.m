@@ -95,7 +95,33 @@ even though this is a bad idea overall; the result is only about 80M!
 
 DumpSave["/home/user/20180807/coastcolorsarray.mx", coastColorsArray];
 
-Graphics[Raster[coastColorsArray, ColorFunction -> RGBColor]]
+Graphics[Raster[Reverse[coastColorsArray], ColorFunction -> RGBColor]]
+
+<< "/home/user/20180807/coastcolorsarray.mx";
+
+Length[coastColorsArray]; (* confirms I got it *)
+
+Graphics[Raster[Reverse[coastColorsArray], ColorFunction -> RGBColor]]
+
+(* lets get a raster to plot w/ no boundaries *)
+
+t0953 = Table[RandomReal[1,3], {i, 1, 600}, {j, 1, 800}];
+
+t0954 = Graphics[Raster[t0953], PlotRangePadding -> 0];
+
+(* above still has one line padding, grumble *)
+
+Export["/tmp/nopad.gif", t0954, ImageSize -> {800,600}]
+
+Run["display -update 1 /tmp/nopad.gif &"];
+
+
+
+
+
+
+
+
 
 
 
