@@ -101,7 +101,48 @@ Graphics[Raster[Reverse[coastColorsArray], ColorFunction -> RGBColor]]
 
 Length[coastColorsArray]; (* confirms I got it *)
 
-Graphics[Raster[Reverse[coastColorsArray], ColorFunction -> RGBColor]]
+(* give a 2D array, "shrink" it by taking only every nth elt in both dims *)
+
+(*
+
+shrink[t_, n_] := Table[t[[i,j]], {i, 1, Length[t], n}, {j, 1,
+Length[t[[i]]], n}];
+
+t1145 = shrink[coastColorsArray , 10];
+
+Graphics[Raster[Reverse[t1145]], ColorFunction -> RGBColor,
+ImagePadding -> 0]
+
+
+(* ignore below
+
+shrink[t_, n_] := Table[{i,j}, {i, 1, Length[t], n}, {j, 1,
+Length[t[[i]]], n}];
+
+*)
+
+Table[{i,j}, {i, 1, 10, 2}, {j, 1, 10, 2}]
+
+t1149[t_] := Table[{i,j}, {i, 1, Length[t], 2}, {j, 1, Length[t[[i]]], 2}]
+
+t1150[t_] := Table[t[[i,j]], {i, 1, Length[t], 2}, {j, 1, Length[t[[i]]], 2}]
+
+t1152[t_, n_] := Table[t[[i,j]], {i, 1, Length[t], n}, 
+ {j, 1, Length[t[[i]]], n}]
+
+
+
+
+t1146 = Table[Prime[i]+Prime[j], {i, 1, 100}, {j, 1, 100}];
+
+
+
+
+
+t1133 = Graphics[Raster[Reverse[coastColorsArray], ColorFunction ->
+RGBColor, ImagePadding -> 0]]
+
+Export["/home/user/20180807/map2.png", t1133, ImageSize -> {9000,4500}]
 
 (* lets get a raster to plot w/ no boundaries *)
 
@@ -134,7 +175,7 @@ The following should create a 50x50 image named `/tmp/nopad.gif` with mostly ran
 <pre><code>
 t1024 = Table[If[i==1 || i==50 || j==1 || j==50, {1,0,0}, RandomReal[1,3]], 
  {i, 1, 50}, {j, 1, 50}];
-t1025 = Graphics[Raster[t1024], PlotRangePadding -> 0];
+t1025 = Graphics[Raster[t1024], PlotRangePadding -> 0, ImagePadding -> 0];
 Export["/tmp/nopad.gif", t1025, ImageSize -> {50,50}]
 </code></pre>
 

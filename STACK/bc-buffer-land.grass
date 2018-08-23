@@ -217,9 +217,12 @@ db.select "SELECT * FROM mygrid LIMIT 20"
 
 v.db.addcolumn map=mygrid columns="lon DOUBLE PRECISION, lat DOUBLE PRECISION"
 v.to.db type=point map=mygrid option=coor columns=lon,lat
-
-
 v.db.addcolumn map=mygrid columns="distance DOUBLE PRECISION"
+
+v.distance from=mygrid to=GSHHS_f upload=dist column=distance
+
+
+
 v.distance from=mygrid to=GSHHS_c_L1 upload=dist column=distance
 
 
