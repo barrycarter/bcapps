@@ -49,15 +49,20 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
      Run[StringJoin["display -geometry 800x600 -update 1 ", file, "&"]]; 
     Return[file];];
 
+(* colordata automatically truncates! *)
+
+landfunc = ColorData["SandyTerrain"]
+waterfunc = ColorData["DeepSeaColors"]
+
+(* this also removes the RGB header that Raster can't handle *)
+
+distance2Color[d_] := distance2Color[d] = 
+Apply[List, If[d>0, waterfunc[1-Floor[d/1600,1/16]],
+ landfunc[1-Floor[-d/1600,1/16]]]];
+
 </formulas>
 
 (* we now need to create a legend(ary) legend *)
-
-t2019 = DeleteDuplicates[Table[distance2Color[x], {x,-2000,2000}]];
-
-SwatchLegend[Map[RGBColor, t2019], Automatic]
-
-Plot[Norm[distance2Color[x]], {x, 0, 2000}]
 
 t2039 = Table[{
  ToString[100*i]<>"-"<>ToString[100*(i+1)]<>" km", 
@@ -65,8 +70,73 @@ t2039 = Table[{
 
 t2039[[-1,1]] = "1600+ km";
 
+t2048 = Reverse[Transpose[t2039]];
 
-Apply[SwatchLegend, Reverse[Transpose[t2039]], LegendMarkerSize -> 50]
+delta = 500;
+
+ht = 100;
+
+t2136 = Table[{t2048[[1, i]],
+ Rectangle[{i*delta, 0}, {(i+1)*delta, ht}]}, {i, 1, 17}]
+
+t1311 = Graphics[t2136];
+
+Export["/tmp/big.gif", t1311, ImageSize -> {3000, 200}];
+
+Export["/tmp/big.gif", t1311, ImageSize -> {3000, 100}];
+Run["xv /tmp/big.gif &"];
+
+fontsize = 70;
+
+t2137 = Table[{RGBColor[1,1,1], Text[Style[t2048[[2,i]], FontSize ->
+fontsize], {i*delta+delta/2, ht/2}]}, {i, 1, 17}]
+
+wlabel = {RGBColor[0,0,0], Text[Style["Water", FontSize -> 
+fontsize], {delta/2, ht/2}]};
+
+t2139  = Show[Graphics[{t2136, t2137, wlabel}]];
+
+Export["/tmp/big.gif", t2139, ImageSize -> {9000, 4500}];
+
+Run["xv /tmp/big.gif &"];
+
+
+t2139  = Show[Graphics[{t2136, t2137}], PlotRange -> {{0,0}, {5000,1000}}];
+
+t2139  = Show[Graphics[{t2136, t2137}], ImagePadding -> 0, 
+ PlotRange -> {{0,0}, {3000, 0}}];
+
+
+Export["/tmp/big.gif", t2139, ImageSize -> {9000, 100}, AspectRatio -> 1/20];
+
+
+
+Run["display -update 1 /tmp/big.gif &"];
+
+
+t2019 = DeleteDuplicates[Table[distance2Color[x], {x,-2000,2000}]];
+
+SwatchLegend[Map[RGBColor, t2019], Automatic]
+
+Plot[Norm[distance2Color[x]], {x, 0, 2000}]
+
+SwatchLegend[t2048[[1]], t2048[[2]], LegendMarkerSize -> 50]
+
+t2053 = SwatchLegend[t2048[[1]], t2048[[2]], LegendMarkerSize -> 50,
+LegendLayout -> "Row", LegendLabel -> "Outland Distance"];
+
+Grid[Table[Text[i[[1]], Background -> i[[2]]], {i, t2039}]]
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -89,18 +159,6 @@ round2[x_] = If[Round[x,0.01] == 0, Sign[x]*0.01, Round[x,0.01]];
 down so the "0.01" above is intentionally not 1/100 *)
 
 coast = Table[{i[[1]], i[[2]], round2[i[[3]]]}, {i, coast0}];
-
-(* colordata automatically truncates! *)
-
-landfunc = ColorData["SandyTerrain"]
-waterfunc = ColorData["DeepSeaColors"]
-
-(* this also removes the RGB header that Raster can't handle *)
-
-Clear[distance2Color];
-distance2Color[d_] := distance2Color[d] = 
-Apply[List, If[d>0, waterfunc[1-Floor[d/1600,1/16]],
- landfunc[1-Floor[-d/1600,1/16]]]];
 
 coastDists = Transpose[coast][[3]];
 
