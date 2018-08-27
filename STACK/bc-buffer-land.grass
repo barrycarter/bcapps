@@ -265,19 +265,12 @@ r.buffer --overwrite units=kilometers input=GSHHS_c_L1_rast
  output=distance 
  distances=100,200,300,400,500,-100,-200,-300,-400,-500
 
+# voronoi testing
 
+# nontrivial
 
+v.mkgrid --overwrite type=point map=smallgrid box=10,10 coordinates=-180,-90 
+ position=coor grid=18,36
 
-
-
-
-
-
-
-
-
-
-
-
-
+v.voronoi input=smallgrid output=smallgridvor
 

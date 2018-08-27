@@ -73,7 +73,7 @@ coast = Table[{i[[1]], i[[2]], round2[i[[3]]]}, {i, coast0}];
 
 (* colordata automatically truncates! *)
 
-landfunc = ColorData["CoffeeTones"]
+landfunc = ColorData["SandyTerrain"]
 waterfunc = ColorData["DeepSeaColors"]
 
 (* this also removes the RGB header that Raster can't handle *)
@@ -93,17 +93,9 @@ coastColorsArray = Partition[coastColors, 9000];
 even though this is a bad idea overall; the result is only about 80M! 
 *)
 
-DumpSave["/home/user/20180807/coastcolorsarray.mx", coastColorsArray];
-
-Graphics[Raster[Reverse[coastColorsArray], ColorFunction -> RGBColor]]
-
-<< "/home/user/20180807/coastcolorsarray.mx";
-
-Length[coastColorsArray]; (* confirms I got it *)
+DumpSave["/home/user/20180807/coastcolorsarray2.mx", coastColorsArray];
 
 (* give a 2D array, "shrink" it by taking only every nth elt in both dims *)
-
-(*
 
 shrink[t_, n_] := Table[t[[i,j]], {i, 1, Length[t], n}, {j, 1,
 Length[t[[i]]], n}];
@@ -111,7 +103,69 @@ Length[t[[i]]], n}];
 t1145 = shrink[coastColorsArray , 10];
 
 Graphics[Raster[Reverse[t1145]], ColorFunction -> RGBColor,
-ImagePadding -> 0]
+PlotRangePadding -> 0, ImagePadding -> 0]
+
+t1218 = Graphics[Raster[Reverse[coastColorsArray], ColorFunction -> RGBColor],
+ PlotRangePadding -> 0, ImagePadding -> 0];
+
+Export["/home/user/20180807/map3.png", t1218, ImageSize -> {9000,4500}]
+
+tODO: can compute area using elliptical earth
+
+(* the not-so-great circle at a given latitude, allowing for cosine and Earth's radius *)
+
+circle[lat_] = rad[lat]*Cos[lat]
+
+(* and the area of a 0.04 square *)
+
+area[clat_] = Integrate[circle[lat], {lat, clat-0.02, clat+0.02}]*0.04/360
+
+(* below per wikipedia *)
+
+cdist[a_, b_, lat_] = Sqrt[((a*a*Cos[lat])^2 + (b*b*Sin[lat])^2) /
+((a*Cos[lat])^2 + (b*Sin[lat])^2)];
+
+(* the area of the infentesimal is 2*Pi*r in length and the height is ...
+
+1 radian = r, so dtheta is r *)
+
+t1337[a_, b_, lat_] = Integrate[(cdist[a,b,lat])^2*Cos[lat], lat];
+
+t1337[6378.137, 6356.7523, 0.02*Degree] - 
+ t1337[6378.137, 6356.7523, -0.02*Degree]
+
+cdist[6378.137, 6356.7523, 1*Degree]
+
+area[lat_] := Integrate[cdist[6378.137, 6356.7523, x]*Cos[x], {x,
+lat-.02*Degree, lat+.02*Degree}]
+
+
+
+
+
+
+
+
+
+
+
+cdist[6378.137, 6356.7523, lat]
+
+Plot[cdist[6378.137, 6356.7523, lat*Degree], {lat, -90, 90}]
+
+cdistint[lat_] = Integrate[cdist[a, b, lat]*Cos[lat]]
+
+cdistint[lat_] = Integrate[cdist[6378.137, 6356.7523, lat]*Cos[lat], lat]
+
+
+
+
+
+<< "/home/user/20180807/coastcolorsarray.mx";
+
+Length[coastColorsArray]; (* confirms I got it *)
+
+(*
 
 
 (* ignore below

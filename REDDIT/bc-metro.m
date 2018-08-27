@@ -22,6 +22,7 @@ tab >> ~/BCGIT/REDDIT/metro-area-data.m
 (* Mathematica is being cocksucky w/ forced updates *)
 
 $AllowInternet = False;
+$AllowInternet = True;
 
 (* find US metro areas *)
 
@@ -76,10 +77,6 @@ Print["Using spherical, NOT ELLIPTICAL, coordinates"];
 
 </formulas>
 
-(* reallow Internet after Mathematica stops being stupid *)
-
-$AllowInternet = True;
-
 approach of 20180811.17 below
 
 rc = Table[RandomReal[1,3], {i,1,50}];
@@ -96,7 +93,7 @@ t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]],
  {lon,-180,180,1}, {lat,-90,90,1}];
 
 t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]], {lat,25,55,.1},
- {lon,-120,-70,.1}]
+ {lon,-120,-70,.1}];
 
 t1716 = Table[f[t1712[lonLatDeg2XYZ[lon,lat]]], {lat,25,55,30/4096},
  {lon,-120,-70,50/8192}];
@@ -1052,6 +1049,56 @@ t1445 = Table[RandomReal[1,4], {x, 1, 10}, {y, 1, 10}, {z, 1, 10}];
 t1445 = Table[RandomReal[1,4], {x, 1, 100}, {y, 1, 100}, {z, 1, 100}];
 
 t1445 = Table[RandomReal[1,4], {x, 1, 1000}, {y, 1, 1000}, {z, 1, 1000}];
+
+
+(* JFF matching of MAPS/bc-closest-gmap.pl =
+http://test.barrycarter.info/gmap8.php *)
+
+points = {
+ {35.08, -106.66},
+ {48.87, 2.33},
+ {71.26826, -156.80627},
+ {-41.2833, 174.783333},
+ {-22.88,  -43.28}
+};
+
+t2050 = Table[sph2xyz[i[[2]]*Degree, i[[1]]*Degree, 1], {i, points}]
+
+(* assign colors to each area *)
+
+rc = Table[RandomReal[1,3], {i,1,50}];
+Table[f[t2050[[i]]] = rc[[i]], {i, 1, Length[points]}];
+
+t2051 = RegionNearest[Point[t2050]];
+
+t2056 = Table[f[t2051[sph2xyz[lon*Degree, lat*Degree, 1]]], 
+ {lat, -90, 90, 1}, {lon, -180, 180, 1}];
+
+t2056 = Table[f[t2051[sph2xyz[lon*Degree, lat*Degree, 1]]], 
+ {lat, -90, 90, 0.1}, {lon, -180, 180, 0.1}];
+
+t2152 = Graphics[Raster[t2056]]
+
+Graphics[Raster[t2056], Axes -> True]
+
+t2145 = Entity["Country", "World"]["Polygon"];
+
+t2146 = Apply[Line, t2145];
+
+t2151 = Graphics[
+ Scale[Translate[t2146, {180, 90}], {10, 10}], Axes -> True]
+
+Show[{t2152, t2151}]
+
+
+PlotRangePadding -> 0, ImagePadding -> 0, ImageSize -> {3600, 1800}]
+
+Export["/tmp/temp.png", %, ImageSize -> {3600, 1800}]
+
+
+
+
+
 
 
 
