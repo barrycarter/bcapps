@@ -793,3 +793,5 @@ Some other notes:
 </question>
 
 TODO: SPELL CHECK
+
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=180&w=-180&n=90&s=-90&center=0,0&url=map3.png&zoom=2

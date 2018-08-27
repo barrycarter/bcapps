@@ -262,7 +262,7 @@ alias scanit "bc-scan-pic-brighton.pl"
 alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
 # stopnet stops network intensive processes
-alias stopnet "sudo killall -STOP qbittorrent wget curl idevs; xmessage consider pausing firefox and tumblr_backup and other downloads &"
+alias stopnet "sudo killall -STOP qbittorrent wget curl idevs; pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
 
 # start mathematica with the <formula(s)> section of given file; useful
 # for reloads (note careful avoidance of $)

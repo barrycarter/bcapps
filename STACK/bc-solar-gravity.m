@@ -1,9 +1,39 @@
 (*
 
- attempts to solve
- https://astronomy.stackexchange.com/questions/26167/how-far-out-can-the-sun-keep-celestial-objects-revolving
+attempts to solve https://astronomy.stackexchange.com/questions/26167/how-far-out-can-the-sun-keep-celestial-objects-revolving
 
 *)
+
+<oneoff>
+
+(* load star data using newer "Entity" model *)
+
+slist = EntityList["Star"];
+
+solarMass = Entity["Star", "Sun"]["Mass"]
+
+data = Table[{i["Name"], i["Mass"]/solarMass, 
+ i["HelioCoordinates"]/Quantity["Light Year"]}, {i, slist}];
+
+data >> starnamepos.m
+
+</oneoff>
+
+<formulas>
+
+
+
+
+
+
+
+</formulas>
+
+note: voronoi doesn't suffice because of combined star forces (2
+nearby stars could be stronger)-- would need to find entire circle
+where force is towards sun and roughly constant or has props of
+elliptical orbit
+
 
 (* note: the export only needs to be done once *)
 

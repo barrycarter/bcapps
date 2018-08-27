@@ -51,6 +51,25 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
 
 </formulas>
 
+(* we now need to create a legend(ary) legend *)
+
+t2019 = DeleteDuplicates[Table[distance2Color[x], {x,-2000,2000}]];
+
+SwatchLegend[Map[RGBColor, t2019], Automatic]
+
+Plot[Norm[distance2Color[x]], {x, 0, 2000}]
+
+t2039 = Table[{
+ ToString[100*i]<>"-"<>ToString[100*(i+1)]<>" km", 
+ RGBColor[distance2Color[50+100*i]]}, {i, 0, 16}]
+
+t2039[[-1,1]] = "1600+ km";
+
+
+Apply[SwatchLegend, Reverse[Transpose[t2039]], LegendMarkerSize -> 50]
+
+
+
 (* read NASA file *)
 
 nasaFile = "/home/barrycarter/20180807/dist2coast.signed.txt.bz2";
