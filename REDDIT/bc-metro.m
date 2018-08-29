@@ -83,6 +83,10 @@ t1323[lon_, lat_] := metrosUSATop[[Ordering[
  Table[GeoDistance[i[[4]], {lat, lon}], {i, metrosUSATop}]
 ][[1]]]];
 
+t1323[lon_, lat_] := Ordering[
+ Table[GeoDistance[i[[4]], {lat, lon}], {i, metrosUSATop}]
+][[1]];
+
 t1327 = Timing[
  Table[{lon, lat, t1323[lon, lat]}, {lon, -120, -90}, {lat, 30, 49}]
 ];
@@ -94,17 +98,77 @@ t1327 = Timing[
 bc-closest-gmap or something
 
 (* Given a lon/lat rectangle and a function that returns nearest point
-given lon/lat, return rectangle if all nearest points are identical,
-return 4 subrectangles otherwise [but do nothing w/ them, just return them] *)
+given lon/lat, return nearest point if all nearest points are identical, false otherwise *)
 
-t1403[lon1_, lat1_, lon2_, lat2_, f_] := Module[{p1, p2, p3, p4},
+t1403[{lon1_, lat1_}, {lon2_, lat2_}, f_] := Module[{p1, p2, p3, p4},
 
   p1 = f[lon1,lat1];
   p2 = f[lon2,lat1];
   p3 = f[lon2,lat2];
   p4 = f[lon1,lat2];
+  (* testing *)
+  Print[p1];
+  Print[p2];
+  Print[p3];
+  Print[p4];
+  If[p1 == p2 == p3 == p4, Return[p1], Return[False]];
+];
 
-  If [p1 == p2 == p3 == p4, Return[p1]];
+(* Given a lon/lat rectangle, return four sub-rectangles (trivial) *)
+
+t1414[{lon1_, lat1_}, {lon2_, lat2_}] = {
+ { {lon1, lat1}, {(lon1+lon2)/2, (lat1+lat2)/2} },
+ { {(lon1+lon2)/2, lat1}, {lon2, (lat1+lat2)/2} },
+ { {lon1, (lat1+lat2)/2}, {(lon1+lon2)/2, lat2} },
+ { {(lon1+lon2)/2, (lat1+lat2)/2}, {lon2, lat2} }
+};
+
+
+t1414[{-106.5, 35.5}, {-106, 36}]
+
+Table[Rectangle[i[[1]], i[[2]]], {i, t1414[{-106.5, 35.5}, {-106, 36}]}]
+
+Table[Flatten[{i, t1323}, 1], {i, t1414[{-106.5, 35.5}, {-106, 36}]}]
+
+Table[Apply[t1403, Flatten[{i, t1323}, 1]], 
+ {i, t1414[{-107, 35}, {-106, 36}]}]
+
+(* the whole she-bang, hardcoding for now *)
+
+t1439[{lon1_, lat1_}, {lon2_, lat2_}] := Module[{s},
+
+ Print["t1439({",lon1,", ",lat1,"}, {",lon2,", ",lat2,"})"];
+
+ (* TODO: refine stopping condition *)
+ If[Abs[lon1-lon2] < 0.1 && Abs[lat1-lat2] < 0.1, Return[]];
+
+(* TODO: if p1 != p2, could go straight to division there *)
+
+  p1 = t1323[lon1,lat1];
+  p2 = t1323[lon2,lat1];
+  p3 = t1323[lon2,lat2];
+  p4 = t1323[lon1,lat2];
+
+  If[p1 == p2 == p3 == p4, Return[p1]];
+
+  s = t1414[{lon1, lat1}, {lon2, lat2}];
+  Return[Table[Apply[t1439, i], {i, s}]];
+
+];
+
+t1439[{-107, 35}, {-106, 36}]
+
+
+  Print["S:", s, "S1:", s[[1]], "APPLY:", Apply[t1439,s[[1]]]];
+
+
+
+
+t1403[{-107, 35}, {-106, 36}, t1323]
+
+t1403[-106.5, 35.5, -106, 36, t1323]
+
+
 
   
  
