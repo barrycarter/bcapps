@@ -12,6 +12,14 @@ slist = EntityList["Star"];
 
 solarMass = Entity["Star", "Sun"]["Mass"]
 
+(* not sure why I can't do it all at once, but... *)
+
+data[j_] := data[j] = Table[{i["Name"], i["Mass"]/solarMass, 
+ i["HelioCoordinates"]/Quantity["Light Year"]}, {i, 
+ Take[slist, {j*10000+1, (j+1)*10000}]}];
+
+
+
 data = Table[{i["Name"], i["Mass"]/solarMass, 
  i["HelioCoordinates"]/Quantity["Light Year"]}, {i, slist}];
 

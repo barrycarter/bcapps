@@ -321,8 +321,16 @@ zeroCrossings[l_] := Module[{zc},
 
 (* the radius of the earth at latitude l (given in radians) *)
 
+(* this is also correct, but adding alternate version *)
+
 rad[lat_] = Sqrt[8108893139432429 - 32876703150355522144690902360200/
     (8108893139432429 + 27233178721371*Cos[2*lat])]/10000
+
+(* from https://en.wikipedia.org/wiki/Earth_radius#Location-dependent_radii *)
+
+earthRadius[lat_] = Sqrt[8.10889313943241*^7 + (-2.4664556851543004*^-8 - 
+    8.283427506956529*^-11*Cos[2*lat])^(-1)];
+
 
 (* GMST and GAST time at Unix day d, given as an angle,
 http://aa.usno.navy.mil/faq/docs/GAST.php *)

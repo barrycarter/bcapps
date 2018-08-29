@@ -62,13 +62,98 @@ Apply[List, If[d>0, waterfunc[1-Floor[d/1600,1/16]],
 
 </formulas>
 
+(* the actual area data *)
+
+area[lat_] = 2*Pi*Integrate[rad[lat]^2*Cos[lat], lat]
+
+(* the area of a square .04 each side centered at lat IN DEGREES *)
+
+areaSquare[lat_] = (area[(lat+.02)*Degree] - area[(lat-.02)*Degree])/9000.;
+
+area[4*Degree]-area[3.98*Degree]
+
+(* and the coast data once again *)
+
+coast0 = ReadList[
+ "!bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2", {Number,
+Number, Number}];
+
+(* TODO: explain why round to nearest km + 4km issue, ie not ideal *)
+
+(* rounding distance to nearest 10m because least precise data is that
+precise, except when close to 0, to preserve sign *)
+
+round2[x_] = If[Round[x,1] == 0, Sign[x], Round[x,1]];
+
+(* special case small neg/pos; using precise numbers slows Mathematica
+down so the "0.01" above is intentionally not 1/100 *)
+
+coast = Table[{i[[1]], i[[2]], round2[i[[3]]]}, {i, coast0}];
+
+pointsByDist = Sort[Gather[coast, #1[[3]] == #2[[3]] &], #1[[1,3]] <
+#2[[1,3]] &];
+
+t1057 = pointsByDist[[1000]];
+
+areaByDist = Table[{i[[1,3]], Total[Map[areaSquare, Transpose[i][[2]]]]},
+ {i, pointsByDist}];
+
+
+t1231 = Accumulate[Transpose[areaByDist][[2]]];
+
+t1232 = Table[Flatten[{areaByDist[[i]], t1231[[i]]}], {i, 1,
+Length[areaByDist]}];
+
+t1236 = Table[{i[[1]], i[[2]], AccountingForm[i[[3]]]}, {i, t1232}];
+
+(* above doesnt export correctly *)
+
+Table[Print[ToString[i[[1]]<>"\t"<>i[[2]]<>"\t"<>i[[3]]]], {i, t1232}];
+
+elt = t1232[[66]]
+
+
+
+
+
+
+
+
+Total[Map[areaSquare, Transpose[t1057][[2]]]]
+
+TODO: look at Wake/Midway actual points
+
+
+
+coastDists = Transpose[coast][[3]];
+
+
+
+
+
+
+
+
 (* we now need to create a legend(ary) legend *)
 
 t2039 = Table[{
- ToString[100*i]<>"-"<>ToString[100*(i+1)]<>" km", 
+ ToString[100*i]<>"-"<>ToString[100*(i+1)], 
  RGBColor[distance2Color[50+100*i]]}, {i, 0, 16}]
 
-t2039[[-1,1]] = "1600+ km";
+t2039[[-1,1]] = "1600+";
+
+t1337 = Table[{
+ ToString[100*i]<>"-"<>ToString[100*(i+1)], 
+ RGBColor[distance2Color[-50-100*i]]}, {i, 0, 16}]
+
+t1337[[-1,1]] = "1600+";
+
+(* TODO: yellow hard to differentiate in land colors *)
+
+t1338 = Reverse[Transpose[t1337]];
+
+t1339 = Table[{RGBColor[1,1,1], Text[Style[t1338[[2,i]], FontSize ->
+fontsize], {i*delta+delta/2, ht/2}]}, {i, 1, 17}]
 
 t2048 = Reverse[Transpose[t2039]];
 
@@ -77,6 +162,9 @@ delta = 500;
 ht = 100;
 
 t2136 = Table[{t2048[[1, i]],
+ Rectangle[{i*delta, 0}, {(i+1)*delta, ht}]}, {i, 1, 17}]
+
+t1350 = Table[{t1338[[1, i]],
  Rectangle[{i*delta, 0}, {(i+1)*delta, ht}]}, {i, 1, 17}]
 
 t1311 = Graphics[t2136];
@@ -91,7 +179,10 @@ fontsize = 70;
 t2137 = Table[{RGBColor[1,1,1], Text[Style[t2048[[2,i]], FontSize ->
 fontsize], {i*delta+delta/2, ht/2}]}, {i, 1, 17}]
 
-wlabel = {RGBColor[0,0,0], Text[Style["Water", FontSize -> 
+wlabel = {RGBColor[0,0,0], Text[Style["Water (in km)", FontSize -> 
+fontsize], {delta/2, ht/2}]};
+
+llabel = {RGBColor[0,0,0], Text[Style["Land (in km)", FontSize -> 
 fontsize], {delta/2, ht/2}]};
 
 t2139  = Show[Graphics[{t2136, t2137, wlabel}]];
@@ -201,6 +292,8 @@ area[clat_] = Integrate[circle[lat], {lat, clat-0.02, clat+0.02}]*0.04/360
 
 cdist[a_, b_, lat_] = Sqrt[((a*a*Cos[lat])^2 + (b*b*Sin[lat])^2) /
 ((a*Cos[lat])^2 + (b*Sin[lat])^2)];
+
+
 
 (* the area of the infentesimal is 2*Pi*r in length and the height is ...
 
@@ -322,19 +415,6 @@ As nearly as I can tell, setting `ImageSize -> {51,51}` and then trimming the re
 
 As a note, I realize I could've just loaded the image back into Mathematica to confirm it has a border, but, hopefully, the above is convincing enough.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 (* hesitant about using a function here, plus this is the wrong thing
 to do for Interpolation *)
 
@@ -408,14 +488,6 @@ t1258 = Table[
 
 Graphics[Raster[t1258]]
 showit
-
-
-
-
-
-
-
-
 
 (*  different values, 509997 when rounded to nearest 10m, 509996 once I get rid of the 0's *)
 

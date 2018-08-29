@@ -77,6 +77,43 @@ Print["Using spherical, NOT ELLIPTICAL, coordinates"];
 
 </formulas>
 
+did i give up on geodistance 20180829.13
+
+t1323[lon_, lat_] := metrosUSATop[[Ordering[
+ Table[GeoDistance[i[[4]], {lat, lon}], {i, metrosUSATop}]
+][[1]]]];
+
+t1327 = Timing[
+ Table[{lon, lat, t1323[lon, lat]}, {lon, -120, -90}, {lat, 30, 49}]
+];
+
+13.8231 seconds for above, 620 pts
+
+(* the 4 points rule like I use in that other thing? *)
+
+bc-closest-gmap or something
+
+(* Given a lon/lat rectangle and a function that returns nearest point
+given lon/lat, return rectangle if all nearest points are identical,
+return 4 subrectangles otherwise [but do nothing w/ them, just return them] *)
+
+t1403[lon1_, lat1_, lon2_, lat2_, f_] := Module[{p1, p2, p3, p4},
+
+  p1 = f[lon1,lat1];
+  p2 = f[lon2,lat1];
+  p3 = f[lon2,lat2];
+  p4 = f[lon1,lat2];
+
+  If [p1 == p2 == p3 == p4, Return[p1]];
+
+  
+ 
+
+
+
+
+t1323[-106.5, 35]
+
 approach of 20180811.17 below
 
 rc = Table[RandomReal[1,3], {i,1,50}];
@@ -1095,10 +1132,19 @@ PlotRangePadding -> 0, ImagePadding -> 0, ImageSize -> {3600, 1800}]
 
 Export["/tmp/temp.png", %, ImageSize -> {3600, 1800}]
 
+<question>
 
+Subject: If rectangle corner points have same nearest neighbor, does whole region?
 
+Question: If all four corners of a spherical (but actually WGS84/elliptical) rectangle are closest to a given point `p` in a set `S`, does that necessarily mean all points inside the rectangle are also closest to `p`?
 
+I'm trying to coax Mathematica into creating a geographical Voronoi map (my ugly efforts so far: https://github.com/barrycarter/bcapps/blob/master/REDDIT/bc-metro.m). This isn't too hard to do if I assume the Earth is spherical, but, as a form of self-loathing, I've decided to do this using the Earth's true shape, or at least WGS84.
 
+Mathematica does have a WGS84 accurate `GeoDistance` function, but it's expensive to evaluate, so I want to use it as few times as possible.
 
+My plan is to break up my region into latitude/longitude rectangles, and, if the 4 corner points are all closest to the same point in my set, assume the entire rectangular region is also closest to that point.
 
+I'm pretty sure I could prove this on a perfect sphere, but I'm worried that it might not be true on an ellipsoid.
+
+Ages ago, I created http://test.barrycarter.info/gmap8.php using this technique (https://github.com/barrycarter/bcapps/blob/master/MAPS/bc-closest-gmap.pl but the code is currently commented out, since I tried to use qhull instead)
 
