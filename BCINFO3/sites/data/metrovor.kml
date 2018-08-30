@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Document>
+<GroundOverlay>
+<color>80808080</color>
+<Icon>
+<href>http://data.bcinfo3.barrycarter.info/metrovor.png</href>
+</Icon>
+<LatLonBox>
+<north>50</north>
+<south>24</south>
+<east>-66</east>
+<west>-125</west>
+</LatLonBox>
+</GroundOverlay>
+</Document>
+</kml>

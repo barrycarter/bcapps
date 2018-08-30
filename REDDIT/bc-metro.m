@@ -77,6 +77,129 @@ Print["Using spherical, NOT ELLIPTICAL, coordinates"];
 
 </formulas>
 
+(* returning to nearest region approach *)
+
+regNear = RegionNearest[Point[geopos]];
+
+nearest[lon_, lat_] := Position[geopos, 
+ regNear[lonLatDeg2XYZ[lon,lat]]][[1,1]];
+
+Timing[Table[nearest[lon, lat], {lon, -130, -60, 0.1}, {lat, 25, 50, 0.1}]];
+
+3.95 sec to do 700 by 250
+
+t1805 = Timing[
+ Table[nearest[lon, lat], {lon, -125, -66, 0.02}, {lat, 24, 50, 0.02}]
+];
+
+t1806 = t1805[[2]];
+
+15.1851 sec to do 1400 by 500
+
+to do 2950 by 1300, it takes... 83.14 seconds
+
+US extrema: n 50, s 24, e -66, w -125
+
+rc = Table[RandomReal[1,3], {i,1,50}];
+
+t1807 = Map[rc[[#]] &, t1806, {2}];
+
+t1808 = Transpose[t1807];
+
+t1809 = Graphics[Raster[t1808], ImagePadding -> 0, PlotRangePadding -> 0];
+
+Export["/tmp/voronoi.png", t1809, ImageSize -> {2951, 1301}];
+
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=-66&w=-125&n=50&s=24&center=37,-95.5&url=metrovor.png&zoom=4
+
+(* Cut the rectangle from {lon1, lat1} to {lon2, lat2} into 4 smaller
+rectangles *)
+
+rect24Rects[lon1_, lat1_, lon2_, lat2_] = {
+ {lon1, lat1, (lon1+lon2)/2, (lat1+lat2)/2},
+ {(lon1+lon2)/2, lat1, lon2, (lat1+lat2)/2},
+ {lon1, (lat1+lat2)/2, (lon1+lon2)/2, lat2},
+ {(lon1+lon2)/2, (lat1+lat2)/2, lon2, lat2}
+};
+
+(* the recursive approach w/ regionnearest ... *)
+
+(* t = tolerance TODO: make this in km or something *)
+
+findRegions[lon1_, lat1_, lon2_, lat2_, t_] := Module[{p1, p2, p3, p4},
+  p1 = nearest[lon1,lat1];
+  p2 = nearest[lon2,lat1];
+  p3 = nearest[lon2,lat2];
+  p4 = nearest[lon1,lat2];
+  If[p1 == p2 == p3 == p4, Return[{lon1, lat1, lon2, lat2, p1}]];
+  If[Abs[lon1-lon2] < t && Abs[lat1-lat2] < t, 
+    Return[{lon1, lat1, lon2, lat2, 0}]];
+  Return[Flatten[
+ Table[Apply[findRegions, Flatten[{i,t}]], 
+        {i, rect24Rects[lon1, lat1, lon2, lat2]}]]];
+];
+
+findRegions[-106, 35, -105, 36]
+
+(* overly deep nesting, fixing *)
+
+t1822 = N[findRegions[-107, 35, -105, 36]]
+
+(* the fact that I have to partition the result into 5 element lengths
+is stupid, but let's go w/ it for now *)
+
+t1830 = N[findRegions[-120, 25, -70, 49, 0.1]];
+
+t1831 = Partition[t1830, 5];
+
+rc = Table[RandomReal[1,3], {i,1,50}];
+
+t1832 = Table[{
+ If[i[[5]]==0, RGBColor[{0,0,0}], RGBColor[rc[[i[[5]]]]]], 
+  Rectangle[{i[[1]], i[[2]]}, {i[[3]], i[[4]]}]}, {i, t1831}];
+
+t1844 = N[findRegions[-120, 25, -70, 49, 0.1]];
+
+t1845 = Partition[t1844, 5];
+
+t1846 = Table[{
+ If[i[[5]]==0, RGBColor[{0,0,0}], RGBColor[rc[[i[[5]]]]]], 
+  Rectangle[{i[[1]], i[[2]]}, {i[[3]], i[[4]]}]}, {i, t1845}];
+
+(* below fails: return can't return 3 args *)
+testM := Module[{}, Return[1,2,3]];
+
+
+
+
+Region`Mesh`MeshMemberCellIndex[mr, pt]
+
+
+
+(*
+
+Given a geographic point {lon, lat} and a set of geographic points S
+in the same format (note lon precedes lat here), return the following:
+
+  - the index of the point in S closest to P
+
+  - the distance from S to P (in km, no units in return value)
+
+  - the distance from P to the second closest point in S (ie, is P
+  almost equidistance from two members of S) (in km, no units in return value)
+
+*)
+
+ps2nearestPointInS[lon_, lat_, s_] := Module[{dists, near1, near2},
+
+ dists = Table[GeoDistance[{lat, lon}, Reverse[i]], {i, s};
+ {near1, near2} = Ordering[dists, {1,2}];
+
+(* got bored of this *)
+
+
+(* TODO: may not work if across more than half globe *)
+
 did i give up on geodistance 20180829.13
 
 t1323[lon_, lat_] := metrosUSATop[[Ordering[
@@ -140,7 +263,7 @@ t1439[{lon1_, lat1_}, {lon2_, lat2_}] := Module[{s},
  Print["t1439({",lon1,", ",lat1,"}, {",lon2,", ",lat2,"})"];
 
  (* TODO: refine stopping condition *)
- If[Abs[lon1-lon2] < 0.1 && Abs[lat1-lat2] < 0.1, Return[]];
+ If[Abs[lon1-lon2] < 0.01 && Abs[lat1-lat2] < 0.01, Return[]];
 
 (* TODO: if p1 != p2, could go straight to division there *)
 
@@ -149,14 +272,14 @@ t1439[{lon1_, lat1_}, {lon2_, lat2_}] := Module[{s},
   p3 = t1323[lon2,lat2];
   p4 = t1323[lon1,lat2];
 
-  If[p1 == p2 == p3 == p4, Return[p1]];
+  If[p1 == p2 == p3 == p4, Return[{{lon1,lat1}, {lon2,lat2}, p1}]];
 
   s = t1414[{lon1, lat1}, {lon2, lat2}];
   Return[Table[Apply[t1439, i], {i, s}]];
 
 ];
 
-t1439[{-107, 35}, {-106, 36}]
+t1439[{-107., 35.}, {-106., 36.}]
 
 
   Print["S:", s, "S1:", s[[1]], "APPLY:", Apply[t1439,s[[1]]]];
@@ -1212,3 +1335,27 @@ I'm pretty sure I could prove this on a perfect sphere, but I'm worried that it 
 
 Ages ago, I created http://test.barrycarter.info/gmap8.php using this technique (https://github.com/barrycarter/bcapps/blob/master/MAPS/bc-closest-gmap.pl but the code is currently commented out, since I tried to use qhull instead)
 
+gcdist marengo.ia.us kansas.city minneapolis chicago milwaukee
+Marengo to Kansas City: 228 mi (367 km, 1.23/2.45/4.90 ltms)
+Marengo to Minneapolis: 227 mi (366 km, 1.22/2.45/4.89 ltms)
+Marengo to Chicago: 227 mi (366 km, 1.22/2.44/4.89 ltms)
+Marengo to Milwaukee: 229 mi (368 km, 1.23/2.46/4.92 ltms)
+Kansas City to Minneapolis: 411 mi (662 km, 2.21/4.42/8.84 ltms)
+Kansas City to Chicago: 410 mi (660 km, 2.20/4.41/8.82 ltms)
+Kansas City to Milwaukee: 441 mi (710 km, 2.37/4.74/9.47 ltms)
+Minneapolis to Chicago: 355 mi (571 km, 1.91/3.81/7.62 ltms)
+Minneapolis to Milwaukee: 298 mi (479 km, 1.60/3.20/6.40 ltms)
+Chicago to Milwaukee: 83 mi (133 km, 0.45/0.89/1.79 ltms)
+
+gcdist denver.city.tx oklahoma.city dallas austin san.antonio
+
+Denver City to Oklahoma City: 349 mi (562 km, 1.87/3.75/7.50 ltms)
+Denver City to Dallas: 349 mi (562 km, 1.88/3.75/7.51 ltms)
+Denver City to Austin: 352 mi (567 km, 1.89/3.78/7.57 ltms)
+Denver City to San Antonio: 354 mi (570 km, 1.90/3.80/7.61 ltms)
+Oklahoma City to Dallas: 189 mi (305 km, 1.02/2.04/4.08 ltms)
+Oklahoma City to Austin: 359 mi (578 km, 1.93/3.86/7.72 ltms)
+Oklahoma City to San Antonio: 421 mi (678 km, 2.26/4.52/9.05 ltms)
+Dallas to Austin: 182 mi (293 km, 0.98/1.96/3.92 ltms)
+Dallas to San Antonio: 252 mi (406 km, 1.36/2.71/5.42 ltms)
+Austin to San Antonio: 73 mi (118 km, 0.40/0.79/1.58 ltms)

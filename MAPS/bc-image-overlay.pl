@@ -83,3 +83,4 @@ print "<p>Source: https://github.com/barrycarter/bcapps/blob/master/MAPS/bc-imag
 print "</body></html>\n";
 
 # TODO: add instructions re how to change zoom, map type, refresh, center, etc
+
