@@ -3,7 +3,9 @@
 <Document>
 
 <Style id="randomColorIcon"><IconStyle><Icon>
-<href>http://maps.google.com/mapfiles/kml/pal3/icon21.png</href>
+<href>
+https://maps.gstatic.com/mapfiles/ms2/micons/horsebackriding.png
+</href>
 </Icon></IconStyle></Style>
 
 <GroundOverlay>
