@@ -110,7 +110,9 @@ t1809 = Graphics[Raster[t1808], ImagePadding -> 0, PlotRangePadding -> 0];
 
 Export["/tmp/voronoi.png", t1809, ImageSize -> {2951, 1301}];
 
-http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=-66&w=-125&n=50&s=24&center=37,-95.5&url=metrovor.png&zoom=4
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=-66&w=-125&n=50&s=24&center=37,-95.5&url=metrovor.png&zoom=5&maptypeid=ROADMAP
+
+http://test.barrycarter.info/bc-image-overlay.pl?url=metrovor.kml&center=37,-95.5&zoom=5&maptypeid=ROADMAP
 
 (* placemarks *)
 
