@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://earth.google.com/kml/2.0">
 <Document>
+
 <GroundOverlay>
 <color>80808080</color>
 <Icon>
-<href>http://data.bcinfo3.barrycarter.info/metrovor.png</href>
+<href>http://data.bcinfo3.barrycarter.info/metrovortrans.png</href>
 </Icon>
 <LatLonBox>
 <north>50</north>
@@ -13,5 +14,307 @@
 <west>-125</west>
 </LatLonBox>
 </GroundOverlay>
+
+<Placemark>    
+<Style><BalloonStyle><color>80808080</color></BalloonStyle></Style>
+<name>New York-Northern New Jersey-Long Island, NY-NJ-PA</name> 
+<description>Population: 19015900</description> 
+<Point><coordinates>-73.9179,40.7042,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Los Angeles-Long Beach-Santa Ana, CA</name> 
+<description>Population: 12944801</description> 
+<Point><coordinates>-118.376,34.0862,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Chicago-Joliet-Naperville, IL-IN-WI</name> 
+<description>Population: 9504753</description> 
+<Point><coordinates>-87.6794,41.8407,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Dallas-Fort Worth-Arlington, TX</name> 
+<description>Population: 6526548</description> 
+<Point><coordinates>-96.7872,32.7995,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Houston-Sugar Land-Baytown, TX</name> 
+<description>Population: 6086538</description> 
+<Point><coordinates>-95.3832,29.7629,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Philadelphia-Camden-Wilmington, PA-NJ-DE-MD</name> 
+<description>Population: 5992414</description> 
+<Point><coordinates>-75.1448,39.998,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Washington-Arlington-Alexandria, DC-VA-MD-WV</name> 
+<description>Population: 5703948</description> 
+<Point><coordinates>-77.01,38.91,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Miami-Fort Lauderdale-Pompano Beach, FL</name> 
+<description>Population: 5670125</description> 
+<Point><coordinates>-80.2241,25.7877,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Atlanta-Sandy Springs-Marietta, GA</name> 
+<description>Population: 5359205</description> 
+<Point><coordinates>-84.4032,33.7595,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Boston-Cambridge-Quincy, MA-NH</name> 
+<description>Population: 4591112</description> 
+<Point><coordinates>-71.0891,42.3216,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>San Francisco-Oakland-Fremont, CA</name> 
+<description>Population: 4391037</description> 
+<Point><coordinates>-122.437,37.7599,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Riverside-San Bernardino-Ontario, CA</name> 
+<description>Population: 4304997</description> 
+<Point><coordinates>-117.396,33.9481,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Detroit-Warren-Livonia, MI</name> 
+<description>Population: 4285832</description> 
+<Point><coordinates>-83.1026,42.3871,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Phoenix-Mesa-Glendale, AZ</name> 
+<description>Population: 4263236</description> 
+<Point><coordinates>-112.076,33.5284,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Seattle-Tacoma-Bellevue, WA</name> 
+<description>Population: 3500026</description> 
+<Point><coordinates>-122.333,47.6264,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Minneapolis-St. Paul-Bloomington, MN-WI</name> 
+<description>Population: 3318486</description> 
+<Point><coordinates>-93.2682,44.9645,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>San Diego-Carlsbad-San Marcos, CA</name> 
+<description>Population: 3140069</description> 
+<Point><coordinates>-117.146,32.7795,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Tampa-St. Petersburg-Clearwater, FL</name> 
+<description>Population: 2824724</description> 
+<Point><coordinates>-82.4646,27.9709,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>St. Louis, MO-IL</name> 
+<description>Population: 2817355</description> 
+<Point><coordinates>-90.2428,38.6277,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Baltimore-Towson, MD</name> 
+<description>Population: 2729110</description> 
+<Point><coordinates>-76.617,39.308,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Denver-Aurora-Broomfield, CO</name> 
+<description>Population: 2599504</description> 
+<Point><coordinates>-104.965,39.7263,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Pittsburgh, PA</name> 
+<description>Population: 2359746</description> 
+<Point><coordinates>-79.9773,40.4414,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Portland-Vancouver-Hillsboro, OR-WA</name> 
+<description>Population: 2262605</description> 
+<Point><coordinates>-122.64,45.523,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>San Antonio-New Braunfels, TX</name> 
+<description>Population: 2194927</description> 
+<Point><coordinates>-98.5127,29.4515,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Sacramento~Arden-Arcade~Roseville, CA</name> 
+<description>Population: 2176235</description> 
+<Point><coordinates>-121.469,38.5556,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Orlando-Kissimmee-Sanford, FL</name> 
+<description>Population: 2171360</description> 
+<Point><coordinates>-81.3758,28.5335,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Cincinnati-Middletown, OH-KY-IN</name> 
+<description>Population: 2138038</description> 
+<Point><coordinates>-84.5031,39.1362,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Cleveland-Elyria-Mentor, OH</name> 
+<description>Population: 2068283</description> 
+<Point><coordinates>-81.6697,41.4823,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Kansas City, MO-KS</name> 
+<description>Population: 2052676</description> 
+<Point><coordinates>-94.5554,39.0763,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Las Vegas-Paradise, NV</name> 
+<description>Population: 1969975</description> 
+<Point><coordinates>-115.222,36.1942,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>San Jose-Sunnyvale-Santa Clara, CA</name> 
+<description>Population: 1865450</description> 
+<Point><coordinates>-121.873,37.3041,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Columbus, OH</name> 
+<description>Population: 1858464</description> 
+<Point><coordinates>-82.9915,39.9898,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Charlotte-Gastonia-Rock Hill, NC-SC</name> 
+<description>Population: 1795472</description> 
+<Point><coordinates>-80.8292,35.2072,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Austin-Round Rock-San Marcos, TX</name> 
+<description>Population: 1783519</description> 
+<Point><coordinates>-97.7472,30.3005,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Indianapolis-Carmel, IN</name> 
+<description>Population: 1778568</description> 
+<Point><coordinates>-86.1477,39.7909,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Virginia Beach-Norfolk-Newport News, VA-NC</name> 
+<description>Population: 1679894</description> 
+<Point><coordinates>-76.0872,36.8345,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Nashville-Davidson~Murfreesboro~Franklin, TN</name> 
+<description>Population: 1617142</description> 
+<Point><coordinates>-86.7621,36.1548,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Providence-New Bedford-Fall River, RI-MA</name> 
+<description>Population: 1600224</description> 
+<Point><coordinates>-71.4221,41.8236,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Milwaukee-Waukesha-West Allis, WI</name> 
+<description>Population: 1562216</description> 
+<Point><coordinates>-87.9559,43.0522,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Jacksonville, FL</name> 
+<description>Population: 1360251</description> 
+<Point><coordinates>-81.66,30.3194,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Memphis, TN-MS-AR</name> 
+<description>Population: 1325605</description> 
+<Point><coordinates>-89.9711,35.1174,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Louisville/Jefferson County, KY-IN</name> 
+<description>Population: 1294849</description> 
+<Point><coordinates>-85.7495,38.2289,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Oklahoma City, OK</name> 
+<description>Population: 1278053</description> 
+<Point><coordinates>-97.535,35.4823,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Richmond, VA</name> 
+<description>Population: 1269380</description> 
+<Point><coordinates>-77.4615,37.5383,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Hartford-West Hartford-East Hartford, CT</name> 
+<description>Population: 1213255</description> 
+<Point><coordinates>-72.6886,41.7626,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>New Orleans-Metairie-Kenner, LA</name> 
+<description>Population: 1191089</description> 
+<Point><coordinates>-90.059,29.9728,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Raleigh-Cary, NC</name> 
+<description>Population: 1163515</description> 
+<Point><coordinates>-78.6446,35.8188,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Salt Lake City, UT</name> 
+<description>Population: 1145905</description> 
+<Point><coordinates>-111.893,40.7547,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Buffalo-Niagara Falls, NY</name> 
+<description>Population: 1134039</description> 
+<Point><coordinates>-78.8494,42.9047,0</coordinates></Point> 
+</Placemark>   
+   
+<Placemark>    
+<name>Birmingham-Hoover, AL</name> 
+<description>Population: 1132264</description> 
+<Point><coordinates>-86.8127,33.5248,0</coordinates></Point> 
+</Placemark>   
+
 </Document>
 </kml>

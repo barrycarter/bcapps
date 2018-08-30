@@ -112,8 +112,45 @@ Export["/tmp/voronoi.png", t1809, ImageSize -> {2951, 1301}];
 
 http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=-66&w=-125&n=50&s=24&center=37,-95.5&url=metrovor.png&zoom=4
 
+(* placemarks *)
+
+(* TODO: could I use Mathematica's built in KML support here? *)
+
+placemark[i_] := {i[[2]], i[[3,1]], Reverse[i[[4,1]]]};
+
+template = "
+<Placemark>
+<name>`name`</name>
+<description>`description`</description>
+<Point><coordinates>`lon`,`lat`,0</coordinates></Point>
+</Placemark>
+";
+
+placemark[i_] := StringTemplate[template][<|
+ "name" -> i[[2]], "description" -> "Population: "<>ToString[i[[3,1]]], 
+ "lon" -> i[[4,1,2]], "lat" -> i[[4,1,1]]
+|>];
+
+placemarks = Table[placemark[i], {i, metrosUSATop}];
+
+Export["/tmp/pmarks.txt", StringJoin[placemarks]];
+
+(* TODO: make placemarks match underlying color? *)
+
+
+placemark[metrosUSATop[[6]]]
+
+[<|"a" -> 1234, "b" -> 5678|>]
+
+
+placemark[i_] := "<Placemark>\n<name>\n"<>i[[2]]<>"\n</name>\n</Placemark>";
+
+
+
+
+
 (* Cut the rectangle from {lon1, lat1} to {lon2, lat2} into 4 smaller
-rectangles *)
+rectangles -- works ok actually, a little slow *)
 
 rect24Rects[lon1_, lat1_, lon2_, lat2_] = {
  {lon1, lat1, (lon1+lon2)/2, (lat1+lat2)/2},
@@ -1359,3 +1396,6 @@ Oklahoma City to San Antonio: 421 mi (678 km, 2.26/4.52/9.05 ltms)
 Dallas to Austin: 182 mi (293 km, 0.98/1.96/3.92 ltms)
 Dallas to San Antonio: 252 mi (406 km, 1.36/2.71/5.42 ltms)
 Austin to San Antonio: 73 mi (118 km, 0.40/0.79/1.58 ltms)
+
+TODO: can probably combine kml with client side opacity for image
+
