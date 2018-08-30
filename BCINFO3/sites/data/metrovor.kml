@@ -2,8 +2,11 @@
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Document>
 
+<Style id="randomColorIcon"><IconStyle><Icon>
+<href>http://maps.google.com/mapfiles/kml/pal3/icon21.png</href>
+</Icon></IconStyle></Style>
+
 <GroundOverlay>
-<color>80808080</color>
 <Icon>
 <href>http://data.bcinfo3.barrycarter.info/metrovortrans.png</href>
 </Icon>
@@ -17,22 +20,9 @@
 
 <Placemark>    
 <name>New York-Northern New Jersey-Long Island, NY-NJ-PA</name>
-
+<styleUrl>#randomColorIcon</styleUrl>
 <description>Population: 19015900</description> 
 <Point><coordinates>-73.9179,40.7042,0</coordinates></Point> 
-
-<Region>
-
-<LatLonAltBox>
-<north>41</north><south>40</south><east>-73</east><west>-74</west>
-</LatLonAltBox>
-
-<Lod>
-<minLodPixels>512</minLodPixels>
-<maxLodPixels>-1</maxLodPixels>
-</Lod>
-
-</Region>
 
 </Placemark>   
    
