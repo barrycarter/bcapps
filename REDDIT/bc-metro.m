@@ -37,6 +37,8 @@ metrosUSASorted = Sort[metrosUSA, #1[[3]] > #2[[3]] &]
 
 metrosUSATop = Take[metrosUSASorted, 50];
 
+metrosUSARest = Take[metrosUSASorted, {51, -1}]
+
 (* form usable to Mathematica *)
 
 (* geopos = Table[i[[4]] -> i, {i, metrosUSATop}]; *)
@@ -114,6 +116,24 @@ http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=-66&w=-125&n=50
 
 http://test.barrycarter.info/bc-image-overlay.pl?url=metrovor.kml&center=37,-95.5&zoom=5&maptypeid=ROADMAP
 
+wholeWorld = Timing[
+ Table[nearest[lon, lat], {lon, -180, 180, 0.02}, {lat, -90, 90, 0.02}]
+];
+
+t0751 = wholeWorld[[2]];
+
+t0752 = Map[rc[[#]] &, t0751, {2}];
+
+t0759 = Transpose[t0752];
+
+t0800 = Graphics[Raster[t0759], ImagePadding -> 0, PlotRangePadding -> 0];
+
+Export["/tmp/metroworld.png", t0800, ImageSize -> {18001, 9001}];
+
+
+
+
+
 (* placemarks *)
 
 (* TODO: could I use Mathematica's built in KML support here? *)
@@ -138,6 +158,27 @@ placemarks = Table[placemark[i], {i, metrosUSATop}];
 Export["/tmp/pmarks.txt", StringJoin[placemarks]];
 
 (* TODO: make placemarks match underlying color? *)
+
+(* and now the micropolitans *)
+
+template2 = "
+<Placemark>
+<name>`name`</name>
+<description>`description`</description>
+<styleUrl>#micropolitan</styleUrl>
+<Point><coordinates>`lon`,`lat`,0</coordinates></Point>
+</Placemark>
+";
+
+placemark2[i_] := StringTemplate[template2][<|
+ "name" -> i[[2]], "description" -> "Population: "<>ToString[i[[3,1]]], 
+ "lon" -> i[[4,1,2]], "lat" -> i[[4,1,1]]
+|>];
+
+placemarks2 = Table[placemark2[i], {i, metrosUSARest}];
+
+Export["/tmp/pmarks2.txt", StringJoin[placemarks2]];
+
 
 
 placemark[metrosUSATop[[6]]]
@@ -1401,3 +1442,14 @@ Austin to San Antonio: 73 mi (118 km, 0.40/0.79/1.58 ltms)
 
 TODO: can probably combine kml with client side opacity for image
 
+<answer>
+
+I'm still working on this, but here's a map and two vaguely interesting facts:
+
+  * http://test.barrycarter.info/bc-image-overlay.pl?url=metrovor.kml&center=37,-95.5&zoom=5&maptypeid=ROADMAP
+
+  * Marengo, Iowa is equidistant from Kansas City, Minneapolis, Chicago, and Milwaukee
+
+  * Denver City, Texas is equidistant from Oklahoma City, Dallas, Austin, and San Antonio
+
+</answer>

@@ -2,9 +2,19 @@
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Document>
 
-<Style id="randomColorIcon"><IconStyle><Icon>
+<!-- using default for metropolitan areas -->
+
+<Style id="micropolitan"><IconStyle><Icon>
 <href>
 https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png
+</href>
+</Icon></IconStyle></Style>
+
+<!-- style below is unused -->
+
+<Style id="metropolitan"><IconStyle><Icon>
+<href>
+https://maps.gstatic.com/mapfiles/ms2/micons/snowflake_simple.png
 </href>
 </Icon></IconStyle></Style>
 
@@ -22,10 +32,8 @@ https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png
 
 <Placemark>    
 <name>New York-Northern New Jersey-Long Island, NY-NJ-PA</name>
-<styleUrl>#randomColorIcon</styleUrl>
-<description>Population: 19015900</description> 
+<description>Population: 19015900</description>
 <Point><coordinates>-73.9179,40.7042,0</coordinates></Point> 
-
 </Placemark>   
    
 <Placemark>    
@@ -321,6 +329,6252 @@ https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle_blue.png
 <description>Population: 1132264</description> 
 <Point><coordinates>-86.8127,33.5248,0</coordinates></Point> 
 </Placemark>   
+
+<!-- micropolitans below this line -->
+
+<Placemark> 
+<name>Rochester, NY</name> 
+<description>Population: 1055278</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.6115,43.1655,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tucson, AZ</name> 
+<description>Population: 989569</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-110.918,32.2145,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Honolulu, HI</name> 
+<description>Population: 963607</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-157.826,21.309,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tulsa, OK</name> 
+<description>Population: 946962</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.9373,36.1313,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fresno, CA</name> 
+<description>Population: 942904</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.792,36.7815,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bridgeport-Stamford-Norwalk, CT</name> 
+<description>Population: 925899</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.1959,41.1886,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Albuquerque, NM</name> 
+<description>Population: 898642</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.61,35.1107,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Omaha-Council Bluffs, NE-IA</name> 
+<description>Population: 877110</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.013,41.2605,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Albany-Schenectady-Troy, NY</name> 
+<description>Population: 871478</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.7813,42.6598,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>New Haven-Milford, CT</name> 
+<description>Population: 861113</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.9232,41.3111,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bakersfield-Delano, CA</name> 
+<description>Population: 851710</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.032,35.3573,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dayton, OH</name> 
+<description>Population: 845388</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.1967,39.7627,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oxnard-Thousand Oaks-Ventura, CA</name> 
+<description>Population: 831771</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.182,34.1913,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Allentown-Bethlehem-Easton, PA-NJ</name> 
+<description>Population: 824916</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.4773,40.6017,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>El Paso, TX</name> 
+<description>Population: 820790</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.423,31.7902,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Baton Rouge, LA</name> 
+<description>Population: 808242</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.1402,30.4581,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Worcester, MA</name> 
+<description>Population: 801227</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-71.8038,42.2688,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>McAllen-Edinburg-Mission, TX</name> 
+<description>Population: 797810</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.2364,26.2163,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Grand Rapids-Wyoming, MI</name> 
+<description>Population: 779604</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.6583,42.9605,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Columbia, SC</name> 
+<description>Population: 777116</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.0108,34.0171,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greensboro-High Point, NC</name> 
+<description>Population: 730966</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.8194,36.0799,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Little Rock-North Little Rock-Conway, AR</name> 
+<description>Population: 709901</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.3311,34.736,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>North Port-Bradenton-Sarasota, FL</name> 
+<description>Population: 709355</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.5777,27.4882,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Knoxville, TN</name> 
+<description>Population: 704500</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.9422,35.9729,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Akron, OH</name> 
+<description>Population: 701456</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.5179,41.0732,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Stockton, CA</name> 
+<description>Population: 696214</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.301,37.9756,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Springfield, MA</name> 
+<description>Population: 693204</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.5475,42.1124,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Charleston-North Charleston-Summerville, SC</name> 
+<description>Population: 682121</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.9863,32.7893,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Poughkeepsie-Newburgh-Middletown, NY</name> 
+<description>Population: 672871</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.907,41.671,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Syracuse, NY</name> 
+<description>Population: 662553</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.1444,43.0469,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Colorado Springs, CO</name> 
+<description>Population: 660319</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-104.792,38.8634,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Toledo, OH</name> 
+<description>Population: 650266</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.5753,41.6657,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greenville-Mauldin-Easley, SC</name> 
+<description>Population: 647401</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.3854,34.8443,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cape Coral-Fort Myers, FL</name> 
+<description>Population: 631330</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.9825,26.6396,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Boise City-Nampa, ID</name> 
+<description>Population: 627664</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-116.238,43.6137,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wichita, KS</name> 
+<description>Population: 625526</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.3362,37.6888,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lakeland-Winter Haven, FL</name> 
+<description>Population: 609492</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.959,28.0412,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Des Moines-West Des Moines, IA</name> 
+<description>Population: 580255</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.6209,41.5909,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Madison, WI</name> 
+<description>Population: 576467</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.2244,42.9211,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Scranton~Wilkes-Barre, PA</name> 
+<description>Population: 563223</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.6674,41.4106,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Youngstown-Warren-Boardman, OH-PA</name> 
+<description>Population: 562739</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.6493,41.0963,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Augusta-Richmond County, GA-SC</name> 
+<description>Population: 561858</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.022,33.4333,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ogden-Clearfield, UT</name> 
+<description>Population: 555916</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.961,41.2277,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Harrisburg-Carlisle, PA</name> 
+<description>Population: 552911</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.8756,40.2698,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jackson, MS</name> 
+<description>Population: 545394</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.2044,32.3204,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Palm Bay-Melbourne-Titusville, FL</name> 
+<description>Population: 543566</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.3758,28.5335,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Provo-Orem, UT</name> 
+<description>Population: 540834</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.661,40.2444,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Chattanooga, TN-GA</name> 
+<description>Population: 533372</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.2673,35.0455,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lancaster, PA</name> 
+<description>Population: 523594</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.3044,40.0399,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Modesto, CA</name> 
+<description>Population: 518522</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.995,37.6615,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Portland-South Portland-Biddeford, ME</name> 
+<description>Population: 515807</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-70.2691,43.6651,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Durham-Chapel Hill, NC</name> 
+<description>Population: 512979</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.9072,35.9886,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Deltona-Daytona Beach-Ormond Beach, FL</name> 
+<description>Population: 494804</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.2163,28.907,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Santa Rosa-Petaluma, CA</name> 
+<description>Population: 488116</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.705,38.4486,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Winston-Salem, NC</name> 
+<description>Population: 482025</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.2605,36.1028,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lexington-Fayette, KY</name> 
+<description>Population: 479244</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.4946,38.0296,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fayetteville-Springdale-Rogers, AR-MO</name> 
+<description>Population: 473830</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.1609,36.0764,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Spokane, WA</name> 
+<description>Population: 473761</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-117.41,47.6733,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lansing-East Lansing, MI</name> 
+<description>Population: 465138</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.5549,42.7176,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pensacola-Ferry Pass-Brent, FL</name> 
+<description>Population: 453218</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.2093,30.437,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Visalia-Porterville, CA</name> 
+<description>Population: 449253</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.307,36.3241,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Springfield, MO</name> 
+<description>Population: 440142</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2862,37.1951,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>York-Hanover, PA</name> 
+<description>Population: 436770</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.728,39.9627,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Corpus Christi, TX</name> 
+<description>Population: 431381</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.4019,27.7429,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Reno-Sparks, NV</name> 
+<description>Population: 429606</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.822,39.5271,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Asheville, NC</name> 
+<description>Population: 429017</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.5558,35.5799,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Port St. Lucie, FL</name> 
+<description>Population: 427874</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.355,27.2758,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Santa Barbara-Santa Maria-Goleta, CA</name> 
+<description>Population: 426878</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.714,34.4258,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Huntsville, AL</name> 
+<description>Population: 425480</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.5963,34.7123,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Flint, MI</name> 
+<description>Population: 422080</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.694,43.0276,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Salinas, CA</name> 
+<description>Population: 421898</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.643,36.6839,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Wayne, IN</name> 
+<description>Population: 419453</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.1265,41.0783,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vallejo-Fairfield, CA</name> 
+<description>Population: 416471</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.236,38.113,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brownsville-Harlingen, TX</name> 
+<description>Population: 414123</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.4844,25.9303,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Reading, PA</name> 
+<description>Population: 412778</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.9263,40.3417,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mobile, AL</name> 
+<description>Population: 412577</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.1033,30.6795,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Killeen-Temple-Fort Hood, TX</name> 
+<description>Population: 411595</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.7266,31.1056,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Canton-Massillon, OH</name> 
+<description>Population: 403869</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.3758,40.805,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Shreveport-Bossier City, LA</name> 
+<description>Population: 403595</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.7711,32.468,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Manchester-Nashua, NH</name> 
+<description>Population: 401696</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-71.4516,42.9863,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Salem, OR</name> 
+<description>Population: 394865</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.029,44.9311,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Beaumont-Port Arthur, TX</name> 
+<description>Population: 390535</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.1267,30.0799,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Anchorage, AK</name> 
+<description>Population: 387516</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-149.762,61.1919,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Davenport-Moline-Rock Island, IA-IL</name> 
+<description>Population: 381342</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.5907,41.543,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Peoria, IL</name> 
+<description>Population: 379556</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.6094,40.7207,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Montgomery, AL</name> 
+<description>Population: 378608</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.2791,32.3615,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fayetteville, NC</name> 
+<description>Population: 374157</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.9176,35.0667,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tallahassee, FL</name> 
+<description>Population: 369758</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.2728,30.4518,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wilmington, NC</name> 
+<description>Population: 369685</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.9121,34.2232,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Trenton-Ewing, NJ</name> 
+<description>Population: 367063</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-74.7561,40.2217,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hickory-Lenoir-Morganton, NC</name> 
+<description>Population: 364567</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.3284,35.7377,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Evansville, IN-KY</name> 
+<description>Population: 359879</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.5506,37.9772,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Savannah, GA</name> 
+<description>Population: 355576</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.1038,32.0507,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Eugene-Springfield, OR</name> 
+<description>Population: 353416</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.11,44.0577,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rockford, IL</name> 
+<description>Population: 348360</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.0698,42.2698,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ann Arbor, MI</name> 
+<description>Population: 347962</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.7393,42.2745,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ocala, FL</name> 
+<description>Population: 332529</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.1306,29.1877,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kalamazoo-Portage, MI</name> 
+<description>Population: 328205</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.5839,42.2792,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Naples-Marco Island, FL</name> 
+<description>Population: 328134</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.7985,26.1529,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>South Bend-Mishawaka, IN-MI</name> 
+<description>Population: 318688</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.2552,41.6726,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kingsport-Bristol-Bristol, TN-VA</name> 
+<description>Population: 309793</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.5421,36.5369,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Green Bay, WI</name> 
+<description>Population: 309469</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.0158,44.5134,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Roanoke, VA</name> 
+<description>Population: 308861</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.9557,37.2769,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lincoln, NE</name> 
+<description>Population: 306503</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.6753,40.8099,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Collins-Loveland, CO</name> 
+<description>Population: 305525</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.078,40.5592,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Charleston, WV</name> 
+<description>Population: 303674</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.6333,38.3495,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Columbus, GA-AL</name> 
+<description>Population: 301439</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.9404,32.4896,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Smith, AR-OK</name> 
+<description>Population: 300087</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.3987,35.3687,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Boulder, CO</name> 
+<description>Population: 299378</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.26,40.0194,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Utica-Rome, NY</name> 
+<description>Population: 298447</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.2319,43.0966,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lubbock, TX</name> 
+<description>Population: 290002</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.878,33.5647,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Huntington-Ashland, WV-KY-OH</name> 
+<description>Population: 287599</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.4336,38.413,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Spartanburg, SC</name> 
+<description>Population: 286868</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.3854,34.8443,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Erie, PA</name> 
+<description>Population: 280985</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.0762,42.1145,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Duluth, MN-WI</name> 
+<description>Population: 279815</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.1171,46.7804,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Clarksville, TN-KY</name> 
+<description>Population: 277701</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.3583,36.5594,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lafayette, LA</name> 
+<description>Population: 277307</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.0294,30.2139,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Myrtle Beach-North Myrtle Beach-Conway, SC</name> 
+<description>Population: 276340</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.8755,33.7042,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Atlantic City-Hammonton, NJ</name> 
+<description>Population: 274338</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-74.439,39.365,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Norwich-New London, CT</name> 
+<description>Population: 273502</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.0285,41.3509,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>San Luis Obispo-Paso Robles, CA</name> 
+<description>Population: 271969</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.663,35.2743,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hagerstown-Martinsburg, MD-WV</name> 
+<description>Population: 271488</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.72,39.6428,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gainesville, FL</name> 
+<description>Population: 266369</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.3361,29.6652,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Holland-Grand Haven, MI</name> 
+<description>Population: 266300</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.1066,42.777,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Santa Cruz-Watsonville, CA</name> 
+<description>Population: 264298</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.026,36.972,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kennewick-Pasco-Richland, WA</name> 
+<description>Population: 264133</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.159,46.2035,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cedar Rapids, IA</name> 
+<description>Population: 260575</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.6685,41.9831,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Merced, CA</name> 
+<description>Population: 259898</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.478,37.306,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greeley, CO</name> 
+<description>Population: 258638</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-104.724,40.4151,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Olympia, WA</name> 
+<description>Population: 256591</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.893,47.0424,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Laredo, TX</name> 
+<description>Population: 256496</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.4906,27.5244,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bremerton-Silverdale, WA</name> 
+<description>Population: 254633</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.653,47.57,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lynchburg, VA</name> 
+<description>Population: 254171</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.1702,37.4037,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Amarillo, TX</name> 
+<description>Population: 253823</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.845,35.1993,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gulfport-Biloxi, MS</name> 
+<description>Population: 253511</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.0762,30.4016,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Binghamton, NY</name> 
+<description>Population: 250074</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.0284,42.0759,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Yakima, WA</name> 
+<description>Population: 247141</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.53,46.5967,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Waco, TX</name> 
+<description>Population: 238564</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.1559,31.5515,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Topeka, KS</name> 
+<description>Population: 234647</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.6895,39.0392,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Macon, GA</name> 
+<description>Population: 232920</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.6517,32.8348,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sioux Falls, SD</name> 
+<description>Population: 232433</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.7318,43.5363,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Champaign-Urbana, IL</name> 
+<description>Population: 232336</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.2612,40.113,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>College Station-Bryan, TX</name> 
+<description>Population: 231623</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.3145,30.6014,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Appleton, WI</name> 
+<description>Population: 227403</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.4017,44.2655,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tuscaloosa, AL</name> 
+<description>Population: 221553</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.5346,33.2065,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Chico, CA</name> 
+<description>Population: 220266</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.835,39.74,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Longview, TX</name> 
+<description>Population: 216666</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.7539,32.5091,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Barnstable Town, MA</name> 
+<description>Population: 215769</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-70.3531,41.6592,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Las Cruces, NM</name> 
+<description>Population: 213598</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.765,32.3197,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tyler, TX</name> 
+<description>Population: 213381</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.2999,32.3342,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Burlington-South Burlington, VT</name> 
+<description>Population: 212535</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.2232,44.4847,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fargo, ND-MN</name> 
+<description>Population: 212171</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.8087,46.8714,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Prescott, AZ</name> 
+<description>Population: 211888</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-112.461,34.5682,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Springfield, IL</name> 
+<description>Population: 211547</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.6504,39.7833,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Houma-Bayou Cane-Thibodaux, LA</name> 
+<description>Population: 208583</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.7161,29.5876,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Florence, SC</name> 
+<description>Population: 206161</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.7741,34.1841,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Medford, OR</name> 
+<description>Population: 204822</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.862,42.332,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Charlottesville, VA</name> 
+<description>Population: 203882</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.4865,38.0345,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bellingham, WA</name> 
+<description>Population: 203663</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.475,48.7502,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lafayette, IN</name> 
+<description>Population: 203608</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.8747,40.4106,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lake Havasu City-Kingman, AZ</name> 
+<description>Population: 202351</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-114.309,34.49,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Yuma, AZ</name> 
+<description>Population: 200870</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-114.615,32.6921,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lake Charles, LA</name> 
+<description>Population: 200822</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2085,30.2147,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Seaford, DE</name> 
+<description>Population: 200330</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.4293,38.9128,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Johnson City, TN</name> 
+<description>Population: 199818</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.3728,36.3354,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Saginaw-Saginaw Township North, MI</name> 
+<description>Population: 199088</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.9508,43.4209,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Elkhart-Goshen, IN</name> 
+<description>Population: 198941</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.9688,41.6831,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Racine, WI</name> 
+<description>Population: 195388</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.8059,42.7261,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bloomington, IN</name> 
+<description>Population: 194193</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.529,39.1621,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Athens-Clarke County, GA</name> 
+<description>Population: 193317</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.3832,33.9555,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greenville, NC</name> 
+<description>Population: 192690</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.3724,35.6016,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>St. Cloud, MN</name> 
+<description>Population: 190014</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.1725,45.5568,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hilton Head Island-Beaufort, SC</name> 
+<description>Population: 189879</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.7429,32.1788,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Torrington, CT</name> 
+<description>Population: 188789</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.1187,41.8175,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Anderson, SC</name> 
+<description>Population: 188488</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.6489,34.5145,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rochester, MN</name> 
+<description>Population: 187612</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.4732,44.0258,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hilo, HI</name> 
+<description>Population: 186738</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-155.086,19.7055,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Daphne-Fairhope-Foley, AL</name> 
+<description>Population: 186717</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.8864,30.6313,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Crestview-Fort Walton Beach-Destin, FL</name> 
+<description>Population: 183482</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.6167,30.4202,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gainesville, GA</name> 
+<description>Population: 183052</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.8339,34.3045,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kingston, NY</name> 
+<description>Population: 182448</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-74.3903,41.4733,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jacksonville, NC</name> 
+<description>Population: 179719</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.4098,34.7596,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Redding, CA</name> 
+<description>Population: 177774</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.37,40.5766,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Monroe, LA</name> 
+<description>Population: 177651</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.0949,32.5103,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>El Centro, CA</name> 
+<description>Population: 177057</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-115.558,32.7881,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Joplin, MO</name> 
+<description>Population: 176849</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.511,37.0778,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Columbia, MO</name> 
+<description>Population: 175831</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.3338,38.9484,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lebanon, NH-VT</name> 
+<description>Population: 174595</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.2552,43.6439,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Terre Haute, IN</name> 
+<description>Population: 172663</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.3898,39.4696,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Muskegon-Norton Shores, MI</name> 
+<description>Population: 171302</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.2477,43.2266,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bloomington-Normal, IL</name> 
+<description>Population: 170556</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.9835,40.4776,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>East Stroudsburg, PA</name> 
+<description>Population: 169882</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.1801,41.0014,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Panama City-Lynn Haven-Panama City Beach, FL</name> 
+<description>Population: 169856</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.6645,30.1745,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Waterloo-Cedar Falls, IA</name> 
+<description>Population: 168289</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.3462,42.4924,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oshkosh-Neenah, WI</name> 
+<description>Population: 167699</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.4545,44.2217,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Yuba City, CA</name> 
+<description>Population: 167497</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.626,39.1348,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Abilene, TX</name> 
+<description>Population: 166416</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.7455,32.4464,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dover, DE</name> 
+<description>Population: 164834</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.5268,39.1619,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pascagoula, MS</name> 
+<description>Population: 162790</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.542,30.3637,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Thomasville-Lexington, NC</name> 
+<description>Population: 162697</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.0773,35.8858,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Eau Claire, WI</name> 
+<description>Population: 162657</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.4927,44.8146,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Blacksburg-Christiansburg-Radford, VA</name> 
+<description>Population: 162487</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.4177,37.2299,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Parkersburg-Marietta-Vienna, WV-OH</name> 
+<description>Population: 162248</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.5421,39.2662,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Statesville-Mooresville, NC</name> 
+<description>Population: 161202</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.8785,35.7868,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pueblo, CO</name> 
+<description>Population: 160545</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-104.62,38.2669,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Punta Gorda, FL</name> 
+<description>Population: 160511</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.1058,26.9902,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bend, OR</name> 
+<description>Population: 160338</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.308,44.0564,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Billings, MT</name> 
+<description>Population: 160097</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-108.537,45.7866,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Janesville, WI</name> 
+<description>Population: 160092</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.0511,42.5397,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jackson, MI</name> 
+<description>Population: 159748</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.4072,42.2441,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Albany, GA</name> 
+<description>Population: 157688</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.1656,31.5823,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vineland-Millville-Bridgeton, NJ</name> 
+<description>Population: 157095</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.014,39.4804,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Niles-Benton Harbor, MI</name> 
+<description>Population: 156941</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.2508,41.8303,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kahului-Wailuku, HI</name> 
+<description>Population: 156674</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-156.467,20.8818,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Iowa City, IA</name> 
+<description>Population: 154893</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.525,41.6558,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>State College, PA</name> 
+<description>Population: 154722</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.8587,40.7913,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Alexandria, LA</name> 
+<description>Population: 154505</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.4592,31.2928,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ottawa-Streator, IL</name> 
+<description>Population: 154092</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.8422,41.3471,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Decatur, AL</name> 
+<description>Population: 154070</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.9834,34.581,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bangor, ME</name> 
+<description>Population: 153786</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-68.783,44.8109,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hanford-Corcoran, CA</name> 
+<description>Population: 153765</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.647,36.3333,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Burlington, NC</name> 
+<description>Population: 153291</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.4456,36.0896,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Madera-Chowchilla, CA</name> 
+<description>Population: 152925</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.067,36.9634,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rocky Mount, NC</name> 
+<description>Population: 152157</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.8056,35.9541,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Monroe, MI</name> 
+<description>Population: 151560</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.3935,41.9181,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Chambersburg, PA</name> 
+<description>Population: 150811</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.6564,39.9348,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jefferson City, MO</name> 
+<description>Population: 150480</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.1893,38.573,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wichita Falls, TX</name> 
+<description>Population: 150261</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.5149,33.897,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pottsville, PA</name> 
+<description>Population: 147513</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.2027,40.6851,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Florence-Muscle Shoals, AL</name> 
+<description>Population: 147293</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.6629,34.8203,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wheeling, WV-OH</name> 
+<description>Population: 147197</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.6986,40.0703,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Grand Junction, CO</name> 
+<description>Population: 147083</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-108.559,39.0805,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Concord, NH</name> 
+<description>Population: 146579</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-71.5491,43.2201,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dothan, AL</name> 
+<description>Population: 146562</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.4073,31.2272,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Santa Fe, NM</name> 
+<description>Population: 145648</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.965,35.6672,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hattiesburg, MS</name> 
+<description>Population: 145428</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.3087,31.316,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Traverse City, MI</name> 
+<description>Population: 144411</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.6123,44.7601,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sioux City, IA-NE-SD</name> 
+<description>Population: 144062</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.3957,42.498,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Warner Robins, GA</name> 
+<description>Population: 143925</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.638,32.6087,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Johnstown, PA</name> 
+<description>Population: 143728</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.921,40.3252,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Auburn-Opelika, AL</name> 
+<description>Population: 143468</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.4808,32.5977,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dalton, GA</name> 
+<description>Population: 142741</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.9716,34.7711,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Valdosta, GA</name> 
+<description>Population: 142307</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.2831,30.8467,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>St. George, UT</name> 
+<description>Population: 141666</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-113.578,37.0953,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Coeur d'Alene, ID</name> 
+<description>Population: 141132</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-116.78,47.6928,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Midland, TX</name> 
+<description>Population: 140308</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-102.099,32.0051,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Odessa, TX</name> 
+<description>Population: 140111</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-102.365,31.8633,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Homosassa Springs, FL</name> 
+<description>Population: 140031</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.55,28.8072,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sebastian-Vero Beach, FL</name> 
+<description>Population: 138894</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.4824,27.7828,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Napa, CA</name> 
+<description>Population: 138088</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.299,38.3048,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Salisbury, NC</name> 
+<description>Population: 138019</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.4785,35.6683,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Springfield, OH</name> 
+<description>Population: 137691</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.8041,39.9271,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Morristown, TN</name> 
+<description>Population: 137494</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.2961,36.2106,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tupelo, MS</name> 
+<description>Population: 137388</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.7259,34.2596,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Texarkana, TX-Texarkana, AR</name> 
+<description>Population: 136552</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.0674,33.4372,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lumberton, NC</name> 
+<description>Population: 135517</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.0119,34.6272,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Battle Creek, MI</name> 
+<description>Population: 135490</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.204,42.3121,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Eureka-Arcata-Fortuna, CA</name> 
+<description>Population: 134761</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-124.163,40.79,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Flagstaff, AZ</name> 
+<description>Population: 134511</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.631,35.1992,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>La Crosse, WI-MN</name> 
+<description>Population: 134488</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.2331,43.8132,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wausau, WI</name> 
+<description>Population: 134400</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.6207,44.8817,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jamestown-Dunkirk-Fredonia, NY</name> 
+<description>Population: 134368</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.2386,42.0955,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lebanon, PA</name> 
+<description>Population: 134311</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.4209,40.3415,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sierra Vista-Douglas, AZ</name> 
+<description>Population: 133289</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-110.276,31.5455,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Morgantown, WV</name> 
+<description>Population: 132251</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.9507,39.6337,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Idaho Falls, ID</name> 
+<description>Population: 132073</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-112.033,43.4918,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Anderson, IN</name> 
+<description>Population: 131235</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.6815,40.1,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pittsfield, MA</name> 
+<description>Population: 130458</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.2515,42.4522,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Manhattan, KS</name> 
+<description>Population: 130240</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.5868,39.1901,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Winchester, VA-WV</name> 
+<description>Population: 130065</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.1668,39.1784,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Glens Falls, NY</name> 
+<description>Population: 128996</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.6778,43.3358,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rapid City, SD</name> 
+<description>Population: 128361</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.228,44.0762,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Farmington, NM</name> 
+<description>Population: 128200</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-108.19,36.7515,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>New Bern, NC</name> 
+<description>Population: 128003</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.0691,35.1091,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bowling Green, KY</name> 
+<description>Population: 127607</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.4444,36.9817,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>St. Joseph, MO-KS</name> 
+<description>Population: 127574</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.8365,39.7579,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Logan, UT-ID</name> 
+<description>Population: 127549</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.831,41.7379,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Altoona, PA</name> 
+<description>Population: 127099</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.3998,40.5107,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Harrisonburg, VA</name> 
+<description>Population: 126562</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.8728,38.4433,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lawton, OK</name> 
+<description>Population: 125815</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.4178,34.6094,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Salisbury, MD</name> 
+<description>Population: 125529</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.5934,38.3658,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Goldsboro, NC</name> 
+<description>Population: 123697</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.978,35.382,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mansfield, OH</name> 
+<description>Population: 123510</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.5229,40.7549,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Steubenville-Weirton, OH-WV</name> 
+<description>Population: 123243</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.576,40.4086,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jonesboro, AR</name> 
+<description>Population: 122829</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.694,35.8281,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hammond, LA</name> 
+<description>Population: 122571</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.4656,30.5044,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Augusta-Waterville, ME</name> 
+<description>Population: 121935</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-69.7653,44.3235,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Elizabethtown, KY</name> 
+<description>Population: 121771</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.8662,37.7027,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sherman-Denison, TX</name> 
+<description>Population: 121419</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.61,33.6411,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dunn, NC</name> 
+<description>Population: 119256</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.6108,35.3104,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Staunton-Waynesboro, VA</name> 
+<description>Population: 118629</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.0764,38.1579,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Willimantic, CT</name> 
+<description>Population: 118151</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.1934,41.7139,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Albany-Lebanon, OR</name> 
+<description>Population: 118122</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.096,44.6302,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mount Vernon-Anacortes, WA</name> 
+<description>Population: 118109</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.326,48.4201,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Watertown-Fort Drum, NY</name> 
+<description>Population: 117910</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.7579,44.038,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Anniston-Oxford, AL</name> 
+<description>Population: 117797</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.8267,33.663,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Muncie, IN</name> 
+<description>Population: 117660</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.3882,40.1932,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cleveland, TN</name> 
+<description>Population: 116834</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.8711,35.1715,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Williamsport, PA</name> 
+<description>Population: 116747</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.0187,41.2444,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Victoria, TX</name> 
+<description>Population: 116230</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.9935,28.8169,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jackson, TN</name> 
+<description>Population: 115396</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.8208,35.6331,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Owensboro, KY</name> 
+<description>Population: 115333</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.1184,37.7577,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sheboygan, WI</name> 
+<description>Population: 115149</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.7577,43.7721,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wooster, OH</name> 
+<description>Population: 114611</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.9373,40.8093,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kankakee-Bradley, IL</name> 
+<description>Population: 113698</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.8639,41.117,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>San Angelo, TX</name> 
+<description>Population: 113443</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.453,31.4531,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brunswick, GA</name> 
+<description>Population: 112923</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.4893,31.1588,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wenatchee-East Wenatchee, WA</name> 
+<description>Population: 112448</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.325,47.4233,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lawrence, KS</name> 
+<description>Population: 112211</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.2532,38.9599,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ogdensburg-Massena, NY</name> 
+<description>Population: 111690</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.0279,44.6773,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Michigan City-La Porte, IN</name> 
+<description>Population: 111374</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.8869,41.7094,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Allegan, MI</name> 
+<description>Population: 111234</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.8517,42.5283,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bismarck, ND</name> 
+<description>Population: 110879</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.779,46.8133,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Decatur, IL</name> 
+<description>Population: 110730</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.9442,39.8516,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Missoula, MT</name> 
+<description>Population: 110138</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-114.012,46.8626,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>East Liverpool-Salem, OH</name> 
+<description>Population: 107570</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.5691,40.6285,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Roseburg, OR</name> 
+<description>Population: 107490</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.356,43.218,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lexington Park, MD</name> 
+<description>Population: 107484</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.4506,38.2589,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sumter, SC</name> 
+<description>Population: 107460</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.3635,33.9269,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Show Low, AZ</name> 
+<description>Population: 107398</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-110.048,34.2436,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lewiston-Auburn, ME</name> 
+<description>Population: 107398</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-70.1924,44.0975,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Meridian, MS</name> 
+<description>Population: 107364</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.7042,32.3748,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bluefield, WV-VA</name> 
+<description>Population: 107180</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.2187,37.2622,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bay City, MI</name> 
+<description>Population: 107110</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.8895,43.592,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cookeville, TN</name> 
+<description>Population: 106498</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.5043,36.1642,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lima, OH</name> 
+<description>Population: 106094</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.115,40.7407,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Danville, VA</name> 
+<description>Population: 105696</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.4044,36.5872,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gadsden, AL</name> 
+<description>Population: 104303</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.0104,34.0101,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Whitewater, WI</name> 
+<description>Population: 102931</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.5403,42.6729,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cumberland, MD-WV</name> 
+<description>Population: 102884</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.7629,39.6477,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Longview, WA</name> 
+<description>Population: 102478</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.956,46.1427,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fond du Lac, WI</name> 
+<description>Population: 102079</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.4443,43.7567,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ithaca, NY</name> 
+<description>Population: 101723</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.4929,42.4565,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gettysburg, PA</name> 
+<description>Population: 101434</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.2342,39.8293,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ashtabula, OH</name> 
+<description>Population: 101345</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.797,41.8771,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Richmond-Berea, KY</name> 
+<description>Population: 101257</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.2936,37.7447,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Twin Falls, ID</name> 
+<description>Population: 100687</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-114.464,42.5614,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Enterprise-Ozark, AL</name> 
+<description>Population: 100570</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.8445,31.3275,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tullahoma, TN</name> 
+<description>Population: 100344</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.2133,35.3685,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Adrian, MI</name> 
+<description>Population: 99440</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.9171,42.5802,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fairbanks, AK</name> 
+<description>Population: 99192</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-147.726,64.8381,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Paducah, KY-IL</name> 
+<description>Population: 99090</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.6274,37.0722,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Corning, NY</name> 
+<description>Population: 99033</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.3032,42.3275,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pine Bluff, AR</name> 
+<description>Population: 98924</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.0231,34.2166,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sebring, FL</name> 
+<description>Population: 98630</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.4444,27.4956,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Truckee-Grass Valley, CA</name> 
+<description>Population: 98612</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.204,39.3422,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kokomo, IN</name> 
+<description>Population: 98588</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.1318,40.4822,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Grand Forks, ND-MN</name> 
+<description>Population: 98054</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.0549,47.9123,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>The Villages, FL</name> 
+<description>Population: 97756</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.9712,28.9378,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Shelby, NC</name> 
+<description>Population: 97489</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.5378,35.2883,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Palm Coast, FL</name> 
+<description>Population: 97376</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.2234,29.5381,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mankato-North Mankato, MN</name> 
+<description>Population: 97204</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.9938,44.1645,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hot Springs, AR</name> 
+<description>Population: 97124</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.0554,34.4971,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cape Girardeau-Jackson, MO-IL</name> 
+<description>Population: 97024</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.5465,37.309,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ocean City, NJ</name> 
+<description>Population: 96601</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-74.5938,39.2654,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rome, GA</name> 
+<description>Population: 95989</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.185,34.2599,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dubuque, IA</name> 
+<description>Population: 94648</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.6869,42.5043,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sunbury, PA</name> 
+<description>Population: 94558</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.7892,40.8639,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Clarksburg, WV</name> 
+<description>Population: 94523</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.3369,39.2834,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Albertville, AL</name> 
+<description>Population: 94166</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.2113,34.2654,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cheyenne, WY</name> 
+<description>Population: 92680</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-104.802,41.1455,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>New Philadelphia-Dover, OH</name> 
+<description>Population: 92508</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.4473,40.4894,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Orangeburg, SC</name> 
+<description>Population: 91910</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.8622,33.4968,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sevierville, TN</name> 
+<description>Population: 91466</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.5699,35.8776,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pocatello, ID</name> 
+<description>Population: 91457</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-112.447,42.8752,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bozeman, MT</name> 
+<description>Population: 91377</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.047,45.6779,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kalispell, MT</name> 
+<description>Population: 91301</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-114.316,48.1978,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Moses Lake, WA</name> 
+<description>Population: 91265</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.288,47.1211,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brainerd, MN</name> 
+<description>Population: 91153</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.1932,46.3591,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>New Castle, PA</name> 
+<description>Population: 90535</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.3446,40.9973,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ames, IA</name> 
+<description>Population: 89663</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.6316,42.0273,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Southern Pines-Pinehurst, NC</name> 
+<description>Population: 89352</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.3983,35.1819,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Indiana, PA</name> 
+<description>Population: 89298</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.1549,40.6211,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Elmira, NY</name> 
+<description>Population: 88840</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.8185,42.1569,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Meadville, PA</name> 
+<description>Population: 88740</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.1474,41.6421,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Beaver Dam, WI</name> 
+<description>Population: 88661</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.5479,43.497,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pendleton-Hermiston, OR</name> 
+<description>Population: 87894</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-118.798,45.6703,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lufkin, TX</name> 
+<description>Population: 87669</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.7304,31.3369,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ukiah, CA</name> 
+<description>Population: 87553</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.209,39.1488,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Zanesville, OH</name> 
+<description>Population: 86237</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.0122,39.946,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Corvallis, OR</name> 
+<description>Population: 85928</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.276,44.5708,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bloomsburg-Berwick, PA</name> 
+<description>Population: 85772</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.454,41.0006,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Branson, MO</name> 
+<description>Population: 84999</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.255,36.6377,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Laurel, MS</name> 
+<description>Population: 84852</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.1393,31.6974,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Russellville, AR</name> 
+<description>Population: 84391</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.1368,35.2784,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Midland, MI</name> 
+<description>Population: 84063</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.2306,43.6227,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Watertown-Fort Atkinson, WI</name> 
+<description>Population: 83943</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.8404,42.9271,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Opelousas-Eunice, LA</name> 
+<description>Population: 83552</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.0844,30.5282,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Grants Pass, OR</name> 
+<description>Population: 82987</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.328,42.439,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Plattsburgh, NY</name> 
+<description>Population: 81945</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.4954,44.6879,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Great Falls, MT</name> 
+<description>Population: 81837</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.286,47.5037,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Talladega-Sylacauga, AL</name> 
+<description>Population: 81664</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.1013,33.4347,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Danville, IL</name> 
+<description>Population: 81509</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.6215,40.1393,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Columbia, TN</name> 
+<description>Population: 81509</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.0445,35.615,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wilson, NC</name> 
+<description>Population: 81452</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.9235,35.7311,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>DuBois, PA</name> 
+<description>Population: 81445</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.762,41.1203,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Manitowoc, WI</name> 
+<description>Population: 80976</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.0318,43.9147,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hinesville-Fort Stewart, GA</name> 
+<description>Population: 80587</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.6117,31.8324,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cullman, AL</name> 
+<description>Population: 80536</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.845,34.1775,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Olean, NY</name> 
+<description>Population: 79832</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.4965,42.0834,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Auburn, NY</name> 
+<description>Population: 79738</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.5648,42.9317,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Portsmouth, OH</name> 
+<description>Population: 79277</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.9654,38.7432,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Beckley, WV</name> 
+<description>Population: 79127</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.1832,37.7798,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oak Harbor, WA</name> 
+<description>Population: 78971</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.659,48.2951,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lincolnton, NC</name> 
+<description>Population: 78932</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.2428,35.4742,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Athens, TX</name> 
+<description>Population: 78826</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.8491,32.2028,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Chillicothe, OH</name> 
+<description>Population: 78249</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.9838,39.3365,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Searcy, AR</name> 
+<description>Population: 78167</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.7337,35.247,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Stillwater, OK</name> 
+<description>Population: 77988</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.0685,36.1215,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lancaster, SC</name> 
+<description>Population: 77908</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.7733,34.7211,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Columbus, IN</name> 
+<description>Population: 77870</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.9111,39.214,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Somerset, PA</name> 
+<description>Population: 77405</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.0813,40.0069,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Warsaw, IN</name> 
+<description>Population: 77336</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.847,41.2406,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Quincy, IL-MO</name> 
+<description>Population: 77314</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.3887,39.9323,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Keene, NH</name> 
+<description>Population: 76918</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.2884,42.9425,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sandusky, OH</name> 
+<description>Population: 76751</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.7091,41.4467,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Casper, WY</name> 
+<description>Population: 76366</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.325,42.8347,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Roanoke Rapids, NC</name> 
+<description>Population: 76066</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.6548,36.4545,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Centralia, WA</name> 
+<description>Population: 75901</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.961,46.7205,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Helena, MT</name> 
+<description>Population: 75699</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-112.027,46.5958,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Findlay, OH</name> 
+<description>Population: 75056</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.6422,41.0428,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marshfield-Wisconsin Rapids, WI</name> 
+<description>Population: 74785</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.8231,44.3868,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Seneca, SC</name> 
+<description>Population: 74418</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.9558,34.6841,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Palatka, FL</name> 
+<description>Population: 74041</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.6513,29.6477,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Key West, FL</name> 
+<description>Population: 73873</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.784,24.5592,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mount Airy, NC</name> 
+<description>Population: 73714</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.6093,36.5008,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gallup, NM</name> 
+<description>Population: 73664</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-108.734,35.5238,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Grand Island, NE</name> 
+<description>Population: 73551</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.358,40.9223,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>New Iberia, LA</name> 
+<description>Population: 73400</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.8185,30.0036,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Statesboro, GA</name> 
+<description>Population: 72881</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.7792,32.4451,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Aberdeen, WA</name> 
+<description>Population: 72546</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.819,46.9758,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Minot, ND</name> 
+<description>Population: 72067</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.292,48.2332,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Port Angeles, WA</name> 
+<description>Population: 71838</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.441,48.113,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Payne, AL</name> 
+<description>Population: 71375</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.7066,34.4538,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Frankfort, KY</name> 
+<description>Population: 71037</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.8631,38.1973,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Muskogee, OK</name> 
+<description>Population: 71003</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.368,35.7466,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Galesburg, IL</name> 
+<description>Population: 70735</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.3685,40.9523,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mount Pleasant, MI</name> 
+<description>Population: 70622</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.775,43.6009,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Shawnee, OK</name> 
+<description>Population: 70280</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.9338,35.3425,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Stevens Point, WI</name> 
+<description>Population: 70084</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.5603,44.523,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Owosso, MI</name> 
+<description>Population: 69841</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.1745,42.9961,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greenwood, SC</name> 
+<description>Population: 69835</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.1548,34.1898,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marion, IN</name> 
+<description>Population: 69793</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.6647,40.5491,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greeneville, TN</name> 
+<description>Population: 69339</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.8225,36.1682,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>North Wilkesboro, NC</name> 
+<description>Population: 68984</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.142,36.1709,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Richmond, IN</name> 
+<description>Population: 68643</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.8907,39.8302,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Huntsville, TX</name> 
+<description>Population: 68087</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.5484,30.7113,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>LaGrange, GA</name> 
+<description>Population: 67764</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.0319,33.0366,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kapaa, HI</name> 
+<description>Population: 67701</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-159.338,22.0883,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marquette, MI</name> 
+<description>Population: 67694</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.4024,46.5486,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Forest City, NC</name> 
+<description>Population: 67538</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.8701,35.3311,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lake City, FL</name> 
+<description>Population: 67485</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.6397,30.1896,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Morehead City, NC</name> 
+<description>Population: 67373</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.7467,34.7277,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Martinsville, VA</name> 
+<description>Population: 67300</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.8692,36.6861,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marion-Herrin, IL</name> 
+<description>Population: 66622</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.9302,37.7304,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Klamath Falls, OR</name> 
+<description>Population: 66299</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.778,42.2234,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marshall, TX</name> 
+<description>Population: 66296</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.3637,32.5429,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marion, OH</name> 
+<description>Population: 66212</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.1264,40.5866,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Roswell, NM</name> 
+<description>Population: 65890</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-104.528,33.3872,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Alamogordo, NM</name> 
+<description>Population: 65703</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.952,32.8959,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marinette, WI-MI</name> 
+<description>Population: 65586</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.6287,45.092,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Farmington, MO</name> 
+<description>Population: 65577</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.4221,37.7819,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Nacogdoches, TX</name> 
+<description>Population: 65466</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.6509,31.6089,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hobbs, NM</name> 
+<description>Population: 65423</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.141,32.7122,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Charleston-Mattoon, IL</name> 
+<description>Population: 65012</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.179,39.4887,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Athens, OH</name> 
+<description>Population: 64769</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.0962,39.3294,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hutchinson, KS</name> 
+<description>Population: 64607</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.9235,38.0655,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Faribault-Northfield, MN</name> 
+<description>Population: 64409</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2786,44.2939,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Clearlake, CA</name> 
+<description>Population: 64323</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.631,38.9528,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Elizabeth City, NC</name> 
+<description>Population: 64197</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.225,36.2956,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Somerset, KY</name> 
+<description>Population: 63657</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.6094,37.083,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Red Bluff, CA</name> 
+<description>Population: 63601</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.238,40.1766,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ruston, LA</name> 
+<description>Population: 63179</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.6405,32.5297,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sayre, PA</name> 
+<description>Population: 62917</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.5208,41.9836,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Coos Bay, OR</name> 
+<description>Population: 62791</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-124.237,43.3765,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hudson, NY</name> 
+<description>Population: 62550</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.6758,42.419,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Baraboo, WI</name> 
+<description>Population: 62290</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.7876,43.5968,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Crowley, LA</name> 
+<description>Population: 61982</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.3737,30.2136,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Salina, KS</name> 
+<description>Population: 61963</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.6072,38.8243,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oneonta, NY</name> 
+<description>Population: 61917</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.0744,42.4722,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rio Grande City-Roma, TX</name> 
+<description>Population: 61715</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.8184,26.3807,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lewiston, ID-WA</name> 
+<description>Population: 61476</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-117.001,46.4002,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rutland, VT</name> 
+<description>Population: 61289</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.1932,43.6256,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mount Vernon, OH</name> 
+<description>Population: 61275</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.4812,40.3927,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sturgis, MI</name> 
+<description>Population: 61136</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.4166,41.7982,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Shelton, WA</name> 
+<description>Population: 61019</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.106,47.2137,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fremont, OH</name> 
+<description>Population: 60734</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.1171,41.3489,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Enid, OK</name> 
+<description>Population: 60670</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.8808,36.4006,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Albemarle, NC</name> 
+<description>Population: 60626</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.1953,35.3584,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Carbondale, IL</name> 
+<description>Population: 60365</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.2203,37.7264,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Laconia, NH</name> 
+<description>Population: 60223</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-71.4679,43.5508,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Granbury, TX</name> 
+<description>Population: 60121</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.7814,32.442,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Batavia, NY</name> 
+<description>Population: 59993</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.9782,42.9855,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Georgetown, SC</name> 
+<description>Population: 59991</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.2938,33.3674,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Columbus, MS</name> 
+<description>Population: 59671</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.4151,33.5018,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Barre, VT</name> 
+<description>Population: 59626</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.5728,44.2614,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Walla Walla, WA</name> 
+<description>Population: 59588</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-118.33,46.0651,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Norwalk, OH</name> 
+<description>Population: 59496</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.6114,41.243,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>London, KY</name> 
+<description>Population: 59355</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.0842,37.1275,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kinston, NC</name> 
+<description>Population: 59339</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.5851,35.2707,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Edwards, CO</name> 
+<description>Population: 59281</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.592,39.6402,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sanford, NC</name> 
+<description>Population: 58752</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.1755,35.4759,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sterling, IL</name> 
+<description>Population: 58388</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.6933,41.7968,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Palestine, TX</name> 
+<description>Population: 58308</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.6385,31.7579,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Abbeville, LA</name> 
+<description>Population: 58276</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.1291,29.9725,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Point Pleasant, WV-OH</name> 
+<description>Population: 58268</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.1286,38.8575,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dublin, GA</name> 
+<description>Population: 57924</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.9184,32.5375,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ardmore, OK</name> 
+<description>Population: 57482</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.1294,34.1812,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fergus Falls, MN</name> 
+<description>Population: 57252</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.0732,46.2828,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Crossville, TN</name> 
+<description>Population: 56632</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.0313,35.9542,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fairmont, WV</name> 
+<description>Population: 56586</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.1435,39.4813,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tiffin, OH</name> 
+<description>Population: 56469</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.179,41.1168,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Picayune, MS</name> 
+<description>Population: 55718</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.6802,30.5281,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Calhoun, GA</name> 
+<description>Population: 55621</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.9426,34.4999,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gaffney, SC</name> 
+<description>Population: 55540</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.653,35.0719,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Carson City, NV</name> 
+<description>Population: 55439</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.754,39.1609,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Eagle Pass, TX</name> 
+<description>Population: 55405</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.489,28.7106,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Waycross, GA</name> 
+<description>Population: 55244</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.3549,31.2139,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gloversville, NY</name> 
+<description>Population: 55180</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-74.3428,43.0525,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Phoenix Lake-Cedar Ridge, CA</name> 
+<description>Population: 54953</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-122.508,37.8946,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jasper, IN</name> 
+<description>Population: 54927</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.9327,38.3953,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oil City, PA</name> 
+<description>Population: 54683</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.7073,41.4283,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Morgan City, LA</name> 
+<description>Population: 54210</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.1973,29.7008,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Muscatine, IA</name> 
+<description>Population: 54184</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.0561,41.424,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Carlsbad-Artesia, NM</name> 
+<description>Population: 54152</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-104.236,32.4119,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Harriman, TN</name> 
+<description>Population: 53838</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.5557,35.9286,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Milledgeville, GA</name> 
+<description>Population: 53817</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.2334,33.0878,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ontario, OR-ID</name> 
+<description>Population: 53692</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-116.969,44.0268,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>McComb, MS</name> 
+<description>Population: 53470</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.4595,31.2446,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Warrensburg, MO</name> 
+<description>Population: 53439</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.735,38.7631,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Scottsboro, AL</name> 
+<description>Population: 53291</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.0426,34.6514,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Danville, KY</name> 
+<description>Population: 53281</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.775,37.6455,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kearney, NE</name> 
+<description>Population: 53278</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.0812,40.7007,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Leonard Wood, MO</name> 
+<description>Population: 53175</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.1173,37.7382,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ashland, OH</name> 
+<description>Population: 53153</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.3151,40.867,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Payson, AZ</name> 
+<description>Population: 53144</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.327,34.2395,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rochelle, IL</name> 
+<description>Population: 53115</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.0657,41.9233,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Natchez, MS-LA</name> 
+<description>Population: 52943</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.3876,31.5544,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greenville, OH</name> 
+<description>Population: 52809</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.628,40.1025,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Athens, TN</name> 
+<description>Population: 52508</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.6021,35.4482,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Glasgow, KY</name> 
+<description>Population: 52342</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.9202,37.0004,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Alexander City, AL</name> 
+<description>Population: 52336</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.936,32.9332,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Polk South, LA</name> 
+<description>Population: 52107</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2112,31.047,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Durango, CO</name> 
+<description>Population: 51917</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-107.871,37.2787,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fernley, NV</name> 
+<description>Population: 51871</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.215,39.5987,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Malone, NY</name> 
+<description>Population: 51551</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-74.288,44.8279,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ocean Pines, MD</name> 
+<description>Population: 51514</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.1528,38.3837,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mason City, IA</name> 
+<description>Population: 51482</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2019,43.1487,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bartlesville, OK</name> 
+<description>Population: 51476</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.9595,36.7472,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Elko, NV</name> 
+<description>Population: 51470</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-115.766,40.8364,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Winona, MN</name> 
+<description>Population: 51378</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.6472,44.0482,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Boone, NC</name> 
+<description>Population: 51333</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.6687,36.2114,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Douglas, GA</name> 
+<description>Population: 51277</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.8508,31.5074,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Platteville, WI</name> 
+<description>Population: 51210</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.7104,42.8485,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jacksonville, TX</name> 
+<description>Population: 51140</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.2686,31.9635,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rexburg, ID</name> 
+<description>Population: 50992</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.785,43.823,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>St. Marys, GA</name> 
+<description>Population: 50410</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.5713,30.7563,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greenville, MS</name> 
+<description>Population: 50406</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.0484,33.3986,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brigham City, UT</name> 
+<description>Population: 50290</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-112.015,41.5102,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Paris, TX</name> 
+<description>Population: 50074</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.5477,33.6625,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Humboldt, TN</name> 
+<description>Population: 49935</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.9111,35.8226,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Amsterdam, NY</name> 
+<description>Population: 49916</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-74.1857,42.9558,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kerrville, TX</name> 
+<description>Population: 49783</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.1405,30.0465,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Clovis, NM</name> 
+<description>Population: 49649</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.205,34.4125,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cortland, NY</name> 
+<description>Population: 49363</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.1813,42.6007,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sidney, OH</name> 
+<description>Population: 49307</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.161,40.2897,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>New Castle, IN</name> 
+<description>Population: 49264</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.365,39.9237,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Del Rio, TX</name> 
+<description>Population: 49106</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.896,29.3707,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Clinton, IA</name> 
+<description>Population: 49015</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.2073,41.8469,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oxford, MS</name> 
+<description>Population: 48472</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.5262,34.3598,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vicksburg, MS</name> 
+<description>Population: 48346</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.8754,32.336,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Norfolk, NE</name> 
+<description>Population: 48302</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.421,42.0331,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Corsicana, TX</name> 
+<description>Population: 48054</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.4694,32.0925,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tahlequah, OK</name> 
+<description>Population: 47845</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.9715,35.9129,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Starkville, MS</name> 
+<description>Population: 47741</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.82,33.4625,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Washington, NC</name> 
+<description>Population: 47691</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.052,35.5535,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Nogales, AZ</name> 
+<description>Population: 47676</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-110.939,31.354,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cadillac, MI</name> 
+<description>Population: 47629</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.4137,44.251,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Freeport, IL</name> 
+<description>Population: 47563</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.6304,42.292,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kendallville, IN</name> 
+<description>Population: 47553</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.2605,41.4418,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Culpeper, VA</name> 
+<description>Population: 47476</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.9992,38.4719,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Burlington, IA-IL</name> 
+<description>Population: 47365</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.1157,40.8082,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cañon City, CO</name> 
+<description>Population: 47347</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.228,38.4468,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bogalusa, LA</name> 
+<description>Population: 47139</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.8638,30.7804,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mount Vernon, IL</name> 
+<description>Population: 47138</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.9082,38.3135,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Plymouth, IN</name> 
+<description>Population: 47050</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.3125,41.3439,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Madisonville, KY</name> 
+<description>Population: 46909</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.5022,37.3327,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gardnerville Ranchos, NV</name> 
+<description>Population: 46886</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-119.734,38.8959,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lewistown, PA</name> 
+<description>Population: 46858</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.5732,40.5974,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cedar City, UT</name> 
+<description>Population: 46740</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-113.074,37.6826,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gillette, WY</name> 
+<description>Population: 46618</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.505,44.2827,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rockingham, NC</name> 
+<description>Population: 46611</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.7612,34.9395,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Red Wing, MN</name> 
+<description>Population: 46217</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.5625,44.5651,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bedford, IN</name> 
+<description>Population: 46195</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.4923,38.8627,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ponca City, OK</name> 
+<description>Population: 46159</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.0724,36.7124,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Blytheville, AR</name> 
+<description>Population: 45966</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.9139,35.9307,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Blackfoot, ID</name> 
+<description>Population: 45952</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-112.346,43.1901,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Huntingdon, PA</name> 
+<description>Population: 45875</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.0131,40.4952,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wapakoneta, OH</name> 
+<description>Population: 45838</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.115,40.7407,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Safford, AZ</name> 
+<description>Population: 45753</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-109.715,32.8233,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oak Hill, WV</name> 
+<description>Population: 45699</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.1453,37.9828,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bellefontaine, OH</name> 
+<description>Population: 45688</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.7581,40.3609,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Moultrie, GA</name> 
+<description>Population: 45645</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.7836,31.1702,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>McAlester, OK</name> 
+<description>Population: 45625</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.7664,34.933,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Shelbyville, TN</name> 
+<description>Population: 45509</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.4524,35.489,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Harrison, AR</name> 
+<description>Population: 45315</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.1137,36.2372,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Henderson, NC</name> 
+<description>Population: 45307</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.4085,36.3248,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bemidji, MN</name> 
+<description>Population: 45264</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.8777,47.4765,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Duncan, OK</name> 
+<description>Population: 45197</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.9494,34.5166,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Coldwater, MI</name> 
+<description>Population: 45197</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.0025,41.9428,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pullman, WA</name> 
+<description>Population: 45077</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-117.172,46.7326,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rolla, MO</name> 
+<description>Population: 45020</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.763,37.9488,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lewisburg, PA</name> 
+<description>Population: 44847</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.8882,40.9639,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mount Sterling, KY</name> 
+<description>Population: 44802</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.9445,38.0566,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Thomasville, GA</name> 
+<description>Population: 44702</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.9782,30.8364,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rock Springs, WY</name> 
+<description>Population: 44175</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-109.222,41.5909,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Menomonie, WI</name> 
+<description>Population: 43971</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.9606,44.8815,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Claremont, NH</name> 
+<description>Population: 43462</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-72.3446,43.3772,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bucyrus, OH</name> 
+<description>Population: 43389</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.9732,40.806,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pahrump, NV</name> 
+<description>Population: 43351</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-116.012,36.2087,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Burley, ID</name> 
+<description>Population: 43341</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-113.793,42.5361,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Selma, AL</name> 
+<description>Population: 43332</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.0247,32.4164,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Big Rapids, MI</name> 
+<description>Population: 43300</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.4812,43.6989,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cornelia, GA</name> 
+<description>Population: 43279</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.5309,34.5137,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bradford, PA</name> 
+<description>Population: 43222</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.6446,41.9591,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marble Falls, TX</name> 
+<description>Population: 43117</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.2694,30.5785,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Durant, OK</name> 
+<description>Population: 43089</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.3848,33.9998,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Poplar Bluff, MO</name> 
+<description>Population: 43082</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.4027,36.7598,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Seymour, IN</name> 
+<description>Population: 42966</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.8901,38.9564,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Paragould, AR</name> 
+<description>Population: 42720</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.5029,36.0571,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Madison-Keokuk, IA-MO</name> 
+<description>Population: 42640</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.339,40.6286,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Auburn, IN</name> 
+<description>Population: 42462</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.0564,41.3655,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greenwood, MS</name> 
+<description>Population: 42234</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.1839,33.5187,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sedalia, MO</name> 
+<description>Population: 42178</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2311,38.7029,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Willmar, MN</name> 
+<description>Population: 42173</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.0482,45.1196,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Alma, MI</name> 
+<description>Population: 42145</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.6594,43.3784,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lawrenceburg, TN</name> 
+<description>Population: 42115</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.3346,35.2435,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wilmington, OH</name> 
+<description>Population: 41927</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.8291,39.4459,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ellensburg, WA</name> 
+<description>Population: 41629</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.545,46.9971,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mountain Home, AR</name> 
+<description>Population: 41536</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.3823,36.3362,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tifton, GA</name> 
+<description>Population: 41461</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.5101,31.4634,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Warren, PA</name> 
+<description>Population: 41441</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.1424,41.8441,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>El Dorado, AR</name> 
+<description>Population: 41427</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.6626,33.2135,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Alice, TX</name> 
+<description>Population: 41339</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.0705,27.7507,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>El Campo, TX</name> 
+<description>Population: 41314</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.2735,29.1966,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Minden, LA</name> 
+<description>Population: 41288</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2833,32.6168,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cedartown, GA</name> 
+<description>Population: 41211</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.254,34.0153,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Montrose, CO</name> 
+<description>Population: 41011</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-107.866,38.477,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marshalltown, IA</name> 
+<description>Population: 40980</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.9146,42.0417,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Aberdeen, SD</name> 
+<description>Population: 40878</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.4813,45.4637,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Celina, OH</name> 
+<description>Population: 40838</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.5701,40.5515,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jacksonville, IL</name> 
+<description>Population: 40814</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.2344,39.7319,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>West Plains, MO</name> 
+<description>Population: 40665</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.865,36.7374,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Riverton, WY</name> 
+<description>Population: 40579</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-108.395,43.0278,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>La Follette, TN</name> 
+<description>Population: 40512</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.1276,36.375,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Espanola, NM</name> 
+<description>Population: 40446</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.065,36.0019,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Okeechobee, FL</name> 
+<description>Population: 40140</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.8332,27.2416,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>McMinnville, TN</name> 
+<description>Population: 39927</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.7793,35.6867,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cambridge, OH</name> 
+<description>Population: 39927</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.5868,40.0251,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Selinsgrove, PA</name> 
+<description>Population: 39819</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.8629,40.8025,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Urbana, OH</name> 
+<description>Population: 39795</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.7515,40.1109,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Rockland, ME</name> 
+<description>Population: 39708</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-69.1147,44.1096,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Natchitoches, LA</name> 
+<description>Population: 39442</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.0951,31.7541,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Austin, MN</name> 
+<description>Population: 39349</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.978,43.6678,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Centralia, IL</name> 
+<description>Population: 39335</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.1325,38.5253,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pittsburg, KS</name> 
+<description>Population: 39220</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.6998,37.4103,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lock Haven, PA</name> 
+<description>Population: 39208</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-77.4503,41.1344,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sikeston, MO</name> 
+<description>Population: 39136</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.5852,36.8796,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Clewiston, FL</name> 
+<description>Population: 39089</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.9336,26.7534,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hannibal, MO</name> 
+<description>Population: 38998</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.3774,39.7041,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Berlin, NH-VT</name> 
+<description>Population: 38979</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-71.1914,44.4787,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pontiac, IL</name> 
+<description>Population: 38885</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.6304,40.88,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Defiance, OH</name> 
+<description>Population: 38884</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.3629,41.2819,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Logansport, IN</name> 
+<description>Population: 38828</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.3605,40.7535,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Houghton, MI</name> 
+<description>Population: 38811</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.5625,47.1172,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sault Ste. Marie, MI</name> 
+<description>Population: 38797</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.3527,46.4885,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Walterboro, SC</name> 
+<description>Population: 38611</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-80.6662,32.9043,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Union City, TN-KY</name> 
+<description>Population: 38545</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.0508,36.4244,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vincennes, IN</name> 
+<description>Population: 38500</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.5161,38.6783,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Crawfordsville, IN</name> 
+<description>Population: 38441</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.8968,40.0388,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Gainesville, TX</name> 
+<description>Population: 38396</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.1403,33.6304,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Stephenville, TX</name> 
+<description>Population: 38266</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.2136,32.2202,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dyersburg, TN</name> 
+<description>Population: 38192</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.3828,36.0394,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brownwood, TX</name> 
+<description>Population: 38186</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.9824,31.7079,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Easton, MD</name> 
+<description>Population: 38025</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.0705,38.7716,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ada, OK</name> 
+<description>Population: 37799</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.6682,34.7637,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Scottsbluff, NE</name> 
+<description>Population: 37728</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.661,41.8671,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Newberry, SC</name> 
+<description>Population: 37721</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.6166,34.2777,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Moscow, ID</name> 
+<description>Population: 37704</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-116.997,46.7317,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hastings, NE</name> 
+<description>Population: 37702</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.3917,40.5893,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Dodge, IA</name> 
+<description>Population: 37660</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.1803,42.5068,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Murray, KY</name> 
+<description>Population: 37544</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.3157,36.6095,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Americus, GA</name> 
+<description>Population: 37531</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.2266,32.0752,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mayfield, KY</name> 
+<description>Population: 37519</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.6401,36.7377,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>North Platte, NE</name> 
+<description>Population: 37456</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.771,41.1359,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Huntington, IN</name> 
+<description>Population: 37211</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.4956,40.8821,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Astoria, OR</name> 
+<description>Population: 37153</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-123.821,46.1888,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Escanaba, MI</name> 
+<description>Population: 37105</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.072,45.7452,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Garden City, KS</name> 
+<description>Population: 37083</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.864,37.9753,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Corinth, MS</name> 
+<description>Population: 37052</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.5153,34.9372,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bennington, VT</name> 
+<description>Population: 36970</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-73.2081,42.8912,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Canton, IL</name> 
+<description>Population: 36962</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.0343,40.5577,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Coshocton, OH</name> 
+<description>Population: 36955</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.8566,40.2678,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Monroe, WI</name> 
+<description>Population: 36891</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.3763,42.6185,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Laramie, WY</name> 
+<description>Population: 36889</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.587,41.3129,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Batesville, AR</name> 
+<description>Population: 36861</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.6413,35.7735,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bay City, TX</name> 
+<description>Population: 36809</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.9645,28.9808,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fremont, NE</name> 
+<description>Population: 36773</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.4899,41.4397,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Peru, IN</name> 
+<description>Population: 36611</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.0678,40.7577,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Emporia, KS</name> 
+<description>Population: 36581</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.1871,38.4081,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Newton, IA</name> 
+<description>Population: 36547</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.0469,41.6986,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Owatonna, MN</name> 
+<description>Population: 36534</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2246,44.0872,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vidalia, GA</name> 
+<description>Population: 36499</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.4101,32.2153,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Plainview, TX</name> 
+<description>Population: 36498</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.719,34.1912,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hutchinson, MN</name> 
+<description>Population: 36432</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.375,44.8888,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Winfield, KS</name> 
+<description>Population: 36272</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.9807,37.2479,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Alexandria, MN</name> 
+<description>Population: 36172</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.3704,45.8841,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>DeRidder, LA</name> 
+<description>Population: 36129</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2902,30.8514,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Laurinburg, NC</name> 
+<description>Population: 35861</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.4701,34.7647,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Corbin, KY</name> 
+<description>Population: 35823</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.0955,36.9416,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lebanon, MO</name> 
+<description>Population: 35636</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.6617,37.6782,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Newport, TN</name> 
+<description>Population: 35544</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.1965,35.9633,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dixon, IL</name> 
+<description>Population: 35467</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.4851,41.8461,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ottumwa, IA</name> 
+<description>Population: 35421</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.4148,41.0129,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sulphur Springs, TX</name> 
+<description>Population: 35371</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.602,33.1341,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Seneca Falls, NY</name> 
+<description>Population: 35198</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.795,42.9119,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Big Spring, TX</name> 
+<description>Population: 35122</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.475,32.2432,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Martin, TN</name> 
+<description>Population: 34980</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.8516,36.3418,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Coffeyville, KS</name> 
+<description>Population: 34911</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.6264,37.0377,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Arcadia, FL</name> 
+<description>Population: 34894</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.8599,27.2176,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brookhaven, MS</name> 
+<description>Population: 34889</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.4428,31.5817,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Taylorville, IL</name> 
+<description>Population: 34865</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.288,39.5408,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dodge City, KS</name> 
+<description>Population: 34568</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.018,37.7597,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Butte-Silver Bow, MT</name> 
+<description>Population: 34383</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-112.563,45.9609,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Decatur, IN</name> 
+<description>Population: 34370</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.9292,40.8296,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kill Devil Hills, NC</name> 
+<description>Population: 34307</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-75.6701,36.0254,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Effingham, IL</name> 
+<description>Population: 34280</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.5459,39.1209,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Susanville, CA</name> 
+<description>Population: 34200</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.646,40.4171,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Angola, IN</name> 
+<description>Population: 34028</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.0009,41.637,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bonham, TX</name> 
+<description>Population: 33958</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.1818,33.5838,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Valley, AL</name> 
+<description>Population: 33939</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.1779,32.8114,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brenham, TX</name> 
+<description>Population: 33791</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.397,30.1619,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cleveland, MS</name> 
+<description>Population: 33771</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.7265,33.742,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Watertown, SD</name> 
+<description>Population: 33420</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.1204,44.9034,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pella, IA</name> 
+<description>Population: 33335</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.9174,41.4073,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vernal, UT</name> 
+<description>Population: 33163</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-109.535,40.4548,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Frankfort, IN</name> 
+<description>Population: 33104</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.5115,40.2822,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Taos, NM</name> 
+<description>Population: 32917</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.577,36.394,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Chester, SC</name> 
+<description>Population: 32916</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.2116,34.7056,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Troy, AL</name> 
+<description>Population: 32915</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.9673,31.802,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brevard, NC</name> 
+<description>Population: 32820</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-82.7287,35.2416,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cambridge, MD</name> 
+<description>Population: 32640</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-76.0771,38.5663,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kingsville, TX</name> 
+<description>Population: 32633</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.8655,27.515,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wabash, IN</name> 
+<description>Population: 32608</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.8272,40.8008,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mount Pleasant, TX</name> 
+<description>Population: 32596</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.9701,33.1579,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Columbus, NE</name> 
+<description>Population: 32593</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.3585,41.4328,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Macomb, IL</name> 
+<description>Population: 32582</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.674,40.4605,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Paris, TN</name> 
+<description>Population: 32352</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.3138,36.3012,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Madison, IN</name> 
+<description>Population: 32249</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.3954,38.7501,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brookings, SD</name> 
+<description>Population: 32226</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.7881,44.3063,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Juneau, AK</name> 
+<description>Population: 32164</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-134.512,58.3514,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Beeville, TX</name> 
+<description>Population: 32095</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.7508,28.4055,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Washington, IN</name> 
+<description>Population: 31978</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.1751,38.6582,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kennett, MO</name> 
+<description>Population: 31974</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.0517,36.238,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Miami, OK</name> 
+<description>Population: 31860</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.876,36.8835,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dillon, SC</name> 
+<description>Population: 31758</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.368,34.4178,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>St. Marys, PA</name> 
+<description>Population: 31751</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-78.5427,41.4376,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jackson, WY-ID</name> 
+<description>Population: 31714</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-110.769,43.4754,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jennings, LA</name> 
+<description>Population: 31694</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.6569,30.2222,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hope, AR</name> 
+<description>Population: 31558</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.5899,33.6678,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Maysville, KY</name> 
+<description>Population: 31531</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.7759,38.6439,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Central City, KY</name> 
+<description>Population: 31272</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-87.1286,37.295,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Albert Lea, MN</name> 
+<description>Population: 31172</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.3681,43.6507,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Camden, AR</name> 
+<description>Population: 31024</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.8349,33.5709,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lewisburg, TN</name> 
+<description>Population: 30881</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-86.7931,35.449,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Iron Mountain, MI-WI</name> 
+<description>Population: 30625</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.0641,45.8226,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jesup, GA</name> 
+<description>Population: 30327</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.8851,31.6019,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lincoln, IL</name> 
+<description>Population: 30140</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.3675,40.1499,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kirksville, MO</name> 
+<description>Population: 29933</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.5795,40.1935,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Eufaula, AL-GA</name> 
+<description>Population: 29583</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.1538,31.8894,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Alpena, MI</name> 
+<description>Population: 29386</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.4413,45.0648,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Silver City, NM</name> 
+<description>Population: 29380</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-108.274,32.7779,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Las Vegas, NM</name> 
+<description>Population: 29301</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.223,35.597,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Indianola, MS</name> 
+<description>Population: 29296</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.6474,33.448,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>McPherson, KS</name> 
+<description>Population: 29241</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.6622,38.3719,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sheridan, WY</name> 
+<description>Population: 29239</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.959,44.7967,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Washington Court House, OH</name> 
+<description>Population: 28985</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.4356,39.5363,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hays, KS</name> 
+<description>Population: 28742</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.3223,38.8794,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Middlesborough, KY</name> 
+<description>Population: 28725</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.7232,36.6101,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Union, SC</name> 
+<description>Population: 28679</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.6249,34.7173,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Crescent City, CA</name> 
+<description>Population: 28659</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-124.201,41.7548,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Merrill, WI</name> 
+<description>Population: 28602</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.7315,45.4745,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Van Wert, OH</name> 
+<description>Population: 28601</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.5835,40.8679,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bennettsville, SC</name> 
+<description>Population: 28509</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-79.6848,34.6213,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>North Vernon, IN</name> 
+<description>Population: 28196</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.6278,39.005,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Morgan, CO</name> 
+<description>Population: 28175</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.799,40.2533,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mineral Wells, TX</name> 
+<description>Population: 28115</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.1019,32.8086,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Silverthorne, CO</name> 
+<description>Population: 27972</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.077,39.6384,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Forrest City, AR</name> 
+<description>Population: 27970</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.7887,35.0101,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wauchula, FL</name> 
+<description>Population: 27887</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-81.8146,27.5461,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Yazoo City, MS</name> 
+<description>Population: 27886</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.4074,32.8565,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Great Bend, KS</name> 
+<description>Population: 27841</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.778,38.3661,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fort Valley, GA</name> 
+<description>Population: 27823</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.891,32.5534,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Weatherford, OK</name> 
+<description>Population: 27750</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.6876,35.5387,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bainbridge, GA</name> 
+<description>Population: 27694</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.571,30.9048,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Grants, NM</name> 
+<description>Population: 27658</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-107.842,35.1553,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bastrop, LA</name> 
+<description>Population: 27608</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.9149,32.7779,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fitzgerald, GA</name> 
+<description>Population: 27352</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.2565,31.7154,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Thomaston, GA</name> 
+<description>Population: 26977</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-84.3269,32.8918,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Uvalde, TX</name> 
+<description>Population: 26535</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.7896,29.2143,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Altus, OK</name> 
+<description>Population: 26447</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.3266,34.6438,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lexington, NE</name> 
+<description>Population: 26398</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.7439,40.7794,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mountain Home, ID</name> 
+<description>Population: 26346</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-115.694,43.1368,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Boone, IA</name> 
+<description>Population: 26255</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.8861,42.0611,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dickinson, ND</name> 
+<description>Population: 25993</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-102.789,46.8836,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Toccoa, GA</name> 
+<description>Population: 25960</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.3199,34.5747,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Greensburg, IN</name> 
+<description>Population: 25944</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.4837,39.3403,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Clarksdale, MS</name> 
+<description>Population: 25913</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.5719,34.1979,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marshall, MN</name> 
+<description>Population: 25891</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.7879,44.4472,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>La Grande, OR</name> 
+<description>Population: 25791</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-118.093,45.3272,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Summerville, GA</name> 
+<description>Population: 25736</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.348,34.4798,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>New Ulm, MN</name> 
+<description>Population: 25734</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.463,44.312,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mexico, MO</name> 
+<description>Population: 25566</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.8848,39.1658,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Moberly, MO</name> 
+<description>Population: 25346</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.4388,39.4204,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Deming, NM</name> 
+<description>Population: 25281</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-107.756,32.2611,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>The Dalles, OR</name> 
+<description>Population: 25234</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.183,45.6012,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fredericksburg, TX</name> 
+<description>Population: 25114</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.8718,30.2741,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Harrisburg, IL</name> 
+<description>Population: 24981</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.5459,37.7338,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Campbellsville, KY</name> 
+<description>Population: 24731</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.3454,37.346,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fallon, NV</name> 
+<description>Population: 24637</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-118.779,39.4728,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Heber, UT</name> 
+<description>Population: 24417</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-111.412,40.5068,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Magnolia, AR</name> 
+<description>Population: 24401</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.2335,33.2741,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Williston, ND</name> 
+<description>Population: 24374</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.628,48.1565,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Spearfish, SD</name> 
+<description>Population: 24312</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.853,44.4898,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Connersville, IN</name> 
+<description>Population: 24285</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.1377,39.6539,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Scottsburg, IN</name> 
+<description>Population: 23987</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.7767,38.6852,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Cordele, GA</name> 
+<description>Population: 23710</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-83.7773,31.9642,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pampa, TX</name> 
+<description>Population: 23571</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.965,35.543,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Maryville, MO</name> 
+<description>Population: 23468</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.8712,40.3454,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Liberal, KS</name> 
+<description>Population: 23328</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.928,37.0434,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Marshall, MO</name> 
+<description>Population: 23280</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.1979,39.1162,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pierre Part, LA</name> 
+<description>Population: 23153</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.2066,29.961,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Mitchell, SD</name> 
+<description>Population: 23027</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.0263,43.7139,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Levelland, TX</name> 
+<description>Population: 22892</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-102.372,33.5847,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Arkadelphia, AR</name> 
+<description>Population: 22858</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-93.0662,34.1219,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Wahpeton, ND-MN</name> 
+<description>Population: 22837</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.6105,46.2699,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sterling, CO</name> 
+<description>Population: 22619</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.212,40.6254,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Yankton, SD</name> 
+<description>Population: 22612</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.3925,42.8816,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Oskaloosa, IA</name> 
+<description>Population: 22530</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-92.6445,41.2939,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hood River, OR</name> 
+<description>Population: 22493</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-121.522,45.7067,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brookings, OR</name> 
+<description>Population: 22426</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-124.286,42.0575,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Elk City, OK</name> 
+<description>Population: 22288</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.4238,35.4027,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Borger, TX</name> 
+<description>Population: 22132</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.402,35.6628,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Raymondville, TX</name> 
+<description>Population: 22095</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-97.783,26.4815,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Beatrice, NE</name> 
+<description>Population: 22031</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.7432,40.2684,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Dumas, TX</name> 
+<description>Population: 21954</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.967,35.8625,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Grenada, MS</name> 
+<description>Population: 21706</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.8088,33.7751,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Parsons, KS</name> 
+<description>Population: 21511</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.2697,37.3391,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Helena-West Helena, AR</name> 
+<description>Population: 21442</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-90.6443,34.5457,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Worthington, MN</name> 
+<description>Population: 21397</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.5991,43.6239,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Price, UT</name> 
+<description>Population: 21318</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-110.807,39.6001,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Guymon, OK</name> 
+<description>Population: 21312</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.48,36.6854,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tuskegee, AL</name> 
+<description>Population: 21182</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-85.7068,32.4315,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Jamestown, ND</name> 
+<description>Population: 21062</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.703,46.9056,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Evanston, WY</name> 
+<description>Population: 20985</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-110.965,41.2633,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Prineville, OR</name> 
+<description>Population: 20839</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-120.846,44.304,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Fairmont, MN</name> 
+<description>Population: 20689</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-94.4586,43.6522,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>West Point, MS</name> 
+<description>Population: 20456</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-88.6524,33.6062,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ruidoso, NM</name> 
+<description>Population: 20454</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-105.666,33.3414,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Portales, NM</name> 
+<description>Population: 20446</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.339,34.1822,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Storm Lake, IA</name> 
+<description>Population: 20406</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.202,42.6435,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pierre, SD</name> 
+<description>Population: 20294</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.336,44.368,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Woodward, OK</name> 
+<description>Population: 20034</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.3977,36.4331,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Hereford, TX</name> 
+<description>Population: 19595</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-102.399,34.822,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Bishop, CA</name> 
+<description>Population: 18478</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-118.395,37.3651,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Brownsville, TN</name> 
+<description>Population: 18470</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-89.2609,35.5906,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Los Alamos, NM</name> 
+<description>Population: 18222</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-106.298,35.8911,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Huron, SD</name> 
+<description>Population: 17550</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-98.2182,44.3591,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Snyder, TX</name> 
+<description>Population: 16919</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.914,32.7155,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Spirit Lake, IA</name> 
+<description>Population: 16899</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.1043,43.4231,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Atchison, KS</name> 
+<description>Population: 16793</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.1283,39.5625,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Spencer, IA</name> 
+<description>Population: 16590</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-95.1472,43.1453,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Havre, MT</name> 
+<description>Population: 16397</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-109.678,48.5454,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Andrews, TX</name> 
+<description>Population: 15445</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-102.552,32.3214,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Sweetwater, TX</name> 
+<description>Population: 15269</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-100.407,32.4681,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vermillion, SD</name> 
+<description>Population: 14051</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-96.9269,42.781,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Kodiak, AK</name> 
+<description>Population: 13872</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-152.394,57.7931,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Pecos, TX</name> 
+<description>Population: 13757</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-103.5,31.4154,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Lamesa, TX</name> 
+<description>Population: 13751</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-101.958,32.7344,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Ketchikan, AK</name> 
+<description>Population: 13593</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-131.664,55.3477,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Vernon, TX</name> 
+<description>Population: 13404</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-99.2905,34.1511,0</coordinates></Point> 
+</Placemark> 
+ 
+<Placemark> 
+<name>Tallulah, LA</name> 
+<description>Population: 12004</description> 
+<styleUrl>#micropolitan</styleUrl> 
+<Point><coordinates>-91.1913,32.409,0</coordinates></Point> 
+</Placemark> 
 
 </Document>
 </kml>
