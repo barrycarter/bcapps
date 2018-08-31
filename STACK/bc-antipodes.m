@@ -6,9 +6,30 @@ using coastal data?
 
 *)
 
-coast0 = ReadList[
+coast = Partition[ReadList[
  "!bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2", {Number,
-Number, Number}];
+Number, Number}], 9000];
+
+anticoast = Reverse[Map[RotateRight[#, 4500] &, coast]];
+
+(* given row/col in coast, give row/col of antipode *)
+
+(* special case for col 4500 to avoid mod *)
+
+(* method below not actually any faster *)
+
+antipodeRC[r_, 4500] = {4501-r, 9000};
+antipodeRC[r_, c_] = {4501-r, Mod[c+4500, 9000]};
+
+t2119 = Table[Flatten[{
+ coast[[antipodeRC[i,j][[1]], antipodeRC[i,j][[2]]]],
+ coast[[i,j]], 2*Sign[coast[[i,j,3]]] +
+  Sign[coast[[antipodeRC[i,j][[1]], antipodeRC[i,j][[2]], 3]]]}],
+ {i, 1, 4500}, {j, 1, 9000}];
+
+
+
+
 
 coast = Partition[coast0, 9000];
 anticoast = Reverse[Map[RotateRight[#, 4500] &, coast]];
@@ -32,16 +53,33 @@ t2024 = Reverse[Partition[t2023, 900]];
 Graphics[Raster[t2024]];
 
 
-t2042 = Table[{coast[[i,j]], 
-       2*Sign[coast[[i,j,3]]] + Sign[anticoast[[i,j,3]]]},
+t2042 = Table[Flatten[{coast[[i,j]], anticoast[[i,j]], 
+       2*Sign[coast[[i,j,3]]] + Sign[anticoast[[i,j,3]]]}],
  {i, 1, 4500}, {j, 1, 9000}];
-
-t2043 = Partition[Flatten[t2042], 4];
 
 f[3] = {0, 0, 1};
 f[1] = {0, 1, 0};
 f[-1] = {1, 1, 0};
 f[-3] = {1, 0, 0};
+
+t2141 = Reverse[Map[f[#[[7]]] &, t2042, {2}]];
+
+Graphics[Raster[t2141]];
+
+t2148 = Map[#[[;;;;10]] &, t2141[[;;;;10]]];
+
+t2148 = Map[#[[;;;;5]] &, t2141[[;;;;5]]];
+Dimensions[t2148]
+Graphics[Raster[t2148], PlotRangePadding -> 0]
+showit
+
+Raster[t2141]
+
+t2153 = Graphics[Raster[t2141], PlotRangePadding -> 0, ImagePadding -> 0];
+Export["/tmp/antipodes.gif", t2153, ImageSize -> {9000, 4500}];
+Run["display -update 1 /tmp/antipodes.gif &"];
+
+
 
 t2044 = Map[f,Transpose[t2043][[4]]];
 t2045 = Reverse[Partition[t2044, 9000]];
