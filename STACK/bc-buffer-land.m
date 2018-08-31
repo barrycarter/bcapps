@@ -2294,9 +2294,3 @@ t1015 = ContourPlot[x+y, {x,0,1}, {y,0,1}, ColorFunction -> althue,
 PlotLegends -> True, Contours -> {0.5, 1, 1.5}]
 
 
-
-
-
-
-
-
