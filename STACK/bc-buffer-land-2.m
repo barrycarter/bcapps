@@ -293,6 +293,10 @@ area[clat_] = Integrate[circle[lat], {lat, clat-0.02, clat+0.02}]*0.04/360
 cdist[a_, b_, lat_] = Sqrt[((a*a*Cos[lat])^2 + (b*b*Sin[lat])^2) /
 ((a*Cos[lat])^2 + (b*Sin[lat])^2)];
 
+(* er is equatorial radius, pr is polar radius *)
+
+radius[lat_, er_, pr_] = 
+
 
 
 (* the area of the infentesimal is 2*Pi*r in length and the height is ...
