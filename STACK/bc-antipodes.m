@@ -12,7 +12,60 @@ Number, Number}];
 
 coast = Partition[coast0, 9000];
 
+t1948 = Reverse[Map[RotateRight[#, 4500] &, coast]];
+
+anticoast = Reverse[Map[RotateRight[#, 4500] &, coast]];
+
+(* Dimensions[coast] and Dimensions[t1948] *) are now {4500, 9000, 3}
+
+t1950 := Module[{r, c},
+ r = RandomInteger[{1,4500}];
+ c = RandomInteger[{1,9000}];
+ Return[{coast[[r,c]], t1948[[r,c]]}];
+];
+
+t1951[x_] := {x, Apply[antipode, Take[x[[1]],2]] == Take[x[[2]], 2]};
+
+t1951[x_] := {x, 
+ Abs[Apply[antipode, Take[x[[1]],2]] - Take[x[[2]], 2]] < 10^-6};
+
+t1957 = Table[t1951[t1950], {i, 1, 10^6}];
+
+Select[t1957, #[[2]] == False &]
+
+empty list so we are good
+
+2*Sign[1] + Sign[-1]
+
+the function above gives:
+
+3 for both positive (water vs water)
+1 for first positive and second negative (water vs land)
+-1 for first negative and second positive (land vs water)
+-3 for both negative (land vs land)
+
+t2010 = Table[2*Sign[coast[[i,j,3]]] + Sign[anticoast[[i,j,3]]], 
+ {i, 1, 4500}, {j, 1, 9000}];
+
+f[3] = {0,0,1}
+f[1] = {0,1,0}
+f[-1] = {1,1,0}
+f[-3] == {1,0,0}
+
+t2014 = Map[f, t2010, {2}];
+
+
+
+
+
+
+
+
+
+
 (* trying to find position directly based on symmetry *)
+
+RotateRight[coast[[1]], 4500];
 
 t1517 = coast0[[;;;;100]];
 
