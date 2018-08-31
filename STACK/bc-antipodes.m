@@ -32,8 +32,22 @@ t2024 = Reverse[Partition[t2023, 900]];
 Graphics[Raster[t2024]];
 
 
+t2042 = Table[{coast[[i,j]], 
+       2*Sign[coast[[i,j,3]]] + Sign[anticoast[[i,j,3]]]},
+ {i, 1, 4500}, {j, 1, 9000}];
 
-test2031 = Table[RandomReal[1,3], {i, 1, 10}, {j, 1, 10}];
+t2043 = Partition[Flatten[t2042], 4];
+
+f[3] = {0, 0, 1};
+f[1] = {0, 1, 0};
+f[-1] = {1, 1, 0};
+f[-3] = {1, 0, 0};
+
+t2044 = Map[f,Transpose[t2043][[4]]];
+t2045 = Reverse[Partition[t2044, 9000]];
+Graphics[Raster[t2045]];
+
+
 
 
 
