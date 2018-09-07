@@ -475,6 +475,7 @@ qgis-grass
 qgis-python
 qgis-server
 qhull
+GeographicLib
 sagemath
 pyephem
 stellarium

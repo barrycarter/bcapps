@@ -288,14 +288,31 @@ circle[lat_] = rad[lat]*Cos[lat]
 
 area[clat_] = Integrate[circle[lat], {lat, clat-0.02, clat+0.02}]*0.04/360
 
-(* below per wikipedia *)
+(* below per wikipedia, a is equatorial *)
 
 cdist[a_, b_, lat_] = Sqrt[((a*a*Cos[lat])^2 + (b*b*Sin[lat])^2) /
 ((a*Cos[lat])^2 + (b*Sin[lat])^2)];
 
 (* er is equatorial radius, pr is polar radius *)
 
-radius[lat_, er_, pr_] = 
+area2[lat_, er_, pr_] = Integrate[cdist[er,pr,lat]*Cos[lat], lat]
+
+t0935 = 
+ FullSimplify[area2[lat, er, pr], {er > pr, pr > 0, -Pi/2 < lat < Pi/2}];
+
+$
+   -\frac{\text{er} \text{pr} \sin (\text{lat}) E\left(\csc
+    ^{-1}\left(\frac{\sqrt{2}
+    \text{er}}{\sqrt{\text{er}^2+\text{pr}^2+(\text{er}-\text{pr})
+    (\text{er}+\text{pr}) \cos (2
+   \text{lat})}}\right)|\frac{\text{er}^2}{\text{pr}^2}+1\right)}{\sqrt{\text{p
+    r}^2-\text{er}^2} \left| \sin (\text{lat})\right| }
+$
+
+
+
+
+
 
 
 
