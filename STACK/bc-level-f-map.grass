@@ -4,7 +4,13 @@
 # below gets too big to store in BCGIT
 # grass74 -c EPSG:4326 /home/user/20180909/coastline
 
+# look at and fix default region
+g.region -p
+g.region n=90 s=-90 w=-180 e=180 nsres=0.01 ewres=0.01
+
 # TODO: pathify below to make it less specific to me
+
+# NOTE: L1 is slow but you only have to do it once, others are fast
 
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L1.shp"
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L2.shp"
@@ -14,9 +20,63 @@ v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L5.shp"
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L6.shp"
 
 # this is one line, just broken up for readability
-v.patch 
- input=GSHHS_f_L1,GSHHS_f_L2,GSHHS_f_L3,GSHHS_f_L4,GSHHS_f_L5,GSHHS_f_L6
+# we use L6, not L5, for Antarctica
+v.patch input=GSHHS_f_L1,GSHHS_f_L2,GSHHS_f_L3,GSHHS_f_L4,GSHHS_f_L6 
  output=GSHHS_f
+
+# errors from above
+
+WARNING: Number of duplicate centroids: 71
+Intersections at borders will have to be snapped
+Lines common between files will have to be edited
+The header information also may have to be edited
+v.patch complete. 5 vector maps patched
+
+
+# and the river files...
+
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L01.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L02.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L03.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L04.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L05.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L06.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L07.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L08.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L09.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L10.shp"
+v.in.ogr "/home/user/20180806/coastline/WDBII_shp/f/WDBII_river_f_L11.shp"
+
+v.patch input=WDBII_river_f_L01,WDBII_river_f_L02,WDBII_river_f_L03,
+              WDBII_river_f_L04,WDBII_river_f_L05,WDBII_river_f_L06,
+              WDBII_river_f_L07,WDBII_river_f_L08,WDBII_river_f_L09,
+              WDBII_river_f_L10,WDBII_river_f_L11 output=WDBII_river_f
+
+# and absolutely everything
+
+v.patch input=WDBII_river_f,GSHHS_f output=supercoast
+
+d.erase
+d.vect supercoast
+# TODO: must zoom to computational regional extent
+# overwriting during testing
+# TODO: caspian sea and two great lakes still dark?!
+d.out.file --overwrite output=/tmp/temp.png size=9000,4500
+
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=180&w=-180&n=90&s=-90&center=0,0&url=supercoast.png&zoom=3
+
+# now, to rasterize
+v.to.rast input=supercoast output=supercoast_rast use=val val=1
+
+# and look at the results info
+r.info supercoast_rast
+
+# TODO: need to subtract not patch?
+
+# TODO: https://stackoverflow.com/questions/43158140/way-to-create-multiline-comments-in-bash
+
+# make sure we have everything
+g.list type=all
 
 # looking at these backwards is quite interesting
 
@@ -32,11 +92,12 @@ Level 5: Antarctica based on ice front boundary.
 Level 6: Antarctica based on grounding line boundary.
 
 
-# levels as above
+# levels as above, always zoom out
 d.mon wx0
 d.erase
 d.vect GSHHS_f_L6
 d.erase
+# this overlay, which we dont use, appears to contain an odd line
 d.vect GSHHS_f_L5
 d.erase
 d.vect GSHHS_f_L4
@@ -45,7 +106,9 @@ d.vect GSHHS_f_L3
 d.erase
 d.vect GSHHS_f_L2
 d.erase
+# may need to check and uncheck render for this one
 d.vect GSHHS_f_L1
+d.erase
 
 # TODO: look at sqlite to see resolution of polys?
 
@@ -71,3 +134,17 @@ If overlapping is not desired, the data need to be cleaned.
 The input could be cleaned by snapping vertices to each other.
 Estimated range of snapping threshold: [1e-13, 0.0001]
 Try to import again, snapping with at least 1e-13: 'snap=1e-13'
+
+# TODO: rivers in WDBII_shp/f/WDBII_river_f_L01.shp
+
+Level  1: Double-lined rivers (river-lakes).
+Level  2: Permanent major rivers.
+Level  3: Additional major rivers.
+Level  4: Additional rivers.
+Level  5: Minor rivers.
+Level  6: Intermittent rivers - major.
+Level  7: Intermittent rivers - additional.
+Level  8: Intermittent rivers - minor.
+Level  9: Major canals.
+Level 10: Minor canals.
+Level 11: Irrigation canals.
