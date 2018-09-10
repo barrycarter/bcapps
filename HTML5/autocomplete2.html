@@ -1,0 +1,14 @@
+<script>
+function initialize() {
+    new google.maps.places.Autocomplete(
+    (document.getElementById('autocomplete')), {
+        types: ['geocode']
+    });
+}
+
+initialize();
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<input id="autocomplete" placeholder="Enter your address" type="text"></input>
