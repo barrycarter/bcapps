@@ -1,0 +1,13 @@
+# this is just to create largeish 9000x4500 PNG map I can overlay on
+# google maps just to see if I am doing it right
+
+# grass74 -c EPSG:4326 /home/user/BCGIT/STACK/coastline
+
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L1.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L2.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L3.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L4.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L5.shp"
+v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L6.shp"
+
+
