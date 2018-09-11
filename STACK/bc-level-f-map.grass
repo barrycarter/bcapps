@@ -11,6 +11,7 @@ g.region n=90 s=-90 w=-180 e=180 nsres=0.01 ewres=0.01
 # TODO: pathify below to make it less specific to me
 
 # NOTE: L1 is slow but you only have to do it once, others are fast
+# We dont actually use L5, but include it just for fun
 
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L1.shp"
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L2.shp"
@@ -18,6 +19,54 @@ v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L3.shp"
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L4.shp"
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L5.shp"
 v.in.ogr "/home/user/20180806/coastline/GSHHS_shp/f/GSHHS_f_L6.shp"
+
+# glue together the land shapefiles: L1, L3, and L6
+
+v.patch input=GSHHS_f_L1,GSHHS_f_L3,GSHHS_f_L6 output=GSHHS_f_land
+
+# and the water (note that major oceans are implicitly included by L1)
+
+v.patch input=GSHHS_f_L2,GSHHS_f_L4 output=GSHHS_f_water
+
+# and subtract water from land
+
+# TODO: all split lines are single lines
+
+v.overlay --overwrite ainput=GSHHS_f_land binput=GSHHS_f_water operator=not 
+ output=supercoast
+
+# TODO: have to actually create rivers before doing this
+# TODO: river is actually not WDBII
+
+v.overlay --overwrite ainput=supercoast binput=WDBII_river_f operator=not
+ output=superdupercoast
+
+v.overlay --overwrite ainput=supercoast binput=WDBII_river_f_poly operator=not
+ output=superdupercoast
+
+# this is ugly
+
+# "In latitude-longitude coordinate system specify distances in degree
+# unit" (super icky because rivers have different buffering now)
+
+v.buffer --overwrite input=WDBII_river_f output=WDBII_river_f_poly type=line 
+ distance=0.01
+
+d.out.file --overwrite output=/tmp/temp.png size=9000,4500
+
+d.out.file --overwrite output=/tmp/temp.png size=18000,9000
+
+# TODO: get around using multi
+
+# TODO: make rivers.png transparent or better bg color
+
+# this doesnt work too big
+d.out.file --overwrite output=/tmp/temp2.png size=36000,18000
+
+
+# L2 and L4 
+
+# TODO: I use --overwrite you may not want to
 
 # this is one line, just broken up for readability
 # we use L6, not L5, for Antarctica
