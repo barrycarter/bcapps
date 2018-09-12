@@ -36,9 +36,26 @@ name[i_] := If[NumericQ[i[[2]]], "HIP"<>ToString[i[[2]]],
                   i[[5]]
             ]]];
 
+starFunc[_] = {};
+
+Table[
+ starFunc[Take[i,{18,20}]] = Append[starFunc[Take[i,{18,20}]], name[i]],
+ {i, data2}];
+
+Map[name, Select[data2, Take[#,{18,20}] == dupes[[1,1]] &]]
+
 t1831 = Table[{i[[1]], name[i]}, {i, data2}];
 
 Select[t1831, #[[2]] == "test" &]
+
+starxyz = Table[Take[i, {18,20}], {i, data2}];
+
+nearfunc = Nearest[starxyz -> {"Index", "Distance"}]
+
+dists = Sort[Table[Flatten[{i, nearfunc[starxyz[[i]], 2][[2]]}],  
+ {i, 1, Length[starxyz]}], #1[[3]] < #2[[3]] &];
+
+dupes = Select[Tally[starxyz], #[[2]] > 1 &];
 
 
 
@@ -56,14 +73,6 @@ Short[Transpose[data2][[2]], 10]
 
 Short[Transpose[data2][[4]], 10]
 
-starxyz = Table[Take[i, {18,20}], {i, data2}];
-
-nearfunc = Nearest[starxyz -> {"Index", "Distance"}]
-
-dists = Sort[Table[Flatten[{i, nearfunc[starxyz[[i]], 2][[2]]}],  
- {i, 1, Length[starxyz]}], #1[[3]] < #2[[3]] &];
-
-dupes = Select[Tally[starxyz], #[[2]] > 1 &];
 
 
 
