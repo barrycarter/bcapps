@@ -1,14 +1,77 @@
-# ---------------------------------------
+# Celestia scripts (.cel) must start with "{" and end with "}"
 
-#   This is my Celestia script
+# "rpm -ql celestia" shows what celestia installs, useful in finding data
 
-# ---------------------------------------
+# per https://en.wikibooks.org/wiki/Celestia/Binary_Star_File
+
+# "The x, y and z coordinates are calculated as follows"
+
+# matrix: [1 0 0, 0 cos(epsilon) sin(epsilon), 0 -sin(epsilon) cos(epsilon)]
+# times: [d*cos(theta)*sin(phi), d*cos(phi), -d*sin(theta)*sin(phi)]
+
+# the first matrix above is rotation around the x axis by the
+# obliquity of the ecliptic
+
+# the second is some odd spherical to xyz transformation
+
+# where d is the distance in light years, theta = RA + 180°, phi = Dec
+# - 90° and epsilon = 23.4392911°
+
+# using this to find altair
+
+# ra = 5.26704 (radians)
+# theta = ra + Pi
+# dec = 0.511466 (radians)
+# phi = dec - Pi/2
+
+# is (7.68326, 12.4461, 8.12128) the magic?
+
+
 {
-  select { object "Sol/Earth" }
 
-  center { time 3 }
+set {name "FOV" value 72}
 
-  wait   { duration 3 }
+# another test
+# setposition {base [10.4388 3.50488 19.8847]}
+
+# just a test (puts Altair at pole but still 6ly away)
+# setposition {base [7.68326 2.5797 14.6358]}
+
+# below fails
+# setposition {base [7.68326 2.5797 20.6358]}
+
+# this is calculated from docs
+# setposition {base [7.6832 12.4461 8.12128]}
+
+# this places sun at 0 dec, 12h ra
+# setposition {base [1 0 0]}
+
+# this places sun at -65 or so dec, 6h ra
+# setposition {base [0 1 0]}
+
+# unhelpful
+# setposition {base [0 100000 0]}
+
+# this places sun at 23 or so dec, 6h ra
+# setposition {base [0 0 1]}
+
+# Altair ecliptic grid: 20h07m07s, 29d18m17.5s, distance still 16.73ly obvious
+# setposition {base [7.68326 -12.4019 8.18861]}
+
+
+
+
+# as a test, should land me on Altair: 19h50m47.7s, +8d52m13.3s, 16.73ly
+
+# setposition {base [7.68348 -14.6356 2.57975] offset [0. 0. 0.]}
+
+# setposition {base [7.68348 14.6356 2.57975] offset [0. 0. 0.]}
+
+# setposition {base [-7.68348 14.6356 2.57975] offset [0. 0. 0.]}
+
+# setposition {
+#    base [1. 0. 0.]
+#    offset [0. 0. 0.]
+# }
+
 }
-
-# ---------------------------------------
