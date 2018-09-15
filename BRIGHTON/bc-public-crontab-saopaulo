@@ -267,9 +267,11 @@ MAILTO="daemon"
 # audio/video so -i flag won't cause problems
 
 # commented out 3/26/18 as I approach my bandwidth cap; have scheduled
-# to resume 1 Apr; resume 31 Apr 2018 evening
+# to resume 1 Apr; resume 31 Mar 2018 evening
 
-25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
+# hit bandwidth cap again on 9/13/2018
+
+# 25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
 
 # cleanup tmp files daily
 

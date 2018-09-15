@@ -7,6 +7,7 @@ efibootmgr
 
 # system tools
 
+gtkglext-devel
 gtkglext-libs-1.2.0-21.el7
 alien
 # no longer available
@@ -479,6 +480,7 @@ GeographicLib
 sagemath
 pyephem
 stellarium
+wcstools
 celestia
 bc
 calc

@@ -78,6 +78,15 @@ coast0 = ReadList[
  "!bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2", {Number,
 Number, Number}];
 
+coastFunc = Interpolation[coast0, InterpolationOrder -> 1];
+
+In[39]:= Plot[{coastFunc[x,30], coastFunc[x,35], coastFunc[x,40]}, {x,-180,180}]
+
+t2307 = Table[{lon, lat, coastFunc[lon, lat]}, {lon, -180, 180, 0.008},
+ {lat, -90, 90, 0.008}];
+
+
+
 (* TODO: explain why round to nearest km + 4km issue, ie not ideal *)
 
 (* rounding distance to nearest 10m because least precise data is that

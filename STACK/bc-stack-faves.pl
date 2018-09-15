@@ -51,7 +51,7 @@ my($out,$err,$res);
 
 my($count) = 0;
 
-for $i (1..10) {
+for $i (1..100) {
 
   ($out,$err,$res) = cache_command2("curl 'https://stackexchange.com/users/favorites/$userid?page=$i&sort=recent'", "age=86400");
 
