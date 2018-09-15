@@ -30,12 +30,27 @@
 {
 
 # wanted equatorial but it doesnt appear to work
-setframe {ref "Sol/Earth" coordsys "ecliptic"}
+setframe {ref "Sol/Earth" coordsys "equatorial"}
 
 
 set {name "FOV" value 72}
 
 # tests w/ equa frame
+
+# this should bring me close to lambda pisces (and it did)
+# setposition {base [106 0 0]}
+
+# this should bring me close to polaris (but does not)
+# setposition {base [0 0 432.57]}
+
+# this brings me closer to 18h and 0 deg (7 Sgr)
+# setposition {base [0 0 1079.9]}
+
+# does this bring me closer to Polaris? (not really)
+# brings me close to HIP89344, which is at 18h, 90-ecl) dec
+setposition {base [0 432.57 0]}
+
+
 
 
 # sun at 180, 0 as expected
@@ -47,7 +62,7 @@ set {name "FOV" value 72}
 # sun at 90, 0 not as expected (are they flipping y and z coords?)
 
 # in ecliptic system:  90 horizontal, 0 vertical
-setposition {base [0 0 1]}
+# setposition {base [0 0 1]}
 
 # sun at south pole, so yes, their system is twisted
 
