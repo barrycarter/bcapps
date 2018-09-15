@@ -29,7 +29,8 @@
 
 {
 
-setframe {ref "Sol/Earth" coordsys "equatorial"}
+# wanted equatorial but it doesnt appear to work
+setframe {ref "Sol/Earth" coordsys "ecliptic"}
 
 
 set {name "FOV" value 72}
@@ -38,16 +39,23 @@ set {name "FOV" value 72}
 
 
 # sun at 180, 0 as expected
+# sun at 12h, 0 deg in "celestial" system (not horizontal)
+
+# in ecliptic system: 180 horizontal, 0 vertical
 # setposition {base [1 0 0]}
 
 # sun at 90, 0 not as expected (are they flipping y and z coords?)
-# setposition {base [0 0 1]}
+
+# in ecliptic system:  90 horizontal, 0 vertical
+setposition {base [0 0 1]}
 
 # sun at south pole, so yes, their system is twisted
+
+# in ecliptic system: right at south pole
 # setposition {base [0 1 0]}
 
 # setposition {base [7.68348 2.57975 -14.6356]}
-setposition {base [7.68348 14.6356 2.57975]}
+# setposition {base [7.68348 14.6356 2.57975]}
 
 # another test
 # setposition {base [10.4388 3.50488 19.8847]}
