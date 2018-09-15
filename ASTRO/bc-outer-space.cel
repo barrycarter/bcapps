@@ -29,7 +29,25 @@
 
 {
 
+setframe {ref "Sol/Earth" coordsys "equatorial"}
+
+
 set {name "FOV" value 72}
+
+# tests w/ equa frame
+
+
+# sun at 180, 0 as expected
+# setposition {base [1 0 0]}
+
+# sun at 90, 0 not as expected (are they flipping y and z coords?)
+# setposition {base [0 0 1]}
+
+# sun at south pole, so yes, their system is twisted
+# setposition {base [0 1 0]}
+
+# setposition {base [7.68348 2.57975 -14.6356]}
+setposition {base [7.68348 14.6356 2.57975]}
 
 # another test
 # setposition {base [10.4388 3.50488 19.8847]}
@@ -57,9 +75,6 @@ set {name "FOV" value 72}
 
 # Altair ecliptic grid: 20h07m07s, 29d18m17.5s, distance still 16.73ly obvious
 # setposition {base [7.68326 -12.4019 8.18861]}
-
-
-
 
 # as a test, should land me on Altair: 19h50m47.7s, +8d52m13.3s, 16.73ly
 
