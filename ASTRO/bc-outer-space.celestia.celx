@@ -1,7 +1,0 @@
-# A Celestia (not LUA) script to answer
-# https://astronomy.stackexchange.com/questions/27601/what-would-stargazing-be-like-at-the-edge-of-our-galaxy
-
-# http://www.donandcarla.com/Celestia/cel_scripting/guide/Cel_Script_Guide_v1_0g.htm
-
-set {name "FOV" value 30.0}
-
