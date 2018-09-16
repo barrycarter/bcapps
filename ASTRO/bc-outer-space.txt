@@ -1,0 +1,51 @@
+Subject: Does Celestia respect 'setframe' coordinate systems?
+
+Through trial and error (see script below that summarizes what I've found), I've learned Celestia's coordinate system appears to be:
+
+  - The x axis points to the vernal equinox
+
+  - The y axis points to the ecliptic north pole
+
+  - The z axis points to 18 hours right ascension, -23.4393 declination (ie, the obliquity of the ecliptic)
+
+regardless of whether you choose the "equatorial", "ecliptical", or "universal" frames.
+
+I wrote the script below to confirm this: regardless of which setframe command you uncomment (or if you leave them all commented), the results are the same.
+
+<pre><code>
+
+{
+
+# using Celestia 1.6.1
+
+# set to equatorial frame
+# setframe {ref "Sol/Earth" coordsys "equatorial"}
+# setframe {ref "Sol/Earth" coordsys "ecliptical"}
+# setframe {ref "Sol/Earth" coordsys "universal"}
+
+# 27 Psc is near the vernal equinox at a distance of 234.48 ly
+# this brings me within 14 ly
+setposition {base [234.48 0 0]}
+select {object "27 Psc"}
+center {time 0.01}
+wait {duration 3.0}
+
+# 42 Dra is near the north ecliptic pole at 18h, 66.56 declination
+# this brings me within 15 ly
+setposition {base [0 314.82 0]}
+select {object "42 Dra"}
+center {time 0.01}
+wait {duration 3.0}
+
+# 7 Sgr is near the 18h, -23.4393 declination
+# this brings me within 20 ly
+setposition {base [0 0 1079.99]}
+select {object "7 Sgr"}
+center {time 0.01}
+wait {duration 3.0}
+
+}
+
+</code></pre>
+
+I am aware that https://en.wikibooks.org/wiki/Celestia/Binary_Star_File suggests the coordinates are stored internally as some gyration of ecliptical coordinates, but assumed "setframe" would change this.

@@ -57,12 +57,16 @@ while ($all=~s%<(.*?)>(.*?)</\1>%%s) {
   }
 }
 
+debug(var_dump("proclist", \%proclist));
+
 for $i (@procs) {
 
   # cleanup proc line and split into fields
   $i=trim($i);
   $i=~s/\s+/ /isg;
   ($pid,$ppid,$time,$rss,$vsz,$stat,$proc,$proc2,$proc3) = split(/\s+/,$i);
+
+  debug("Looking at: $proc");
 
   # ignore [bracketed] processes because there are lots of them and
   # they all seem OK
@@ -88,6 +92,8 @@ for $i (@procs) {
   # for multiple run checking, count if/how many times proc is running
   $isproc{$proc}++;
 
+  debug("BETA: $proc");
+
   # report stopped processes
   if ($stat=~/T/ && !$proclist{stopped}{$proc}) {
     push(@err, "stopped.$proc ($pid)");
@@ -103,6 +109,8 @@ for $i (@procs) {
     push(@err, "mem.$proc ($pid)");
   }
 
+  debug("GAMMA: $proc");
+
   # if the proc must be running or may run indefinitely, stop here
   # Note: programs that must run are also checked later
 
@@ -111,6 +119,8 @@ for $i (@procs) {
   # any process may run for up to 300s
   my($stime) = pstime2sec($time);
   if ($stime < 300) {next;}
+
+  debug("$proc, $stime");
 
   # TODO: add process specific timeouts (thought I already had this)
 

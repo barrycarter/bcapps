@@ -26,14 +26,39 @@
 
 # is (7.68326, 12.4461, 8.12128) the magic?
 
-
 {
 
-# wanted equatorial but it doesnt appear to work
-setframe {ref "Sol/Earth" coordsys "equatorial"}
+# using Celestia 1.6.1
 
+# set to equatorial frame
+# setframe {ref "Sol/Earth" coordsys "equatorial"}
+# setframe {ref "Sol/Earth" coordsys "ecliptical"}
+# setframe {ref "Sol/Earth" coordsys "universal"}
 
-set {name "FOV" value 72}
+# 27 Psc is near the vernal equinox at a distance of 234.48 ly
+# this brings me within 14 ly
+setposition {base [234.48 0 0]}
+select {object "27 Psc"}
+center {time 0.01}
+wait {duration 3.0}
+
+# 42 Dra is near the north ecliptic pole at 18h, 66.56 declination
+# this brings me within 15 ly
+setposition {base [0 314.82 0]}
+select {object "42 Dra"}
+center {time 0.01}
+wait {duration 3.0}
+
+# 7 Sgr is near the 18h, -23.4393 declination
+# this brings me within 20 ly
+setposition {base [0 0 1079.99]}
+select {object "7 Sgr"}
+center {time 0.01}
+wait {duration 3.0}
+
+}
+
+# set {name "FOV" value 72}
 
 # tests w/ equa frame
 
@@ -48,10 +73,7 @@ set {name "FOV" value 72}
 
 # does this bring me closer to Polaris? (not really)
 # brings me close to HIP89344, which is at 18h, 90-ecl) dec
-setposition {base [0 432.57 0]}
-
-
-
+# setposition {base [0 432.57 0]}
 
 # sun at 180, 0 as expected
 # sun at 12h, 0 deg in "celestial" system (not horizontal)
