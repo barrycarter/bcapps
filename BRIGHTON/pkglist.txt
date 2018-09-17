@@ -589,6 +589,7 @@ xemacs-packages-extra
 nano
 dos2unix
 evince
+fbreader
 
 # spreadsheets/graphing programs/etc
 gnumeric
