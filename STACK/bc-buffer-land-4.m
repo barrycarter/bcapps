@@ -29,17 +29,13 @@ Table[color[i] = RandomReal[1,3], {i, min, max}];
 
 colored = Map[color, data, {2}];
 
-Dimensions[colored];
-
-nw = Take[colored, {1, 18000/3}, {1, 36000/3}];
-
-rnw = Graphics[Raster[nw], PlotRangePadding -> 0, ImagePadding -> 0];
+Dimensions[colored]
 
 (* doing these in "order" *)
 
-chunk = Take[colored, {1, 6000}, {12001, 24000}];
-rchunk = Graphics[Raster[nw], PlotRangePadding -> 0, ImagePadding -> 0];
-Export["/tmp/3.png", rchunk, ImageSize -> {36000/3, 18000/3}];
+chunk = Take[colored, {12001, 18000}, {24001, 36000}];
+rchunk = Graphics[Raster[chunk], PlotRangePadding -> 0, ImagePadding -> 0];
+Export["/tmp/9.png", rchunk, ImageSize -> {12000, 6000}];
 Run["xmessage all finished sir &"]
 
 

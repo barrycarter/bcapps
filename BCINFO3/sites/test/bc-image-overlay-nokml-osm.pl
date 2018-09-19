@@ -1,9 +1,15 @@
 #!/bin/perl
 
+die "Decided to stick w/ google maps for now, sigh";
+
 # Does what bc-image-overlay does, without KML
+
+# converting bc-image-overlay-nokml.pl to use OSM, not google
+# TODO: everything
 
 # Given an image on my server (bcinfo3) and other parameters, create
 # google map with that image. Options (given as GET variables to the URL):
+
 
 # center = lat,lon center of map (in that order)
 # zoom = google zoom level
@@ -63,7 +69,7 @@ my($str) = << "MARK";
   body { height: 100%; margin: 0px; padding: 0px }
   #map_canvas { height: 100% }
 </style>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=$google_maps_key"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
 
 // these must exist outside initialize because i use them globally

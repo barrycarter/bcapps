@@ -48,7 +48,7 @@ my($str) = << "MARK";
   body { height: 100%; margin: 0px; padding: 0px }
   #map_canvas { height: 100% }
 </style>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=$google_maps_key"></script>
 <script type="text/javascript">
 function initialize() {
  var myLatLng = new google.maps.LatLng($query{center});

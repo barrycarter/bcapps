@@ -110,6 +110,12 @@ our(%d4mekeys) = list2hash("file", "Name", "Manufacturer", "UPC", "url",
 "vitamind", "vitamine", "vitamink", "weight", "servingsize_prepared",
 "servingsizeingrams", "calories");
 
+# this key is NOT private because it shows up in URLs, so it's ok to
+# put it here; it is protected by referer, however (not that this is
+# perfect)
+
+our($google_maps_key) = "AIzaSyCC5urLnHN5DKVEZti8umw5k2d_-OsHDMo";
+
 # HACK: not sure this is right way to do this
 our(%globopts);
 our(%is_tempfile);

@@ -15,13 +15,18 @@ $zip->read($file);
 
 # find data/js/user_details.js, mtime, and contents (for username)
 
-my($data) = $zip->memberNamed("data/js/user_details.js");
+# twitter seriously fucked up/changed their format circa 18 Sep 2018
+
+# my($data) = $zip->memberNamed("data/js/user_details.js");
+
+my($data) = $zip->memberNamed("account.js");
 my($mtime) = strftime("%Y%m%d.%H%M%S", gmtime($data->lastModTime()));
 my($contents) = $data->contents();
 
 # find username in contents, die if none
 
-unless ($contents=~s%"screen_name" : "(.*?)"%%) {die "NO USERNAME";}
+# unless ($contents=~s%"screen_name" : "(.*?)"%%) {die "NO USERNAME";}
+unless ($contents=~s%"username" : "(.*?)"%%) {die "NO USERNAME";}
 
 my($sn) = $1;
 

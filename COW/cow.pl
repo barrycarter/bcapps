@@ -7,6 +7,8 @@
 require "/usr/local/lib/bclib.pl";
 use Text::Unidecode;
 
+die "This program is not used; if placed back into production, replace gbefore.txt below to include API key";
+
 chdir("/home/barrycarter/BCGIT/COW/");
 open(A,"bzcat bigcit.txt.bz2|");
 open(B,">/var/tmp/temp.html");

@@ -2,6 +2,8 @@
 
 # shows where sun is shining, twilight, etc
 
+die "This program is not used; if ever placed into production, will require an API key";
+
 require "/usr/local/lib/bclib.pl";
 
 # from wolframalpha (in m)

@@ -17,7 +17,40 @@ system("echo '<meta http-equiv=\"refresh\" content=\"60\">' > $outputfile");
 system("echo Last updated: `date` >> $outputfile");
 # circles that come close to the edges confuse google maps?
 system("echo '<br>The odd grey rectangles near the equinoxes appear to be an artifact of how google maps draws client-side circles' >> $outputfile");
-system("/bin/cat /usr/local/etc/gbefore.txt >> $outputfile");
+
+# the gbefore.txt code is now hardcoded below so I can include my API key
+
+open(A, ">$outputfile");
+
+print A << "MARK";
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0px; padding: 0px }
+  #map_canvas { height: 100% }
+</style>
+<script type="text/javascript"
+    src="http://maps.google.com/maps/api/js?sensor=false&key=$google_maps_key">
+</script>
+<script type="text/javascript">
+
+function initialize() {
+  var myLatLng = new google.maps.LatLng(0,0);
+  var myOptions = {
+    zoom: 2,
+    center: myLatLng,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+  var map = new google.maps.Map(document.getElementById("map_canvas"),
+      myOptions);
+
+MARK
+;
 
 open(A, ">>$outputfile");
 

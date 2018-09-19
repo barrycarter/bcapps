@@ -14,6 +14,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+die "This code does not work, see my question on gis.stackexchange.com
+for details"
+
 # debug(antipode(5,10));
 
 %points = (

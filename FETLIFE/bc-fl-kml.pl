@@ -5,6 +5,8 @@
 
 # --clientside: create a clientside map (not yet working 100%)
 
+die "Program not used; if putting into production, need API key, not gbefore.txt";
+
 require "/usr/local/lib/bclib.pl";
 
 my($row,%data);

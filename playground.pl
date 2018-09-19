@@ -2826,6 +2826,8 @@ $r1 = $EARTH_CIRC/2;
 
 # the dividing circle between two points is a circle w/ center on earth
 
+die "Command below will not work, need API key";
+
 system("cp /usr/local/etc/sun/gbefore.txt /home/barrycarter/BCINFO/sites/TEST/playground.html");
 
 open(A, ">>/home/barrycarter/BCINFO/sites/TEST/playground.html");
