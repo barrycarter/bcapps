@@ -62,6 +62,18 @@ Apply[List, If[d>0, waterfunc[1-Floor[d/1600,1/16]],
 
 </formulas>
 
+(* a randomly colored map *)
+
+coast0 = ReadList[
+ "!bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2", {Number,
+Number, Number}];
+
+(* this is straight rounding *)
+
+coast2 = Table[{i[[1]], i[[2]], Round[i[[3]]]}, {i, coast0}];
+
+
+
 (* the actual area data *)
 
 area[lat_] = 2*Pi*Integrate[rad[lat]^2*Cos[lat], lat]
@@ -73,10 +85,6 @@ areaSquare[lat_] = (area[(lat+.02)*Degree] - area[(lat-.02)*Degree])/9000.;
 area[4*Degree]-area[3.98*Degree]
 
 (* and the coast data once again *)
-
-coast0 = ReadList[
- "!bzcat /home/barrycarter/20180807/dist2coast.signed.txt.bz2", {Number,
-Number, Number}];
 
 coastFunc = Interpolation[coast0, InterpolationOrder -> 1];
 

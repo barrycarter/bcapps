@@ -17,16 +17,19 @@ $zip->read($file);
 
 # twitter seriously fucked up/changed their format circa 18 Sep 2018
 
-# my($data) = $zip->memberNamed("data/js/user_details.js");
+# twitter is apparently flipping back and forth, so I am uncommenting
+# proper lines as needed
 
-my($data) = $zip->memberNamed("account.js");
+my($data) = $zip->memberNamed("data/js/user_details.js");
+
+# my($data) = $zip->memberNamed("account.js");
 my($mtime) = strftime("%Y%m%d.%H%M%S", gmtime($data->lastModTime()));
 my($contents) = $data->contents();
 
 # find username in contents, die if none
 
-# unless ($contents=~s%"screen_name" : "(.*?)"%%) {die "NO USERNAME";}
-unless ($contents=~s%"username" : "(.*?)"%%) {die "NO USERNAME";}
+unless ($contents=~s%"screen_name" : "(.*?)"%%) {die "NO USERNAME";}
+# unless ($contents=~s%"username" : "(.*?)"%%) {die "NO USERNAME";}
 
 my($sn) = $1;
 
