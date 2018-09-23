@@ -2,12 +2,22 @@
 
 Using the TIF file (which loads amazingly fast)
 
+in real file, -2513.32 is lowest, 2694.96 is max
+
+first suggests 32768 == 0, so does last
+
+TODO: whine 01d vs old
+
+TODO: all complaints from others
+
+TODO: color scheme changes are too small
+
 *)
 
 (* Import runs surprisingly fast *)
 
-data = Reverse[
-Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif", "Data"]];
+data = Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif", 
+ "Data"];
 
 (*
 
@@ -21,6 +31,51 @@ min = Min[flat];
 *)
 
 {min, max} = {30255, 35463};
+
+minidata = data[[;;;;100, ;;;;100]];
+
+(* Same colors as bc-buffer-land-2.m *)
+
+landfunc = ColorData["SandyTerrain"];
+waterfunc = ColorData["DeepSeaColors"];
+
+(* clear function and the border is black; with 1km values cahcing may
+actually be useful *)
+
+Clear[distance2Color];
+distance2Color[32768] = {0, 0, 0};
+
+distance2Color[d_] := distance2Color[d] = 
+ N[Apply[List, If[d>32768, waterfunc[1-Floor[(d-32768)/1600,1/16]],
+ landfunc[1-Floor[-(d-32768)/1600,1/16]]]]];
+
+(* in addition to testing, this sets the value for almost all d *)
+
+t1344 = Graphics[Raster[
+ Partition[Table[distance2Color[30255+i], {i,0,5199}], 100]
+ ]]
+showit
+
+(* test on minidata *)
+
+temp1405 = Map[distance2Color, minidata, {2}];
+
+Graphics[Raster[temp1405]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (* breaking it into 3*3 pieces, the whole thing won't digitize properly *)
 
