@@ -14,10 +14,11 @@ TODO: color scheme changes are too small
 
 *)
 
-(* Import runs surprisingly fast *)
+(* Import runs surprisingly fast, I should NOT reverse here, but its easier *)
 
-data = Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif", 
- "Data"];
+data =
+Reverse[Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif",
+"Data"]];
 
 (*
 
@@ -54,13 +55,15 @@ distance2Color[d_] := distance2Color[d] =
 t1344 = Graphics[Raster[
  Partition[Table[distance2Color[30255+i], {i,0,5199}], 100]
  ]]
-showit
 
 (* test on minidata *)
 
 temp1405 = Map[distance2Color, minidata, {2}];
 
+
+
 Graphics[Raster[temp1405]]
+showit
 
 
 
