@@ -58,14 +58,32 @@ t1344 = Graphics[Raster[
 
 (* test on minidata *)
 
-temp1405 = Map[distance2Color, minidata, {2}];
+temp1405 = Graphics[
+ Raster[Map[distance2Color, minidata, {2}]],
+ ImagePadding -> 0, PlotRangePadding -> 0, Frame -> False
+];
+
+Export["/tmp/output.png", temp1405, ImageSize -> {360, 180}]
+
+(* the real thing *)
+
+image = Graphics[
+ Raster[Map[distance2Color, data, {2}]],
+ ImagePadding -> 0, PlotRangePadding -> 0, Frame -> False
+];
+
+Export["/var/tmp/output.png", temp1405, ImageSize -> {36000, 18000}]
+
+
+
+
 
 
 
 Graphics[Raster[temp1405]]
 showit
 
-
+TODO: leftmost pixels are all 32768 or 32769
 
 
 
