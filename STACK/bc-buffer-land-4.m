@@ -77,11 +77,11 @@ Export["/tmp/output.png", temp1405, ImageSize -> {360, 180}]
 (* the real thing *)
 
 image = Graphics[
- Raster[Map[distance2Color, data1, {2}]],
+ Raster[Map[distance2Color, data, {2}]],
  ImagePadding -> 0, PlotRangePadding -> 0, Frame -> False
 ];
 
-Export["/var/tmp/output.png", image, ImageSize -> {18000, 9000}]
+Export["/var/tmp/output.png", image, ImageSize -> {36000, 18000}]
 
 
 
