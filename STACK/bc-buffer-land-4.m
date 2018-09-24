@@ -14,11 +14,18 @@ TODO: color scheme changes are too small
 
 *)
 
-(* Import runs surprisingly fast, I should NOT reverse here, but its easier *)
+(* Import runs surprisingly fast *)
 
-data =
-Reverse[Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif",
-"Data"]];
+data0 = Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif",
+"Data"];
+
+data = Reverse[data0];
+
+(* mathematica won't rasterize 36000x18000 so cut into chunks *)
+
+data1 = data[[1;;9000, 1;;18000]];
+
+
 
 (*
 
@@ -56,7 +63,7 @@ t1344 = Graphics[Raster[
  Partition[Table[distance2Color[30255+i], {i,0,5199}], 100]
  ]]
 
-(* test on minidata *)
+(* test on minidata 
 
 temp1405 = Graphics[
  Raster[Map[distance2Color, minidata, {2}]],
@@ -65,6 +72,8 @@ temp1405 = Graphics[
 
 Export["/tmp/output.png", temp1405, ImageSize -> {360, 180}]
 
+*)
+
 (* the real thing *)
 
 image = Graphics[
@@ -72,7 +81,7 @@ image = Graphics[
  ImagePadding -> 0, PlotRangePadding -> 0, Frame -> False
 ];
 
-Export["/var/tmp/output.png", temp1405, ImageSize -> {36000, 18000}]
+Export["/var/tmp/output.png", image, ImageSize -> {36000, 18000}]
 
 
 
