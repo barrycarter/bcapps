@@ -14,6 +14,20 @@ TODO: color scheme changes are too small
 
 *)
 
+<formulas>
+
+landfunc = ColorData["SandyTerrain"];
+waterfunc = ColorData["DeepSeaColors"];
+
+Clear[distance2Color];
+distance2Color[32768] = {0, 0, 0};
+
+distance2Color[d_] := distance2Color[d] = 
+ N[Apply[List, If[d>32768, waterfunc[1-Floor[(d-32768)/1600,1/16]],
+ landfunc[1-Floor[-(d-32768)/1600,1/16]]]]];
+
+</formulas>
+
 (* Import runs surprisingly fast *)
 
 data0 = Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif",
@@ -23,7 +37,15 @@ data = Reverse[data0];
 
 (* mathematica won't rasterize 36000x18000 so cut into chunks *)
 
-data1 = data[[1;;9000, 1;;18000]];
+dataChunk = data[[12001;;18000, 24001;;36000]];
+
+image = Graphics[
+ Raster[Map[distance2Color, dataChunk, {2}]],
+ ImagePadding -> 0, PlotRangePadding -> 0, Frame -> False
+];
+
+Export["/var/tmp/output.png", image, ImageSize -> {12000, 6000}]
+
 
 
 
@@ -44,18 +66,8 @@ minidata = data[[;;;;100, ;;;;100]];
 
 (* Same colors as bc-buffer-land-2.m *)
 
-landfunc = ColorData["SandyTerrain"];
-waterfunc = ColorData["DeepSeaColors"];
-
 (* clear function and the border is black; with 1km values cahcing may
 actually be useful *)
-
-Clear[distance2Color];
-distance2Color[32768] = {0, 0, 0};
-
-distance2Color[d_] := distance2Color[d] = 
- N[Apply[List, If[d>32768, waterfunc[1-Floor[(d-32768)/1600,1/16]],
- landfunc[1-Floor[-(d-32768)/1600,1/16]]]]];
 
 (* in addition to testing, this sets the value for almost all d *)
 
