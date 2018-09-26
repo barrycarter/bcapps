@@ -19,13 +19,42 @@ require "/usr/local/lib/bclib.pl";
 
 my(%dist);
 
+# the latitude of the top line
+$lat = 90 - 0.01/2;
+
 open(A, "bzcat /home/barrycarter/20180807/output.asc.bz2|");
 
 while (<A>) {
 
   chomp;
 
-  debug("GOT LINE: $_");
+  # remove spaces
+  s/^\s*//;
+
+  # ignore header lines
+  unless (/^\d/) {next;}
+
+  # since the latitude is constant for the row, area is fixed for all cols
+  # spherical approximation from:
+  # http://mathforum.org/library/drmath/view/63767.html
+
+  my($area) = 6371.008*6371.008/36000*2*$PI*
+ (sin($DEGRAD*($lat+0.01/2)) - sin(($DEGRAD*($lat-0.01/2))));
+  debug("LAT: $lat, AREA: $area");
+
+  for $i (split(/\s+/, $_)) {
+    $totarea += $area;
+#    debug("LAT: $lat, I: $i");
+  }
+
+  $lat -= 0.01;
+
+}
+
+debug("TOTAREA: $totarea");
+
+=item comment
+
 
   my($lon, $lat, $dist) = split(/\s+/, $_);
 
@@ -36,9 +65,6 @@ while (<A>) {
   # also hideous using real value as key
   $dist{$dist} += $area;
 
-  # just a counter
-  if (++$count%100000==0) {debug("COUNT: $count");}
-
 }
 
 my($accum) = 0;
@@ -47,3 +73,5 @@ for $i (sort {$a <=> $b} keys %dist) {
   $accum += $dist{$i};
   print "$i $dist{$i} $accum\n";
 }
+
+=cut
