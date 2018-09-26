@@ -308,8 +308,9 @@ libsamplerate-devel
 libmpg123
 libmpg123-devel
 
-# graphics incl scanning and fonts
+# graphics/images incl scanning and fonts
 # some of these may be installed by a groupinstall
+libgeotiff-devel
 mtpaint
 xournal
 perl-Image-ExifTool
@@ -728,6 +729,8 @@ perl-Statistics*
 perl-Test*
 perl-Text*
 perl-utf8
+
+
 
 # Apache mods
 mod_ldap

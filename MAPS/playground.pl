@@ -2,6 +2,29 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# GeoTiff testing
+
+use Image::GeoTIFF::Tiled;
+ 
+my $t = Image::GeoTIFF::Tiled->new("/home/user/20180807/GMT_intermediate_coast_distance_01d.tif");
+
+# Dump meta info
+$t->print_meta;
+ 
+die "TESTING";
+ 
+# Dump last tile
+$t->dump_tile( $t->number_of_tiles - 1 );
+
+# Get an iterator for an arbitrary shape
+my $iter = $t->get_iterator_shape( $shape );
+# Get a histogram of pixel values
+my %c;
+$c{$v}++ while ( defined( my $v = $iter->next ) );
+
+
+die "TESTING";
+
 # given slippy tile + four coords to project it onto, do so efficiently
 
 # example 3,4,2 (z,x,y), western Europe

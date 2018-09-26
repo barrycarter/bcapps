@@ -90,3 +90,6 @@ setenv videogrep2 '\.mp4$|\.mkv$|\.avi|\.webm$'
 
 # never log me out/time me out
 unset autologout
+
+# libgeotiff puts header files in a stupid place
+setenv CPATH "/usr/include/libgeotiff/"
