@@ -17,10 +17,13 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my(%dist);
-
 # the latitude of the top line
 $lat = 90 - 0.01/2;
+
+# The Earth's surface area (to excessive precision)
+$surfEarth = 5.10065621721675*10**8;
+
+my(%dist);
 
 open(A, "bzcat /home/barrycarter/20180807/output.asc.bz2|");
 
@@ -38,20 +41,24 @@ while (<A>) {
   # spherical approximation from:
   # http://mathforum.org/library/drmath/view/63767.html
 
-  my($area) = 6371.008*6371.008/36000*2*$PI*
+  my($area) = $surfEarth/36000/2*
  (sin($DEGRAD*($lat+0.01/2)) - sin(($DEGRAD*($lat-0.01/2))));
-  debug("LAT: $lat, AREA: $area");
+
+  if (rand() < 0.01) {debug("LAT: $lat, TOTAREA: $totarea");}
 
   for $i (split(/\s+/, $_)) {
     $totarea += $area;
-#    debug("LAT: $lat, I: $i");
+    $dist{$i} += $area;
   }
 
   $lat -= 0.01;
 
 }
 
-debug("TOTAREA: $totarea");
+for $i (sort {$a <=> $b} keys %dist) {
+  $cum += $dist{$i};
+  print "$i,$dist{$i},$cum\n";
+}
 
 =item comment
 
