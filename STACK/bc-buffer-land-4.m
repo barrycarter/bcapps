@@ -33,6 +33,38 @@ distance2Color[d_] := distance2Color[d] =
 data0 = Import["/home/user/20180807/GMT_intermediate_coast_distance_01d.tif",
 "Data"];
 
+(* even though I got the raster right, what does this data tell me? *)
+
+data0[[2,2]]-32768 == 1
+
+data0[[-2,2]]-32768 == 1
+
+data0[[2,-2]] - 32768 == 1
+
+data0[[-2, -2]] - 32768 == -1274 (deeply inland, so antarctica)
+
+(* get area straight from data0 *)
+
+using same as dist2coast.signed.txt.bz2
+
+-179.98 89.98 to 
+
+lat[i_] = N[90+1/200-i/100]
+
+lon[j_] = N[-180-1/200+j/100]
+
+dataTest = Table[{{lon[j], lat[i]}, data0[[i,j]]-32768}, 
+ {i, 1, 18000, 100}, {j, 1, 36000, 100}];
+
+Interpolation[Flatten[dataTest,1]]
+
+
+
+data4Area = Table[{lon[i], lat[j], data0[[i,j]]-32768}, 
+ {i, 1, 18000}, {j, 1, 36000}];
+
+ABOVE IS WRONG!!!
+
 data = Reverse[data0];
 
 (* mathematica won't rasterize 36000x18000 so cut into chunks *)
