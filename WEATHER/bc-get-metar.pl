@@ -15,7 +15,7 @@ for $i (@res1) {$statinfo{$i->{metar}} = $i;}
 
 # URL updated (to https) 24 Feb 2018
 # my($url) = "http://aviationweather.gov/adds/dataserver_current/current/metars.cache.csv.gz";
-my($url) = "https://aviationweather.gov/adds/dataserver_current/current/metars.cache.csv.gz"
+my($url) = "https://aviationweather.gov/adds/dataserver_current/current/metars.cache.csv.gz";
 
 my($out,$err,$res) = cache_command2("curl $url | gunzip", "age=150");
 

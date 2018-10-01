@@ -5,7 +5,7 @@
 # TODO: try to fix when something broken?
 # TODO: see notes in nagyerass.txt
 
-require "bclib.pl";
+require "/usr/local/lib/bclib.pl";
 
 $tests = read_file("nagyerass.txt");
 

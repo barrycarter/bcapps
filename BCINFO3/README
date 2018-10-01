@@ -324,6 +324,8 @@ mkdir -p /home/barrycarter/SPICE/KERNELS
 cd /home/barrycarter/SPICE/KERNELS
 curl -O http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-1.bsp -O http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de431_part-2.bsp -O http://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00010.tpc -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0011.tls -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_latest_high_prec.bpc -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_720101_070426.bpc
 
+# REF: on 30 Sep 2018, removed DE431 files (too much space), dl'd DE430 instead
+
 # REF: removed planetary satellite kernels later as they were taking
 # up too much room
 

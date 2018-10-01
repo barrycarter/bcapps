@@ -264,6 +264,16 @@ alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 # stopnet stops network intensive processes
 alias stopnet "sudo killall -STOP qbittorrent wget curl idevs; \pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
 
+# bc-daemon-checker will restart stopped processes if the system is
+# idle, but this allows me to restart them when I want
+
+alias startit "sudo killall -CONT recollindex zpaq rcltar tesseract"
+
+alias startnet "sudo killall -CONT qbittorrent wget curl idevs; \pkill -CONT -f tumblr_backup; xmessage consider resuming firefox and other downloads and make sure tumblr backup stopped&"
+
+
+
+
 # start mathematica with the <formula(s)> section of given file; useful
 # for reloads (note careful avoidance of $)
 

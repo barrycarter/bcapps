@@ -4,6 +4,8 @@
 # accounts) and "report" these to ~/ERR which ultimately prints to my
 # background image
 
+# TODO: if result file is empty or doesnt have any status, that's an error
+
 # -nocurl: dont actually query montastic API (useful for testing)
 
 require "/usr/local/lib/bclib.pl";

@@ -266,6 +266,10 @@ Given a list of mountpoints, write a random tempfile to each, read it
 back to confirm its the same, and check that the associated device
 numbers are different (ie, I havent "lost" a mount)
 
+TODO: compare to mounts.txt (sort of done by bc_check_mounts2)
+
+TODO: free space testing here
+
 =cut
 
 sub bc_check_mounts {

@@ -98,7 +98,7 @@ for $i (@procs) {
   if ($stat=~/T/ && !$proclist{stopped}{$proc}) {
     push(@err, "stopped.$proc ($pid)");
 
-    # this is slightly ugly
+    # this is slightly ugly: resume stopped processes if system is idle
     if ($idle) {system("kill -CONT $pid");}
 
   }

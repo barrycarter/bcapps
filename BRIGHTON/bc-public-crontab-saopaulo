@@ -270,8 +270,9 @@ MAILTO="daemon"
 # to resume 1 Apr; resume 31 Mar 2018 evening
 
 # hit bandwidth cap again on 9/13/2018
+# restored 10/1/2018
 
-# 25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
+25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
 
 # cleanup tmp files daily
 
