@@ -5,21 +5,25 @@
 # -show: print out string I send to file
 # -test: in testing mode, use cached data more
 
-push(@INC,"/usr/local/lib");
-require "bclib.pl";
+# being rewritten on 2 Oct 2018 as wunderground stops giving out free keys
+
+require "/usr/local/lib/bclib.pl";
 $now = time();
 
-# pull key from private file; you can get your own at api.wunderground.com
-require "/home/barrycarter/bc-private.pl";
+warn "testing";
 
-# below is my personal key
-$key = $wunderground{key};
+$globopts{test} = 1;
 
 # obtain + JSON parse data (caching solely for testing)
 if ($globopts{test}) {$age=300;} else {$age=-1;}
-($out, $err, $res) = cache_command("curl http://api.wunderground.com/api/$key/conditions/forecast10day/astronomy/q/KABQ.json", "age=$age");
+
+# 102,118 is the grid where I live (in Albuquerque)
+($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118", "age=$age");
+
 debug("OUT: $out");
 $json = JSON::from_json($out);
+
+die "TESTING";
 
 # <h>intermediate variables are for sissies!</h>
 for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {

@@ -269,10 +269,7 @@ alias stopnet "sudo killall -STOP qbittorrent wget curl idevs; \pkill -STOP -f t
 
 alias startit "sudo killall -CONT recollindex zpaq rcltar tesseract"
 
-alias startnet "sudo killall -CONT qbittorrent wget curl idevs; \pkill -CONT -f tumblr_backup; xmessage consider resuming firefox and other downloads and make sure tumblr backup stopped&"
-
-
-
+alias startnet "sudo killall -CONT qbittorrent wget curl idevs; \pkill -CONT -f tumblr_backup; xmessage consider resuming firefox and other downloads&"
 
 # start mathematica with the <formula(s)> section of given file; useful
 # for reloads (note careful avoidance of $)

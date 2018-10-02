@@ -459,6 +459,7 @@ libzip
 libzip-devel
 
 # math/science tools
+wgrib
 geos
 geos-devel
 geos-python
