@@ -5,21 +5,128 @@
 # -show: print out string I send to file
 # -test: in testing mode, use cached data more
 
-# being rewritten on 2 Oct 2018 as wunderground stops giving out free keys
+# complete rewrite 3 Oct 2018
 
 require "/usr/local/lib/bclib.pl";
-$now = time();
 
-warn "testing";
+warn "testing"; $globopts{test} = 1;
 
-$globopts{test} = 1;
+# cache for a long time if testing
+if ($globopts{test}) {$age=3600;} else {$age=-1;}
 
-my($out, $err, $res, $json);
+my($out, $err, $res, $json, %output);
 
-# obtain + JSON parse data (caching solely for testing)
-if ($globopts{test}) {$age=300;} else {$age=-1;}
+# get current data for KABQ
+
+($out, $err, $res) = cache_command2("curl https://api.weather.gov/stations/KABQ/observations/latest", "age=$age");
+
+$json = JSON::from_json($out);
+
+$data = $json->{properties};
+
+$output{timestamp} = strftime("@ %Y%m%d.%H%M%S", localtime(str2time($data->{timestamp})));
+
+# convert to proper temperature units
+
+for $i ("temperature", "windChill", "dewpoint") {
+
+  # special case if undefined
+  if (defined($data->{$i}->{value})) { 
+    $output{$i} = sprintf("%0.1fF", $data->{$i}->{value}*1.8+32);
+  } else {
+    $output{$i} = "NAF";
+  }
+}
+
+$output{humidity} = sprintf("%0.1f%%", $data->{relativeHumidity}->{value});
+
+$output{pressure} = sprintf("%0.2fin", $data->{barometricPressure}->{value}*0.00029530);
+
+# windspeed and gust are in m/s, direction is in degrees
+
+$output{wind} = windinfo($data->{'windDirection'}->{'value'},
+			 $data->{'windSpeed'}->{'value'},
+			 $data->{'windGust'}->{'value'}
+			 );
+
+debug("$output{wind} ($output{pressure})");
+
+# TODO: parse this better
+
+$output{weather} = $data->{textDescription};
+
+debug("$output{weather}/$output{temperature}/$output{windChill}/$output{humidity} ($output{dewpoint})");
+
+debug("TS: $timestamp");
+
+debug(var_dump("JSON", $json));
+
+=item
+
+JSON->{'properties'}->{'icon'} = 'https://api.weather.gov/icons/land/day/bkn?size=medium';
+
+JSON->{'properties'}->{'timestamp'} = '2018-10-03T14:52:00+00:00';
+
+JSON->{'properties'}->{'textDescription'} = 'Mostly Cloudy';
+
+JSON->{'properties'}->{'temperature'}->{'value'} = '17.2';
+JSON->{'properties'}->{'windChill'}->{'value'} = undef;
+JSON->{'properties'}->{'relativeHumidity'}->{'value'} = '83.608459924942';
+JSON->{'properties'}->{'dewpoint'}->{'value'} = '14.4';
+JSON->{'properties'}->{'windDirection'}->{'value'} = 0;
+JSON->{'properties'}->{'windSpeed'}->{'value'} = 0;
+JSON->{'properties'}->{'windGust'}->{'value'} = undef;
+JSON->{'properties'}->{'barometricPressure'}->{'value'} = 102070; [in Pa]
+
+sample:
+
+                "textDescription": "Clear",
+                "textDescription": "Cloudy",
+                "textDescription": "Light Rain",
+                "textDescription": "Mostly Clear",
+                "textDescription": "Mostly Cloudy",
+                "textDescription": "Partly Cloudy",
+                "textDescription": "Rain and Fog/Mist",
+                "textDescription": "Rain",
+                "textDescription": "Thunderstorms and Rain",
+                "textDescription": "Thunderstorms",
+
+
+NAF below is windchill
+
+@8:52 AM, September 27
+Mostly Cloudy/60F/NAF/78% (53F)
+ESE 6G (30.05in) 
+
+=cut
+
+# TODO: add heat index?
+
+# this subroutine is specific to this program, do not confuse w/
+# wind() in bclib.pl
+
+sub windinfo {
+  my($dir, $speed, $gust);
+
+  if ($speed == 0 && $gust == 0) {return "CALM";}
+
+  my(@winddirs) = ("N","NNE","NE","ENE", "E","ESE","SE","SSE", "S","SSW","SW","WSW", "W","WNW","NW","NNW","N");
+
+  # convert from m/s to mph
+  $speed = sprintf("%d", $speed*3600/1609.344);
+  $gust = sprintf("%d", $gust*3600/1609.344);
+  $dir = $winddirs[round($dir/22.5)];
+  my($ret) = "$dir $speed";
+  if ($gust > $speed) {$ret .= "G$gust";}
+  return $ret;
+}
+
+
+die "END HERE";
 
 # 102,118 is the grid where I live (in Albuquerque)
+
+
 ($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118/forecast", "age=$age");
 
 $json = JSON::from_json($out);
@@ -78,8 +185,6 @@ my($forecasts) = join("\n", @forecasts);
 # debug($forecasts);
 
 # now, the current conditions
-
-($out, $err, $res) = cache_command2("curl https://api.weather.gov/stations/KABQ/observations/latest");
 
 $json = JSON::from_json($out);
 my(%metar) = parse_metar($json->{properties}->{rawMessage});
