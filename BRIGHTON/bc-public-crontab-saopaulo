@@ -70,7 +70,9 @@ MAILTO="daemon"
 
 # update weather on background image every 10m or so
 # errors here can be ignored
-*/10 * * * * /home/user/BCGIT/bc-get-weather.pl >& /dev/null
+# disabling as wunderground.com stops free keys
+# when restoring, will have moved it to WEATHER subdir
+# */10 * * * * /home/user/BCGIT/WEATHER/bc-get-weather.pl >& /dev/null
 
 # copy over error messages from bcinfo3.barrycarter.info, which uses the same
 # ~/ERR/*.err protocol
