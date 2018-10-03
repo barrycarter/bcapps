@@ -20,15 +20,16 @@ if ($globopts{test}) {$age=300;} else {$age=-1;}
 # 102,118 is the grid where I live (in Albuquerque)
 ($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118", "age=$age");
 
-debug("<out>$out</out>");
 $json = JSON::from_json($out);
 
-for $i (sort keys %{$json->{'properties'}}) {
-  # figuring out which vars have 168 data (hourly) vs 16 data (bidaily)
-  my($j) = $json->{properties}->{$i}->{values};
-  my($size) = scalar(@$j);
-  debug("I: $i, SIZE: $size");
-  debug(var_dump("J", $j));
+for $i ("maxTemperature", "minTemperature", "probabilityOfPrecipitation",
+	"skyCover", "weather") {
+  debug("I: $i");
+  my($data) = $json->{properties}->{$i}->{values};
+
+
+
+  debug(var_dump("DATA", $data));
 }
 
 
