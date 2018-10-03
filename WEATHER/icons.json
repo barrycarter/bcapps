@@ -1,0 +1,107 @@
+{
+    "@context": [],
+    "icons": {
+        "skc": {
+            "description": "Fair/clear"
+        },
+        "few": {
+            "description": "A few clouds"
+        },
+        "sct": {
+            "description": "Partly cloudy"
+        },
+        "bkn": {
+            "description": "Mostly cloudy"
+        },
+        "ovc": {
+            "description": "Overcast"
+        },
+        "wind_skc": {
+            "description": "Fair/clear and windy"
+        },
+        "wind_few": {
+            "description": "A few clouds and windy"
+        },
+        "wind_sct": {
+            "description": "Partly cloudy and windy"
+        },
+        "wind_bkn": {
+            "description": "Mostly cloudy and windy"
+        },
+        "wind_ovc": {
+            "description": "Overcast and windy"
+        },
+        "snow": {
+            "description": "Snow"
+        },
+        "rain_snow": {
+            "description": "Rain/snow"
+        },
+        "rain_sleet": {
+            "description": "Rain/sleet"
+        },
+        "snow_sleet": {
+            "description": "Rain/sleet"
+        },
+        "fzra": {
+            "description": "Freezing rain"
+        },
+        "rain_fzra": {
+            "description": "Rain/freezing rain"
+        },
+        "snow_fzra": {
+            "description": "Freezing rain/snow"
+        },
+        "sleet": {
+            "description": "Sleet"
+        },
+        "rain": {
+            "description": "Rain"
+        },
+        "rain_showers": {
+            "description": "Rain showers (high cloud cover)"
+        },
+        "rain_showers_hi": {
+            "description": "Rain showers (low cloud cover)"
+        },
+        "tsra": {
+            "description": "Thunderstorm (high cloud cover)"
+        },
+        "tsra_sct": {
+            "description": "Thunderstorm (medium cloud cover)"
+        },
+        "tsra_hi": {
+            "description": "Thunderstorm (low cloud cover)"
+        },
+        "tornado": {
+            "description": "Tornado"
+        },
+        "hurricane": {
+            "description": "Hurricane conditions"
+        },
+        "tropical_storm": {
+            "description": "Tropical storm conditions"
+        },
+        "dust": {
+            "description": "Dust"
+        },
+        "smoke": {
+            "description": "Smoke"
+        },
+        "haze": {
+            "description": "Haze"
+        },
+        "hot": {
+            "description": "Hot"
+        },
+        "cold": {
+            "description": "Cold"
+        },
+        "blizzard": {
+            "description": "Blizzard"
+        },
+        "fog": {
+            "description": "Fog/mist"
+        }
+    }
+}

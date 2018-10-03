@@ -18,9 +18,37 @@ $globopts{test} = 1;
 if ($globopts{test}) {$age=300;} else {$age=-1;}
 
 # 102,118 is the grid where I live (in Albuquerque)
-($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118", "age=$age");
+($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118/forecast", "age=$age");
 
 $json = JSON::from_json($out);
+
+for $i (@{$json->{properties}->{periods}}) {
+
+  # date and time
+  $i->{startTime}=~m/(\d{4}-\d{2}-\d{2})T(\d{2})/;
+  my($date, $time) = ($1, $2);
+  # TODO: insanely ugly, convert m-d-y to unix time and then to localtime?!
+  my($day) = strftime("%a%d", localtime(str2time($date)));
+  my($tod) = $time>=12?"night":"day";
+
+  # printing order for this date
+  unless ($order{$date}) {$order{$date} = ++$count;}
+
+  # forecasted weather
+  debug("ICON: $i->{icon}");
+  my($weather) = parse_icon($i->{icon});
+
+  debug("$i->{startTime} => $day/$tod ($count)");
+    
+
+#  debug($i->{startTime},str2time($i->{startTime}));
+
+#  debug("KI:", keys %{$i});
+}
+
+# debug(var_dump("JSON", $json));
+
+die "TESTING";
 
 for $i ("maxTemperature", "minTemperature", "probabilityOfPrecipitation",
 	"skyCover", "weather") {
@@ -120,6 +148,18 @@ if ($globopts{show}) {print $str;}
 
 # and write to info file
 write_file_new($str, "/home/barrycarter/ERR/forecast.inf");
+
+# parses the weather icon (see WEATHER/icons.json)
+
+sub parse_icon {
+  my($icon) = @_;
+  debug("ICON: $icon");
+
+  return "";
+}
+
+
+
 
 =item format
 
