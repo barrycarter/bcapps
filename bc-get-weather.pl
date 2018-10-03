@@ -20,8 +20,28 @@ if ($globopts{test}) {$age=300;} else {$age=-1;}
 # 102,118 is the grid where I live (in Albuquerque)
 ($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118", "age=$age");
 
-debug("OUT: $out");
+debug("<out>$out</out>");
 $json = JSON::from_json($out);
+
+for $i (sort keys %{$json->{'properties'}}) {
+  # figuring out which vars have 168 data (hourly) vs 16 data (bidaily)
+  my($j) = $json->{properties}->{$i}->{values};
+  my($size) = scalar(@$j);
+  debug("I: $i, SIZE: $size");
+  debug(var_dump("J", $j));
+}
+
+
+# forecast data
+
+# JSON->{'properties'}->{'maxTemperature'}->{'values'}->[0]
+# JSON->{'properties'}->{'minTemperature'}->{'values'}->[0]
+# JSON->{'properties'}->{'probabilityOfPrecipitation'}->{'values'}->[0]
+# JSON->{'properties'}->{'skyCover'}->{'values'}->[0]
+# JSON->{'properties'}->{'weather'}->{'values'}->[0]
+# won't use below but it is available
+# JSON->{'properties'}->{'temperature'}->{'values'}->[0]
+
 
 die "TESTING";
 
@@ -99,3 +119,23 @@ if ($globopts{show}) {print $str;}
 
 # and write to info file
 write_file_new($str, "/home/barrycarter/ERR/forecast.inf");
+
+=item format
+
+Format of data from https://api.weather.gov/gridpoints/ABQ/102,118
+(adding /forecast to the end of this URL gives text format, which is
+less useful to me)... fields that are possibly interesting only.
+
+
+
+Examples:
+
+apparentTemperature, SIZE: 168 (hourly)
+
+dewpoint, SIZE: 82 (sporadic, but end of validTime gives how many
+hours good for
+
+Cool things I don't need: hainesIndex davisStabilityIndex (other less
+interesting indexes exist too), mixingHeight
+
+=cut

@@ -740,6 +740,7 @@ mod_ldap
 deluge
 qbittorrent
 qbittorrent-nox
+transmission-common
 
 # Blog
 # this wont really install from yum, just noting it here
