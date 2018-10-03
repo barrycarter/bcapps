@@ -14,6 +14,8 @@ warn "testing";
 
 $globopts{test} = 1;
 
+my($out, $err, $res, $json);
+
 # obtain + JSON parse data (caching solely for testing)
 if ($globopts{test}) {$age=300;} else {$age=-1;}
 
@@ -35,6 +37,8 @@ for $i (@{$json->{properties}->{periods}}) {
 
   # printing order for this date
   unless ($order{$day}) {$order{$day} = ++$count;}
+  # only 7 days
+  if ($count >= 8) {last;}
 
   # forecasted weather
   $data{$day}{$tod}{weather} = parse_forecast($i->{shortForecast});
@@ -62,8 +66,27 @@ for $i (sort {$order{$a} <=> $order{$b}} keys %data) {
 		  $data{$i}{day}{weather}, $data{$i}{night}{weather},
 		  $data{$i}{day}{temp}, $data{$i}{night}{temp},
 		  $data{$i}{day}{prec}, $data{$i}{night}{prec});
-  debug("$str");
+
+  # cleanup string, mostly for "tonight"
+  $str=~s%^/+%%;
+  $str=~s%/+%/%g;
+  push(@forecasts, "$i:$str");
 }
+
+my($forecasts) = join("\n", @forecasts);
+
+# debug($forecasts);
+
+# now, the current conditions
+
+($out, $err, $res) = cache_command2("curl https://api.weather.gov/stations/KABQ/observations/latest");
+
+$json = JSON::from_json($out);
+my(%metar) = parse_metar($json->{properties}->{rawMessage});
+
+debug("METAR", %metar);
+
+# debug("OUT: $out");
 
 # debug(var_dump("JSON", $json));
 
@@ -198,7 +221,7 @@ sub parse_forecast {
   $forecast=~s/Partly Cloudy/PCL/;
 
   # TODO: not really happy about this one (so not generalizing)
-  $forecast=~s/Scattered TSTRM/TS/;
+  $forecast=~s/Scattered TS/TS/;
 
   return $forecast;
 }
