@@ -21,7 +21,6 @@ my($out, $err, $res, $json, %output);
 ($out, $err, $res) = cache_command2("curl https://api.weather.gov/stations/KABQ/observations/latest", "age=$age");
 
 $json = JSON::from_json($out);
-
 $data = $json->{properties};
 
 $output{timestamp} = strftime("@ %Y%m%d.%H%M%S", localtime(str2time($data->{timestamp})));
@@ -39,7 +38,6 @@ for $i ("temperature", "windChill", "dewpoint") {
 }
 
 $output{humidity} = sprintf("%0.1f%%", $data->{relativeHumidity}->{value});
-
 $output{pressure} = sprintf("%0.2fin", $data->{barometricPressure}->{value}*0.00029530);
 
 # windspeed and gust are in m/s, direction is in degrees
@@ -49,17 +47,79 @@ $output{wind} = windinfo($data->{'windDirection'}->{'value'},
 			 $data->{'windGust'}->{'value'}
 			 );
 
-debug("$output{wind} ($output{pressure})");
-
 # TODO: parse this better
 
 $output{weather} = $data->{textDescription};
 
-debug("$output{weather}/$output{temperature}/$output{windChill}/$output{humidity} ($output{dewpoint})");
+$str = << "MARK";
+$output{timestamp}
+$output{weather}/$output{temperature}/$output{windChill}/$output{humidity} ($output{dewpoint})
+$output{wind} ($output{pressure})
+MARK
+;
 
-debug("TS: $timestamp");
+# now to get forecast data
 
-debug(var_dump("JSON", $json));
+# 102,118 is the grid where I live (in Albuquerque)
+
+($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118/forecast", "age=$age");
+
+$json = JSON::from_json($out);
+
+for $i (@{$json->{properties}->{periods}}) {
+
+  # date and time
+  $i->{startTime}=~m/(\d{4}-\d{2}-\d{2})T(\d{2})/;
+  my($date, $time) = ($1, $2);
+  # TODO: insanely ugly, convert m-d-y to unix time and then to localtime?!
+  my($day) = strftime("%a%d", localtime(str2time($date)));
+  my($tod) = $time>=12?"night":"day";
+
+  # printing order for this date
+  unless ($order{$day}) {$order{$day} = ++$count;}
+  # only 7 days
+  if ($count >= 8) {last;}
+
+  # forecasted weather
+  $data{$day}{$tod}{weather} = parse_forecast($i->{shortForecast});
+
+  # temperature
+  $data{$day}{$tod}{temp} = $i->{temperature};
+
+  # TODO: could maybe parse icon for this
+  if ($i->{detailedForecast}=~m/precipitation is (\d+%)/) {
+    $data{$day}{$tod}{prec} = $1;
+  } else {
+    $data{$day}{$tod}{prec} = "0%";
+  }
+}
+
+for $i (sort {$order{$a} <=> $order{$b}} keys %data) {
+  my($str) = join("/", 
+		  $data{$i}{day}{weather}, $data{$i}{night}{weather},
+		  $data{$i}{day}{temp}, $data{$i}{night}{temp},
+		  $data{$i}{day}{prec}, $data{$i}{night}{prec});
+
+  # cleanup string, mostly for "tonight"
+  $str=~s%^/+%%;
+  $str=~s%/+%/%g;
+  push(@forecasts, "$i:$str");
+}
+
+my($forecasts) = join("\n", @forecasts);
+
+debug("$str\n$forecasts");
+
+# TODO: use .new format
+
+# TODO: consider stopping if not enough good/recent data
+
+
+# debug("$output{weather}/$output{temperature}/$output{windChill}/$output{humidity} ($output{dewpoint})");
+
+# debug("TS: $timestamp");
+
+# debug(var_dump("JSON", $json));
 
 =item
 
@@ -124,63 +184,15 @@ sub windinfo {
 
 die "END HERE";
 
-# 102,118 is the grid where I live (in Albuquerque)
-
-
-($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118/forecast", "age=$age");
-
-$json = JSON::from_json($out);
-
 my(%data);
-
-for $i (@{$json->{properties}->{periods}}) {
-
-  # date and time
-  $i->{startTime}=~m/(\d{4}-\d{2}-\d{2})T(\d{2})/;
-  my($date, $time) = ($1, $2);
-  # TODO: insanely ugly, convert m-d-y to unix time and then to localtime?!
-  my($day) = strftime("%a%d", localtime(str2time($date)));
-  my($tod) = $time>=12?"night":"day";
-
-  # printing order for this date
-  unless ($order{$day}) {$order{$day} = ++$count;}
-  # only 7 days
-  if ($count >= 8) {last;}
-
-  # forecasted weather
-  $data{$day}{$tod}{weather} = parse_forecast($i->{shortForecast});
-
-  # temperature
-  $data{$day}{$tod}{temp} = $i->{temperature};
-
-  # TODO: could maybe parse icon for this
-  if ($i->{detailedForecast}=~m/precipitation is (\d+%)/) {
-    $data{$day}{$tod}{prec} = $1;
-  } else {
-    $data{$day}{$tod}{prec} = "0%";
-  }
 
 #  debug("WEATHER: $day/$tod: $weather");
 #  debug("$i->{startTime} => $day/$tod ($count)");
 #  debug($i->{startTime},str2time($i->{startTime}));
 #  debug("KI:", keys %{$i});
-}
+# }
 
 debug(%order);
-
-for $i (sort {$order{$a} <=> $order{$b}} keys %data) {
-  my($str) = join("/", 
-		  $data{$i}{day}{weather}, $data{$i}{night}{weather},
-		  $data{$i}{day}{temp}, $data{$i}{night}{temp},
-		  $data{$i}{day}{prec}, $data{$i}{night}{prec});
-
-  # cleanup string, mostly for "tonight"
-  $str=~s%^/+%%;
-  $str=~s%/+%/%g;
-  push(@forecasts, "$i:$str");
-}
-
-my($forecasts) = join("\n", @forecasts);
 
 # debug($forecasts);
 
@@ -301,6 +313,9 @@ write_file_new($str, "/home/barrycarter/ERR/forecast.inf");
 sub parse_forecast {
   my($forecast) = @_;
 #  debug("$forecast");
+
+  # TODO: unhappy w/ my abbrevs below, so just returning as is for now
+  return ($forecast);
 
   # handle special case "x then y"
   # TODO: can there be 3 or more here?
