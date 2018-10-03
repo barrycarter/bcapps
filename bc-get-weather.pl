@@ -22,6 +22,8 @@ if ($globopts{test}) {$age=300;} else {$age=-1;}
 
 $json = JSON::from_json($out);
 
+my(%data);
+
 for $i (@{$json->{properties}->{periods}}) {
 
   # date and time
@@ -32,18 +34,35 @@ for $i (@{$json->{properties}->{periods}}) {
   my($tod) = $time>=12?"night":"day";
 
   # printing order for this date
-  unless ($order{$date}) {$order{$date} = ++$count;}
+  unless ($order{$day}) {$order{$day} = ++$count;}
 
   # forecasted weather
-  debug("ICON: $i->{icon}");
-  my($weather) = parse_icon($i->{icon});
+  $data{$day}{$tod}{weather} = parse_forecast($i->{shortForecast});
 
-  debug("$i->{startTime} => $day/$tod ($count)");
-    
+  # temperature
+  $data{$day}{$tod}{temp} = $i->{temperature};
 
+  # TODO: could maybe parse icon for this
+  if ($i->{detailedForecast}=~m/precipitation is (\d+%)/) {
+    $data{$day}{$tod}{prec} = $1;
+  } else {
+    $data{$day}{$tod}{prec} = "0%";
+  }
+
+#  debug("WEATHER: $day/$tod: $weather");
+#  debug("$i->{startTime} => $day/$tod ($count)");
 #  debug($i->{startTime},str2time($i->{startTime}));
-
 #  debug("KI:", keys %{$i});
+}
+
+debug(%order);
+
+for $i (sort {$order{$a} <=> $order{$b}} keys %data) {
+  my($str) = join("/", 
+		  $data{$i}{day}{weather}, $data{$i}{night}{weather},
+		  $data{$i}{day}{temp}, $data{$i}{night}{temp},
+		  $data{$i}{day}{prec}, $data{$i}{night}{prec});
+  debug("$str");
 }
 
 # debug(var_dump("JSON", $json));
@@ -83,7 +102,7 @@ for $i (@{$json->{forecast}->{simpleforecast}->{forecastday}}) {
   $i->{conditions}=~s/clear/CLR/isg;
   $i->{conditions}=~s/partly cloudy/PCL/isg;
   $i->{conditions}=~s/mostly cloudy/MCL/isg;
-  $i->{conditions}=~s/chance of a thunderstorm/TSTRM?/isg;
+  $i->{conditions}=~s/chance of a thunderstorm/TSRM/isg;
   $i->{conditions}=~s/chance of rain/RAIN?/isg;
   $i->{conditions}=~s/chance rain/RAIN?/isg;
   $i->{conditions}=~s/thunderstorm/TSTRM!/isg;
@@ -149,13 +168,39 @@ if ($globopts{show}) {print $str;}
 # and write to info file
 write_file_new($str, "/home/barrycarter/ERR/forecast.inf");
 
-# parses the weather icon (see WEATHER/icons.json)
+# parses shortForecast
 
-sub parse_icon {
-  my($icon) = @_;
-  debug("ICON: $icon");
+sub parse_forecast {
+  my($forecast) = @_;
+#  debug("$forecast");
 
-  return "";
+  # handle special case "x then y"
+  # TODO: can there be 3 or more here?
+  if ($forecast=~m%(.*?)\s+then\s+(.*?)$%) {
+    return parse_forecast($1)."+".parse_forecast($2);
+  }
+
+  # TODO: work in progress as I see more forecasts
+  # NOTE: order is important (eg, "Slight Chance" before "Chance")
+
+  $forecast=~s/Mostly\s+/~/;
+
+  $forecast=~s/(Sunny|Clear)/CLR/;
+
+  $forecast=~s/Slight Chance\s+(.*?)$/$1??/;
+
+  $forecast=~s/Rain Showers/RA/;
+
+  $forecast=~s/Showers And Thunderstorms/TS/;
+
+  $forecast=~s/Chance\s+(.*?)$/$1?/;
+
+  $forecast=~s/Partly Cloudy/PCL/;
+
+  # TODO: not really happy about this one (so not generalizing)
+  $forecast=~s/Scattered TSTRM/TS/;
+
+  return $forecast;
 }
 
 
