@@ -8,11 +8,18 @@
 # complete rewrite 3 Oct 2018
 
 require "/usr/local/lib/bclib.pl";
+require "$bclib{home}/bc-private.pl";
+
+# warn "TESTING"; $globopts{test} = 1;
 
 # cache for a long time if testing
 if ($globopts{test}) {$age=3600;} else {$age=-1;}
 
 my($out, $err, $res, $json, %output);
+
+# get_pws_data();
+
+# die "TESTING";
 
 # get current data for KABQ
 
@@ -43,7 +50,7 @@ $output{pressure} = sprintf("%0.2fin", $data->{barometricPressure}->{value}*0.00
 
 $output{wind} = windinfo($data->{'windDirection'}->{'value'},
 			 $data->{'windSpeed'}->{'value'},
-			 $data->{'windGust'}->{'value'}
+			 $data->{'windGust'}->{'value'}, "m/s"
 			 );
 
 # TODO: parse this better
@@ -116,15 +123,23 @@ write_file_new("$str$forecasts", "$bclib{home}/ERR/forecast.inf");
 # wind() in bclib.pl
 
 sub windinfo {
-  my($dir, $speed, $gust);
+  my($dir, $speed, $gust, $unit) = @_;
 
   if ($speed == 0 && $gust == 0) {return "CALM";}
 
   my(@winddirs) = ("N","NNE","NE","ENE", "E","ESE","SE","SSE", "S","SSW","SW","WSW", "W","WNW","NW","NNW","N");
 
+  # tweak for unit
+  my($mult);
+  if ($unit eq "m/s") {
+    $mult = 3600/1609.344;
+  } elsif ($unit eq "mph") {
+    $mult = 1;
+  }
+
   # convert from m/s to mph
-  $speed = sprintf("%0.0f", $speed*3600/1609.344);
-  $gust = sprintf("%0.0f", $gust*3600/1609.344);
+  $speed = sprintf("%0.0f", $speed*$mult);
+  $gust = sprintf("%0.0f", $gust*$mult);
   $dir = $winddirs[round($dir/22.5)];
   my($ret) = "$dir $speed";
   if ($gust > $speed) {$ret .= "G$gust";}
@@ -166,4 +181,59 @@ sub parse_forecast {
   $forecast=~s/Scattered TS/TS/;
 
   return $forecast;
+}
+
+# NOTE: this is a subroutine purely for code cleanliness, and is
+# specific to this program
+
+sub get_pws_data {
+
+  # $age is global
+
+  my($out, $err, $res) = cache_command2("curl 'https://api.aerisapi.com/observations/PWS_LORAXABQ?&client_id=$private{aeris}{accessid}&client_secret=$private{aeris}{secretkey}'", "age=$age");
+
+  my($json) = JSON::from_json($out);
+
+  my($data) = $json->{response}->{ob};
+
+  my($wind) = windinfo($data->{windDirDEG}, $data->{windSpeedMPH},
+		       $data->{windGustSpeedMPH}, "mph");
+
+  # this is more accurate than tempF
+  my($temp) = sprintf("%0.1fF", $data->{tempC}*1.8+32);
+
+
+
+  debug("WIND: $wind");
+  
+
+  debug(var_dump("json", $json));
+
+
+=item comment
+
+json->{'response'}->{'ob'}->{'dateTimeISO'} = '2018-10-04T11:20:00-06:00';
+json->{'response'}->{'ob'}->{'dewpointF'} = 51;
+json->{'response'}->{'ob'}->{'humidity'} = 38;
+json->{'response'}->{'ob'}->{'icon'} = 'pcloudy.png';
+json->{'response'}->{'ob'}->{'tempF'} = 79;
+json->{'response'}->{'ob'}->{'weather'} = 'Mostly Sunny';
+json->{'response'}->{'ob'}->{'windDir'} = 'SSW';
+json->{'response'}->{'ob'}->{'windGustMPH'} = 6;
+json->{'response'}->{'ob'}->{'windMPH'} = 0;
+json->{'response'}->{'ob'}->{'windSpeedMPH'} = 0; # which one to use?
+json->{'response'}->{'obDateTime'} = '2018-10-04T11:20:00-06:00';
+
+json->{'response'}->{'ob'}->{'light'} = 70; # just curious about this one
+json->{'response'}->{'ob'}->{'sky'} = 19;
+json->{'response'}->{'ob'}->{'skywxSrc'} = 'KABQ';
+json->{'response'}->{'ob'}->{'solradWM2'} = 663;
+
+
+
+
+
+=cut
+
+
 }
