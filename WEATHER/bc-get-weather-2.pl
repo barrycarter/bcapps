@@ -10,16 +10,16 @@
 require "/usr/local/lib/bclib.pl";
 require "$bclib{home}/bc-private.pl";
 
-# warn "TESTING"; $globopts{test} = 1;
+warn "TESTING"; $globopts{test} = 1;
 
 # cache for a long time if testing
 if ($globopts{test}) {$age=3600;} else {$age=-1;}
 
 my($out, $err, $res, $json, %output);
 
-# get_pws_data();
+get_pws_data();
 
-# die "TESTING";
+die "TESTING";
 
 # get current data for KABQ
 
@@ -188,52 +188,56 @@ sub parse_forecast {
 
 sub get_pws_data {
 
+  my(%output);
+
   # $age is global
 
   my($out, $err, $res) = cache_command2("curl 'https://api.aerisapi.com/observations/PWS_LORAXABQ?&client_id=$private{aeris}{accessid}&client_secret=$private{aeris}{secretkey}'", "age=$age");
 
   my($json) = JSON::from_json($out);
 
+  debug(var_dump("JSON", $json));
+
   my($data) = $json->{response}->{ob};
 
-  my($wind) = windinfo($data->{windDirDEG}, $data->{windSpeedMPH},
-		       $data->{windGustSpeedMPH}, "mph");
+  $output{timestamp} = strftime("LOCAL %Y%m%d.%H%M%S", localtime($data->{timestamp}));
 
-  # this is more accurate than tempF
-  my($temp) = sprintf("%0.1fF", $data->{tempC}*1.8+32);
+  # convert to proper temperature units
+  for $i ("tempC", "windchillC", "dewpointC") {
 
+    debug("DATA $i IS: $data->{$i}");
 
+  # special case if undefined
+    if (defined($data->{$i})) {
+      $output{$i} = sprintf("%0.1fF", $data->{$i}*1.8+32);
+    } else {
+      $output{$i} = "NAF";
+    }
+  }
 
-  debug("WIND: $wind");
-  
+  $output{humidity} = sprintf("%0.0f%%", $data->{humidity});
+  $output{pressure} = sprintf("%0.2fin", $data->{pressureIN});
 
-  debug(var_dump("json", $json));
+  # windspeed and gust are in m/s, direction is in degrees
 
+  $output{wind} = windinfo($data->{'windDirDEG'}, $data{'windSpeedMPH'},
+			 $data->{'windGustSpeedMPH'}, "mph");
 
-=item comment
+  # TODO: parse this better
 
-json->{'response'}->{'ob'}->{'dateTimeISO'} = '2018-10-04T11:20:00-06:00';
-json->{'response'}->{'ob'}->{'dewpointF'} = 51;
-json->{'response'}->{'ob'}->{'humidity'} = 38;
-json->{'response'}->{'ob'}->{'icon'} = 'pcloudy.png';
-json->{'response'}->{'ob'}->{'tempF'} = 79;
-json->{'response'}->{'ob'}->{'weather'} = 'Mostly Sunny';
-json->{'response'}->{'ob'}->{'windDir'} = 'SSW';
-json->{'response'}->{'ob'}->{'windGustMPH'} = 6;
-json->{'response'}->{'ob'}->{'windMPH'} = 0;
-json->{'response'}->{'ob'}->{'windSpeedMPH'} = 0; # which one to use?
-json->{'response'}->{'obDateTime'} = '2018-10-04T11:20:00-06:00';
+  $output{weather} = parse_forecast($data->{weatherShort});
 
-json->{'response'}->{'ob'}->{'light'} = 70; # just curious about this one
-json->{'response'}->{'ob'}->{'sky'} = 19;
-json->{'response'}->{'ob'}->{'skywxSrc'} = 'KABQ';
-json->{'response'}->{'ob'}->{'solradWM2'} = 663;
+  # TODO: last 2 are just for fun and temporary
+  my($str) = << "MARK";
+$output{timestamp}
+$output{weather}/$output{tempC}/$output{windchillC}/$output{humidity} ($output{dewpointC})
+$output{wind} ($output{pressure})
 
+MARK
+;
 
+  debug("STR: $str");
 
-
-
-=cut
-
+  return $str;
 
 }
