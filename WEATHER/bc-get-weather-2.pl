@@ -1,25 +1,22 @@
 #!/bin/perl
 
 # Gets local weather from wunderground API solely to print on X root window
-# runs from cron every 10m
-# -show: print out string I send to file
+# runs from cron every 1m
+
 # -test: in testing mode, use cached data more
+
+# in theory, could get KABQ data from aeris too, more consistent (but
+# more delayed?)
 
 # complete rewrite 3 Oct 2018
 
 require "/usr/local/lib/bclib.pl";
 require "$bclib{home}/bc-private.pl";
 
-warn "TESTING"; $globopts{test} = 1;
-
 # cache for a long time if testing
 if ($globopts{test}) {$age=3600;} else {$age=-1;}
 
 my($out, $err, $res, $json, %output);
-
-get_pws_data();
-
-die "TESTING";
 
 # get current data for KABQ
 
@@ -114,7 +111,15 @@ for $i (sort {$order{$a} <=> $order{$b}} keys %data) {
 
 my($forecasts) = join("\n", @forecasts);
 
-write_file_new("$str$forecasts", "$bclib{home}/ERR/forecast.inf");
+my($pws) = get_pws_data();
+
+# TODO: temporary + probably a bad idea
+
+($out, $err, $res) = cache_command2("$bclib{githome}/bc-quikbak.pl $bclib{home}/ERR/forecast.inf");
+
+debug("OUT: $out, ERR: $err, RES: $res");
+
+write_file_new("$str$forecasts\n$pws", "$bclib{home}/ERR/forecast.inf");
 
 # TODO: consider stopping if not enough good/recent data
 # TODO: add heat index?
@@ -196,16 +201,12 @@ sub get_pws_data {
 
   my($json) = JSON::from_json($out);
 
-  debug(var_dump("JSON", $json));
-
   my($data) = $json->{response}->{ob};
 
-  $output{timestamp} = strftime("LOCAL %Y%m%d.%H%M%S", localtime($data->{timestamp}));
+  $output{timestamp} = strftime("%Y%m%d.%H%M%S", localtime($data->{timestamp}));
 
   # convert to proper temperature units
   for $i ("tempC", "windchillC", "dewpointC") {
-
-    debug("DATA $i IS: $data->{$i}");
 
   # special case if undefined
     if (defined($data->{$i})) {
@@ -213,6 +214,11 @@ sub get_pws_data {
     } else {
       $output{$i} = "NAF";
     }
+  }
+
+  # ugly special case since station reports pointless windchill
+  if (abs($output{windchillC}-$output{tempC}) < 1) {
+    $output{windchillC} = "NAF";
   }
 
   $output{humidity} = sprintf("%0.0f%%", $data->{humidity});
@@ -223,20 +229,13 @@ sub get_pws_data {
   $output{wind} = windinfo($data->{'windDirDEG'}, $data{'windSpeedMPH'},
 			 $data->{'windGustSpeedMPH'}, "mph");
 
-  # TODO: parse this better
-
-  $output{weather} = parse_forecast($data->{weatherShort});
-
-  # TODO: last 2 are just for fun and temporary
+  # TODO: last line is just for fun and temporary
   my($str) = << "MARK";
-$output{timestamp}
-$output{weather}/$output{tempC}/$output{windchillC}/$output{humidity} ($output{dewpointC})
+Local/$output{tempC}/$output{windchillC}/$output{humidity} ($output{dewpointC}) [$output{timestamp}]
 $output{wind} ($output{pressure})
-
+Light: $data->{light}, Sky: $data->{sky}, Rad: $data->{solradWM2}
 MARK
 ;
-
-  debug("STR: $str");
 
   return $str;
 

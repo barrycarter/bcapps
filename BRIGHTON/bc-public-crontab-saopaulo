@@ -73,7 +73,9 @@ MAILTO="daemon"
 # disabling as wunderground.com stops free keys
 # when restoring, will have moved it to WEATHER subdir
 # restored shortly after
-*/10 * * * * /home/user/BCGIT/WEATHER/bc-get-weather-2.pl >& /dev/null
+# later doing every 2m and no longer devnulling for a bit
+# turned on debugging briefly, being weird
+*/2 * * * * /home/user/BCGIT/WEATHER/bc-get-weather-2.pl --debug
 
 # copy over error messages from bcinfo3.barrycarter.info, which uses the same
 # ~/ERR/*.err protocol

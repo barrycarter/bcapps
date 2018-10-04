@@ -138,21 +138,24 @@ for $i (glob("/home/barrycarter/ERR/*.inf")) {
 # ($out, $err, $res) = cache_command("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=KNMALBUQ361'", "age=120");
 
 # station much closer to me, so keeping it private
-($out, $err, $res) = cache_command2("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=$private{wstation}'", "age=120");
 
-debug("OUT: $out, ERR: $err");
+# as of 4 Oct 2018, weather info is obtained/printed by bc-get-weather-2.pl
+
+# ($out, $err, $res) = cache_command2("curl -s 'http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=$private{wstation}'", "age=120");
+
+# debug("OUT: $out, ERR: $err");
 
 # create hash + strip trailing .0
-while ($out=~s%<(.*?)>([^<>]*?)</\1>%%is) {
-  ($key, $val) = ($1, $2);
-  $val=~s/\.0$//;
-  $hash{$key}=$val;
-}
+# while ($out=~s%<(.*?)>([^<>]*?)</\1>%%is) {
+#  ($key, $val) = ($1, $2);
+#  $val=~s/\.0$//;
+#  $hash{$key}=$val;
+#}
 
-$hash{observation_time}=~s/^last updated on //isg;
+# $hash{observation_time}=~s/^last updated on //isg;
 
 
-push(@info, "Local/$hash{temp_f}F/$hash{wind_dir}$hash{wind_mph}G$hash{wind_gust_mph}/$hash{relative_humidity}% ($hash{dewpoint_f}F) [$hash{observation_time}]");
+# push(@info, "Local/$hash{temp_f}F/$hash{wind_dir}$hash{wind_mph}G$hash{wind_gust_mph}/$hash{relative_humidity}% ($hash{dewpoint_f}F) [$hash{observation_time}]");
 
 # I have no cronjob for world time, so...
 
