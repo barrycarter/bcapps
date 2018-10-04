@@ -35,7 +35,8 @@ for $i ("temperature", "windChill", "dewpoint") {
   }
 }
 
-$output{humidity} = sprintf("%0.1f%%", $data->{relativeHumidity}->{value});
+# $output{humidity} = sprintf("%0.1f%%", $data->{relativeHumidity}->{value});
+$output{humidity} = sprintf("%0.0f%%", $data->{relativeHumidity}->{value});
 $output{pressure} = sprintf("%0.2fin", $data->{barometricPressure}->{value}*0.00029530);
 
 # windspeed and gust are in m/s, direction is in degrees
@@ -47,7 +48,7 @@ $output{wind} = windinfo($data->{'windDirection'}->{'value'},
 
 # TODO: parse this better
 
-$output{weather} = $data->{textDescription};
+$output{weather} = parse_forecast($data->{textDescription});
 
 $str = << "MARK";
 $output{timestamp}
@@ -122,8 +123,8 @@ sub windinfo {
   my(@winddirs) = ("N","NNE","NE","ENE", "E","ESE","SE","SSE", "S","SSW","SW","WSW", "W","WNW","NW","NNW","N");
 
   # convert from m/s to mph
-  $speed = sprintf("%d", $speed*3600/1609.344);
-  $gust = sprintf("%d", $gust*3600/1609.344);
+  $speed = sprintf("%0.0f", $speed*3600/1609.344);
+  $gust = sprintf("%0.0f", $gust*3600/1609.344);
   $dir = $winddirs[round($dir/22.5)];
   my($ret) = "$dir $speed";
   if ($gust > $speed) {$ret .= "G$gust";}
