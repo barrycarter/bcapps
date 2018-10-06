@@ -222,7 +222,7 @@ sub get_pws_data {
   }
 
   $output{humidity} = sprintf("%0.0f%%", $data->{humidity});
-  $output{pressure} = sprintf("%0.2fin", $data->{pressureIN});
+  $output{pressure} = sprintf("%0.2fin", $data->{altimeterIN});
 
   # windspeed and gust are in m/s, direction is in degrees
 

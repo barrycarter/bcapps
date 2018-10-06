@@ -74,8 +74,7 @@ MAILTO="daemon"
 # when restoring, will have moved it to WEATHER subdir
 # restored shortly after
 # later doing every 2m and no longer devnulling for a bit
-# turned on debugging briefly, being weird
-*/2 * * * * /home/user/BCGIT/WEATHER/bc-get-weather-2.pl --debug
+*/2 * * * * /home/user/BCGIT/WEATHER/bc-get-weather-2.pl
 
 # copy over error messages from bcinfo3.barrycarter.info, which uses the same
 # ~/ERR/*.err protocol
