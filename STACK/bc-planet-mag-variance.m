@@ -30,3 +30,126 @@ Plot[mag["Mercury", d], {d, 0, 100*86400*366}]
 
 Table[mag["Mercury", d], {d, 0, 86400*100, 86400}]
 
+    Mercury:   -0.36 + 5*log10(r*R) + 0.027 * FV + 2.2E-13 * FV**6
+    Venus:     -4.34 + 5*log10(r*R) + 0.013 * FV + 4.2E-7  * FV**3
+    Mars:      -1.51 + 5*log10(r*R) + 0.016 * FV
+    Jupiter:   -9.25 + 5*log10(r*R) + 0.014 * FV
+    Saturn:    -9.0  + 5*log10(r*R) + 0.044 * FV + ring_magn
+    Uranus:    -7.15 + 5*log10(r*R) + 0.001 * FV
+    Neptune:   -6.90 + 5*log10(r*R) + 0.001 * FV
+
+    Moon:      +0.23 + 5*log10(r*R) + 0.026 * FV + 4.0E-9 * FV**4
+
+    ring_magn = -2.6 * sin(abs(B)) + 1.2 * (sin(B))**2
+
+Here B is the tilt of Saturn's rings which we also need to compute. Then we start with Saturn's geocentric ecliptic longitude and latitude (los, las) which we've already computed. We also need the tilt of the rings to the ecliptic, ir, and the "ascending node" of the plane of the rings, Nr:
+
+    ir = 28.06_deg
+    Nr = 169.51_deg + 3.82E-5_deg * d
+
+Here d is our "day number" which we've used so many times before. Now let's compute the tilt of the rings:
+
+    B = asin( sin(las) * cos(ir) - cos(las) * sin(ir) * sin(los-Nr) )
+
+bzcat jupiter-brightness.txt.bz2 | perl -F, -anle 'print $F[5]'|sort -nu|less
+
+tab = {
+ {"Sun", -26.78, -26.71},
+ {"Mercury", -2.45, 5.58},
+ {"Venus", -4.89, -3.82},
+ {"Moon", -12.87, -3.76},
+ {"Mars", -2.88, 1.84},
+ {"Jupiter", -2.94, -1.66},
+ {"Saturn", 0.42, 1.47},
+ {"Uranus", 5.31, 5.95},
+ {"Neptune", 7.80, 8.00},
+ {"Pluto", 13.75, 15.96},
+ {"Comet Halley", 2, 25.66},
+ {"Tesla Roadster", 6.66, 29.29}
+}
+
+tab2 = Table[Flatten[{i, i[[3]]-i[[2]]}], {i, tab}]
+
+tab3 = 
+ Prepend[tab2, Table[Style[i, Bold], {i, {"Body", "Max", "Min", "Delta"}}]]
+
+g = Grid[tab3, Frame -> All];
+
+moon moves too fast, but 100y
+
+files are avail
+
+ max/min brightness
+
+<answer>
+
+$
+\begin{array}{cccc}
+                   \text{Body} & \text{Max} & \text{Min} & \text{Delta} \\
+                   \text{Sun} & -26.78 & -26.71 & 0.07 \\
+                   \text{Mercury} & -2.45 & 5.58 & 8.03 \\
+                   \text{Venus} & -4.89 & -3.82 & 1.07 \\
+                   \text{Moon} & -12.87 & -3.76 & 9.11 \\
+                   \text{Mars} & -2.88 & 1.84 & 4.72 \\
+                   \text{Jupiter} & -2.94 & -1.66 & 1.28 \\
+                   \text{Saturn} & 0.42 & 1.47 & 1.05 \\
+                   \text{Uranus} & 5.31 & 5.95 & 0.64 \\
+                   \text{Neptune} & 7.8 & 8. & 0.2 \\
+                   \text{Pluto} & 13.75 & 15.96 & 2.21 \\
+                   \text{Comet Halley} & 2 & 25.66 & 23.66 \\
+                   \text{Tesla Roadster} & 6.66 & 29.29 & 22.63 \\
+                  \end{array}
+$
+
+The answer is Mercury (as above), subject to the proecedure/caveats below:
+
+###Procedure###
+
+  - I used HORIZONS to generate daily brightness data for a century for:
+
+    - all the planets as viewed from Earth (except Earth itself)
+
+    - the Sun, the Moon, Pluto, Comet Halley, and the Tesla Roadster
+
+  - I then noted the minimum and maximum brigtness, along with the magnitude difference of these brightnesses, in the table above.
+
+  - You can use HORIZONS to compute the results yourself, or view the results in the *-brightness.txt.bz2 files in https://github.com/barrycarter/bcapps/blob/master/ASTRO/
+
+###Caveats###
+
+  - Although Mercury's brightness changes more than Mars, the Sun's glare makes it impossible to see Mercury though Earth's atmosphere when Mercury's angular distance from the Sun is small. Therefore, Mars may be a better practical answer.
+
+  - Because I used daily brightnesses, it's theoretically possible I missed absolute (intraday) minimums or maximums, especially for the Moon, whose brightness changes rapidly. However: 
+
+    - I took 100 years worth of data, and the moon's brightness doesn't have a period that's a multiple of one day. Since the moon's synodic period is approximately 29.5 days, its brightness is almost periodic in 59 days (2 synodic periods), but it's far enough from 29.5 days that this shouldn't be too much of a problem.
+
+    - The Moon isn't a planet: I just added it for reference
+
+    - Unless the Moon's actual brightness difference was higher than 23.66 magnitudes (which is probably unlikely[?]), it would remain in 2nd place in terms of brightness change, so the exact value isn't as important.
+
+  - Because I used only a 100 year period, I did not include a complete orbit for either Neptune or Pluto. This shouldn't be an issue because:
+
+    - The synodic period of both planets is just over a year, and much of the brightness change comes from Earth's own orbit, not Neptune's or Pluto's.
+
+    - Even if the maximum magnitude change were slightly higher than in the table, it wouldn't make much of a difference.
+
+  - Note that "Max" and "Min" refer to brightness, which is ordered the opposite of magnitude: lower magnitude means greater brightness.
+
+  - Because I used daily data, I missed rare events such as transits and eclipses. The table above is for an "average" orbit, excluding special cases.
+
+  - In some cases, HORIZONS gives "n.a." for magnitude data. I ignore these "n.a." values.
+
+  - Data for the Tesla Roadster is only available from 2018-Feb-07 03:00 UTC to 2090-Jan-01 23:00 UTC, not the entire century.
+  
+###Complexity###
+
+The problem is nontrivial. As you correctly note, the planet's geocentric and heliocentric distance play into the formula, but there's more to it.
+
+Quoting Oliver Montenbruck and Thomas Pfleger's "Astronomy on the Personal Computer" (https://books.google.com/books?id=nHUqBAAAQBAJ):
+
+[[images]]
+
+Paul Schlyter's http://www.stjarnhimlen.se/comp/ppcomp.html#15 provides similar nontrivial formulas.
+
+TODO: how dark does the moon really get?
+
