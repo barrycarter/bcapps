@@ -21,3 +21,14 @@ TODO: maybe create second file from metafile (in private location) to
 handle $$ cleanly
 
 TODO: test may contain subtests
+
+TODO: include private tests
+
+TODO: import existing nagios tests
+
+TODO: add ping tests since I don't have the concept of hosts vs services
+
+TODO: allow suppress.txt to suppress running tests, not just printing results
+
+TODO: consider moving inventory checks here?
+

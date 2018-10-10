@@ -9,9 +9,22 @@ MAILTO=daemon
 # TODO: consider auto-image-hashing anything that gets added here
 /home/user/VLC/ IN_CREATE env DISPLAY=:0.0 feh -F -d --draw-tinted -K . -G $@/$#
 
-# if I myself change, re incrontab me
+# if I myself change, re incrontab me (doesn't always work)
 
 /home/user/BCGIT/BRIGHTON/bc-public-incrontab-saopaulo IN_MODIFY incrontab $@
+
+# every time I download something move all screenshots to correct directory
+
+# below is not working sigh (because glob exists only in shell?)
+
+# /home/user/Downloads IN_CREATE mv `glob /home/user/Downloads/Screenshot*` /home/user/SCREENSHOTS/
+
+# test wildcards
+
+# MODIFY works, CREATE does not, file must already exist?
+# /home/user/20181006/test123 IN_MODIFY env DISPLAY=:0.0 xmessage testing
+# /home/user/20181006/test123 IN_CREATE env DISPLAY=:0.0 xmessage alpha
+# /home/user/20181006/test* IN_CREATE env DISPLAY=:0.0 xmessage alpha
 
 # TODO: if I ever use a private incrontab file, test above must be changed
 
