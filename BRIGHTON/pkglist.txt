@@ -183,6 +183,8 @@ monodevelop-devel
 python34-jupyter-core
 python34-jupyroot
 python34-nbformat
+python34-pip
+python2-pip
 root-notebook
 jasmine
 gcc-gfortran
@@ -459,6 +461,7 @@ libzip
 libzip-devel
 
 # math/science tools
+readosm
 wgrib
 geos
 geos-devel

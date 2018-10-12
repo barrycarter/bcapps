@@ -55,14 +55,20 @@ my($files) = join(" ",@files);
 
 # construct fgrep chain; first phrase is normal grep
 my($fphrase) = shift(@phrases);
-my($cmd) = "fgrep -i '$fphrase' $files";
+my($cmd) = "fgrep -i -R '$fphrase' $files";
 
 # other phrases as piped greps
 for $i (@phrases) {
   $cmd .= "|fgrep -i '$i'";
 }
 
-debug($cmd);
-system($cmd);
+my($out, $err, $res) = cache_command2($cmd, "age=-1");
+
+debug("OUT: $out", "ERR: $err", "RES: $res");
+
+print $out;
+
+# debug($cmd);
+# system($cmd);
 
 

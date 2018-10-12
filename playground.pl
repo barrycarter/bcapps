@@ -32,6 +32,17 @@ use Algorithm::GoldenSection;
 use Inline::Python;
 use FFI::Raw;
 use v5.10;
+use Google::ProtocolBuffers;
+
+open(A, "/home/barrycarter/20181011/planet-latest.osm.pbf");
+
+my($line) = <A>;
+
+debug("LINE: $line");
+
+# debug("RES: $res");
+
+die "TESTING";
 
 create_el_tz_file();
 
