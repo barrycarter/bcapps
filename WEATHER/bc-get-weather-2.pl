@@ -133,11 +133,10 @@ sub parse_forecast {
 
   # conversion hash
   # TODO: Chance and Slight Change conflict, do I just hope on order (ugh?)
-  # Partly and mostly are symbols understood by fly
   my(%hash) = (
-	       "Rain" => "RA", "And" => "+", "Showers" => "SHR",
+	       "Rain" => "RA", "And" => "+", "Showers" => "SH",
 	       "Thunderstorms" => "TS", "Cloudy" => "CLD",
-	       "Partly" => chr(26), "Mostly" => chr(27),
+	       "Partly" => "P", "Mostly" => "M",
 	       "Clear" => "CLR", "Sunny" => "CLR",
 	       "Slight Chance" => "??", "Scattered" => "SCT",
 	       "Isolated" => "ISO", "Likely" => "!", "Snow" => "SN",
@@ -147,49 +146,14 @@ sub parse_forecast {
 #  debug("HASH", keys %hash);
 
   for $i (keys %hash) {
-#    debug("OLD: $forecast, KEY: $i");
+    debug("OLD: $forecast, KEY: $i");
     $forecast=~s/\s*$i\s*/$hash{$i}/g;
-#    debug("NEW: $forecast, KEY WAS: $i");
+    debug("NEW: $forecast, KEY WAS: $i");
   }
 
-return $forecast;
+  # can't get this working as a key sigh
 
-  # TODO: work in progress as I see more forecasts
-  # NOTE: order is important (eg, "Slight Chance" before "Chance")
-
-  $forecast=~s/Mostly\s+/M/;
-
-  # these mean the same thing (wow!)
-  $forecast=~s/Partly (Cloudy|Sunny)/PCLD/;
-
-  $forecast=~s/(Sunny|Clear)/CLR/;
-
-  $forecast=~s/Slight Chance\s+/??$1/;
-
-#  $forecast=~s/\s*Rain Showers\s*/RA/;
-
-  $forecast=~s/Rain/RA/;
-
-  $forecast=~s/ And /+/;
-
-  $forecast=~s/Showers/SHWRS/;
-
-  $forecast=~s/Showers And Thunderstorms/TS/;
-
-  $forecast=~s/Chance\s+/?$1/;
-
-  $forecast=~s/Cloudy/CLD/;
-
-  $forecast=~s/Isolated /ISO/;
-
-  $forecast=~s/\s*Likely\s*/!/;
-
-  $forecast=~s/\s*Scattered\s*/SCT/;
-
-  $forecast=~s/\s*Thunderstorms\s*/TS/;
-
-  # TODO: not really happy about this one (so not generalizing)
-#  $forecast=~s/Scattered TS/TS/;
+  $forecast=~s/Slight\?/??/g;
 
   return $forecast;
 }
