@@ -178,6 +178,12 @@ calendar
 
 # programming languages (or related)
 
+protobuf
+protobuf-devel
+protobuf-c
+protobuf-c-devel
+protobuf-c-debuginfo
+protobuf-static
 rust
 monodevelop-devel
 python34-jupyter-core
