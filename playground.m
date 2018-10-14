@@ -15,14 +15,6 @@ temp1903 = FullSimplify[temp1902, conds]
 
 temp1903 /. ArcTan[x_, y_] -> ArcTan[y/x]
 
-
-
-
-
-
-
-
-
 (* NMinimize and http://stackoverflow.com/questions/4463481/ *)
 
 (* the data *)

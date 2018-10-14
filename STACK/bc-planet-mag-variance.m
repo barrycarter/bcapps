@@ -6,9 +6,88 @@ See also: http://www.stjarnhimlen.se/comp/ppcomp.html
 
 *)
 
+<formulas>
+
+(* convert luminosity to magnitude and vice versa *)
+
+lum2mag[lum_] = Log10[lum]*-5/2;
+
+mag2lum[mag_] = 100^(-mag/5);
+
+au = Quantity[1, "astronomical unit"];
+
+</formulas>
+
+data[planet_, t_] := Module[{hc, ec, mag},
+
+ (* the coordinates of the Earth and planet *)
+
+ hc = PlanetData[planet, 
+  EntityProperty["Planet", "HelioCoordinates", {"Date" -> unix2Date[t]}]]/
+   Quantity[1, "astronomical unit"];
+
+ ec = PlanetData["Earth", 
+  EntityProperty["Planet", "HelioCoordinates", {"Date" -> unix2Date[t]}]]/
+      Quantity[1, "astronomical unit"];
+
+ mag = PlanetData[planet, 
+  EntityProperty["Planet", "ApparentMagnitude", {"Date" -> unix2Date[t]}]];
+
+(*
+ Return[{VectorAngle[-ec, hc-ec], mag2lum[mag]*Norm[hc]^2*Norm[hc-ec]^2}];
+*)
+
+
+ Return[{VectorAngle[ec, hc], mag2lum[mag]*Norm[hc]^2*Norm[hc-ec]^2}];
+];
+
+temp2048 = Table[data["Jupiter", t], {t, 0, 86400*1000, 86400*5}];
+
+temp2048 = Table[data["Jupiter", t], {t, 0, 86400*365, 86400*15}];
+
+temp2049 = Table[data["Venus", t], {t, 0, 86400*365*3, 86400*15}];
+
+(* on 14 Oct 2018, consider phase angle vs central angle *)
+
+(* cent angle is theta, a is earth dist, r is planet dist *)
+
+conds = {a > 0, r >0, theta > 0}
+
+earth = {a,0}
+
+planet = r*{Cos[theta], Sin[theta]}
+
+phi = Simplify[VectorAngle[planet, planet-earth], conds]
+
+Plot[phi /. {a -> 1, r -> 5}, {theta,0,2*Pi}]
+
+Simplify[D[phi, a], conds]
+
+Simplify[D[phi, r], conds]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pos[planet_, t_] :=  PlanetData[planet, 
+  EntityProperty["Planet", "HelioCoordinates", {"Date" -> unix2Date[t]}]];
+
+
+
+HelioCoordinates[
+
 EntityProperty["Jupiter", "ApparentMagnitude"]
 
-
+temp2014 = PlanetData["Jupiter"]["Properties"]
 
 PlanetData["Jupiter", {"ApparentMagnitude", {"Date" ->
 ToDate[3155716800]}}]

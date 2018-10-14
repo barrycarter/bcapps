@@ -140,7 +140,7 @@ sub parse_forecast {
 	       "Clear" => "CLR", "Sunny" => "CLR",
 	       "Slight Chance" => "??", "Scattered" => "SCT",
 	       "Isolated" => "ISO", "Likely" => "!", "Snow" => "SN",
-	       "Chance" => "?"
+	       "Chance" => "?", "Light" => "LT", "T-storms" => "TS"
 	       );
 
 #  debug("HASH", keys %hash);

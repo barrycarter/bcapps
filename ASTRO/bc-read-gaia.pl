@@ -18,9 +18,10 @@ while (<>) {
     $hash{$headers[$i]} = $fields[$i];
   }
 
-#  if ($hash{phot_g_mean_mag} <= 6) {
-    debug(var_dump("hash", \%hash));
-#  }
+  if ($hash{parallax} > 0) {
+    print "$hash{parallax} $hash{l} $hash{b} $hash{phot_g_mean_mag} $hash{ra} $hash{dec}\n";
+#    debug(var_dump("hash", \%hash));
+  }
   
 
 }
@@ -35,5 +36,9 @@ https://gea.esac.esa.int/archive/documentation/GDR1/Catalogue_consolidation/sec_
 only mentions phot_g_mean_mag so using that as filter
 
 parallax is in mas (milliarcseconds) per above
+
+l and b are given (galactic long/lat!)
+
+l = longitude, b = latitude
 
 =cut
