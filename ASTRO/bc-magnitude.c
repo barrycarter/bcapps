@@ -16,6 +16,9 @@ int main( int argc, char **argv ) {
 
   // the call
 
-  retval = phaseq_c(0, "Moon", "Sun", "Earth", "CN+S");
-  printf("%f\n", retval);
+  for (int i=1; i <= 36600; i++) {
+    retval = phaseq_c(unix2et(946684800+86400*(i-1)),
+		      "Moon", "Sun", "Earth", "CN+S");
+    printf("%f\n", i, retval);
+  }
 }
