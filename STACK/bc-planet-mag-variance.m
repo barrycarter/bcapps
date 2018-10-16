@@ -4,6 +4,17 @@ See also: http://www.stjarnhimlen.se/comp/ppcomp.html
 
 3155716800 = 1 Jan 2000 at noon UTC
 
+bzcat venus-brightness.txt.bz2 | perl -nle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print $_}' 
+
+This Unix command extracts just the magnitudes (and dates, so we can
+make sure we've lined things up properly)
+
+bzcat venus-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/ven.txt
+
+This combines the data from bc-magnitude (C program) with the magnitudes
+
+bc-magnitude Venus | paste -d, - /tmp/ven.txt
+
 *)
 
 <formulas>
@@ -17,6 +28,9 @@ mag2lum[mag_] = 100^(-mag/5);
 au = Quantity[1, "astronomical unit"];
 
 </formulas>
+
+venus = Import["!bc-magnitude Venus | paste -d, - /tmp/ven.txt", "CSV"];
+
 
 data[planet_, t_] := Module[{hc, ec, mag},
 
