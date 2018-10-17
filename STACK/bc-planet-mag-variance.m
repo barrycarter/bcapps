@@ -4,23 +4,8 @@ See also: http://www.stjarnhimlen.se/comp/ppcomp.html
 
 3155716800 = 1 Jan 2000 at noon UTC
 
-bzcat venus-brightness.txt.bz2 | perl -nle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print $_}' 
-
-This Unix command extracts just the magnitudes (and dates, so we can
-make sure we've lined things up properly)
-
-bzcat venus-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/ven.txt
-
-bzcat mars-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/mars.txt
-
-bzcat jupiter-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/jupiter.txt
-
-bzcat moon-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/moon.txt
-
-This combines the data from bc-magnitude (C program) with the magnitudes
-
-bc-magnitude Venus | paste -d, - /tmp/ven.txt
-bc-magnitude Mars | paste -d, - /tmp/mars.txt
+bc-make-planet-mag-files.pl creates ready to load files that contain
+planet phase value, distance from Sun/Earth, and magnitude
 
 *)
 
@@ -32,15 +17,46 @@ lum2mag[lum_] = Log10[lum]*-5/2;
 
 mag2lum[mag_] = 100^(-mag/5);
 
-au = Quantity[1, "astronomical unit"];
-
-</formulas>
-
 (* below directly from HORIZONS files *)
 
 au = 149597870.700
 
-venus = Import["!bc-magnitude Venus | paste -d, - /tmp/ven.txt", "CSV"];
+</formulas>
+
+planets = {"mercury", "venus", "moon", "mars", "jupiter", "saturn", "uranus",
+	"neptune", "pluto"};
+
+(* from https://nineplanets.org/data1.html, third param is visible magnitude at opposition *)
+
+info[mercury] = {2440, 0.11, -1.9};
+info[venus] = {6052, 0.65, -4.4};
+info[mars] = {3397, 0.15  -2.0};
+info[jupiter] = {71492, 0.52,  -2.7};
+info[saturn] =  {60268, 0.47, 0.7};
+info[uranus] = {25559, 0.51, 5.5};
+info[neptune] =  {24766, 0.41, 7.8};
+info[pluto] =  {1150, 0.55,  13.6};
+
+Table[planet[i] = Import["/tmp/"<>i<>"-final.txt", "CSV"], {i, planets}];
+
+(* area in arcsecond^2 of an object with radius r at distance d *)
+
+arcarea[r_, d_] = Pi*((3600*ArcTan[r/d]/Degree)^2)
+
+(* luminescence per arcsecond^2, adjusted for solar distance and albedo *)
+
+test1919 = Table[{i[[4]], 
+ lum2mag[
+ mag2lum[i[[8]]] * i[[5]]^2/au^2 / 
+ (Pi*(ArcTan[info[saturn][[2]]/i[[6]]])^2) /
+ info[saturn][[2]]
+ ]},
+ {i, planet["saturn"]}];
+
+
+
+
+venus = Import["/tmp/venus-final.txt", "CSV"];
 
 (* have to use barycenter here *)
 
