@@ -6,10 +6,21 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my(%date);
+
 for $i (@ARGV) {
-  open(A, "tac $i| fgrep -v '0 messages (0 bytes) retrieved, 0 skipped' | fgrep -v 'Initializing SimpleIMAPSSLRetriever'| fgrep -v 'getmailOperationError error'|");
+
+  open(A, "tac $i|");
+  $date{$i} = "0000-00-00 00:00:00";
 
   while (<A>) {
-    debug("GOT: $_");
+    if (/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s+(\d+) messages\s*\(\d+ bytes\)\s* retrieved/ && $2>0) {
+      $date{$i} = $1;
+      last;
+    }
   }
+}
+
+for $i (sort {$date{$b} cmp $date{$a}} keys %date) {
+  print "$i: $date{$i}\n";
 }

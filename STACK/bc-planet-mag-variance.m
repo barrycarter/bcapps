@@ -11,9 +11,16 @@ make sure we've lined things up properly)
 
 bzcat venus-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/ven.txt
 
+bzcat mars-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/mars.txt
+
+bzcat jupiter-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/jupiter.txt
+
+bzcat moon-brightness.txt.bz2 | perl -F, -anle 'if ($_ eq "\$\$SOE") {$p=1; next;} elsif ($_ eq "\$\$EOE") {$p=0; next;} if ($p==1) {print "$F[0],$F[5]"}' >! /tmp/moon.txt
+
 This combines the data from bc-magnitude (C program) with the magnitudes
 
 bc-magnitude Venus | paste -d, - /tmp/ven.txt
+bc-magnitude Mars | paste -d, - /tmp/mars.txt
 
 *)
 
@@ -29,7 +36,47 @@ au = Quantity[1, "astronomical unit"];
 
 </formulas>
 
+(* below directly from HORIZONS files *)
+
+au = 149597870.700
+
 venus = Import["!bc-magnitude Venus | paste -d, - /tmp/ven.txt", "CSV"];
+
+(* have to use barycenter here *)
+
+mars = Import["!bc-magnitude 4 | paste -d, - /tmp/mars.txt", "CSV"];
+
+jup = Import["!bc-magnitude 5 | paste -d, - /tmp/jupiter.txt", "CSV"];
+
+moon = Import["!bc-magnitude 301 | paste -d, - /tmp/moon.txt", "CSV"];
+
+(* convert magnitude to luminosity, adjust for distances and albedo,
+Venus = 0.689 *)
+
+ven2 = Table[{i[[4]], 
+ lum2mag[mag2lum[i[[8]]]*i[[5]]^2*i[[6]]^2/0.689/6052^2/au^4]},
+ {i, venus}];
+
+mars2 = Table[{i[[4]], 
+ lum2mag[mag2lum[i[[8]]]*i[[5]]^2*i[[6]]^2/0.17/3397^2/au^4]},
+ {i, mars}];
+
+jup2 = Table[{i[[4]], 
+ lum2mag[mag2lum[i[[8]]]*i[[5]]^2*i[[6]]^2/0.52/71492^2/au^4]},
+ {i, jup}];
+
+moon2 = Table[{i[[4]], 
+ lum2mag[mag2lum[i[[8]]]*i[[5]]^2*i[[6]]^2/0.12/1738^2/au^4]},
+ {i, moon}];
+
+ven3 = Table[{i[[4]], 
+ lum2mag[mag2lum[i[[8]]]*i[[5]]^2*i[[6]]^2/0.689/6052^2/au^4/(i[[4]]/Pi)]},
+ {i, venus}];
+
+
+
+
+
 
 
 data[planet_, t_] := Module[{hc, ec, mag},
