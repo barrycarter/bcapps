@@ -1,3 +1,26 @@
+(* can mathematica find the most isolated of, say 2M points? *)
+
+t = Table[RandomReal[1,3], {i, 1, 10^6}];
+
+g = NearestNeighborGraph[t];
+
+lens = Table[{i, Norm[i[[2]]-i[[1]]]}, {i, EdgeList[g]}];
+
+lens2 = Sort[lens, #1[[2]] < #2[[2]] &];
+
+
+Take[EdgeList[g], 10]
+
+VertexIndex[g, t[[7]]]
+
+AdjacencyList[g, t[[7]]]
+
+Nearest[t][{0,0,0}]
+
+
+
+
+
 (* Mercator stuff *)
 
 (* below from bclib.pl, trying to find inverse *)
