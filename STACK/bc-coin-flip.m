@@ -17,12 +17,16 @@ Flatten[Map[nState,Flatten[Map[nState, nState[{5,9,1}]],1]],1]
 
 (* chance of being in state p, q *)
 
-f[6, 9] = 1/2; (* this is actually irrelvant *)
-f[5, 9] = 1/2;
 f[5, 8] = 1;
+f[p_, 8] = 0;
 
-f[p_, q_] := If[p/(q-1) >= 5/8, 0, f[p, q-1]]/2 + f[p-1, q-1]/2
+f[p_, q_] := f[p,q] = If[p/(q-1) > 5/8, 0, f[p, q-1]]/2 + f[p-1, q-1]/2
 
+Table[f[p, 10], {p, Ceiling[10*5/8], 10}]
+
+probs[q_] := Table[f[p, q], {p, Ceiling[q*5/8], q}]
+
+wins[q_] := Table[f[p, q]*p/q, {p, Ceiling[q*5/8], q}]
  
 
 
