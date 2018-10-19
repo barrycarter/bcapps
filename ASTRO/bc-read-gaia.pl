@@ -24,15 +24,16 @@ while (<>) {
   debug("END");
 
   debug($hash{parallax});
-
-  if ($hash{parallax} > 0) {
+  
+  # this field is redundant (but useful)!
+  if ($hash{parallax_over_error} > 1) {
     
     my($r) = 1000/$hash{parallax};
     my($x, $y, $z)=sph2xyz($hash{l}, $hash{b}, $r, "degrees=1");
 
     my($abs) = 5 + $hash{phot_g_mean_mag} - 5*log($r)/log(10);
 
-#    print "$hash{source_id} $x $y $z $abs\n";
+    print "$hash{source_id} $x $y $z $abs\n";
 
 
 #    print "$hash{parallax} $hash{l} $hash{b} $hash{phot_g_mean_mag} $hash{ra} $hash{dec}\n";

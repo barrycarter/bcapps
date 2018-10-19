@@ -4,6 +4,30 @@ http://math.stackexchange.com/questions/6195/why-is-this-coin-flipping-probabili
 
 *)
 
+
+(*
+
+20181019.151811 approach: next states if < 5/8
+
+*)
+
+nState[{p_, q_, n_}] := If[p/q >= 5/8, {}, {{p+1,q+1,n+1}, {p,q+1,n+1}}];
+
+Flatten[Map[nState,Flatten[Map[nState, nState[{5,9,1}]],1]],1]
+
+(* chance of being in state p, q *)
+
+f[6, 9] = 1/2; (* this is actually irrelvant *)
+f[5, 9] = 1/2;
+f[5, 8] = 1;
+
+f[p_, q_] := If[p/(q-1) >= 5/8, 0, f[p, q-1]]/2 + f[p-1, q-1]/2
+
+ 
+
+
+
+
 (*
 
 upto 2 flips:
