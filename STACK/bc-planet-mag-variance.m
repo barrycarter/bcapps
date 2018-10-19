@@ -28,14 +28,15 @@ planets = {"mercury", "venus", "moon", "mars", "jupiter", "saturn", "uranus",
 
 (* from https://nineplanets.org/data1.html, third param is visible magnitude at opposition *)
 
-info[mercury] = {2440, 0.11, -1.9};
-info[venus] = {6052, 0.65, -4.4};
-info[mars] = {3397, 0.15  -2.0};
-info[jupiter] = {71492, 0.52,  -2.7};
-info[saturn] =  {60268, 0.47, 0.7};
-info[uranus] = {25559, 0.51, 5.5};
-info[neptune] =  {24766, 0.41, 7.8};
-info[pluto] =  {1150, 0.55,  13.6};
+info["mercury"] = {2440, 0.11, -1.9};
+info["venus"] = {6052, 0.65, -4.4};
+info["mars"] = {3397, 0.15,  -2.0};
+info["jupiter"] = {71492, 0.52,  -2.7};
+info["saturn"] =  {60268, 0.47, 0.7};
+info["uranus"] = {25559, 0.51, 5.5};
+info["neptune"] =  {24766, 0.41, 7.8};
+info["pluto"] =  {1150, 0.55,  13.6};
+info["moon"] = {1738, 0.12, -12.7};
 
 Table[planet[i] = Import["/tmp/"<>i<>"-final.txt", "CSV"], {i, planets}];
 
@@ -45,13 +46,14 @@ arcarea[r_, d_] = Pi*((3600*ArcTan[r/d]/Degree)^2)
 
 (* luminescence per arcsecond^2, adjusted for solar distance and albedo *)
 
-test1919 = Table[{i[[4]], 
+tab[p_] := Table[{i[[4]], 
  lum2mag[
- mag2lum[i[[8]]] * i[[5]]^2/au^2 / 
- (Pi*(ArcTan[info[saturn][[2]]/i[[6]]])^2) /
- info[saturn][[2]]
+ mag2lum[i[[8]]] * i[[5]]^2/au^2 / arcarea[info[p][[1]], i[[6]]] /
+ info[p][[2]]
  ]},
- {i, planet["saturn"]}];
+ {i, planet[p]}];
+
+
 
 
 

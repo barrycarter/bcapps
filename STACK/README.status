@@ -5,6 +5,7 @@ http://physics.stackexchange.com/questions/14362: gave answer, downvoted
 http://math.stackexchange.com/questions/2022782: work in bc-arctan.m, don't think I've found anything useful
 
 https://astronomy.stackexchange.com/questions/21301: answered
+(bc-babylon.m = workfile)
 
 https://astronomy.stackexchange.com/questions/2408: answered
 
@@ -13,4 +14,45 @@ bc-bins.m
 
 http://quant.stackexchange.com/questions/24970: answered
 
+https://earthscience.stackexchange.com/questions/14656/how-to-calculate-boundary-around-all-land-on-earth
+(bc-buffer-land-*.m) -- in progress, looking at two approaches, one w/
+existing data and also bc-buffer-land.pl
 
+https://stackoverflow.com/questions/46629934/given-a-pair-of-integers-minimum-of-operations-performed-to-reach-target-n (answered: work in bc-add-sets.m)
+
+https://earthscience.stackexchange.com/questions/14132/how-much-of-earths-land-area-has-antipodal-land-area: work in bc-antipodes.m (but also relates to bc-buffer-land-*.m)
+
+https://quant.stackexchange.com/questions/30199/is-there-a-unique-solution-for-two-options
+(work is in bc-black-scholes.m, never finished answer)
+
+https://mathematica.stackexchange.com/questions/111255/toms-family-how-to-cross-the-bridge (work in bc-bridge-torch.m, never finished answer)
+
+bc-bs-squared.m: not sure what problem I was trying to solve
+
+bc-cartograms*.m: attempt to generalize
+https://mathematica.stackexchange.com/questions/14327/constructing-election-cartograms/16138#16138
+
+http://politics.stackexchange.com/questions/15180 (work in bc-coalition.m)
+
+http://math.stackexchange.com/questions/6195/why-is-this-coin-flipping-probability-problem-unsolved
+(work in bc-coin-flip.m, I don't solve it either?), possibly related
+to
+https://quant.stackexchange.com/questions/2172/probability-distribution-of-maximum-value-of-binary-option
+
+http://math.stackexchange.com/questions/2028308/how-to-determine-the-average-number-of-dice-showing-the-most-common-value
+bc-dice-mode.m (someone else answered, but I want to do more, maybe
+OEIS, maybe create prob dist)
+
+bc-doolittle.m: ???
+
+http://photo.stackexchange.com/questions/6073/measuring-angular-distance-with-photographs
+(bc-dual-camera.m) [this is my question]
+
+bc-eclipse.m: possible work done to help TIME mag guy, forgot prob URL though
+
+http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-land-distance-from-equator bc-equ-dist.m (gave full answer)
+
+[alpha thru bc-equ-dist.m]
+
+
+TODO: do this for QUORA and REDDIT too?

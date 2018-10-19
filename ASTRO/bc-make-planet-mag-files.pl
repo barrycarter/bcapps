@@ -23,14 +23,20 @@ for $i (glob "*-brightness.txt.bz2") {
   while (<A>) {
     if ($_=~/^\$\$EOE$/) {last;}
     my(@fields) = csv($_);
-    debug("FIELDS", @fields);
-    print B "$fields[0],$fields[5]\n";
+    print B "$fields[0],$fields[5],$fields[6]\n";
   }
 
   close(A);
   close(B);
 
-  my($out, $err, $res) = cache_command2("bc-magnitude '$i barycenter' | paste -d, - /tmp/$i-0.txt > /tmp/$i-final.txt", "age=-1");
+  # the moon doesnt have a barycenter (well, it does, but SPICE
+  # doesnt know that)
+
+  my($p) = $i eq "moon"?$i:"$i barycenter";
+  debug("P: $p");
+
+  my($out, $err, $res) = cache_command2("bc-magnitude '$p' | paste -d, - /tmp/$i-0.txt > /tmp/$i-final.txt", "age=-1");
+  debug("ERR: $err");
 
 }
 
