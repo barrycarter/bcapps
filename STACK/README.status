@@ -52,7 +52,126 @@ bc-eclipse.m: possible work done to help TIME mag guy, forgot prob URL though
 
 http://gis.stackexchange.com/questions/190753/using-gis-to-determine-average-land-distance-from-equator bc-equ-dist.m (gave full answer)
 
-[alpha thru bc-equ-dist.m]
+bc-fuji.m for https://astronomy.stackexchange.com/questions/23165/viewing-diamond-fuji
 
+https://politics.stackexchange.com/questions/6286/is-it-true-that-republicans-have-an-unfair-geographical-advantage-in-elections-f natbc-geovantage.m
+
+astronomy.stackexchange.com/questions/1213/solar-noon-meridian-crossing-time-versus-time-of-maximum-elevation bc-high-noon.m
+
+https://physics.stackexchange.com/questions/245808/change-of-temperature-of-gas-in-cylinder?rq=1 bc-ideal-gas.m (fullly solved)
+
+http://space.stackexchange.com/questions/18718/calculating-positions-of-moons-ascending-and-descending-nodes-from-ephemeris-fi AND https://astronomy.stackexchange.com/questions/18883/recurrence-of-moon-at-virgos-feet both bc-lunar-nodes.m (no work done)
+
+https://astronomy.stackexchange.com/questions/19126/exactly-how-elliptical-is-mercurys-orbit-visually-without-exaggeration/19127#19127
+bc-mercury.m (fully answered)
+
+http://astronomy.stackexchange.com/questions/2392/motion-of-the-sun-as-observed-from-mercury?rq=1 bc-mercury2.m (no work done)
+
+https://physics.stackexchange.com/questions/210794/question-doubt-about-time-dilation-symmetry-in-special-relativity/252258#252258 bc-minkowski.m 
+
+https://astronomy.stackexchange.com/questions/23987/occultations-of-triton
+bc-moonar-eclipse.m someone else answered thought would be interesting
+to dig
+
+http://stats.stackexchange.com/questions/210005/how-many-replications-to-eliminate-noise bc-multinomial.m
+
+https://math.stackexchange.com/questions/2846682/is-it-possible-to-solve-this-equation-symbolicaly-with-mathematica-mupad bc-mupad.m
+
+https://astronomy.stackexchange.com/questions/27605/of-the-stars-in-the-gaia-hipparchos-catalogs-which-one-is-the-most-isolated bc-nearest-star.m
+
+https://earthscience.stackexchange.com/questions/10564/why-does-relative-humidity-seem-to-correlate-with-high-temperature-at-least-whe bc-nj-temp-hum.m
+
+http://physics.stackexchange.com/questions/244315/ bc-no-instant-accel.m
+
+https://astronomy.stackexchange.com/questions/20976/determining-sunrise-and-sunset-times-based-on-azimuth-and-elevation
+https://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-rise-transit-and-set-time/14508#14508
+anythin bc-object-riset-from-az-elt.m
+
+http://physics.stackexchange.com/questions/254391/applications-of-octonions-in-special-relativity bc-octo.m
+
+http://math.stackexchange.com/questions/1720741/closed-form-of-int-0-pi-x3-ln82-sinx-dx bc-odd-function.m
+
+http://math.stackexchange.com/questions/1747184/given-that-sum-frac1n2-frac-pi26-how-can-i-find-sum-frac1n bc-pi2-over6.m
+
+bc-planet-mag-variance.m https://astronomy.stackexchange.com/questions/27918/what-is-the-planet-relative-to-earth-that-shows-the-greatest-change-in-apparent/27954#27954 (fully answered but interesting prob)
+
+bc-prob-max.m http://math.stackexchange.com/questions/1700486 (did give complete answer, could maybe give better one)
+
+https://earthscience.stackexchange.com/questions/14545/longest-land-path-on-afro-eurasia bc-rains-in-africa.m
+
+http://physics.stackexchange.com/questions/210794/
+http://physics.stackexchange.com/questions/246165/ bc-realitivity.m [note intentional misspelling, real vs rel]
+
+bc-regression.m  https://math.stackexchange.com/questions/1698543/earth-population-growth-rate-is-exponential-or-logarithmic
+
+https://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-rise-transit-and-set-time/14508
+bc-rst.m bc-rst2.m
+
+https://math.stackexchange.com/questions/2420506/existence-of-n-1-sigman-1-n-2-sigman-2-cdots-n-r-sigman-r-for bc-sigma-theory.m
+
+http://astronomy.stackexchange.com/questions/14776/solar-elevation-angles-anomaly bc-solar-angle.m (pretty much full answer)
+
+https://astronomy.stackexchange.com/questions/26167/how-far-out-can-the-sun-keep-celestial-objects-revolving bc-solar-gravity.m
+
+bc-solar-transit.m
+https://astronomy.stackexchange.com/questions/26875/how-to-calculate-the-time-for-the-solar-disk-to-pass-the-horizon-and-transits-l
+
+bc-solve-1650965.m https://math.stackexchange.com/questions/1650965/prove-that-a-planar-graph-has-four-coloring
+
+bc-solve-astronomy-13635.m
+https://astronomy.stackexchange.com/questions/13635/determining-distance-from-semi-major-axis-and-eccentricity
+(said I was working on a better answer)
+
+bc-solve-astronomy-13817.m  https://astronomy.stackexchange.com/questions/13817/special-relativity-as-applied-to-an-interstellar-starship
+
+bc-solve-codereview-118568.m https://codereview.stackexchange.com/questions/118568/risk-battle-simulator-v2 (solved, answer accepted)
+
+bc-solve-gis-178354.m  https://gis.stackexchange.com/questions/178354/convert-lat-lng-to-pixel-and-vice-versa fully solved
+
+bc-solve-math-1630476.m: https://math.stackexchange.com/questions/1630476/in-a-directed-graph-every-vertex-has-exactly-seven-edges-coming-in-what-can-on (my comment eseentially answers)
+
+bc-solve-math-1650982.m: https://math.stackexchange.com/questions/1650982/topology-of-the-complex-curve-x4y4-1
+
+bc-solve-math-1669083.m: https://math.stackexchange.com/questions/1669083/proof-regarding-decimal-expansions
+
+bc-solve-mathematica-105671.m: https://mathematica.stackexchange.com/questions/105671/3d-orbits-of-moons-around-their-respective-planets
+
+bc-solve-stats-196655.m: https://stats.stackexchange.com/questions/196655/fit-plane-to-3d-data-using-least-squares (question no longer exists, consdier commoncrawl))
+
+bc-solve-stats-235939.m https://stats.stackexchange.com/questions/235939/probability-of-two-events-occurring-in-same-time
+
+https://math.stackexchange.com/questions/2319162/a-mathmatical-way-to-solve-for-x-in-a-b2-ax-bx bc-square-powers.m
+
+bc-star-size.m https://photo.stackexchange.com/questions/92387/why-do-stars-appear-as-circles-not-points
+
+http://mathematica.stackexchange.com/questions/111371/plots-of-united-states-states-with-non-standard-labels bc-state-names.m (lots of upvotes, mainly for humor)
+
+bc-stickrise.m http://astronomy.stackexchange.com/questions/19619/how-to-make-motion-of-the-sun-more-apparent-at-seconds-scale (I haven't psoted this)
+
+bc-stock-min.m http://quant.stackexchange.com/questions/24970/estimate-probability-of-limit-order-execution-over-a-large-time-frame (full answer)
+
+http://space.stackexchange.com/questions/14537/how-will-a-suborbital-flight-country-to-country-work bc-suborbital.m
+
+http://math.stackexchange.com/questions/1717271/ bc-subset-intersect.m (gave answer, but may be incorrect)
+
+bc-subsolar.m https://physics.stackexchange.com/questions/25396/is-there-a-simple-yet-accurate-formula-for-where-on-earth-the-sun-and-moon-are-d MAYBE or linked question??
+
+bc-sun-hight.m (misspelling is intentional) https://astronomy.stackexchange.com/questions/26347/given-sunrise-noon-sunset-longitude-and-latitude-can-i-calculate-the-hight
+
+bc-tau-tau.m http://stats.stackexchange.com/questions/210313/how-to-specify-exact-rise-to-peak-and-decay-to-baseline-times-in-an-exponential
+
+https://math.stackexchange.com/questions/2466696/how-to-solve-2-tetrated-0-5-times bc-tetration.m 
+
+http://math.stackexchange.com/questions/1688586/finding-an-angle-in-a-triangle-when-the-length-of-one-side-is-unknown-and-the-d bc-triangle-angle.m
+
+http://physics.stackexchange.com/questions/9345/how-will-the-twin-paradox-become-for-time-dilation-if-no-acceleration-was-ever bc-twin-paradox.m
+
+https://mathematica.stackexchange.com/questions/178316/project-map-to-a-particular-shape bc-us-to-france.m
+
+bc-what-about-naomi.m MAYBE https://math.stackexchange.com/questions/1625182/modeling-with-exponential-distributions https://math.stackexchange.com/questions/1627264/a-follow-up-question-about-modeling-with-exponential-distributions
+
+TODO: cleanup playground.m, too much crap
+
+TODO: my star list?
 
 TODO: do this for QUORA and REDDIT too?

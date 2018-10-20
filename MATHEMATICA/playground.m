@@ -17,6 +17,16 @@ AdjacencyList[g, t[[7]]]
 
 Nearest[t][{0,0,0}]
 
+(* TODO: canonize this *)
+
+alertme := Run["xmessage -geometry 1024 mathematica done &"];
+
+(* however, I actually have 200M+ stars, so... *)
+
+t = Table[RandomReal[1,3], {i, 1, 5*10^8}]; alertme
+
+g = NearestNeighborGraph[t]; alertme
+
 
 
 
