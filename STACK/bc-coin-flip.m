@@ -20,13 +20,93 @@ Flatten[Map[nState,Flatten[Map[nState, nState[{5,9,1}]],1]],1]
 f[5, 8] = 1;
 f[p_, 8] = 0;
 
-f[p_, q_] := f[p,q] = If[p/(q-1) > 5/8, 0, f[p, q-1]]/2 + f[p-1, q-1]/2
+f[p_, q_] := f[p,q] = If[p/(q-1) > 5/8, 0, f[p, q-1]]/2 +
+                      If[(p-1)/(q-1) > 5/8, 0, f[p-1, q-1]]/2
 
 Table[f[p, 10], {p, Ceiling[10*5/8], 10}]
 
-probs[q_] := Table[f[p, q], {p, Ceiling[q*5/8], q}]
+probs[q_] := Table[f[p, q], {p, Floor[q*5/8+1], q}]
 
-wins[q_] := Table[f[p, q]*p/q, {p, Ceiling[q*5/8], q}]
+wins[q_] := Table[f[p, q]*p/q, {p, Floor[q*5/8+1], q}]
+
+Table[Total[probs[n]], {n,9,20}]
+
+shows more than 100%
+
+temp1628 = Table[Total[wins[n]], {n, 9, 100}]
+
+temp1629 = Flatten[Position[temp1628, _?(# > 0 &)]]
+
+A047400	   Numbers that are congruent to {1, 3, 6} mod 8
+
+when mod 1, just 1 entry
+
+same when mod 3
+
+same when mod 6
+
+probs[9+8][[1]]/probs[9][[1]]
+
+temp1640 = Table[probs[9+8*i][[1]]/probs[1+8*i][[1]], {i, 1, 50}]
+
+temp1644 = Table[Total[probs[9+8*i]], {i, 0, 100}]
+
+Log[Take[Denominator[temp1644],10]]/Log[2]
+
+{1., 9., 17., 22., 32., 41., 49., 57., 65., 73.}
+
+Out[191]= {1., 9., 17., 22., 32., 41., 49., 57., 65., 73., 81., 89., 93., 105., 
+ 
+>    111., 120., 129., 137., 145., 153., 161., 169., 172., 184., 193., 200., 
+ 
+>    208., 212., 225., 232., 241., 249., 256., 262., 272., 281., 289., 297., 
+ 
+>    305., 313., 321., 328., 335., 345., 353., 361., 369., 377., 385., 393., 
+ 
+>    401., 407., 414., 424., 430., 439., 447., 457., 464., 473., 481., 489., 
+ 
+>    495., 505., 511., 520., 529., 537., 544., 553., 556., 568., 576., 585., 
+ 
+>    591., 599., 609., 616., 624., 632., 640., 644., 655., 665., 673., 680., 
+ 
+>    689., 696., 705., 711., 721., 729., 737., 745., 753., 761., 767., 774., 
+ 
+>    785., 793.}
+
+
+
+temp1647 = Table[Total[wins[9+8*i]], {i, 0, 100}]
+
+temp1648 = Table[Total[wins[11+8*i]], {i, 0, 100}]
+
+temp1649 = Table[Total[wins[14+8*i]], {i, 0, 100}]
+
+
+ListLogPlot[{temp1647, temp1648, temp1649}]
+
+ListLogPlot[{temp1647+temp1648+temp1649}]
+
+temp1650 = Table[Total[wins[i]], {i, 9, 100}]
+
+temp1651 = Table[{i, Total[wins[i]]}, {i, 9, 1000}]
+
+temp1652 = Select[temp1651, #[[2]] > 0 &];
+
+temp1653 = Table[{i[[1]], Log[i[[2]]]}, {i, temp1652}]
+
+Fit[temp1653, {1,x}, x]
+
+-7.28864 - 0.0361529 x
+
+In[173]:= Sum[%, {x,9,Infinity}]                                                
+
+Out[173]= 0.0138983
+
+
+
+
+
+
  
 
 
@@ -34,7 +114,7 @@ wins[q_] := Table[f[p, q]*p/q, {p, Ceiling[q*5/8], q}]
 
 (*
 
-upto 2 flips:
+UPTO 2 flips:
 
 
 H - stop with gain (50% chance)
