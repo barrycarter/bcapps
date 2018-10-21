@@ -20,7 +20,7 @@ existing data and also bc-buffer-land.pl
 
 https://stackoverflow.com/questions/46629934/given-a-pair-of-integers-minimum-of-operations-performed-to-reach-target-n (answered: work in bc-add-sets.m)
 
-https://earthscience.stackexchange.com/questions/14132/how-much-of-earths-land-area-has-antipodal-land-area: work in bc-antipodes.m (but also relates to bc-buffer-land-*.m)
+https://earthscience.stackexchange.com/questions/14132/how-much-of-earths-land-area-has-antipodal-land-area: work in bc-antipodes.m (but also relates to bc-buffer-land-*.m) bc-antipodes.pl
 
 https://quant.stackexchange.com/questions/30199/is-there-a-unique-solution-for-two-options
 (work is in bc-black-scholes.m, never finished answer)
@@ -43,7 +43,7 @@ http://math.stackexchange.com/questions/2028308/how-to-determine-the-average-num
 bc-dice-mode.m (someone else answered, but I want to do more, maybe
 OEIS, maybe create prob dist)
 
-bc-doolittle.m: ???
+bc-doolittle.m: https://stats.stackexchange.com/questions/239112/how-to-calculate-the-doolittle-skill-score/239156#239156
 
 http://photo.stackexchange.com/questions/6073/measuring-angular-distance-with-photographs
 (bc-dual-camera.m) [this is my question]
@@ -124,7 +124,7 @@ https://astronomy.stackexchange.com/questions/13635/determining-distance-from-se
 
 bc-solve-astronomy-13817.m  https://astronomy.stackexchange.com/questions/13817/special-relativity-as-applied-to-an-interstellar-starship
 
-bc-solve-codereview-118568.m https://codereview.stackexchange.com/questions/118568/risk-battle-simulator-v2 (solved, answer accepted)
+bc-solve-codereview-118568.m https://codereview.stackexchange.com/questions/118568/risk-battle-simulator-v2 (solved, answer accepted) bc-solve-codereview-118568-orig.c bc-solve-codereview-118568.c
 
 bc-solve-gis-178354.m  https://gis.stackexchange.com/questions/178354/convert-lat-lng-to-pixel-and-vice-versa fully solved
 
@@ -134,7 +134,7 @@ bc-solve-math-1650982.m: https://math.stackexchange.com/questions/1650982/topolo
 
 bc-solve-math-1669083.m: https://math.stackexchange.com/questions/1669083/proof-regarding-decimal-expansions
 
-bc-solve-mathematica-105671.m: https://mathematica.stackexchange.com/questions/105671/3d-orbits-of-moons-around-their-respective-planets
+bc-solve-mathematica-105671.m: https://mathematica.stackexchange.com/questions/105671/3d-orbits-of-moons-around-their-respective-planets bc-solve-mathematica-105671.pl
 
 bc-solve-stats-196655.m: https://stats.stackexchange.com/questions/196655/fit-plane-to-3d-data-using-least-squares (question no longer exists, consdier commoncrawl))
 
@@ -169,6 +169,82 @@ http://physics.stackexchange.com/questions/9345/how-will-the-twin-paradox-become
 https://mathematica.stackexchange.com/questions/178316/project-map-to-a-particular-shape bc-us-to-france.m
 
 bc-what-about-naomi.m MAYBE https://math.stackexchange.com/questions/1625182/modeling-with-exponential-distributions https://math.stackexchange.com/questions/1627264/a-follow-up-question-about-modeling-with-exponential-distributions
+
+bc-blank-ical.pl http://webapps.stackexchange.com/questions/90641/icalendar-rrule-recurring-events-custom-repeat?noredirect=1#comment79508_90641
+
+bc-codereview-1739.pl http://codereview.stackexchange.com/questions/1739/spherical-voronoi-diagram-binary-splitting-approach (this does not work)
+
+bc-solve-re-11804.pl https://reverseengineering.stackexchange.com/questions/11804/i-really-struggled-to-figure-it-out-now-can-anyone-help-me-reverse-engineer-thi
+
+bc-solve-stats-191220.pl https://stats.stackexchange.com/questions/191220/car-out-of-route
+
+https://astronomy.stackexchange.com/questions/20018/stellarium-simulation bc-stell-travel.pl
+
+http://musicfans.stackexchange.com/questions/4561/was-2016-really-a-partcularly-deadly-year-for-artists bc-celeb-death.txt
+
+http://physics.stackexchange.com/questions/105379/homogeneity-of-space-implies-linearity-of-lorentz-transformations bc-homogenity.txt
+
+bc-solve-physics-238376.txt https://physics.stackexchange.com/questions/238376/how-can-geometrized-units-have-more-than-one-constant-equal-to-1
+
+bc-solve-stats-190994.txt https://stats.stackexchange.com/questions/190994/how-many-observations-needed-to-reach-90-confidence (fully answered)
+
+https://astronomy.stackexchange.com/questions/19043/how-can-the-next-supermoon-be-analytically-predicted?noredirect=1&lq=1 bc-supermoon.txt
+
+https://codereview.stackexchange.com/questions/127000/triangle-calculator-calculate-if-its-a-valid-triangle-and-what-type Main.java bc-triangle-prob.java.orig
+
+bc-solve-codereview-116985.java https://codereview.stackexchange.com/questions/116985/interplanetary-weight-calculator
+
+bc-solve-codereview-118091.c https://codereview.stackexchange.com/questions/118091/nested-loops-with-linear-array
+
+bc-solve-codereview-119661-orig.php bc-solve-codereview-119661.php https://codereview.stackexchange.com/questions/119661/rating-normalization-algorithm
+
+TODO: move these from MATHEMATICA subdir to STACK
+
+http://stackoverflow.com/questions/6535505/collatz-conjecture-in-mathematica bc-collatz.m
+
+bc-elastic.m https://astronomy.stackexchange.com/questions/13302/ (related to)
+
+bc-joint.m https://stats.stackexchange.com/questions/245749/determine-limits-of-integration-to-find-the-pdf-of-the-difference-of-two-random/245899#245899
+
+https://astronomy.stackexchange.com/questions/13965/eclipse-cycle-calculations-needed bc-orrery.m http://physics.stackexchange.com/questions/197481/
+
+https://math.stackexchange.com/questions/99299/best-fitting-plane-given-a-set-of-points ??? bc-planar.m
+
+http://astronomy.stackexchange.com/questions/10979/moons-orbit-around-the-sun bc-solve-astro-10979.m
+
+http://math.stackexchange.com/questions/1615072/eccentricity-is-invariant-for-ellipse-defined-by-intersection-between-plane-and bc-solve-math-1615072.m
+
+http://math.stackexchange.com/questions/1615460/expected-value-and-a-variance-of-a-die-sequence bc-solve-math-1615460-2.m bc-solve-math-1615460.m
+
+bc-solve-math-1624385.m https://math.stackexchange.com/questions/1624385/draw-regions-on-the-complex-plane-that-satisfy-this-relation 
+
+bc-solve-math-1626286.m https://math.stackexchange.com/questions/1626286/motion-of-particle-on-parabola
+
+bc-solve-math-1638274.m https://math.stackexchange.com/questions/1638274/making-66-with-1-1-1-1-1
+
+bc-solve-mathematica-104178.m https://mathematica.stackexchange.com/questions/104178/recognize-physical-constants
+
+bc-solve-mathematica-104830.m https://mathematica.stackexchange.com/questions/104830/datelistplot-failing-on-inflation-adjusted-timeseries (wolfram recognizes this as a bug)
+
+bc-solve-mathematica-104993.m https://mathematica.stackexchange.com/questions/104993/is-there-an-easy-way-to-do-set-counting-in-mathematica
+
+bc-solve-money-57938.m https://money.stackexchange.com/questions/57938/calculate-apy-revolving-loan-with-offset-staggered-payment-schedule
+
+bc-solve-physics-232097.m https://physics.stackexchange.com/questions/232097/will-the-energy-of-gravitational-collision-be-the-same
+
+bc-solve-physics-232844.m https://physics.stackexchange.com/questions/232844/faster-alternative-to-travel-to-any-location-in-the-west https://space.stackexchange.com/questions/13866/faster-alternative-to-travel-to-any-location-in-the-west also bc-solve-space-13866.m
+
+http://stats.stackexchange.com/questions/191040/use-points-in-euclidean-space-to-find-probability-based-on-distributions bc-solve-stats-191040.m
+
+bc-triangle-prob.m http://math.stackexchange.com/questions/2104594/for-all-triangle-prove-that-sum-limits-cycm-a-cos-frac-alpha2-geq-frac3
+
+
+
+END TODO ABOVE
+
+[user@domain STACK]$ ls | egrep -v '\.m$|\.pl$|\.gif$|\.jpg$' | less
+
+above helps to sort after I've done .m and .pl
 
 TODO: cleanup playground.m, too much crap
 

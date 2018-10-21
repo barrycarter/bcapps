@@ -1,3 +1,5 @@
+NOTE: ~20 Oct 2018, moved many files from here to ../STACK/ where they belong
+
 Interesting vs non-interesting FORTRAN routines in SOFA libraries
 (non-interesting = perform trivial/useless functions)
 
