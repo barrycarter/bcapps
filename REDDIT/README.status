@@ -1,0 +1,16 @@
+https://www.reddit.com/r/cheatatmathhomework/comments/5a0p3p/combinatorics_multisets/ bc-ice-cream.m
+
+https://www.reddit.com/r/HomeworkHelp/comments/5npsfx/algebra_gambling_word_problem/ bc-martingale.m
+
+https://www.reddit.com/r/cheatatmathhomework/comments/5br67a/year_9_problem_solving/ bc-median.m
+
+https://www.reddit.com/r/geography/comments/8qzl3p/if_we_redrew_us_state_lines_by_voronoi_of_the_top/ bc-metro.m
+
+https://www.reddit.com/r/askscience/comments/5k1fmb/whats_the_average_number_of_attempts_necessary_to/ bc-nth-success.m (and maybe other URLs)
+
+https://www.reddit.com/r/answers/comments/5rcazy/what_is_a_polynomial_function_that_allows_for_the/ bc-prez.m
+
+bc-thanos-kills.m https://www.reddit.com/r/answers/comments/9hcvk0/if_thanos_destroys_half_the_population_of_the/ and (perhaps others)
+
+ls | egrep -v '\.m$|\.pl$|\.gif$|\.jpg$' | less
+
