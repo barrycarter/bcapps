@@ -23,8 +23,34 @@ https://www.quora.com/Where-is-the-place-in-Germany-that-starts-with-P bc-pee-on
 
 https://www.quora.com/How-do-you-find-the-uncertainty-in-a-measurement-of-the-probability-of-a-Bernoulli-trial-calculated-from-doing-it-repeatedly-and-using-success-trials bc-prob-70.m
 
-[gave up here, since QUORA keeps banning me anyway]
+https://www.quora.com/How-would-you-solve-this-series-problem bc-recursion.m
+
+https://www.quora.com/Do-pure-mathematicians-find-mathematical-statistics-ugly/answer/Donald-Blood/comment/25152005 bc-silly.m
+
+https://www.quora.com/What-route-from-Maine-to-California-by-land-would-cross-through-the-least-US-states-whilst-staying-in-the-US-throughout-the-journey draw boundary graph bc-state-borders.m
+
+https://www.quora.com/Five-men-and-three-women-are-to-be-seated-around-a-circular-table-What-is-the-probability-that-no-two-women-sit-together
+ bc-table-peeps.m
+
+https://www.quora.com/How-do-we-find-a-closed-form-for-tan-2-pi-7 bc-trig.m
+
+https://www.quora.com/unanswered/If-you-drew-a-single-straight-line-bisecting-America-so-that-both-land-and-population-were-nearly-equally-divided-which-way-would-the-line-point
+bc-us-split.m (but this is wrong, since it assumes cylinderical map
+lines are "straight")
+
+https://www.quora.com/What-is-the-smallest-total-land-area-in-the-United-States-whose-100-vote-would-be-sufficient-to-elect-a-president bc-min-area.pl
+
+https://www.quora.com/Can-time-difference-between-two-places-be-greater-than-24-hours bc-tz.txt
+
+
+
+[sort of gave up here, since QUORA keeps banning me anyway]
+
+https://www.quora.com/We-randomly-generate-digits-of-a-decimal-number-until-we-obtain-a-prime-number-Are-we-sure-to-ultimately-get-one bc-primes.m
+
 
 https://www.quora.com/Given-I-point-my-finger-randomly-at-the-sky-what-are-the-theorical-odds-that-Im-pointing-at-some-star NOT SURE IF I EVER TRIED TO ANSWER THIS OR THIS https://www.quora.com/If-a-person-is-pointing-in-a-random-direction-what-are-the-odds-that-he-she-is-pointing-directly-towards-a-star-in-the-observable-universe
 
+
+ls | egrep -v '\.m$|\.pl$|\.gif$|\.jpg$' | less
 
