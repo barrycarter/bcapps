@@ -238,6 +238,8 @@ http://stats.stackexchange.com/questions/191040/use-points-in-euclidean-space-to
 
 bc-triangle-prob.m http://math.stackexchange.com/questions/2104594/for-all-triangle-prove-that-sum-limits-cycm-a-cos-frac-alpha2-geq-frac3
 
+bc-astro-formulas.m: many many problems solved
+
 END TODO ABOVE (this was later actually done)
 
 [user@domain STACK]$ ls | egrep -v '\.m$|\.pl$|\.gif$|\.jpg$' | less

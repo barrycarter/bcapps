@@ -1,0 +1,61 @@
+This is not an answer, just a summary of my progress so far (to find an answer deeper and more verifiable than the answer I gave in comments)
+
+My basic strategy to solve this problem was fairly simple:
+
+  - Download the GAIA DR2 release (it's 61234 files with a total of 587,745,975,091 bytes compressed, but I felt it was useful for other purposes, so I went ahead and did this)
+
+  - Use the parallax column to compute distance as 1/parallax in parsecs, ignoring parallexes that were missing on negative.
+
+  - Use l and b, the galactic longitude and latitude, combined with the distance, to find the XYZ coordinates of each star in a galactic frame centered on the Sun.
+
+  - Use Mathematica's NearestNeighbor function to find the nearest neighbor for each star.
+
+  - Find the maximum nearest neighbor distance to find the answer.
+
+Problems:
+
+  - Some parallax values, while positive, are ridiculously small, placing objects well outside the Milky Way galaxy.
+
+  - These aren't observations of distance galaxies, but rather errors in measurement.
+
+  - To help compute the magnitude of the error, GAIA2 has a "parallax_error" field and an even more helpful "parallax_over_error" field, which is just the parallax divided by the error in measurement.
+
+  - I initally decided to omit stars where the parallax_over_error was less than 1, meaning there was a 84% (portion of normal curve above -1 standard deviations) chance the "actual" parallax was positive.
+
+  - It turns out there are 653,127,802 meeting this criteria.
+
+  - Since I wasn't sure 1 was the right cutoff, I decided to look at the distribution of parallax_over_error values by running this query on https://gea.esac.esa.int/archive/
+
+<code>
+SELECT ROUND(parallax_over_error, 2), COUNT(*) FROM
+gaiadr2.gaia_source GROUP BY 1 ORDER BY 1
+</code>
+
+The compressed results are at: https://github.com/barrycarter/bcapps/blob/master/STACK/1540263409478O-result.csv.bz2.
+
+  - Altough there are parallax_over_error as low as -1697.54 and as high as 11292.6,there is a sharp peak to the left of 1:
+
+[[image42.gif]]
+
+This means that if I change the cutoff value for parallax_over_error even slightly, it vastly changes the number of stars included. Specifically:
+
+  - For a cutoff value of 1, there are 653,127,802 stars, as noted above.
+
+  - For a cutoff value of 2 (97.7% confidence of positive parallax), there are 393,469,663 stars.
+
+  - For a cutoff value of 3 (99.87% confidence of positive parallax), there are 255,459,809 stars.
+
+The choice of cutoff is nontrivial, since stars with high parallax_over_error values are likely to have lower parallaxes, and thus appear further away and more isolated, even though they're probably not and this is just an artifact of measurement error.
+
+  - Mathematica's NearestNeighbor[] function of my machine can handle an impressive 100 million random values, but not a lot more than that. Therefore, even if I do find a good filter value for parallax_over_error, there might be an issue re calculating the most isolated star.
+
+
+Minor notes:
+
+  - In addition to very small positive parallax values, GAIA2 has very large positive parallax values as well, which have been acknowledged as errors: https://www.cosmos.esa.int/web/gaia/forum#!/thread/1688565
+
+
+
+PROBS, WHAT I AM DOING, GRAPH, ALSO TOUGH FOR MATHEMATICA
+
+ARGH: http://www2.mpia-hd.mpg.de/homes/calj/ notes this
