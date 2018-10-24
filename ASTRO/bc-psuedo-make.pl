@@ -3,6 +3,8 @@
 # I can't get make to do what I want (but could if I tried harder),
 # this hack works around it
 
+# --force: force recompilation even if target appears up to date
+
 require "/usr/local/lib/bclib.pl";
 
 # TODO: this should check standard.tm time too
@@ -13,7 +15,10 @@ for $i (glob("*.c")) {
 
   # if targ is more recent, ignore
   my($targtime) = -M $targ;
-  if ($targtime && $targtime < -M $i) {next;}
+  if ($targtime && $targtime < -M $i && !$globopts{force}) {
+    debug("$i: COMPILED VERSION IS UP TO DATE");
+    next;
+  }
 
   # else compile
 #  my($cmd) = "gcc -pg -std=gnu99 -Wall -O2 -I /home/barrycarter/SPICE/cspice/include $i -o $targ /home/barrycarter/SPICE/cspice/lib/cspice.a -lm";
