@@ -1,3 +1,5 @@
+# SEE ALSO README.status
+
 # these are the Stack Exchange problems I consider "solved" in the
 # sense that I don't expect to make any more effort on them; this file
 # allows me to 'grep -v' when looking for unsolved problems
