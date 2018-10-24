@@ -11,6 +11,9 @@ DISPLAY=":0.0"
 
 MAILTO="daemon"
 
+# xmessage width (TODO: automate this)
+XWIDTH=1600
+
 # test cron job to see what my path is and the env and the aliases
 # * * * * * echo $PATH; printenv; alias
 
@@ -75,6 +78,7 @@ MAILTO="daemon"
 # restored shortly after
 # later doing every 2m and no longer devnulling for a bit
 # to avoid killing my AERIS API limit, once every 5 minutes
+# this burns 576 of my 750 hits
 */5 * * * * /home/user/BCGIT/WEATHER/bc-get-weather-2.pl
 
 # copy over error messages from bcinfo3.barrycarter.info, which uses the same
@@ -86,7 +90,7 @@ MAILTO="daemon"
 
 # Reminds me to walkaround every 20m or so (pomodoro method?)
 # devnulling annoying "gtk-message" stderr
-0,20,40 * * * * /home/user/BCGIT/bc-walkaround.pl
+0,20,40 * * * * /home/user/BCGIT/bc-walkaround.pl --width=$XWIDTH
 
 # In my time zone (MST7MDT), gocomics updates comics at 2310; if I
 # happen to be awake, this alerts me so I can make the notorious
@@ -95,7 +99,7 @@ MAILTO="daemon"
 # THIS IS WRONG: using exec and ampersand makes pid 1 the parent
 # process AND doesnt generate an unnecessary email to cron
 
-10 23 * * * xmessage -geometry 1024 GOCOMICS RESET&
+10 23 * * * xmessage -geometry $XWIDTH GOCOMICS RESET&
 
 # run my montastic tests twice an hour (montastic is a free service
 # and is pretty good, but really more of an extra check in addition to
@@ -131,10 +135,10 @@ MAILTO="daemon"
 # others); note the "&" backgrounds the xmessage to prevent cron from
 # hanging
 
-30 16 * * Mon xmessage -geometry 1024 put out trash &
+30 16 * * Mon xmessage -geometry $XWIDTH put out trash &
 
 # and take the empty trash bin in the next day
-30 16 * * Tue xmessage -geometry 1024 retract trashing device &
+30 16 * * Tue xmessage -geometry $XWIDTH retract trashing device &
 
 # TODO: can I replace /home/user with ~ (or even $HOME and set it?) 
 # universally and do I want to?
@@ -312,3 +316,6 @@ MAILTO="daemon"
 # off again on 18 Apr 2018 for more cleanup
 # back on 11 May 2018
 17 2 * * * date; /home/user/BCGIT/bc-xwd-cleanup.pl --debug; /home/user/BCGIT/bc-xwd-cleanup.pl --debug; date
+
+# just a test for width
+# * * * * * xmessage -geometry $XWIDTH this is only a test

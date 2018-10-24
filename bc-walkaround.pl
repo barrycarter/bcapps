@@ -7,7 +7,11 @@
 # up and walkaround &", but the shell started by cron matches
 # 'walkaround', ha!
 
+# --width: width of popup
+
 require "/usr/local/lib/bclib.pl";
+
+defaults("width=1024");
 
 # run only once (no warnings during lock phase)
 $globopts{nowarn}=1;
@@ -36,7 +40,7 @@ for (;;) {
   # "Gtk-Message: GtkDialog mapped without a transient parent. This is discouraged."
   # hate doing "2> /dev/null" here but "GtkDialog mapped without a
   # transient parent. This is discouraged." is freaking annoying
-  $res = `zenity --entry --text "$msg" --width 1024 --title stickymessage 2> /dev/null`;
+  $res = `zenity --entry --text "$msg" --width $globopts{width} --title stickymessage 2> /dev/null`;
   if ($res=~/\S/) {last;}
   $msg .= " [reply cannot be blank]";
 }

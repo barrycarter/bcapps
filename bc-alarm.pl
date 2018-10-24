@@ -9,6 +9,9 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+# changed 23 Oct 2018 for flexible width
+defaults("width=1600");
+
 my($time) = shift(@ARGV);
 # TODO: catenating remaining args is probably a bad idea
 my($msg) = join(" ",@ARGV);
@@ -28,7 +31,7 @@ if ($globopts{nosms}) {
 # I can't receive mail from at jobs, so -M below
 open(A,"|at -M -v $time")||die("Can't open at command, $!");
 # TODO: is TERM setting below necessary?
-print A "DISPLAY=:0.0; export DISPLAY; TERM=vt100; export TERM; xmessage -geometry 1024 $msg & $smc &";
+print A "DISPLAY=:0.0; export DISPLAY; TERM=vt100; export TERM; xmessage -geometry $globopts{width} $msg & $smc &";
 close(A);
 
 # log
