@@ -43,3 +43,6 @@ MAILTO=daemon
 # test w/ symlink (works, but need to seriously improve)
 
 # /home/user/mail/myphonebox IN_MODIFY echo test of output from incrontab
+
+# temp 23 Oct 2018
+/home/user/Downloads/asu.tsv IN_MODIFY env DISPLAY=:0.0 xmessage asu dl complete

@@ -59,3 +59,8 @@ Minor notes:
 PROBS, WHAT I AM DOING, GRAPH, ALSO TOUGH FOR MATHEMATICA
 
 ARGH: http://www2.mpia-hd.mpg.de/homes/calj/ notes this
+
+Visible table: gaiadr2.urat1_neighbourhood
+
+http://gaia.ari.uni-heidelberg.de/tap/tables
+

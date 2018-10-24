@@ -198,8 +198,6 @@ bc-solve-codereview-118091.c https://codereview.stackexchange.com/questions/1180
 
 bc-solve-codereview-119661-orig.php bc-solve-codereview-119661.php https://codereview.stackexchange.com/questions/119661/rating-normalization-algorithm
 
-TODO: move these from MATHEMATICA subdir to STACK
-
 http://stackoverflow.com/questions/6535505/collatz-conjecture-in-mathematica bc-collatz.m
 
 bc-elastic.m https://astronomy.stackexchange.com/questions/13302/ (related to)
@@ -234,13 +232,87 @@ bc-solve-physics-232097.m https://physics.stackexchange.com/questions/232097/wil
 
 bc-solve-physics-232844.m https://physics.stackexchange.com/questions/232844/faster-alternative-to-travel-to-any-location-in-the-west https://space.stackexchange.com/questions/13866/faster-alternative-to-travel-to-any-location-in-the-west also bc-solve-space-13866.m
 
-http://stats.stackexchange.com/questions/191040/use-points-in-euclidean-space-to-find-probability-based-on-distributions bc-solve-stats-191040.m
+http://stats.stackexchange.com/questions/191040/use-points-in-euclidean-space-to-find-probability-based-on-distributions bc-solve-stats-191040.m (solved, but my answer may be wrong)
 
 bc-triangle-prob.m http://math.stackexchange.com/questions/2104594/for-all-triangle-prove-that-sum-limits-cycm-a-cos-frac-alpha2-geq-frac3
 
-bc-astro-formulas.m: many many problems solved
+bc-astro-formulas.m: many many problems solved (but in ASTRO, not
+STACK) if I ever get around to writing this
 
-END TODO ABOVE (this was later actually done)
+https://astronomy.stackexchange.com/questions/24304/expression-for-length-of-sunrise-sunset-as-function-of-latitude-and-day-of-year bc-sun-rise-set-lengths.m (just moved)
+
+TODO: move to STACK, rename to bc- where needed
+
+http://astronomy.stackexchange.com/questions/937/ astro.m
+
+http://astronomy.stackexchange.com/questions/1213/solar-noon-meridian-crossing-time-versus-time-of-maximum-elevation bc-elevation.m
+
+http://earthscience.stackexchange.com/questions/9083/latitude-and-daylight-hours bc-length-of-day.m
+
+http://math.stackexchange.com/questions/1512996/angle-of-point-on-one-circle-to-match-view-from-another-circle bc-planetimer.m
+
+bc-solve-astro-12824.m http://astronomy.stackexchange.com/questions/12824/how-long-does-a-sunrise-or-sunset-take
+
+bc-solve-astro-12981.m http://astronomy.stackexchange.com/questions/12981/
+
+http://astronomy.stackexchange.com/questions/13115/from-which-exoplanets-is-our-sun-the-brightest-star-on-the-night-sky bc-solve-astro-13115.m
+
+bc-solve-astro-13126.m http://astronomy.stackexchange.com/questions/13126/absolute-apparent-magnitude-and-distance-for-hip31978-inconsistent/13128
+
+bc-solve-astro-13396.m http://astronomy.stackexchange.com/questions/13396/
+
+bc-solve-astro-228542.m http://physics.stackexchange.com/questions/228542/calculating-time-from-altitude-of-the-sun
+
+bc-solve-astro-246-2.m http://astronomy.stackexchange.com/questions/246/do-any-known-exoplanetary-solar-bodies-have-annular-eclipses-similar-to-earth also bc-solve-astro-246.m
+
+bc-solve-earthscience-7281.m  http://earthscience.stackexchange.com/questions/7281/what-is-the-moons-distance-from-viewer-at-horizon 
+
+bc-solve-math-388134.m https://math.stackexchange.com/questions/388134/how-to-calculate-ellipse-sector-area-from-a-focus
+
+bc-solve-physics-230221.m https://physics.stackexchange.com/questions/230221/needed-acceleration-input-to-reach-a-target-point
+
+bc-solve-physics-48287.m http://physics.stackexchange.com/questions/48287/earth-moves-how-much-under-my-feet-when-i-jump and similar
+
+bc-trajectory.m http://physics.stackexchange.com/questions/48287/ and others
+
+bc-solve-astro-12824.c http://astronomy.stackexchange.com/questions/12824/how-long-does-a-sunrise-or-sunset-take
+
+bc-solve-astro-12940.c http://astronomy.stackexchange.com/questions/12940/22nd-is-shortest-day-in-some-places-but-the-21st-is-shortest-in-other-places-c
+
+http://astronomy.stackexchange.com/questions/13008/are-there-accurate-equinox-and-solstice-predictions-for-the-distant-past bc-solve-astro-13008.c
+
+bc-solve-astro-13227.c http://astronomy.stackexchange.com/questions/13227
+
+bc-solve-astro-13248.py http://astronomy.stackexchange.com/questions/13248
+
+bc-solve-astro-246.c http://astronomy.stackexchange.com/questions/246 bc-solve-astro-246.txt.bz2
+
+bc-solve-astro-5894.c http://astronomy.stackexchange.com/questions/5894
+
+bc-solve-overflow-33944589.c http://stackoverflow.com/questions/33944589
+
+
+
+
+TODO: playground files
+
+TODO: move images over carefully too (do I still have these??)
+
+TODO: .c files need more junk to compile in STACK
+
+TODO: worry about people looking for ASTRO files (symlink or just merge ASTRO and STACK as symlinks?)
+
+
+
+
+
+
+
+
+
+
+
+END TODO: move to STACK
 
 [user@domain STACK]$ ls | egrep -v '\.m$|\.pl$|\.gif$|\.jpg$' | less
 

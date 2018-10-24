@@ -147,6 +147,8 @@ conds = {
 
 simptan = {ArcTan[x_,y_] -> ArcTan[y/x]};
 
+(* TODO: this does NOT WORK! *)
+
 conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2};
 
 </formulas>
@@ -162,6 +164,19 @@ formulas = {
  az == raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]],
  alt == raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[2]]
 }
+
+formulas2 = {
+ tanaz == Tan[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[1]]],
+ tanalt == Tan[raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst][[2]]]
+}
+
+Solve[formulas2, dec, Reals]
+
+
+
+
+
+Solve[formulas /. simptan, dec, Reals]
 
 decLatAlt2azAbs[dec,lat,alt]
 
