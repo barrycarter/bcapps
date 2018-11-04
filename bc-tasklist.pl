@@ -15,12 +15,20 @@
 
 require "/usr/local/lib/bclib.pl";
 defaults("directory=/usr/local/etc/tasks");
-dodie("chdir('$globopts{directory}')");
+my($dir) = $globopts{directory};
+dodie("chdir('$dir')");
+
 my($out, $err, $res);
 
 # action depends on first parameter
 my($action, $task) = @ARGV;
 
+# TODO: if I allow parameters for list, this next check could be ugly
+# TODO: should this really be --action=action --task=task in general?
+
+# if task is given, make sure the file exists
+
+if ($task && !(-f "$task.task")) {die("$task: no such task in $dir");}
 
 debug("ACTION: $action, TASK: $task");
 
@@ -28,9 +36,6 @@ debug("ACTION: $action, TASK: $task");
 # TODO: subroutinize
 
 if ($action=~/^(start|begin)$/i) {
-
-  # does this task exist?
-  unless (-f "$task.task") {die("$task: no such task");}
 
   # have I already started?
   if (-f "$task.task.new") {die("$task: task already started");}
@@ -40,7 +45,7 @@ if ($action=~/^(start|begin)$/i) {
   
   if ($res) {die("$task: CP FAILED FOR SOME REASON");}
 
-  print "Task started\n";
+  print "$task: Task started\n";
 
   exit(0);
 }
@@ -49,27 +54,20 @@ if ($action=~/^(start|begin)$/i) {
 
 if ($action=~/^(stop|fail)$/i) {
 
-  # does this task exist?
-  unless (-f "$task.task") {die("$task: no such task");}
-
   # have I already started?
-  unless (-f "$task.task.new") {die("task: task not started");}
+  unless (-f "$task.task.new") {die("$task: task not started");}
 
   # OK, rm .new and tell user
   ($out, $err, $res) = cache_command2("rm $task.task.new");
   
   if ($res) {die("$task: CP FAILED FOR SOME REASON");}
 
-  print "Task stopped, not completed\n";
+  print "$task: Task stopped, not completed\n";
 
   exit(0);
 }
 
 if ($action=~/^(end|finish)$/i) {
-
-  # does this task exist?
-  # TODO: this test can be outside the ifs?
-  unless (-f "$_.task") {die("$task: no such task");}
 
   # can't stop what you haven't started
   # TODO: HOWEVER, do want to allow start/finish at same time
@@ -80,14 +78,14 @@ if ($action=~/^(end|finish)$/i) {
   
   if ($res) {die("$task: MV FAILED FOR SOME REASON");}
 
-  print "Task finished\n";
+  print "$task: Task completed\n";
 
   exit(0);
 }
 
 if ($action=~/^list$/i) {
 
-  ($out, $err, $res) = cache_command2("find . -iname '*.task*' -printf \'%T\@ %f\n\' | sort -n");
+  ($out, $err, $res) = cache_command2("find . -iname '*.task' -printf \'%T\@ %f\n\' | sort -n");
 
   for $i (split(/\n/, $out)) {
 
@@ -98,7 +96,10 @@ if ($action=~/^list$/i) {
     chomp($data);
     $task=~s/\.task//;
 
-    print "$time \e[1m$task\e[0m $data\n";
+    # TODO: list in progress on top or something?
+    my($inprog) = (-f "$task.task.new")?" (IN PROGRESS) ":"";
+
+    print "$time \e[1m$task$inprog\e[0m $data\n";
 
   }
 
