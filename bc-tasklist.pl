@@ -71,10 +71,10 @@ if ($action=~/^(end|finish)$/i) {
 
   # can't stop what you haven't started
   # TODO: HOWEVER, do want to allow start/finish at same time
-  unless (-f "$_.task.new") {die("$task: task not started");}
+  unless (-f "$task.task.new") {die("$task: task not started");}
 
   # OK, resolve task and tell user
-  ($out, $err, $res) = cache_command2("mv $_.task $_.task.old && mv $_.task.new $_.task");
+  ($out, $err, $res) = cache_command2("mv $task.task $task.task.old && mv $task.task.new $task.task");
   
   if ($res) {die("$task: MV FAILED FOR SOME REASON");}
 
