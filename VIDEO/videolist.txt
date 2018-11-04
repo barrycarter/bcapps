@@ -71,7 +71,6 @@ Diff'rent Strokes [GETTING]
 Dilbert [DONE]
 Doctor Who??
 Doogie Howser
-Dukes of Hazard (and Enos)
 Eight Is Enough [GETTING]
 Empty Nest [DONE]
 Enterprise [GETTING]
@@ -193,7 +192,7 @@ The Charmings
 The Cosby Show [GETTING]
 The Dick Van Dyke Show [GETTING]
 The Drew Carey Show [DONE]
-The Dukes of Hazzard [GETTING]
+The Dukes of Hazzard [GETTING] (and Enos)
 The Flintstones [DONE]
 The IT Crowd
 The Jeffersons [SPECIAL] [no source for seasons 4+]

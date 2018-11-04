@@ -4041,7 +4041,9 @@ sub xmessage {
   write_file("Message from $0 at ".`date`.$msg, $tempfile);
   if ($bg) {$BGCHAR="&";}
   # revert to home directory to avoid problems
-  my($ret)=system("cd; xmessage -geometry 1024 -nearmouse -file $tempfile -buttons OK:0,BAD:2 -default OK 1> $tempfile.out 2> $tempfile.err $BGCHAR");
+#  my($ret)=system("cd; xmessage -geometry 1024 -nearmouse -file $tempfile -buttons OK:0,BAD:2 -default OK 1> $tempfile.out 2> $tempfile.err $BGCHAR");
+  # hard coded change 23 Oct 2018, sigh
+  my($ret)=system("cd; xmessage -geometry 1600 -nearmouse -file $tempfile -buttons OK:0,BAD:2 -default OK 1> $tempfile.out 2> $tempfile.err $BGCHAR");
   # don't kill temp file too fast
   if ($bg) {sleep(1); return 0;}
   # if not backgrounding, read result

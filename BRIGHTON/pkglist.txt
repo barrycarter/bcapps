@@ -318,6 +318,7 @@ libmpg123-devel
 
 # graphics/images incl scanning and fonts
 # some of these may be installed by a groupinstall
+gwenview
 libgeotiff-devel
 mtpaint
 xournal
@@ -435,6 +436,7 @@ lsb
 telnet
 squid
 pidgin
+purple-discord
 pidgin-devel
 pidgin-discord
 purple-discord
@@ -740,7 +742,8 @@ perl-Test*
 perl-Text*
 perl-utf8
 
-
+# documentation
+man-pages
 
 # Apache mods
 mod_ldap
