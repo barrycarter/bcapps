@@ -284,6 +284,9 @@ alias grep "grep -ia"
 alias fgrep "fgrep -ia"
 alias egrep "egrep -ia"
 
+# xdotool commands to mark multiple discord servers as read
+alias discordread perl -le 'for (1..20) {print \"sleep 1; xdotool key --window 0x1a00010 keydown Shift keydown Escape keyup Escape keyup Shift keydown Control keydown Alt keydown Down keyup Down keyup Alt keyup Control\"}'
+
 # I don't want these aliase from /etc/profile.d/colorgrep.csh
 unalias ls
 unalias ll

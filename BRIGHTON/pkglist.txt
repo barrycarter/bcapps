@@ -5,6 +5,9 @@
 # meta-system tools
 efibootmgr
 
+# libraries
+libcxx
+
 # system tools
 
 gtkglext-devel

@@ -63,6 +63,7 @@ while (substr($line,0,length($key)) eq $key) {
   chomp($line);
   push(@for, $line);
   $line = current_line(\*A, "\n");
+  debug("FORWARD: $line");
 }
 
 debug("FOR FAIL: $line");
@@ -76,6 +77,7 @@ while  (substr($line,0,length($key)) eq $key) {
   chomp($line);
   push(@rev, $line);
   $line = current_line(\*A, "\n",-1);
+  debug("REVERSE: $line");
 }
 
 debug("REV FAIL: $line");

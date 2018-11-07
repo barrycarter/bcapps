@@ -11,6 +11,8 @@
 
 # TODO: this may be combinable with nagyerass stuff
 
+# TODO: log what I do
+
 # --directory: the directory where the tasks are located
 
 require "/usr/local/lib/bclib.pl";
