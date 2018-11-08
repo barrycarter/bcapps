@@ -1,6 +1,7 @@
 # xdotool commands to mark multiple discord servers as read
 # can't make it an alias due to funky quoting
-perl -le 'for (1..20) {print "sleep 1; xdotool key --window 0x1a00010 keydown Shift keydown Escape keyup Escape keyup Shift keydown Control keydown Alt keydown Down keyup Down keyup Alt keyup Control"}' | sh; xmessage all finished sir
+
+perl -le 'for (1..25) {print "sleep 1; xdotool key --window 0x1a00010 keydown Shift keydown Escape keyup Escape keyup Shift keydown Control keydown Alt keydown Down keyup Down keyup Alt keyup Control"}' | sh; xmessage all finished sir
 
 exit;
 
