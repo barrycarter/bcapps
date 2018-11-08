@@ -4,6 +4,11 @@
 # distance between any two in the bin is the length of the words in
 # the bin (ie, maximal)
 
+# ugly way to test (confirms 0th chars are diff)
+
+# bc-partition-words.pl < batch1.txt | perl -nle '@l=split(//, $_);
+# print $l[0]' | sort -u | wc
+
 require "/usr/local/lib/bclib.pl";
 
 my(@words);
@@ -27,9 +32,13 @@ for $i (@words) {
 
 my(@order) = sort {scalar(keys $iscompat{$b}) <=> scalar(keys $iscompat{$a})} keys %iscompat;
 
-for $i (@order) {debug("$i");}
+# for $i (@order) {debug("$i");}
 
+my(@test);
 
+for $i (@order) {@test = @{word_ok_in_list($i, \@test)};}
+
+print join(", ", @test),"\n";
 
 
 # hash of words we've already seen
@@ -38,15 +47,16 @@ my(%skip);
 
 
 # determines if a given word is compatible with a given list of words
-# (uses %iscompat hash)
+# (uses %iscompat hash); if so, return list w/ $word appended, else as is
 
 sub word_ok_in_list {
   my($word, $listref) = @_;
   my(@list) = @$listref;
   my($i);
 
-  for $i (@list) {unless ($iscompat{$word}{$i}) {return 0;}}
-  return 1;
+  for $i (@list) {unless ($iscompat{$word}{$i}) {return \@list}};
+  push(@list, $word);
+  return \@list;
 }
 
 
@@ -60,7 +70,7 @@ sub compatible {
   my(@w1) = map(ord, split(//, $w1));
   my(@w2) = map(ord, split(//, $w2));
 
-  for (my($i) = 0; $i < $#w1; $i++) {
+  for (my($i) = 0; $i <= $#w1; $i++) {
     if ($w1[$i] == $w2[$i]) {return 0;}
   }
 
