@@ -14,9 +14,42 @@ while (<>) {chomp; push(@words, $_);}
 
 # TODO: this could be done twice as fast
 
+# iscombat = pair list
+my(%iscompat);
+
 for $i (@words) {
   for $j (@words) {
-    debug("$i, $j");
+    if (compatible($i,$j)) {$iscompat{$i}{$j}=1;}
   }
+}
+
+# debug(scalar(keys $iscompat{"cheap"}));
+
+my(@order) = sort {scalar(keys $iscompat{$b}) <=> scalar(keys $iscompat{$a})} keys %iscompat;
+
+for $i (@order) {debug("$i");}
+
+
+# hash of words we've already seen
+my(%skip);
+
+# this loops only ends via exit
+
+
+
+# program specific subroutine (assumed same length, limited case)
+
+sub compatible {
+  my($w1, $w2) = @_;
+
+  # this is maybe too clever
+  my(@w1) = map(ord, split(//, $w1));
+  my(@w2) = map(ord, split(//, $w2));
+
+  for (my($i) = 0; $i < $#w1; $i++) {
+    if ($w1[$i] == $w2[$i]) {return 0;}
+  }
+
+  return 1;
 }
 
