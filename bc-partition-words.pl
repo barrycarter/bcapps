@@ -30,10 +30,24 @@ my(@order) = sort {scalar(keys $iscompat{$b}) <=> scalar(keys $iscompat{$a})} ke
 for $i (@order) {debug("$i");}
 
 
+
+
 # hash of words we've already seen
 my(%skip);
 
-# this loops only ends via exit
+
+
+# determines if a given word is compatible with a given list of words
+# (uses %iscompat hash)
+
+sub word_ok_in_list {
+  my($word, $listref) = @_;
+  my(@list) = @$listref;
+  my($i);
+
+  for $i (@list) {unless ($iscompat{$word}{$i}) {return 0;}}
+  return 1;
+}
 
 
 
