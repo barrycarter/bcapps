@@ -153,6 +153,40 @@ conds2 = {0 <= {ra, lon, gmst, az, dec, lat, alt} <= Pi/2};
 
 </formulas>
 
+<relations>
+
+(* attempt to "auto solve" astronomy variables *)
+
+conds = {
+ -Pi < ra < Pi, -Pi < lon < Pi, -Pi < gmst < Pi, -Pi < az < Pi,
+ -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2
+};
+
+eqns = {
+
+ az == ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+ ra]*Sin[lat], -(Cos[dec]*Sin[gmst + lon - ra])],
+
+ alt == ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+ ra]*Sin[lat])^2 + Cos[dec]^2*Sin[gmst + lon - ra]^2],
+ Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]],
+
+ tanaz == (Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - 
+ ra]*Sin[lat])/( -(Cos[dec]*Sin[gmst + lon - ra])),
+
+ tanalt == (Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - 
+ ra]*Sin[lat])^2 + Cos[dec]^2*Sin[gmst + lon - ra]^2])/
+ (Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]),
+
+ lst == gmst + lon
+
+};
+
+Solve[eqns, alt, {lat, lst}]
+
+Solve[{eqns, conds}, gmst]
+
+
 <sources>
 
 
