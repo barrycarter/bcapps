@@ -74,3 +74,10 @@ Subject: Astronomy
 Code URL: https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-astro-formulas.m
 Description: Closed form formulas for astronomy (useful when doing "meta astronomy" and not numerically precise astronomy)
 
+Subject: Various
+Code URL: NA
+Description: Finish answering questions in STACK/README.status
+
+Subject: Blogging
+Code URL: wORDPRESS/README
+Description: Command line Wordpress posting + actual things I want to post

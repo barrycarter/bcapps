@@ -28,9 +28,26 @@ for $i (@words) {
   }
 }
 
+@testing = ("odium", "whack", "scuzz", "ortho", "lubra", "expel", "along", "marsh", "indie", "whelk", "rumor", "frump", "storm", "cheek", "cheap", "apsos", "gizmo", "toric", "halls", "stoic", "axman", "dingy", "afore", "argot", "recap", "lucre", "guppy", "death", "sonny", "poxed", "mauve", "holly", "focus", "eased", "nicad", "pieta", "merit", "irate", "earls", "timid", "dealt", "guyed", "musty", "semen", "galas", "doest", "diode", "drily", "greps", "geoid");
+
+my(@test);
+
+for $i (@testing) {@test = @{word_ok_in_list($i, \@test)};}
+
+print join(", ", @test),"\n";
+
+
+# debug(@testing);
+
+die "TESTING";
+
+# print join(", ", keys $iscompat{"odium"}),"\n";
+
 # debug(scalar(keys $iscompat{"cheap"}));
 
 my(@order) = sort {scalar(keys $iscompat{$b}) <=> scalar(keys $iscompat{$a})} keys %iscompat;
+
+print join(", ", @order),"\n";
 
 # for $i (@order) {debug("$i");}
 

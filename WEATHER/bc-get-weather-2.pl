@@ -329,7 +329,8 @@ sub parse_forecast {
 	       "Widespread" => "WSPR", "Rain" => "RA", "Showers" => "SH",
 	       "Scattered" => "SCT", "Sunny" => "CLR", "Clear" => "CLR",
 	       "Partly" => "P", "Isolated" => "ISO", "Storms" => "STRMS",
-	       "Light" => "LT"
+	       "Light" => "LT", "Chance of" => "?", "Slight Chance of" => "??",
+	       "Snow" => "SN", "Wintry Mix" => "(RA+SN)"
 	       );
 
 #  debug("HASH", keys %hash);
