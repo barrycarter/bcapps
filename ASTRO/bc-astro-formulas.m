@@ -162,6 +162,18 @@ conds = {
  -Pi/2 < dec < Pi/2, -Pi/2 < lat < Pi/2, -Pi/2 < alt < Pi/2
 };
 
+(* below for mathematica.SE *)
+
+eqns = {
+ az == ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+ ra]*Sin[lat], -(Cos[dec]*Sin[gmst + lon - ra])],
+ ha == gmst + lon - ra
+}
+
+Eliminate[eqns, {gmst}]
+
+
+
 eqns = {
 
  az == ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
@@ -171,21 +183,48 @@ eqns = {
  ra]*Sin[lat])^2 + Cos[dec]^2*Sin[gmst + lon - ra]^2],
  Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]],
 
- tanaz == (Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - 
- ra]*Sin[lat])/( -(Cos[dec]*Sin[gmst + lon - ra])),
+ lst == gmst + lon,
 
- tanalt == (Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - 
- ra]*Sin[lat])^2 + Cos[dec]^2*Sin[gmst + lon - ra]^2])/
- (Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]),
-
- lst == gmst + lon
+ ha == lst - ra
 
 };
 
-Solve[eqns, alt, {lat, lst}]
+Solve[eqns, az, {dec, lat, ha}]
+
+Simplify[eqns, Take[eqns,-2]]
+
+
+Solve[eqns, alt, {lat, lst, ra, dec}]
 
 Solve[{eqns, conds}, gmst]
 
+eqns = {
+
+ lst == gmst + lon,
+
+ ha == lst - ra,
+
+ Cos[dec] == codec,
+
+ Cos[ha] == coha,
+
+ Cos[lat] == colat,
+
+ Sin[dec] == sidec,
+
+ Sin[lat] == silat,
+
+ Sin[ha] == siha,
+
+ tanalt == (codec*coha*colat + sidec*silat)/
+ Sqrt[codec^2*siha^2 + (colat*sidec -
+ codec*coha*silat)^2],
+
+ tanaz == (Cot[ha]*Sin[lat] - colat*Csc[ha]*Tan[dec])^(-1)
+
+};
+
+Solve[eqns, tanalt, {siha, coha, sidec, codec, silat, colat}]
 
 <sources>
 
@@ -392,7 +431,7 @@ res1750 = raDecLatLonGMST2azAlt[ra,dec,lat,lon,gmst]
 
 
 
-trying matrix approach
+trying matrix approach (see 'mat' above for correct matrix)
 
 north pole first
 
@@ -880,6 +919,97 @@ FindFit[dates2, c1 + c2*y + c3*m + c4*d, {c1,c2,c3,c4}, {y,m,d}]
 g[y_,m_,d_] = c1 + c2*y + c3*m + c4*d /. %
 
 diffs2 = Table[Apply[g, Take[i, 3]] - i[[4]], {i, dates2}]
+
+(*
+
+How to help Mathematica Solve simple substitution equation?
+
+<pre><code>
+
+(* Here are two equations *)
+
+eqns = {
+ az == ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+ ra]*Sin[lat], -(Cos[dec]*Sin[gmst + lon - ra])],
+ ha == gmst + lon - ra
+};
+
+(* should be easy... just replace gmst+lon-ra with ha in the az equation *)
+
+Solve[eqns, az, {ha}] // InputForm
+
+(* the answer, however, still contains gmst, lon, and ra *)
+
+{{az -> ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
+    -(Cos[dec]*Sin[gmst + lon - ra])]}}
+
+(* Eliminate won't work here ... *)
+
+Eliminate[eqns, {gmst, lon, ra}] // InputForm
+
+(* yielding this error *)
+
+Eliminate::dinv: 
+   The expression ArcTan[Cos[lat] Sin[dec] - 
+      Cos[dec] Cos[gmst + lon - ra] Sin[lat], -(Cos[dec] Sin[gmst + lon - ra])]
+    involves unknowns in more than one argument, so inverse functions cannot be
+     used.
+
+(* and this unhelpful output *)
+
+az == ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
+   -(Cos[dec]*Sin[gmst + lon - ra])] && gmst == ha - lon + ra
+
+</code></pre>
+
+My question here isn't necessarily "why can't Mathematica do this?" (because that answer really doesn't help me), but "what can I do to help Mathematica solve this?"
+
+The actual problem has many more variables and equations, but this example represents the general problem.
+
+EDIT: Here's a slightly more complicated example where the comment suggestions don't work as well:
+
+<pre><code>
+
+eqns = {
+
+ az == ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+ ra]*Sin[lat], -(Cos[dec]*Sin[gmst + lon - ra])],
+
+ alt == ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+ ra]*Sin[lat])^2 + Cos[dec]^2*Sin[gmst + lon - ra]^2],
+ Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]],
+
+ lst == gmst + lon,
+
+ ha == lst - ra
+
+};
+
+(* note that gmst + lon - ra is just ha but through 2 equations this time *)
+
+Solve[eqns, az, {ha}] // InputForm
+
+(* still doesn't work, as expected *)
+
+{{az -> ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
+    -(Cos[dec]*Sin[gmst + lon - ra])]}}
+
+(* let's try Simplify *)
+
+Simplify[Take[eqns, 2], Take[eqns, -2]] // InputForm
+
+(* makes one translation, but not both; of course, with Simplify, I
+haven't specified a target *)
+
+{az == ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[lst - ra]*Sin[lat], 
+   -(Cos[dec]*Sin[lst - ra])], 
+ alt == ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[lst - ra]*Sin[lat])^2 + 
+     Cos[dec]^2*Sin[lst - ra]^2], Cos[dec]*Cos[lat]*Cos[lst - ra] + 
+    Sin[dec]*Sin[lat]]}
+
+Solve[Take[eqns,2]] /. Solve[Take[eqns,-2], ha]
+
+
 
 
 
