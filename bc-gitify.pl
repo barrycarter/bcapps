@@ -27,7 +27,10 @@ $file=~s!/./!/!g;
 
 unless ($file=~s!^.*BCGIT/!!) {die "NOT IN BCGIT!";}
 
-print "https://github.com/barrycarter/bcapps/blob/master/$file\n";
+# microsoft fucks this up and changes blob to tree
+# print "https://github.com/barrycarter/bcapps/blob/master/$file\n";
+
+print "https://github.com/barrycarter/bcapps/tree/master/$file\n";
 
 
 

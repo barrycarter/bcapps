@@ -8,6 +8,9 @@
 # ie, using complex single line pipes instead of short scripts or
 # something
 
+# TODO: add test: crontab length shouldn't be 0 (sometimes happens
+# after reboot)
+
 # NOTES: (why don't I use nagios, hmmm?) [enamored w/ parallel?]
 #   - "paste -s -d," pastes multiple lines into a single line
 #   - "sort" insures lines are in canonical order

@@ -3,6 +3,9 @@
 # Normalizes the bcunix-dump.sh and similar files for Unix machines
 # dumps filelist of given Unix drive and creates other useful-to-me files
 
+# TODO: cross copy TOC across all drives just to make it easier if one
+# drive is down (can always get from backups, but not the same)
+
 require "/usr/local/lib/bclib.pl";
 
 # $name is just anything to identify the drive, eg, "bcunix"
