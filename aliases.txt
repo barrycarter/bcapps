@@ -238,7 +238,8 @@ alias emacsfile 'readlink -f \!* | xargs -I : gnudoit \(find-file \":\"\)'
 alias date+ "/home/barrycarter/BCGIT/bc-date-plus.pl"
 
 # as part of my plan to never install anything
-alias node "/root/build/node-v6.0.0-linux-x86/bin/node"
+# undone 11/14/18, installed normally
+# alias node "/root/build/node-v6.0.0-linux-x86/bin/node"
 
 # lets me play C64/128 games (probably better ways to do this)
 alias commodoreplay "\rm ~/temp.zip; \cp \!* ~/temp.zip; x64 ~/temp.zip&"
