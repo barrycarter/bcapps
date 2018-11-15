@@ -18,6 +18,7 @@ client.on("ready", () => {
     channels = client.channels;
     // this is a one-channel bot for now
     channel = channels.get('509413318851559436');
+    channel.send("I have been summoned!");
     console.log(channel);
     //    console.log(channels('509413318851559435'));
     //    console.log("start");
