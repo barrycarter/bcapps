@@ -56,6 +56,9 @@ XWIDTH=1600
 
 * * * * * cat /home/user/BCGIT/BRIGHTON/bc-public-crontab-saopaulo /home/user/BCPRIV/bc-private-crontab-saopaulo >! /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
 
+# daily, set the hw clock (which drifts) to the system clock
+21 13 * * * sudo hwclock --systohc
+
 # update background every minute (version 2 for saopaulo, original breaks it)
 
 # TODO: the 'sudo' here is just in case I run this as root once and

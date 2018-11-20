@@ -81,3 +81,17 @@ Description: Finish answering questions in STACK/README.status
 Subject: Blogging
 Code URL: wORDPRESS/README
 Description: Command line Wordpress posting + actual things I want to post
+
+TODO: write up these mini-ideas
+
+  - fictious unix time zones
+
+  - abusing dns text records to provide small chunks of info over UDP
+
+  - automated character time measurement, scene measurement is another
+  (in tv shows) [ie, conclusively figure out how much screen time each
+  actor/character has w/o watching the movie/show]
+
+
+
+

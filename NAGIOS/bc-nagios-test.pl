@@ -18,6 +18,10 @@
 # sorting and plugins
 $ENV{LC_ALL} = "C";
 
+# hideous temporary logging to find "Argument list too long" error,
+# which, because the bad way I do it, doesn't get flagged as error
+$globopts{filedebug} = "/tmp/nagdebug.txt";
+
 # renice self (removed after I start nagios at nice 19 anyway)
 # system("/usr/bin/renice 19 -p $$");
 
@@ -41,8 +45,6 @@ $cmd=~s/\"//isg;
 $cmd=~/^\s*(.*?)\s+(.*)$/;
 my($bin,$arg) = ($1,$2);
 
-debug("BIN/ARG: $bin/$arg");
-
 # if the "binary" starts with "bc_", I want to run a local function
 if ($bin=~/^bc_/) {
   # this is dangerous, but I control my nagios files
@@ -53,7 +55,15 @@ if ($bin=~/^bc_/) {
 }
 
 # >>8 converts Perl exit value to program exit value (kind of)
-$res = system("$bin $arg")>>8;
+
+# switching to cache_command2 for better debugging
+
+my($out, $err, $res) = cache_command2("$bin $arg", "age=-1");
+
+my($time) = time();
+debug("AT: $time","RAN: $bin $arg","OUT: $out", "ERR: $err", "RES: $res","\n");
+
+$res = $res>>8;
 
 # run function on result before returning?
 # no need to do this on functions I write myself, above
@@ -655,7 +665,9 @@ sub fix_resolv {
 
 =item bc_check_domain_exp()
 
-Checks whether any of my domains are within 60 days of expiration (nagios).
+Checks whether any of my domains are within 44 days of expiration (nagios).
+
+(was 60 days, but my autorenewing domains reregister 45 days before exp)
 
 =cut
 
@@ -679,14 +691,14 @@ sub bc_check_domain_exp {
     my($date) = $2;
     $date=~s/\s*$//isg;
     my($exp) = (str2time($date)-$now)/86400;
-    if ($exp<60) {
-      printf("ERR: $i expires in %d < 60 days\n",$exp);
+    if ($exp<44) {
+      printf("ERR: $i expires in %d < 44 days\n",$exp);
       return 2;
     }
-    printf("OK: $i expires in %d > 60 days\n",$exp);
+    printf("OK: $i expires in %d > 44 days\n",$exp);
   }
 
-  print "All domains expire > 60 days\n";
+  print "All domains expire > 44 days\n";
   return 0;
 }
 

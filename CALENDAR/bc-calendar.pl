@@ -196,7 +196,7 @@ for $week (-1..$globopts{weeks}-1) {
 
       $count++;
 
-      if ($count > 2) {warn "More than 3 events for $stardate!";}
+      if ($count > 3) {warn "More than 3 events for $stardate!";}
 
       my($eventy) = $y1+$eventystart+$eventspacing*$count;
       my($eventy) = $yprint+$eventspacing*$count;
