@@ -79,7 +79,7 @@ Code URL: NA
 Description: Finish answering questions in STACK/README.status
 
 Subject: Blogging
-Code URL: wORDPRESS/README
+Code URL: @ORDPRESS/README
 Description: Command line Wordpress posting + actual things I want to post
 
 TODO: write up these mini-ideas
@@ -92,6 +92,13 @@ TODO: write up these mini-ideas
   (in tv shows) [ie, conclusively figure out how much screen time each
   actor/character has w/o watching the movie/show]
 
+  - GAIA2 star catalog in 3D
 
+  - triangle dissection/shapes in general
+
+  - game on real world map
+
+  - most files in my git that are not answers to questions relate to
+  some project
 
 

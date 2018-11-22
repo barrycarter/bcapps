@@ -20,7 +20,10 @@ $ENV{LC_ALL} = "C";
 
 # hideous temporary logging to find "Argument list too long" error,
 # which, because the bad way I do it, doesn't get flagged as error
-$globopts{filedebug} = "/tmp/nagdebug.txt";
+
+# turns out error was in bc-nagios-handler.pl not here
+
+# $globopts{filedebug} = "/tmp/nagdebug.txt";
 
 # renice self (removed after I start nagios at nice 19 anyway)
 # system("/usr/bin/renice 19 -p $$");
@@ -61,9 +64,11 @@ if ($bin=~/^bc_/) {
 my($out, $err, $res) = cache_command2("$bin $arg", "age=-1");
 
 my($time) = time();
-debug("AT: $time","RAN: $bin $arg","OUT: $out", "ERR: $err", "RES: $res","\n");
+# debug("AT: $time","RAN: $bin $arg","OUT: $out", "ERR: $err", "RES: $res","\n");
 
 $res = $res>>8;
+
+debug("OUT: $out");
 
 # run function on result before returning?
 # no need to do this on functions I write myself, above
