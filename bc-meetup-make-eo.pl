@@ -13,11 +13,17 @@ require "/home/barrycarter/bc-private.pl";
 
 my($gurl) = "Socially-Awkward-People-Want-to-Socialize-SAPWWS";
 
-my($cmd) ="curl 'https://api.meetup.com/$gurl/members?key=$private{meetup}{key}'";
+# my($cmd) ="curl 'https://api.meetup.com/$gurl/members?key=$private{meetup}{key}'";
+
+# TODO: this is ugly hack for 200+ members, I need to fix this properly
+
+my($cmd) ="curl 'https://api.meetup.com/$gurl/members?page=200&offset=150&key=$private{meetup}{key}'";
 
 my($out,$err,$res) = cache_command2($cmd, "age=3600");
 
 my(@arr) = @{JSON::from_json($out)};
+
+debug("ARRAY LENGTH: $#arr+1");
 
 $cmd = "curl -X PATCH 'https://api.meetup.com/$gurl/members/219789953' -d 'add_role=event_organizer&key=$private{meetup}{key}'";
 

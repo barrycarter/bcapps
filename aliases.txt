@@ -292,3 +292,11 @@ alias discordread perl -le 'for (1..20) {print \"sleep 1; xdotool key --window 0
 unalias ls
 unalias ll
 unalias l.
+
+# I have heroku installed funny and gcloud
+alias heroku /root/build/heroku/bin/heroku
+alias gcloud /root/build/google-cloud-sdk/bin/gcloud
+
+# push to chingu/heroku
+alias chingu "cd /mnt/villa/user/20181119/Bears-Team-16; git add .; git commit; git pull -v; git push Bears-Team-16 master; git push https://git.heroku.com/bears-team-16.git master"
+

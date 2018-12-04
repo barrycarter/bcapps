@@ -32,3 +32,5 @@ function var_dump(obj) {
 
   return out;
 }
+
+// TODO: have bot delete its old messages so it doesn't flood channel

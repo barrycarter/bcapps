@@ -20,14 +20,14 @@ CREATE VIEW badbank AS SELECT * FROM bankstatements WHERE
 CREATE VIEW badbankcat AS SELECT * FROM bankstatements WHERE
  (category IS NULL OR category="") AND amount<0 AND date>="2013-09-01";
 
-The following command shows Internet outages to report to Comcast:
+The following command shows Internet outages to report to Comcast/Xfinity:
 
-tac /var/nagios/nagios.log | fgrep -i 'google;DOWN;HARD' | less
+sudo tac /var/nagios/nagios.log | fgrep -i 'google;DOWN;HARD' | less
 
 (there aren't many, but the 5 minute check interval means 50 minutes
 of outages before this kicks in)
 
-tac /var/nagios/nagios.log | fgrep -i 'google;DOWN;soft;5' | less
+sudo tac /var/nagios/nagios.log | fgrep -i 'google;DOWN;soft;5' | less
 
 (above for 25m worth of outages; using "soft;1" gives false positives,
 but even "soft;2" is good for reporting to Comcast)

@@ -176,6 +176,8 @@ sub get_weather_data {
 
   my($out, $err, $res) = cache_command2("curl 'https://api.aerisapi.com/observations/$station?&client_id=$private{aeris}{accessid}&client_secret=$private{aeris}{secretkey}'", "age=$age");
 
+  debug("OUT: $out");
+
   my($json) = JSON::from_json($out);
 
   my($data) = $json->{response}->{ob};
@@ -330,7 +332,7 @@ sub parse_forecast {
 	       "Scattered" => "SCT", "Sunny" => "CLR", "Clear" => "CLR",
 	       "Partly" => "P", "Isolated" => "ISO", "Storms" => "STRMS",
 	       "Light" => "LT", "Chance of" => "?", "Slight Chance of" => "??",
-	       "Snow" => "SN", "Wintry Mix" => "(RA+SN)"
+	       "Snow" => "SN", "Wintry Mix" => "(RA+SN)", "Likely" => "LKLY"
 	       );
 
 #  debug("HASH", keys %hash);

@@ -33,3 +33,5 @@
 20170206 QE II 65th yr
 # TODO: add this in general
 20170120 Inauguration
+
+20181205 Bush Sr Mourning

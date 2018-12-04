@@ -32,3 +32,6 @@ TODO: allow suppress.txt to suppress running tests, not just printing results
 
 TODO: consider moving inventory checks here?
 
+TODO: test that weather data is fairly recent
+
+

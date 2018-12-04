@@ -36,3 +36,5 @@ August 20 - [for 2017]
 # TODO: could move all events in bc-imp-dates.pl to here
 # TODO: makes sure notes from impdates.html survive
 # TODO: if not above, restore to bc-imp-dates.pl w/ parenthetical birthdays
+
+20181205 Bush Sr Day of Mourning

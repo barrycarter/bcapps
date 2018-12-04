@@ -93,3 +93,6 @@ unset autologout
 
 # libgeotiff puts header files in a stupid place
 setenv CPATH "/usr/include/libgeotiff/"
+
+# for node
+setenv NODE_PATH "/home/user/:."
