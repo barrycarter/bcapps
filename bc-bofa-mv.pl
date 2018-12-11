@@ -33,7 +33,7 @@ for $i (@ARGV) {
     $fname = handle_ally($all);
   } elsif ($all=~/pnm\.com/i) {
     $fname = handle_pnm($all);
-  } elsif ($pdf=~/Registered to: VANGUARD/m) {
+  } elsif ($pdf=~/Registered to: VANGUARD/m || $all=~/Vanguard Voyager Services/m) {
     $fname = handle_vanguard($all);
   } elsif ($all=~/PayPal Account ID/) {
     $fname = handle_paypal($all);
@@ -168,6 +168,7 @@ sub handle_paypal {
 
 sub handle_vanguard {
   my($all) = @_;
+  debug("VANGUARD CALLED");
 
   # first three words
   $all=~/^([A-Z][a-z]+\s+\d+\s*,\s*\d+)/s;
