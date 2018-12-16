@@ -14,13 +14,14 @@ my($out, $err, $res);
 # extra reminders for some sites
 
 my(%extra) = (
- "facebook" => "(also dl activity log + dta on log)"
+ "facebook" => "(dl activity log + dta log)"
 );
 
 # find all files in dirs where I backup stuff
 # TODO: this is serious overkill, most aren't even backups
 
-my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE");
+my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE", "INSTAGRAM", 
+	     "DISCORD", "TUMBLR/BACKUPS");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # hash to keep latest save for each account
@@ -49,15 +50,24 @@ for $i (split(/\n/, $out)) {
 
 for $i (split(/\n/, $out)) {
 
-  
-#  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+)\.zip$%) {next;}
+  # specific to directory/site
 
-  # alt form allows notes or whatever after date
-  unless ($i=~m%/([^\/]+)/([^\-\/]+)\-([\dTZ\.]+).*?\.zip$%) {next;}
+  unless (
+	  $i=~m%/(GOOGLE)/(.*?)\-(\d{8}T\d{6})Z.zip$% ||
+	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
+	  $i=~m%/(INSTAGRAM)/(.*?)_(\d{8})\.zip$%
+	 ) {
+    debug("IGNORING: $i");
+    next;
+  }
+
   my($site, $acct, $date) = (lc($1), lc($2), $3);
 
   # ignore raw forms of google and linkedin outputs
   if ($acct=~/^complete_linkedindataexport/ || $acct eq "takeout") {next;}
+
+  # special case for tumblr
+  if ($site eq "tumblr/backups") {$site = "tumblr";}
 
   # convert "stardate" to form that makes str2time happy
   $date=~s/(\d{4})(\d{2})(\d{2})\.(\d{2})(\d{2})(\d{2})/$1-$2-$3 $4:$5:$6/;
