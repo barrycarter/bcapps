@@ -37,13 +37,13 @@ sub get_forecasts_old {
   # 102,118 is the grid where I live (in Albuquerque)
   my($out, $err, $res) = cache_command2("curl https://api.weather.gov/gridpoints/ABQ/102,118/forecast", "age=$age");
 
-  debug("OUT: $out");
+#  debug("OUT: $out");
 
   my($json) = JSON::from_json($out);
 
   for $i (@{$json->{properties}->{periods}}) {
 
-    debug("PERIOD: $i->{number}");
+#    debug("PERIOD: $i->{number}");
 
     # date and time
     $i->{startTime}=~m/(\d{4}-\d{2}-\d{2})T(\d{2})/;
@@ -53,7 +53,7 @@ sub get_forecasts_old {
     # better way to check day/night
     my($tod) = ($i->{isDaytime} eq "true")?"day":"night";
 
-    debug("$date/$time/$day/$tod");
+#    debug("$date/$time/$day/$tod");
 
     # printing order for this date
     unless ($order{$day}) {$order{$day} = ++$count;}
@@ -146,9 +146,9 @@ sub parse_forecast_old {
 #  debug("HASH", keys %hash);
 
   for $i (keys %hash) {
-    debug("OLD: $forecast, KEY: $i");
+#    debug("OLD: $forecast, KEY: $i");
     $forecast=~s/\s*$i\s*/$hash{$i}/g;
-    debug("NEW: $forecast, KEY WAS: $i");
+#    debug("NEW: $forecast, KEY WAS: $i");
   }
 
   # can't get this working as a key sigh
@@ -176,7 +176,7 @@ sub get_weather_data {
 
   my($out, $err, $res) = cache_command2("curl 'https://api.aerisapi.com/observations/$station?&client_id=$private{aeris}{accessid}&client_secret=$private{aeris}{secretkey}'", "age=$age");
 
-  debug("OUT: $out");
+#  debug("OUT: $out");
 
   my($json) = JSON::from_json($out);
 
@@ -230,7 +230,7 @@ MARK
 ;
   }
 
-  debug("STR: $str");
+#  debug("STR: $str");
   return $str;
 
 }
@@ -245,7 +245,7 @@ sub get_forecasts {
 
   my($json) = JSON::from_json($out);
 
-  debug(var_dump("json", $json));
+#  debug(var_dump("json", $json));
 
   for $i (@{$json->{response}->[0]->{periods}}) {
 
@@ -257,10 +257,10 @@ sub get_forecasts {
     my($day) = strftime("%a%d", localtime(str2time($date)));
     # better way to check day/night
 #    my($tod) = ($i->{isDaytime} eq "true")?"day":"night";
-    debug("ISDAY: $i->{isDay}");
+#    debug("ISDAY: $i->{isDay}");
     my($tod) = $i->{isDay}?"day":"night";
 
-    debug("$date/$day/$tod");
+#    debug("$date/$day/$tod");
 
     # printing order for this date
     unless ($order{$day}) {$order{$day} = ++$count;}
@@ -332,7 +332,8 @@ sub parse_forecast {
 	       "Scattered" => "SCT", "Sunny" => "CLR", "Clear" => "CLR",
 	       "Partly" => "P", "Isolated" => "ISO", "Storms" => "STRMS",
 	       "Light" => "LT", "Chance of" => "?", "Slight Chance of" => "??",
-	       "Snow" => "SN", "Wintry Mix" => "(RA+SN)", "Likely" => "LKLY"
+	       "Snow" => "SN", "Wintry Mix" => "(RA+SN)", "Likely" => "LKLY",
+	       "Very" => "V"
 	       );
 
 #  debug("HASH", keys %hash);
