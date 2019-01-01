@@ -22,6 +22,9 @@ unless ($date) {
 
   for $i (@files) {
 
+    # ignore dirs quietly
+    if (-d $i) {next;}
+
     unless ($i=~/^pic\.(\d{8}):\d{6}\.png$/) {
       warn("BAD FILE: $i");
       next;

@@ -300,3 +300,8 @@ alias gcloud /root/build/google-cloud-sdk/bin/gcloud
 # push to chingu/heroku
 alias chingu "cd /mnt/villa/user/20181119/Bears-Team-16; git add .; git commit; git pull -v; git push Bears-Team-16 master; git push https://git.heroku.com/bears-team-16.git master"
 
+# can use this to do "cmd > `timestamp`" w/o worry about collisions
+alias timestamp "date +%Y%m%d.%H%M%S.%N.txt"
+
+# most recent file in directory
+alias lastfile "ls -t | head -1"

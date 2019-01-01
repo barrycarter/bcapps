@@ -57,7 +57,8 @@ XWIDTH=1600
 * * * * * cat /home/user/BCGIT/BRIGHTON/bc-public-crontab-saopaulo /home/user/BCPRIV/bc-private-crontab-saopaulo >! /home/user/bc-final-crontab; crontab /home/user/bc-final-crontab
 
 # advent of code (not that I should get excited about this)
-55 21 * * * xmessage -geometry $XWIDTH advent of code starts in 5m&
+# gone 30 Dec 2018
+# 55 21 * * * xmessage -geometry $XWIDTH advent of code starts in 5m&
 
 # daily, set the hw clock (which drifts) to the system clock
 21 13 * * * sudo hwclock --systohc

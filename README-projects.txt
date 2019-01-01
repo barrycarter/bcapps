@@ -1,4 +1,8 @@
 Subject: Internet
+Code URL: none
+Description: Sites can detect ad blockers, so create a new one that downloads their ad but never displays it to you, making it much harder for them to tell you are blocking their ads.
+
+Subject: Internet
 Code URL: none yet (but see "sub post_to_wp" in bclib.pl)
 Description: allow local editing of a wordpress wiki as though it were a jekyll wiki (ie, allow mirroring and easy post creations)
 

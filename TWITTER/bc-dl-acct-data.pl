@@ -14,7 +14,8 @@ my($out, $err, $res);
 # extra reminders for some sites
 
 my(%extra) = (
- "facebook" => "(dl activity log + dta log)"
+ "facebook" => "(dl activity log + dta log)",
+ "twitter" => "(update notifications)"
 );
 
 # find all files in dirs where I backup stuff
