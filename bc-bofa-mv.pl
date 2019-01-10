@@ -24,6 +24,8 @@ for $i (@ARGV) {
   # switch based on pdf or txt contents
   if ($all=~/CenturyLink/s) {
     $fname = handle_centurylink($all);
+  } elsif ($all=~/bluebird/i) {
+    $fname = handle_bluebird($all);
   } elsif ($all=~/capitalone/i) {
     # this test MUST come before COMCAST test because I bill COMCAST to capone
     $fname = handle_capone($all);
@@ -72,6 +74,19 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_bluebird {
+  my($all) = @_;
+
+  $all=~/Card Number Ending in\s*\-\s*(\d+)$/m||warnlocal("BAD CARD#");;
+  my($num) = $1;
+
+  $all=~m%Statement Period \d{2}/\d{2}/\d{4} through (\d{2})/(\d{2})/(\d{4})$%m || warnlocal("BAD DATE");
+
+  my($fname) = strftime("bluebird-$num-%m-%d-%Y.pdf", gmtime(str2time("$3-$1-$2")));
+
+  return $fname;
 }
 
 sub handle_capone {

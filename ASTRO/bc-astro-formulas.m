@@ -189,7 +189,7 @@ eqns = {
 
 };
 
-Solve[eqns, az, {dec, lat, ha}]
+Solve[eqns, az, {dec, lat, ha}, Reals]
 
 Simplify[eqns, Take[eqns,-2]]
 

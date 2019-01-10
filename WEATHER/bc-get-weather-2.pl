@@ -333,7 +333,7 @@ sub parse_forecast {
 	       "Partly" => "P", "Isolated" => "ISO", "Storms" => "STRMS",
 	       "Light" => "LT", "Chance of" => "?", "Slight Chance of" => "??",
 	       "Snow" => "SN", "Wintry Mix" => "(RA+SN)", "Likely" => "LKLY",
-	       "Very" => "V"
+	       "Very" => "V", "Windy" => "WNDY"
 	       );
 
 #  debug("HASH", keys %hash);
