@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# convert HYG db to JS useful form
+
+# zcat hygdata_v3.csv.gz | perl -F, -anle 'print "stars[$F[0]]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"'
+
+zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[13] <= 5) {$n++; print "stars[$n]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"}'
+
+exit;
+
 # using cldr
 
 fgrep mapZone common/supplemental/windowsZones.xml | perl -nle '/other="(.*?)".*type="(.*?)"/; for $i (split(/\s+/,$2)) {print "$i $1"}' | sort | uniq
