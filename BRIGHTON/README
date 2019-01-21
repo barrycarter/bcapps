@@ -2,7 +2,8 @@ NOTE: I ended up getting an even newer machine, dubbed saopaulo, but
 most of this directory is still about brighton (saopaulo procs were
 essentially identical)
 
-% "this directory" refers to https://github.com/barrycarter/bcapps/blob/master/BRIGHTON/
+% "this directory" refers to
+https://github.com/barrycarter/bcapps/blob/master/BRIGHTON/
 
 % I am installing from an old Fedora Core 11 machine (hereafter called
 "dullon") using ssh and vncserver to access a my new machine; for

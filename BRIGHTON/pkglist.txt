@@ -181,6 +181,7 @@ calendar
 
 # programming languages (or related)
 
+glibc-devel
 ghc-compiler
 protobuf
 protobuf-devel
