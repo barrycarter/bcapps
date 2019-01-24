@@ -26,8 +26,11 @@ for $i (split(/\n/,$out)) {
 # now the drives actually on the system
 
 for $i (glob("/dev/sd* /dev/mapper/*")) {
+
   # drive sda (and its partitions) are main hard drive, so not interesting
-  if ($i=~m%/sda%) {next;}
+  # as of 23 Jan 2019, this may not be true, so DO check /dev/sda
+
+#  if ($i=~m%/sda%) {next;}
 
   # TODO: push below is fairly ugly, could do better
   my($id) = $dev2id{$i};

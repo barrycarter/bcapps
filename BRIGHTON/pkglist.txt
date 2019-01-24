@@ -10,6 +10,7 @@ libcxx
 
 # system tools
 
+cpulimit
 gtkglext-devel
 gtkglext-libs-1.2.0-21.el7
 alien
