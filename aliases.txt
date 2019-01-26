@@ -134,6 +134,9 @@ alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 # background)
 alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  remotes master; popd"
 
+# for YAMC
+alias yamcgit "pushd .; cd ~/20190125/YAMC; git add .; git commit; git pull -v; git push remotes master; popd"
+
 # running stuff from non-home-dir can do weird things, so..
 
 # unaliased 14 Aug 2017, causes problems with path issues

@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://earth.google.com/kml/2.0">
 <Document>
+
 <GroundOverlay>
 <Icon>
-<href>http://data.bcinfo3.barrycarter.info/grid.png</href>
+<href>http://data.bcinfo3.barrycarter.info/lcc_west_1km_trans.png</href>
+</Icon>
+<LatLonBox>
+<north>90</north>
+<south>-90</south>
+<west>-179.999999</west>
+<east>0</east>
+</LatLonBox>
+</GroundOverlay>
+
+<GroundOverlay>
+<Icon>
+<href>http://data.bcinfo3.barrycarter.info/lcc_east_1km_trans.png</href>
 </Icon>
 <LatLonBox>
 <north>90</north>
 <south>-90</south>
 <east>180</east>
-<west>-180</west>
+<west>0</west>
 </LatLonBox>
 </GroundOverlay>
+
 </Document>
 </kml>

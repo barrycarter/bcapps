@@ -114,7 +114,8 @@ our(%d4mekeys) = list2hash("file", "Name", "Manufacturer", "UPC", "url",
 # put it here; it is protected by referer, however (not that this is
 # perfect)
 
-our($google_maps_key) = "AIzaSyCC5urLnHN5DKVEZti8umw5k2d_-OsHDMo";
+# our($google_maps_key) = "AIzaSyCC5urLnHN5DKVEZti8umw5k2d_-OsHDMo";
+our($google_maps_key) = "AIzaSyAGL_Xc8z1fTp8Na-stxE9u8ihnjEbkbbA";
 
 # HACK: not sure this is right way to do this
 our(%globopts);

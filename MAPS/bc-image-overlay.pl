@@ -5,6 +5,8 @@
 
 # TODO: allow scale/rotate/etc controls to be turned off
 
+# TODO: opacity (can't do easily w/ KML files)
+
 # sample URL: http://test.bcinfo3.barrycarter.info/bc-image-overlay.pl?center=35.1,-106.55&zoom=13&maptypeid=HYBRID&url=conus.kml&refresh=60
 
 require "/usr/local/lib/bclib.pl";

@@ -7,7 +7,10 @@
   body { height: 100%; margin: 0px; padding: 0px }
   #map_canvas { height: 100% }
 </style>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
+
+<!-- hardcoding google key is icky but harmless -->
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAGL_Xc8z1fTp8Na-stxE9u8ihnjEbkbbA">
 </script>
 <script type="text/javascript">
 
