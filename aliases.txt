@@ -308,3 +308,6 @@ alias timestamp "date +%Y%m%d.%H%M%S.%N.txt"
 
 # most recent file in directory
 alias lastfile "ls -t | head -1"
+
+# decimal radixes and values
+alias od "od -A d -t d1 \!*"

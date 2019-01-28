@@ -30,5 +30,7 @@ exclusions.txt: exclusions-commented.txt
 
 # bc-chunk-backup2 creates statlist.txt and filelist.txt
 # 100G restored to 10G on 5/8/18 as I resume non-hd backups
+# I run bc-chunk-backup2 repeatedly, so it has a higher CPU limit
+# same w/ bc-join-backup.pl
 filelist.txt: exclusions.txt backup0.txt
-	cpulimit -l 10 egrep -avf exclusions.txt backup0.txt | cpulimit -l 10 bc-join-backup.pl | cpulimit -l 10 bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
+	cpulimit -l 10 egrep -avf exclusions.txt backup0.txt | cpulimit -l 100 bc-join-backup.pl | cpulimit -l 100 bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
