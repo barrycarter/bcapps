@@ -23,4 +23,4 @@ DINK/bctest/story/DYNAMIC.c
 # this changes constantly, just need one copy though
 DINK/map.dat
 # no need to copy this into github
-BCINFO3/sites/DB/yamc.db
+yamc.db
