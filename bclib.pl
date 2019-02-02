@@ -582,6 +582,7 @@ Returns a list of hashes representing the results of $query on $db
 
 sub sqlite3hashlist {
   my($query,$db) = @_;
+  debug("QUERY: $query, DB: $db");
   my($raw) = sqlite3($query,$db);
   my($hashref) = {};
   my(@res) = ();
