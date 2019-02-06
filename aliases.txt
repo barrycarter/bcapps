@@ -81,6 +81,10 @@ alias bcinfo4 "screen -t BC4 ssh -i /home/barrycarter/.ssh/id_rsa.bc barrycar@bc
 
 alias bcinfo3sync "bc-mirror-server.pl --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO3/ bcinfo3; bc-mirror-server.pl --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCINFO3-PRIV bcinfo3"
 
+# 02 Feb 2019: for bcinfo4
+
+alias bcinfo4sync "bc-mirror-server.pl --user=barrycar --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/BCGIT/BCINFO4/ bcinfo4"
+
 # chmods all Perl scripts to +x (something I tend to be bad about)
 alias perlfix "find /home/barrycarter/PERL/ /home/barrycarter/BCGIT/ -iname '*.pl' | xargs chmod +x"
 

@@ -6,6 +6,7 @@
 # --remoteroot = mirror files to this directory on remote server (default "/")
 # --hash = use hashed mirror file, not pathwise mirror file
 # --ssh = use this command for the rsync, not the regular ssh (can be
+# --user = use this user, not root
 # used to supply different id files, for example)
 
 # TODO: assumes mirroring as root@ (VPS), which may be bad
@@ -13,7 +14,7 @@
 require "/usr/local/lib/bclib.pl";
 
 my($dir,$server) = @ARGV;
-defaults("remoteroot=/");
+defaults("remoteroot=/&user=root");
 
 unless ($dir=~m%^\/%) {die "dir must be full path, not $dir";}
 unless ($server) {die "Usage: $0 directory server";}
@@ -70,7 +71,7 @@ if ($globopts{dryrun}) {$opts = "-n";}
 
 if ($globopts{ssh}) {$globopts{ssh} = "-e '$globopts{ssh}'";};
 
-my($com)="rsync $globopts{ssh} --no-W -vv -P $opts -z -R -L --files-from=$mirfile.todo . root\@$server:$globopts{remoteroot}";
+my($com)="rsync $globopts{ssh} --no-W -vv -P $opts -z -R -L --files-from=$mirfile.todo . $globopts{user}\@$server:$globopts{remoteroot}";
 
 debug($com);
 my($out,$err,$res) = cache_command2($com);

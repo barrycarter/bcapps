@@ -14,7 +14,10 @@
 require "/usr/local/lib/bclib.pl";
 
 # defaults
-defaults("start=20150930&weights=200,190,180,160,150,120");
+# defaults("start=20150930&weights=200,190,180,160,150,120");
+
+# another try early 2019
+defaults("start=20190201&weights=210,200,190,180,160,150,120");
 
 # if --start is in "stardate" format, fix it to change dot to space
 # (str2time doesn't like stardate format)
