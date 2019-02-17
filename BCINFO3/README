@@ -346,6 +346,29 @@ cd ~/build
 wget http://dl.eff.org/certbot-auto
 chmod a+x certbot-auto
 
+: above fails
 
+cpan Crypt::LE
+
+: above fails
+
+: using https://gethttpsforfree.com/
+
+openssl genrsa 4096 > account.key
+
+openssl rsa -in account.key -pubout
+
+openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <
+(cat /etc/pki/tls/openssl.cnf <
+(printf "\n[SAN]\nsubjectAltName=DNS:terramapadventure.com,DNS:*.terramapadventure.com"))
+
+openssl req -new -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr
+
+: followed steps at https://gethttpsforfree.com/
+
+openssl dhparam -out dhparam.pem 4096
+
+# error is Starting lighttpd: 2019-02-06 14:43:15: (network.c.571)
+# SSL: couldn't read private key from '/etc/pki/tls/certs/chained.pem'
 
 

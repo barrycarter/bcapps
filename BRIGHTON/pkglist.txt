@@ -10,6 +10,10 @@ libcxx
 
 # system tools
 
+# below only because netlify.com lets you upload files using drag and
+# drop but not select from browser (decided against later)
+# nautilus
+
 ibus
 ibus-m17n
 cpulimit
@@ -567,6 +571,8 @@ aisleriot
 an
 
 # databases
+# mongodb
+mongodb-org
 mariadb-server
 mariadb
 postgresql

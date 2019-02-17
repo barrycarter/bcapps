@@ -315,3 +315,7 @@ alias lastfile "ls -t | head -1"
 
 # decimal radixes and values
 alias od "od -A d -t d1 \!*"
+
+# for the yamc proejct
+
+alias yamcsync "bc-mirror-server.pl --debug --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/yamcroot/ 167.99.95.147;"

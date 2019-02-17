@@ -167,7 +167,8 @@ for $i (glob("/home/barrycarter/ERR/*.inf")) {
 @zones = ( "Pago Pago", "Pacific/Pago_Pago", "PT", "US/Pacific", "MT",
 "US/Mountain", "CT", "US/Central", "ET", "US/Eastern", "GMT", "GMT",
 "Lagos", "Africa/Lagos", "Milan", "Europe/Rome", "Cairo", "Africa/Cairo",
-"Delhi", "Asia/Kolkata", "HongKong", "Asia/Hong_Kong", "Manila" =>
+"Delhi", "Asia/Kolkata", "Jakarta" => "Asia/Jakarta",
+"HongKong", "Asia/Hong_Kong", "Manila" =>
 "Asia/Manila", "Tokyo", "Asia/Tokyo", "Sydney" => "Australia/Sydney",
 "Auckland" => "Pacific/Auckland", "Chatam" => "Pacific/Chatham",
 "Samoa", "Pacific/Apia");

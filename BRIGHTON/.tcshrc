@@ -96,3 +96,6 @@ setenv CPATH "/usr/include/libgeotiff/"
 
 # for node
 setenv NODE_PATH "/home/user/:."
+
+# for Go (language) [forego is a funny pun]
+setenv GOPATH "/home/user/GO/"
