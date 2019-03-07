@@ -1,4 +1,7 @@
 # commands to run regularly for nagios
 
 # confirms my energy monitoring device's local webserver is running
-curl -s http://ted.local.lan/Footprints.html | zcat | grep 'TED 5000'
+
+# turned off 3/6/19 as 1) I go flat rate via arcadiapower and
+# 2) it's slightly broken and i don't want to fix it
+# curl -s http://ted.local.lan/Footprints.html | zcat | grep 'TED 5000'

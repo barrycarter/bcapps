@@ -47,6 +47,7 @@ Code URL: https://github.com/barrycarter/bcapps/blob/master/GEONAMES/
 Showcase: http://albuquerque.weather.94y.info/ gives Albuquerque
 current conditions for nearest weather station; in theory, any dotted
 city notation in place of Albuquerque should work
+TODO: Add sun/moon rise/set and dusk/dawn
 
 Subject: Closed Captioning
 Code URL: https://github.com/barrycarter/bcapps/blob/master/data/

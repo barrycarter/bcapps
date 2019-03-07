@@ -99,17 +99,27 @@ sub get_target {
   unless (-f $i) {debug("$i: not a file"); return();}
   unless (@x=stat($i)) {warn("$i: nostat, $!"); return();}
 
-  # find canonical directory for file
-  unless ($i=~m!/!) {$i="./$i";} # add slash if there isn't one already
-  if ($i=~m!^(/.*/)!) {
-    # given file via full path name
-    $aa=$1;
-  } elsif ($i=~m!^(.*/)!) {
-    # given file in current directory
-    $aa="$ENV{PWD}/$1";
-  } else {
-    warn("Can't find dir for $i");
-  }
+  # use realpath to find path (temporary force debug)
+  my($out, $err, $res) = cache_command2("realpath \"$i\"");
+  $globopts{debug} = 1;
+  debug("OUT: $out");
+  $out=~s%^(.*/)[^/]+$%$1%;
+  $aa = $out;
+  debug("DIR: $aa");
+  $globopts{debug} = 0;
+
+
+#   # find canonical directory for file
+#   unless ($i=~m!/!) {$i="./$i";} # add slash if there isn't one already
+#   if ($i=~m!^(/.*/)!) {
+#     # given file via full path name
+#     $aa=$1;
+#   } elsif ($i=~m!^(.*/)!) {
+#     # given file in current directory
+#     $aa="$ENV{PWD}/$1";
+#   } else {
+#     warn("Can't find dir for $i");
+#   }
 
   if ($aa=~m%^/tmp/%) {debug("$i: tmp file"); return();}
 

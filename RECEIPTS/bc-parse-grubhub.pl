@@ -4,8 +4,6 @@ require "/usr/local/lib/bclib.pl";
 
 my($data, $file) = cmdfile();
 
-# debug("DATA: $data");
-
 unless ($data=~s%<span>Ordered from</span><br/>\s*<span.*?>\s*(.*?)\s*</span>%%) {
   warn("NO MATCH REST NAME");
 }
@@ -13,20 +11,30 @@ unless ($data=~s%<span>Ordered from</span><br/>\s*<span.*?>\s*(.*?)\s*</span>%%)
 my($rest) = $1;
 
 unless (
-#	$data=~s%<span>Order Details</span><br/>\s*<span>(.*?)</span>%%
 	$data=~s%<span>Order Details</span><br/>\s*<span>(.*?)</span>\s*<br/><span><b>(.*?)</b></span>%%
-       ) {
-  warn "NO MATCH";
-} else {
-  debug("GOT: $1, $2, $3");
+       ) {warn("NO MATCH TIME/NUM");}
+
+my($time, $num) = ($1, $2);
+
+my($order);
+
+while ($data=~s%\s*(.*?)\s*<!-- (qty|item name|price) -->%%) {
+
+  my($value, $type) = ($1, $2);
+
+  $value=~s/\&nbsp;//;
+
+  $order .= "$value ";
+
+  if ($type eq "price") {$order .= "\n";}
+
 }
 
-die "TESTING";
+while ($data=~s%<td.*?>\s*(Service fee|Estimated sales tax|Tip)\s*</td>\s*<td.*?>\s*(.*?)\s*</td>%%) {
 
-unless ($data=~s%<span>Order Details</span><br/>\s*<span>(.*?)</span>\s*<span><b>(.*?)</b></span>%%s) {
-  warn("NO MATCH TIME/NUM");
+  debug("$1, $2, ALPHA");
 }
 
-my($time, $num) = $1, $2;
 
-debug("$rest/$time/$num");
+# debug("ORDER: $order");
+

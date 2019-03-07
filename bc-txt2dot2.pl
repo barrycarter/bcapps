@@ -19,10 +19,10 @@ for $i (split(/\n/, $data)) {
   # associate edges; no need to last entry, already handled by penultimate
   for ($j=0; $j<=$#neds-1; $j+=2) {
     # this is a node, and so is target
-    $nodes{"$neds[$j];"} = 1;
-    $nodes{"$neds[$j+2];"} = 1;
+    $nodes{qq%"$neds[$j]";%} = 1;
+    $nodes{qq%"$neds[$j+2]";%} = 1;
     # edge between them
-    $edges{qq%$neds[$j] -> $neds[$j+2] [label="$neds[$j+1]"];%} = 1;
+    $edges{qq%"$neds[$j]" -> "$neds[$j+2]" [label="$neds[$j+1]"];%} = 1;
   }
 }
 

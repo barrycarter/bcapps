@@ -40,5 +40,5 @@ scroll_right Right
 scroll_up Up
 scroll_down Down
 
-
-
+# action1 is now defined in my aliases as copy to tmp, so let C do this too
+action_1 C

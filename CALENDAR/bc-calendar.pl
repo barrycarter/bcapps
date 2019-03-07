@@ -11,6 +11,8 @@ require "/usr/local/lib/bclib.pl";
 
 defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant&monthsize=medium&moonstampfont=medium&moonstampcolor=255,0,0");
 
+# TODO: add emmys/grammys/oscars to calendar
+
 # font heights and widths for fly
 # TODO: put in bclib.pl?
 

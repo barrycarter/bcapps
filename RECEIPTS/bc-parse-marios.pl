@@ -3,6 +3,10 @@
 # useful only to me, parses the HTML version of Mario's Pizzeria
 # receipts so I can add them to my db
 
+warn "This program does NOT print order number/time, use with caution";
+
+# TODO: fix above
+
 require "/usr/local/lib/bclib.pl";
 
 my($all, $file) = cmdfile();

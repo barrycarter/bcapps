@@ -26,8 +26,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# as of 2/26/2019, I used fixed bill from arcadiapower.com, so will no
+# longer update this prog
+
 # last meter read date in mm/dd/yyyy format <h>(screw Europe!)</h>
-my($read) = "01/24/2019";
+my($read) = "02/25/2019";
 
 # TODO: cant get timezone working properly, so setting to -0600 (MDT) for now
 # changed to -0700 on 11/22/17 (a bit late)

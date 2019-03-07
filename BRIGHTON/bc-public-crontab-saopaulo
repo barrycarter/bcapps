@@ -322,7 +322,7 @@ XWIDTH=1600
 
 # off again on 18 Apr 2018 for more cleanup
 # back on 11 May 2018
-17 2 * * * date; /home/user/BCGIT/bc-xwd-cleanup.pl --debug; /home/user/BCGIT/bc-xwd-cleanup.pl --debug; date
+17 2 * * * date; /home/user/BCGIT/bc-xwd-cleanup.pl --debug; date; /home/user/BCGIT/bc-xwd-cleanup.pl --debug; date
 
 # just a test for width
 # * * * * * xmessage -geometry $XWIDTH this is only a test

@@ -9,6 +9,8 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/barrycarter/bc-private.pl";
 
+unless ($globopts{nosms}) {warn("Did you mean alarm2?");}
+
 # changed 23 Oct 2018 for flexible width
 defaults("width=1600");
 

@@ -2700,7 +2700,8 @@ sub osm_cache_bc {
   # $sha is legacy variable name; sha1sum no longer involved
   # NOTE: I had the call to sprintf completely messed up earlier :(
   # The -.005 is for rounding
-  my($sha) = sprintf("OSM-%.2f,%.2f",$lat-.005,$lon-.005);
+  # 0.7 added to get rid of 0.6 results
+  my($sha) = sprintf("OSM-0.7-%.2f,%.2f",$lat-.005,$lon-.005);
 
   # is it already cached in memory?
   if ($shared{osm}{$sha}) {return $shared{osm}{$sha};}
@@ -2710,9 +2711,14 @@ sub osm_cache_bc {
 
   # if file doesn't already exist, get it
   unless (-f "$dir/$sha") {
-    my($cmd) = sprintf("curl -o $dir/$sha 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon-.005, $lat-.005, $lon+.005, $lat+.005);    my($out, $err, $res) = cache_command($cmd);
+    my($cmd) = sprintf("curl -o $dir/$sha 'http://api.openstreetmap.org/api/0.6/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon-.005, $lat-.005, $lon+.005, $lat+.005);
+#    my($cmd) = sprintf("curl -Lo $dir/$sha 'http://api.openstreetmap.org/api/0.7/map/?bbox=%.2f,%.2f,%.2f,%.2f'", $lon-.005, $lat-.005, $lon+.005, $lat+.005);
+    debug("CMD: $cmd");
+    debug("OUT: $out");
+    my($out, $err, $res) = cache_command($cmd);
   }
 
+  debug("Returning cached info");
   $shared{osm}{$sha} = read_file("$dir/$sha");
   return $shared{osm}{$sha};
 }
