@@ -170,9 +170,10 @@ alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 
 # alias feh "feh -p -. -x --draw-tinted -K . -G \!*"
 # alias feh "feh -. -x --draw-tinted -K . -G \!*"
 # changed 3/7/19 to allow instant copying
-alias feh "feh -. -x --draw-tinted -K . --action1 ';[copy]cp %f /tmp/fehpic.jpg' \!*"
+# alias feh "feh -. -x --draw-tinted -K . --action1 ';[copy]cp %f /tmp/fehpic.jpg' \!*"
 # testing
 # alias feh "feh -. -x --draw-tinted -K . --action1 'echo %f %F %n ' \!*"
+alias feh "feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
 
 alias waitpid bc-waitpid.pl
 
@@ -327,3 +328,4 @@ alias yamcsync "bc-mirror-server.pl --debug --ssh='ssh -i /home/barrycarter/.ssh
 # for the fusion project
 
 alias fusiongit "pushd .; cd /mnt/villa/user/20190226/a-1-family-furniture; git add .; git commit; git pull -v; git push origin master; popd"
+

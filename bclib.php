@@ -181,4 +181,13 @@ function sqlite3_command ($query,$db){
   return($aa);
 }
 
+// pend: prepend and append characters to an array
+
+function pend($l,$pp,$ap) {
+  while(list($key,$val)=each($l)) {
+    $l[$key]=$pp.$val.$ap;
+  }
+  return($l);
+}
+
 ?>
