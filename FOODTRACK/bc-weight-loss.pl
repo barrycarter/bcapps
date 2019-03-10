@@ -223,7 +223,9 @@ MARK
 
 close(B);
 
+# "gnuplot -persist" does not allow mouse-based zooming, so changing?
 unless ($globopts{nograph}) {system("gnuplot -persist /tmp/bwl.plt");}
+# unless ($globopts{nograph}) {system("gnuplot /tmp/bwl.plt &");}
 
 =item mathematica
 
