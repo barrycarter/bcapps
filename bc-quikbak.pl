@@ -101,7 +101,7 @@ sub get_target {
 
   # use realpath to find path (temporary force debug)
   my($out, $err, $res) = cache_command2("realpath \"$i\"");
-  $globopts{debug} = 1;
+#  $globopts{debug} = 1;
   debug("OUT: $out");
   $out=~s%^(.*/)[^/]+$%$1%;
   $aa = $out;

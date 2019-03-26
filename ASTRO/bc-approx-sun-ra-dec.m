@@ -11,6 +11,114 @@ We can get much better precision by adjusting this number using the [Equation of
 
 </writeup>
 
+*)
+
+(* work below 26 Mar 2019 *)
+
+(* math2 bc-astro-formulas.m *)
+
+temp0734 = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
+"Number", "RecordLists" -> True], 0];
+
+dates = Select[temp0734, #[[2]] <= 2466154 &];
+
+ras = Transpose[dates][[3]];
+decs = Transpose[dates][[4]];
+
+diffra0 = Differences[ras];
+
+diffras = Table[If[i < -Pi, i+2*Pi, i], {i, diffra0}];
+
+ListPlot[superleft[diffras, 2], PlotRange -> All]
+
+ListPlot[superleft[decs, 2], PlotRange -> All]
+
+(* about 5*10^-6 radians for ra, 6/1000 radian for dec *)
+
+rad0[t_] = superfour[diffras,2][t]
+
+ra0[t_] = Mod[Chop[Integrate[rad0[t], t]], 2*Pi]
+
+temp0752 = Table[ras[[i]] - ra0[i], {i, 1, Length[ras]}];
+
+temp0753 = Table[If[i < 0, i+2*Pi, i], {i, temp0752}];
+temp0754 = Mean[temp0753]
+
+ra1[t_] = Mod[Chop[Integrate[rad0[t], t]] + 4.895320853488509, 2*Pi]
+
+ra1[t_] = Chop[Integrate[rad0[t], t]] + 4.895320853488509
+
+temp0755 = Table[ras[[i]] - ra1[i], {i, 1, Length[ras]}];
+
+(* ra1 is within 2/1000 radian = 0.11 degree *)
+
+(* t is in julian hours - 1 from epoch *)
+
+FindRoot[ra1[t] == Pi, {t, 2400}]
+
+(* 6366.03 is result *)
+
+N[Take[ras, {6365, 6367}]-Pi]
+
+(* very close to true equinox *)
+
+(* convert unix time to position in array *)
+
+unix2pos[t_] = (t-946728000+3600)/3600
+
+N[unix2pos[1553609788]]
+
+168579, so 
+
+N[temp0734[[168579]]] // FullForm
+
+FromJulianDate[2.458569083333*10^6]
+
+is correct to nearest hour
+
+ra[t_] = FullSimplify[ra1[unix2pos[t]], t>0]
+
+dec0[t_] = superfour[decs, 2][t]
+
+dec[t_] = FullSimplify[dec0[unix2pos[t]], t>0]
+
+
+
+
+
+
+
+
+
+
+
+
+(*
+
+2.4661545 or 2466154 rounded
+
+
+
+In[16]:= FromJulianDate[temp0734[[1,2]]]                                        
+
+Out[16]= DateObject[{2000, 1, 1, 12, 0, 0.}, Instant, Gregorian, 0.]
+
+In[17]:= FromJulianDate[temp0734[[-1,2]]]                                       
+
+Out[17]= DateObject[{2099, 12, 31, 18, 0, 0.}, Instant, Gregorian, 0.]
+
+*)
+
+
+
+
+
+
+
+
+
+(* end work 26 Mar 2019 *)
+
 using mathematica directly for elevation at 0,0 location
 
 AstronomicalData["Sun", "Azimuth"]

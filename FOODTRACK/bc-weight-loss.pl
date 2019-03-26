@@ -17,7 +17,8 @@ require "/usr/local/lib/bclib.pl";
 # defaults("start=20150930&weights=200,190,180,160,150,120");
 
 # another try early 2019
-defaults("start=20190201&weights=210,200,190,180,160,155,150,120");
+# defaults("start=20190201&weights=210,200,190,180,160,155,150,120");
+defaults("start=20190201&weights=210,200,180,155,120");
 
 # if --start is in "stardate" format, fix it to change dot to space
 # (str2time doesn't like stardate format)
@@ -218,14 +219,15 @@ plot "/tmp/bwl.txt" title "Weight" with linespoints, \\
 "/tmp/bwl3.txt" title "LogReg" with linespoints ls 2, \\
 "/tmp/bwl4.txt" title "Linear" with linespoints ls 3, \\
 "/tmp/bwl5.txt" title "Log" with linespoints ls 4
+pause mouse close
 MARK
 ;
 
 close(B);
 
 # "gnuplot -persist" does not allow mouse-based zooming, so changing?
-unless ($globopts{nograph}) {system("gnuplot -persist /tmp/bwl.plt");}
-# unless ($globopts{nograph}) {system("gnuplot /tmp/bwl.plt &");}
+# unless ($globopts{nograph}) {system("gnuplot -persist /tmp/bwl.plt");}
+unless ($globopts{nograph}) {system("gnuplot /tmp/bwl.plt &");}
 
 =item mathematica
 

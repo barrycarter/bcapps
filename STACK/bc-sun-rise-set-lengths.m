@@ -225,7 +225,9 @@ temp0917 = Transpose[temp1044][[4]];
 
 x = number of hours since 11am on 1 Jan 2000 (hmmmm)
 
+temp2042 = Transpose[temp1044][[3]];
 
+temp2043 = Differences[temp2042];
 
 FromDate[FromJulianDate[jd][[1]]]
 

@@ -138,6 +138,7 @@ our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
 # --keeptemp: keep temporary files
 # --xmessage: pop up xmessage when program ends
 # --bgend: write to background image when program ends
+# --nodetach: don't detach from the terminal even if program normally would
 
 # largest possible path (really?)
 

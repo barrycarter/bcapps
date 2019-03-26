@@ -18,9 +18,17 @@ while ($data=~s%<li.*?>(.*?)</li>%%) {
 
   unless (@list) {next;}
 
-  debug(toOz($list[1]));
+  debug("LIST", @list);
 
-  if (@list) {print "$list[2] $list[0] $list[1]\n";}
+  my($price, $oz, $prod) = @list;
+  $oz = toOz($oz);
+  $price =~s/\$//;
+
+  my($priceperlb) = sprintf("%.2f", 16*$price/$oz);
+
+  print join("\t", $priceperlb, $prod, $price, $oz),"\n";
+
+#  if (@list) {print "$list[2] $list[0] $list[1]\n";}
 }
 
 
@@ -35,6 +43,11 @@ sub toOz {
 
   # same with x oz, n ct
   if ($quant=~/^([\s\d\.]+)oz,\s*\d+\s*ct$/) {return $1;}
+
+  # for lbs
+  if ($quant=~/^\s*(\d+)\s+(lb|lb tray|lb roll)$/) {return 16*$1;}
+
+  if ($quant eq "per lb") {return 16;}
   
   debug("QUANT: $quant");
 }

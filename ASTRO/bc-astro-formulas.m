@@ -13,6 +13,7 @@ Time units used:
   - gmst: Greenwich mean sidereal time (radians)
   - time: sidereal time (radians) [2*pi ~ 23h56m clock time]
   - doy: day of year (0-366), days since Jan 1 0h UT
+  - unixtime: number of seconds since Jan 01 1970 00:00:00 UTC
 
 Angular units used:
 
@@ -98,6 +99,10 @@ Modifier:
 </docs>
 
 <formulas>
+
+unixtime2mjd[t_] = (t-946728000)/86400
+
+mjd2GMST[d_] = Rationalize[(18.697374558 + 24.06570982441908*d)/12*Pi];
 
 raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
@@ -294,7 +299,6 @@ Plot[decLatAlt2az[eclipticFixed[], lat*Degree, -5/6*Degree][[2]]/Degree,
  {lat, -60, 60}]
 
 decLatAlt2az[eclipticFixed[], lat, -5/6*Degree]
-
 
 raDecLatLonGMST2azAlt[ra, dec, lat, lon,
  raDecLatLonAlt2GMST[ra,dec,lat,lon,0][[1]]][[1]]
