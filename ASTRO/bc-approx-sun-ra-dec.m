@@ -23,23 +23,31 @@ loy = 24*365.2425;
 
 decf = Interpolation[decs]
 
-n = 3;
+n = 4;
 
 f[x_] = c[0] + Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
 
 f[x_] = c[0] + Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x] 
  + e[i]*(x-Length[decs]/2)*Cos[h[i] - i*2*Pi/loy*x], {i,1,n}];
 
+f[x_] = c[0] + e[1]*(x-Length[decs]/2)*Cos[h[1]-1*2*Pi/loy*x] + 
+        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
 vars = Flatten[{c[0], Table[{c[i], d[i], e[i], h[i]}, {i,1,n}]}];
+
+vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
 
 ff = FindFit[decs, f[x], vars, x];
 
-g[x_] = f[x] /. ff;
+g[x_] = N[f[x] /. ff];
 
 Plot[{(g[x]-decf[x])/Degree*60}, {x, 1, Length[decs]}, PlotRange->All]
 
 Plot[ ((g[x]-decf[x])/Degree*60) / (x-Length[decs]/2), 
  {x, 1, Length[decs]}, PlotRange->All]
+
+(* above = w/in 30' of arc for n = 1, 10' of arc for n=2, 0.5 for n = 3  *)
+
 
 
 
