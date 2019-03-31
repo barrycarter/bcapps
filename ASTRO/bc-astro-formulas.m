@@ -104,6 +104,8 @@ unixtime2mjd[t_] = (t-946728000)/86400
 
 mjd2GMST[d_] = Rationalize[(18.697374558 + 24.06570982441908*d)/12*Pi];
 
+unixtime2GMST[t_] = mjd2GMST[unixtime2mjd[t]];
+
 raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
   -(Cos[dec]*Sin[gmst + lon - ra])], 

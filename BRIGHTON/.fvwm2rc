@@ -59,6 +59,9 @@ Style "*xclock*" NoTitle, NoHandles, BorderWidth 0
 Style "xmessage" NoTitle, NoHandles, Sticky
 Style "*rdesktop*" NoTitle, NoHandles, BorderWidth 0
 
+# below added 26 Mar 2019
+Style "*zoom*" Sticky
+
 # if a window names itself "sticky", this makes it sticky
 Style "*sticky*" NoTitle, NoHandles, Sticky
 

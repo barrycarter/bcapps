@@ -483,6 +483,7 @@ libzip-devel
 # math/science tools
 readosm
 wgrib
+wgrib2
 geos
 geos-devel
 geos-python

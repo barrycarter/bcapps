@@ -17,6 +17,37 @@ We can get much better precision by adjusting this number using the [Equation of
 
 (* math2 bc-astro-formulas.m *)
 
+(* TODO: make length of year more accurate *)
+
+loy = 24*365.2425;
+
+decf = Interpolation[decs]
+
+n = 3;
+
+f[x_] = c[0] + Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
+f[x_] = c[0] + Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x] 
+ + e[i]*(x-Length[decs]/2)*Cos[h[i] - i*2*Pi/loy*x], {i,1,n}];
+
+vars = Flatten[{c[0], Table[{c[i], d[i], e[i], h[i]}, {i,1,n}]}];
+
+ff = FindFit[decs, f[x], vars, x];
+
+g[x_] = f[x] /. ff;
+
+Plot[{(g[x]-decf[x])/Degree*60}, {x, 1, Length[decs]}, PlotRange->All]
+
+Plot[ ((g[x]-decf[x])/Degree*60) / (x-Length[decs]/2), 
+ {x, 1, Length[decs]}, PlotRange->All]
+
+
+
+
+
+FindFit[decs, c[1]*Cos[d[1] - 2*Pi/365.2427/24*x], {c[1], d[1]}, x]
+
+
 temp0734 = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
 "Number", "RecordLists" -> True], 0];
 
@@ -82,6 +113,28 @@ dec0[t_] = superfour[decs, 2][t]
 
 dec[t_] = FullSimplify[dec0[unix2pos[t]], t>0]
 
+(* tests on 27 Mar 2019 *)
+
+(* t = 1553697010 *)
+
+abqsun[t_] = raDecLatLonGMST2azAlt[ra[t], dec[t], 35.05*Degree, -106.5*Degree,
+unixtime2GMST[t]];
+
+abqel[t_] = abqsun[t][[2]]
+
+Plot[abqsun[t][[2]], {t, 1553666400, 1553666400+86400}]
+
+FindRoot[abqsun[t][[2]] == -50/60*Degree, {t, 1553666400, 1553666400+86400}]
+
+Round[1.5556768699307582*10^9]
+
+brent[abqel, 1553666400, 1553666400+43200]
+
+Clear[t]
+
+FindRoot[raDecLatLonGMST2azAlt[ra[t], dec[t], 35.05*Degree, -106.5*Degree, 
+unixtime2GMST[t]], {t, 1553697010}]
+
 
 
 
@@ -108,6 +161,26 @@ In[17]:= FromJulianDate[temp0734[[-1,2]]]
 Out[17]= DateObject[{2099, 12, 31, 18, 0, 0.}, Instant, Gregorian, 0.]
 
 *)
+
+(* max bad dec = 5500 is pretty bad elt wise *)
+
+N[decs[[5500]]]/Degree is 13.1901 deg
+
+2451774 = jd
+
+FromJulianDate[2451774]
+
+so aug 17th ish of 2000
+
+jaklat = -6.18*Degree
+jaklon = 106.83*Degree
+
+jakartaalt[t_] = raDecLatLonGMST2azAlt[ra[t], dec[t], jaklat, jaklon, 
+unixtime2GMST[t]][[2]]
+
+
+
+
 
 
 
