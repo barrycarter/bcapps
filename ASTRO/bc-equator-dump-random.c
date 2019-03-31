@@ -28,8 +28,8 @@ int main (int argc, char **argv) {
   double t;
 
   // if insufficient argc, complain, don't just seg fault
-  if (argc != 5) {
-    printf("Usage: observed observer syear eyear\n");
+  if (argc != 6) {
+    printf("Usage: observed observer syear eyear repeats\n");
     exit(-1);
   }
 
@@ -37,6 +37,7 @@ int main (int argc, char **argv) {
   int obs = atoi(argv[2]);
   double syear = atof(argv[3]);
   double eyear = atof(argv[4]);
+  int repeats = atoi(argv[5]);
 
   // TODO: this needs to be a debugging statement, not actually printed, confuses fly
   // printf("YEAR: %f to %f\n", syear,eyear);
@@ -45,7 +46,7 @@ int main (int argc, char **argv) {
   SpiceDouble v[3];
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  for (i=0; i<1000; i++) {
+  for (i=0; i< repeats; i++) {
 
     t = (syear-2000.)*31556952 + (eyear-syear)*31556952*1.D*rand()/RAND_MAX;
 

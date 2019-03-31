@@ -296,8 +296,69 @@ In[24]:= FromJulianDate[data[[1,2]]]
 
 Out[24]= DateObject[{2000, 1, 1, 12, 0, 0.}, Instant, Gregorian, 0.]
 
+(* new work below 31 Mar 2019 *)
+
+data = ReadList["/mnt/villa/user/20190331/sun-2000-2039.txt", "Number",
+"RecordLists" -> True];
+
+(* from 2000-01-01 noon to 2099-12-31 noon *)
+
+FromJulianDate[data[[1,2]]]
+FromJulianDate[data[[-1,2]]]
+
+(* ugly data cleaning *)
+data = Drop[data, -40];
 
 
+(* now 1999-12-31 noon to 2039-12-31 noon *)
+
+decs = Transpose[data][[4]];
+
+loy = 365.242190402*24;
+
+decf = Interpolation[decs];
+
+(* n = 4, 36 arcseconds so using it *)
+
+n = 4;
+
+f[x_] = c[0] + e[1]*(x-Length[decs]/2)*Cos[h[1]-1*2*Pi/loy*x] + 
+        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
+f[x_] = c[0] + e[1]*(x)*Cos[h[1]-1*2*Pi/loy*x] + 
+        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
+vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
+
+ff = FindFit[decs, f[x], vars, x];
+
+g[x_] = N[f[x] /. ff];
+
+Plot[{(g[x]-decf[x])/Degree*60}, {x, 1, Length[decs]}, PlotRange->All]
+
+g[x_] = 
+
+-0.00660034682304194 + 0.00005943126027014166*
+  Cos[0.1382121231084053 + 0.0007167829858620732*x] - 
+ 3.3898637221626486*^-10*x*Cos[0.1382121231084053 + 0.0007167829858620732*x] + 
+ 0.4059817975334219*Cos[0.16472457702329088 + 0.0007167829858620732*x] + 
+ 0.006650307408393432*Cos[0.08799218361323846 + 0.0014335659717241464*x] + 
+ 0.0029884502510170584*Cos[0.4751129080198563 + 0.0021503489575862194*x] - 
+ 0.0001423860679394147*Cos[3.547005404616773 + 0.0028671319434482928*x]
+
+(* checking vs random times, not hourly *)
+
+testdata = ReadList["/tmp/randcheck.txt", "Number", "RecordLists" -> True]; 
+
+change[d_] = 24*d-5.8837056`*^7+1
+
+testtab = Table[g[change[i[[2]]]] - i[[4]], {i, testdata}];
+
+Max[Abs[testtab]]
+
+(* 0.000143475 = 30 arc seconds, 32 arcsecs a bit out *)
+
+f1047[x_] = g[x][[2]]
 
 
 

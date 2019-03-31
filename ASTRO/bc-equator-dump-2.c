@@ -43,13 +43,15 @@ int main (int argc, char **argv) {
   SpiceDouble v[3];
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  for (i=(syear-2000.)*31556952; i<=(eyear-2000.)*31556952; i+=3600) {
+  // below allows one day of tolerance
+  for (i=(syear-2000.)*31556952-86400; i<=(eyear-2000.)*31556952+86400; i+=3600) {
 
     // planet equatorial coords as viewed from earth, converted to spherical
     spkezp_c(planet,i,"EQEQDATE","NONE",obs,v,&lt);
     recrad_c(v,&range,&ra,&dec);
-
-    printf("%d %f %f %f %f\n", planet, et2jd(i), ra, dec,
+    
+    // 8 decimal digits is sort of a compromise
+    printf("%d %.8f %.8f %.8f %.8f\n", planet, et2jd(i), ra, dec,
 	   earthangle(i,planet,10));
 
   }
