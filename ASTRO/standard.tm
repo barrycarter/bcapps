@@ -3,8 +3,7 @@
 TEMP REMOVED:
 
 '/home/user/SPICE/KERNELS/earth_720101_070426.bpc',
-'/home/user/SPICE/KERNELS/earth_000101_160314_151222.bpc',
-'/home/user/SPICE/KERNELS/earth_070425_370426_predict.bpc',
+'/home/user/SPICE/KERNELS/earth_070425_370426_predict.bpc'
 
 REMOVED FOR TESTING:
 
@@ -31,5 +30,6 @@ KERNELS_TO_LOAD = (
 '/home/user/SPICE/KERNELS/earth_070425_370426_predict-alt-source.bpc',
 '/home/barrycarter/BCGIT/ASTRO/eqeqdate.tf',
 '/home/user/SPICE/KERNELS/earth_assoc_itrf93.tf',
-'/home/user/SPICE/KERNELS/gm_de431.tpc'
+'/home/user/SPICE/KERNELS/gm_de431.tpc',
+'/home/user/SPICE/KERNELS/earth_000101_160314_151222.bpc'
 )
