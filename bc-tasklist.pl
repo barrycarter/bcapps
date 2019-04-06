@@ -87,7 +87,7 @@ if ($action=~/^(end|finish)$/i) {
 
 if ($action=~/^list$/i) {
 
-  ($out, $err, $res) = cache_command2("find . -iname '*.task' -printf \'%T\@ %f\n\' | sort -n");
+  ($out, $err, $res) = cache_command2("find . -maxdepth 1 -iname '*.task' -printf \'%T\@ %f\n\' | sort -n");
 
   for $i (split(/\n/, $out)) {
 

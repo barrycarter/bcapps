@@ -307,7 +307,7 @@ FromJulianDate[data[[1,2]]]
 FromJulianDate[data[[-1,2]]]
 
 (* ugly data cleaning *)
-data = Drop[data, -40];
+data = Drop[data, -41];
 
 
 (* now 1999-12-31 noon to 2039-12-31 noon *)
@@ -318,12 +318,16 @@ loy = 365.242190402*24;
 
 decf = Interpolation[decs];
 
+temp0835 = Table[{i/Length[decs], decs[[i]]}, {i,1, Length[decs]}];
+xp = Table[x^i, {i,0,99}];
+temp0836[x_] = Fit[temp0835, xp, x]
+temp0837[x_] = Interpolation[temp0835][x]
+Plot[temp0837[x] - temp0836[x], {x,0,1}]
+
+
 (* n = 4, 36 arcseconds so using it *)
 
 n = 4;
-
-f[x_] = c[0] + e[1]*(x-Length[decs]/2)*Cos[h[1]-1*2*Pi/loy*x] + 
-        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
 
 f[x_] = c[0] + e[1]*(x)*Cos[h[1]-1*2*Pi/loy*x] + 
         Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
@@ -332,19 +336,24 @@ vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
 
 ff = FindFit[decs, f[x], vars, x];
 
+f0827 = Fit[decs, xp, x];
+
+f0828[x_] = N[f0827]
+
+Plot[{(f0828[x]-decf[x])/Degree*60}, {x, 1, Length[decs]}, PlotRange->All]
+
 g[x_] = N[f[x] /. ff];
 
 Plot[{(g[x]-decf[x])/Degree*60}, {x, 1, Length[decs]}, PlotRange->All]
 
 g[x_] = 
 
--0.00660034682304194 + 0.00005943126027014166*
-  Cos[0.1382121231084053 + 0.0007167829858620732*x] - 
- 3.3898637221626486*^-10*x*Cos[0.1382121231084053 + 0.0007167829858620732*x] + 
- 0.4059817975334219*Cos[0.16472457702329088 + 0.0007167829858620732*x] + 
- 0.006650307408393432*Cos[0.08799218361323846 + 0.0014335659717241464*x] + 
- 0.0029884502510170584*Cos[0.4751129080198563 + 0.0021503489575862194*x] - 
- 0.0001423860679394147*Cos[3.547005404616773 + 0.0028671319434482928*x]
+0.006600347081705735 - 0.4060412089312136*
+  Cos[24.96802053223509 - 0.0007167829858620732*x] + 
+ 3.389951327804244*^-10*x*Cos[0.13820827714442324 + 0.0007167829858620732*x] - 
+ 0.006650306895424216*Cos[0.0879921938557077 + 0.0014335659717241464*x] + 
+ 0.002988449799865202*Cos[3.6167056463110376 + 0.0021503489575862194*x] + 
+ 0.0001423856004896973*Cos[3.547006960283199 + 0.0028671319434482928*x]
 
 (* checking vs random times, not hourly *)
 
@@ -358,7 +367,21 @@ Max[Abs[testtab]]
 
 (* 0.000143475 = 30 arc seconds, 32 arcsecs a bit out *)
 
-f1047[x_] = g[x][[2]]
+jd2unix[d_] = (d-2451545.0)*86400 + 946728000
+
+unix2jd[t_] = (t-946728000)/86400 + 2451545
+
+h[t_] = Expand[Simplify[N[g[change[unix2jd[t]]]]]]
+
+
+
+h[t_] = Chop[Simplify[g[change[unix2jd[t]]], t>0]]
+
+
+
+
+
+
 
 
 

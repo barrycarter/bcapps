@@ -59,8 +59,14 @@ Style "*xclock*" NoTitle, NoHandles, BorderWidth 0
 Style "xmessage" NoTitle, NoHandles, Sticky
 Style "*rdesktop*" NoTitle, NoHandles, BorderWidth 0
 
-# below added 26 Mar 2019
+# below added 26 Mar 2019 (for zoom)
 Style "*zoom*" Sticky
+
+# below added 02 Apr 2019 (for Chromium)
+Style "*chrom*" Sticky
+
+# below added 05 Apr 2019 (for Visual Studio)
+Style "*Studio*" Sticky
 
 # if a window names itself "sticky", this makes it sticky
 Style "*sticky*" NoTitle, NoHandles, Sticky

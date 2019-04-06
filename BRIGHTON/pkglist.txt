@@ -14,6 +14,7 @@ libcxx
 # drop but not select from browser (decided against later)
 # nautilus
 
+snapd
 ibus
 ibus-m17n
 cpulimit
