@@ -15,6 +15,8 @@
 
 double bc_elev(double lat, double lon, double et, char *target) {
 
+  printf("GOT: %f %f %f %s\n", lat, lon, et, target);
+
   double pos[3], radii[3], normal[3], state[3], lt;
   int n;
 
@@ -33,18 +35,20 @@ double bc_elev(double lat, double lon, double et, char *target) {
   // position of Sun in ITRF93
   spkcpo_c("Sun", et, "ITRF93", "OBSERVER", "CN+S", pos, "Earth", "ITRF93", state,  &lt);
 
-  return dpr_c()*(halfpi_c() - vsep_c(state,  normal));
+  double elev =  dpr_c()*(halfpi_c() - vsep_c(state,  normal));
+
+  printf("COMPUTED, lt is: %f, n is: %d\n", lt, n);
+
+  return elev;
 }
 
 int main (int argc, char **argv) {
 
-  double lat, lon, time, elev;
+  double lat, lon, time;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   for (int i=0; i< 100000; i++) {
-
-    printf("ALPHA\n");
 
     lat = pi_c()*rand()/RAND_MAX-halfpi_c();
     lon = twopi_c()*rand()/RAND_MAX-pi_c();
@@ -56,9 +60,12 @@ int main (int argc, char **argv) {
     lat = 0.611738;
     lon = -1.85878;
     time = 1554616800+i;
-    elev = bc_elev(lat, lon, unix2et(time), "10");
+    printf("ALPHA\n");
 
-    printf("%f,%f,%f,%f\n", lat, lon, time, elev);
+    double elev = bc_elev(lat, lon, unix2et(time), "10");
+    printf("RETURN\n");
+
+    //    printf("%f,%f,%f,%f\n", lat, lon, time, elev);
   }
 }
 
