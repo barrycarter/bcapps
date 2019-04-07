@@ -17,7 +17,7 @@ double bc_elev(double lat, double lon, double et, char *target) {
 
   printf("GOT: %f %f %f %s\n", lat, lon, et, target);
 
-  double pos[3], radii[3], normal[3], state[3], lt;
+  double pos[3], radii[3], normal[3], state[6], lt;
   int n;
 
   // the Earth's 3 radii
@@ -59,10 +59,13 @@ int main (int argc, char **argv) {
     // failing badly, so testing w/ knownish values
     lat = 0.611738;
     lon = -1.85878;
-    time = 1554616800+i;
+    time = 1554616800.+i;
     printf("ALPHA\n");
 
-    double elev = bc_elev(lat, lon, unix2et(time), "10");
+    double utime = unix2et(time);
+    printf("UTIME: %f\n", utime);
+    //    double elev = bc_elev(lat, lon, unix2et(time), "10");
+    double elev = bc_elev(lat, lon, time-946728000., "10");
     printf("RETURN\n");
 
     //    printf("%f,%f,%f,%f\n", lat, lon, time, elev);
