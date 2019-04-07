@@ -13,7 +13,8 @@ Time units used:
   - gmst: Greenwich mean sidereal time (radians)
   - time: sidereal time (radians) [2*pi ~ 23h56m clock time]
   - doy: day of year (0-366), days since Jan 1 0h UT
-  - unixtime: number of seconds since Jan 01 1970 00:00:00 UTC
+  - unix: number of seconds since Jan 01 1970 00:00:00 UTC
+  - et: ephemeris time, but not including leap seconds
 
 Angular units used:
 
@@ -100,11 +101,46 @@ Modifier:
 
 <formulas>
 
-unixtime2mjd[t_] = (t-946728000)/86400
+(* this formula does NOT include leap seconds *)
+
+et2unix[et_] = et+946728000;
+
+(* 2 approx functions of unix date (time/86400), accurate to 1 minute between 2000 and 2040 *)
+
+approxSolarDec[d_] = 
+
+0.006600347081705735 + 0.0001423856004896973* Cos[750.3796732291627 -
+0.06881116664275902*d] + 0.002988449799865202*Cos[561.8283044957733 -
+0.051608374982069265*d] - 0.006650306895424216*Cos[376.8753479008672 -
+0.03440558332137951*d] + (-0.00008914046514027652 +
+8.135883186730187*^-9*d)* Cos[188.34346177021703 -
+0.017202791660689755*d] - 0.4060412089312136*Cos[213.44969057959656 -
+0.017202791660689755*d];
+
+approxSolarRA[d_] =
+
+-183.60463065117156 + 0.017202794912315095*d + (-0.0018008266443874203
+- 2.9411763351419828*^-8*d)* Cos[0.017202791660689755*d] +
+0.015021735819525052* Cos[0.03440558332137951*d] +
+0.0003875255420428442* Cos[0.051608374982069265*d] +
+0.0006145014212268023* Cos[0.06881116664275902*d] +
+(0.032088399441517666 - 3.01996346144518*^-9*d)*
+Sin[0.017202791660689755*d] + 0.040607038132426936*
+Sin[0.03440558332137951*d] + 0.0013302197369213912*
+Sin[0.051608374982069265*d] +
+0.0007332171043171772*Sin[0.06881116664275902*d];
+
+geocentricLatitude2geodeticLatitude[x_] =  ArcTan[1.0033640898209764*Tan[x]];
+
+unix2mjd[t_] = (t-946728000)/86400;
+
+jd2mjd[jd_] = jd-2451545;
+
+mjd2unix[mjd_] = mjd*86400 + 946728000;
+
+jd2unix[jd_] = mjd2unix[jd2mjd[jd]];
 
 mjd2GMST[d_] = Rationalize[(18.697374558 + 24.06570982441908*d)/12*Pi];
-
-unixtime2GMST[t_] = mjd2GMST[unixtime2mjd[t]];
 
 raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 

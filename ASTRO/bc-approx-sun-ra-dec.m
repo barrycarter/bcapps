@@ -13,6 +13,38 @@ We can get much better precision by adjusting this number using the [Equation of
 
 *)
 
+<formulas>
+
+(* as functions of unix date (time/86400) *)
+
+approxSolarDec[d_] = 
+
+0.006600347081705735 + 0.0001423856004896973* Cos[750.3796732291627 -
+0.06881116664275902*d] + 0.002988449799865202*Cos[561.8283044957733 -
+0.051608374982069265*d] - 0.006650306895424216*Cos[376.8753479008672 -
+0.03440558332137951*d] + (-0.00008914046514027652 +
+8.135883186730187*^-9*d)* Cos[188.34346177021703 -
+0.017202791660689755*d] - 0.4060412089312136*Cos[213.44969057959656 -
+0.017202791660689755*d];
+
+approxSolarRA[d_] =
+
+-183.60463065117156 + 0.017202794912315095*d + (-0.0018008266443874203
+- 2.9411763351419828*^-8*d)* Cos[0.017202791660689755*d] +
+0.015021735819525052* Cos[0.03440558332137951*d] +
+0.0003875255420428442* Cos[0.051608374982069265*d] +
+0.0006145014212268023* Cos[0.06881116664275902*d] +
+(0.032088399441517666 - 3.01996346144518*^-9*d)*
+Sin[0.017202791660689755*d] + 0.040607038132426936*
+Sin[0.03440558332137951*d] + 0.0013302197369213912*
+Sin[0.051608374982069265*d] +
+0.0007332171043171772*Sin[0.06881116664275902*d];
+
+
+geocentricLatitude2geodeticLatitude[x_] =  ArcTan[1.0033640898209764*Tan[x]]
+
+</formulas>
+
 (* work below 26 Mar 2019 *)
 
 (* math2 bc-astro-formulas.m *)
@@ -377,13 +409,79 @@ h[t_] = Expand[Simplify[N[g[change[unix2jd[t]]]]]]
 
 h[t_] = Chop[Simplify[g[change[unix2jd[t]]], t>0]]
 
+(* work below 6 Apr 2019 *)
+
+data = ReadList["/mnt/villa/user/20190331/sun-2000-2039.txt", "Number",
+"RecordLists" -> True];
+
+(* ugly data cleaning *)
+data = Drop[data, -41];
+
+(* from 2000-01-01 noon to 2099-12-31 noon *)
+
+FromJulianDate[data[[1,2]]]
+FromJulianDate[data[[-1,2]]]
+
+(* now 1999-12-31 noon to 2039-12-31 noon *)
+
+ras = Transpose[data][[3]];
+
+rasf = Interpolation[ras];
+
+radiffs = Mod[Differences[Transpose[data][[3]]], 2*Pi];
+
+radifff = Interpolation[radiffs]
+
+loy = 365.242190402*24;
+
+n = 4;
+
+f[x_] = c[0] + e[1]*(x)*Cos[h[1]-1*2*Pi/loy*x] + 
+        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
+vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
+
+ff = FindFit[radiffs, f[x], vars, x];
+
+g[x_] = N[f[x] /. ff];
+
+j[x_] = Integrate[g[x], x]
+
+Plot[Mod[rasf[x]-j[x],2*Pi],{x,1,Length[ras]}, PlotRange -> All]
+
+t1854 = Table[Mod[ras[[i]] - j[i], 2*Pi], {i, 1, Length[ras]}];
+
+4.877075022487457 = const of int
+
+Plot[{(g[x]-radifff[x])/Degree*60}, {x, 1, Length[radiffs]}, PlotRange->All]
+
+(* work below 7 Apr 2019 for reduced latitude to geodetic latitude *)
+
+a[x_] = GeodesyData["WGS84", {"ReducedLatitude", x}]
+
+b[x_] = InverseFunction[a][x]
+
+(* tests *)
+
+data = ReadList["/mnt/villa/user/20190331/sun-2000-2039.txt", "Number",
+"RecordLists" -> True];
 
 
+t1037 = jd2unixtime[data[[4,2]]]
+
+approxSolarDec[t1037]
 
 
+(* ugh, fixing functions to use some reasonable time thing *)
 
+unixtime2index[d_] = d/3600-262979+24
 
+unixtime2index[946641600]
+unixtime2index[2208942000]
 
+unixdate2index[d_] = unixtime2index[d*86400]
+
+FullSimplify[approxSolarDec[unixdate2index[d]], d>0]
 
 
 
