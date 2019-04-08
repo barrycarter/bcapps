@@ -462,5 +462,63 @@ check[lat_, lon_, t_, res_] =
   lat, lon, gmst[t/86400]] - res
 
 
+(* same process w/ a slightly more accurate output *)
+
+data = Drop[ReadList["/mnt/villa/user/20190407/unixt.txt", "Number",
+"RecordLists" -> True], -41];
+
+(* above is 1999-12-31T06:36:00+0000 to 2039-12-31T05:36:00+0000 *)
+
+ras = Transpose[data][[4]];
+
+rasf = Interpolation[ras];
+
+radiffs = Mod[Differences[ras], 2*Pi];
+
+radifff = Interpolation[radiffs]
+
+loy = 365.242190402*24;
+
+(* 
+
+n=1 yields 2.29183 degree accuracy
+n=2 yields 6.87549 minutes accuracy
+n=3 yields 3.43775 minutes accuracy
+n=4 yields 52 seconds accuracy
+n=5 yields 41 seconds accuracy
+n=6 doesn't help
+n=10 doesn't help
+
+*)
+
+n = 5;
+
+f[x_] = c[0] + e[1]*(x)*Cos[h[1]-1*2*Pi/loy*x] + 
+        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
+vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
+
+ff = FindFit[radiffs, f[x], vars, x];
+
+g[x_] = N[f[x] /. ff];
+
+j[x_] = Integrate[g[x], x]
+
+(*
+ListPlot[Table[Mod[ras[[i]] - j[i], 2*Pi], {i, 1, Length[ras]}] , 
+ PlotRange -> All]
+*)
+
+constInt = Mean[Table[Mod[ras[[i]] - j[i], 2*Pi], {i, 1, Length[ras]}]]
+
+k[x_] = j[x] + constInt
+
+(* the 'j' below because the constInt flips at 0 *)
+
+Plot[Mod[rasf[x]-j[x],2*Pi],{x,1,Length[ras]}, PlotRange -> All]
+
+
+
+
 
 
