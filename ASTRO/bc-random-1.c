@@ -33,17 +33,17 @@ double bc_elev(double lat, double lon, double et, char *target) {
   //  printf("POS: %f %f %f\n", pos[0], pos[1], pos[2]);
   //  printf("NORMAL: %f %f %f\n", normal[0], normal[1], normal[2]);
 
-  printf("ET = %f\n", et);
-  printf("POS: %f %f %f\n", pos[0], pos[1], pos[2]);
+  //  printf("ET = %f\n", et);
+  //  printf("POS: %f %f %f\n", pos[0], pos[1], pos[2]);
 
   // position of Sun in ITRF93
   spkcpo_c("Sun", et, "ITRF93", "OBSERVER", "CN+S", pos, "Earth", "ITRF93", state,  &lt);
 
-  printf("STATE: %f %f %f\n", state[0], state[1], state[2]);
+  //  printf("STATE: %f %f %f\n", state[0], state[1], state[2]);
 
   double el = halfpi_c() - vsep_c(state,  normal); 
 
-  printf("DEBUG: %f,%f,%f,%f,%f\n", lat, lon, 0., el, et);
+  //  printf("DEBUG: %f,%f,%f,%f,%f\n", lat, lon, 0., el, et);
 
   //  return halfpi_c() - vsep_c(normal,  state);
   return el;
@@ -63,15 +63,14 @@ int main (int argc, char **argv) {
     time = 1167721200.*rand()/RAND_MAX + 946684800.;
 
     // failing badly, so testing w/ knownish values
-    lat = 0.611738;
-    lon = -1.85878;
-    time = 1554616800.+i;
+    //    lat = 0.611738;
+    //    lon = -1.85878;
+    //    time = 1554616800.+i;
 
-    double utime = unix2et(time);
     //    double elev = bc_elev(lat, lon, unix2et(time), "10");
     double elev = bc_elev(lat, lon, unix2et(time), "10");
 
-    printf("%f,%f,%f,%f,%f\n", lat, lon, time, elev, utime);
+    printf("%f,%f,%f,%f\n", lat, lon, time, elev);
   }
 }
 
