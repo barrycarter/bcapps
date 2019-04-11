@@ -12,7 +12,7 @@
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-#define MAXWIN 200000
+#define MAXWIN 100
 
 int main(int argc, char **argv) {
 
@@ -23,27 +23,30 @@ int main(int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  // we are testing with fixed lat/lon
   SpiceDouble fixedlat = 35.05*rpd_c();
   SpiceDouble fixedlon = -106.5*rpd_c();
 
+  // the function that gives the value we want
   void testf1(SpiceDouble et, SpiceDouble *value) {
-    *value = altitude(301, et, fixedlat, fixedlon);
+    *value = altitude(10, et, fixedlat, fixedlon);
   }
 
+  // automated function that tells if target func is increasing or decreasing
   void testf1Delta (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
 		    SpiceDouble et, SpiceBoolean * isdecr ) {
     SpiceDouble dt = 10.;
     uddc_c( udfuns, et, dt, isdecr);
   }
 
-  // 1970 to 2038 (all "Unix time") for testing
-  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+  // today
+  wninsd_c(unix2et(1554962400),unix2et(1554962400+86400*10),&cnfine);
 
-  gfuds_c(testf1, testf1Delta, "<", 0., 0., 1., MAXWIN, &cnfine,&result);
+  gfuds_c(testf1, testf1Delta, "=", 0., 0., 1., MAXWIN, &cnfine,&result);
 
   for (int i=0; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
-    printf("0deg %f %f\n",et2jd(beg),et2jd(end));
+    printf("0deg %f %f\n",et2unix(beg),et2unix(end));
 
     // findmins(beg,end);
   }
