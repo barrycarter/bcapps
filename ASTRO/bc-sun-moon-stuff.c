@@ -15,7 +15,7 @@
 // return the azimuth and altitude of an object at a given time from a
 // given location on Earth (topographicSpherical is the return value)
 
-void azalt(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon, SpiceDouble *topographicSpherical) {
+void azimuthAltitude(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon, SpiceDouble *topographicSpherical) {
 
   SpiceDouble targetPosition[3], targetPositionTopographic[3];
   SpiceDouble observerPosition[3], surfaceNormal[3], eastVector[3];
@@ -54,7 +54,20 @@ void azalt(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon, Spic
   topographicSpherical[0] = halfpi_c()-topoLon;
   topographicSpherical[1] = halfpi_c()-topoLat;
   topographicSpherical[2] = topoR;
+}
 
+// helper functions
+
+double azimuth(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
+  SpiceDouble topographicSpherical[3];
+  azimuthAltitude(targ, et, lat, lon, topographicSpherical);
+  return topographicSpherical[0];
+}
+
+double altitude(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
+  SpiceDouble topographicSpherical[3];
+  azimuthAltitude(targ, et, lat, lon, topographicSpherical);
+  return topographicSpherical[1];
 }
 
 int main(int argc, char **argv) {
@@ -65,10 +78,14 @@ int main(int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
   for (int i=1554962400; i<1555048800; i+=600) {
-    azalt(301, unix2et(i), 35*rpd_c(), -106*rpd_c(), topographicSpherical);
+    //    azimuthAltitude(301, unix2et(i), 35*rpd_c(), -106*rpd_c(), topographicSpherical);
 
-    printf("%d %f %f %f\n", i, topographicSpherical[0]/rpd_c(), 
-	   topographicSpherical[1]/rpd_c(), topographicSpherical[2]);
+    //    printf("%d %f %f %f\n", i, topographicSpherical[0]/rpd_c(), 
+    // topographicSpherical[1]/rpd_c(), topographicSpherical[2]);
+
+  printf("ALT: %d %f %f\n", i, 
+	 azimuth(301, unix2et(i), 35*rpd_c(), -106*rpd_c())/rpd_c(), 
+	 altitude(301, unix2et(i), 35*rpd_c(), -106*rpd_c())/rpd_c());
 
   }
 
