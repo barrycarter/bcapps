@@ -22,14 +22,52 @@ void isDecreasing(void(* udfuns)(SpiceDouble et,SpiceDouble *value),
   *isdecr = (res2 < res1);
 }
 
-int main(int argc, char **argv) {
+// returns the next time (after et) target reaches elevation elev at lat/lon
 
+SpiceDouble nextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDouble lat, SpiceDouble lon) {
+
+  // just 1 result cell and cnfine has to be 2 big for beg and end
   SPICEDOUBLE_CELL(result, 10);
   SPICEDOUBLE_CELL(cnfine,2);
   SpiceDouble beg, end;
 
+  // elevation function
+  void elevationFunction(SpiceDouble et, SpiceDouble *value) {
+    *value = altitude(target, et, lat, lon);
+  }
+
+  // loop for 400 days but early abort
+  for (int i=0; i<400; i++) {
+
+    // the window for a day
+    wninsd_c(et+i*86400, et+(i+1)*86400, &cnfine);
+
+    // search within that window
+    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 10, &cnfine, &result);
+
+    // if at least 1 result, break out of for loop
+    if (wncard_c(&result) >= 1) {break;}
+  }
+
+  // return the one result
+  wnfetd_c(&result, 0, &beg, &end);
+  return beg;
+
+}
+
+int main(int argc, char **argv) {
+
+  /*
+  SPICEDOUBLE_CELL(result, 10);
+  SPICEDOUBLE_CELL(cnfine,2);
+  SpiceDouble beg, end;
+  */
+
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  printf("SUNSET: %f\n", et2unix(nextTime(10, unix2et(1555022362), -0.833333*rpd_c(), 35.05*rpd_c(), -106.5*rpd_c())));
+
+  /*
   // we are testing with fixed lat/lon
   SpiceDouble fixedlat = 35.05*rpd_c();
   SpiceDouble fixedlon = -106.5*rpd_c();
@@ -49,6 +87,7 @@ int main(int argc, char **argv) {
     wnfetd_c(&result,i,&beg,&end);
     printf("0deg %f %f\n",et2unix(beg),et2unix(end));
   }
+  */
 
   return 0;
 
