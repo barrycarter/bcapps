@@ -517,8 +517,7 @@ k[x_] = j[x] + constInt
 
 Plot[Mod[rasf[x]-j[x],2*Pi],{x,1,Length[ras]}, PlotRange -> All]
 
+unix2pos[t_] = (t-946622160+3600)/3600
 
-
-
-
+unixday2pos[d_] = unix2pos[d*86400]
 

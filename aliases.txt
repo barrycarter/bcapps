@@ -329,7 +329,7 @@ alias yamcsync "bc-mirror-server.pl --debug --ssh='ssh -i /home/barrycarter/.ssh
 
 alias fusiongit "pushd .; cd /mnt/villa/user/20190226/a-1-family-furniture; git add .; git commit; git pull -v; git push origin master; popd"
 
-# easier to find
-alias vscode /usr/share/code/bin/code&
+# easier to find (fixed later to quote it, so & is part of alias
+alias vscode "/usr/share/code/bin/code&"
 
 
