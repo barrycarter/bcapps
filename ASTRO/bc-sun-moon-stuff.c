@@ -15,9 +15,9 @@
 // return the azimuth and altitude of an object at a given time from a
 // given location on Earth
 
-SpiceDouble *azalt(ConstSpiceChar *targ, SpiceDouble et, ConstSpiceChar *ref, SpiceDouble lat, SpiceDouble lon) {
+void azalt(ConstSpiceChar *targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
 
-  SpiceDouble pos[3], normal[3], north[3], state[3], surf[3], res[2], lt;
+  SpiceDouble pos[3], normal[3], north[3], state[3], surf[3], lt;
   SpicePlane plane;
 
   // HACK: cheating a bit here hardcoding Earth's radii
@@ -33,21 +33,29 @@ SpiceDouble *azalt(ConstSpiceChar *targ, SpiceDouble et, ConstSpiceChar *ref, Sp
 
   // projection of z vector to this plane (ie, direction "north")
   SpiceDouble z[3] = {0,0,1};
-
   vprjp_c(z, &plane, north);
+
+  // the matrix rotating ITRF93 to topographic frame (z = up, y = north)
+  SpiceDouble matrix[3][3];
+
+  twovec_c(north, 2, normal, 1, matrix);
 
   // vector to target at time
   spkcpo_c(targ, et, "ITRF93", "OBSERVER", "CN+S", pos, "Earth", "ITRF93", state, &lt);
+
+  // rotate into topographic frame
+  SpiceDouble loc[3];
+  mtxv_c(matrix, state, loc);
 
   // project this vector to plane
   vprjp_c(state, &plane, surf);
 
   // the angle between the surface and north vectors
-  double dang = acos(vdot_c(surf, north)/vnorm_c(surf)/vnorm_c(north));
+  SpiceDouble az = acos(vdot_c(surf, north)/vnorm_c(surf)/vnorm_c(north));
 
-  printf("ANGLE: %f\n", dang/rpd_c());
+  // the angle between the normal and object
 
-  return res;
+  printf("ANGLE: %f\n", az/rpd_c());
 
   /*
   printf("STATE (%f %f %f): %f %f %f\n", lat, lon, stime, state[0], state[1], state[2]);
@@ -62,7 +70,13 @@ int main(int argc, char **argv) {
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  // currently does nothing
+  azalt("Sun", unix2et(0), 35*rpd_c(), -106*rpd_c());
 
+
+  //  for (int i=1554962400; i<1555048800; i+=600) {
+  //    azalt("Sun", unix2et(i), 35*rpd_c(), -106*rpd_c());
+  //  }
 
   return 0;
 
