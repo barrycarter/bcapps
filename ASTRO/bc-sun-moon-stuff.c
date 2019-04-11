@@ -12,8 +12,6 @@
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-#define MAXWIN 100
-
 // TODO: add this to bclib.h
 
 void isDecreasing(void(* udfuns)(SpiceDouble et,SpiceDouble *value),
@@ -26,10 +24,9 @@ void isDecreasing(void(* udfuns)(SpiceDouble et,SpiceDouble *value),
 
 int main(int argc, char **argv) {
 
-  SPICEDOUBLE_CELL(result, 2*MAXWIN);
+  SPICEDOUBLE_CELL(result, 10);
   SPICEDOUBLE_CELL(cnfine,2);
   SpiceDouble beg, end;
-  SpiceInt count = 20;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
@@ -42,20 +39,11 @@ int main(int argc, char **argv) {
     *value = altitude(10, et, fixedlat, fixedlon);
   }
 
-  /*
-  // automated function that tells if target func is increasing or decreasing
-  void testf1Delta (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
-		    SpiceDouble et, SpiceBoolean * isdecr ) {
-    SpiceDouble dt = 10.;
-    uddc_c( udfuns, et, dt, isdecr);
-  }
-  */
-
   // today
-  wninsd_c(unix2et(1554962400),unix2et(1554962400+86400*10),&cnfine);
+  wninsd_c(unix2et(1554962400),unix2et(1554962400+86400*1),&cnfine);
 
-  // TODO: explicit warning against using uddc_c
-  gfuds_c(testf1, isDecreasing, "=", 0., 0., 60., MAXWIN, &cnfine,&result);
+  gfuds_c(testf1, isDecreasing, "=", 0., 0., 60., 100, &cnfine,&result);
+  SpiceInt count = wncard_c( &result );
 
   for (int i=0; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
