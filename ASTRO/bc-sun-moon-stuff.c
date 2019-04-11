@@ -49,17 +49,22 @@ void azalt(ConstSpiceChar *targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lo
   // construct the matrix that converts ITRF to topographic, east = x
   twovec_c(surfaceNormal, 3, eastVector, 1, itrf2TopographicMatrix);
 
-  // apply the matrix to the ITRF coords
-  mtxv_c(itrf2TopographicMatrix, targetPositionTopographic, topographicPosition);
+  // confirm the matrix does the right thing
+  //  SpiceDouble test[3];
+  //  mxv_c(itrf2TopographicMatrix, surfaceNormal, test);
+  //  printf("TEST: %f %f %f\n", test[0], test[1], test[2]);
 
-  printf("POS: %f %f %f\n", topographicPosition[0], topographicPosition[1], topographicPosition[2]);
+  // apply the matrix to the ITRF coords
+  mxv_c(itrf2TopographicMatrix, targetPositionTopographic, topographicPosition);
+
+  //  printf("POS: %f %f %f\n", topographicPosition[0], topographicPosition[1], topographicPosition[2]);
 
   // convert to spherical coordinates
   // TODO: fix topoLat
   recsph_c(topographicPosition, &topoR, &topoLat, &topoLon);
 
-  topographicSpherical[0] = topoLon;
-  topographicSpherical[1] = topoLat;
+  topographicSpherical[0] = halfpi_c()-topoLon;
+  topographicSpherical[1] = halfpi_c()-topoLat;
   topographicSpherical[2] = topoR;
 
 }
