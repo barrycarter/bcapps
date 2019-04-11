@@ -375,3 +375,61 @@ SpiceDouble *geom_info(SpiceInt targ, SpiceDouble et, ConstSpiceChar *ref,
   return results;
 }
 
+
+// return the azimuth and altitude of an object at a given time from a
+// given location on Earth (topographicSpherical is the return value)
+
+void azimuthAltitude(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon, SpiceDouble *topographicSpherical) {
+
+  SpiceDouble targetPosition[3], targetPositionTopographic[3];
+  SpiceDouble observerPosition[3], surfaceNormal[3], eastVector[3];
+  SpiceDouble itrf2TopographicMatrix[3][3], topographicPosition[3];
+  SpiceDouble topoR, topoLat, topoLon;
+  SpiceDouble lt;
+  SpiceDouble northVector[3] = {0,0,1};
+
+  // HACK: cheating a bit here hardcoding Earth's radii
+
+  // find position of object in ITRF93 frame
+  spkezp_c(targ, et, "ITRF93", "CN+S", 399, targetPosition, &lt);
+
+  // find observer position in ITRF93
+  georec_c(lon, lat, 0, 6378.137, 0.0033528128, observerPosition);
+
+  // subtract to get topographic position
+  vsub_c(targetPosition, observerPosition, targetPositionTopographic);
+
+  // the surface normal vector from the observer (z axis)
+  surfnm_c(6378.137, 6378.137, 6356.7523, observerPosition, surfaceNormal);
+
+  // the north cross the normal vector yields an east pointing vector in plane
+  vcrss_c(northVector, surfaceNormal, eastVector);
+
+  // construct the matrix that converts ITRF to topographic, east = x
+  twovec_c(surfaceNormal, 3, eastVector, 1, itrf2TopographicMatrix);
+
+  // apply the matrix to the ITRF coords
+  mxv_c(itrf2TopographicMatrix, targetPositionTopographic, topographicPosition);
+
+  // convert to spherical coordinates
+  recsph_c(topographicPosition, &topoR, &topoLat, &topoLon);
+
+  // and "return"
+  topographicSpherical[0] = halfpi_c()-topoLon;
+  topographicSpherical[1] = halfpi_c()-topoLat;
+  topographicSpherical[2] = topoR;
+}
+
+// helper functions
+
+double azimuth(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
+  SpiceDouble topographicSpherical[3];
+  azimuthAltitude(targ, et, lat, lon, topographicSpherical);
+  return topographicSpherical[0];
+}
+
+double altitude(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
+  SpiceDouble topographicSpherical[3];
+  azimuthAltitude(targ, et, lat, lon, topographicSpherical);
+  return topographicSpherical[1];
+}

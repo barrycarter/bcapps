@@ -12,71 +12,45 @@
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-// return the azimuth and altitude of an object at a given time from a
-// given location on Earth (topographicSpherical is the return value)
-
-void azimuthAltitude(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon, SpiceDouble *topographicSpherical) {
-
-  SpiceDouble targetPosition[3], targetPositionTopographic[3];
-  SpiceDouble observerPosition[3], surfaceNormal[3], eastVector[3];
-  SpiceDouble itrf2TopographicMatrix[3][3], topographicPosition[3];
-  SpiceDouble topoR, topoLat, topoLon;
-  SpiceDouble lt;
-  SpiceDouble northVector[3] = {0,0,1};
-
-  // HACK: cheating a bit here hardcoding Earth's radii
-
-  // find position of object in ITRF93 frame
-  spkezp_c(targ, et, "ITRF93", "CN+S", 399, targetPosition, &lt);
-
-  // find observer position in ITRF93
-  georec_c(lon, lat, 0, 6378.137, 0.0033528128, observerPosition);
-
-  // subtract to get topographic position
-  vsub_c(targetPosition, observerPosition, targetPositionTopographic);
-
-  // the surface normal vector from the observer (z axis)
-  surfnm_c(6378.137, 6378.137, 6356.7523, observerPosition, surfaceNormal);
-
-  // the north cross the normal vector yields an east pointing vector in plane
-  vcrss_c(northVector, surfaceNormal, eastVector);
-
-  // construct the matrix that converts ITRF to topographic, east = x
-  twovec_c(surfaceNormal, 3, eastVector, 1, itrf2TopographicMatrix);
-
-  // apply the matrix to the ITRF coords
-  mxv_c(itrf2TopographicMatrix, targetPositionTopographic, topographicPosition);
-
-  // convert to spherical coordinates
-  recsph_c(topographicPosition, &topoR, &topoLat, &topoLon);
-
-  // and "return"
-  topographicSpherical[0] = halfpi_c()-topoLon;
-  topographicSpherical[1] = halfpi_c()-topoLat;
-  topographicSpherical[2] = topoR;
-}
-
-// helper functions
-
-double azimuth(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
-  SpiceDouble topographicSpherical[3];
-  azimuthAltitude(targ, et, lat, lon, topographicSpherical);
-  return topographicSpherical[0];
-}
-
-double altitude(SpiceInt targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
-  SpiceDouble topographicSpherical[3];
-  azimuthAltitude(targ, et, lat, lon, topographicSpherical);
-  return topographicSpherical[1];
-}
+#define MAXWIN 200000
 
 int main(int argc, char **argv) {
 
-  SpiceDouble topographicSpherical[3];
-
+  SPICEDOUBLE_CELL(result, 2*MAXWIN);
+  SPICEDOUBLE_CELL(cnfine,2);
+  SpiceDouble beg, end;
+  SpiceInt count = 20;
 
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
+  SpiceDouble fixedlat = 35.05*rpd_c();
+  SpiceDouble fixedlon = -106.5*rpd_c();
+
+  void testf1(SpiceDouble et, SpiceDouble *value) {
+    *value = altitude(301, et, fixedlat, fixedlon);
+  }
+
+  void testf1Delta (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
+		    SpiceDouble et, SpiceBoolean * isdecr ) {
+    SpiceDouble dt = 10.;
+    uddc_c( udfuns, et, dt, isdecr);
+  }
+
+  // 1970 to 2038 (all "Unix time") for testing
+  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+
+  gfuds_c(testf1, testf1Delta, "<", 0., 0., 1., MAXWIN, &cnfine,&result);
+
+  for (int i=0; i<count; i++) {
+    wnfetd_c(&result,i,&beg,&end);
+    printf("0deg %f %f\n",et2jd(beg),et2jd(end));
+
+    // findmins(beg,end);
+  }
+
+  //  printf("%f\n", testf1(unix2et(1554962400)));
+
+  /*
   for (int i=1554962400; i<1555048800; i+=600) {
     //    azimuthAltitude(301, unix2et(i), 35*rpd_c(), -106*rpd_c(), topographicSpherical);
 
@@ -88,6 +62,7 @@ int main(int argc, char **argv) {
 	 altitude(301, unix2et(i), 35*rpd_c(), -106*rpd_c())/rpd_c());
 
   }
+  */
 
   return 0;
 
