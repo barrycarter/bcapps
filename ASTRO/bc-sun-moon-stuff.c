@@ -18,11 +18,15 @@
 void azalt(ConstSpiceChar *targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lon) {
 
   SpiceDouble targetPosition[3], targetPositionTopographic[3];
-  SpiceDouble observerPosition[3], surfaceNormal[3];
+  SpiceDouble observerPosition[3], surfaceNormal[3], eastVector[3];
+  SpiceDouble itrf2TopographicMatrix[3][3], topographicPosition[3];
+  SpiceDouble topoR, topoLat, topoLon;
   SpiceDouble lt;
 
-    //targpos[3], normal[3], north[3], state[3], surf[3], lt;
-    //  SpicePlane plane;
+  //targpos[3], normal[3], north[3], state[3], surf[3], lt;
+  //  SpicePlane plane;
+
+  SpiceDouble northVector[3] = {0,0,1};
 
   // HACK: cheating a bit here hardcoding Earth's radii
 
@@ -39,8 +43,32 @@ void azalt(ConstSpiceChar *targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lo
   // the surface normal vector from the observer (z axis)
   surfnm_c(6378.137, 6378.137, 6356.7523, observerPosition, surfaceNormal);
 
-  printf("observerPosition: %f %f %f\n", observerPosition[0], observerPosition[1], observerPosition[2]);
-  printf("surfaceNormal: %f %f %f\n", surfaceNormal[0], surfaceNormal[1], surfaceNormal[2]);
+  // the north cross the normal vector yields an east pointing vector in plane
+  vcrss_c(northVector, surfaceNormal, eastVector);
+
+  // construct the matrix that converts ITRF to topographic, east = x
+  twovec_c(surfaceNormal, 3, eastVector, 1, itrf2TopographicMatrix);
+
+  // apply the matrix to the ITRF coords
+  mtxv_c(itrf2TopographicMatrix, targetPositionTopographic, topographicPosition);
+
+  // convert so spherical coordinates
+  // TODO: fix topoLat
+  recsph_c(topographicPosition, &topoR, &topoLat, &topoLon);
+
+  printf("%f %f\n", topoLat/rpd_c(), topoLon/rpd_c());
+
+
+  //  printf("TOPOPOS: %f, %f, %f", topographicPosition[0], topographicPosition[1], topographicPosition[2]);
+
+  //  twovec_c(north, 2, normal, 3, matrix);
+  //  twovec_c(normal, 3, north, 2, matrix);
+
+
+  //  printf("eastVector: %f %f %f\n", eastVector[0], eastVector[1], eastVector[2]);
+
+  //  printf("observerPosition: %f %f %f\n", observerPosition[0], observerPosition[1], observerPosition[2]);
+  //  printf("surfaceNormal: %f %f %f\n", surfaceNormal[0], surfaceNormal[1], surfaceNormal[2]);
 
   // angle between surfaceNormal and object
   double normalAngle = vsep_c(surfaceNormal, targetPositionTopographic);
@@ -68,8 +96,6 @@ void azalt(ConstSpiceChar *targ, SpiceDouble et, SpiceDouble lat, SpiceDouble lo
   // the matrix rotating ITRF93 to topographic frame (z = up, y = north)
   SpiceDouble matrix[3][3];
 
-  //  twovec_c(north, 2, normal, 3, matrix);
-  twovec_c(normal, 3, north, 2, matrix);
 
   // vector to target at time
 
