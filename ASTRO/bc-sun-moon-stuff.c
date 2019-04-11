@@ -56,38 +56,19 @@ SpiceDouble nextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDou
 }
 
 int main(int argc, char **argv) {
-
-  /*
-  SPICEDOUBLE_CELL(result, 10);
-  SPICEDOUBLE_CELL(cnfine,2);
-  SpiceDouble beg, end;
-  */
-
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  printf("SUNSET: %f\n", et2unix(nextTime(10, unix2et(1555022362), -0.833333*rpd_c(), 35.05*rpd_c(), -106.5*rpd_c())));
+  double et = unix2et(1555022362);
+  double lat =  35.05*rpd_c();
+  double lon = -106.5*rpd_c();
 
-  /*
-  // we are testing with fixed lat/lon
-  SpiceDouble fixedlat = 35.05*rpd_c();
-  SpiceDouble fixedlon = -106.5*rpd_c();
+  double elvs[4] = {-0.83333333333, -6, -12, -18};
 
-  // the function that gives the value we want
-  void testf1(SpiceDouble et, SpiceDouble *value) {
-    *value = altitude(10, et, fixedlat, fixedlon);
+  for (int i=0; i <= 3; i++) {
+    printf("SUN NEXT @%f: %f\n", elvs[i], et2unix(nextTime(10, et, elvs[i]*rpd_c(), lat, lon)));
   }
 
-  // today
-  wninsd_c(unix2et(1554962400),unix2et(1554962400+86400*1),&cnfine);
-
-  gfuds_c(testf1, isDecreasing, "=", 0., 0., 60., 100, &cnfine,&result);
-  SpiceInt count = wncard_c( &result );
-
-  for (int i=0; i<count; i++) {
-    wnfetd_c(&result,i,&beg,&end);
-    printf("0deg %f %f\n",et2unix(beg),et2unix(end));
-  }
-  */
+  printf("MOON NEXT AT HORIZON: %f\n", et2unix(nextTime(301, et, elvs[0]*rpd_c(), lat, lon)));
 
   return 0;
 
