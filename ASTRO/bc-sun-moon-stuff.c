@@ -12,89 +12,57 @@
 // this the wrong way to do things
 #include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
 
-// Earth's equatorial and polar radii
-#define EER 6378.137
-#define EPR 6356.7523
-#define MAXWIN 10000
+// return the azimuth and altitude of an object at a given time from a
+// given location on Earth
 
-// globals
-SpiceDouble lat, lon, elev, utime, desired, pos[3], delta;
-int target;
+SpiceDouble *azalt(ConstSpiceChar *targ, SpiceDouble et, ConstSpiceChar *ref, SpiceDouble lat, SpiceDouble lon) {
 
-void show_results (char *prefix, SpiceCell result, 
-                   void(* udfuns)(SpiceDouble et,SpiceDouble * value)) {
+  SpiceDouble pos[3], normal[3], north[3], state[3], surf[3], res[2], lt;
+  SpicePlane plane;
 
-  SpiceInt nres = wncard_c(&result);
-  SpiceDouble beg, end, vbeg, vend;
+  // HACK: cheating a bit here hardcoding Earth's radii
 
-  for (int i=0; i<nres; i++) {
-    wnfetd_c(&result,i,&beg,&end);
-    udfuns(beg,&vbeg);
-    udfuns(end,&vend);
-    printf("%s %f %f %f %f\n",prefix,et2unix(beg),et2unix(end),vbeg,vend);
-  }
-}
+  // pos = fixed ITRF93 position of lat/lon
+  georec_c(lon*rpd_c(),lat*rpd_c(), 0, 6378.137, 0.0033528128, pos);
 
-void gfq (SpiceDouble et, SpiceDouble *value) {
+  // surface normal there
+  surfnm_c(6378.137, 6378.137, 6356.7523, pos, normal);
 
-  SpiceDouble v[3], lt;
+  // the plane perpendicular to normal but passing through origin
+  nvc2pl_c(normal, 0, &plane);
 
-  // target position (converting utc to et)
-  spkezp_c(target,et,"ITRF93","CN+S",399,v,&lt);
+  // projection of z vector to this plane (ie, direction "north")
+  SpiceDouble z[3] = {0,0,1};
 
-  // target position compared to pos
-  for (int i=0; i<=2; i++) {v[i] -= pos[i];}
+  vprjp_c(z, &plane, north);
 
-  //  printf("@%f: %f %f %f\n",et2unix(et),v[0],v[1],v[2]);
+  // vector to target at time
+  spkcpo_c(targ, et, "ITRF93", "OBSERVER", "CN+S", pos, "Earth", "ITRF93", state, &lt);
 
-  // and the angle (radians) (pi/2 minus because vsep is distance from zenith)
-  *value = halfpi_c()-vsep_c(v,pos);
-  printf("elev(%f) :%f\n",et2unix(et),*value*dpr_c());
-}
+  // project this vector to plane
+  vprjp_c(state, &plane, surf);
 
-void gfdecrx (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
-              SpiceDouble et, SpiceBoolean * isdecr ) {
+  // the angle between the surface and north vectors
+  double dang = acos(vdot_c(surf, north)/vnorm_c(surf)/vnorm_c(north));
 
-  SpiceDouble v1=0, v2=0;
-  udfuns(et-0.5,&v1);
-  udfuns(et+0.5,&v2);
-  // TODO: if v1 and v2 are identical, choose larger interval?
-  if (v2<v1) {*isdecr=1;} else {*isdecr=0;}
+  printf("ANGLE: %f\n", dang/rpd_c());
+
+  return res;
+
+  /*
+  printf("STATE (%f %f %f): %f %f %f\n", lat, lon, stime, state[0], state[1], state[2]);
+  printf("PROJ (%f %f): %f %f %f\n", lat, lon, north[0], north[1], north[2]);
+  printf("POS (%f %f): %f %f %f\n", lat, lon, pos[0], pos[1], pos[2]);
+  printf("SRFNM (%f %f): %f %f %f\n", lat, lon, normal[0], normal[1], normal[2]);
+  */
+
 }
 
 int main(int argc, char **argv) {
 
-  SPICEDOUBLE_CELL(cnfine,2);
-  SPICEDOUBLE_CELL(result,2*MAXWIN);
-
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  if (argc != 4) {
-    // Units: degrees degrees meters seconds
-    printf("Usage: latitude longitude elevation unixtime\n");
-    exit(-1);
-  }
 
-  // assign from argv and convert degrees -> radians, meters -> km
-  lat = atof(argv[1])*rpd_c();
-  lon = atof(argv[2])*rpd_c();
-  elev = atof(argv[3])/1000.;
-  utime = atof(argv[4]);
-
-  // compute position of lat,lon in IAU_EARTH frame (a rotating frame)
-  georec_c (lon, lat, elev, EER, (EER-EPR)/EER, pos);
-
-  // create a window one day on either side of given time
-  wninsd_c(unix2et(utime-86400),unix2et(utime+86400),&cnfine);
-
-  // search for when object at desired altitude (astronomical)
-  gfuds_c(gfq,gfdecrx,"=",desired,0,3600,MAXWIN,&cnfine,&result);
-
-  printf("INPUT: %f %f %f %f %d\n",lat,lon,elev,utime,target);
-  show_results("test",result,gfq);
-
-  //  gfq(unix2et(utime),&ang);
-  //printf("%f\n",r2d(ang));
 
   return 0;
 
