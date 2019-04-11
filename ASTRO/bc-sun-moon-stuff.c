@@ -14,6 +14,16 @@
 
 #define MAXWIN 100
 
+// TODO: add this to bclib.h
+
+void isDecreasing(void(* udfuns)(SpiceDouble et,SpiceDouble *value),
+		  SpiceDouble et, SpiceBoolean *isdecr) {
+  SpiceDouble res1, res2;
+  udfuns(et-1, &res1);
+  udfuns(et+1, &res2);
+  *isdecr = (res2 < res1);
+}
+
 int main(int argc, char **argv) {
 
   SPICEDOUBLE_CELL(result, 2*MAXWIN);
@@ -32,41 +42,27 @@ int main(int argc, char **argv) {
     *value = altitude(10, et, fixedlat, fixedlon);
   }
 
+  /*
   // automated function that tells if target func is increasing or decreasing
   void testf1Delta (void(* udfuns)(SpiceDouble et,SpiceDouble * value),
 		    SpiceDouble et, SpiceBoolean * isdecr ) {
     SpiceDouble dt = 10.;
     uddc_c( udfuns, et, dt, isdecr);
   }
+  */
 
   // today
   wninsd_c(unix2et(1554962400),unix2et(1554962400+86400*10),&cnfine);
 
-  gfuds_c(testf1, testf1Delta, "=", 0., 0., 1., MAXWIN, &cnfine,&result);
+  // TODO: explicit warning against using uddc_c
+  gfuds_c(testf1, isDecreasing, "=", 0., 0., 60., MAXWIN, &cnfine,&result);
 
   for (int i=0; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
     printf("0deg %f %f\n",et2unix(beg),et2unix(end));
-
-    // findmins(beg,end);
   }
-
-  //  printf("%f\n", testf1(unix2et(1554962400)));
-
-  /*
-  for (int i=1554962400; i<1555048800; i+=600) {
-    //    azimuthAltitude(301, unix2et(i), 35*rpd_c(), -106*rpd_c(), topographicSpherical);
-
-    //    printf("%d %f %f %f\n", i, topographicSpherical[0]/rpd_c(), 
-    // topographicSpherical[1]/rpd_c(), topographicSpherical[2]);
-
-  printf("ALT: %d %f %f\n", i, 
-	 azimuth(301, unix2et(i), 35*rpd_c(), -106*rpd_c())/rpd_c(), 
-	 altitude(301, unix2et(i), 35*rpd_c(), -106*rpd_c())/rpd_c());
-
-  }
-  */
 
   return 0;
 
 }
+
