@@ -8,7 +8,8 @@ require Image::PNG;
 
 my($z) = 5;
 my($x, $y, $px, $py) =  latLonZoom2SlippyTilePixel(35.05, -106.5, $z);
-my $png = Image::PNG->new();
+
+# my $png = Image::PNG->new();
 
 
 # obtain and cache the slippy tiles from openweathermap
@@ -16,8 +17,44 @@ my $png = Image::PNG->new();
 for $i ("clouds_new", "precipitation_new", "pressure_new", "wind_new", "temp_new") {
   my($cmd) = "curl -o /var/cache/OWM/$i-$z-$x-$y.png 'https://tile.openweathermap.org/map/$i/$z/$x/$y.png?appid=$private{openweathermap}{appid}'";
   cache_command2($cmd, "age=900");
-  $png->read("/var/cache/OWM/$i-$z-$x-$y.png");
-  debug($png->data());
+
+  my(@arr) = readPNG("/var/cache/OWM/$i-$z-$x-$y.png");
+#   $png->read("/var/cache/OWM/$i-$z-$x-$y.png");
+#   my $data - $png->data();
+#   debug("DATA: $data");
+#   for $j (0..$#{$png->rows}) {
+#     for $k (split(//, @{$png->rows}[$j])) {
+#       debug("$i, $j, ".ord($k));
+#     }
+#   }
+
+
+}
+
+=item readPNG($fname)
+
+Read the PNG file $fname and return an array of arrays with its pixel values
+
+=cut
+
+sub readPNG {
+  my($fname) = @_;
+  my(@res);
+
+  my($png) = Image::PNG->new();
+  $png->read($fname);
+  my($bytesPerPixel) = $png->rowbytes/$png->width();
+
+  for $i (0..$#{$png->rows}) {
+    my($str) = @{$png->rows}[$i];
+
+    for ($j=0; $j < length($str); $j += $bytesPerPixel) {
+      my($sub) = substr($str, $j,  $bytesPerPixel);
+      $res[$i][$j] = join(",",map($_=ord($_), split(//, $sub)));
+    }
+  }
+  return @res;
+
 }
 
 =item latLonZoom2SlippyTilePixel($lat, $lon, $zoom, $options)
