@@ -37,7 +37,9 @@ for $i (@{$data->{list}}) {
   }
 }
 
-print "CLOSEST: $minhash->{name}\n";
+my($dist) = sprintf("%0.2f", gcdist($lat, $lon, $minhash->{coord}{Lat}, $minhash->{coord}{Lon}));
+
+print "CLOSEST: $minhash->{name} ($minhash->{coord}{Lat}, $minhash->{coord}{Lon}) ($dist miles)\n";
 debug(var_dump("MH", $minhash));
 
 # obtain and cache the slippy tiles from openweathermap
