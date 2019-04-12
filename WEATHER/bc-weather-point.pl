@@ -7,11 +7,38 @@ require "/home/user/bc-private.pl";
 require Image::PNG;
 
 my($lat, $lon) = @ARGV;
+
+# find the xyz pos of point
+my($posx, $posy, $posz) = sph2xyz($lon, $lat, 1, "degrees=1");
+
 my($z) = 5;
 my($x, $y, $px, $py) =  latLonZoom2SlippyTilePixel($lat, $lon, $z);
 
-# my $png = Image::PNG->new();
+# obtain weather data
 
+cache_command2("curl -o /var/cache/OWM/conditions.json 'http://api.openweathermap.org/data/2.5/box/city?bbox=-180,-90,180,90,999999&appid=$private{openweathermap}{appid}'", "age=900");
+
+# TODO: subroutinize this
+
+my($data) = JSON::from_json(read_file("/var/cache/OWM/conditions.json"));
+
+# find the closest station
+my($mindist) = Infinity;
+my($minhash);
+
+for $i (@{$data->{list}}) {
+  my($x, $y, $z) = sph2xyz($i->{coord}{Lon}, $i->{coord}{Lat}, 1, "degrees=1");
+
+  my($dist2) = ($x-$posx)**2 + ($y-$posy)**2 + ($z-$posz)**2;
+
+  if ($dist2 < $mindist) {
+    $mindist = $dist2;
+    $minhash = $i;
+  }
+}
+
+print "CLOSEST: $minhash->{name}\n";
+debug(var_dump("MH", $minhash));
 
 # obtain and cache the slippy tiles from openweathermap
 

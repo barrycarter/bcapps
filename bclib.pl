@@ -841,7 +841,7 @@ sub urlencode {
 
 Converts spherical ($theta,$phi,$r) to Cartesian ($x,$y,$z)
 
- degrees=1: assume theta and phi are in degrees, not radians
+degrees=1: assume theta and phi are in degrees, not radians
 
 =cut
 
