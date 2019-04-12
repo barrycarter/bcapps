@@ -6,29 +6,31 @@ require "/usr/local/lib/bclib.pl";
 require "/home/user/bc-private.pl";
 require Image::PNG;
 
+my($lat, $lon) = @ARGV;
 my($z) = 5;
-my($x, $y, $px, $py) =  latLonZoom2SlippyTilePixel(35.05, -106.5, $z);
+my($x, $y, $px, $py) =  latLonZoom2SlippyTilePixel($lat, $lon, $z);
 
 # my $png = Image::PNG->new();
 
 
 # obtain and cache the slippy tiles from openweathermap
 
-for $i ("clouds_new", "precipitation_new", "pressure_new", "wind_new", "temp_new") {
-  my($cmd) = "curl -o /var/cache/OWM/$i-$z-$x-$y.png 'https://tile.openweathermap.org/map/$i/$z/$x/$y.png?appid=$private{openweathermap}{appid}'";
+for $i ("clouds", "precipitation", "pressure", "wind", "temp") {
+  my($cmd) = "curl -o /var/cache/OWM/$i-$z-$x-$y.png 'https://tile.openweathermap.org/map/${i}_new/$z/$x/$y.png?appid=$private{openweathermap}{appid}'";
   cache_command2($cmd, "age=900");
 
   my(@arr) = readPNG("/var/cache/OWM/$i-$z-$x-$y.png");
-#   $png->read("/var/cache/OWM/$i-$z-$x-$y.png");
-#   my $data - $png->data();
-#   debug("DATA: $data");
-#   for $j (0..$#{$png->rows}) {
-#     for $k (split(//, @{$png->rows}[$j])) {
-#       debug("$i, $j, ".ord($k));
-#     }
-#   }
 
+  $px = round($px);
+  $py = round($py);
 
+  print join("\t", $i, $arr[$px][$py], $px, $py),"\n";
+
+  for $x ($px-1..$px+1) {
+    for $y($py-1..$py+1) {
+#      print "$i $x $y $arr[$x][$y]\n";
+    }
+  }
 }
 
 =item readPNG($fname)
@@ -50,7 +52,8 @@ sub readPNG {
 
     for ($j=0; $j < length($str); $j += $bytesPerPixel) {
       my($sub) = substr($str, $j,  $bytesPerPixel);
-      $res[$i][$j] = join(",",map($_=ord($_), split(//, $sub)));
+      # TODO: icky indexing here
+      $res[$i][$j/$bytesPerPixel] = join(",",map($_=ord($_), split(//, $sub)));
     }
   }
   return @res;
