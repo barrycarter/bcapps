@@ -2,6 +2,14 @@
 
 # attempts to get weather by point based on openweathermap API
 
+# TODO: api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}
+
+# TODO: api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}
+
+# TODO: https://timezonedb.com/api
+
+
+
 require "/usr/local/lib/bclib.pl";
 require "/home/user/bc-private.pl";
 require Image::PNG;
