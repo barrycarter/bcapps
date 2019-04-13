@@ -450,8 +450,8 @@ void isDecreasing(void(* udfuns)(SpiceDouble et,SpiceDouble *value),
 SpiceDouble nextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDouble lat, SpiceDouble lon) {
 
   // just 1 result cell and cnfine has to be 2 big for beg and end
-  SPICEDOUBLE_CELL(result, 10);
-  SPICEDOUBLE_CELL(cnfine,2);
+  SPICEDOUBLE_CELL(cnfine, 1000);
+  SPICEDOUBLE_CELL(result, 1000);
   SpiceDouble beg, end;
 
   // elevation function
@@ -459,17 +459,24 @@ SpiceDouble nextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDou
     *value = altitude(target, et, lat, lon);
   }
 
+  // the initial window
+  wninsd_c(et, et+86400, &cnfine);
+
   // loop for 400 days but early abort
   for (int i=0; i<400; i++) {
 
-    // the window for a day
-    wninsd_c(et+i*86400, et+(i+1)*86400, &cnfine);
+    printf("DEBUG (nextTime): %d\n", i);
 
     // search within that window
-    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 10, &cnfine, &result);
+    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
 
     // if at least 1 result, break out of for loop
     if (wncard_c(&result) >= 1) {break;}
+
+    // otherwise, tweak window to be next day
+    wncond_c(86400., 0., &cnfine);
+    wnexpd_c(0., 86400., &cnfine);
+
   }
 
   // return the one result
@@ -481,8 +488,8 @@ SpiceDouble nextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDou
 SpiceDouble prevTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDouble lat, SpiceDouble lon) {
 
   // just 1 result cell and cnfine has to be 2 big for beg and end
-  SPICEDOUBLE_CELL(result, 10);
-  SPICEDOUBLE_CELL(cnfine,2);
+  SPICEDOUBLE_CELL(cnfine, 1000);
+  SPICEDOUBLE_CELL(result, 1000);
   SpiceDouble beg, end;
 
   // elevation function
@@ -490,17 +497,25 @@ SpiceDouble prevTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDou
     *value = altitude(target, et, lat, lon);
   }
 
+  // the initial window
+  wninsd_c(et-86400, et, &cnfine);
+
+
   // loop for 400 days but early abort
   for (int i=-1; i>-400; i--) {
 
-    // the window for a day
-    wninsd_c(et+i*86400, et+(i+1)*86400, &cnfine);
+    printf("DEBUG (prevTime): %d\n", i);
 
     // search within that window
-    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 10, &cnfine, &result);
+    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
 
     // if at least 1 result, break out of for loop
     if (wncard_c(&result) >= 1) {break;}
+
+    // otherwise, tweak window to be prev dat
+    wncond_c(0., 86400., &cnfine);
+    wnexpd_c(86400., 0., &cnfine);
+
   }
 
   // return the one result

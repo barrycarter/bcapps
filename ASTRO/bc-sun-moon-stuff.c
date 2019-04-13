@@ -1,9 +1,5 @@
 /* determines moon/sun rise/set/twilight times */
 
-// the angular separation from zenith of a given body at a given time
-// in a given place; because I plan to feed this routine to gfq, most
-// "parameters" are global
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,9 +11,15 @@
 int main(int argc, char **argv) {
   furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
 
-  double et = unix2et(1555022362);
-  double lat =  35.05*rpd_c();
-  double lon = -106.5*rpd_c();
+  if (argc != 4) {
+    printf("Usage: lat(degrees) lon(degrees) unixtime\n");
+    return -1;
+  }
+
+  double lat = atof(argv[1])*rpd_c();
+  double lon = atof(argv[2])*rpd_c();
+  double et = unix2et(atof(argv[3]));
+
   double elvs[4] = {-0.83333333333, -6, -12, -18};
 
   printf("SUN az: %f, el: %f\n", azimuth(10, et, lat, lon)/rpd_c(), 
