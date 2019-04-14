@@ -17,7 +17,48 @@ my($lonw) = floor($lon*120)/120;
 
 my($fname) = osm_cache_bc2($lats, $lonw, 1/120);
 
-debug(read_file($fname));
+my($data) = read_file($fname);
+
+# TODO: better job of ignoring unnecessary
+
+# ignore self-closing nodes
+$data=~s%<node.*?/>%%g;
+
+# ignore nd refs inside ways
+$data=~s%<nd ref="\d+"/>%%g;
+
+# cleanup blanks
+$data=~s/\s*\n+\s*/\n/sg;
+
+# handle nodes and ways
+
+while ($data=~s%<(node|way)(.*?)>(.*?)</\g1>%%s) {handle_item($1, $2, $3);}
+
+# debug("DATA: $data");
+
+# TODO: do a better job of this extraction
+
+# while ($data=~s/(<tag.*?>)//) {
+#   debug("TAG: $1");
+# }
+
+# debug("DATA: $data");
+
+# prog specific sub to handle things
+
+sub handle_item {
+
+  my($type, $header, $data) = @_;
+
+  my(%hash);
+  while ($data=~s%<tag k="(.*?)" v="(.*?)"/>%%) {$hash{$1} = $2;}
+
+  unless ($hash{amenity} || $hash{name}) {return;}
+
+  # TODO: cleanup
+  return "$hash{name} ($hash{amenity})";
+}
+
 
 # TODO: move this to bclib.pl
 
