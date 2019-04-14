@@ -443,78 +443,49 @@ void isDecreasing(void(* udfuns)(SpiceDouble et,SpiceDouble *value),
   *isdecr = (res2 < res1);
 }
 
-// TODO: can probably combine next and prev routines
+// returns the prev/next time (before/after et) target reaches
+// elevation elev at lat/lon
 
-// returns the next time (after et) target reaches elevation elev at lat/lon
-
-SpiceDouble nextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDouble lat, SpiceDouble lon) {
+SpiceDouble prevOrNextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, 
+			   SpiceDouble lat, SpiceDouble lon, SpiceInt dir) {
 
   // just 1 result cell and cnfine has to be 2 big for beg and end
-  SPICEDOUBLE_CELL(cnfine, 1000);
-  SPICEDOUBLE_CELL(result, 1000);
+  SPICEDOUBLE_CELL(cnfine, 2);
+  SPICEDOUBLE_CELL(result, 6);
   SpiceDouble beg, end;
 
   // elevation function
   void elevationFunction(SpiceDouble et, SpiceDouble *value) {
     *value = altitude(target, et, lat, lon);
   }
-
-  // the initial window
-  wninsd_c(et, et+86400, &cnfine);
 
   // loop for 400 days but early abort
   for (int i=0; i<400; i++) {
 
+    // TODO: ssize here is super ugly
+    ssize_c(2, &cnfine);
+    ssize_c(6, &result);
+
+    if (dir == 1) {
+      wninsd_c(et+86400*i, et+86400*(i+1), &cnfine);
+    } else {
+      wninsd_c(et-86400*(i+1), et-86400*i, &cnfine);
+    }
     // search within that window
-    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
+    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 3600., 1000, &cnfine, &result);
 
     // if at least 1 result, break out of for loop
     if (wncard_c(&result) >= 1) {break;}
-
-    // otherwise, tweak window to be next day
-    wncond_c(86400., 0., &cnfine);
-    wnexpd_c(0., 86400., &cnfine);
-
   }
 
-  // return the one result
-  wnfetd_c(&result, 0, &beg, &end);
+  // return the first or last result
+
+  if (dir == 1) {
+    wnfetd_c(&result, 0, &beg, &end);
+  } else {
+    wnfetd_c(&result, wncard_c(&result)-1, &beg, &end);
+  }
+
   return beg;
 
-}
-
-SpiceDouble prevTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDouble lat, SpiceDouble lon) {
-
-  // just 1 result cell and cnfine has to be 2 big for beg and end
-  SPICEDOUBLE_CELL(cnfine, 1000);
-  SPICEDOUBLE_CELL(result, 1000);
-  SpiceDouble beg, end;
-
-  // elevation function
-  void elevationFunction(SpiceDouble et, SpiceDouble *value) {
-    *value = altitude(target, et, lat, lon);
-  }
-
-  // the initial window
-  wninsd_c(et-86400, et, &cnfine);
-
-
-  // loop for 400 days but early abort
-  for (int i=-1; i>-400; i--) {
-
-    // search within that window
-    gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
-
-    // if at least 1 result, break out of for loop
-    if (wncard_c(&result) >= 1) {break;}
-
-    // otherwise, tweak window to be prev dat
-    wncond_c(0., 86400., &cnfine);
-    wnexpd_c(86400., 0., &cnfine);
-
-  }
-
-  // return the one result
-  wnfetd_c(&result, wncard_c(&result)-1, &beg, &end);
-  return beg;
 }
