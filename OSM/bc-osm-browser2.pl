@@ -6,6 +6,12 @@
 
 # uses 30 second grid
 
+# fun way to test: $0 --debug `perl -le 'print rand()*180-90,"
+# ",rand()*360-180'`
+
+# TODO: draw vertical and horizontal lines to grid world?
+# TODO: use OSM tiles in google maps?
+
 require "/usr/local/lib/bclib.pl";
 
 my($lat, $lon) = @ARGV;
@@ -14,6 +20,8 @@ my($lat, $lon) = @ARGV;
 
 my($lats) = floor($lat*120)/120;
 my($lonw) = floor($lon*120)/120;
+
+debug("USING LAT: $lats, LON: $lonw");
 
 my($fname) = osm_cache_bc2($lats, $lonw, 1/120);
 
@@ -32,7 +40,13 @@ $data=~s/\s*\n+\s*/\n/sg;
 
 # handle nodes and ways
 
-while ($data=~s%<(node|way)(.*?)>(.*?)</\g1>%%s) {handle_item($1, $2, $3);}
+my(@items) = ();
+
+while ($data=~s%<(node|way)(.*?)>(.*?)</\g1>%%s) {
+  push(@items, handle_item($1, $2, $3));
+}
+
+debug(@items);
 
 # debug("DATA: $data");
 
@@ -50,13 +64,39 @@ sub handle_item {
 
   my($type, $header, $data) = @_;
 
-  my(%hash);
-  while ($data=~s%<tag k="(.*?)" v="(.*?)"/>%%) {$hash{$1} = $2;}
+  my($origdata) = $data;
 
-  unless ($hash{amenity} || $hash{name}) {return;}
+  my(%hash);
+  while ($data=~s%<tag k="(.*?)" v="(.*?)"/>%%) {
+
+    my($key, $val) = ($1, $2);
+
+    # assign
+    $hash{$key} = $val;
+
+    # this is ugly
+    if ($key=~/(.*?):.*/) {
+      $hash{$1} .= $val;
+    }
+
+  }
+
+  # the type of this item
+  # https://taginfo.openstreetmap.org/keys for most used keys
+
+  for $i ("amenity", "highway", "office", "shop", "tourism", "tower", 
+	  "waterway", "man_made", "railway", "building", "landuse",
+	 "leisure", "aeroway", "natural") {
+    if ($hash{$i}) {
+      $hash{_type} = "$i: $hash{$i}";
+      last;
+    }
+  }
+
+  unless ($hash{_type} || $hash{name}) {debug("IGNORING: $origdata"); return;}
 
   # TODO: cleanup
-  return "$hash{name} ($hash{amenity})";
+  return "$hash{name} ($hash{_type})";
 }
 
 
