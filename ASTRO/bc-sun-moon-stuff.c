@@ -31,9 +31,9 @@ SpiceDouble timeRangeElevation(SpiceInt target, SpiceDouble et1,
   SpiceDouble meas, avg, stddev;
   wnsumd_c(&result, &meas, &avg, &stddev, &shortest, &longest);
 
-  printf("SUMMARY: %f %f %f %d %d\n", meas, avg, stddev, shortest, longest);
+  //  printf("SUMMARY: %f %f %f %d %d\n", meas, avg, stddev, shortest, longest);
 
-  printf("SIZES: %d %d\n", wncard_c(&result), wncard_c(&cnfine));
+  //  printf("SIZES: %d %d\n", wncard_c(&result), wncard_c(&cnfine));
 
   //  printf("ET: %f %f, ELEV: %f\n", et1, et2, elev);
 
@@ -43,19 +43,19 @@ SpiceDouble timeRangeElevation(SpiceInt target, SpiceDouble et1,
     *value = altitude(target, et, lat, lon);
   }
 
-  printf("ABOUT TO INSERT\n");
+  //  printf("ABOUT TO INSERT\n");
   wninsd_c(et1, et2, &cnfine);
-  printf("DONE INSERTING\n");
+  //  printf("DONE INSERTING\n");
 
-  gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
+  gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 3600., 1000, &cnfine, &result);
 
-  printf("DONE FINDING\n");
+  //  printf("DONE FINDING\n");
 
-  printf("RESULT SIZE: %d\n", wncard_c(&result));
+  //  printf("RESULT SIZE: %d\n", wncard_c(&result));
 
   for (int i=0; i < wncard_c(&result); i++) {
     wnfetd_c(&result, wncard_c(&result)-1, &beg, &end);
-    printf("RESULT %d: %f\n", i, beg);
+    //    printf("RESULT %d: %f\n", i, beg);
   }
 
   
@@ -185,7 +185,7 @@ int main(int argc, char **argv) {
   for (int i=0; i <= 3; i++) {
 
     for (int j=0; j < 400; j++) {
-      printf("J = %d\n", j);
+      //      printf("J = %d\n", j);
       result = timeRangeElevation(10, et+j*86400, et+(j+1)*86400, elvs[i]*rpd_c(),
 				  lat, lon, 1);
       if (result > 0) {break;}
