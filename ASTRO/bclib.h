@@ -465,8 +465,6 @@ SpiceDouble nextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDou
   // loop for 400 days but early abort
   for (int i=0; i<400; i++) {
 
-    printf("DEBUG (nextTime): %d\n", i);
-
     // search within that window
     gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
 
@@ -503,8 +501,6 @@ SpiceDouble prevTime(SpiceInt target, SpiceDouble et, SpiceDouble elev, SpiceDou
 
   // loop for 400 days but early abort
   for (int i=-1; i>-400; i--) {
-
-    printf("DEBUG (prevTime): %d\n", i);
 
     // search within that window
     gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
