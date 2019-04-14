@@ -21,24 +21,43 @@ SpiceDouble timeRangeElevation(SpiceInt target, SpiceDouble et1,
 			       SpiceDouble lat, SpiceDouble lon,
 			       SpiceInt firstOrLast) {
   SPICEDOUBLE_CELL(cnfine, 2);
-  SPICEDOUBLE_CELL(result, 6);
+  SPICEDOUBLE_CELL(result, 10);
   SpiceDouble beg, end;
 
-  printf("SIZE: %d\n", wncard_c(&result));
+  ssize_c(2, &cnfine);
+  ssize_c(10, &result);
 
-  printf("ET: %f %f, ELEV: %f\n", et1, et2, elev);
+  SpiceInt shortest, longest;
+  SpiceDouble meas, avg, stddev;
+  wnsumd_c(&result, &meas, &avg, &stddev, &shortest, &longest);
+
+  printf("SUMMARY: %f %f %f %d %d\n", meas, avg, stddev, shortest, longest);
+
+  printf("SIZES: %d %d\n", wncard_c(&result), wncard_c(&cnfine));
+
+  //  printf("ET: %f %f, ELEV: %f\n", et1, et2, elev);
 
   // elevation function
   void elevationFunction(SpiceDouble et, SpiceDouble *value) {
-    printf("RETURNING %f\n", altitude(target, et, lat, lon));
+    //    printf("RETURNING %f\n", altitude(target, et, lat, lon));
     *value = altitude(target, et, lat, lon);
   }
 
+  printf("ABOUT TO INSERT\n");
   wninsd_c(et1, et2, &cnfine);
+  printf("DONE INSERTING\n");
 
   gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 60., 1000, &cnfine, &result);
 
-  printf("SIZE: %d\n", wncard_c(&result));
+  printf("DONE FINDING\n");
+
+  printf("RESULT SIZE: %d\n", wncard_c(&result));
+
+  for (int i=0; i < wncard_c(&result); i++) {
+    wnfetd_c(&result, wncard_c(&result)-1, &beg, &end);
+    printf("RESULT %d: %f\n", i, beg);
+  }
+
   
 
   // if no results, indicate so
