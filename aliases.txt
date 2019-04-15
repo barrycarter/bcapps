@@ -325,6 +325,8 @@ alias od "od -A d -t d1 \!*"
 
 alias yamcsync "bc-mirror-server.pl --debug --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/yamcroot/ 167.99.95.147;"
 
+alias yamc "ssh -i /home/barrycarter/.ssh/id_rsa.bc root@167.99.95.147"
+
 # for the fusion project
 
 alias fusiongit "pushd .; cd /mnt/villa/user/20190226/a-1-family-furniture; git add .; git commit; git pull -v; git push origin master; popd"
