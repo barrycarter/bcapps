@@ -25,21 +25,23 @@ int main(int argc, char **argv) {
 
   double elvs[4] = {-0.83333333333, -6, -12, -18};
 
-  printf("SUN az: %f, el: %f\n", azimuth(10, et, lat, lon)/rpd_c(), 
+  // out format is for other progs (could kill the newlines, but nah)
+
+  printf("saz=%f&sel=%f&\n", azimuth(10, et, lat, lon)/rpd_c(), 
 	 altitude(10, et, lat, lon)/rpd_c());
 
-  printf("MOON az: %f, el: %f\n", azimuth(301, et, lat, lon)/rpd_c(), 
+  printf("maz=%f&mel=%f&\n", azimuth(301, et, lat, lon)/rpd_c(), 
 	 altitude(301, et, lat, lon)/rpd_c());
 
   
   for (int i=0; i <= 3; i++) {
-    printf("SUN PREV @%f: %f\n", elvs[i], et2unix(prevOrNextTime(10, et, elvs[i]*rpd_c(), lat, lon, -1)));
-    printf("SUN NEXT @%f: %f\n", elvs[i], et2unix(prevOrNextTime(10, et, elvs[i]*rpd_c(), lat, lon, 1)));
+    printf("sp%f=%f&\n", elvs[i], et2unix(prevOrNextTime(10, et, elvs[i]*rpd_c(), lat, lon, -1)));
+    printf("sn%f=%f&\n", elvs[i], et2unix(prevOrNextTime(10, et, elvs[i]*rpd_c(), lat, lon, 1)));
   }
 
-  printf("MOON PREV AT HORIZON: %f\n", et2unix(prevOrNextTime(301, et, elvs[0]*rpd_c(), lat, lon, -1)));
+  printf("mph=%f&\n", et2unix(prevOrNextTime(301, et, elvs[0]*rpd_c(), lat, lon, -1)));
 
-  printf("MOON NEXT AT HORIZON: %f\n", et2unix(prevOrNextTime(301, et, elvs[0]*rpd_c(), lat, lon, 1)));
+  printf("mnh=%f\n", et2unix(prevOrNextTime(301, et, elvs[0]*rpd_c(), lat, lon, 1)));
 
   return 0;
 

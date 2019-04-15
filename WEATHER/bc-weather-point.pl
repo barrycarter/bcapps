@@ -8,13 +8,21 @@
 
 # TODO: https://timezonedb.com/api
 
-
-
 require "/usr/local/lib/bclib.pl";
 require "/home/user/bc-private.pl";
 require Image::PNG;
 
+# actually easier to use point feature, sigh(?)
+
 my($lat, $lon) = @ARGV;
+
+# curl https://api.open-elevation.com/api/v1/lookup\?locations\=10,10\|20,20\|41.161758,-8.583933
+
+
+
+
+
+die "TESTING";
 
 # find the xyz pos of point
 my($posx, $posy, $posz) = sph2xyz($lon, $lat, 1, "degrees=1");
