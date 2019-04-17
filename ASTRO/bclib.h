@@ -494,8 +494,14 @@ SpiceDouble prevOrNextTime2(SpiceInt target, SpiceDouble et, SpiceDouble elev,
 			   SpiceDouble lat, SpiceDouble lon, SpiceInt dir) {
 
   SPICEDOUBLE_CELL(cnfine, 2);
-  SPICEDOUBLE_CELL(result, 400);
+  SPICEDOUBLE_CELL(result, 5000);
   SpiceDouble beg, end;
+
+  // empty cnfine and result and then allow them to hold new intervals
+  //  scard_c(0, &cnfine);
+  //  scard_c(0, &result);
+  //  scard_c(2, &cnfine);
+  //  scard_c(800, &result);
 
   // elevation function
   void elevationFunction(SpiceDouble et, SpiceDouble *value) {

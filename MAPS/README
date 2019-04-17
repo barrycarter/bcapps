@@ -17,3 +17,41 @@ reshaped slippy tiles in real time.
 See also:
 
 http://gis.stackexchange.com/questions/29101/create-mercator-map-with-arbitrary-center-orientation
+
+Notes for map server:
+
+  - Request not in JSON, advise them to send "{cmd: 'help'}"
+
+  - help should include sources and limitations
+
+Data provided:
+
+  - Elevation (SRTM 3 second + alt source for high alt)
+
+  - Climate (Koeppen-Geiger)
+
+  - Astronomical phenomena (computed)
+
+  - Land slope
+
+  - Land use (ESACCI)
+
+What I have:
+
+  - 200G server on digitalocean
+
+  - binary versions of elevation, climate, land slope and land use
+  (but need help combining them)
+
+  - program that computes astronomical phenomena
+
+
+Help I need w/ map server:
+
+  - Converting front end JS requests to back end file byte requests
+
+  - Gluing large bin files together
+
+  - Returning data consistently and quasi-efficiently
+
+  - Testing accuracy
