@@ -459,8 +459,8 @@ SpiceDouble prevOrNextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev,
     *value = altitude(target, et, lat, lon);
   }
 
-  // loop for 400 days but early abort
-  for (int i=0; i<400; i++) {
+  // loop for 200 days but early abort
+  for (int i=0; i<200; i++) {
 
     // TODO: ssize here is super ugly
     ssize_c(2, &cnfine);
@@ -477,6 +477,39 @@ SpiceDouble prevOrNextTime(SpiceInt target, SpiceDouble et, SpiceDouble elev,
     // if at least 1 result, break out of for loop
     if (wncard_c(&result) >= 1) {break;}
   }
+
+  // return the first or last result
+
+  if (dir == 1) {
+    wnfetd_c(&result, 0, &beg, &end);
+  } else {
+    wnfetd_c(&result, wncard_c(&result)-1, &beg, &end);
+  }
+
+  return beg;
+
+}
+
+SpiceDouble prevOrNextTime2(SpiceInt target, SpiceDouble et, SpiceDouble elev, 
+			   SpiceDouble lat, SpiceDouble lon, SpiceInt dir) {
+
+  SPICEDOUBLE_CELL(cnfine, 2);
+  SPICEDOUBLE_CELL(result, 400);
+  SpiceDouble beg, end;
+
+  // elevation function
+  void elevationFunction(SpiceDouble et, SpiceDouble *value) {
+    *value = altitude(target, et, lat, lon);
+  }
+
+  // single interval
+  if (dir == 1) {
+    wninsd_c(et, et+86400*200, &cnfine);
+  } else {
+    wninsd_c(et-86400*200, et, &cnfine);
+  }
+
+  gfuds_c(elevationFunction, isDecreasing, "=", elev, 0., 3600., 1000, &cnfine, &result);
 
   // return the first or last result
 

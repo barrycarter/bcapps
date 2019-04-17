@@ -19,6 +19,9 @@ int main(int argc, char **argv) {
     return -1;
   }
 
+  // testing
+  double (*f)(SpiceInt, SpiceDouble, SpiceDouble, SpiceDouble, SpiceDouble, SpiceInt) = &prevOrNextTime;
+
   double lat = atof(argv[1])*rpd_c();
   double lon = atof(argv[2])*rpd_c();
   double et = unix2et(atof(argv[3]));
@@ -35,13 +38,13 @@ int main(int argc, char **argv) {
 
   
   for (int i=0; i <= 3; i++) {
-    printf("sp%f=%f&\n", elvs[i], et2unix(prevOrNextTime(10, et, elvs[i]*rpd_c(), lat, lon, -1)));
-    printf("sn%f=%f&\n", elvs[i], et2unix(prevOrNextTime(10, et, elvs[i]*rpd_c(), lat, lon, 1)));
+    printf("sp%f=%f&\n", elvs[i], et2unix(f(10, et, elvs[i]*rpd_c(), lat, lon, -1)));
+    printf("sn%f=%f&\n", elvs[i], et2unix(f(10, et, elvs[i]*rpd_c(), lat, lon, 1)));
   }
 
-  printf("mph=%f&\n", et2unix(prevOrNextTime(301, et, elvs[0]*rpd_c(), lat, lon, -1)));
+  printf("mph=%f&\n", et2unix(f(301, et, elvs[0]*rpd_c(), lat, lon, -1)));
 
-  printf("mnh=%f\n", et2unix(prevOrNextTime(301, et, elvs[0]*rpd_c(), lat, lon, 1)));
+  printf("mnh=%f\n", et2unix(f(301, et, elvs[0]*rpd_c(), lat, lon, 1)));
 
   return 0;
 
