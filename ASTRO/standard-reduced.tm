@@ -19,11 +19,12 @@ REMOVED FOR TESTING:
 '/home/barrycarter/SPICE/KERNELS/nep081.bsp',
 '/home/barrycarter/BCGIT/ASTRO/iss.bsp',
 
+Instead of using DE431, uses "just as good" DE430
+
 \begindata
 
 KERNELS_TO_LOAD = (
-'/home/user/SPICE/KERNELS/de431_part-1.bsp',
-'/home/user/SPICE/KERNELS/de431_part-2.bsp',
+'/home/user/SPICE/KERNELS/de430.bsp',
 '/home/user/SPICE/KERNELS/pck00010.tpc',
 '/home/user/SPICE/KERNELS/naif0012.tls',
 '/home/user/SPICE/KERNELS/earth_latest_high_prec.bpc',

@@ -142,7 +142,7 @@ XWIDTH=1600
 # others); note the "&" backgrounds the xmessage to prevent cron from
 # hanging
 
-30 16 * * Mon xmessage -geometry $XWIDTH put out trash &
+30 16 * * Mon xmessage -geometry $XWIDTH follow TRASH PROCEDURE &
 
 # and take the empty trash bin in the next day
 30 16 * * Tue xmessage -geometry $XWIDTH retract trashing device &
