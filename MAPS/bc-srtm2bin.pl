@@ -11,21 +11,62 @@ require "/usr/local/lib/bclib.pl";
 
 my($fname) = @ARGV;
 
-$| = 1;
-
 open(A, "zcat $fname|");
 
-my(@arr);
-
 # first 6 rows are header lines
+my(@arr);
 for $i (0..5) {$arr[$i] = <A>;}
 
+# meta data
 my(%meta);
-
 for $i (@arr) {
   $i=~s/^(.*?)\s+(.*)$//;
   $meta{$1} = $2;
 }
+
+# assign latitude values to each row; because of our numbering scheme,
+# the last row is nrows-1
+
+my($curlat) = $meta{yllcorner} + $meta{cellsize}/2;
+
+for ($i = $meta{nrows}-1 ; $i >= 0; $i--) {
+  $row2lat[$i] = $curlat;
+
+  # the "adjusted latitude" adds 90 for all positives and divides by cellsize
+  $adjlat[$i] = ($curlat+90)/$meta{cellsize};
+
+  # if it's not sufficiently close to its rounded value, worry; otherwise round
+  my($round) = round($adjlat[$i]);
+  if (abs($round - $adjlat[$i]) > 0.1) {die "BAD ROUND: $i";}
+  $adjlat[$i] = $round;
+
+  $curlat += $meta{cellsize};
+}
+
+# same thing for longitude
+
+my($curlon) = $meta{xllcorner} + $meta{cellsize}/2;
+
+for $i (0..$meta{ncols}-1) {
+  $col2lon[$i] = $curlon;
+
+  # the "adjusted longitude" adds 180 for all positives and divides by cellsize
+  $adjlon[$i] = ($curlon+180)/$meta{cellsize};
+
+  # if it's not sufficiently close to its rounded value, worry; otherwise round
+  my($round) = round($adjlon[$i]);
+  if (abs($round - $adjlon[$i]) > 0.1) {die "BAD ROUND: $i";}
+  $adjlon[$i] = $round;
+
+  $curlon += $meta{cellsize};
+}
+
+debug(@adjlon);
+
+die "TESTING";
+
+
+
 
 my($row) = 0;
 
