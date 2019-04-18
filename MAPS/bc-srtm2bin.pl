@@ -4,10 +4,16 @@
 
 # TODO: 65535 header or something (1M?)
 
+# the valid x values are: 0 to 431999
+# the valid y values are: 0 to 216000 (allowing one extra pixel)
+
 # final file size is 360*1200 for longitude and 180*1200 for latitude
 # times 2 bytes per data point, so 186.624 GB (uncompressed)
 
 require "/usr/local/lib/bclib.pl";
+
+# reserve 1M bytes for header
+my($reserve) = 10**6;
 
 my($fname) = @ARGV;
 
@@ -57,6 +63,10 @@ for $i (0..$meta{ncols}-1) {
   my($round) = round($adjlon[$i]);
   if (abs($round - $adjlon[$i]) > 0.1) {die "BAD ROUND: $i";}
   $adjlon[$i] = $round;
+
+  # special case wraparound
+  # TODO: don't hardcode value below
+  if ($adjlon[$i] == 432000) {$adjlon[$i] = 0;}
 
   $curlon += $meta{cellsize};
 }
