@@ -2,13 +2,11 @@
 
 # converts the SRTM data to a big binary file that covers the Earth
 
-# TODO: 65535 header or something (1M?)
-
 # the valid x values are: 0 to 431999
 # the valid y values are: 0 to 216000 (allowing one extra pixel)
 
 # final file size is 360*1200 for longitude and 180*1200 for latitude
-# times 2 bytes per data point, so 186.624 GB (uncompressed)
+# times 2 bytes per data point, so 186.624 GB + 1M header (uncompressed)
 
 require "/usr/local/lib/bclib.pl";
 
@@ -30,82 +28,65 @@ for $i (@arr) {
   $meta{$1} = $2;
 }
 
-# assign latitude values to each row; because of our numbering scheme,
-# the last row is nrows-1
+# because the big file (186+G) is fixed, we hardcode a little
 
-my($curlat) = $meta{yllcorner} + $meta{cellsize}/2;
+# we adjust lower left corner latitude and longitude by turning them
+# into row/col coordinates (positive and a multiple of cellsize)
 
-for ($i = $meta{nrows}-1 ; $i >= 0; $i--) {
-  $row2lat[$i] = $curlat;
+# we then add 1/2 to each (and round) so they represent the lowest
+# left value, which is 1/2 cellsize away in each direction from the
+# corner
 
-  # the "adjusted latitude" adds 90 for all positives and divides by cellsize
-  $adjlat[$i] = ($curlat+90)/$meta{cellsize};
+my($adjlat) = round(($meta{yllcorner}+90)*1200+1/2);
+my($adjlon) = round(($meta{xllcorner}+180)*1200+1/2);
 
-  # if it's not sufficiently close to its rounded value, worry; otherwise round
-  my($round) = round($adjlat[$i]);
-  if (abs($round - $adjlat[$i]) > 0.1) {die "BAD ROUND: $i";}
-  $adjlat[$i] = $round;
+# for speed, we compute the adjusted lat/lon for each row/col (we are
+# 0-indexed)
 
-  $curlat += $meta{cellsize};
-}
+my(@row2lat, @col2lon);
 
-# same thing for longitude
-
-my($curlon) = $meta{xllcorner} + $meta{cellsize}/2;
-
-for $i (0..$meta{ncols}-1) {
-  $col2lon[$i] = $curlon;
-
-  # the "adjusted longitude" adds 180 for all positives and divides by cellsize
-  $adjlon[$i] = ($curlon+180)/$meta{cellsize};
-
-  # if it's not sufficiently close to its rounded value, worry; otherwise round
-  my($round) = round($adjlon[$i]);
-  if (abs($round - $adjlon[$i]) > 0.1) {die "BAD ROUND: $i";}
-  $adjlon[$i] = $round;
-
-  # special case wraparound
-  # TODO: don't hardcode value below
-  if ($adjlon[$i] == 432000) {$adjlon[$i] = 0;}
-
-  $curlon += $meta{cellsize};
-}
-
-debug(@adjlon);
-
-die "TESTING";
-
-
-
+for ($i=$meta{nrows}-1; $i>=0; $i--) {$row2lat[$i] = $adjlat++;}
+  
+for $i (0..$meta{ncols}-1) {$col2lon[$i] = $adjlon++;}
 
 my($row) = 0;
 
 while (<A>) {
 
-  my(@cols) = split(/\s+/, $_);
-
-  # the latitude associated with this row
-  my($lat) = $meta{cellsize}*($row + 3/2-$meta{nrows}) + $meta{yllcorner};
-
-  for $i (0..$#cols) {
-    # longitude for this column
-    # TODO: this is insanely inefficent
-    my($lon) = $meta{cellsize}*($i+1/2) + $meta{xllcorner};
-    debug("ROW: $row, COL: $i, LAT: $lat, LON: $lon, VAL: $cols[$i]");
+  # ignore impossible latitudes with a warning
+  if ($row2lat[$row] < 0 || $row2lat[$row] > 216000) {
+    warn "Ignoring bad latitude: $row -> $row2lat[$row]";
+    next;
   }
 
+  my(@cols) = split(/\s+/, $_);
+
+  for $col (0..$#cols) {
+
+    # ignore impossible longitudes with a warning
+    if ($col2lon[$col] < 0 || $col2lon[$col] > 431999) {
+      warn "Ignoring bad longitude: $col -> $col2lon[$col]";
+      next;
+    }
+
+    # the byte position in the mega file (2 bytes per data point)
+    my($byte) = $row2lat[$row]*2*432000 + $col2lon[$col]*2 + $reserve + 1;
+
+    # the value to post, converted to bytes
+    # this makes -9999 -> 0 = missing value
+    my($post) = $cols[$i] + 9999;
+    my($b1) = floor($post/256);
+    my($b2) = $post%256;
+
+  }
   $row++;
+
+  if ($row%100 == 0) {debug("ROW: $row");}
+
 }
 
-# debug(%meta);
 
-die "TESTING";
-
-my(%meta);
-
-debug("NCOLS: $ncols");
-
-die "TESTING";
+exit(0);
 
 while (<>) {
 
