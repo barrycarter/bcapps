@@ -782,4 +782,3 @@ wordpress
 
 # TODO: "yum update" may help install some sources that require higher
 # versions of packages
-
