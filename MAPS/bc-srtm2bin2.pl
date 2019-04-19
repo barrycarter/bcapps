@@ -2,6 +2,9 @@
 
 # converts an AAIGRID to a binary file covering the Earth
 
+# This version uses binary data files I created earlier, in the hopes
+# that will be faster
+
 # Required options <h>(yes, that's an oxymoron)</h>
 #
 # --dataPerDegree: number of data points per degree
@@ -11,7 +14,6 @@
 # --inputFile: the input file (this could be a regular argument?)
 
 use Number::Format 'format_number';
-use String::Scanf;
 require "/usr/local/lib/bclib.pl";
 
 # ensure all options are set (except maybe outputfile)
@@ -48,8 +50,6 @@ if ($globopts{outputFile} && -s $globopts{outputFile} < $bytes) {
 
 unless ($globopts{inputFile}) {die "No input file";}
 
-# TODO: allow for noncompressed AAIGRIDs
-
 debug("I: $globopts{inputFile}");
 
 if ($globopts{inputFile} =~ /\.zip$/) {
@@ -57,6 +57,32 @@ if ($globopts{inputFile} =~ /\.zip$/) {
 } else {
   open(A, "$globopts{inputFile}");
 }
+
+# the binary file with the data for this input file (which will be
+# ignored after I pull out the first few values)
+
+my($binfile) = "$globopts{inputFile}.bin";
+
+unless (-f $binfile) {die "Binary file $globopts{inputFile}.bin does not exist";}
+
+open(B, "$globopts{inputFile}.bin");
+
+while (!eof(B)) {
+  sysread(B, $out, 2);
+
+  if (++$count%1e6 == 0) {debug("COUNT: $count");}
+
+}
+
+
+
+die "TESTING";
+
+debug("LOADING BIN FILE");
+my($bindata) = read_file("$globopts{inputFile}.bin");
+debug("DONE LOADING BIN FILE");
+
+die "TESTING";
 
 # open the outfile
 open(B, $globopts{outputFile})||die("Can't open output file: $!");
