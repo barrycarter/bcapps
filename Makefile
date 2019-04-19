@@ -1,7 +1,7 @@
 all: phrases.txt /home/user/bin/bc-scanf-tests
 
-/home/user/bin/bc-scanf-tests: bc-scanf-tests.c
-	gcc -o /home/user/bin/bc-scanf-tests bc-scanf-tests.c
+/home/user/bin/bc-scanf-tests: bc-scanf-tests.c Makefile
+	gcc -o /home/user/bin/bc-scanf-tests bc-scanf-tests.c -lm
 
 # this just makes it easier to fgrep -vf
 # can't get egrep -v '^
