@@ -8,12 +8,24 @@
 int main(int argc, char **argv) {
 
   signed long long val, res, i, j, ncols, nrows, nodata_value, adjlat, adjlon;
-  signed long long dataSize, count = 0;
+  signed long long dataSize, byte, count = 0;
+  FILE *fd;
   double xllcorner, yllcorner, cellsize;
   char str[100];
 
+  // the output file
+  if (argc != 2) {
+    printf("Usage: $0 outputfile\n");
+    return -1;
+  }
+
+
   // we reserve the first 1M bytes for comments
   signed long long reserve = 1000000;
+
+  // open the output file
+  fd = fopen(argv[1], "r+");
+
 
   // read first few lines of AAIgrid file for metadata
 
@@ -88,25 +100,43 @@ Reserved for comments: %lli\n\
 Output file size: %lli bytes (%lli MB, %lli GB)\n", 
 	 bigrows, bigcols, reserve, size, size/1000000, size/1000000000);
 
+  printf("\n");
+
   // TODO: test output file size (+ get on argv)
   
-
-  // speed test here
   for (i=0; i < nrows; i++) {
 
-    // compute matrix point for this latitude/row
 
-    // first compute the latitude
-    adjlat = yllcorner + cellsize*(nrows - i - 1/2);
 
-    
+    // compute big matrix row for this latitude/row
+    // +90 to make it positive and then just multiply by dataPerDegree
 
-    
+    adjlat = (yllcorner + cellsize*(nrows - i - 1/2) + 90)*dataPerDegree;
+
+    if (adjlat < 0 || adjlat > bigrows) {
+      printf("BAD LATITUDE: %lli\n", adjlat);
+      continue;
+    }
 
     for (j=0; j < ncols; j++) {
 
-      // TODO: computing this each time is redundant
-      adjlon = xllcorner + cellsize*(j+1/2);
+      // TODO: computing this each time is inefficient
+      // +180 to make it positive and then mult byh dataPerDegree
+
+      adjlon = (xllcorner + cellsize*(j+1/2) + 180)*dataPerDegree;
+
+      //      printf("ADJLON: %lli\n", adjlon);
+
+      // the byte where we will write this
+
+      byte = adjlat*bigcols*dataSize + adjlon*2 + reserve;
+
+      if (byte < 0 || byte > size) {
+	printf("Attempt to print to invalid byte: %lli\n", byte);
+	continue;
+      }
+
+      printf("BYTE: %lli\n", byte);
 
       // read value from stdin
       scanf("%lli", &val);
