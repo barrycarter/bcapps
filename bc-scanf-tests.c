@@ -56,6 +56,8 @@ int main(int argc, char **argv) {
     return -1;
   }
 
+  // print some information on the values we've computed
+
   printf("\
 WARNING: ASSUMING SOME VALUES BASED ON META DATA\n\
 COLS: %lli\n\
@@ -71,9 +73,20 @@ Data add factor: %lli\n\
 	 ncols, nrows, xllcorner, yllcorner, cellsize, nodata_value,
 	 dataPerDegree, dataSize, addToData);
 
-  // this is just to be more like bc-srtm2bin.pl
 
-  printf("Output file size minimum: %lli\n", 360*180*dataPerDegree*dataPerDegree*dataSize + reserve);
+  // print some information about the bigger file we're inserting into
+
+  // the +1 below allows for data points at +90 and -90 and data
+  // points at +180 and -180 even those these are the same
+
+  signed long long bigrows = 180*dataPerDegree+1;
+  signed long long bigcols = 360*dataPerDegree+1;
+  signed long long size = bigrows*bigcols*dataSize + reserve;
+
+  printf("Output file rows: %lli\nOutput file cols: %lli\n\
+Reserved for comments: %lli\n\
+Output file size: %lli bytes (%lli MB, %lli GB)\n", 
+	 bigrows, bigcols, reserve, size, size/1000000, size/1000000000);
 
   // TODO: test output file size (+ get on argv)
   
