@@ -4,18 +4,35 @@
 
 int main(int argc, char **argv) {
 
-  int val, res, i, count = 0;
-  double dval;
+  int val, res, i, ncols, nrows, nodata_value, count = 0;
+  double xllcorner, yllcorner, cellsize;
   char str[100];
 
   // read first few lines of AAIgrid file
 
-  for (i=0; i<7; i++) {
+  for (i=0; i<12; i++) {
     scanf("%s", str);
-    printf("STRING: %s\n", str);
-    scanf("%f", &dval);
-    printf("FLOAT: %f\n", dval);
+
+    // pluck out the values I need
+    if (i == 1) {
+      ncols = atoi(str);
+    } else if (i == 3) {
+      nrows = atoi(str);
+    } else if (i == 5) {
+      xllcorner = atof(str);
+    } else if (i == 7) {
+      yllcorner = atof(str);
+    } else if (i == 9) {
+      cellsize = atof(str);
+    } else if (i == 11) {
+      nodata_value = atoi(str);
+    } else {
+      // do nothing
+    }
   }
+
+  printf("COLS: %d\nROWS: %d\nXLL: %f\nYLL: %f\nCS: %f\nND: %d\n",
+	 ncols, nrows, xllcorner, yllcorner, cellsize, nodata_value);
 
   return -1;
 
