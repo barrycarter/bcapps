@@ -26,7 +26,6 @@ int main(int argc, char **argv) {
   // open the output file
   fd = fopen(argv[1], "r+");
 
-
   // read first few lines of AAIgrid file for metadata
 
   for (i=0; i<12; i++) {
@@ -106,7 +105,7 @@ Output file size: %lli bytes (%lli MB, %lli GB)\n",
   
   for (i=0; i < nrows; i++) {
 
-
+    if (i%100==0) {printf("ROW: %lli / %lli\n", i, nrows);}
 
     // compute big matrix row for this latitude/row
     // +90 to make it positive and then just multiply by dataPerDegree
@@ -125,38 +124,64 @@ Output file size: %lli bytes (%lli MB, %lli GB)\n",
 
       adjlon = (xllcorner + cellsize*(j+1/2) + 180)*dataPerDegree;
 
-      //      printf("ADJLON: %lli\n", adjlon);
+      // this test is unnecessary, technically
+      if (adjlon < 0 || adjlon > bigcols) {
+	printf("BAD LONGITUDE: %lli\n", adjlon);
+	continue;
+      }
 
       // the byte where we will write this
 
-      byte = adjlat*bigcols*dataSize + adjlon*2 + reserve;
+      byte = (adjlat*bigcols + adjlon)*dataSize + reserve;
 
       if (byte < 0 || byte > size) {
+	printf("I: %lli, J: %lli, ADJLAT: %lli, ADJLON: %lli\n", i, j, adjlat, adjlon);
 	printf("Attempt to print to invalid byte: %lli\n", byte);
 	continue;
       }
 
-      printf("BYTE: %lli\n", byte);
+      // seek to position
+      lseek(fd, byte, SEEK_SET);
 
-      // read value from stdin
+      // read value from stdin and add to it as needed
+      
       scanf("%lli", &val);
+      val += addToData;
 
+      // convert val to 8 or 16 bit string
 
+      if (dataSize == 1) {
+
+	if (val < 0) {
+	  printf("VAL < 0, using 0: %lli\n", val);
+	  val = 0;
+	}
+
+	if (val > 255) {
+	  printf("VAL > 255, using 255: %lli\n", val);
+	  val = 255;
+	}
+
+	fputc(val, fd);
+    } else if (dataSize == 2) {
+
+	if (val < 0) {
+	  printf("VAL < 0, using 0: %lli\n", val);
+	  val = 0;
+	}
+
+	if (val > 65535) {
+	  printf("VAL > 65535, using 65535: %lli\n", val);
+	  val = 255;
+	}
+
+	fputc(val/256, fd);
+	fputc(val%256, fd);
+      }
     }
   }
-
-  return -1;
-
-  while (!feof(stdin)) {
-    //    res = scanf("%lli", &val);
-    scanf("%lli", &val);
-    count++;
-    //    printf("%lli: %lli,%lli\n", count, val/256, val%256);
-    printf("%lli: %lli (%lli)\n", count, val, res);
-    // val = -99999999;
-  }
-
   return 0;
 }
+
 
   
