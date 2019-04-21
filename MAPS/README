@@ -28,6 +28,9 @@ What I have:
 
   - program that computes astronomical phenomena
 
+Data sources:
+
+  - http://srtm.csi.cgiar.org/srtmdata/
 
 Help I need w/ map server:
 
@@ -39,6 +42,11 @@ Help I need w/ map server:
 
   - Testing accuracy
 
+Notes:
+
+  - The GMTED2010 files for far north and far south regions DO exist
+  as ZIP files on earthexplorer.usgs.gov, but you have to request them
+  as a special case by choosing points or lines within those areas.
 
 OLD STUFF
 =========

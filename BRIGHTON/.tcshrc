@@ -99,3 +99,6 @@ setenv NODE_PATH "/home/user/:."
 
 # for Go (language) [forego is a funny pun]
 setenv GOPATH "/home/user/GO/"
+
+# notify me of background job completions immediately
+set notify

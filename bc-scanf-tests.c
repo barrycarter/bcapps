@@ -3,6 +3,8 @@
 #include <string.h>
 #include <math.h>
 
+// NOTE: can put comments on end by appending to file after written
+
 // To use, stdin should be aaigrid file
 
 int main(int argc, char **argv) {
@@ -19,9 +21,6 @@ int main(int argc, char **argv) {
     return -1;
   }
 
-
-  // we reserve the first 1M bytes for comments
-  signed long long reserve = 1000000;
 
   // open the output file
   fd = fopen(argv[1], "r+");
@@ -92,12 +91,11 @@ Data add factor: %lli\n\
 
   signed long long bigrows = 180*dataPerDegree+1;
   signed long long bigcols = 360*dataPerDegree+1;
-  signed long long size = bigrows*bigcols*dataSize + reserve;
+  signed long long size = bigrows*bigcols*dataSize;
 
   printf("Output file rows: %lli\nOutput file cols: %lli\n\
-Reserved for comments: %lli\n\
 Output file size: %lli bytes (%lli MB, %lli GB)\n", 
-	 bigrows, bigcols, reserve, size, size/1000000, size/1000000000);
+	 bigrows, bigcols, size, size/1000000, size/1000000000);
 
   printf("\n");
 
@@ -106,6 +104,9 @@ Output file size: %lli bytes (%lli MB, %lli GB)\n",
   for (i=0; i < nrows; i++) {
 
     if (i%100==0) {printf("ROW: %lli / %lli\n", i, nrows);}
+
+    // this computation is JFF
+    double lat = yllcorner + cellsize*(nrows - i - 1/2);
 
     // compute big matrix row for this latitude/row
     // +90 to make it positive and then just multiply by dataPerDegree
@@ -118,6 +119,9 @@ Output file size: %lli bytes (%lli MB, %lli GB)\n",
     }
 
     for (j=0; j < ncols; j++) {
+
+      // JFF and debugging
+      double lon = xllcorner + cellsize*(j+1/2);
 
       // TODO: computing this each time is inefficient
       // +180 to make it positive and then mult byh dataPerDegree
@@ -132,7 +136,7 @@ Output file size: %lli bytes (%lli MB, %lli GB)\n",
 
       // the byte where we will write this
 
-      byte = (adjlat*bigcols + adjlon)*dataSize + reserve;
+      byte = (adjlat*bigcols + adjlon)*dataSize;
 
       if (byte < 0 || byte > size) {
 	printf("I: %lli, J: %lli, ADJLAT: %lli, ADJLON: %lli\n", i, j, adjlat, adjlon);
@@ -141,12 +145,14 @@ Output file size: %lli bytes (%lli MB, %lli GB)\n",
       }
 
       // seek to position
-      lseek(fd, byte, SEEK_SET);
+      fseek(fd, byte, SEEK_SET);
 
       // read value from stdin and add to it as needed
       
       scanf("%lli", &val);
       val += addToData;
+
+      printf("I: %lli, J: %lli, LAT: %f, LON: %f, BYTE: %lli, VAL: %lli\n", i, j, lat, lon, byte, val);
 
       // convert val to 8 or 16 bit string
 

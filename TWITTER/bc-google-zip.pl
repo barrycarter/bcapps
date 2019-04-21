@@ -22,6 +22,13 @@ my($date) = $1;
 my($zip) = Archive::Zip->new();
 $zip->read($file);
 
+# experimental code for new google takeout format?
+
+my($jdata) = $zip->memberNamed("Takeout/Profile/Profile.json");
+my($jcont) = $jdata->contents();
+
+debug("JCONT: $jcont");
+
 # find data/js/user_details.js, mtime, and contents (for username)
 
 my($data) = $zip->memberNamed("Takeout/index.html");
