@@ -192,6 +192,18 @@ sub str2hash {
   return %hash;
 }
 
+=item str2hashref(str)
+
+Does what str2hash does, but returns a reference to a hash
+
+=cut
+
+sub str2hashref {
+  my($string) = @_;
+  my(%hash) = parse_form($string);
+  return \%hash;
+}
+
 =item parse_options()
 
 Parses things like --foo and --bar=1 on the command line and removes

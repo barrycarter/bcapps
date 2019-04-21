@@ -52,12 +52,11 @@ NB_LAB;LCCOwnLabel;R;G;B
 
 open(A, "/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.dat");
 
-getLandUse();
+debug(var_dump("land", getLandUse(str2hashref("lat=0&lon=0"))));
 
 =item getLandUse(%hash)
 
-Get the land use data for the rectangle given by %hash values slat,
-nlat, wlon and elon
+Get the land use data for a single lat/lon in hash
 
 TODO: figure out how to handle permanent filehandle like A better
 
@@ -65,33 +64,14 @@ TODO: figure out how to handle permanent filehandle like A better
 
 sub getLandUse {
 
-  my($hashref) = @_;
-  my(%hash) = %$hashref;
+  my(%hash) = %{$_[0]};
   my($data);
 
-  # tests
-
-  $lat = 35.1;
-  $lon = -106.5;
-  $y = round(($lat+90)*360);
-  $x = round(($lon+180)*360);
-  $byte = $y*129601 + $x;
+  my($y) = round(($hash{lat}+90)*360);
+  my($x) = round(($hash{lon}+180)*360);
+  my($byte) = $y*129601 + $x;
   seek(A, $byte, SEEK_SET);
   sysread(A, $data, 1);
-  $val = ord($data);
-
-  debug("LAT: $lat", "LON: $lon", "Y: $y", "X: $x", "BYTE: $byte",
-      "DATA: $val");
-
-#   for $lat (-90..90) {
-#     for $lon (-180..180) {
-#       seek(A, $byte, SEEK_SET);
-#       sysread(A, $data, 1);
-#       $val = ord($data);
-
-#       if ($val == 210 || $val == 200) {next;}
-
-#       debug("LAT: $lat, LON: $lon, Y: $y, X: $x, BYTE: $byte, DATA: $val");
-#     }
-#   }
+  return str2hashref("landuse=".ord($data));
 }
+
