@@ -24,10 +24,17 @@ $zip->read($file);
 
 # experimental code for new google takeout format?
 
-my($jdata) = $zip->memberNamed("Takeout/Profile/Profile.json");
+my($jdata) = $zip->memberNamed("Takeout/archive_browser.html");
 my($jcont) = $jdata->contents();
+unless ($jcont=~s%archive for (.*?)<%%i) {die "NO USERNAME";}
 
-debug("JCONT: $jcont");
+my($sn) = $1;
+
+# print the recommended action
+
+print "ln -s '$file' $sn-$date.zip\n";
+
+die "OLD CODE FOLLOWS";
 
 # find data/js/user_details.js, mtime, and contents (for username)
 
