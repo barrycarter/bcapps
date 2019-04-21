@@ -11,7 +11,10 @@ require "/usr/local/lib/bclib.pl";
 require "$bclib{githome}/MAPS/bc-mapserver-lib.pl";
 require "$bclib{githome}/MAPS/bc-mapserver-commands.pl";
 
-process_command(str2hashref("cmd=time&foo=bar&i=hero"));
+my($ans) = process_command(str2hashref("cmd=time&foo=bar&i=hero"));
+
+debug(var_dump("ans", $ans));
+
 
 
 

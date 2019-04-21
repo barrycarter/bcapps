@@ -9,25 +9,23 @@ sub process_command {
 
   my($hashref) = @_;
 
-  my($cmd) = $hashref->{cmd};
+  # TODO: delete testing
 
-  # error checking
+  $hashref = str2hashref("cmd=fosadfsa");
 
-  unless ($cmd) {
-    return str2hashref("type=error&value=API request did not have 'cmd' field");}
 
-  # now try to run command_$cmd 
+  # run command
+  my($res) = eval("command_$hashref->{cmd}(\$hashref)");
 
-  debug("CMD: $cmd");
-  my($eval) = "command_$cmd(\$hashref)";
-  debug("EVAL: $eval");
-  my($res) = eval($eval);
+  # check for errors
+  my($err) = $@;
 
-#  $res = eval(qq%1+5;%);
-#  $test = "1+5";
-#  $res = eval($test);
+  if ($err) {
+    return str2hashref("type=error&value=The command **$hashref->{cmd}** does not exist");
+  }
 
   debug("RES: $res, ERR: $@");
+
   debug(var_dump("res", $res));
 
 }
