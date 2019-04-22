@@ -3,9 +3,9 @@
 
 sub command_time {
 
-  debug("CALLED!");
+  my($hashref) = @_;
 
-  # TODO: look at hash vals
+  # TODO: look at hashref vals
   return str2hashref("time=".time());
 
 }

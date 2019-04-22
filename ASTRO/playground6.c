@@ -9,13 +9,13 @@
 #include <string.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 // END TESTING
 
 int main(void) {
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   double stime = 1419984000, etime = 1451692800;
   double lat, lon;

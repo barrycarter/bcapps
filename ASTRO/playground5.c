@@ -3,7 +3,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 int main( int argc, char **argv ) {
 
@@ -14,7 +14,7 @@ int main( int argc, char **argv ) {
   SpiceBoolean found;
   SpiceDouble beg, end;
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   cidfrm_c(542, 255, &fid, name, &found);
 
@@ -23,7 +23,7 @@ int main( int argc, char **argv ) {
   exit(-1);
 
   // these ET limits for jupxxx.bsp should be consistent
-  spkcov_c ("/home/barrycarter/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
+  spkcov_c ("/home/user/SPICE/KERNELS/jup310.bsp", 502, &cnfine);
 
   // refine slightly to avoid corner case errors
   SPICE_CELL_SET_D(SPICE_CELL_ELEM_D(&cnfine,0)+86400, 0, &cnfine);

@@ -118,7 +118,7 @@ int main (int argc, char **argv) {
   SPICEDOUBLE_CELL(result,2*MAXWIN);
   SpiceDouble beg,end;
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   // this is wasteful, but I don't want to rewrite code
   planets[0] = 0;

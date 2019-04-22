@@ -11,7 +11,7 @@
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 int main (int argc, char **argv) {
 

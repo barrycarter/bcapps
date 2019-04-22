@@ -10,7 +10,7 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 // Earth's equatorial and polar radii
 #define EER 6378.137
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   if (argc != 7) {
     // Units: degrees degrees meters seconds id-from-planet-ids.txt degrees

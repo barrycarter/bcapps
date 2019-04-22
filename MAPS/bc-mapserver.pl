@@ -13,6 +13,10 @@ require "$bclib{githome}/MAPS/bc-mapserver-commands.pl";
 
 my($ans) = process_command(str2hashref("cmd=time&foo=bar&i=hero"));
 
+# user won't be able to call this, but I can for testing
+
+$ans = landuse(str2hashref("lat=35.05453&lon=-106.5"));
+
 debug(var_dump("ans", $ans));
 
 

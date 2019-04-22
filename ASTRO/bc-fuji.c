@@ -6,7 +6,7 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 
 // TODO: move line to bclib.h
@@ -32,7 +32,7 @@ int main (int argc, char **argv) {
   SpiceInt dim = 3;
 
   // kernel
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   // time
   double time = unix2et(1508911200);

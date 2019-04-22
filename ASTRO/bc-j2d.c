@@ -12,7 +12,7 @@ double jd2et(double d) {return 86400.*(d-2451545.);}
 
 int main( int argc, char **argv ) {
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
   SpiceDouble et;
 
   for (et=-479654654399.+300.; et<= 479386728000.; et+=86400.*1.) {

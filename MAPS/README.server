@@ -1,0 +1,14 @@
+# I am using the same server for this as for terramapadventure.com
+# (https://github.com/barrycarter/YAMC), so what I'm doing here is in
+# addition to what I did on that server
+
+installing cspice...
+
+which needs tcsh (sort of)
+
+yum -y install tcsh unzip screen gdal psmisc
+
+gdal_translate -of aaigrid product/*.tif ESACCI.txt
+
+
+

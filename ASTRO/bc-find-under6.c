@@ -23,7 +23,7 @@ int main( int argc, char **argv )
   SpiceInt i,j;
 
   // which ephermis's to use
-  furnsh_c( "/home/barrycarter/BCGIT/ASTRO/standard.tm" );
+  furnsh_c( "/home/user/BCGIT/ASTRO/standard.tm" );
 
   // TOL too small otherwise; this is one second
   gfstol_c(1.);

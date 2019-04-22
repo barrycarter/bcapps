@@ -38,7 +38,7 @@ int main( int argc, char **argv ) {
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   // DE431 limits
   //  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);

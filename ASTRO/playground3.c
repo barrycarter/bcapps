@@ -6,12 +6,12 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 int main (int argc, char **argv) {
 
   SpiceDouble delta, lt, v[3], t=0;
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   // test that I got directions right
 

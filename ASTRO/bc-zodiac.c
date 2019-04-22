@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 // the next two includes are part of the CSPICE library
 #include "SpiceUsr.h"
@@ -113,7 +113,7 @@ int main (int argc, char **argv) {
   SpiceDouble beg,end,*array;
   SpiceInt count,i,j,house;
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   // 1 second tolerance (serious overkill, but 1e-6 is default, worse!)
   gfstol_c(1.);

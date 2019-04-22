@@ -15,7 +15,7 @@
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 int main (int argc, char **argv) {
 
@@ -24,7 +24,7 @@ int main (int argc, char **argv) {
   SpiceInt dim;
 
   // the standard kernels
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   // Earth's mass parameter
   bodvrd_c("EARTH", "GM", 1, &dim, mu);

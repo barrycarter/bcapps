@@ -3,7 +3,7 @@
 #include <string.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 #define TIMLEN 41
 #define TIMFMT "YYYY-MON-DD HR:MN ::MCAL ::RND"
@@ -18,7 +18,7 @@ int main( int argc, char **argv ) {
   SpiceChar begstr[TIMLEN];
 
   // the kernels
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   // the call
 

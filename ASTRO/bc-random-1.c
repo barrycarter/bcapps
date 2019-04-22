@@ -8,7 +8,7 @@
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 // bc_sky_elev either doesn't work right or I forgot how to use my own
 // function-- in either case, let's replace it
@@ -54,7 +54,7 @@ int main (int argc, char **argv) {
 
   double lat, lon, time;
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   for (int i=0; i< 100000; i++) {
 

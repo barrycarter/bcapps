@@ -9,7 +9,7 @@
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 #define MAXSEP 0.10471975511965977462
 #define MAXWIN 1000000
 
@@ -127,7 +127,7 @@ int main (int argc, char **argv) {
 
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
   wninsd_c((SYEAR-2000.)*31556952.,(EYEAR-2000.)*31556952.,&cnfine);
 
   // all of DE431

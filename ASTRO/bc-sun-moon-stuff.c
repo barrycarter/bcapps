@@ -6,13 +6,13 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 // slow test case is:
 // bc-sun-moon-stuff `calc -89-37/60` `calc -10-11/60` 1404194400
 
 int main(int argc, char **argv) {
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard-reduced.tm");
 
   if (argc != 4) {
     printf("Usage: lat(degrees) lon(degrees) unixtime\n");

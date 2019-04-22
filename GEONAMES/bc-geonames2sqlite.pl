@@ -22,13 +22,15 @@ require "/usr/local/lib/bclib.pl";
 # TODO: tables to create!
 
 # check that all needed files are present
-for $i ("allCountries.txt", "alternateNames.txt", "countryInfo.txt",
+for $i ("allCountries.zip", "alternateNames.zip", "countryInfo.txt",
 	"timeZones.txt", "admin2Codes.txt", "featureCodes_en.txt") {
   if ($globopts{nodep}) {next;}
   unless (-f $i) {die "$i not here (unzip?)";}
 }
 
-open(A,"alternateNames.txt");
+# alternateNames.zip actually has another file, iso-languagecodes.txt,
+# that we ignore for now
+open(A,"zcat alternateNames.zip|");
 open(B,">altnames1.tsv");
 
 while (<A>) {
@@ -68,7 +70,7 @@ for $i (split("\n",read_file("canon.txt"))) {
   $canon{$1}{$3} = $2;
 }
 
-open(A,"allCountries.txt");
+open(A,"zcat allCountries.zip|");
 open(C,">geonames.tsv");
 open(B,">altnames0.tsv");
 

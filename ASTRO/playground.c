@@ -22,7 +22,7 @@ int main (int argc, char **argv) {
   SpiceDouble beg,end,stime,etime,*array;
   char test2[2000];
 
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   exit(-1);
 
@@ -33,9 +33,9 @@ int main (int argc, char **argv) {
 
   exit(-1);
 
-  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
+  spkcov_c("/home/user/SPICE/KERNELS/de431_part-1.bsp", 399, &range);
   wnfetd_c (&range, 0, &stime, &end);
-  spkcov_c("/home/barrycarter/SPICE/KERNELS/de431_part-2.bsp", 399, &range);
+  spkcov_c("/home/user/SPICE/KERNELS/de431_part-2.bsp", 399, &range);
   wnfetd_c(&range, 0, &beg, &etime);
 
   printf("TIMES: %f %f\n", beg, etime);

@@ -11,7 +11,7 @@ void main(int argc, char **argv) {
 #define MAXITR 11100016
   SpiceInt i;
   SpiceDouble et, lt, pos [3];
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
   int source = atoi(argv[1]);
   int target = atoi(argv[2]);
 

@@ -11,7 +11,7 @@ require "/usr/local/lib/bclib.pl";
 for $i (glob("*.c")) {
 
   my($targ) = $i;
-  $targ=~s%^(.*?)\.c$%/home/barrycarter/bin/$1%isg;
+  $targ=~s%^(.*?)\.c$%/home/user/bin/$1%isg;
 
   # if targ is more recent, ignore
   my($targtime) = -M $targ;
@@ -25,7 +25,7 @@ for $i (glob("*.c")) {
 
   # below for saopaulo, above for dullon
   # removed -pg 2 Aug 2017, gmon.out not helpful
-  my($cmd) = "gcc -std=gnu99 -Wall -O2 -I /home/barrycarter/SPICE/SPICE64/cspice/include $i -o $targ /home/barrycarter/SPICE/SPICE64/cspice/lib/cspice.a -lm";
+  my($cmd) = "gcc -std=gnu99 -Wall -O2 -I /home/user/SPICE/SPICE64/cspice/include $i -o $targ /home/user/SPICE/SPICE64/cspice/lib/cspice.a -lm";
   debug($cmd);
 
   print "Making: $i -> $targ\n";

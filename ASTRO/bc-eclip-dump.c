@@ -8,7 +8,7 @@
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 /*
 
@@ -41,7 +41,7 @@ int main (int argc, char **argv) {
 
   SpiceDouble i,lt,ra,dec,range;
   SpiceDouble v[3];
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   for (i=(syear-2000.)*31556952; i<=(eyear-2000.)*31556952; i+=3600) {
 

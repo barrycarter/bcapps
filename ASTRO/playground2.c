@@ -7,7 +7,7 @@
 #include "SpiceZfc.h"
 #include <math.h>
 // this the wrong way to do things
-#include "/home/barrycarter/BCGIT/ASTRO/bclib.h"
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
 int main (int argc, char **argv) {
 
@@ -16,7 +16,7 @@ int main (int argc, char **argv) {
   SpiceDouble v[3];
   SpiceDouble pos[3];
   int i;
-  furnsh_c("/home/barrycarter/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
   //  spkezp_c(299,0,"ITRF93","LT+S",399,v,&lt);
   //  printf("POS: %f,%f,%f\n",v[0],v[1],v[2]);
