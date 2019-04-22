@@ -1,0 +1,102 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "ol",
+        "scope": null,
+        "escapedName": "ol",
+        "name": "ol",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/mnt/villa/user/20190125/YAMC"
+    ]
+  ],
+  "_from": "ol@latest",
+  "_hasShrinkwrap": false,
+  "_id": "ol@5.3.1",
+  "_inCache": true,
+  "_location": "/ol",
+  "_nodeVersion": "10.10.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/ol_5.3.1_1550781113809_0.41590707048955555"
+  },
+  "_npmUser": {
+    "name": "tschaub",
+    "email": "tim.schaub@gmail.com"
+  },
+  "_npmVersion": "6.4.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "ol",
+    "scope": null,
+    "escapedName": "ol",
+    "name": "ol",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/ol/-/ol-5.3.1.tgz",
+  "_shasum": "cd5eaa5c7f7df8fb08e0935161e56b1d85d188f5",
+  "_shrinkwrap": null,
+  "_spec": "ol",
+  "_where": "/mnt/villa/user/20190125/YAMC",
+  "bugs": {
+    "url": "https://github.com/openlayers/openlayers/issues"
+  },
+  "dependencies": {
+    "pbf": "3.1.0",
+    "pixelworks": "1.1.0",
+    "rbush": "2.0.2"
+  },
+  "description": "OpenLayers mapping library",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-1eCZ/bqqFUqfU2gJl2AWCD6vEpOCohW/OjC4/7lILu7knOfvFAfN2x9I8g0BJfDGYF34XFt1WR62acTfaZ5rUA==",
+    "shasum": "cd5eaa5c7f7df8fb08e0935161e56b1d85d188f5",
+    "tarball": "https://registry.npmjs.org/ol/-/ol-5.3.1.tgz",
+    "fileCount": 705,
+    "unpackedSize": 6397959,
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcbwq6CRA9TVsSAnZWagAAwiAP/ReHd5Gp5ENc6g5dipcZ\nCaf7gbMTevohLzJU2jXOpBIJruSpQdy1DG+JKgl/GxLM//npmzsH2oiM6Jif\n/Hu2qCl9OHFvzd+D2aKdfCw3uWSX52mZHUKl4nwWwlwsIbCcsCXdnPmuDxZa\nux+t4196vFAbdyyKaYV9dRGTrHSdiscVL2pZ/KXMzQ007PDfbV7U0uYZxzRi\nRUONySx95WXOAtrkap485GsxlwnmCs6SqlMigyR9WP6TQ1I6k08u2mWihZcg\ny0aL3uPkSZJ8qFSAviyM+O2LSfoCxymDW1yrrYnrmxZGGHaWs8LZkFmgyofD\njuZaNkOOjYWNE0A9+Tun1SJkl6OeDi+BJYKDcSnbYRm8fzxv1HWNPE6FmBHa\nea6rc+SaSOye6VBB4joflQExWazkfKJyBtk84TTmjIgvTbiX4pBkzQKJSnm8\nX/pyZnE2XjRgdrBmfPfoJhjhzb8PXkBHtnE4pNc+mxg6dlqtWgjtyezNU5AT\nA5eHOeA9gPXAQYtu626CfyGrySIihtQGNg/kn2Q2xImBHLR52OWhBcci5eT8\nXtd2CuuulPnZlcYFhVKgtyTAfvj6JQ8dIfY+8IDkTqPcFQrrP4Y7IMJMAKYF\nsK6iUeMDG45VEyH46BSczwQNedLY1Bk5/FwsadOeMWhJTpWY8YKJmXYUeFtY\nBHpp\r\n=YsKv\r\n-----END PGP SIGNATURE-----\r\n"
+  },
+  "homepage": "https://openlayers.org/",
+  "keywords": [
+    "map",
+    "mapping",
+    "ol"
+  ],
+  "license": "BSD-2-Clause",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "ahocevar",
+      "email": "andreas.hocevar@gmail.com"
+    },
+    {
+      "name": "fredj",
+      "email": "frederic.junod@gmail.com"
+    },
+    {
+      "name": "tschaub",
+      "email": "tim.schaub@gmail.com"
+    }
+  ],
+  "name": "ol",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/openlayers/openlayers.git"
+  },
+  "sideEffects": [
+    "proj.js",
+    "ol.css"
+  ],
+  "version": "5.3.1"
+}
