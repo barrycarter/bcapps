@@ -1,0 +1,9 @@
+<!DOCTYPE HTML>
+<title>OpenLayers Simplest Example</title>
+<div id="demoMap" style="height:250px"></div>
+<script src="OpenLayers.js"></script>
+<script>
+    map = new OpenLayers.Map("demoMap");
+    map.addLayer(new OpenLayers.Layer.OSM("Fuck", "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"));
+    map.zoomToMaxExtent();
+</script>

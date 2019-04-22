@@ -7,6 +7,8 @@ Notes for map server:
 
   - help should include sources and limitations
 
+  - should listen on UDS and client programs can provide web/socket service
+
 Data provided:
 
   - Elevation (SRTM 3 second + alt source for high alt)
@@ -42,11 +44,25 @@ Help I need w/ map server:
 
   - Testing accuracy
 
+Basic commands:
+
+  - cmd=(climate|landuse|elevation) lats=, latn=, lonw=, lone= : obtain data for a given bounding box
+
+  - cmd=source data=(climate|landuse|elevation): data source information
+
+  - cmd=key data=(climate|landuse|elevation): the key to convert returned values to meaningful values
+
+  - cmd=meta data=(climate|landuse|elevation): metadata about the various data types (TODO: this may need to be split into sources)
+
 Notes:
 
   - The GMTED2010 files for far north and far south regions DO exist
   as ZIP files on earthexplorer.usgs.gov, but you have to request them
   as a special case by choosing points or lines within those areas.
+
+  - `gdalinfo 70n120w_20101117_gmted_max075.tif` shows gdal does
+  recognize the TIFs I mention above (the rest of the data is in ADF
+  format)
 
 OLD STUFF
 =========

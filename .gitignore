@@ -24,3 +24,5 @@ DINK/bctest/story/DYNAMIC.c
 DINK/map.dat
 # no need to copy this into github
 yamc.db
+# ignore node_modules
+node_modules
