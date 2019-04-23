@@ -26,9 +26,37 @@ function redraw_map () {
   var bounds;
   let zoom = map.getZoom();
 
-  let bounds1 = [ [-180, -90], [180, 90] ];
+  let sw = [ [-180, -90], [0, 0] ]; // SW
+  let nw = [ [-180, 0], [0, 90] ]; // NW
+  let ne = [ [0, 0], [180, 90] ]; // NE
+  let se = [ [0, -90], [180, 0] ]; // SE
 
-  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=0&x=0&y=0`, bounds1).addTo(map);
+  // fixing
+  sw = [ [-180, -90], [0, 0] ]; // SW
+  nw = [ [0, -90], [180, 0] ];
+  ne = [ [0, 0], [180, 90] ]; // NE
+  se = [ [-180, 0], [0, 90] ];
+
+  // more fixing, assuming y, x order
+
+  sw = [ [-90, -180], [0, 0] ]; // SW
+  nw = [ [0, -180], [90, 0] ];
+  ne = [ [0, 0], [90, 180] ]; // NE
+  se = [ [-90, 0], [0, 180] ];
+
+
+  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=0&y=0`, 
+		 nw).addTo(map);
+
+  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=1&y=0`, 
+		 ne).addTo(map);
+
+  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=0&y=1`, 
+		 sw).addTo(map);
+
+  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=1&y=1`, 
+		 se).addTo(map);
+
 
 
   // all level zoom tiles
@@ -41,7 +69,7 @@ function redraw_map () {
 
       //      bounds = [ [tile2long(j, zoom), tile2lat(i+1, zoom)],
       //      		 [tile2long(j+1, zoom), tile2lat(i, zoom)]];
-      console.log("BOUNDS",i,j,bounds);
+      //      console.log("BOUNDS",i,j,bounds);
       //      L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=${zoom}&x=${i}&y=${j}.png`, bounds).addTo(map);
 
       //      L.imageOverlay(`https://a.tile.openstreetmap.org/${zoom}/${i}/${j}.png`,
