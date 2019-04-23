@@ -8,20 +8,22 @@
 <script>
 
 var map = L.map('map', {
-    crs: L.CRS.Simple, minZoom: -5
+    crs: L.CRS.Simple
 });
 
+map.on('zoomend', function() {console.log("zooming has happened", map.getBounds());});
+
+/*
 L.tileLayer(
 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
  {opacity: 1}).
 addTo(map);
+*/
 
-/*
 L.tileLayer(
 'http://test.barrycarter.info/bc-mytile2.pl?zoom={z}&x={x}&y={y}.png',
  {opacity: 0.5}).
 addTo(map);
-*/
 
 // var imageUrl = 'https://terramapadventure.herokuapp.com/MapTiles/lcc-reduced-01.png';
 
@@ -34,10 +36,13 @@ L.imageOverlay(
 
 bounds = [[-255, 0], [0, 255]];
 
+/*
 L.imageOverlay(
 	"file:///home/user/NOBACKUP/EARTHDATA/CLIMATE/merc1.png", bounds,
 	{opacity: 0.5}).addTo(map);
+*/
 
 map.fitBounds(bounds);
+
 
 </script>
