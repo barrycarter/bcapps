@@ -7,13 +7,15 @@
 var map = L.map('map').setView([75, -55], 4);
 
 L.tileLayer(
-'http://test.barrycarter.info/bc-mytile.pl?zoom={z}&x={x}&y={y}.png',
- {opacity: 0.5}).
+'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+ {opacity: 1}).
 addTo(map);
 
 L.tileLayer(
-'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+'http://test.barrycarter.info/bc-mytile2.pl?zoom={z}&x={x}&y={y}.png',
  {opacity: 0.5}).
 addTo(map);
+
+
 
 </script>
