@@ -7,11 +7,16 @@
 
 <script>
 
+// the latitude limit for square Mercator maps
+
+var latLimit = 85.0511;
+
 var map = L.map('map', {
     crs: L.CRS.Simple
 });
 
 map.on('zoomend', redraw_map);
+map.on('moveend', redraw_map);
 
 function tile2long(x,z) {
   return (x/Math.pow(2,z)*360-180);
@@ -20,95 +25,69 @@ function tile2lat(y,z) {
   var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
   return (180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
 }
+function long2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
+function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }
 
 function redraw_map () {
 
   var bounds;
   let zoom = map.getZoom();
 
-  // order is y, x for bounds
-  sw = [ [-90, -180], [0, 0] ];
-  nw = [ [0, -180], [90, 0] ];
-  ne = [ [0, 0], [90, 180] ];
-  se = [ [-90, 0], [0, 180] ];
+  let mapBounds = map.getBounds();
 
+  console.log(mapBounds);
 
-  /*
-  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=0&y=0`, 
-		 nw).addTo(map);
+  // the minimum latitude we are viewing and the y value associated
+  // with that tile (which is actually maxY because south = higher y)
 
-  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=1&y=0`, 
-		 ne).addTo(map);
+  let minLat = Math.max(mapBounds._southWest.lat, -latLimit);
+  let maxY = Math.ceil(lat2tile(minLat, zoom));
 
-  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=0&y=1`, 
-		 sw).addTo(map);
+  // and same for maxLat
+  let maxLat = Math.min(mapBounds._northEast.lat, latLimit);
+  let minY = Math.floor(lat2tile(maxLat, zoom));
 
-  L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=1&y=1`, 
-		 se).addTo(map);
-  */
+  // and for longitude
+  let minLong = Math.max(mapBounds._southWest.lng, -180);
+  let minX = Math.floor(long2tile(minLong, zoom));
 
+  let maxLong = Math.min(mapBounds._northEast.lng, 180);
+  let maxX = Math.ceil(long2tile(maxLong, zoom));
+
+  console.log("Y RANGE", minY, maxY, "X RANGE", minX, maxX);
 
   // all level zoom tiles
 
-  for (let i=0; i<2**zoom; i++) {
-    for (let j=0; j<2**zoom; j++) {
+  for (let i=minX; i<=maxX; i++) {
+    for (let j=minY; j<=maxY; j++) {
 
       bounds = [ [tile2lat(j, zoom), tile2long(i, zoom)],
 		 [tile2lat(j+1, zoom), tile2long(i+1, zoom)]];
 
       //      L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=${zoom}&x=${i}&y=${j}.png`, bounds).addTo(map);
 
-            L.imageOverlay(`https://a.tile.openstreetmap.org/${zoom}/${i}/${j}.png`, bounds).addTo(map);
+      L.imageOverlay(`https://a.tile.openstreetmap.org/${zoom}/${i}/${j}.png`, bounds).addTo(map);
 
-      //      bounds = [ [tile2long(i, zoom), tile2lat(j+1, zoom)],
-      //      		 [tile2long(i+1, zoom), tile2lat(j, zoom)]];
 
-      //      bounds = [ [tile2long(j, zoom), tile2lat(i+1, zoom)],
-      //      		 [tile2long(j+1, zoom), tile2lat(i, zoom)]];
-      //      console.log("BOUNDS",i,j,bounds);
-      //      L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=${zoom}&x=${i}&y=${j}.png`, bounds).addTo(map);
-
+/*
+      L.imageOverlay(
+	"file:///home/user/NOBACKUP/EARTHDATA/CLIMATE/beck-converted.png",
+	[[-90, -180], [90, 180]],
+	{opacity: 0.1}).addTo(map);
+*/
     }
   }
 }
-  // get the extent of this map
-  //  let bounds = map.getBounds();
 
-	
-
-// function() {console.log("zooming has happened", map.getBounds());});
-
-
-
-/*
-L.tileLayer(
-'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
- {opacity: 1}).
-addTo(map);
-*/
-
-/*
-L.tileLayer(
-'http://test.barrycarter.info/bc-mytile2.pl?zoom={z}&x={x}&y={y}.png',
- {opacity: 0.5}).
-addTo(map);
-*/
-
-// var imageUrl = 'https://terramapadventure.herokuapp.com/MapTiles/lcc-reduced-01.png';
-
-/*
-L.imageOverlay(
-	"file:///home/user/NOBACKUP/EARTHDATA/CLIMATE/merc1.png",
-	[[-85, -180], [85, 180]],
-	{opacity: 0.5}).addTo(map);
-*/
 
 bounds = [[-90, -180], [90, 180]];
 
+
 /*
 L.imageOverlay(
-	"file:///home/user/NOBACKUP/EARTHDATA/CLIMATE/merc1.png", bounds,
-	{opacity: 0.5}).addTo(map);
+	"file:///home/user/NOBACKUP/EARTHDATA/CLIMATE/beck-converted.png",
+	[[-90, -180], [90, 180]],
+	{opacity: 0.1}).addTo(map);
 */
 
 map.fitBounds(bounds);
