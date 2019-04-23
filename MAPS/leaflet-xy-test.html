@@ -26,25 +26,14 @@ function redraw_map () {
   var bounds;
   let zoom = map.getZoom();
 
-  let sw = [ [-180, -90], [0, 0] ]; // SW
-  let nw = [ [-180, 0], [0, 90] ]; // NW
-  let ne = [ [0, 0], [180, 90] ]; // NE
-  let se = [ [0, -90], [180, 0] ]; // SE
-
-  // fixing
-  sw = [ [-180, -90], [0, 0] ]; // SW
-  nw = [ [0, -90], [180, 0] ];
-  ne = [ [0, 0], [180, 90] ]; // NE
-  se = [ [-180, 0], [0, 90] ];
-
-  // more fixing, assuming y, x order
-
-  sw = [ [-90, -180], [0, 0] ]; // SW
+  // order is y, x for bounds
+  sw = [ [-90, -180], [0, 0] ];
   nw = [ [0, -180], [90, 0] ];
-  ne = [ [0, 0], [90, 180] ]; // NE
+  ne = [ [0, 0], [90, 180] ];
   se = [ [-90, 0], [0, 180] ];
 
 
+  /*
   L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=0&y=0`, 
 		 nw).addTo(map);
 
@@ -56,13 +45,20 @@ function redraw_map () {
 
   L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=1&x=1&y=1`, 
 		 se).addTo(map);
-
+  */
 
 
   // all level zoom tiles
 
   for (let i=0; i<2**zoom; i++) {
     for (let j=0; j<2**zoom; j++) {
+
+      bounds = [ [tile2lat(j, zoom), tile2long(i, zoom)],
+		 [tile2lat(j+1, zoom), tile2long(i+1, zoom)]];
+
+      //      L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=${zoom}&x=${i}&y=${j}.png`, bounds).addTo(map);
+
+            L.imageOverlay(`https://a.tile.openstreetmap.org/${zoom}/${i}/${j}.png`, bounds).addTo(map);
 
       //      bounds = [ [tile2long(i, zoom), tile2lat(j+1, zoom)],
       //      		 [tile2long(i+1, zoom), tile2lat(j, zoom)]];
@@ -72,8 +68,6 @@ function redraw_map () {
       //      console.log("BOUNDS",i,j,bounds);
       //      L.imageOverlay(`http://test.barrycarter.info/bc-mytile2.pl?zoom=${zoom}&x=${i}&y=${j}.png`, bounds).addTo(map);
 
-      //      L.imageOverlay(`https://a.tile.openstreetmap.org/${zoom}/${i}/${j}.png`,
-      //		     bounds).addTo(map);
     }
   }
 }
@@ -109,7 +103,7 @@ L.imageOverlay(
 	{opacity: 0.5}).addTo(map);
 */
 
-bounds = [[-180, -90], [180, 90]];
+bounds = [[-90, -180], [90, 180]];
 
 /*
 L.imageOverlay(
