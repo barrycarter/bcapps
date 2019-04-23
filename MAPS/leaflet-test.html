@@ -5,40 +5,10 @@
 
 <script>
 var map = L.map('map').setView([75, -55], 4);
-L.tileLayer('http://map.barrycarter.info/IMAGES/TEST/{z},{x},{y}.jpg',
-{maxZoom: 7}).addTo(map);
-map.attributionControl.setPrefix("brassweasel's Solstice (map by barrycarter)");
 
-var popup = L.popup();
-
-function showLatLng(e) {
-popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(map);
-}
-
-map.on('contextmenu', showLatLng);
-
-var ssp = L.layerGroup([
-L.marker([71.31136,-39.00146]),
-L.marker([68.0692,-18.34717]),
-L.marker([65.37142,-51.9873]),
-L.marker([66.09827,-35.50781]),
-L.marker([71.76707,-50.27344])
-]);
-
-var pears = L.layerGroup([
-L.marker([79.79675,-80.32104]),
-L.marker([79.83366,-74.36646]),
-L.marker([79.74602,-57.43652]),
-L.marker([79.72253,-38.68286]),
-L.marker([79.28427,-30.47607]),
-L.marker([78.2648, -24.03809]),
-L.marker([76.41397,-15.88623]),
-L.marker([77.17181,-48.68042]),
-L.marker([78.57355,-64.48975])
-]);
-
-var overlays = {"Spaceship Parts": ssp, "Silver Pears": pears};
-
-L.control.layers(null,overlays).addTo(map);
+L.tileLayer(
+'http://test.barrycarter.info/bc-mytile.pl?zoom={z}&x={x}&y={y}.png',
+ {opacity: 0.5}).
+addTo(map);
 
 </script>
