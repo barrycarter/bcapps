@@ -18,6 +18,13 @@ map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
 
+// transparent debugger
+
+function td(x) {
+  console.log(x);
+  return x;
+}
+
 // get the tile and lat/lon extents of a given map, adjusting for
 // "impossible" cases
 
@@ -113,7 +120,44 @@ function tiles2Map(m, baseURL, s, maxZoom) {
       bounds = [
 		[tileRect2lat(j, zoom), tile2long(i, zoom)],
 		[tileRect2lat(j+1, zoom), tile2long(i+1, zoom)]];
-      L.imageOverlay(str, bounds).addTo(m);
+      L.imageOverlay(str, bounds, {maxZoom: 20}).addTo(m);
+    }
+  }
+}
+
+/**
+
+Given an object with these keys, place tiles on map after reprojecting
+to equiangular:
+
+  - map: the map
+
+  - url: the tileserver's base URL
+
+  - opacity: the opacity of the tiles
+
+  - minZoom: the minimum zoom level to use
+
+
+*/
+
+function projectedTiles2Map(obj) {
+
+  td(`CALLED: ${obj}`);
+
+  let extents = getMapExtents(obj.map);
+
+  // we may need to change this for minZoom
+  let zoom = extents.zoom;
+
+  for (let i=extents.minX; i<=extents.maxX; i++) {
+    for (let j=extents.minY; j<=extents.maxY; j++) {
+
+      bounds = [ [tile2lat(j, extents.zoom), tile2long(i, extents.zoom)],
+                 [tile2lat(j+1, extents.zoom), tile2long(i+1, extents.zoom)]];
+      
+      // TODO: 1 is just for testing
+      L.imageOverlay(`${obj.url}/${zoom}/${i}/${j}.png`, bounds, {opacity: 1}).addTo(obj.map);
     }
   }
 }
@@ -123,7 +167,8 @@ function tiles2Map(m, baseURL, s, maxZoom) {
 redraw_map();
 
 function redraw_map () {
-  tiles2Map(map, "http://test.barrycarter.info/BECK", "beck_kg", 5);
+  //  tiles2Map(map, "http://test.barrycarter.info/BECK", "beck_kg", 5);
+  projectedTiles2Map({map: map, url: 'https://a.tile.openstreetmap.org'});
 }
 
 
