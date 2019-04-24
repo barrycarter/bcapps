@@ -28,7 +28,9 @@ function getMapExtents(m) {
   let zoom = map.getZoom();
   let mapBounds = map.getBounds();
 
-    // the minimum latitude we are viewing and the y value associated
+  ret.zoom = zoom;
+
+  // the minimum latitude we are viewing and the y value associated
   // with that tile (which is actually maxY because south = higher y)
 
   ret.minLat = Math.max(mapBounds._southWest.lat, -latLimit);
@@ -86,10 +88,29 @@ function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.
 
 function tiles2Map(m, baseURL, s) {
 
+  var str, num, bounds;
+
   // find the zoom level and the x and y extents
   let mapBounds = getMapExtents(m);
-  console.log(mapBounds);
-	
+
+  for (let i = mapBounds.minX; i <= mapBounds.maxX; i++) {
+    for (let j = mapBounds.minYRect; j <= mapBounds.maxYRect; j++) {
+
+      // tiles are single numbered
+      num = j*2**mapBounds.zoom + i;
+
+      // find the URL
+      str = `${baseURL}/${mapBounds.zoom}/${s}_${mapBounds.zoom}_${num}.png`;
+
+      // put in the right place
+      // TODO: probably shouldn't create a new ImageOverlay everytime
+
+
+
+
+      console.log(str);
+    }
+  }
 }
 
 // smaller imageoverlays
@@ -97,7 +118,7 @@ function tiles2Map(m, baseURL, s) {
 redraw_map();
 
 function redraw_map () {
-  tiles2Map(map, "", "");
+  tiles2Map(map, "http://test.barrycarter.info/BECK", "beck_kg");
 }
 
 
