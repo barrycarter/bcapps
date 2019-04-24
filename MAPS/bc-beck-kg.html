@@ -63,7 +63,7 @@ function getMapExtents(m) {
 // converts latitude to rectangular tile number, not slippy tile
 // and the other way
 
-function tileRect2lat(y, z) {return y/2**z*180-90;}
+function tileRect2lat(y, z) {return 90-y/2**z*180;}
 
 function lat2TileRect(lat, z) {return Math.floor(2**z*(90-lat)/180);}
 
@@ -86,29 +86,34 @@ function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.
 // baseURL/{n}/str_{n}_{k}.png is the kth slippy tile at zoom level n,
 // paint the necessary tiles on to map
 
-function tiles2Map(m, baseURL, s) {
+// if zoom level exceeds maxZoom, print the maxZoom level tiles
+
+function tiles2Map(m, baseURL, s, maxZoom) {
 
   var str, num, bounds;
 
   // find the zoom level and the x and y extents
   let mapBounds = getMapExtents(m);
 
+  let zoom = Math.min(mapBounds.zoom, maxZoom);
+
   for (let i = mapBounds.minX; i <= mapBounds.maxX; i++) {
     for (let j = mapBounds.minYRect; j <= mapBounds.maxYRect; j++) {
 
       // tiles are single numbered
-      num = j*2**mapBounds.zoom + i;
+      num = j*2**zoom + i;
 
       // find the URL
-      str = `${baseURL}/${mapBounds.zoom}/${s}_${mapBounds.zoom}_${num}.png`;
+      str = `${baseURL}/${zoom}/${s}_${zoom}_${num}.png`;
 
       // put in the right place
       // TODO: probably shouldn't create a new ImageOverlay everytime
+      // bounds are in y, x order
 
-
-
-
-      console.log(str);
+      bounds = [
+		[tileRect2lat(j, zoom), tile2long(i, zoom)],
+		[tileRect2lat(j+1, zoom), tile2long(i+1, zoom)]];
+      L.imageOverlay(str, bounds).addTo(m);
     }
   }
 }
@@ -118,7 +123,7 @@ function tiles2Map(m, baseURL, s) {
 redraw_map();
 
 function redraw_map () {
-  tiles2Map(map, "http://test.barrycarter.info/BECK", "beck_kg");
+  tiles2Map(map, "http://test.barrycarter.info/BECK", "beck_kg", 5);
 }
 
 
