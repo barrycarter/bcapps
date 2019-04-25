@@ -39,6 +39,10 @@ function getMapExtents(m) {
     zoom = Math.min(zoom, m.maxZoom);
   }
 
+  if (m.minZoom) {
+    zoom = Math.max(zoom, m.minZoom);
+  }
+
   let mapBounds = map.getBounds();
 
   ret.zoom = zoom;
@@ -133,7 +137,7 @@ function tiles2Map(obj) {
       // tiles are single numbered
       num = j*2**zoom + i;
 
-      td(`Z: ${zoom}, I: ${i}, J: ${j}, NUM: ${num}`);
+      //      td(`Z: ${zoom}, I: ${i}, J: ${j}, NUM: ${num}`);
 
       // find the URL
       str = `${obj.baseURL}/${zoom}/${obj.baseFilename}_${zoom}_${num}.png`;
@@ -145,7 +149,7 @@ function tiles2Map(obj) {
       bounds = [
 		[tileRect2lat(j, zoom), tile2long(i, zoom)],
 		[tileRect2lat(j+1, zoom), tile2long(i+1, zoom)]];
-      L.imageOverlay(str, td(bounds, "BOUNDS"), {opacity: obj.opacity}).addTo(obj.map);
+      L.imageOverlay(str, bounds, {opacity: obj.opacity}).addTo(obj.map);
     }
   }
 }
@@ -170,7 +174,14 @@ to equiangular:
 
 function projectedTiles2Map(obj) {
 
+  // TODO: this is really ugly
+  obj.map.minZoom = obj.minZoom
+
   let extents = getMapExtents(obj.map);
+
+  obj.map.MinZoom = undefined;
+
+  if (!obj.opacity) {obj.opacity = 1;}
 
   // we may need to change this for minZoom
   let zoom = extents.zoom;
@@ -180,9 +191,12 @@ function projectedTiles2Map(obj) {
 
       bounds = [ [tile2lat(j, extents.zoom), tile2long(i, extents.zoom)],
                  [tile2lat(j+1, extents.zoom), tile2long(i+1, extents.zoom)]];
+
       
       // TODO: 1 is just for testing
-      L.imageOverlay(`${obj.url}/${zoom}/${i}/${j}.png`, bounds, {opacity: 1}).addTo(obj.map);
+      L.imageOverlay(`${obj.url}/${zoom}/${i}/${j}.png`, bounds, 
+		     {opacity: obj.opacity, maxNativeZoom: obj.maxZoom}).
+	addTo(obj.map);
     }
   }
 }
@@ -196,7 +210,15 @@ function redraw_map () {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
-  projectedTiles2Map({map: map, url: 'https://a.tile.openstreetmap.org'});
+  td(map.getZoom(), "ZOOM");
+
+  projectedTiles2Map({map: map, minZoom: 4, 
+	url: 'https://a.tile.openstreetmap.org'});
+
+  projectedTiles2Map({map: map, 
+	url: 'http://test.barrycarter.info/bc-mytile3.pl?', opacity: 0.4})
+
+
   tiles2Map({map: map, opacity: 0.4, baseURL: "http://test.barrycarter.info/BECK", baseFilename: "beck_kg", maxZoom: 5});
 }
 
