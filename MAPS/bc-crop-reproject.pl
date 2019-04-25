@@ -10,6 +10,14 @@
 # image and make it transparent to end user if its a file or a
 # reprojection
 
+# TODO: could make this more efficient by letting leaflet reproject
+# for certain zoom levels and only reproject here if zoom level is too
+# high for leaflet
+
+# TODO: could look at and fix leaflet reprojection code
+
+# TODO: sanitize QUERY_STRING and indiv elements
+
 =item crop_and_reproject($hashref)
 
 Given zoom, a zoomlevel for which tiles already exist, create the

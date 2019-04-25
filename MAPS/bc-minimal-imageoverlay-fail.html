@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="leaflet-hacked.css" />
+<script src="leaflet-hacked.js"></script>
+<style>html,body, #map {height:100%;}</style>
+<div id="map"></div>
+
+
+<script>
+
+var map = L.map('map', {crs: L.CRS.Simple});
+map.fitBounds([[-90, -180], [90, 180]]);
+map.on('zoomend', print_debugging);
+// map.on('moveend', redraw_map);
+
+L.imageOverlay('https://cdn.pixabay.com/photo/2014/01/11/23/40/guinea-pig-242520__340.jpg', [[-20, -20], [20, 20]]).addTo(map);
+
+// transparent debugger
+
+function td(x, str) {
+  console.log(`TD(${str}): ${x}`);
+  return x;
+}
+
+function print_debugging() {
+ console.log("ZOOM: "+map.getZoom());
+}
+
+</script>
