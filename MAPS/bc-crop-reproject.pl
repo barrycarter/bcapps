@@ -6,6 +6,10 @@
 
 # TODO: could this be done client side?
 
+# TODO: if I *am* going to this server side, might as well send the
+# image and make it transparent to end user if its a file or a
+# reprojection
+
 =item crop_and_reproject($hashref)
 
 Given zoom, a zoomlevel for which tiles already exist, create the

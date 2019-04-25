@@ -45,7 +45,9 @@ unless ($date) {
 system("mkdir $date");
 system("mv pic.$date:*.png $date");
 dodie("chdir('/home/user/XWD/$date')");
-defaults("xmessage=1");
+
+# no longer need this
+# defaults("xmessage=1");
 
 # run tesseract and convert on all files in directory (convert to .pnm
 # because ZPAQ compresses this most efficiently)
