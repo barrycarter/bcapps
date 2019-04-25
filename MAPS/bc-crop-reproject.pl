@@ -13,6 +13,8 @@ z/x/y tile where z> zoom, and return it
 
 This version works for equirectangular tiles, not Mercator tiles
 
+height and width must be provided (not necessarily 256x256)
+
 =cut
 
 require "/usr/local/lib/bclib.pl";
@@ -20,6 +22,10 @@ require "/usr/local/lib/bclib.pl";
 sub crop_and_reproject {
 
   my($hashref) = @_;
+
+  # this is ugly, I may be overfocused on looping
+  $hashref->{dim}{x} = $hashref->{width};
+  $hashref->{dim}{y} = $hashref->{height};
 
   my($factor) = 2**($hashref->{z}-$hashref->{zoom});
 
@@ -33,8 +39,9 @@ sub crop_and_reproject {
       my($val) = ($hashref->{$i}+$j)/$factor;
 
       # note: these should all fall in the same tile
+      debug("VAL ($i,$j): $val");
       $ret{tile}{$i}{$j} = floor($val);
-      $ret{pixel}{$i}{$j} = floor(256*($val - $ret{tile}{$i}{$j}));
+      $ret{pixel}{$i}{$j} = floor($hashref->{dim}{$i}*($val - $ret{tile}{$i}{$j}));
     }
   }
 
@@ -50,15 +57,13 @@ sub crop_and_reproject {
   debug("TX: $tx, TY: $ty");
 }
 
-crop_and_reproject(str2hashref("zoom=5&z=10&x=282&y=432"));
+$lonw = -81.21;
+$latn = 25.06;
+$z = 6;
 
-=item comments
+$x = ($lonw+180)/360*2**$z;
+$y = (90-$latn)/180*2**$z;
 
-why does 282, 432 -> 8, 13 -> 360 ?
+debug("X: $x, Y: $y");
 
-360 = 11 * 32 + 8
-
-
-
-
-=cut
+crop_and_reproject(str2hashref("zoom=5&z=$z&x=17&y=23&width=1350&height=675"));
