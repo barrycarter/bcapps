@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="leaflet.css" />
+<link rel="stylesheet" href="leaflet-hacked.css" />
 <script src="leaflet.js"></script>
 <script src="proj4-compressed.js"></script>
 <script src="proj4leaflet.js"></script>
@@ -20,8 +20,8 @@ map.on('moveend', redraw_map);
 
 // transparent debugger
 
-function td(x) {
-  console.log(x);
+function td(x, str) {
+  console.log(`TD(${str}): ${x}`);
   return x;
 }
 
@@ -33,6 +33,12 @@ function getMapExtents(m) {
   let ret = {};
 
   let zoom = map.getZoom();
+
+  // TODO: fix hack for max and minZoom
+  if (m.maxZoom) {
+    zoom = Math.min(zoom, m.maxZoom);
+  }
+
   let mapBounds = map.getBounds();
 
   ret.zoom = zoom;
@@ -89,20 +95,37 @@ function tile2lat(y,z) {
 function long2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
 function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }
 
-// given a map m, a baseURL and string s such that
-// baseURL/{n}/str_{n}_{k}.png is the kth slippy tile at zoom level n,
-// paint the necessary tiles on to map
+/**
 
-// if zoom level exceeds maxZoom, print the maxZoom level tiles
+Given an object with the following values, put tiles on unprojected map:
 
-function tiles2Map(m, baseURL, s, maxZoom) {
+  - map: the map
+
+  - baseURL: the base URL of the image files
+
+  - baseFilename: the base filename of the image files
+  (baseURL/{n}/str_{n}_{k}.png is the kth slippy tile at zoom level n)
+
+  - maxZoom: the maximum zoom level for the image tiles
+
+  - opacity: the opacity of the tile overlay
+
+*/
+
+function tiles2Map(obj) {
 
   var str, num, bounds;
 
-  // find the zoom level and the x and y extents
-  let mapBounds = getMapExtents(m);
+  // TODO: this is hideously ugly
+  obj.map.maxZoom = obj.maxZoom
 
-  let zoom = Math.min(mapBounds.zoom, maxZoom);
+  // find the zoom level and the x and y extents
+  let mapBounds = getMapExtents(obj.map);
+
+  // TODO: fix this hack (undoing it here so its not permanent)
+  obj.map.maxZoom = undefined;
+
+  let zoom = mapBounds.zoom;
 
   for (let i = mapBounds.minX; i <= mapBounds.maxX; i++) {
     for (let j = mapBounds.minYRect; j <= mapBounds.maxYRect; j++) {
@@ -110,8 +133,10 @@ function tiles2Map(m, baseURL, s, maxZoom) {
       // tiles are single numbered
       num = j*2**zoom + i;
 
+      td(`Z: ${zoom}, I: ${i}, J: ${j}, NUM: ${num}`);
+
       // find the URL
-      str = `${baseURL}/${zoom}/${s}_${zoom}_${num}.png`;
+      str = `${obj.baseURL}/${zoom}/${obj.baseFilename}_${zoom}_${num}.png`;
 
       // put in the right place
       // TODO: probably shouldn't create a new ImageOverlay everytime
@@ -120,10 +145,12 @@ function tiles2Map(m, baseURL, s, maxZoom) {
       bounds = [
 		[tileRect2lat(j, zoom), tile2long(i, zoom)],
 		[tileRect2lat(j+1, zoom), tile2long(i+1, zoom)]];
-      L.imageOverlay(str, bounds, {maxZoom: 20}).addTo(m);
+      L.imageOverlay(str, td(bounds, "BOUNDS"), {opacity: obj.opacity}).addTo(obj.map);
     }
   }
 }
+
+// TODO: handle defaults where caller doesn't specify value
 
 /**
 
@@ -142,8 +169,6 @@ to equiangular:
 */
 
 function projectedTiles2Map(obj) {
-
-  td(`CALLED: ${obj}`);
 
   let extents = getMapExtents(obj.map);
 
@@ -167,8 +192,12 @@ function projectedTiles2Map(obj) {
 redraw_map();
 
 function redraw_map () {
-  //  tiles2Map(map, "http://test.barrycarter.info/BECK", "beck_kg", 5);
+
+  // TODO: not this
+  map.eachLayer(function(layer) {layer.remove()});
+
   projectedTiles2Map({map: map, url: 'https://a.tile.openstreetmap.org'});
+  tiles2Map({map: map, opacity: 0.4, baseURL: "http://test.barrycarter.info/BECK", baseFilename: "beck_kg", maxZoom: 5});
 }
 
 
