@@ -21,7 +21,7 @@
 =item crop_and_reproject($hashref)
 
 Given zoom, a zoomlevel for which tiles already exist, create the
-z/x/y tile where z> zoom, and return it
+z/x/y tile where z > zoom, and return it
 
 This version works for equirectangular tiles, not Mercator tiles
 
@@ -34,39 +34,33 @@ require "/usr/local/lib/bclib.pl";
 sub crop_and_reproject {
 
   my($hashref) = @_;
-
-  # this is ugly, I may be overfocused on looping
-  $hashref->{dim}{x} = $hashref->{width};
-  $hashref->{dim}{y} = $hashref->{height};
-
-  my($factor) = 2**($hashref->{z}-$hashref->{zoom});
-
   my(%ret);
 
+  my($factor) = 2**($hashref->{z}-$hashref->{zoom});
   debug("FACTOR: $factor");
 
-  for $i ("x", "y") {
-    for $j (0, 1) {
+  # find the zoom level tile corresponding to this z level tile
 
-      my($val) = ($hashref->{$i}+$j)/$factor;
+  my($west) = $hashref->{x}/$factor;
+  my($xtile) = floor($west);
 
-      # note: these should all fall in the same tile
-      debug("VAL ($i,$j): $val");
-      $ret{tile}{$i}{$j} = floor($val);
-      $ret{pixel}{$i}{$j} = floor($hashref->{dim}{$i}*($val - $ret{tile}{$i}{$j}));
-    }
-  }
+  # pixel range for x
+  my($xpw) = ($west-$xtile)*$hashref->{width};
+  my($xpe) = $xpw + $hashref->{width}/$factor;
 
-  $ret{tilenum} = $ret{tile}{y}{0}*2**($hashref->{zoom}) + $ret{tile}{x}{0};
+  debug("X: $xpw - $xpe");
 
-  debug(var_dump("RET", \%ret));
+  my($w, $e) = ($hashref->{x}/$factor, ($hashref->{x}+1)/$factor);
+  my($n, $s) = ($hashref->{y}/$factor, ($hashref->{y}+1)/$factor);
 
-  # convert z/x/y to zoom/x/y
+  # $e may be one number higher due if it hits a tile edge, so use $w
+  
+  my($tx) = floor($w);
+  
 
 
-  my($tx) = $hashref->{x}*(2**($hashref->{zoom}-$hashref->{z}));
-  my($ty) = $hashref->{y}*(2**($hashref->{zoom}-$hashref->{z}));
-  debug("TX: $tx, TY: $ty");
+
+  debug("$n $e $s $w");
 }
 
 $lonw = -81.21;

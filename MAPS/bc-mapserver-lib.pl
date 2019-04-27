@@ -2,6 +2,10 @@
 
 # Meta values for the data sets
 
+our(%meta);
+
+%{$meta{landuse}} = ("dataPointsPerDegree" => 360, "bytesPerDataPoint" => 1);
+
 # Given a hash where the key cmd represents the command, call the
 # relevant use command in bc-mapserver-commands.pl
 

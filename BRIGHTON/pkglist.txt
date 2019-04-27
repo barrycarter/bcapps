@@ -130,6 +130,7 @@ okular
 agrep
 aldo
 ant
+ant-junit
 bzip2
 pbzip2
 lbzip2
