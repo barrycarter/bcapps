@@ -1,5 +1,29 @@
 /**
 
+General notes:
+
+lng = longitude (not lon or long)
+
+
+*/
+
+
+/**
+
+Dumps an object as a string
+
+*/
+
+function var_dump(obj) {
+  let out = '';
+  for (var i in obj) {
+    out += i + ": " + obj[i] + "\n";
+  }
+  return out;
+}
+
+/**
+
 Given a string that looks like an HTTP QUERY_STRING, convert it to a
 hash. This is one of the few functions here that does NOT take a hash
 as its argument
@@ -35,6 +59,21 @@ projection: if 1, Mercator project, otherwise equirectangular project
 
 function tile2LngLat(obj) {
 
+  // set defaults
+
+  let options = str2hash("projection=0");
+
+  td(options, "options");
+  td(obj, "obj");
+
+  //  obj = {...options, ...obj};
+
+  // true for both projections
+  let lng = obj.x/2**obj.z*360-180;
+
+  if (projection == 0) {
+    return {lng: lng, lat: 90-obj.y/2**obj.z*180}
+  }
 
 }
   
@@ -66,7 +105,7 @@ function placeTilesOnMap(obj) {
 /** transparent debugger */
 
 function td(x, str) {
-  console.log(`TD(${str}): ${x}`);
+  console.log(`TD(${str}): `, var_dump(x));
   return x;
 }
 
