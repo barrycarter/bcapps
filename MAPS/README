@@ -11,7 +11,7 @@ Notes for map server:
 
 Data provided:
 
-  - Elevation (SRTM 3 second + alt source for high alt)
+  - Elevation (SRTM 3 second + alt source for high alt) (maybe SRTM 1)
 
   - Climate (Koeppen-Geiger)
 
@@ -20,6 +20,12 @@ Data provided:
   - Land slope
 
   - Land use (ESACCI)
+
+  - TODO: population density?
+
+  - TODO: timezone
+
+  - TODO: nation/state/etc?
 
 What I have:
 
@@ -30,7 +36,7 @@ What I have:
 
   - program that computes astronomical phenomena
 
-Data sources:
+Data sources and information:
 
   - http://srtm.csi.cgiar.org/srtmdata/
 

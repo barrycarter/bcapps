@@ -152,6 +152,7 @@ function tiles2Map(obj) {
       bounds = [
 		[tileRect2lat(j, zoom), tile2long(i, zoom)],
 		[tileRect2lat(j+1, zoom), tile2long(i+1, zoom)]];
+      td(`OVERLAY: ${str}`);
       L.imageOverlay(str, bounds, {opacity: obj.opacity}).addTo(obj.map);
     }
   }
@@ -222,7 +223,9 @@ function redraw_map () {
 	url: 'http://test.barrycarter.info/bc-mytile3.pl?', opacity: 0.4})
 
 
-  tiles2Map({map: map, opacity: 0.4, baseURL: "http://test.barrycarter.info/BECK", baseFilename: "beck_kg", maxZoom: 5});
+    //  tiles2Map({map: map, opacity: 0.4, baseURL: "http://test.barrycarter.info/BECK", baseFilename: "beck_kg", maxZoom: 5});
+
+  tiles2Map({map: map, opacity: 0.4, baseURL: "file:///home/user/BCGIT/BCINFO3/sites/test/BECK/", baseFilename: "beck_kg", maxZoom: 5});
 }
 
 

@@ -248,6 +248,7 @@ rubygem-rspec
 rubygem-bundler
 ruby-doc
 sqlite
+libspatialite-devel
 sqlite-devel
 python-gmpy2
 pygame
