@@ -1,13 +1,33 @@
+<link rel="stylesheet" href="MAPS/leaflet.css" />
+<script src="MAPS/leaflet.js"></script>
 <script src="bclib.js"></script>
 
+<style>html,body, #map {height:100%;}</style>
+<div id="map"></div>
+
 <script>
+
+hash1 = {'a': 3, 'b': 4, 'c': 5};
+hash2 = {'a': 4, 'e': 7, 'f': 4};
+
+// console.log(mergeHashes(hash1, hash2));
+
+// spread operator doesn't work
+// console.log({...hash1, ...hash2});
 
 // note for ... style merges, second overwrites first
 
 // console.log(str2hash("a=1&b=2&c=3"));
 
-console.log(tile2LngLat({z: 5, x: 2, y: 3}));
+// console.log(tile2LngLat({z: 5, x: 2, y: 32, projection: 1}));
+
+// placeTilesOnMap({map: "foo"});
+
+
+let map = L.map('map', {crs: L.CRS.Simple});
+map.fitBounds([[-90, -180], [90, 180]]);
+
+
+placeTilesOnMap({map: map});
 
 </script>
-
-

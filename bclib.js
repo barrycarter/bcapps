@@ -45,6 +45,22 @@ function str2hash(str) {
 
 }
 
+/**
+
+Given two hashes, merge them where first overrides second for matching keys
+
+*/
+
+function mergeHashes(obj1, obj2) {
+
+  let returnHash = {};
+
+  Object.keys(obj2).forEach(function (key) {returnHash[key] = obj2[key]});
+  Object.keys(obj1).forEach(function (key) {returnHash[key] = obj1[key]});
+  
+  return returnHash;
+}  
+
 /*
 
 Converts a slippy tile or an equirectangular tile to a latitude and longitude:
@@ -61,19 +77,58 @@ function tile2LngLat(obj) {
 
   // set defaults
 
-  let options = str2hash("projection=0");
-
-  td(options, "options");
-  td(obj, "obj");
-
-  //  obj = {...options, ...obj};
+  obj = mergeHashes(obj, str2hash("projection=0"));
 
   // true for both projections
   let lng = obj.x/2**obj.z*360-180;
 
-  if (projection == 0) {
+  if (obj.projection == 0) {
     return {lng: lng, lat: 90-obj.y/2**obj.z*180}
   }
+
+  // for Mercator
+  // TODO: I copied this from somewhere else and am NOT happy about it
+
+  let n = Math.PI-2*Math.PI*obj.y/2**obj.z;
+  let lat = 180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n)));
+  return {lng: lng, lat: lat};
+
+}
+
+/*
+
+Converts a latitude and longitude to a slippy tile or an equirectangular tile
+
+z: tile zoom value
+lat: the latitude
+lng: tile longitude
+
+projection: if 1, Mercator project, otherwise equirectangular project
+
+*/
+
+function lngLat2Tile(obj) {
+
+  // set defaults
+
+  obj = mergeHashes(obj, str2hash("projection=0"));
+
+  // true for both projections
+  let x = (obj.lng/360+180)*2**obj.z;
+
+  // for equirectangular
+  if (obj.projection == 0) {
+    return {z: z, x: x, y: (90-obj.lat)/180*2**obj.z};
+  }
+
+  // for Mercator
+  // TODO: I copied this from somewhere else and am NOT happy about it
+
+  let y = 1-Math.log(Math.tan(obj.lat*Math.PI/180) + 1/Math.cos(obj.lat*Math.PI/180))/Math.PI/2*2**obj.z;
+
+
+
+
 
 }
   
@@ -96,9 +151,20 @@ otherwise, assume they are equirectangular
 
 opacity; tile opacity
 
+fake: if set to 1, don't do anything, just print out debugging info
+
 */
 
 function placeTilesOnMap(obj) {
+
+  obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&projection=0&opacity=1"));
+
+  let mapBounds = obj.map.getBounds();
+
+  // compute min/max lat/lon truncating at limits
+
+  console.log(mapBounds.getWest());
+
 
 }
 
