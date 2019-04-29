@@ -79,9 +79,9 @@ map.fitBounds([[-90, -180], [90, 180]]);
 // force break it
 map.setZoom(3);
 
-// placeTilesOnMap({map: map});
-// map.on('zoomend', redraw_map);
-// map.on('moveend', redraw_map);
+placeTilesOnMap({map: map});
+map.on('zoomend', redraw_map);
+map.on('moveend', redraw_map);
 
 function redraw_map() {
 	placeTilesOnMap({map: map});

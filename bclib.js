@@ -217,8 +217,12 @@ function placeTilesOnMap(obj) {
 
   // the corner boundaries (in this order so se > nw in both coords)
 
-  let nw = lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection});
-  let se = lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection});
+  // TODO: not happy with the way I am floor-ifying these
+
+  let nw = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection}), f: Math.floor}).hash;
+  let se = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection}), f: Math.floor}).hash;
+
+  td(nw, "nw");
 
   // and now the loop to get and place the tiles themselves
 
