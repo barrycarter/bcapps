@@ -4,8 +4,26 @@ General notes:
 
 lng = longitude (not lon or long)
 
+z = zoom (not zoom)
+
 
 */
+
+/**
+
+Bound a given number n by left and right
+
+NOTE: not a hash to hash function
+
+*/
+
+function boundNumber(n, left, right) {
+
+  if (n > right) {return right;}
+  if (n < left) {return left;}
+  return n;
+  
+}
 
 
 /**
@@ -139,6 +157,8 @@ Place slippy tiles or equirectangular tiles on a Leaflet "map"
 
 map: put the tiles here
 
+z: the current zoom level
+
 tileURL: template for tile URLs
 
 minZoom: never get tiles lower than this zoom level
@@ -158,6 +178,11 @@ function placeTilesOnMap(obj) {
 
   obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&projection=0&opacity=1"));
 
+
+  // TODO: the actual z value (but tile z value could be different)
+
+  let z = obj.map.getZoom();
+
   let mapBounds = obj.map.getBounds();
 
   // compute min/max lat/lon truncating at limits
@@ -169,15 +194,42 @@ function placeTilesOnMap(obj) {
   let e = Math.min(Math.max(-180, mapBounds.getEast()), 180);
   let w = Math.min(Math.max(-180, mapBounds.getWest()), 180);
 
-  console.log("EXTENTS", n, e, s, w);
+  // determine the x and y values corresponding to these extents (we
+  // use 'floor' here because a tile starts at its nw boundary)
 
+  // the corner boundaries (in this order so se > nw in both coords)
+
+  let nw = lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection});
+  let se = lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection});
+
+  // and now the loop to get and place the tiles themselves
+
+  for (let x = nw.x; x < se.x; x++) {
+    for (let y = nw.y; y < se.y; y++) {
+
+      // TODO: there should be a better way to find bounds
+
+      let nwBound = tile2LngLat({x: x, y: y, z: z});
+      let seBound = tile2LngLat({x: x+1, y: y+1, z: z});
+
+      // these are in lat/lng order, sigh
+
+      let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
+
+      // TODO: this is insanely specific to my test map, generalize
+      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
+
+      L.imageOverlay(td(url), td(bounds), {opacity: td(obj.opacity)}).addTo(obj.map);
+
+    }
+  }
 
 }
 
 /** transparent debugger */
 
 function td(x, str) {
-  console.log(`TD(${str}): `, var_dump(x));
+  console.log(`TD(${str}): `, JSON.stringify(x));
   return x;
 }
 

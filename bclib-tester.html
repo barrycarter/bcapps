@@ -7,8 +7,8 @@
 
 <script>
 
-hash1 = {'a': 3, 'b': 4, 'c': 5};
-hash2 = {'a': 4, 'e': 7, 'f': 4};
+// hash1 = {'a': 3, 'b': 4, 'c': 5};
+// hash2 = {'a': 4, 'e': 7, 'f': 4};
 
 // console.log(mergeHashes(hash1, hash2));
 
@@ -26,11 +26,57 @@ hash2 = {'a': 4, 'e': 7, 'f': 4};
 
 // placeTilesOnMap({map: "foo"});
 
+// this is a HACK function to figure out where I put climate tiles on
+// my server (I used a really weird naming scheme)-- in general, this can
+// be computed much better-- returns tile name and bounds
+
+function hack_beck2_tiles(obj) {
+
+	returnHash = {};
+
+	// the original image is 43200 x 21600
+	// this is a hack
+	obj.width = 43200;
+
+	// at zoom level 8, the world is 65536 by 65536 so need full tiles
+
+	// at zoom level 7, world is 32768^2, so still need full tiles
+
+	// at zoom level 6, world is 16384, so STILL need full for 21600 dim
+
+	// at zoom level 5, world is 8192, so can use half size tiles
+
+	
+	// original tile size
+
+	let origTileSize = 2**(14-boundNumber(obj.z, 0, 6));
+
+	// number of tiles per row
+
+	let tilesPerRow = Math.ceil(obj.width/origTileSize);
+
+	// the tile I want
+
+	let tileNumber = obj.y*tilesPerRow + obj.x;
+
+	// and now the url
+
+	returnHash.url = `http://test.barrycarter.info/BECK2/${origTileSize}/beck_kg_${origTileSize}_${tileNumber}.png`;
+
+	return returnHash;
+
+}
+
+// console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
 
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
-
-
 placeTilesOnMap({map: map});
+map.on('zoomend', redraw_map);
+map.on('moveend', redraw_map);
+
+function redraw_map() {
+	placeTilesOnMap({map: map});
+}
 
 </script>
