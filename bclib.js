@@ -95,7 +95,7 @@ function tile2LngLat(obj) {
 
 }
 
-/*
+/**
 
 Converts a latitude and longitude to a slippy tile or an equirectangular tile
 
@@ -162,7 +162,14 @@ function placeTilesOnMap(obj) {
 
   // compute min/max lat/lon truncating at limits
 
-  console.log(mapBounds.getWest());
+  // NOTE: this could be done better if we let lngLat2Tile() truncate
+
+  let n = Math.max(Math.min(90, mapBounds.getNorth()), -90);
+  let s = Math.max(Math.min(90, mapBounds.getSouth()), -90);
+  let e = Math.min(Math.max(-180, mapBounds.getEast()), 180);
+  let w = Math.min(Math.max(-180, mapBounds.getWest()), 180);
+
+  console.log("EXTENTS", n, e, s, w);
 
 
 }
