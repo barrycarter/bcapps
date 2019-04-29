@@ -86,11 +86,11 @@ function tile2LngLat(obj) {
     return {lng: lng, lat: 90-obj.y/2**obj.z*180}
   }
 
-  // for Mercator
-  // TODO: I copied this from somewhere else and am NOT happy about it
+  // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
+  // TODO: this is hideous
 
-  let n = Math.PI-2*Math.PI*obj.y/2**obj.z;
-  let lat = 180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n)));
+  let lat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((obj.y/2**obj.z-1/2)*2*Math.PI)));
+
   return {lng: lng, lat: lat};
 
 }
@@ -114,22 +114,21 @@ function lngLat2Tile(obj) {
   obj = mergeHashes(obj, str2hash("projection=0"));
 
   // true for both projections
-  let x = (obj.lng/360+180)*2**obj.z;
+  let x = (obj.lng+180)/360*2**obj.z;
 
   // for equirectangular
   if (obj.projection == 0) {
-    return {z: z, x: x, y: (90-obj.lat)/180*2**obj.z};
+    return {z: obj.z, x: x, y: (90-obj.lat)/180*2**obj.z};
   }
 
   // for Mercator
   // TODO: I copied this from somewhere else and am NOT happy about it
 
-  let y = 1-Math.log(Math.tan(obj.lat*Math.PI/180) + 1/Math.cos(obj.lat*Math.PI/180))/Math.PI/2*2**obj.z;
+  // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
 
-
-
-
-
+  let lat_rad = obj.lat/180*Math.PI;
+  let y = 2**obj.z*(-Math.log(Math.tan(lat_rad) + 1/Math.cos(lat_rad))/2/Math.PI+1/2);
+  return {z: obj.z, x: x, y: y};
 }
   
 
