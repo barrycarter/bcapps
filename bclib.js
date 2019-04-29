@@ -9,6 +9,24 @@ z = zoom (not zoom)
 
 */
 
+
+/** Apply function f to each value in hash hash */
+
+function applyFunctionToHashValues(obj) {
+
+  let returnHash = {};
+  returnHash.hash = {};
+    
+
+  Object.keys(obj.hash).forEach(function (x) {
+      returnHash.hash[x] = obj.f(obj.hash[x]);
+    });
+
+  return returnHash;
+
+}  
+
+
 /**
 
 Bound a given number n by left and right
@@ -219,7 +237,7 @@ function placeTilesOnMap(obj) {
       // TODO: this is insanely specific to my test map, generalize
       let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
 
-      L.imageOverlay(td(url), td(bounds), {opacity: td(obj.opacity)}).addTo(obj.map);
+      L.imageOverlay(url, bounds, {opacity: obj.opacity}).addTo(obj.map);
 
     }
   }

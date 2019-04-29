@@ -34,6 +34,8 @@ function hack_beck2_tiles(obj) {
 
 	returnHash = {};
 
+	td(obj, "input object");
+
 	// the original image is 43200 x 21600
 	// this is a hack
 	obj.width = 43200;
@@ -59,6 +61,8 @@ function hack_beck2_tiles(obj) {
 
 	let tileNumber = obj.y*tilesPerRow + obj.x;
 
+	td({origTileSize, tileNumber, tilesPerRow}, "");
+
 	// and now the url
 
 	returnHash.url = `http://test.barrycarter.info/BECK2/${origTileSize}/beck_kg_${origTileSize}_${tileNumber}.png`;
@@ -71,12 +75,18 @@ function hack_beck2_tiles(obj) {
 
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
-placeTilesOnMap({map: map});
-map.on('zoomend', redraw_map);
-map.on('moveend', redraw_map);
+
+// force break it
+map.setZoom(3);
+
+// placeTilesOnMap({map: map});
+// map.on('zoomend', redraw_map);
+// map.on('moveend', redraw_map);
 
 function redraw_map() {
 	placeTilesOnMap({map: map});
 }
+
+applyFunctionToHashValues({hash: {a: 1.6, b: 2.4, c:3.7 }, f: Math.floor});
 
 </script>
