@@ -222,8 +222,6 @@ function placeTilesOnMap(obj) {
   let nw = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection}), f: Math.floor}).hash;
   let se = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection}), f: Math.floor}).hash;
 
-  td(nw, "nw");
-
   // and now the loop to get and place the tiles themselves
 
   for (let x = nw.x; x < se.x; x++) {
@@ -240,6 +238,8 @@ function placeTilesOnMap(obj) {
 
       // TODO: this is insanely specific to my test map, generalize
       let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
+
+      td([bounds, url], "BOUNDS/URL");
 
       L.imageOverlay(url, bounds, {opacity: obj.opacity}).addTo(obj.map);
 
