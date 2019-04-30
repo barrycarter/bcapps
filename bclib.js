@@ -229,23 +229,30 @@ function placeTilesOnMap(obj) {
 
       // TODO: there should be a better way to find bounds
 
-      let nwBound = tile2LngLat({x: x, y: y, z: z});
-      let seBound = tile2LngLat({x: x+1, y: y+1, z: z});
+      let nwBound = tile2LngLat({x: x, y: y, z: z, projection: obj.projection});
+      let seBound = tile2LngLat({x: x+1, y: y+1, z: z, projection: obj.projection});
 
       // these are in lat/lng order, sigh
 
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
 
-      // TODO: this is insanely specific to my test map, generalize
-      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
 
+      // determine URL from template sent
+
+      let url = `obj.tileURL`;
+
+      td(url, "URL");
+
+
+      // TODO: this is insanely specific to my test map, generalize
+      //      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
+      
       td([bounds, url], "BOUNDS/URL");
 
       L.imageOverlay(url, bounds, {opacity: obj.opacity}).addTo(obj.map);
 
     }
   }
-
 }
 
 /** transparent debugger */

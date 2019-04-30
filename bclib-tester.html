@@ -71,22 +71,24 @@ function hack_beck2_tiles(obj) {
 
 }
 
-// console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
+console.log("hello");
+
+console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
 
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
 
-// force break it
-map.setZoom(3);
+// placeTilesOnMap({map: map, projection: 1, 
+//	tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"
+//	});
 
-placeTilesOnMap({map: map});
-map.on('zoomend', redraw_map);
-map.on('moveend', redraw_map);
+// map.on('zoomend', redraw_map);
+// map.on('moveend', redraw_map);
 
-function redraw_map() {
-	placeTilesOnMap({map: map});
-}
+ function redraw_map() {
+//	placeTilesOnMap({map: map});
+ }
 
-applyFunctionToHashValues({hash: {a: 1.6, b: 2.4, c:3.7 }, f: Math.floor});
+// applyFunctionToHashValues({hash: {a: 1.6, b: 2.4, c:3.7 }, f: Math.floor});
 
 </script>
