@@ -3,7 +3,7 @@
 <script src="bclib.js"></script>
 
 <style>html,body, #map {height:100%;}</style>
-<div id="map"></div>
+<div id="mapDiv"></div>
 
 <script>
 
@@ -73,14 +73,17 @@ function hack_beck2_tiles(obj) {
 
 console.log("hello");
 
-console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
+// console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
 
-let map = L.map('map', {crs: L.CRS.Simple});
+let map = L.map('mapDiv', {crs: L.CRS.Simple});
+
+td(map, "MAP");
+
 map.fitBounds([[-90, -180], [90, 180]]);
 
-// placeTilesOnMap({map: map, projection: 1, 
-//	tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"
-//	});
+placeTilesOnMap({map: map, projection: 1, 
+	tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"
+	});
 
 // map.on('zoomend', redraw_map);
 // map.on('moveend', redraw_map);

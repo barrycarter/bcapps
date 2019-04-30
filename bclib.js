@@ -10,6 +10,34 @@ z = zoom (not zoom)
 */
 
 
+// TODO: find a better way to store this constant as a lib constant
+
+bclib = {};
+bclib.MERCATOR_LAT_LIMIT = 85.0511;
+
+/**
+
+THIS FUNCTION DOES NOT WORK
+
+Replace templated variables in string s with object objs values 
+
+TODO: seriously consider keeping my "all functions take one object"
+oath stronger
+
+
+*/
+
+function convertStringTemplate(s, obj) {
+
+  td(obj, "OBJ");
+
+  //   s = s.replace(/\$\{(.+?)\}/g, function(x, m1) {return obj[m1]});
+  //  td(s,"S");
+
+}
+
+
+
 /** Apply function f to each value in hash hash */
 
 function applyFunctionToHashValues(obj) {
@@ -194,6 +222,11 @@ fake: if set to 1, don't do anything, just print out debugging info
 
 function placeTilesOnMap(obj) {
 
+
+  console.log(obj.map);
+  td(obj.map, "TEST");
+
+
   obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&projection=0&opacity=1"));
 
 
@@ -203,14 +236,20 @@ function placeTilesOnMap(obj) {
 
   let mapBounds = obj.map.getBounds();
 
+  // for Mercator, latitude limit is special; otherwise, 90
+
+  let latLimit = obj.projection==1?bclib.MERCATOR_LAT_LIMIT:90;
+
   // compute min/max lat/lon truncating at limits
 
   // NOTE: this could be done better if we let lngLat2Tile() truncate
 
-  let n = Math.max(Math.min(90, mapBounds.getNorth()), -90);
-  let s = Math.max(Math.min(90, mapBounds.getSouth()), -90);
+  let n = boundNumber(mapBounds.getNorth(), -latLimit, latLimit);
+  let s = boundNumber(mapBounds.getSouth(), -latLimit, latLimit);
   let e = Math.min(Math.max(-180, mapBounds.getEast()), 180);
   let w = Math.min(Math.max(-180, mapBounds.getWest()), 180);
+
+  td([n,e,s,w,z,obj.projection], "NESW1");
 
   // determine the x and y values corresponding to these extents (we
   // use 'floor' here because a tile starts at its nw boundary)
@@ -222,10 +261,14 @@ function placeTilesOnMap(obj) {
   let nw = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection}), f: Math.floor}).hash;
   let se = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection}), f: Math.floor}).hash;
 
+  td([nw, se], "NESW");
+
   // and now the loop to get and place the tiles themselves
 
   for (let x = nw.x; x < se.x; x++) {
     for (let y = nw.y; y < se.y; y++) {
+
+      td([x,y], "x,y");
 
       // TODO: there should be a better way to find bounds
 
@@ -237,11 +280,11 @@ function placeTilesOnMap(obj) {
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
 
 
+      let url = convertStringTemplate(obj.tileURL, obj);
+
       // determine URL from template sent
 
-      let url = `obj.tileURL`;
-
-      td(url, "URL");
+      td([url, obj.tileURL], "URL");
 
 
       // TODO: this is insanely specific to my test map, generalize
@@ -258,7 +301,24 @@ function placeTilesOnMap(obj) {
 /** transparent debugger */
 
 function td(x, str) {
-  console.log(`TD(${str}): `, JSON.stringify(x));
+  console.log(`TD(${str}): `, JSON.stringify(x, getCircularReplacer()));
   return x;
 }
 
+// TODO: move functions that aren't mine somewhere else?
+
+/** Cut and paste from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value#Examples */
+
+const getCircularReplacer = () => {
+
+      const seen = new WeakSet();
+      return (key, value) => {
+	if (typeof value === "object" && value !== null) {
+	  if (seen.has(value)) {
+	    return;
+	  }
+	  seen.add(value);
+	}
+	return value;
+      };
+    };
