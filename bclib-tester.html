@@ -76,19 +76,21 @@ console.log("hello");
 // console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
 
 let map = L.map('map', {crs: L.CRS.Simple});
-
 map.fitBounds([[-90, -180], [90, 180]]);
+map.on('zoomend', redraw_map);
+map.on('moveend', redraw_map);
+redraw_map();
 
-placeTilesOnMap({map: map, projection: 1, 
+function redraw_map() {
+
+  // TODO: not this
+  map.eachLayer(function(layer) {layer.remove()});
+
+  // the OSM map
+  placeTilesOnMap({map: map, projection: 1, 
 	tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"
 	});
-
-// map.on('zoomend', redraw_map);
-// map.on('moveend', redraw_map);
-
- function redraw_map() {
-//	placeTilesOnMap({map: map});
- }
+}
 
 // applyFunctionToHashValues({hash: {a: 1.6, b: 2.4, c:3.7 }, f: Math.floor});
 

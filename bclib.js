@@ -29,13 +29,13 @@ oath stronger
 
 function convertStringTemplate(s, obj) {
 
-  td(obj, "OBJ");
   s = s.replace(/\$\{(.+?)\}/g, function(x, m1) {return obj[m1]});
+
+  // TODO: figure out why below and variants don't work
+  //  s = s.replace(/\$\{(.+?)\}/g, obj.$1);
+
   return s;
-
 }
-
-
 
 /** Apply function f to each value in hash hash */
 
