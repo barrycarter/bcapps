@@ -3,7 +3,7 @@
 <script src="bclib.js"></script>
 
 <style>html,body, #map {height:100%;}</style>
-<div id="mapDiv"></div>
+<div id="map"></div>
 
 <script>
 
@@ -75,9 +75,7 @@ console.log("hello");
 
 // console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
 
-let map = L.map('mapDiv', {crs: L.CRS.Simple});
-
-td(map, "MAP");
+let map = L.map('map', {crs: L.CRS.Simple});
 
 map.fitBounds([[-90, -180], [90, 180]]);
 

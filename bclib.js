@@ -30,9 +30,8 @@ oath stronger
 function convertStringTemplate(s, obj) {
 
   td(obj, "OBJ");
-
-  //   s = s.replace(/\$\{(.+?)\}/g, function(x, m1) {return obj[m1]});
-  //  td(s,"S");
+  s = s.replace(/\$\{(.+?)\}/g, function(x, m1) {return obj[m1]});
+  return s;
 
 }
 
@@ -222,11 +221,6 @@ fake: if set to 1, don't do anything, just print out debugging info
 
 function placeTilesOnMap(obj) {
 
-
-  console.log(obj.map);
-  td(obj.map, "TEST");
-
-
   obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&projection=0&opacity=1"));
 
 
@@ -234,7 +228,7 @@ function placeTilesOnMap(obj) {
 
   let z = obj.map.getZoom();
 
-  let mapBounds = obj.map.getBounds();
+  let mapBounds = td(obj.map.getBounds(), "BOUNDS");
 
   // for Mercator, latitude limit is special; otherwise, 90
 
@@ -280,7 +274,7 @@ function placeTilesOnMap(obj) {
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
 
 
-      let url = convertStringTemplate(obj.tileURL, obj);
+      let url = convertStringTemplate(obj.tileURL, {x: x, y: y, z: z});
 
       // determine URL from template sent
 
