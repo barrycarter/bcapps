@@ -71,8 +71,6 @@ function hack_beck2_tiles(obj) {
 
 }
 
-console.log("hello");
-
 // console.log(hack_beck2_tiles({z: 4, x: 5, y: 6}));
 
 let map = L.map('map', {crs: L.CRS.Simple});
@@ -88,7 +86,8 @@ function redraw_map() {
 
   // the OSM map
   placeTilesOnMap({map: map, projection: 1, 
-	tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"
+	//	tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"
+	tileURL: "http://test.barrycarter.info/bc-mytile3.pl?/${z}/${x}/${y}.png"
 	});
 }
 

@@ -228,11 +228,13 @@ function placeTilesOnMap(obj) {
 
   let z = obj.map.getZoom();
 
-  let mapBounds = td(obj.map.getBounds(), "BOUNDS");
+  let mapBounds = obj.map.getBounds();
 
   // for Mercator, latitude limit is special; otherwise, 90
 
-  let latLimit = obj.projection==1?bclib.MERCATOR_LAT_LIMIT:90;
+  // the +1 below is so we still get the northern/southernmost tiles
+
+  let latLimit = obj.projection==1?bclib.MERCATOR_LAT_LIMIT+1:90;
 
   // compute min/max lat/lon truncating at limits
 
@@ -242,8 +244,6 @@ function placeTilesOnMap(obj) {
   let s = boundNumber(mapBounds.getSouth(), -latLimit, latLimit);
   let e = Math.min(Math.max(-180, mapBounds.getEast()), 180);
   let w = Math.min(Math.max(-180, mapBounds.getWest()), 180);
-
-  td([n,e,s,w,z,obj.projection], "NESW1");
 
   // determine the x and y values corresponding to these extents (we
   // use 'floor' here because a tile starts at its nw boundary)
@@ -255,14 +255,12 @@ function placeTilesOnMap(obj) {
   let nw = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection}), f: Math.floor}).hash;
   let se = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection}), f: Math.floor}).hash;
 
-  td([nw, se], "NESW");
+  td([z, nw.x, se.x, nw.y, se.y], "XY FOR");
 
   // and now the loop to get and place the tiles themselves
 
-  for (let x = nw.x; x < se.x; x++) {
-    for (let y = nw.y; y < se.y; y++) {
-
-      td([x,y], "x,y");
+  for (let x = nw.x; x <= se.x; x++) {
+    for (let y = nw.y; y <= se.y; y++) {
 
       // TODO: there should be a better way to find bounds
 
@@ -273,13 +271,9 @@ function placeTilesOnMap(obj) {
 
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
 
+      // determine URL from template sent (TODO: not working quite right)
 
       let url = convertStringTemplate(obj.tileURL, {x: x, y: y, z: z});
-
-      // determine URL from template sent
-
-      td([url, obj.tileURL], "URL");
-
 
       // TODO: this is insanely specific to my test map, generalize
       //      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
