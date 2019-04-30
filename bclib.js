@@ -126,6 +126,40 @@ function mergeHashes(obj1, obj2) {
 
 /*
 
+Does what tile2LngLat for images that have been sliced up. Input hash values:
+
+z: tile zoom value (0 = highest resolution per gdal_retile.py)
+x: tile x value (may be fractional)
+y: tile y value (may be fractional)
+width: image width
+height: image height
+
+*/
+
+function imageTile2LngLat(obj) {
+
+  // this reduces x and y to numbers between 0 and 1 and then multiples
+
+  //  td(2**(obj.z+8)*obj.x/obj.width*360-180, "ALPHA");
+  td(90-2**(obj.z+8)*obj.y/obj.height*180, "ALPHA");
+
+  return {
+  lng: 2**(obj.z+8)*obj.x/obj.width*360-180,
+      lat: 90-2**(obj.z+8)*obj.y/obj.height*180
+      };
+
+  // TODO: below is for other direction
+
+  // note: at level 0, tiles are 256 x 256
+
+  //  let px = (obj.lng/360+1/2)*obj.width/2**(z+8);
+  //  let py = (90-obj.lat)/180*obj.height/2**(z+8);
+
+}
+
+
+/*
+
 Converts a slippy tile or an equirectangular tile to a latitude and longitude:
 
 z: tile zoom value
@@ -255,7 +289,7 @@ function placeTilesOnMap(obj) {
   let nw = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection}), f: Math.floor}).hash;
   let se = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection}), f: Math.floor}).hash;
 
-  td([z, nw.x, se.x, nw.y, se.y], "XY FOR");
+  //  td([z, nw.x, se.x, nw.y, se.y], "XY FOR");
 
   // and now the loop to get and place the tiles themselves
 
@@ -278,7 +312,7 @@ function placeTilesOnMap(obj) {
       // TODO: this is insanely specific to my test map, generalize
       //      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
       
-      td([bounds, url], "BOUNDS/URL");
+      //      td([bounds, url], "BOUNDS/URL");
 
       L.imageOverlay(url, bounds, {opacity: obj.opacity}).addTo(obj.map);
 
