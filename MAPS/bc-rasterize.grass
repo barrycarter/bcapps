@@ -41,6 +41,48 @@ r.out.gdal input=ne_10m_time_zones_rast
 
 # above does NOT require bringing up an X window
 
+r.out.gdal input=ne_10m_time_zones_rast
+ output=/home/user/20190501/temp1.png format=PNG
+
+# note that you can NOT add overview=5 or anything to above
+
+# now lets rasterize at 131072 x 65536 and PNGify
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast 
+ attribute_column=zone use=attr
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast2
+ attribute_column=zone use=attr memory=64000
+
+# above does NOT make raster any bigger
+
+g.region rows=65536 cols=131072
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast3
+ attribute_column=zone use=attr memory=64000
+
+r.info ne_10m_time_zones_rast3
+
+r.out.gdal input=ne_10m_time_zones_rast3
+ output=/home/user/20190501/temp3.png format=PNG
+
+# shooting for near terapixel
+
+g.region cols=1048576 rows=524288
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast4
+ attribute_column=zone use=attr memory=64000
+
+
+
+
+
+
+
+
+
+
+
 
 
 
