@@ -40,36 +40,58 @@ function hack_beck2_tiles(obj) {
 
   // TODO: pass these as parameters
 
-  let width = 43200;
-  let height = width/2;
+  obj.width = 43200;
+  obj.height = obj.width/2;
 
   let z = obj.map.getZoom();
 
+  // based on image height/width, determine which tiles I want to use
+  // 0 = 256x256 tiles (highest resolution)
+  // 1 = 512x512 tiles (reduced to 256x256)
+
+  td(2**(z+8), "RESOLUTION");
+
+
   let mapBounds = obj.map.getBounds();
 
-  console.log(mapBounds.toBBoxString());
-
   // TODO: this could be functionalized
-
 
   // TODO: consider toBBoxString here
   // TODO: images are assumed equirectangular projected for now
 
   let n = boundNumber(mapBounds.getNorth(), -90, 90);
   let s = boundNumber(mapBounds.getSouth(), -90, 90);
-  let e = Math.min(Math.max(-180, mapBounds.getEast()), 180);
-  let w = Math.min(Math.max(-180, mapBounds.getWest()), 180);
+  let e = boundNumber(mapBounds.getEast(), -180, 180);
+  let w = boundNumber(mapBounds.getWest(), -180, 180);
+
+  // TODO: z = 0 should NOT be hardcoded
+
+  let nw = lngLat2ImageTile(mergeHashes(obj, {lat: n, lng: w, z: 0}));
+  let se = lngLat2ImageTile(mergeHashes(obj, {lat: s, lng: e, z: 0}));
+
+  td([se, nw], "SE,NW");
+
+  for (let i = Math.floor(nw.x); i <= Math.floor(se.x); i++) {
+    for (let j = Math.floor(nw.y); j <= Math.floor(se.y); j++) {
+
+      let bounds0 = imageTile2LngLat(mergeHashes(obj, {z: 0, x: i, y: j}));
+      let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: 0, x: i+1, y: j+1}));
+
+      td([i,j, bounds0, bounds1], "IJ");
+    }
+  }
 
   // figure out the level 0 tiles (in gdal_retile these are the
   // highest resolution tiles)
 
   // TODO: functionalize
 
+  /*
   let yStart = (90-n)/180*height/256;
   let yEnd = (90-s)/180*height/256;
   let xStart = (w/360+1/2)*width/256;
   let xEnd = (e/360+1/2)*width/256;
-
+  */
 
 
 
@@ -80,25 +102,28 @@ function hack_beck2_tiles(obj) {
   //  td([(90-n)/180*height/256, (90-s)/180*height/256], "ALPHA");
 
   //  td([(90-n)/180*height/256/2**5, (90-s)/180*height/256/2**5], "ALPHA");
+
+  /*
   td([
       (90-n)/180*height/256/2**0, 
       (90-s)/180*height/256/2**0,
       (w/360+1/2)*width/256/2**0,
       (e/360+1/2)*width/256/2**0
       ], "ALPHA");
+  */
   
 
   // find the highest power of two dividing height (above this zoom
   // level (minus 8 for 256x256 tiles), we must display tiles at full
   // resolution)
 
-  let highZoom = Math.floor(Math.log(height)/Math.log(2))-8;
+  //  let highZoom = Math.floor(Math.log(height)/Math.log(2))-8;
 
   // for lower zoom levels, we can use lower resolution tiles
 
-  let tileZoom = highZoom - z;
+  //  let tileZoom = highZoom - z;
 
-  td([z, tileZoom, highZoom], "STUFF");
+  //  td([z, tileZoom, highZoom], "STUFF");
   
 
 	returnHash = {};
@@ -140,12 +165,6 @@ function hack_beck2_tiles(obj) {
 	return returnHash;
 
 }
-
-
-td(imageTile2LngLat({x: 5, y: 7, z: 0, height: 21600, width: 43200}));
-td(imageTile2LngLat({x: 5, y: 7, z: 2, height: 21600, width: 43200}));
-td(imageTile2LngLat({x: 5, y: 7, z: 5, height: 21600, width: 43200}));
-
 
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);

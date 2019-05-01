@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <TileMap version="1.0.0" tilemapservice="http://tms.osgeo.org/1.0.0">
+      <Title>temp.vrt</Title>
+      <Abstract></Abstract>
+      <SRS>GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],AUTHORITY["EPSG","4326"]]</SRS>
+      <BoundingBox minx="-180.00000000000000" miny="-90.00000000000000" maxx="180.00000000000000" maxy="90.00000000000000"/>
+      <Origin x="-180.00000000000000" y="-90.00000000000000"/>
+      <TileFormat width="256" height="256" mime-type="image/png" extension="png"/>
+      <TileSets profile="raster">
+        <TileSet href="0" units-per-pixel="2.13333333333333" order="0"/>
+        <TileSet href="1" units-per-pixel="1.06666666666667" order="1"/>
+        <TileSet href="2" units-per-pixel="0.53333333333333" order="2"/>
+        <TileSet href="3" units-per-pixel="0.26666666666667" order="3"/>
+        <TileSet href="4" units-per-pixel="0.13333333333333" order="4"/>
+        <TileSet href="5" units-per-pixel="0.06666666666667" order="5"/>
+        <TileSet href="6" units-per-pixel="0.03333333333333" order="6"/>
+        <TileSet href="7" units-per-pixel="0.01666666666667" order="7"/>
+        <TileSet href="8" units-per-pixel="0.00833333333333" order="8"/>
+      </TileSets>
+    </TileMap>
+    

@@ -140,21 +140,29 @@ function imageTile2LngLat(obj) {
 
   // this reduces x and y to numbers between 0 and 1 and then multiples
 
-  //  td(2**(obj.z+8)*obj.x/obj.width*360-180, "ALPHA");
-  td(90-2**(obj.z+8)*obj.y/obj.height*180, "ALPHA");
+  return {lng: 2**(obj.z+8)*obj.x/obj.width*360-180,
+      lat: 90-2**(obj.z+8)*obj.y/obj.height*180};
 
-  return {
-  lng: 2**(obj.z+8)*obj.x/obj.width*360-180,
-      lat: 90-2**(obj.z+8)*obj.y/obj.height*180
+}
+
+/*
+
+Does what lngLat2Tile for images that have been sliced up. Input hash values:
+
+z: tile zoom value (0 = highest resolution per gdal_retile.py)
+lng: longitude
+lat: latitude
+width: image width
+height: image height
+
+*/
+
+
+function lngLat2ImageTile(obj) {
+
+  return {x: (obj.lng/360+1/2)*obj.width/2**(obj.z+8),
+      y: (90-obj.lat)/180*obj.height/2**(obj.z+8)
       };
-
-  // TODO: below is for other direction
-
-  // note: at level 0, tiles are 256 x 256
-
-  //  let px = (obj.lng/360+1/2)*obj.width/2**(z+8);
-  //  let py = (90-obj.lat)/180*obj.height/2**(z+8);
-
 }
 
 
