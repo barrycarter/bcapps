@@ -1,0 +1,47 @@
+# attempting to use GRASS to rasterize timezone data at high resolution
+
+# this will create it, do NOT use "d.mon start"
+d.mon wx0
+
+# load shp file (must unzip!)
+
+v.in.ogr /mnt/villa/user/NOBACKUP/EARTHDATA/NATURALEARTH/ne_10m_time_zones.shp
+
+# find out how it got named
+
+g.list type=all
+
+# it's ne_10m_time_zones as expected
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast 
+ attribute_column=zone use=attr
+
+# above creates a raster map, below displays it
+
+d.rast ne_10m_time_zones_rast
+
+# some info on it
+
+r.info ne_10m_time_zones_rast
+
+# lets write it
+
+d.out.file output=temp-grass.png size=131072,65536
+
+# 16000 x 8000 works fine
+
+# 36000 x 18000 is native resolutoin (raster map size)
+
+# but creating an image that size crashes
+
+# lets try geotiff
+
+r.out.gdal input=ne_10m_time_zones_rast 
+ output=/home/user/20190501/temp1.tif format=GTiff
+
+# above does NOT require bringing up an X window
+
+
+
+
+
