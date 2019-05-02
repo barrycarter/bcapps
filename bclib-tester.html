@@ -30,6 +30,12 @@
 // my server (I used a really weird naming scheme)-- in general, this can
 // be computed much better-- returns tile name and bounds
 
+// expected params:
+
+// origTileZoom: the original tiles are at this zoom level
+// (theoretically computable from width assuming pixelized tiles weren't
+// created)
+
 function hack_beck2_tiles(obj) {
 
   // this is now a testbed for tiles created by:
@@ -38,18 +44,18 @@ function hack_beck2_tiles(obj) {
 
   // this will replace placeTilesOnMap() for sliced images
 
-  // TODO: pass these as parameters
-
-  obj.width = 43200;
-  obj.height = obj.width/2;
-
   let z = obj.map.getZoom();
+
+  var url;
+
+  td(obj.tileURL, "BEFORE");
+  td(url, "AFTER");
 
   // based on image height/width, determine which tiles I want to use
   // 0 = 256x256 tiles (highest resolution)
   // 1 = 512x512 tiles (reduced to 256x256)
 
-  td(2**(z+8), "RESOLUTION");
+  //  td(2**(z+8), "RESOLUTION");
 
 
   let mapBounds = obj.map.getBounds();
@@ -64,20 +70,22 @@ function hack_beck2_tiles(obj) {
   let e = boundNumber(mapBounds.getEast(), -180, 180);
   let w = boundNumber(mapBounds.getWest(), -180, 180);
 
-  // TODO: z = 0 should NOT be hardcoded
+  let nw = lngLat2ImageTile(mergeHashes(obj, {lat: n, lng: w, z: z}));
+  let se = lngLat2ImageTile(mergeHashes(obj, {lat: s, lng: e, z: z}));
 
-  let nw = lngLat2ImageTile(mergeHashes(obj, {lat: n, lng: w, z: 0}));
-  let se = lngLat2ImageTile(mergeHashes(obj, {lat: s, lng: e, z: 0}));
-
-  td([se, nw], "SE,NW");
+  td([n,e,s,w,z, se, nw], "DIRS,Z,SE,NW");
 
   for (let i = Math.floor(nw.x); i <= Math.floor(se.x); i++) {
     for (let j = Math.floor(nw.y); j <= Math.floor(se.y); j++) {
 
-      let bounds0 = imageTile2LngLat(mergeHashes(obj, {z: 0, x: i, y: j}));
-      let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: 0, x: i+1, y: j+1}));
+      let bounds0 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i, y: j}));
+      let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i+1, y: j+1}));
+      url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
 
-      td([i,j, bounds0, bounds1], "IJ");
+      L.imageOverlay(url, [bounds0, bounds1], 
+			   {opacity: obj.opacity}).addTo(obj.map);
+
+      td([url, bounds0, bounds1], "ALPHA");
     }
   }
 
@@ -176,18 +184,28 @@ map.on('moveend', redraw_map);
 // map.flyTo([25.8, -79.1], 7);
 map.setView([25.8, -79.1], 7);
 
-redraw_map();
-
 // TODO: pass image base too
-// console.log(hack_beck2_tiles({map: map, opacity: 0.5}))
 
+/*
+console.log(hack_beck2_tiles({map: map, opacity: 0.5, width: 43200, 
+	height: 21600, origTileZoom: 8,
+	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
+	}))
+*/
 
-// redraw_map();
+redraw_map();
 
 function redraw_map() {
 
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
+
+  // testing
+
+  hack_beck2_tiles({map: map, opacity: 0.5, width: 43200,
+	height: 21600, origTileZoom: 8,
+	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
+	});
 
   
   // climate map on new server

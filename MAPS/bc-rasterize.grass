@@ -76,15 +76,56 @@ v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast4
 r.out.gdal input=ne_10m_time_zones_rast4
  output=/home/user/20190501/temp4.png format=PNG
 
+# change color style of raster
 
+# this does nothing-- display apparently creates its own color table
+r.colors -r map=ne_10m_time_zones_rast3
 
+r.colors map=ne_10m_time_zones_rast3 color=roygbiv
 
+# below fails, values are floating point
 
+r.colors map=ne_10m_time_zones_rast3 color=random
 
+# can re-render map in display to see preview
 
+r.describe map=ne_10m_time_zones_rast3
 
+r.mapcalc 'tz2 = 4*zone'
 
+# looking at our data so we can "reproject" to integers
 
+db.tables
+
+db.columns ne_10m_time_zones
+
+db.select "SELECT * FROM ne_10m_time_zones LIMIT 20"
+
+db.select -v "SELECT * FROM ne_10m_time_zones LIMIT 20"
+
+db.describe ne_10m_time_zones | less
+
+g.gisenv set="GRASS_PAGER=less"
+
+db.select -v "SELECT DISTINCT(name) FROM ne_10m_time_zones"
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast5
+ attribute_column=name use=attr memory=64000
+
+db.select -v "SELECT DISTINCT(tz_namesum) FROM ne_10m_time_zones"
+
+db.select -v "SELECT DISTINCT(zone*4) FROM ne_10m_time_zones ORDER BY 1"
+
+db.execute "ALTER TABLE ne_10m_time_zones ADD COLUMN tzInt INTEGER"
+
+db.execute "UPDATE ne_10m_time_zones SET tzInt = zone*4"
+
+db.select -v "SELECT DISTINCT(tzInt) FROM ne_10m_time_zones ORDER BY 1"
+
+# success!
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast5
+ attribute_column=tzInt use=attr memory=64000
 
 
 

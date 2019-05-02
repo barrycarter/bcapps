@@ -29,7 +29,11 @@ oath stronger
 
 function convertStringTemplate(s, obj) {
 
+  td([obj.x, obj.y, obj.z], "BETA");
+
   s = s.replace(/\$\{(.+?)\}/g, function(x, m1) {return obj[m1]});
+
+  td("SAFTER", s);
 
   // TODO: figure out why below and variants don't work
   //  s = s.replace(/\$\{(.+?)\}/g, obj.$1);
@@ -133,15 +137,25 @@ x: tile x value (may be fractional)
 y: tile y value (may be fractional)
 width: image width
 height: image height
+origTileZoom: the original tiles are at this zoom level
 
 */
 
 function imageTile2LngLat(obj) {
 
+  //  td([obj.x, obj.y, obj.z, obj.origTileZoom], "TILE");
+
+  //  td(obj.x*256/obj.width*2**(obj.origTileZoom-obj.z)*360-180,"SHIT");
+
+  return {
+  lng: obj.x*256/obj.width*2**(obj.origTileZoom-obj.z)*360-180,
+      lat: obj.y*256/obj.height*2**(obj.origTileZoom-obj.z)*180-90
+      };
+
   // this reduces x and y to numbers between 0 and 1 and then multiples
 
-  return {lng: 2**(obj.z+8)*obj.x/obj.width*360-180,
-      lat: 90-2**(obj.z+8)*obj.y/obj.height*180};
+  //  return {lng: 2**(obj.z+8)*obj.x/obj.width*360-180,
+  //      lat: 90-2**(obj.z+8)*obj.y/obj.height*180};
 
 }
 
@@ -154,15 +168,24 @@ lng: longitude
 lat: latitude
 width: image width
 height: image height
+origTileZoom: the original tiles are at this zoom level
 
 */
 
 
 function lngLat2ImageTile(obj) {
 
-  return {x: (obj.lng/360+1/2)*obj.width/2**(obj.z+8),
-      y: (90-obj.lat)/180*obj.height/2**(obj.z+8)
-      };
+  td("LNG", (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom));
+  td("LAT", (90-obj.lat)/180*obj.height/256*2**(obj.z-obj.origTileZoom));
+
+  return {
+    x: (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom),
+    y: (90-obj.lat)/180*obj.height/256*2**(obj.z-obj.origTileZoom)
+	};
+
+  //  return {x: (obj.lng/360+1/2)*obj.width/2**(obj.z+8),
+  //      y: (90-obj.lat)/180*obj.height/2**(obj.z+8)
+  //      };
 }
 
 
@@ -316,8 +339,6 @@ function placeTilesOnMap(obj) {
       // determine URL from template sent (TODO: not working quite right)
 
       let url = convertStringTemplate(obj.tileURL, {x: x, y: y, z: z});
-
-      td(url, "URL");
 
       // TODO: this is insanely specific to my test map, generalize
       //      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
