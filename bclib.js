@@ -126,6 +126,13 @@ function mergeHashes(obj1, obj2) {
 
 /*
 
+NOTE: This subroutine assumes original image was sliced using:
+
+gdal_translate -of vrt -expand rgba original_image temp.vrt
+gdal2tiles.py -z 0-10 -p raster -v temp.vrt
+
+or similar. Tiles created using other methods should not use this subroutine.
+
 Does what tile2LngLat for images that have been sliced up. Input hash values:
 
 z: tile zoom value (0 = highest resolution per gdal_retile.py)
@@ -157,6 +164,13 @@ function imageTile2LngLat(obj) {
 
 /*
 
+NOTE: This subroutine assumes original image was sliced using:
+
+gdal_translate -of vrt -expand rgba original_image temp.vrt
+gdal2tiles.py -z 0-10 -p raster -v temp.vrt
+
+or similar. Tiles created using other methods should not use this subroutine.
+
 Does what lngLat2Tile for images that have been sliced up. Input hash values:
 
 z: tile zoom value (0 = highest resolution per gdal_retile.py)
@@ -171,10 +185,10 @@ origTileZoom: the original tiles are at this zoom level
 
 function lngLat2ImageTile(obj) {
 
-  td([obj.lng, obj.z, obj.width], "STUFF");
+  td([obj.lng, obj.lat, obj.z, obj.width], "STUFF");
 
   td("LNG", (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom));
-  td("LAT", (90-obj.lat)/180*obj.height/256*2**(obj.z-obj.origTileZoom));
+  td("LAT", (obj.lat+90)/180*obj.height/256*2**(obj.z-obj.origTileZoom));
 
   return {
     x: (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom),

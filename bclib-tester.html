@@ -45,6 +45,7 @@ function hack_beck2_tiles(obj) {
   // this will replace placeTilesOnMap() for sliced images
 
   let z = obj.map.getZoom();
+  td(z,"Z");
 
   var url;
 
@@ -79,11 +80,10 @@ function hack_beck2_tiles(obj) {
       let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i+1, y: j+1}));
       url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
 
-      //      L.imageOverlay(url, [bounds0, bounds1], 
-      //			   {opacity: obj.opacity}).addTo(obj.map);
+            L.imageOverlay(url, [bounds0, bounds1], 
+      			   {opacity: obj.opacity}).addTo(obj.map);
 
       td([url, bounds0, bounds1], "ALPHA");
-      console.log("TESTING!"); return;
     }
   }
 
@@ -175,10 +175,12 @@ function hack_beck2_tiles(obj) {
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
 // map.flyTo([25.8, -79.1], 7);
-map.setView([25.8, -79.1], 7);
-
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
+// can't set zoom from 3 to 6 for some reason?!@?!
+map.setView([25.8, -79.1], 2);
+redraw_map();
+
 
 // for testing, set to Florida
 
@@ -191,8 +193,6 @@ console.log(hack_beck2_tiles({map: map, opacity: 0.5, width: 43200,
 	}))
 */
 
-redraw_map();
-
 function redraw_map() {
 
   // TODO: not this
@@ -204,6 +204,8 @@ function redraw_map() {
 	height: 21600, origTileZoom: 8,
 	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
 	});
+
+  return;
 
   
   // climate map on new server
