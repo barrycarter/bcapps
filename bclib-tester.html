@@ -48,9 +48,6 @@ function hack_beck2_tiles(obj) {
 
   var url;
 
-  td(obj.tileURL, "BEFORE");
-  td(url, "AFTER");
-
   // based on image height/width, determine which tiles I want to use
   // 0 = 256x256 tiles (highest resolution)
   // 1 = 512x512 tiles (reduced to 256x256)
@@ -82,10 +79,11 @@ function hack_beck2_tiles(obj) {
       let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i+1, y: j+1}));
       url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
 
-      L.imageOverlay(url, [bounds0, bounds1], 
-			   {opacity: obj.opacity}).addTo(obj.map);
+      //      L.imageOverlay(url, [bounds0, bounds1], 
+      //			   {opacity: obj.opacity}).addTo(obj.map);
 
       td([url, bounds0, bounds1], "ALPHA");
+      console.log("TESTING!"); return;
     }
   }
 
@@ -176,20 +174,20 @@ function hack_beck2_tiles(obj) {
 
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
+// map.flyTo([25.8, -79.1], 7);
+map.setView([25.8, -79.1], 7);
+
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
 
 // for testing, set to Florida
-
-// map.flyTo([25.8, -79.1], 7);
-map.setView([25.8, -79.1], 7);
 
 // TODO: pass image base too
 
 /*
 console.log(hack_beck2_tiles({map: map, opacity: 0.5, width: 43200, 
 	height: 21600, origTileZoom: 8,
-	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
+	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${y}/${x}.png'
 	}))
 */
 

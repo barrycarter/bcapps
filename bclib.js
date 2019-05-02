@@ -29,11 +29,7 @@ oath stronger
 
 function convertStringTemplate(s, obj) {
 
-  td([obj.x, obj.y, obj.z], "BETA");
-
   s = s.replace(/\$\{(.+?)\}/g, function(x, m1) {return obj[m1]});
-
-  td("SAFTER", s);
 
   // TODO: figure out why below and variants don't work
   //  s = s.replace(/\$\{(.+?)\}/g, obj.$1);
@@ -174,6 +170,8 @@ origTileZoom: the original tiles are at this zoom level
 
 
 function lngLat2ImageTile(obj) {
+
+  td([obj.lng, obj.z, obj.width], "STUFF");
 
   td("LNG", (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom));
   td("LAT", (90-obj.lat)/180*obj.height/256*2**(obj.z-obj.origTileZoom));
