@@ -17,8 +17,6 @@ bclib.MERCATOR_LAT_LIMIT = 85.0511;
 
 /**
 
-THIS FUNCTION DOES NOT WORK
-
 Replace templated variables in string s with object objs values 
 
 TODO: seriously consider keeping my "all functions take one object"
@@ -280,10 +278,12 @@ function placeTilesOnMap(obj) {
 
   obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&projection=0&opacity=1"));
 
+  if (obj.fake) {return;}
+
 
   // TODO: the actual z value (but tile z value could be different)
 
-  let z = obj.map.getZoom();
+  let z = boundNumber(obj.map.getZoom(), obj.minZoom, obj.maxZoom);
 
   let mapBounds = obj.map.getBounds();
 
