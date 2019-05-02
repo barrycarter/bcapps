@@ -44,7 +44,6 @@ function applyFunctionToHashValues(obj) {
   let returnHash = {};
   returnHash.hash = {};
     
-
   Object.keys(obj.hash).forEach(function (x) {
       returnHash.hash[x] = obj.f(obj.hash[x]);
     });

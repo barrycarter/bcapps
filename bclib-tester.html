@@ -7,60 +7,35 @@
 
 <script>
 
-// hash1 = {'a': 3, 'b': 4, 'c': 5};
-// hash2 = {'a': 4, 'e': 7, 'f': 4};
-
-// console.log(mergeHashes(hash1, hash2));
-
-// spread operator doesn't work
-// console.log({...hash1, ...hash2});
-
-// note for ... style merges, second overwrites first
-
-// console.log(str2hash("a=1&b=2&c=3"));
-
-// console.log(tile2LngLat({z: 5, x: 2, y: 32, projection: 1}));
-
-// console.log(lngLat2Tile({lng: 0, lat: 85, z: 3, projection: 1}));
-// console.log(tile2LngLat({x: 4, z: 3, y: 0, projection: 1}));
-
-// placeTilesOnMap({map: "foo"});
-
-// this is a HACK function to figure out where I put climate tiles on
-// my server (I used a really weird naming scheme)-- in general, this can
-// be computed much better-- returns tile name and bounds
-
-// expected params:
-
-// origTileZoom: the original tiles are at this zoom level
-// (theoretically computable from width assuming pixelized tiles weren't
-// created)
-
 /*
 
-document function here 
+Place equirectangular tilesfrom an image on a Leaflet "map" (canvas?) 
+given the following in a hash:
+
+map: put the tiles here
+
+tileURL: template for tile URLs
+
+minZoom: never get tiles lower than this zoom level
+
+maxZoom: never get tiles higher than this zoom level
+
+opacity; tile opacity
+
+fake: if set to 1, don't do anything, just print out debugging info
+
+document function here more
 
 */
 
-function hack_beck2_tiles(obj) {
+function placeImageTilesOnMap(obj) {
 
-  // this is now a testbed for tiles created by:
-  // gdal_retile.py imagefile -levels 8 -v -targetDir CLIMATE2 -of png
-  // I put the tiles created in the main directory into 0/ for consistency
+  // defaults
 
-  // this will replace placeTilesOnMap() for sliced images
+  obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&opacity=1"));
 
   let z = obj.map.getZoom();
-  td(z,"Z");
-
   var url;
-
-  // based on image height/width, determine which tiles I want to use
-  // 0 = 256x256 tiles (highest resolution)
-  // 1 = 512x512 tiles (reduced to 256x256)
-
-  //  td(2**(z+8), "RESOLUTION");
-
 
   let mapBounds = obj.map.getBounds();
 
@@ -77,8 +52,6 @@ function hack_beck2_tiles(obj) {
   let nw = lngLat2ImageTile(mergeHashes(obj, {lat: n, lng: w, z: z}));
   let se = lngLat2ImageTile(mergeHashes(obj, {lat: s, lng: e, z: z}));
 
-  td([n,e,s,w,z, se, nw], "DIRS,Z,SE,NW");
-
   for (let i = Math.floor(nw.x); i <= Math.floor(se.x); i++) {
     for (let j = Math.floor(se.y); j <= Math.floor(nw.y); j++) {
 
@@ -89,93 +62,8 @@ function hack_beck2_tiles(obj) {
             L.imageOverlay(url, [bounds0, bounds1], 
       			   {opacity: obj.opacity}).addTo(obj.map);
 
-      td([url, bounds0, bounds1], "ALPHA");
     }
   }
-
-  // figure out the level 0 tiles (in gdal_retile these are the
-  // highest resolution tiles)
-
-  // TODO: functionalize
-
-  /*
-  let yStart = (90-n)/180*height/256;
-  let yEnd = (90-s)/180*height/256;
-  let xStart = (w/360+1/2)*width/256;
-  let xEnd = (e/360+1/2)*width/256;
-  */
-
-
-
-  td([n,s,e,w], "NSEW");
-
-  // figure out pixel coords in huge map and then in 256x256 tiles
-
-  //  td([(90-n)/180*height/256, (90-s)/180*height/256], "ALPHA");
-
-  //  td([(90-n)/180*height/256/2**5, (90-s)/180*height/256/2**5], "ALPHA");
-
-  /*
-  td([
-      (90-n)/180*height/256/2**0, 
-      (90-s)/180*height/256/2**0,
-      (w/360+1/2)*width/256/2**0,
-      (e/360+1/2)*width/256/2**0
-      ], "ALPHA");
-  */
-  
-
-  // find the highest power of two dividing height (above this zoom
-  // level (minus 8 for 256x256 tiles), we must display tiles at full
-  // resolution)
-
-  //  let highZoom = Math.floor(Math.log(height)/Math.log(2))-8;
-
-  // for lower zoom levels, we can use lower resolution tiles
-
-  //  let tileZoom = highZoom - z;
-
-  //  td([z, tileZoom, highZoom], "STUFF");
-  
-
-	returnHash = {};
-
-	//	td(obj, "input object");
-
-	// the original image is 43200 x 21600
-	// this is a hack
-	obj.width = 43200;
-
-	// at zoom level 8, the world is 65536 by 65536 so need full tiles
-
-	// at zoom level 7, world is 32768^2, so still need full tiles
-
-	// at zoom level 6, world is 16384, so STILL need full for 21600 dim
-
-	// at zoom level 5, world is 8192, so can use half size tiles
-
-	
-	// original tile size
-
-
-	// number of tiles per row
-
-	//	let tilesPerRow = Math.ceil(obj.width/origTileSize);
-
-	// the tile I want
-
-	//	let tileNumber = obj.y*tilesPerRow + obj.x;
-
-	//	td({obj, origTileSize, tileNumber, tilesPerRow}, "");
-
-	//	td([tilesPerRow, origTileSize, tileNumber], "tpr/size/num");
-
-	// and now the url
-
-	//	returnHash.url = `http://test.barrycarter.info/BECK2/${origTileSize}/beck_kg_${origTileSize}_${tileNumber}.png`;
-
-	return returnHash;
-
 }
 
 let map = L.map('map', {crs: L.CRS.Simple});
@@ -192,13 +80,6 @@ redraw_map();
 
 // TODO: pass image base too
 
-/*
-console.log(hack_beck2_tiles({map: map, opacity: 0.5, width: 43200, 
-	height: 21600, origTileZoom: 8,
-	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${y}/${x}.png'
-	}))
-*/
-
 function redraw_map() {
 
   // TODO: not this
@@ -206,12 +87,12 @@ function redraw_map() {
 
   // testing
 
-  //  hack_beck2_tiles({map: map, opacity: 1, width: 43200,
+  //  placeImageTilesOnMap({map: map, opacity: 1, width: 43200,
   //	height: 21600, origTileZoom: 8,
   //	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
   //	});
 
-  hack_beck2_tiles({map: map, opacity: 1, width: 129600,
+  placeImageTilesOnMap({map: map, opacity: 1, width: 129600,
 	height: 64800, origTileZoom: 9,
 	tileURL: 'http://ws.terramapadventure.com/LANDUSE/${z}/${x}/${y}.png'
 	});
