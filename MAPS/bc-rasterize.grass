@@ -73,6 +73,11 @@ g.region cols=1048576 rows=524288
 v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast4
  attribute_column=zone use=attr memory=64000
 
+r.out.gdal input=ne_10m_time_zones_rast4
+ output=/home/user/20190501/temp4.png format=PNG
+
+
+
 
 
 

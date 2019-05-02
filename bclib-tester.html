@@ -179,7 +179,7 @@ map.setView([25.8, -79.1], 7);
 redraw_map();
 
 // TODO: pass image base too
-console.log(hack_beck2_tiles({map: map, opacity: 0.5}))
+// console.log(hack_beck2_tiles({map: map, opacity: 0.5}))
 
 
 // redraw_map();
@@ -189,9 +189,25 @@ function redraw_map() {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
-  hack_beck2_tiles({map: map, opacity: 0.5});
+  
+  // climate map on new server
+  placeTilesOnMap({map: map, projection: 1, opacity: 1, fake: 1,
+	tileURL: "http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png"
+	});
+
+
+  // climate map on new server
+  placeTilesOnMap({map: map, projection: 1, opacity: 1,
+	tileURL: "http://ws.terramapadventure.com/LANDUSE/${z}/${x}/${y}.png"
+	});
+
+
+return;
+
+//  hack_beck2_tiles({map: map, opacity: 0.5});
 
   // my coord map
+
   placeTilesOnMap({map: map, projection: 1, opacity: 0.5,
 	tileURL: "http://test.barrycarter.info/bc-mytile3.pl?/${z}/${x}/${y}.png"
 	});

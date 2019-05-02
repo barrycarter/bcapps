@@ -317,6 +317,8 @@ function placeTilesOnMap(obj) {
 
       let url = convertStringTemplate(obj.tileURL, {x: x, y: y, z: z});
 
+      td(url, "URL");
+
       // TODO: this is insanely specific to my test map, generalize
       //      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;
       
