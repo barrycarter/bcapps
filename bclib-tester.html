@@ -200,9 +200,14 @@ function redraw_map() {
 
   // testing
 
-  hack_beck2_tiles({map: map, opacity: 1, width: 43200,
-	height: 21600, origTileZoom: 8,
-	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
+  //  hack_beck2_tiles({map: map, opacity: 1, width: 43200,
+  //	height: 21600, origTileZoom: 8,
+  //	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
+  //	});
+
+  hack_beck2_tiles({map: map, opacity: 1, width: 129600,
+	height: 64800, origTileZoom: 9,
+	tileURL: 'http://ws.terramapadventure.com/LANDUSE/${z}/${x}/${y}.png'
 	});
 
   return;
