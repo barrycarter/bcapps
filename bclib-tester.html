@@ -74,7 +74,7 @@ function hack_beck2_tiles(obj) {
   td([n,e,s,w,z, se, nw], "DIRS,Z,SE,NW");
 
   for (let i = Math.floor(nw.x); i <= Math.floor(se.x); i++) {
-    for (let j = Math.floor(nw.y); j <= Math.floor(se.y); j++) {
+    for (let j = Math.floor(se.y); j <= Math.floor(nw.y); j++) {
 
       let bounds0 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i, y: j}));
       let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i+1, y: j+1}));
@@ -178,7 +178,7 @@ map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
 // can't set zoom from 3 to 6 for some reason?!@?!
-map.setView([25.8, -79.1], 2);
+map.setView([25.8, -79.1], 7);
 redraw_map();
 
 
@@ -200,7 +200,7 @@ function redraw_map() {
 
   // testing
 
-  hack_beck2_tiles({map: map, opacity: 0.5, width: 43200,
+  hack_beck2_tiles({map: map, opacity: 1, width: 43200,
 	height: 21600, origTileZoom: 8,
 	tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'
 	});
