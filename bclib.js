@@ -146,25 +146,10 @@ origTileZoom: the original tiles are at this zoom level
 
 function imageTile2LngLat(obj) {
 
-  td([obj.x, obj.y, obj.z, obj.width], "T2LLSTUFF");
-
-  td(obj.x*256/obj.width*2**(obj.origTileZoom-obj.z)*360-180, "T2LLLNG");
-  td(obj.y*256/obj.height*2**(obj.origTileZoom-obj.z)*180-90, "T2LLLAT");
-
-  //  td([obj.x, obj.y, obj.z, obj.origTileZoom], "TILE");
-
-  //  td(obj.x*256/obj.width*2**(obj.origTileZoom-obj.z)*360-180,"SHIT");
-
   return {
   lng: obj.x*256/obj.width*2**(obj.origTileZoom-obj.z)*360-180,
       lat: obj.y*256/obj.height*2**(obj.origTileZoom-obj.z)*180-90
       };
-
-  // this reduces x and y to numbers between 0 and 1 and then multiples
-
-  //  return {lng: 2**(obj.z+8)*obj.x/obj.width*360-180,
-  //      lat: 90-2**(obj.z+8)*obj.y/obj.height*180};
-
 }
 
 /*
@@ -190,20 +175,10 @@ origTileZoom: the original tiles are at this zoom level
 
 function lngLat2ImageTile(obj) {
 
-  td([obj.lng, obj.lat, obj.z, obj.width], "STUFF");
-
-
-  td("LNG", (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom));
-  td("LAT", (obj.lat+90)/180*obj.height/256*2**(obj.z-obj.origTileZoom));
-
   return {
     x: (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom),
     y: (obj.lat+90)/180*obj.height/256*2**(obj.z-obj.origTileZoom)
 	};
-
-  //  return {x: (obj.lng/360+1/2)*obj.width/2**(obj.z+8),
-  //      y: (90-obj.lat)/180*obj.height/2**(obj.z+8)
-  //      };
 }
 
 
