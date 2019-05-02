@@ -172,8 +172,12 @@ origTileZoom: the original tiles are at this zoom level
 
 function lngLat2ImageTile(obj) {
 
+  // compute the highest value of x to allow toroidal tiling
+
+  let zoomMultiplier = 2**(obj.z-obj.origTileZoom-8);
+
   return {
-    x: (obj.lng+180)/360*obj.width/256*2**(obj.z-obj.origTileZoom),
+  x: (obj.lng+180)/360*obj.width*zoomMultiplier,
     y: (obj.lat+90)/180*obj.height/256*2**(obj.z-obj.origTileZoom)
 	};
 }
