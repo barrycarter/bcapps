@@ -4,7 +4,9 @@
 
 # this is shell invocation
 
-# grass74 -c EPSG:4326 /home/user/BCGIT/MAPS/timezones/
+# not going to put this in git, it creates weird temporary files
+
+# grass74 -c EPSG:4326 /home/user/GRASS/timezones/
 
 # load the timezones shape file
 
@@ -32,10 +34,18 @@ db.select "SELECT DISTINCT(tzInt) FROM ne_10m_time_zones ORDER BY 1"
 
 # the numbers go from 0 to 104 with gaps, which is good
 
+# set region extents before size so we can test w/ different sizes
+
+g.region n=90 s=-90 w=-180 e=180
+
 # rasterize the vector time zone file at 2^18 cols x 2^17 rows (about
 # 5 arcseconds and better than 400m, though still not fantastic)
 
-g.region cols=262144 rows=131072
+g.region cols=524288 rows=262144
+
+# temporarily because its being weird
+
+g.region cols=8192 rows=4096
 
 g.remove -f type=raster name=ne_10m_time_zones_rast
 
@@ -47,16 +57,21 @@ v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast
 
 # lets look at before we convert it to png
 
+d.mon wx0
+
+d.erase
+
 d.rast ne_10m_time_zones_rast
 
+# colorize this -- not crazy about using random coloration here, but I
+# need something that is NOT graduated
 
+# TODO: consider using Kelly colors or some variant
 
+r.colors map=ne_10m_time_zones_rast color=random
 
-
-
-
-
-
+r.out.gdal input=ne_10m_time_zones_rast
+ output=/home/user/20190501/timezones.png format=PNG
 
 ### fresh start ends here
 

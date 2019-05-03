@@ -23,6 +23,11 @@ http://gentoo.osuosl.org/distfiles/adjtimex_1.29.orig.tar.gz
 http://gentoo.osuosl.org/distfiles/freedink-data-1.08.20140901.tar.gz
 http://gentoo.osuosl.org/distfiles/xteddy-2.2.tar.gz
 
+# because of upgrades, version in distfiles.txt not always available
+# (or at all)
+
+# http://gentoo.osuosl.org/distfiles/nip2-7.38.1.tar.gz
+
 # http://www.gnu-darwin.org/distfiles/ possible source
 
 # consider look at freshports or even bsd ports (it's all source) for more?

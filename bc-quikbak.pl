@@ -20,7 +20,12 @@ require "/usr/local/lib/bclib.pl";
 $etcdir="/usr/local/etc/quikbak";
 
 for $i (@ARGV) {
+
+  debug("I: $i");
+
   ($target,$mod) = get_target($i);
+
+  debug("TARGET: $target");
 
   # should I back this up? if so, where?
   unless ($target) {debug("$i ignored"); next;}
@@ -96,7 +101,7 @@ sub get_target {
   # ignore emacs droppings, non-files, and non-existent files
   # emacs droppings changed to debug, not warn
   if ($i=~/~$/) {debug("$i: emacs backup"); return ();}
-  unless (-f $i) {debug("$i: not a file"); return();}
+  unless (-f $i) {warn("$i: not a file"); return();}
   unless (@x=stat($i)) {warn("$i: nostat, $!"); return();}
 
   # use realpath to find path (temporary force debug)
@@ -106,7 +111,7 @@ sub get_target {
   $out=~s%^(.*/)[^/]+$%$1%;
   $aa = $out;
   debug("DIR: $aa");
-  $globopts{debug} = 0;
+#  $globopts{debug} = 0;
 
 
 #   # find canonical directory for file
@@ -128,6 +133,11 @@ sub get_target {
 
   # this is the target filename
   # return it and the timestamp of the original file
-  $i=~s!(.*/)(.*)$!$etcdir$aa$2!;
-  return ($i,stardate($x[9]));
+
+  if ($i=~s!(.*/)(.*)$!$etcdir$aa$2!) {
+      return ($i,stardate($x[9]));
+    }
+
+  return("$etcdir$aa$i", stardate($x[9]));
+
 }

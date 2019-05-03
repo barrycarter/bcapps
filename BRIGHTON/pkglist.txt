@@ -333,6 +333,8 @@ libmpg123-devel
 
 # graphics/images incl scanning and fonts
 # some of these may be installed by a groupinstall
+
+pngcrush
 gwenview
 libgeotiff-devel
 mtpaint
