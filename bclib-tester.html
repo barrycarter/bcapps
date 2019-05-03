@@ -48,6 +48,11 @@ function placeImageTilesOnMap(obj) {
   let numXTiles = obj.width/256*2**(z-obj.origTileZoom);
   let numYTiles = obj.height/256*2**(z-obj.origTileZoom);
 
+  // the width and height of a tile in degrees
+
+  let tileWidth = 360/numXTiles;
+  let tileHeight = 180/numYTiles;
+
   // determine min and max tile number ranges for current view
 
   let iMin = Math.floor((w+180)/360*numXTiles);
@@ -55,13 +60,40 @@ function placeImageTilesOnMap(obj) {
   let jMin = Math.floor((s+90)/180*numYTiles);
   let jMax = Math.floor((n+90)/180*numYTiles);
 
-  td([iMin, iMax, jMin, jMax], "bounds");
+  //  td([iMin, iMax, jMin, jMax, tileWidth, tileHeight], "bounds");
 
   for (let i = iMin; i <= iMax; i++) {
     for (let j = jMin; j <= jMax; j++) {
-      td([i, j], "IJ");
+
+      // if j value out of bounds, do nothing (TODO: dragon tiles?)
+
+      if (j < 0 || j > numYTiles) {next;}
+
+      // same for i value FOR NOW
+
+      if (i < 0 || i > numXTiles) {next;}
+
+      // determine URL and place tile
+
+      let url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
+
+      td(url, "URL");
+
+      let bounds = [ [-90+tileHeight*j, -180+tileWidth*i],
+		     [-90+tileHeight*(j+1), -180+tileWidth*(i+1)] ];
+
+      td(bounds, "bounds");
+
+      L.imageOverlay(url, bounds, 
+      			   {opacity: obj.opacity}).addTo(obj.map);
+      
+
+
+
     }
   }
+
+  return;
 
   //  let degreesPerTile = 360/(obj.width/256);
 
@@ -90,7 +122,7 @@ function placeImageTilesOnMap(obj) {
       let bounds0 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i, y: j}));
       let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i+1, y: j+1}));
 
-      let url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
+      //      let url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
       L.imageOverlay(url, [bounds0, bounds1], 
       			   {opacity: obj.opacity}).addTo(obj.map);
 
