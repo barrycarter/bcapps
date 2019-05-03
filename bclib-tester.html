@@ -86,45 +86,6 @@ function placeImageTilesOnMap(obj) {
 
       L.imageOverlay(url, bounds, 
       			   {opacity: obj.opacity}).addTo(obj.map);
-      
-
-
-
-    }
-  }
-
-  return;
-
-  //  let degreesPerTile = 360/(obj.width/256);
-
-  // TODO: we are assuming pixelsPerDegree is same for lat and lng,
-  // which is probably ok for now, but not ideal long-term
-
-  //  let pixelsPerDegree = obj.width/360*2**(obj.origTileZoom-z);
-
-  //  td(pixelsPerDegree, "PPD");
-
-  // convert from lngLat to tile numbers, allowing for glitches/wraparound
-
-  // convert lng to interval (0,1), multiply by image width and then
-  // divide based on current zoom level
-
-  //  let imin = (w+180)/360*obj.width*
-
-  // TODO: this could be functionalized
-
-  let nw = lngLat2ImageTile(mergeHashes(obj, {lat: n, lng: w, z: z}));
-  let se = lngLat2ImageTile(mergeHashes(obj, {lat: s, lng: e, z: z}));
-
-  for (let i = Math.floor(nw.x); i <= Math.floor(se.x); i++) {
-    for (let j = Math.floor(se.y); j <= Math.floor(nw.y); j++) {
-
-      let bounds0 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i, y: j}));
-      let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i+1, y: j+1}));
-
-      //      let url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
-      L.imageOverlay(url, [bounds0, bounds1], 
-      			   {opacity: obj.opacity}).addTo(obj.map);
 
     }
   }
