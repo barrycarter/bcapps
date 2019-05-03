@@ -39,8 +39,45 @@ function placeImageTilesOnMap(obj) {
   if (obj.fake) {return;}
 
   let z = boundNumber(obj.map.getZoom(), obj.minZoom, obj.maxZoom);
+
   let [w, s, e, n] = 
     obj.map.getBounds().toBBoxString().split(",").map(parseFloat);
+
+  // the "exact" number of x and y tiles at this z level
+
+  let numXTiles = obj.width/256*2**(z-obj.origTileZoom);
+  let numYTiles = obj.height/256*2**(z-obj.origTileZoom);
+
+  // determine min and max tile number ranges for current view
+
+  let iMin = Math.floor((w+180)/360*numXTiles);
+  let iMax = Math.floor((e+180)/360*numXTiles);
+  let jMin = Math.floor((s+90)/180*numYTiles);
+  let jMax = Math.floor((n+90)/180*numYTiles);
+
+  td([iMin, iMax, jMin, jMax], "bounds");
+
+  for (let i = iMin; i <= iMax; i++) {
+    for (let j = jMin; j <= jMax; j++) {
+      td([i, j], "IJ");
+    }
+  }
+
+  //  let degreesPerTile = 360/(obj.width/256);
+
+  // TODO: we are assuming pixelsPerDegree is same for lat and lng,
+  // which is probably ok for now, but not ideal long-term
+
+  //  let pixelsPerDegree = obj.width/360*2**(obj.origTileZoom-z);
+
+  //  td(pixelsPerDegree, "PPD");
+
+  // convert from lngLat to tile numbers, allowing for glitches/wraparound
+
+  // convert lng to interval (0,1), multiply by image width and then
+  // divide based on current zoom level
+
+  //  let imin = (w+180)/360*obj.width*
 
   // TODO: this could be functionalized
 
