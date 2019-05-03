@@ -182,15 +182,10 @@ function lngLat2ImageTile(obj) {
 
   let zoomMultiplier = 2**(obj.z-obj.origTileZoom-8);
 
-  // compute x, but also compute what image tile to use if x is out of range
-
-  let x = (obj.lng+180)/360*obj.width*zoomMultiplier;
-
-  //  let tileX = ((obj.lng+180).mod(360))/360*obj.width*zoomMultiplier;
-
-  //  obj.lng = (obj.lng+180).mod(360)-180;
-
-  return {x: x, y: (obj.lat+90)/180*obj.height*zoomMultiplier};
+  return {
+  x: (obj.lng+180)/360*obj.width*zoomMultiplier,
+    y: (obj.lat+90)/180*obj.height/256*2**(obj.z-obj.origTileZoom)
+	};
 }
 
 
