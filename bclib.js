@@ -182,16 +182,56 @@ function lngLat2ImageTile(obj) {
 
   let zoomMultiplier = 2**(obj.z-obj.origTileZoom-8);
 
-  obj.lng = (obj.lng+180).mod(360)-180;
+  // compute x, but also compute what image tile to use if x is out of range
 
-  return {
-  x: (obj.lng+180)/360*obj.width*zoomMultiplier,
-      y: (obj.lat+90)/180*obj.height*zoomMultiplier
-      };
+  let x = (obj.lng+180)/360*obj.width*zoomMultiplier;
+
+  //  let tileX = ((obj.lng+180).mod(360))/360*obj.width*zoomMultiplier;
+
+  //  obj.lng = (obj.lng+180).mod(360)-180;
+
+  return {x: x, y: (obj.lat+90)/180*obj.height*zoomMultiplier};
 }
 
 
-/*
+/**
+
+Given a range of latitude and longitude, and an image broken up into
+tiles, return where to place which pieces of the image.
+
+This routine is slightly more efficient and flexible than calling
+lngLat2ImageTile multiple times: it allows longitudes and latitudes
+outside normal limits and makes some calculations only once.
+
+The passed object should have:
+
+bounds: [[slat, wlon], [nlat, elon]]
+tileURL: the template for the URLs for the image
+width: the image width
+height: the image height
+z: the zoom level
+
+*/
+
+function lngLatRange2ImageTiles(obj) {
+
+  // TODO: in reality, we get this from passed obj
+
+  let lngRange = [-180, -90];
+  let latRange = [-90, 0];
+  let z = 5;
+  let origTileZoom = 8;
+  let width = 43200;
+  let height = 21600;
+
+
+
+
+  td("CALLED");
+
+}
+
+/**
 
 Converts a slippy tile or an equirectangular tile to a latitude and longitude:
 
