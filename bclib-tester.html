@@ -40,12 +40,11 @@ function placeImageTilesOnMap(obj) {
 
   let z = boundNumber(obj.map.getZoom(), obj.minZoom, obj.maxZoom);
   let mapBounds = obj.map.getBounds().toBBoxString();
-
-  let [s, w, n, e] = mapBounds;
-
+  let bounds = mapBounds.split(",").map(parseFloat);
 
   //  lngLatRange2ImageTiles(obj);
 
+  let [w, s, e, n] = bounds;
 
   // NOTE: testing lngLatRange2ImageTiles()
 
