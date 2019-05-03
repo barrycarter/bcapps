@@ -1,5 +1,65 @@
 # attempting to use GRASS to rasterize timezone data at high resolution
 
+### fresh start starts here
+
+# this is shell invocation
+
+# grass74 -c EPSG:4326 /home/user/BCGIT/MAPS/timezones/
+
+# load the timezones shape file
+
+v.in.ogr ne_10m_time_zones.shp
+
+# there are warnings, but we ignore them
+
+# let's find the highest and lowest time zones
+
+db.select "SELECT MIN(zone), MAX(zone) FROM ne_10m_time_zones"
+
+# we need a POSITIVE valued integer field to create a raster map
+
+db.execute "ALTER TABLE ne_10m_time_zones ADD COLUMN tzInt INTEGER"
+
+# because there are 1/4 hour time zones, we need to multiply by 4
+
+# min zone was -12 so we need to add 12 to keep things positive
+
+db.execute "UPDATE ne_10m_time_zones SET tzInt = (zone+12)*4"
+
+# lets check to make sure it looks ok
+
+db.select "SELECT DISTINCT(tzInt) FROM ne_10m_time_zones ORDER BY 1"
+
+# the numbers go from 0 to 104 with gaps, which is good
+
+# rasterize the vector time zone file at 2^18 cols x 2^17 rows (about
+# 5 arcseconds and better than 400m, though still not fantastic)
+
+g.region cols=262144 rows=131072
+
+g.remove -f type=raster name=ne_10m_time_zones_rast
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast 
+ attribute_column=tzInt use=attr &
+
+# I can use "jobs -l" and "bc-waitpid.pl" to wait for above since its
+# a regular shell process
+
+# lets look at before we convert it to png
+
+d.rast ne_10m_time_zones_rast
+
+
+
+
+
+
+
+
+
+
+### fresh start ends here
+
 # this will create it, do NOT use "d.mon start"
 d.mon wx0
 
@@ -122,12 +182,75 @@ db.execute "UPDATE ne_10m_time_zones SET tzInt = zone*4"
 
 db.select -v "SELECT DISTINCT(tzInt) FROM ne_10m_time_zones ORDER BY 1"
 
+# must do this first
+
+g.region cols=131072 rows=65536
+
 # success!
 
-v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast5
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast
  attribute_column=tzInt use=attr memory=64000
 
+r.out.gdal input=ne_10m_time_zones_rast
+ output=/home/user/20190501/timezones.png format=PNG
 
+# cleanup
+
+g.remove name=ne_10m_time_zones_rast type=all
+
+r.colors -r map=ne_10m_time_zones_rast
+
+r.colors map=ne_10m_time_zones_rast color=roygbiv
+
+r.out.gdal input=ne_10m_time_zones_rast
+ output=/home/user/20190501/timezones.png format=PNG
+
+# there appears to be an error in the input shp file so trying again
+
+v.in.ogr /mnt/villa/user/NOBACKUP/EARTHDATA/NATURALEARTH/10m_cultural/ne_10m_time_zones.shp
+
+# this did give error messages including
+
+d.mon wx0
+
+d.vect ne_10m_time_zones
+
+# the above looks fine, so lets rasterize
+
+db.execute "ALTER TABLE ne_10m_time_zones ADD COLUMN tzInt INTEGER"
+db.execute "UPDATE ne_10m_time_zones SET tzInt = zone*4"
+
+g.region rows=65536 cols=131072
+
+g.remove -f type=raster name=ne_10m_time_zones_rast
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast
+ attribute_column=tzInt use=attr memory=64000 &
+
+r.colors map=ne_10m_time_zones_rast color=random
+
+r.out.gdal input=ne_10m_time_zones_rast
+ output=/home/user/20190501/timezones.png format=PNG
+
+d.rast ne_10m_time_zones_rast
+
+r.colors 
+
+# Try to import again, snapping with at least 1e-13: 'snap=1e-13'
+
+g.remove -f type=vector name=ne_10m_time_zones
+
+v.in.ogr snap=1e-12
+ input=/home/user/NOBACKUP/EARTHDATA/NATURALEARTH/10m_cultural/ne_10m_time_zones.shp
+
+db.execute "ALTER TABLE ne_10m_time_zones ADD COLUMN tzInt INTEGER"
+db.execute "UPDATE ne_10m_time_zones SET tzInt = zone*4"
+
+v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast
+ attribute_column=tzInt use=attr memory=64000 &
+
+r.out.gdal input=ne_10m_time_zones_rast
+ output=/home/user/20190501/timezones.png format=PNG
 
 
 

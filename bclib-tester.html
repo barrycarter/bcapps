@@ -38,8 +38,6 @@ function placeImageTilesOnMap(obj) {
 
   if (obj.fake) {return;}
 
-  var url;
-
   let z = boundNumber(obj.map.getZoom(), obj.minZoom, obj.maxZoom);
   let mapBounds = obj.map.getBounds();
 
@@ -47,10 +45,12 @@ function placeImageTilesOnMap(obj) {
 
   // TODO: consider toBBoxString here
 
+  // NOTE: not bounding east/west longitudes in hopes of achieving toroidality
+
   let n = boundNumber(mapBounds.getNorth(), -90, 90);
   let s = boundNumber(mapBounds.getSouth(), -90, 90);
-  let e = boundNumber(mapBounds.getEast(), -180, 180);
-  let w = boundNumber(mapBounds.getWest(), -180, 180);
+  let e = mapBounds.getEast();
+  let w = mapBounds.getWest();
 
   let nw = lngLat2ImageTile(mergeHashes(obj, {lat: n, lng: w, z: z}));
   let se = lngLat2ImageTile(mergeHashes(obj, {lat: s, lng: e, z: z}));
@@ -60,7 +60,18 @@ function placeImageTilesOnMap(obj) {
 
       let bounds0 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i, y: j}));
       let bounds1 = imageTile2LngLat(mergeHashes(obj, {z: z, x: i+1, y: j+1}));
-      url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
+
+      // for the URL, mod i by maximum possible value
+
+      // this is the higest possible value for x at this zoom level
+
+      td(obj.width*2**(z-obj.origTileZoom-8), "HMMM");
+      let maxX = Math.floor(obj.width*2**(z-obj.origTileZoom-8));
+
+      let tileI = i.mod(maxX);
+      td([maxX, i, tileI], "ALPHA");
+
+      let url = convertStringTemplate(obj.tileURL, {x: tileI, y: j, z: z});
       L.imageOverlay(url, [bounds0, bounds1], 
       			   {opacity: obj.opacity}).addTo(obj.map);
 

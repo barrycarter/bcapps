@@ -15,6 +15,12 @@ z = zoom (not zoom)
 bclib = {};
 bclib.MERCATOR_LAT_LIMIT = 85.0511;
 
+// taken directly from
+// https://stackoverflow.com/questions/4467539/javascript-modulo-gives-a-negative-result-for-negative-numbers
+// (possibly a bad idea)
+
+Number.prototype.mod = function(n) {return ((this%n)+n)%n;}
+
 /**
 
 Replace templated variables in string s with object objs values 
@@ -176,10 +182,12 @@ function lngLat2ImageTile(obj) {
 
   let zoomMultiplier = 2**(obj.z-obj.origTileZoom-8);
 
+  obj.lng = (obj.lng+180).mod(360)-180;
+
   return {
   x: (obj.lng+180)/360*obj.width*zoomMultiplier,
-    y: (obj.lat+90)/180*obj.height/256*2**(obj.z-obj.origTileZoom)
-	};
+      y: (obj.lat+90)/180*obj.height*zoomMultiplier
+      };
 }
 
 
