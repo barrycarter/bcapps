@@ -43,9 +43,16 @@ g.region n=90 s=-90 w=-180 e=180
 
 g.region cols=524288 rows=262144
 
-# temporarily because its being weird
+# although the above works, converting it to 256 x 256 using
+# gdal2tiles.py takes a very long time
 
-g.region cols=8192 rows=4096
+# instead we note that 1:10M means 1 inch to 10M inches; if we assume
+# a dpi of 1200 pixels per inch (and it's probably lower than that),
+# so we have 10M inches (or 25.4M cm = 254km) per 1200 pixels which
+# ultimately works out to 127/600 km/pixel or 188976 pixels for the
+# Earth's circumference; thus we can use 262144 width instead
+
+g.region cols=262144 rows=131072
 
 g.remove -f type=raster name=ne_10m_time_zones_rast
 
@@ -71,7 +78,7 @@ d.rast ne_10m_time_zones_rast
 r.colors map=ne_10m_time_zones_rast color=random
 
 r.out.gdal input=ne_10m_time_zones_rast
- output=/home/user/20190501/timezones.png format=PNG
+ output=/home/user/20190501/timezones2.png format=PNG
 
 ### fresh start ends here
 
