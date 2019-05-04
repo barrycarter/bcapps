@@ -58,7 +58,12 @@ sub longest_gradient {
     # find the perfect rgb value and diff from current rgb value
     for $j (0..2) {
       $pfc[$j] = $c1[$j] + $frac*($c2[$j]-$c1[$j]);
-      $diff[$j] = abs($pfc[$j] - $rgb[$j]);
+
+      # this determines whether the current color is lagging or leading
+
+      $diff[$j] = ($pfc[$j] - $rgb[$j])*$dir[$j];
+
+#       $diff[$j] = abs($pfc[$j] - $rgb[$j]);
       if ($diff[$j] > $diff[$max]) {$max = $j;}
       debug("PERFECT($j): $pfc[$j], RGB($j): $rgb[$j], DIFF($j): $diff[$j]");
     }
