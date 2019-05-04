@@ -38,6 +38,10 @@ my(%latest);
 my(@errors);
 
 for $i (split(/\n/, $out)) {
+
+  # ignore blank lines
+  if ($i=~/^\s*$/) {next;}
+
   unless ($i=~m%^(.*?):(\S+)%) {push(@errors,"BAD LINE: $i"); next;}
   $latest{lc("$1:$2")} = 1;
 }

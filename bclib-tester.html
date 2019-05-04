@@ -67,11 +67,11 @@ function placeImageTilesOnMap(obj) {
 
       // if j value out of bounds, do nothing (TODO: dragon tiles?)
 
-      if (j < 0 || j > numYTiles) {next;}
+      if (j < 0 || j > numYTiles) {continue;}
 
       // same for i value FOR NOW
 
-      if (i < 0 || i > numXTiles) {next;}
+      if (i < 0 || i > numXTiles) {continue;}
 
       // determine URL and place tile
 
@@ -97,7 +97,8 @@ map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
 // can't set zoom from 3 to 6 for some reason?!@?!
-map.setView([25.8, -79.1], 7);
+// map.setView([25.8, -79.1], 7);
+map.setView([25.8, -79.1], 2);
 redraw_map();
 
 
