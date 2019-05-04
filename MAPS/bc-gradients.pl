@@ -31,15 +31,50 @@ sub longest_gradient {
 
   for $i (0..2) {$dist += abs($c1[$i]-$c2[$i])+1;}
 
+  # this is the start of the gradient
+  my(@rgb) = @c1;
+
+  # this is the "perfect" gradient value (used below)
+  my(@pfc) = @c1;
+
+  my(@diff, $frac);
+
   # ramp from 0 to 1 in steps of 1/$dist
-  for ($i = 0; $i <= 1; $i += 1/$dist) {
 
-    debug("I: $i");
+  for $i (0..$dist) {
 
-    # figure out where each color SHOULD be
-#    my($r, $g, $b) = 
+    $frac = $i/$dist;
+
+    # find the perfect rgb value and diff from current rgb value
+    for $j (0..2) {
+      $pfc[$j] = $c1[$j] + $frac*($c2[$j]-$c1[$j]);
+      $diff[$j] = abs($pfc[$j] - $rgb[$j]);
+    }
+
+    debug("DIFF", @diff);
+
+
+    # this is a very dumb way to find the max, but, since there are
+    # only 3 elts, it might be more efficient; it also allows
+    # consistent breaks between ties, assuming floating point math is
+    # consistent
+
+    if ($diff[0] >= $diff[1] && $diff[0] >= $diff[2]) {
+      $rgb[0]++;
+    } elsif ($diff[1] >= $diff[0] && $diff[1] >= $diff[2]) {
+      $rgb[1]++;
+    } elsif ($diff[2] >= $diff[0] && $diff[2] >= $diff[1]) {
+      $rgb[2]++;
+    } else {
+      die "BAD THING HAS HAPPENED";
+    }
+  
+
+
+#    debug("PFC", @pfc);
 
   }
+
 
   debug("DIST: $dist");
 
