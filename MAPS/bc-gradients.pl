@@ -4,7 +4,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
-longest_gradient(str2hashref("c1=0,0,0&c2=255,255,255"));
+# longest_gradient(str2hashref("c1=0,0,0&c2=255,255,255"));
+
+# qgis spectral gradient part 1
+longest_gradient(str2hashref("c1=43,131,186&c2=171,221,164"));
 
 # TODO: transparency ramp up and down
 
@@ -48,9 +51,13 @@ sub longest_gradient {
 
   # ramp from 0 to 1 in steps of 1/$dist
 
+  # TODO: this allows colors past c2 yuck
+
   for $i (0..$dist) {
 
     $frac = $i/$dist;
+
+    debug("FRAC: $frac");
 
     # keep track of which diff is maximal
     $max = 0;
@@ -60,16 +67,18 @@ sub longest_gradient {
       $pfc[$j] = $c1[$j] + $frac*($c2[$j]-$c1[$j]);
 
       # this determines whether the current color is lagging or leading
-
       $diff[$j] = ($pfc[$j] - $rgb[$j])*$dir[$j];
 
-#       $diff[$j] = abs($pfc[$j] - $rgb[$j]);
       if ($diff[$j] > $diff[$max]) {$max = $j;}
-      debug("PERFECT($j): $pfc[$j], RGB($j): $rgb[$j], DIFF($j): $diff[$j]");
     }
+
+    debug("RGB", @rgb, "PFC", @pfc);
 
     # increment the one with the biggest diff
     $rgb[$max] += $dir[$max];
+
+    # and print the color
+    print join(",",@rgb),"\n";
 
   }
 }
