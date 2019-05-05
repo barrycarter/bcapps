@@ -10,34 +10,41 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: this is seriously lazy for testing
 
-open(B, "ncat -l 22779|");
+# open(B, "ncat -l 22779|");
 
 # non blocking (this is going to bite me)
-fcntl(B, F_SETFL, O_NONBLOCK|O_NDELAY);
+# fcntl(B, F_SETFL, O_NONBLOCK|O_NDELAY);
 
-while (<B>) {
-  debug("GOT: $_");
-}
+# while (<B>) {
+#  debug("GOT: $_");
+# }
 
-debug("ALL DONE");
+# debug("ALL DONE");
 
-open(A, "|grass74");
+# for $i (keys %ENV) {debug("$i -> $ENV{$i}");}
 
-fcntl(A, F_SETFL, O_NONBLOCK|O_NDELAY);
 
-print A "g.list type=all >! /tmp/foobar.txt";
+# let's run this program from WITHIN grass
 
-debug(read_file("/tmp/foobar.txt"));
+# intentionally omitting /home/user/.grass7 from path
 
-print A << "MARK";
+$ENV{PATH} = "/usr/local/grass-7.4.1/bin:/usr/local/grass-7.4.1/scripts:$ENV{PATH}";
 
-v.colors map=ne_10m_time_zones color=roygbiv use=attr column=zone
-g.region n=50 s=30 w=-120 e=-70 rows=256 cols=256
-v.to.rast --overwrite input=ne_10m_time_zones output=temp use=cat
-r.out.gdal --overwrite input=temp output=/tmp/GDAL-1234.png format=PNG
+my($out, $err, $res);
 
-MARK
-;
+($out, $err, $res) = cache_command2("v.colors map=ne_10m_time_zones color=roygbiv use=attr column=zone");
+
+debug("OUT: $out, ERR: $err, RES: $res");
+
+($out, $err, $res) = cache_command2("g.region n=50 s=30 w=-120 e=-70 rows=256 cols=256");
+
+debug("OUT: $out, ERR: $err, RES: $res");
+
+($out, $err, $res) = cache_command2("v.to.rast --overwrite input=ne_10m_time_zones output=temp use=cat");
+
+debug("OUT: $out, ERR: $err, RES: $res");
+
+($out, $err, $res) = cache_command2("r.out.gdal --overwrite input=temp output=/tmp/GDAL-1234.png format=PNG");
 
 debug("BETA");
 
