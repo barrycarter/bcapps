@@ -1,0 +1,36 @@
+# having discovered the wonderful v.what feature of GRASS, I will now
+# load all the data in Natural Earth 10m into GRASS just to see how
+# big it is and if I can mirror it to the server
+
+# create a new project for this
+
+grass74 -c EPSG:4326 /home/user/GRASS/naturalearth/
+
+# TODO: see if there are any NON-shape files in these dirs
+
+\ls ~/NOBACKUP/EARTHDATA/NATURALEARTH/10m_cultural/*.shp | perl -anle 'print "v.in.ogr $_"' | tee temp.sh
+
+sh temp.sh
+
+# the above takes a while
+
+# testing
+
+g.list type=all | perl -nle 'print "v.what -a -m map=$_ 
+ coordinates=-106.1,35.1"' | sh > out1.txt
+
+
+
+# TODO: try multi map format above?
+
+# TODO: some of these SHP files are rasters??
+
+# TODO: if too big, selectively import SHP files
+
+# TODO: don't forget 10m_physical
+
+# TODO: add GeoTiffs that I use that are outside naturalearth
+
+# TODO: add vector maps I use outside naturalearth (if any) to this data batch
+
+

@@ -8,11 +8,65 @@
 
 # grass74 -c EPSG:4326 /home/user/GRASS/timezones/
 
-# load the timezones shape file
+# this is the region for all Natural Earth maps (1:10M)
 
-v.in.ogr ne_10m_time_zones.shp
+g.region n=90 s=-90 w=-180 e=180
+g.region cols=65536 rows=32768
+
+# shapefile name (this can change each time)
+
+setenv SHAPEDIR /mnt/kemptown/NOBACKUP/EARTHDATA/NATURALEARTH/10m_cultural
+setenv SHAPEFILE ne_10m_admin_0_countries
+setenv UNIQCOL cat
+
+# load the shape file
+
+v.in.ogr $SHAPEDIR/$SHAPEFILE.shp
 
 # there are warnings, but we ignore them
+
+# colorize
+
+v.colors map=$SHAPEFILE color=roygbiv use=attr column=$UNIQCOL
+
+v.colors.out map=$SHAPEFILE
+
+# look
+
+d.mon wx0
+
+d.erase
+
+d.vect $SHAPEFILE
+
+# lets look at the db
+
+db.describe $SHAPEFILE | less
+
+db.select -v "SELECT * FROM $SHAPEFILE LIMIT 20" | less
+
+# find a unique integer column and rasterize
+
+g.remove -f type=raster name=$SHAPEFILE
+
+v.to.rast input=$SHAPEFILE output=${SHAPEFILE}_rast 
+ attribute_column=$UNIQCOL use=attr &
+
+# lets look at it quickly and colorize
+
+d.mon wx0
+
+d.erase
+
+r.colors map=${SHAPEFILE}_rast color=roygbiv
+
+d.rast ${SHAPEFILE}_rast
+
+# create PNG
+
+r.out.gdal input=${SHAPEFILE}_rast -t overviews=5
+ output=/home/user/20190501/$SHAPEFILE.png format=PNG &
+
 
 # let's find the highest and lowest time zones
 
