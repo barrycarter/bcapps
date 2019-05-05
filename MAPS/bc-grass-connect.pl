@@ -3,28 +3,34 @@
 # this script (which will eventually be a daemon) connects to the
 # GRASS shell to create PNG files on demand from vector maps
 
-use Fcntl;
+use Socket;
 require "/usr/local/lib/bclib.pl";
 
-# listen on port 22779
+# listen on port 22779 properly
 
-# TODO: this is seriously lazy for testing
-
-open(B, "ncat -l 22779|");
-
-# non blocking (this is going to bite me)
-# fcntl(B, F_SETFL, O_NONBLOCK|O_NDELAY);
+socket(S,PF_INET,SOCK_STREAM,(getprotobyname('tcp')));
+bind(S,sockaddr_in(22779,INADDR_ANY))||die("Can't bind, $!");
+listen(S,SOMAXCONN)||die("Can't listen, $!");
 
 while (true) {
 
-while (<B>) {
-  debug("B READ: $_");
+  debug("Entering infinite loop");
 
-  if (/GET (.*?)/) {last;}
+  accept(C,S);
 
-}
+  # wait for the "double new line" to end it
+  while (<C>) {
 
-debug("FANCY: $1");
+    debug("GOT: *$_*");
+
+    if (/^\s*$/) {last;}
+  }
+
+debug("SEnding reply");
+
+print C "Content-type: text/html\r\n\r\nYou said: `date`\r\n";
+
+close(C);
 
 }
 
