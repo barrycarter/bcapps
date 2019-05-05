@@ -10,16 +10,26 @@ require "/usr/local/lib/bclib.pl";
 
 # TODO: this is seriously lazy for testing
 
-# open(B, "ncat -l 22779|");
+open(B, "ncat -l 22779|");
 
 # non blocking (this is going to bite me)
 # fcntl(B, F_SETFL, O_NONBLOCK|O_NDELAY);
 
-# while (<B>) {
-#  debug("GOT: $_");
-# }
+while (true) {
 
-# debug("ALL DONE");
+while (<B>) {
+  debug("B READ: $_");
+
+  if (/GET (.*?)/) {last;}
+
+}
+
+debug("FANCY: $1");
+
+}
+
+
+debug("ALL DONE");
 
 # for $i (keys %ENV) {debug("$i -> $ENV{$i}");}
 
