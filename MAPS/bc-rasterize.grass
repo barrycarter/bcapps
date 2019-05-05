@@ -54,6 +54,13 @@ g.region cols=524288 rows=262144
 
 g.region cols=262144 rows=131072
 
+# later, it turns out that even THAT is too slow, and it's probably
+# more realistic to assume the resolution is no better than 300 pixels
+# per inch, which works out to 47244 pixels for the Earth's
+# circumference, so 65536 should suffice
+
+g.region cols=65536 rows=32768
+
 g.remove -f type=raster name=ne_10m_time_zones_rast
 
 v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast 
@@ -73,12 +80,12 @@ d.rast ne_10m_time_zones_rast
 # colorize this -- not crazy about using random coloration here, but I
 # need something that is NOT graduated
 
-# TODO: consider using Kelly colors or some variant
+# TODO: consider using Kelly colors or some variant (roygbiv works ok)
 
 r.colors map=ne_10m_time_zones_rast color=random
 
 r.out.gdal input=ne_10m_time_zones_rast
- output=/home/user/20190501/timezones2.png format=PNG
+ output=/home/user/20190501/timezones3.png format=PNG
 
 ### fresh start ends here
 

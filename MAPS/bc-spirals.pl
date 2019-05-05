@@ -50,17 +50,32 @@ spiral[n_, 3] := Table[{-n, i}, {i, n-1, -n, -1}]
 
 spiral[n_, 4] := Table[{i, -n}, {i, -n+1, n}]
 
-spiral[n_, 5] := Table[{n, i}, {i, -n+1, -2}]
+(* only special case *)
 
-spiral[n_] := Flatten[Table[spiral[n, i], {i,1,5}], 1]
+spiral[0] := {{0,0}};
 
-(* above not accurate for n=0 and n=1, so *)
+spiral[n_] := Flatten[Table[spiral[n, i], {i,1,4}], 1]
 
-spiral[0] = {{0,0}};
+Flatten[Table[spiral[i], {i, 0, 5}], 1]
 
-spiral[1] = {
-  {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}
-};
+spiralThru[n_] := Flatten[Table[spiral[i], {i, 0, n}], 1]
+
+first100 = spiralThru[100];
+
+(* we are 0 indexed here *)
+
+first100Indexed := Table[{i, first100[[i+1]]}, {i, 0, Length[first100]-1}];
+
+Transpose[first100][[1]]
+
+first10 = spiralThru[10];
+
+xval[n_] = Interpolation[Transpose[first10][[1]], InterpolationOrder -> 1][n]
+
+Table[xval[n] - Transpose[first10][[1]][[n]], {n, 1, Length[first10]}] confirms perfect fit
+
+
+
 
 
 
