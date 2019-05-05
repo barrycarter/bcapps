@@ -375,6 +375,11 @@ function placeTilesOnMap(obj) {
 
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
 
+      // if bounded, don't print out of bound tiles
+      // TODO: allow wraparound
+
+      if (x < 0 || x >= 2**z || y < 0 || y >= 2**z) {continue;}
+
       // determine URL from template sent (TODO: not working quite right)
 
       let url = convertStringTemplate(obj.tileURL, {x: x, y: y, z: z});

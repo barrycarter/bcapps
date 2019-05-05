@@ -16,10 +16,14 @@ sh temp.sh
 
 # testing
 
-g.list type=all | perl -nle 'print "v.what -a -m map=$_ 
- coordinates=-106.1,35.1"' | sh > out1.txt
+# below gives WAY too much
+# g.list type=all | perl -nle 'print "v.what -a -m map=$_ 
+#  coordinates=-106.1,35.1"' | sh > out1.txt
 
+g.list type=all | perl -nle 'print "v.what -a map=$_ 
+ coordinates=-106.1,35.1 type=area,face,kernel"' | sh > out1.txt
 
+# the cultural data takes up 584M
 
 # TODO: try multi map format above?
 
@@ -32,5 +36,30 @@ g.list type=all | perl -nle 'print "v.what -a -m map=$_
 # TODO: add GeoTiffs that I use that are outside naturalearth
 
 # TODO: add vector maps I use outside naturalearth (if any) to this data batch
+
+# can we create vector maps on the fly?!
+
+g.region n=90 s=-90 w=-180 e=180
+
+d.mon wx0
+
+d.vect ne_10m_time_zones
+
+v.colors map=ne_10m_time_zones color=roygbiv use=attr column=zone
+
+# add a color column for raster use
+
+v.colors map=ne_10m_time_zones color=roygbiv use=attr column=zone 
+ rgb_column=rgb
+
+# lets limit the region and create a 256x256 PNG maybe
+
+g.region n=36 s=34 w=-120 e=-105 rows=256 cols=256
+
+# v.to.rast input=ne_10m_time_zones output=temp_123 rgb_column=rgb
+
+v.to.rast input=ne_10m_time_zones output=temp_123 rgb_column=rgb use=cat
+
+r.out.gdal input=temp_123 output=/tmp/foo.png format=PNG
 
 
