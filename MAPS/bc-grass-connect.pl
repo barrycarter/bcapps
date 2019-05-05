@@ -3,9 +3,27 @@
 # this script (which will eventually be a daemon) connects to the
 # GRASS shell to create PNG files on demand from vector maps
 
+use Fcntl;
 require "/usr/local/lib/bclib.pl";
 
+# listen on port 22779
+
+# TODO: this is seriously lazy for testing
+
+open(B, "ncat -l 22779|");
+
+# non blocking (this is going to bite me)
+fcntl(B, F_SETFL, O_NONBLOCK|O_NDELAY);
+
+while (<B>) {
+  debug("GOT: $_");
+}
+
+debug("ALL DONE");
+
 open(A, "|grass74");
+
+fcntl(A, F_SETFL, O_NONBLOCK|O_NDELAY);
 
 print A "g.list type=all >! /tmp/foobar.txt";
 
@@ -16,10 +34,12 @@ print A << "MARK";
 v.colors map=ne_10m_time_zones color=roygbiv use=attr column=zone
 g.region n=50 s=30 w=-120 e=-70 rows=256 cols=256
 v.to.rast --overwrite input=ne_10m_time_zones output=temp use=cat
-r.out.gdal --overwrite input=temp_32 output=/tmp/GDAL-1234.png format=PNG nodata=0
+r.out.gdal --overwrite input=temp output=/tmp/GDAL-1234.png format=PNG
 
 MARK
 ;
+
+debug("BETA");
 
 =item todo
 
