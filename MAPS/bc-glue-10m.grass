@@ -62,4 +62,19 @@ v.to.rast input=ne_10m_time_zones output=temp_123 rgb_column=rgb use=cat
 
 r.out.gdal input=temp_123 output=/tmp/foo.png format=PNG
 
+# above works
+
+# can we import landuse?
+
+r.import input=/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7.tif output=landuse
+
+d.mon wx0
+
+d.rast landuse
+
+# and SRTM?
+
+r.in.srtm -1 input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTMGL1/N33W099
+
+
 

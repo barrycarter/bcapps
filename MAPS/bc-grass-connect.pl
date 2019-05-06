@@ -3,20 +3,24 @@
 # this script (which will eventually be a daemon) connects to the
 # GRASS shell to create PNG files on demand from vector maps
 
-use Socket;
+use IO::Socket;
 require "/usr/local/lib/bclib.pl";
 
 # listen on port 22779 properly
 
-socket(S,PF_INET,SOCK_STREAM,(getprotobyname('tcp')));
-bind(S,sockaddr_in(22779,INADDR_ANY))||die("Can't bind, $!");
-listen(S,SOMAXCONN)||die("Can't listen, $!");
+my $socket = IO::Socket::INET->new(Timeout => 2, LocalPort => 22779, Listen => 50);
+
+$socket->{timeout} = 2;
+
+# socket(S,PF_INET,SOCK_STREAM,(getprotobyname('tcp')));
+# bind(S,sockaddr_in(22779,INADDR_ANY))||die("Can't bind, $!");
+# listen(S,SOMAXCONN)||die("Can't listen, $!");
 
 while (true) {
 
   debug("Entering infinite loop");
 
-  accept(C,S);
+  accept(C,$socket);
 
   # wait for the "double new line" to end it
   while (<C>) {
