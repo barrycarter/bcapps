@@ -27,14 +27,16 @@ while (true) {
 
   while (<C>) {
 
-    if (/^GET (.*)$/) {$req = $1;}
+    if (/^GET (\S+)$/) {$req = $1;}
 
     if (/^\s*$/) {last;}
   }
 
-  print C "HTTP/1.1 200 OK\nContent-type: text/html\n\n";
+#  print C "HTTP/1.1 200 OK\nContent-type: text/html\n\n";
+ 
+  print C "HTTP/1.1 200 OK\nContent-type: image/png\n\n";
 
-  print C "You said: $req\n";
+  print C read_file("$bclib{githome}/temp.png");
   close(C);
 
 }
