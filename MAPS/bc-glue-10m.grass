@@ -76,5 +76,16 @@ d.rast landuse
 
 r.in.srtm -1 input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTMGL1/N33W099
 
+# now doing "grass74 -c EPSG:4326 /home/user/GRASS/srtm1/" to import SRTM1 data
+
+r.in.srtm -1 input=N19W078 output=srtm1
+
+r.in.srtm -1 input=N40W118 output=srtm1
+
+r.in.srtm -1 input=N40W118,N19W078
+
+
+
+
 
 
