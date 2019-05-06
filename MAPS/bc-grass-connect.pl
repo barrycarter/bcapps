@@ -3,41 +3,41 @@
 # this script (which will eventually be a daemon) connects to the
 # GRASS shell to create PNG files on demand from vector maps
 
-use IO::Socket;
+use Socket;
 require "/usr/local/lib/bclib.pl";
+
+# make sure we are inside a GRASS shell
+
+unless ($ENV{GRASS_VERSION}) {die "Must run in GRASS shell";}
 
 # listen on port 22779 properly
 
-my $socket = IO::Socket::INET->new(Timeout => 2, LocalPort => 22779, Listen => 50);
-
-$socket->{timeout} = 2;
-
-# socket(S,PF_INET,SOCK_STREAM,(getprotobyname('tcp')));
-# bind(S,sockaddr_in(22779,INADDR_ANY))||die("Can't bind, $!");
-# listen(S,SOMAXCONN)||die("Can't listen, $!");
+socket(S,PF_INET,SOCK_STREAM,(getprotobyname('tcp')));
+bind(S,sockaddr_in(22779,INADDR_ANY))||die("Can't bind, $!");
+listen(S,SOMAXCONN)||die("Can't listen, $!");
 
 while (true) {
 
-  debug("Entering infinite loop");
+  my($req);
 
-  accept(C,$socket);
+  accept(C,S);
 
   # wait for the "double new line" to end it
+  # TODO: timeout!!!!
+
   while (<C>) {
 
-    debug("GOT: *$_*");
+    if (/^GET (.*)$/) {$req = $1;}
 
     if (/^\s*$/) {last;}
   }
 
-debug("SEnding reply");
+  print C "HTTP/1.1 200 OK\nContent-type: text/html\n\n";
 
-print C "Content-type: text/html\r\n\r\nYou said: `date`\r\n";
-
-close(C);
+  print C "You said: $req\n";
+  close(C);
 
 }
-
 
 debug("ALL DONE");
 
