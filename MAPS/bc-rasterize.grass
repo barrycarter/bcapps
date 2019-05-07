@@ -29,6 +29,8 @@ v.in.ogr $SHAPEDIR/$SHAPEFILE.shp
 
 v.colors map=$SHAPEFILE color=roygbiv use=attr column=$UNIQCOL
 
+
+
 v.colors.out map=$SHAPEFILE
 
 # look

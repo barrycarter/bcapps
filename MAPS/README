@@ -1,7 +1,18 @@
 MAP SERVER
 ==========
 
+[as of 7 May 2019, geoserver installed + will play heavily into this project]
+
 Notes for map server:
+
+  - TODO: stop using ws.terramapadventure.com and start using
+  mapserver.94y.info or something
+
+  - TODO: get https for whatever domain I end up using
+
+  - TODO: configure geoserver to run as https
+
+  - TODO: create a basic home page similar to TMA
 
   - Request not in JSON, advise them to send "{cmd: 'help'}"
 
@@ -9,23 +20,44 @@ Notes for map server:
 
   - should listen on UDS and client programs can provide web/socket service
 
+  - TODO: create legends for all maps, automatically if possible
+
+  - TODO: test and use geoserver features for both map "tiling" and
+  feature location (ie, which polygons are you in, query feature)
+
+  - TODO: recolor the land use map but keep it as GeoTIFF (ie, apply a style to it based on its preferred colors)
+
 Data provided:
 
   - Elevation (SRTM 3 second + alt source for high alt) (maybe SRTM 1)
 
   - Climate (Koeppen-Geiger)
 
-  - Astronomical phenomena (computed)
+  - Astronomical phenomena (computed) (sun/moon rise/set)
 
   - Land slope
 
   - Land use (ESACCI)
+
+  - Sun/moon rise/set map (not just times per location) (TODO: write C
+  program to determine subsolar point accurately)
 
   - TODO: population density?
 
   - TODO: timezone
 
   - TODO: nation/state/etc?
+
+  - TODO: Islam prayer times? (like sunrise/sunset)
+
+  - TODO: weather (but just proxying another source?)
+
+  - TODO: allow opacity control
+
+TODO: let use "be" on a 1 arcsecond square as current virtual location
+and draw this square on the map
+
+TODO: find English only OSM tileservers if possible
 
 What I have:
 
@@ -69,6 +101,19 @@ Notes:
   - `gdalinfo 70n120w_20101117_gmted_max075.tif` shows gdal does
   recognize the TIFs I mention above (the rest of the data is in ADF
   format)
+
+Improvements:
+
+  - orthographic global projection, not Mercator/equirectangular
+
+TODO later:
+
+  - TODO: reduce disk space on digitalocean (may have to create new
+  share, copy, and delete the old one) to not pay for unused resources
+
+  - TODO: look into "accessible" maps for the color blind or similar
+
+  - TODO: if styling maps, may have to recreate tile caches
 
 OLD STUFF
 =========

@@ -82,7 +82,11 @@ r.in.srtm -1 input=N19W078 output=srtm1
 
 r.in.srtm -1 input=N40W118 output=srtm1
 
-r.in.srtm -1 input=N40W118,N19W078
+r.in.srtm -1 input=N40W118,N19W078 output=strm1
+
+# above fails can only do one at a time
+
+
 
 
 
