@@ -40,7 +40,7 @@ if ($iout > 60*21*1000) {$idle=1;}
 # TODO: move this to conf file too?
 
 my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl",
-"/usr/bin/python", "/bin/sh", "-csh", "sh", "perl", "cpulimit");
+"/usr/bin/python", "/bin/sh", "-csh", "sh", "perl", "cpulimit", "java");
 
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line

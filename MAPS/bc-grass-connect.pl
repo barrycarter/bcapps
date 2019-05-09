@@ -49,7 +49,13 @@ Returns the contents of a PNG file with $text written in it
 
 =cut
 
+sub flyfile {
 
+  my($text) = @_;
+
+  open(A, "|fly -q");
+
+  print A
 
 
 debug("ALL DONE");

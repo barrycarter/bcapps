@@ -260,7 +260,7 @@ XWIDTH=1600
 
 # TODO: this should "lock" itself to avoid multiple runs
 
-*/5 * * * * perl -nle '/(".*?")/; print $1' ~/.emacs_user | xargs bc-quikbak.pl
+*/5 * * * * tail -n +2 ~/.emacs_user | perl -nle '/(".*?")/; print $1' | xargs bc-quikbak.pl
 
 # dump file lists nightly
 
