@@ -334,4 +334,10 @@ alias fusiongit "pushd .; cd /mnt/villa/user/20190226/a-1-family-furniture; git 
 # easier to find (fixed later to quote it, so & is part of alias
 alias vscode "/usr/share/code/bin/code&"
 
+# I sometimes ignore the command line after typing a command -- this
+# alerts me if I did something wrong
 
+# note: the "pre"cmd comes before printing the prompt, so it really
+# acts like post-command for the previous command
+
+alias precmd 'if $? xmessage you have done something wrong'
