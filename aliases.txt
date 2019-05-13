@@ -173,7 +173,11 @@ alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 
 # alias feh "feh -. -x --draw-tinted -K . --action1 ';[copy]cp %f /tmp/fehpic.jpg' \!*"
 # testing
 # alias feh "feh -. -x --draw-tinted -K . --action1 'echo %f %F %n ' \!*"
-alias feh "feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
+
+# feh creates icky filelists in directory it's run it; the "cd" below
+# should help with that
+
+alias feh "cd; feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
 
 alias waitpid bc-waitpid.pl
 

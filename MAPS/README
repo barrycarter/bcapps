@@ -5,8 +5,14 @@ MAP SERVER
 
 Notes for map server:
 
+  - TODO: consider using HTML canvas directly instead of leaflet to 1)
+  give maps a more "scientific" look, 2) avoid forced zooming and
+  allow lower-level zooming
+
+  - TODO: add ethniticty information I downloaded
+
   - TODO: stop using ws.terramapadventure.com and start using
-  mapserver.94y.info or something
+  mapserver.94y.info or something (in progress, ms.94y.info and all terramapadventure.com now point to new server)
 
   - TODO: get https for whatever domain I end up using
 
@@ -26,6 +32,15 @@ Notes for map server:
   feature location (ie, which polygons are you in, query feature)
 
   - TODO: recolor the land use map but keep it as GeoTIFF (ie, apply a style to it based on its preferred colors)
+
+  - TODO: set GEOSERVER_HOME and similar env vars if I want to keep using geoserver locally (but maybe not?)
+
+  - NOT: considered hosting slippy tiles myself using mini pbf file,
+  but really need a lot more space and can't serve from 
+  uber-compressed file
+
+  - NOT: considered overlaying entire large image on Leaflet (instead
+  of breaking into tiles) but that doesn't work well
 
 Data provided:
 
@@ -54,7 +69,7 @@ Data provided:
 
   - TODO: allow opacity control
 
-TODO: let use "be" on a 1 arcsecond square as current virtual location
+TODO: let user "be" on a 1 arcsecond square as current virtual location
 and draw this square on the map
 
 TODO: find English only OSM tileservers if possible
@@ -104,7 +119,7 @@ Notes:
 
 Improvements:
 
-  - orthographic global projection, not Mercator/equirectangular
+  - orthographic global projection, not Mercator/equirectangular (EPSG:9840?)
 
 TODO later:
 
@@ -114,6 +129,61 @@ TODO later:
   - TODO: look into "accessible" maps for the color blind or similar
 
   - TODO: if styling maps, may have to recreate tile caches
+
+WFS Stuff:
+
+Here's the data geoserver lets me query on my maps (and how I got that data):
+
+This curl command gives capabilities:
+
+curl -o  wms-capa.txt 'http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities'
+
+grep for <Name> gives (among other things):
+
+        <Name>Beck_KG_V1_present_0p0083</Name>
+        <Name>ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7</Name>
+        <Name>ne_10m_admin_0_countries</Name>
+        <Name>ne_10m_time_zones</Name>
+        <Name>ne_10m_urban_areas</Name>
+        <Name>ne_10m_admin_1_states_provinces</Name>
+
+These are the queryable layers.
+
+curl -o `timestamp` 'http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=DescribeCoverage&identifiers=Beck_KG_V1_present_0p0083'
+
+The output of the above (cleaned up w/ tidy -xml) shows this layer has
+only one key:
+
+<wcs:Key>PALETTE_INDEX</wcs:Key>
+
+To actually query the value of this key at a given point (example w/
+different map)
+
+curl -o `timestamp` 'http://ws.terramapadventure.com:8080/geoserver/wfs?service=wfs&version=2.0.0&request=GetPropertyValue&bbox=34,-107,36,-105&typeNames=TMA-YAMC:ne_10m_admin_0_countries&valueReference=NAME_EN'
+
+This gives all the VECTOR maps and features at once:
+
+curl -o `timestamp` 'http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wfs?SERVICE=WFS&VERSION=1.1.1&REQUEST=DescribeFeatureType'
+
+  <xsd:complexType name="ne_10m_admin_0_countriesType">
+
+Raster maps:
+
+curl -o `timestamp` 'http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=GetCapabilities'
+
+lists all raster maps (but not what I can query from them)
+
+<ows:Title>Beck_KG_V1_present_0p0083</ows:Title>
+[...]
+
+to see what I can query:
+
+curl -o `timestamp` 'http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=DescribeCoverage&IDENTIFIERS=Beck_KG_V1_present_0p0083,ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7,gpw_v4_population_count_rev11_2020_30_sec'
+
+
+
+
+
 
 OLD STUFF
 =========
