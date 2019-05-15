@@ -180,6 +180,25 @@ to see what I can query:
 
 curl -o `timestamp` 'http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=DescribeCoverage&IDENTIFIERS=Beck_KG_V1_present_0p0083,ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7,gpw_v4_population_count_rev11_2020_30_sec'
 
+URLS for data we actually want (as of maps I had uploaded on 5/13/19):
+
+TMA-YAMC:Beck_KG_V1_present_0p0083 PALETTE_INDEX (only one available)
+
+ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7 GRAY_INDEX (only one avail)
+
+gpw_v4_population_count_rev11_2020_30_sec GRAY_INDEX (only one avail)
+
+ne_10m_admin_0_countries NAME_EN
+
+ne_10m_admin_1_states_provinces name_en
+
+tz_name1st and/or utc_format
+
+ne_10m_urban_areas (no useful fields, just whether you are in one or not)
+
+
+
+
 
 
 
