@@ -43,7 +43,7 @@ my(%vector) =
 # the animal layers are consistent
 
 for $animal ("AMPHIBIANS", "CHONDRICHTHYES", "CONUS", "CORALS_PART1",
-	     "CORALS_PART2", "REPTILES") {
+	     "CORALS_PART2", "REPTILES", "MAMMALS") {
   $vector{$animal} = "binomial";
 }
 
@@ -93,7 +93,7 @@ for $i (keys %vector) {
 }
 
 
-warn "TESTING"; exit(0);
+# warn "TESTING"; exit(0);
 
 # raster layers require WCS
 
@@ -101,7 +101,7 @@ for $i (keys %raster) {
 
 #  $url = "$server/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=DescribeCoverage&identifiers=$i";
 
-  $url = "$server/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=GetCoverage&identifier=$i&valueReference=$raster{$i}&bbox=$slat,$wlng,$nlat,$elng";
+  $url = "$server/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=GetCoverage&identifier=$i&valueReference=$raster{$i}&boundingbox=$slat,$wlng,$nlat,$elng";
 
   debug("URL: $url");
   ($out, $err, $res) = cache_command2("curl '$url' | tidy -xml", "age=3600");
