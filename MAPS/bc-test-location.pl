@@ -10,6 +10,8 @@ my($workspace) = "TMA-YAMC";
 
 # the vector layers we can query
 
+# TODO: consider merging layers esp "animals" layers
+
 my(@vector) =
   (
    "ne_10m_admin_1_states_provinces",
@@ -35,9 +37,17 @@ my(%vector) =
   (
    "ne_10m_admin_1_states_provinces" => "name_en",
    "ne_10m_admin_0_countries" => "NAME_EN",
-   "ne_10m_time_zones" => "tz_name1st",
-   "AMPHIBIANS" => "binomial"
-  );
+   "ne_10m_time_zones" => "tz_name1st"
+   );
+
+# the animal layers are consistent
+
+for $animal ("AMPHIBIANS", "CHONDRICHTHYES", "CONUS", "CORALS_PART1",
+	     "CORALS_PART2", "REPTILES") {
+  $vector{$animal} = "binomial";
+}
+
+
 
 my(%raster) = (
    "Beck_KG_V1_present_0p0083" => "PALETTE_INDEX",
