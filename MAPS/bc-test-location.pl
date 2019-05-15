@@ -64,7 +64,7 @@ my($out, $err, $res);
 
 for $i (keys %vector) {
 
-  $url = "$server/$wfs&bbox=$slat,$wlng,$nlat,$elng&typeNames=$workspace:$i&propertyName=$vector{$i}";
+  $url = "$server/wfs?service=wfs&version=2.0.0&request=GetPropertyValue&bbox=$slat,$wlng,$nlat,$elng&typeNames=$workspace:$i&valueReference=$vector{$i}";
 
   debug("URL: $url");
   debug("I: $i");
@@ -73,13 +73,25 @@ for $i (keys %vector) {
 
   debug("OUT: $out");
 
+  print "<$i>\n";
+
+  while ($out=~s%<$workspace:$vector{$i}>(.*?)</$workspace:$vector{$i}>%%) {
+    print "<value>$1</value>\n";
+  }
+
+  print "</$i>\n";
 }
+
+
+warn "TESTING"; exit(0);
 
 # raster layers require WCS
 
-for $i (@raster) {
+for $i (keys %raster) {
 
-  $url = "$server/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=DescribeCoverage&identifiers=$i";
+#  $url = "$server/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=DescribeCoverage&identifiers=$i";
+
+  $url = "$server/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=GetCoverage&identifier=$i&valueReference=$raster{$i}&bbox=$slat,$wlng,$nlat,$elng";
 
   debug("URL: $url");
   ($out, $err, $res) = cache_command2("curl '$url' | tidy -xml", "age=3600");
