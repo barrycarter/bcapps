@@ -106,6 +106,8 @@ for $i (keys %layers) {
 
   debug(var_dump("HR", $hashref));
 
+  debug("FINAL", $hashref->{'features'}->[0]->{'properties'}->{$layers{$i}});
+
 #  print "<$i>\n";
 
 #  while ($out=~s%<$workspace:$vector{$i}>(.*?)</$workspace:$vector{$i}>%%) {
