@@ -5,6 +5,28 @@ MAP SERVER
 
 Notes for map server:
 
+  - TODO: look at https://github.com/globalmaps
+
+  - TODO: look at data I am pulling into personal directories ~/20190509 and ~/20190509/MORE
+
+  - TODO: look into VRT virtual raster files to combine many raster
+  images virtually (will geoserver accept these?) [test these w fewer
+  files first]
+
+  - TODO: maybe look at MapProxy
+
+  - TODO: look at animal habitat data I have (but it's REALLY big and
+  hard to load) [and may only include "endangered" species, not all
+  species
+
+  - TODO: why does natural earth have so many different bathmetry
+  shape files instead of just having a raster/shape for every
+  underwater elevation?
+
+  - TODO: use squashfs or zipfs to shrink large files if needed
+
+  - TODO: disallow changes to maps on server (ie, turn off the 'edit' features)
+
   - TODO: consider using HTML canvas directly instead of leaflet to 1)
   give maps a more "scientific" look, 2) avoid forced zooming and
   allow lower-level zooming
@@ -50,7 +72,7 @@ Data provided:
 
   - Astronomical phenomena (computed) (sun/moon rise/set)
 
-  - Land slope
+  - Land slope (in NOBACKUP/EARTHDATA/ELEVATION/slope.txt.bz2 and perhaps other locations)
 
   - Land use (ESACCI)
 

@@ -1,0 +1,40 @@
+As the title says I am trying to calculate solar coordinates of the sun for a given location and time. I have spent many 10's of hours on this without success so I will sincerely appreciate help on this. My RA value seems to be right on but the Dec, Alt and Az are off.
+
+Alt value is within 6 degrees but I cannot figure out why it is that close because the latitude is in radians instead of degrees like the other values. If I change latitude to degrees the values don't even make sense.
+
+I have included all the values of the intermediate variables to help see at a glance what might be off. I hard coded the JD and the Local Hour Angle just to take those out of the equation for debugging. Links are shown as to where I got those values.
+
+The C# code is below although the programming language doesn't matter. The formulas are the same in any language.
+
+  //for formulas
+            double D = 2458599.125000 - 2451545.0; //the  first  term is the jd of interest; 2nd term is jd of 1-1-2000 at 12:00:00.0
+            double Latitude = 41.369341;
+            double Longitude = 81.885493;
+
+            double gTmp = 357.529 + 0.98560028 * D;  //mean anomaly of the sun  = 7310.0765751550007
+            double gTmp1 = (gTmp % 360);     //subtract multiples of 360 (returns remainder in degrees)  =  110.07657515500068
+            double g = gTmp1 * Math.PI / 180;   //Convert to radians = 1.9211986657737494
+            double qTmp = 280.459 + 0.98564736 * D; //mean longitude of the sun = 7233.33868336
+            double qTmp1 = (qTmp % 360); //subtract multiples of 360 (returns remainder in degrees) =  33.338683359999777
+            double q = qTmp1;   //don't convert to radians here; convert after terms in degrees are added in the computation of L; =33.338683359999777
+            double L_tmp = q + 1.915 * Math.Sin(g) + 0.020 * Math.Sin(2 * g);//geocentric apparent ecliptic longitude of the sun(adjusted for aberration) = 35.124421105295383
+            var L = (L_tmp % 360) * Math.PI / 180;   //Convert to radians; //subtract multiples of 360 = 0.61303679614439033
+            double eTmp = 23.4393 - 0.00000036 * D;  // = 23.436760515
+            double e = eTmp * Math.PI / 180;   //Convert to radians;   = 0.40904863698815186
+
+            //http://www.neoprogrammics.com/de405_usno_ae98/DE405_Sun.php
+            // formulas per https://aa.usno.navy.mil/faq/docs/SunApprox.php
+            double RA = (Math.Atan2(Math.Cos(e) * Math.Sin(L), Math.Cos(L))) * 180 / Math.PI; //right ascension converted from radians to degrees = 32.838762087228496
+            double dec = (Math.Asin(Math.Sin(e) * Math.Sin(L))) * 180 / Math.PI;  //declination converted from radians to degrees =  3.228747909189217         
+            string[] sunCoordinates = new string[2];   
+            sunCoordinates[0] = ToHMSStr(RA);    // = "2h 11m 21.3s"
+            sunCoordinates[1] = ToDMSstr(dec);  //  = "13d 13m 43.49s"
+
+            //compute alt and az per https://aa.usno.navy.mil/faq/docs/Alt_Az.php and https://aa.usno.navy.mil/faq/docs/GAST.php
+            //LHA for testing is from https://ssd.jpl.nasa.gov/horizons.cgi#results and https://www.vercalendario.info/en/how/convert-ra-degrees-hours.html
+            //from http://www.neoprogrammics.com/de405_usno_ae98/DE405_Sun.php  
+            double LHA = 307.39;   //Local Hour Angle        
+            double lat = Latitude * Math.PI / 180; //Convert to radians; //Latitude is defined above; We get sign (below) after converted to Rad????  = 0.72203120983028346
+            double alt = (Math.Cos(LHA) * Math.Cos(dec) * Math.Cos(lat) + Math.Sin(dec) * Math.Sin(lat)) * 180 / Math.PI; //convert from radians  = 53.266598643452909
+            double az =Math.Atan2(-Math.Sin(LHA) * Math.PI / 180, (Math.Tan(dec)*Math.Cos(lat) * Math.PI / 180 - Math.Sin(lat) * Math.Cos(LHA)) * Math.PI / 180); //convert each term to radians   = 2.4585704411338072
+            az = az * 180 / Math.PI;   //convert from radians   = 140.86570991258415

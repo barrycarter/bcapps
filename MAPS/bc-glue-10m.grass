@@ -86,9 +86,55 @@ r.in.srtm -1 input=N40W118,N19W078 output=strm1
 
 # above fails can only do one at a time
 
+# below 14 May 2019
 
+v.in.ogr ~/NOBACKUP/EARTHDATA/ANIMALS/REPTILES.shp
 
+# above takes forever, gave up
 
+# below 16 May 2019
+
+# grass74 -text ~/GRASS/srtm1/PERMANENT
+
+r.in.srtm -1 input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTMGL1/N33W099
+
+r.in.srtm -1 input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTMGL1/N33W098
+
+r.in.srtm -1 input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTMGL1/N33W097
+
+r.in.srtm -1 input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTMGL1/N33W096
+
+r.in.srtm -1 input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTMGL1/N33W095
+
+# gluing
+
+r.patch input=N33W099,N33W098,N33W097,N33W096,N33W095 output=strmtest1
+
+# fail due to bad region settings
+
+g.remove type=all name=strmtest1 -f
+
+# set region resolution
+
+g.region raster=N33W099
+
+# and extents
+
+g.region n=90 s=-90 w=-180 e=180
+
+# testing https://gis.stackexchange.com/questions/95701/mosaicking-rasters-in-grass-gis
+
+# this takes forever
+r.patch in=N33W099,N33W098,N33W097,N33W096,N33W095 out=mosaic
+
+# this also takes forever
+r.patch -s in=N33W099,N33W098,N33W097,N33W096,N33W095 out=mosaic
+
+# below also very slow
+
+r.out.gdal input=N33W099 output=N33W099.tif format=GTiff
+
+# what if we create geotiffs and then an imagemosaic
 
 
 
