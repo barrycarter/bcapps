@@ -58,4 +58,8 @@ http://ws.terramapadventure.com:8080/geoserver/wfs?service=wfs&version=2.0.0&req
 
 http://ws.terramapadventure.com:8080/geoserver/TMA-YAMC/wcs?SERVICE=WCS&VERSION=1.1.1&REQUEST=DescribeCoverage&identifiers=ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7
 
+URLS for NOAA stuff:
+
+[not free]
+
 =cut

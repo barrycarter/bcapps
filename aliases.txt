@@ -177,7 +177,9 @@ alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 
 # feh creates icky filelists in directory it's run it; the "cd" below
 # should help with that
 
-alias feh "cd; feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
+# but cd breaks other stuff, so no
+
+alias feh "\feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
 
 alias waitpid bc-waitpid.pl
 
@@ -329,7 +331,7 @@ alias od "od -A d -t d1 \!*"
 
 alias yamcsync "bc-mirror-server.pl --debug --ssh='ssh -i /home/barrycarter/.ssh/id_rsa.bc' /home/barrycarter/yamcroot/ 167.99.95.147;"
 
-alias yamc "ssh -i /home/barrycarter/.ssh/id_rsa.bc root@167.99.95.147"
+alias yamc "screen -t YAMC ssh -i /home/barrycarter/.ssh/id_rsa.bc root@167.99.95.147"
 
 # for the fusion project
 
@@ -344,4 +346,7 @@ alias vscode "/usr/share/code/bin/code&"
 # note: the "pre"cmd comes before printing the prompt, so it really
 # acts like post-command for the previous command
 
-alias precmd 'if $? xmessage you have done something wrong'
+# below hurts more than it helps
+# alias precmd 'if $? xmessage you have done something wrong &'
+
+

@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="MAPS/leaflet.css" />
 <script src="MAPS/leaflet.js"></script>
 <script src="bclib.js"></script>
+<script src="bclib-staging.js"></script>
 
 <style>html,body, #map {height:100%;}</style>
 <div id="map"></div>
@@ -113,6 +114,11 @@ console.log("BETA", var_dump(map.getSize()));
 // L.svgOverlay("http://ws.terramapadventure.com/grid.svg", 
 //	       [[0,0], [85,85]]).addTo(map);
 
+// below should work but does not
+// L.circle(latlng, {radius: 10}).addTo(map);
+
+L.circle([35, -106.5], 100000).addTo(map);
+
 redraw_map();
 
 
@@ -139,7 +145,7 @@ function redraw_map() {
 	});
 
   // informative tile grid
-  placeTilesOnMap({map: map, projection: 1, opacity: 0.5, fake: 0,
+  placeTilesOnMap({map: map, projection: 1, opacity: 0.5, fake: 1,
 	tileURL: "http://test.barrycarter.info/bc-mytile3.pl?/${z}/${x}/${y}.png"
 	});
 
@@ -154,6 +160,12 @@ function redraw_map() {
 	height: 64800, origTileZoom: 9, maxZoom: 9,
 	tileURL: 'http://ws.terramapadventure.com/LANDUSE/${z}/${x}/${y}.png'
 	});
+
+L.rectangle([[35, -106.5], [36, -105.5]], {color: "#ff7800", weight: 1}).addTo(map);
+
+L.circle([35, -106.5], 10, {color: "#ff7800", weight: 1}).addTo(map);
+
+
 
 }
 
