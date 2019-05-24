@@ -6,7 +6,7 @@ installing cspice...
 
 which needs tcsh (sort of)
 
-yum -y install tcsh unzip screen gdal psmisc
+yum -y install tcsh unzip screen gdal psmisc gdal-python
 
 gdal_translate -of aaigrid product/*.tif ESACCI.txt
 

@@ -404,8 +404,8 @@ ContourPlot[x, {x, 0, 1}, {y, 0, 1}, ColorFunction -> Hue]
 
 ContourPlot[x, {x, 0, 1}, {y, 0, 1}, ColorFunction -> Hue, Contours -> 12]
 
-In[208]:= ContourPlot[x, {x, 0, 12}, {y, 0, 1}, ColorFunction -> Hue, Contours -
-> 11, ContourLabels -> True]                                                    
+ContourPlot[x, {x, 0, 12}, {y, 0, 1}, ColorFunction -> Hue, Contours
+-> 11, ContourLabels -> True]
 
 {red, yellow, blue, green, indigo}
 
@@ -453,13 +453,86 @@ FindRoot[ColorDistance[Hue[0.0982278], Hue[x]] == 1/2, {x,.2}]
 
 x -> 0.156301
 
-arr = {0, 0.0982278, 0.156301}
+arr = {0, 0.0982278, 0.156301, 0.242403, 0.430743, 0.49455, 0.544489}
 
-cur = 0.156301
+cur = arr[[-1]]
 
 Plot[ColorDistance[Hue[cur], Hue[x]], {x, cur, 1}]
+showit
 
-FindRoot[ColorDistance[Hue[cur], Hue[x]] == 1/2, {x, cur}]
+
+FindRoot[ColorDistance[Hue[cur], Hue[x]] == 1/2, {x, cur+0.01}]
+
+(* let's try 1 *)
+
+arr = {0, 0.156613, 0.473785, 0.575641, 0.895183}
+
+cur = arr[[-1]]
+
+Plot[ColorDistance[Hue[cur], Hue[x]], {x, cur, 1}]
+showit
+
+FindRoot[ColorDistance[Hue[cur], Hue[x]] == 1, {x, cur}]
+
+(* now 0.75 *)
+
+arr = {0, 0.127424, 0.251433, 0.467791, 0.549853, 0.613633, 0.856345}
+
+cur = arr[[-1]]
+
+Plot[ColorDistance[Hue[cur], Hue[x]], {x, cur, 1}]
+showit
+
+FindRoot[ColorDistance[Hue[cur], Hue[x]] == 3/4, {x, cur+0.2}]
+
+(* 0.7 is the orange/yellow diff *)
+
+arr = {0, 0.121642, 0.229803}
+
+cur = arr[[-1]]
+
+Plot[ColorDistance[Hue[cur], Hue[x]], {x, cur, 1}]
+showit
+
+FindRoot[ColorDistance[Hue[cur], Hue[x]] == 7/10, {x, cur+0}]
+
+(* maximal? *)
+
+arr = {0, 2/3, 1/3, 0.534609, 0.88084, 0.138054, 0.457418}
+cur = arr[[-1]]
+
+mindist[h_] := Min[Table[ColorDistance[Hue[i], Hue[h]], {i, arr}]]
+
+Plot[mindist[h], {h, 0, 1}]
+showit
+
+NMaximize[mindist[h], h]
+
+(* random? *)
+
+t = RandomReal[{0,1}, 50];
+
+minrand[t_] := Min[Table[ColorDistance[Hue[t[[i]]], Hue[t[[j]]]], 
+ {i, 1, Length[t]-1}, {j, i+1, Length[t]}]]
+
+t2126 = Table[RandomReal[{0,1}, 50], {i, 1, 1000}];
+
+t2126 = Table[RandomReal[{0,3/4}, 50], {i, 1, 1000}];
+
+t2128 = Table[{i, minrand[i]}, {i, t2126}];
+
+Max[Transpose[t2128][[2]]]
+
+t2129 = Select[t2128, #[[2]] > 0.007907-10^-6 &]
+
+Grid[Map[Hue,Sort[t2129[[1,1]]]]]                                      
+
+
+
+
+
+
+
 
 
 
