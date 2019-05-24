@@ -265,6 +265,201 @@ TODO: understand above, circular data, find perm with max min diff
 
 data also circular in mod sense {7, 1} distance in mod 8 is 2, not 6
 
+(* below on 23 May 2019 *)
+
+maxAbs[list_] := Min[Table[Abs[list[[i]] - list[[i-1]]], {i,2,Length[list]}]];
+
+Permutations[Range[1,5]]
+
+
+Map[maxAbs, Permutations[Range[1,8]]]
+
+Select[Permutations[Range[1,8]], maxAbs[#] == 4 &]
+
+Out[7]= {{4, 8, 3, 7, 2, 6, 1, 5}, {5, 1, 6, 2, 7, 3, 8, 4}}
+
+that's just adding a constant and modding
+
+norm[k_, list_] := Total[
+ Table[Abs[list[[i]]-list[[k]]]/Abs[i-k], {i,
+  Delete[Range[1, Length[list]], k]}]
+]
+
+t1759 = RandomSample[Range[1,7], 7]
+
+
+
+norm2[list_] := Total[Table[norm[i, list], {i, 1, Length[list]}]]
+
+Map[norm2, Permutations[Range[1,5]]]
+
+Select[Permutations[Range[1,5]], norm2[#] == 175/6 &]
+
+LAB colors....
+
+27 from
+
+t1824 = Flatten[
+Table[{i, j, k}, {i, 0, 1, 1/2}, {j, 0, 1, 1/2}, {k, 0, 1, 1/2}],
+ 2];
+
+color[i_] := LABColor[t1824[[i]]]
+
+ContourPlot[Floor[x], {x, 1, 27}, {y, 0, 1}, ColorFunction -> color]
+
+ContourPlot[Floor[x], {x, 1, 27}, {y, 0, 1}, ColorFunction -> Hue/27]
+
+
+Grid[Map[Apply[LABColor], t1824]]                                      
+
+ContourPlot[x, {x, 0, 1}, {y, 0, 1}, ColorFunction -> Hue]
+
+ContourPlot[x, {x, 0, 3/4}, {y, 0, 1}, ColorFunction -> Hue]
+
+ContourPlot[x, {x, 0, 3/4}, {y, 0, 1}, ColorFunction -> Hue, Contours -> 55]
+
+{red, yellow, green, cyan, blue, indigo}
+
+f[x_] = (Floor[x/6]/7 + Mod[x,6])/7
+
+Table[f[x], {x, 1, 42}]
+
+f[x_] = (Floor[(x-1)/6]/8 + Mod[x,7])
+
+Table[f[x], {x, 1, 42}]
+
+Table[LABColor[1, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]
+
+Table[LABColor[1, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]
+
+Table[LABColor[1/2, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]
+
+Grid[Table[LABColor[-1, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]]
+
+Grid[Table[LABColor[100, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]]
+
+(100 = all white)
+
+Grid[Table[LABColor[50, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]]
+
+(still all white)
+
+Grid[Table[LABColor[2, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]]
+
+(some non white, mostly white)
+
+Grid[Table[LABColor[-2, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]]
+
+(all black)
+
+Grid[Table[LABColor[1, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]]
+
+(1 = pastel)
+
+lab[x_] := Grid[Table[LABColor[x, a, b], {a, -1, 1, 1/4}, {b, -1, 1, 1/4}]]
+
+lab 0.5 = more rainbowy
+
+f[x_] = (Mod[x,6] + Floor[x/6]/7)/6
+
+f[x_] = (Mod[x,6] + Floor[x/6]/7*3/4)/6
+
+f[x_] = (Mod[x,6] + Floor[x/6]/7)/8
+
+Table[f[x], {x, 0, 41}]
+
+red is 0 as expected
+
+yellow hue = 1/6 = 2/12
+
+green is 1/3 = 4/12
+
+cyan is 1/2 = 6/12
+
+blue is 2/3 = 8/12
+
+violet is 3/4 = 9/12
+
+f[x_] = Mod[x,5] + Floor[x/5]/9
+
+Table[f[x], {x, 0, 41}]
+
+f[x_] = Mod[x,5] + Floor[x/5]/(41/5)
+
+f[x_] = (Mod[x,5] + Floor[x/5]/(41/5))/6
+
+f[x_] = (Mod[x,5] + Floor[x/5]/(41/5))/6
+
+f[x_] = (Mod[x,5] + Floor[x/5]/8*9/12)/6
+
+f[x_] = Mod[x,5] + Floor[x/5]/8*9/12
+
+Table[f[x], {x, 0, 41}]
+
+t1949 = Map[Hue, Table[f[x], {x, 0, 41}]]
+
+Partition[t1949, 5]
+
+ContourPlot[x, {x, 0, 1}, {y, 0, 1}, ColorFunction -> Hue]
+
+ContourPlot[x, {x, 0, 1}, {y, 0, 1}, ColorFunction -> Hue, Contours -> 12]
+
+In[208]:= ContourPlot[x, {x, 0, 12}, {y, 0, 1}, ColorFunction -> Hue, Contours -
+> 11, ContourLabels -> True]                                                    
+
+{red, yellow, blue, green, indigo}
+
+t2010[x_] := ColorConvert[Hue[x], "LABColor"]
+
+Plot[t2010[x][[1]], {x, 0, 1}]
+
+Plot[t2010[x][[2]], {x, 0, 1}]
+
+Plot[{
+ t2010[x][[1]], t2010[x][[2]], t2010[x][[3]]
+},  {x, 0, 1}]
+
+Plot[ColorDistance[Hue[0], Hue[x]], {x, 0, 1}]
+
+Plot[ColorDistance[Hue[1/6], Hue[x]], {x, 0, 1}]
+
+t2019 = Table[ColorDistance[Hue[i/6], Hue[x]], {i, 0, 5}]
+
+Plot[t2019, {x,0,1}]
+
+Plot[ColorDistance[Hue[0], Hue[x]], {x, 0.2, 0.4}]
+
+0.34 is maximal, so
+
+Table[ColorDistance[Hue[i/12], Hue[(i+1)/12]], {i,0, 11}]
+
+Plot[ColorDistance[Hue[x+1/1000], Hue[x-1/1000]], {x, 0, 1}]
+
+red yellow distance is: ColorDistance[Red, Yellow] = 1.08414
+
+ColorDistance[Red, Orange] is 0.378861
+
+color distance of 0.5 seems to work well
+
+NSolve[ColorDistance[Hue[0], Hue[x]] == 1/2, x]
+
+FindRoot[ColorDistance[Hue[0], Hue[x]] == 1/2, {x,.2}]
+
+x -> 0.0982278
+
+Plot[ColorDistance[Hue[0.0982278], Hue[x]], {x, 0.0982278, 1}]
+
+FindRoot[ColorDistance[Hue[0.0982278], Hue[x]] == 1/2, {x,.2}]
+
+x -> 0.156301
+
+arr = {0, 0.0982278, 0.156301}
+
+cur = 0.156301
+
+Plot[ColorDistance[Hue[cur], Hue[x]], {x, cur, 1}]
+
+FindRoot[ColorDistance[Hue[cur], Hue[x]] == 1/2, {x, cur}]
 
 
 
