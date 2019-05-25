@@ -1,5 +1,8 @@
 #!/bin/perl
 
+# it turns out qgis idiotically doesn't read SLD files even though it
+# writes them; this is a copy of bc-write-sld.pl that writes qml files
+
 # attempts to write a SLD for landuse map based on sample SLDs I have found
 
 require "/usr/local/lib/bclib.pl";
