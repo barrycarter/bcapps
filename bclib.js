@@ -219,11 +219,6 @@ function lngLatRange2ImageTiles(obj) {
   let width = 43200;
   let height = 21600;
 
-
-
-
-  td("CALLED");
-
 }
 
 /**
