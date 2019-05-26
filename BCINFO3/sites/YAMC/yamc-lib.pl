@@ -1,1 +1,0 @@
-/home/user/20190125/YAMC/yamc-lib.pl
