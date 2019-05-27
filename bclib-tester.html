@@ -25,6 +25,25 @@ Land Use: <input type="checkbox" id="landUseMap" value="false">
 
 <script>
 
+// this canvas is never displayed, its just used to create PNGs
+
+// https://stackoverflow.com/questions/28405619/javascript-array-to-png-client-side
+
+console.log('alpha');
+
+canvas = document.createElement('canvas'),
+ctx = canvas.getContext('2d');
+
+for (i=0; i<=240000; i++) {
+ x = Math.floor(Math.random()*1600);
+ y = Math.floor(Math.random()*900);
+  ctx.fillRect(x,y,1,1);
+}
+
+let png = canvas.toDataURL('image/png');
+
+console.log(png);
+
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
@@ -156,12 +175,22 @@ function redraw_map() {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
+  L.imageOverlay(png, [ [0, 0], [45, 45]]).addTo(map);
+
   // the OSM map (comes first so others can overlay)
   placeTilesOnMap(maps['osmMap']);
   placeImageTilesOnMap(maps['tzMap']);
   placeTilesOnMap(maps['infoMap']);
   placeImageTilesOnMap(maps['climateMap']);
   placeImageTilesOnMap(maps['landUseMap']);
+
+  // below takes forever, wrong way to draw pixels
+
+  //  for (i=0; i < 10; i+=0.01) {
+  //    for (j=0; j < 10; j+=0.01) {
+  //       L.rectangle([ [i,j], [i+0.01, j+0.01]]).addTo(map);
+  //    }
+  //  }
   
 // L.rectangle([[35, -106.5], [36, -105.5]], {color: "#ff7800", weight: 1}).addTo(map);
 // L.circle([35, -106.5], 10, {color: "#ff7800", weight: 1}).addTo(map);
