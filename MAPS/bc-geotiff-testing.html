@@ -3,8 +3,26 @@
 
 <script>
 
+// function reqListener () {
+//  console.log(this.responseText);
+// }
 
-let test1 = fetch('http://test.barrycarter.info/cors-test.pl');
+// var oReq = new XMLHttpRequest();
+// oReq.open("GET", "http://wordpress.barrycarter.info/");
+// oReq.open("POST", "http://wordpress.barrycarter.info/");
+// oReq.addEventListener("load", reqListener);
+// oReq.setRequestHeader("Origin", "*");
+// oReq.send();
+
+
+
+// let test1 = fetch('https://a.tile.openstreetmap.org/5/7/4.png');
+
+let test1 = fetch('http://test.barrycarter.info/bc-mytile.pl?zoom=2&x=2&y=3&client=api');
+
+// let test1 = fetch('http://test.barrycarter.info/cors-test.pl');
+
+// let test1 = fetch('http://127.0.0.1:8080/geoserver/localtesting/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fgeotiff8&TRANSPARENT=true&tiled=true&LAYERS=localtesting%3Aelevation&exceptions=application%2Fvnd.ogc.se_inimage&tilesOrigin=-180.0001388888889%2C-56.00013888888889&WIDTH=256&HEIGHT=256&SRS=EPSG%3A4326&STYLES=&BBOX=0%2C0%2C180%2C180');
 
 let test2 = test1.then(function (response) {return response.text();});
 
