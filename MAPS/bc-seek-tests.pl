@@ -40,7 +40,7 @@ sub latlng2byte {
 
 # the whole world in 2048 x 1024 pixels
 
-for ($lat=-90; $lat<=90; $lat += 180/1024) {
+for ($lat=90; $lat>=-90; $lat -= 180/1024) {
   $row++; $col=0;
   for ($lng=-180; $lng<=180; $lng += 360/2048) {
     $col++;
