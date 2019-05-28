@@ -5,6 +5,14 @@ MAP SERVER
 
 Notes for map server:
 
+  - TODO: figure out what color ramp to use for continuous values--
+  the LGBTQ flag seems to use a nice ramp-- violet to purple to
+  spectrum to red is nice too and can maybe be extended to black and
+  white too
+
+  - TODO: show user's location as arcsecond square, but also as
+  containing 3 arcsecond square, 7.5 arcsecond, 30 arcsecond, etc
+
   - TODO: look at https://github.com/globalmaps
 
   - TODO: look at data I am pulling into personal directories ~/20190509 and ~/20190509/MORE
@@ -23,7 +31,30 @@ Notes for map server:
   shape files instead of just having a raster/shape for every
   underwater elevation?
 
-  - TODO: use squashfs or zipfs to shrink large files if needed
+  - TODO: use squashfs or zipfs to shrink large files if needed. Stats:
+
+    - SRTM1 total length of all .hgt files: 370,732,276,590 bytes
+
+    - SRTM1 distribution zip file: 54,649,761,295 bytes (this zip file
+    can not be mounted with fuse-zip and has note "This zip is
+    compressed with BZip2 (with 900Kb dictionary size)"
+
+    - SRTM1 regular squashfs of hgt files separately: 107,125,305,344 bytes
+
+    - SRTM1 regular squashfs of all hgt files glued together (ie, not
+    as a directory of files, but rather a single 370,732,276,590 byte
+    file): 107,134,029,824 bytes
+
+    - SRTM1 xz squashfs similar to above: 70,302,179,328 bytes
+
+    - SRTM1 zpaq'd as list of hgt files: 47,037,258,211 bytes (just as
+    a data point, can not seek inside a zpaq)
+
+    - SRTM1 total size of HGT files converted to TIF: 92,888,522,332 bytes
+
+    - SRTM1 single file elevation.tif of all SRTM1 data: 100,140,355,090 bytes
+
+    - SRTM1 squashfs of elevation.tif: 99,031,736,713 bytes
 
   - TODO: disallow changes to maps on server (ie, turn off the 'edit' features)
 
@@ -218,13 +249,30 @@ tz_name1st and/or utc_format
 
 ne_10m_urban_areas (no useful fields, just whether you are in one or not)
 
+NOTES
+=====
 
+ocal/christmas-candy in the cpt-city Discord section is a good
+"divergent gradient" (in my meaning), but it's hard to find many of
+these
 
+SRTM1 data goes from -12269 to 22894-- cursory glance shows these are
+locations "blacked out" in google maps satellite, SRTM3 goes from
+-9999 to 8806 (where -9999 means no data)
 
+THINGS DONE
+===========
 
+Removed planet-latest.osm.pbf, giving up on idea to serve OSM tiles directly
 
+MINITUAE
+========
 
+using gdal_merge with BIGTIFF changes the TIFF that is created, even
+if the same TIFF could be created w/o this option
 
+In qgis, you can assign a uuid to each row in an attribute table, but
+coloring by it doesn't work
 
 OLD STUFF
 =========
