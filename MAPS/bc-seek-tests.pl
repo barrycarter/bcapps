@@ -4,31 +4,54 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# this is a 100GB file uncompressed
+# an array of random colors
 
-open(A, "/mnt/kemptown/tmp/mt/gaia2-extracted-sorted.csv");
+my(@cols, @col);
 
-# pretending it's a 3 arcsecond file
+for $i (0..255) {
 
-my($lat) = 35;
-my($lng) = -106.5;
+  for $j (0..2) {$col[$j] = floor(rand()*256);}
+
+  push(@cols, join(",", @col));
+}
+
+# debug(@cols);
+
+print "new\nsize 2048,1024\nsetpixel 0,0,0,0,0\n";
+
 
 my($buf);
 
-# this is indeed very quick
+open(A, "/tmp/mnt/climate.bin");
 
-for $i (0..255) {
-  for $j (0..255) {
-    
-    my($lt) = $lat+3*$i/3600;
-    my($ln) = $lng+3*$j/3600;
+# TODO: generalize
 
-    my($byte) = ($lt+90)*432000 + ($ln+180)*60*20;
+sub latlng2byte {
 
-    debug("BYTE: $byte");
+  my($lat, $lng) = @_;
+
+  # this file happens to be 43200 x 21600 and thus 30 seconds per pixel
+
+  my($x) = floor(($lng+180)*43200/360);
+  my($y) = floor((90-$lat)*21600/180);
+
+  return 43200*$y + $x;
+}
+
+# the whole world in 2048 x 1024 pixels
+
+for ($lat=-90; $lat<=90; $lat += 180/1024) {
+  $row++; $col=0;
+  for ($lng=-180; $lng<=180; $lng += 360/2048) {
+    $col++;
+    my($byte) = latlng2byte($lat,$lng);
 
     sysseek(A, $byte, SEEK_SET);
-    sysread(A,$buf,1);
-    debug("BUF: $buf");
+    sysread(A, $buf, 1);
+
+    my($val) = ord($buf);
+
+    print "setpixel $col,$row,$cols[$val]\n";
+
   }
 }
