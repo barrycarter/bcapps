@@ -5,11 +5,22 @@ require "/usr/local/lib/bclib.pl";
  
 my $shapefile = Geo::ShapeFile->new("/home/user/20190427/ne_10m_time_zones.shp");
 
+# with below, can generate 255 x 255 in 5.43s still too slow but better
+# without build_spatial_index, takes so long I aborted it
+
+$shapefile->build_spatial_index();
 
 # got make 3: 10, 12, 21
 debug($shapefile->shapes_in_area(-107, 35, -106, 36));
 
-
+for $i (0..255) {
+  for $j (0..255) {
+    my(@l) = $shapefile->shapes_in_area(
+      -107+$i/255, 35+$j/255, -107+($i+1)/255, 35+($j+1)/255
+    );
+    print "$i $j ",join(",",@l),"\n";
+  }
+}
 
 die "TESTING";
 
