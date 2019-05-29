@@ -205,12 +205,14 @@ function redraw_map() {
   // draw arcsecond square etc
   let center = map.getCenter();
 
-  let latarc = Math.floor(center.lat*3600)/3600;
-  let lngarc = Math.floor(center.lng*3600)/3600;
+  var latarc, lngarc;
 
-  console.log("COORDS",latarc,lngarc,latarc+1/3600,lngarc+1/3600);
-
-  L.rectangle([ [latarc, lngarc], [latarc+1/3600, lngarc+1/3600]]).addTo(map);
+  [3600, 1200, 480, 120, 60].forEach(function (x) {
+     latarc = Math.floor(center.lat*x)/x;
+     lngarc = Math.floor(center.lng*x)/x;
+//  console.log("COORDS",latarc,lngarc,latarc+1/3600,lngarc+1/3600);
+     L.rectangle([ [latarc, lngarc], [latarc+1/x, lngarc+1/x]]).addTo(map);
+});
   
 // L.rectangle([[35, -106.5], [36, -105.5]], {color: "#ff7800", weight: 1}).addTo(map);
 // L.circle([35, -106.5], 10, {color: "#ff7800", weight: 1}).addTo(map);
