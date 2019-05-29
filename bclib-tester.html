@@ -78,8 +78,8 @@ for (var key in maps) {
 }
 
 function update(e) {
-  console.log(var_dump(e.target));
-  console.log(e.target.id);
+//  console.log(var_dump(e.target));
+//  console.log(e.target.id);
   let str = e.target.id.replace(".o", "");
 
   if (str === e.target.id) {
@@ -185,7 +185,7 @@ function redraw_map() {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
-  L.imageOverlay(png, [ [-90, -180], [90, 180]]).addTo(map);
+//  L.imageOverlay(png, [ [-90, -180], [90, 180]]).addTo(map);
 
   // the OSM map (comes first so others can overlay)
   placeTilesOnMap(maps['osmMap']);
@@ -201,6 +201,16 @@ function redraw_map() {
   //       L.rectangle([ [i,j], [i+0.01, j+0.01]]).addTo(map);
   //    }
   //  }
+
+  // draw arcsecond square etc
+  let center = map.getCenter();
+
+  let latarc = Math.floor(center.lat*3600)/3600;
+  let lngarc = Math.floor(center.lng*3600)/3600;
+
+  console.log("COORDS",latarc,lngarc,latarc+1/3600,lngarc+1/3600);
+
+  L.rectangle([ [latarc, lngarc], [latarc+1/3600, lngarc+1/3600]]).addTo(map);
   
 // L.rectangle([[35, -106.5], [36, -105.5]], {color: "#ff7800", weight: 1}).addTo(map);
 // L.circle([35, -106.5], 10, {color: "#ff7800", weight: 1}).addTo(map);
