@@ -24,9 +24,40 @@ let test1 = fetch('http://test.barrycarter.info/bc-cors-test.pl');
 
 // let test1 = fetch('http://127.0.0.1:8080/geoserver/localtesting/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fgeotiff8&TRANSPARENT=true&tiled=true&LAYERS=localtesting%3Aelevation&exceptions=application%2Fvnd.ogc.se_inimage&tilesOrigin=-180.0001388888889%2C-56.00013888888889&WIDTH=256&HEIGHT=256&SRS=EPSG%3A4326&STYLES=&BBOX=0%2C0%2C180%2C180');
 
-let test2 = test1.then(function (response) {return response.text();});
+let test2 = test1.then(function (response) {return response.arrayBuffer();});
 
-let test3 = test2.then(function (response) {console.log(response);});
+// let test2 = test1.then(function (response) {return response.blob();});
+
+let test3 = test2.then(function (response) {
+
+    //    console.log(Array.from(response));
+
+    let view1 = new DataView(response);
+
+    console.log([0,1,2,3,4,5].map(i => view1.getUint8(i)));
+
+    //    console.log(view1.getUint8(1));
+
+    // console.log(response);
+
+    //    console.log(var_dump(response.slice(1,100)));
+    //    var reader = new FileReader();
+    //    reader.addEventListener("loadend", function() {});
+    //    console.log("hello", reader.readAsArrayBuffer(response));
+
+    //    let blob = new Uint8Array(response);
+
+    //    console.log(blob);
+
+      //    console.log(response);
+
+      //    console.log(response.slice(1,10, Number));
+
+    //  for (var i=0; i < response.length; i++) {
+    //      for (var i=0; i < 100; i++) {
+    //        console.log(i, response.charCodeAt(i));
+    //      }
+      });
 
 // http://127.0.0.1:8080/geoserver/localtesting/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fgeotiff8&TRANSPARENT=true&tiled=true&LAYERS=localtesting%3Aelevation&exceptions=application%2Fvnd.ogc.se_inimage&tilesOrigin=-180.0001388888889%2C-56.00013888888889&WIDTH=256&HEIGHT=256&SRS=EPSG%3A4326&STYLES=&BBOX=0%2C0%2C180%2C180
 
