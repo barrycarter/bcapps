@@ -35,7 +35,7 @@ $ENV{PATH} = "/usr/local/grass-7.4.1/bin:/usr/local/grass-7.4.1/scripts:$ENV{PAT
 
 $ENV{GRASS_VERSION} = "7.4.1";
 
-debug(vect2rast(str2hashref("slat=25&nlat=50&wlng=-120&elng=-90&map=ne_10m_time_zones&feature=cat")));
+debug(vect2rast(str2hashref("slat=25&nlat=50&wlng=-120&elng=-60&map=ne_10m_time_zones&feature=cat")));
 
 die "TESTING";
 

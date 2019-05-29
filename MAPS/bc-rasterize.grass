@@ -337,6 +337,13 @@ v.to.rast input=ne_10m_time_zones output=ne_10m_time_zones_rast
 r.out.gdal input=ne_10m_time_zones_rast
  output=/home/user/20190501/timezones.png format=PNG
 
+# below this line, 29 May 2019
+
+r.in.gdal input=/mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM/srtm3.tif output=srtm3
+
+# above might be too big for right away
+
+r.in.gdal /mnt/kemptown/NOBACKUP/EARTHDATA/LANDUSE/ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7.tif output=landuse location=landuse
 
 
 
