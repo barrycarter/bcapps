@@ -33,8 +33,13 @@ let test3 = test2.then(function (response) {
     //    console.log(Array.from(response));
 
     let view1 = new DataView(response);
+    console.log(response.byteLength);
 
-    console.log([0,1,2,3,4,5].map(i => view1.getUint8(i)));
+    //    console.log([0,1,2,3,4,5].map(i => view1.getUint8(i)));
+
+    let res = [...Array(response.byteLength).keys()].map(i => view1.getUint8(i));
+
+    console.log(res);
 
     //    console.log(view1.getUint8(1));
 
