@@ -9,10 +9,11 @@ my($path) = "/home/user/20190528/socketman";
 
 my($buf);
 
-open(A, "/home/user/test.owl");
+# ignore children completion
 
-# ignore PIPE faults
-$SIG{PIPE} = 'IGNORE';
+$SIG{CHLD} = 'IGNORE';
+
+open(A, "/home/user/test.owl");
 
 my $server = IO::Socket::UNIX->new(
    Type => SOCK_STREAM(), Local => $path, Listen => 1);
@@ -33,5 +34,9 @@ while (my $conn = $server->accept()) {
 
   my $in = <$conn>;
   print $conn "You said: $in, have some $buf\n";
+
+  # as the child, I must exit
+  exit();
+
 };
 
