@@ -1,73 +1,43 @@
 #!/bin/perl
 
-# this script (which will eventually be a daemon) connects to the
-# GRASS shell to create PNG files on demand from vector maps
+# this script (which will eventually be a daemon or connected to
+# existing daemon) connects to the GRASS shell to create data files on
+# demand from vector maps
 
-use Socket;
 require "/usr/local/lib/bclib.pl";
 
-# make sure we are inside a GRASS shell
+# gisrc file grass needs (is normally created each time)
 
-unless ($ENV{GRASS_VERSION}) {die "Must run in GRASS shell";}
+# TODO: this file should be less temporary
 
-# listen on port 22779 properly
+my($tmp) = my_tmpfile2();
 
-socket(S,PF_INET,SOCK_STREAM,(getprotobyname('tcp')));
-bind(S,sockaddr_in(22779,INADDR_ANY))||die("Can't bind, $!");
-listen(S,SOMAXCONN)||die("Can't listen, $!");
+my($str) = << "MARK";
+MAPSET: PERMANENT
+GISDBASE: /home/user/GRASS
+LOCATION_NAME: naturalearth
+GUI: text
+PID: $$
+MARK
+;
 
-while (true) {
+write_file($str, $tmp);
 
-  my($req);
+$ENV{GISRC} = $tmp;
 
-  accept(C,S);
+# ENV grass needs
 
-  # wait for the "double new line" to end it
-  # TODO: timeout!!!!
+$ENV{GISBASE} = "/usr/local/grass-7.4.1";
 
-  while (<C>) {
+$ENV{LD_LIBRARY_PATH} = "/usr/local/grass-7.4.1/lib:$ENV{LD_LIBRARY_PATH}";
 
-    if (/^GET (\S+)$/) {$req = $1;}
+$ENV{PATH} = "/usr/local/grass-7.4.1/bin:/usr/local/grass-7.4.1/scripts:$ENV{PATH}";
 
-    if (/^\s*$/) {last;}
-  }
-
-#  print C "HTTP/1.1 200 OK\nContent-type: text/html\n\n";
- 
-  print C "HTTP/1.1 200 OK\nContent-type: image/png\n\n";
-
-  print C read_file("$bclib{githome}/temp.png");
-  close(C);
-
-}
-
-=item flyfile($text)
-
-TODO: seriously improve this
-
-Returns the contents of a PNG file with $text written in it
-
-=cut
-
-sub flyfile {
-
-  my($text) = @_;
-
-  open(A, "|fly -q");
-
-  print A
-
-
-debug("ALL DONE");
-
-# for $i (keys %ENV) {debug("$i -> $ENV{$i}");}
-
+$ENV{GRASS_VERSION} = "7.4.1";
 
 # let's run this program from WITHIN grass
 
 # intentionally omitting /home/user/.grass7 from path
-
-$ENV{PATH} = "/usr/local/grass-7.4.1/bin:/usr/local/grass-7.4.1/scripts:$ENV{PATH}";
 
 my($out, $err, $res);
 
