@@ -3,17 +3,35 @@
 # listen on UDS
 
 require "/usr/local/lib/bclib.pl";
-my($path) = "/home/user/20190528/socketman";
-
 use IO::Socket::UNIX;
 
-# Server:
+my($path) = "/home/user/20190528/socketman";
+
+my($buf);
+
+open(A, "/home/user/test.owl");
+
+# ignore PIPE faults
+$SIG{PIPE} = 'IGNORE';
+
 my $server = IO::Socket::UNIX->new(
-        Type => SOCK_STREAM(),
-        Local => $path,
-        Listen => 1,
-    );
-    my $count = 1;
+   Type => SOCK_STREAM(), Local => $path, Listen => 1);
+
 while (my $conn = $server->accept()) {
-        $conn->print("Hello " . ($count++) . "\n");
-      }
+
+  # fork
+
+  if (fork()) {
+    debug("I am the parent, I will just wait for the next connection");
+    next;
+  }
+
+  debug("I am the child, I will handle this request");
+
+  sysseek(A, 123, SEEK_SET);
+  sysread(A, $buf, 100);
+
+  my $in = <$conn>;
+  print $conn "You said: $in, have some $buf\n";
+};
+

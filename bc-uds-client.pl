@@ -11,7 +11,7 @@ my $client = IO::Socket::UNIX->new(
         Peer => $path
     );
 
-print $client "Hello\n";
+# print $client "Hello\n";
 
-print "Response:", <$client>;
+print "Response:", <$client>, "\n";
 
