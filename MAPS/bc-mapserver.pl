@@ -5,6 +5,8 @@
 
 # TODO: https (or proxy)
 
+# TODO: cleanup, this is ugly
+
 # The main map server
 
 require "/usr/local/lib/bclib.pl";
@@ -12,6 +14,14 @@ use IO::Socket::UNIX;
 
 # ignore children completion
 $SIG{CHLD} = 'IGNORE';
+
+# TODO: move this to a better place
+
+# info about maps
+
+# TODO: make this more flexible for local testing? (or just have a switch?)
+
+$map{climate} = "path=/mnt/volume_lon1_01/CLIMATE/Beck_KG_V1_present_0p0083.tif";
 
 # for testing, seek to the first available port (when this prog dies,
 # the socket can keep living for a bit, sigh)
@@ -109,6 +119,25 @@ sub mapData {
 
   # with of a pixel, for gdal_rasterize or warp
   my($tr) = $width/256;
+
+  # info on this map
+
+  unless ($map{$hr->{map}}) {
+    warn "Unknown map, returning";
+    return;
+  }
+
+  my($mapinfo) = str2hashref($map{$hr->{map}});
+
+  # TODO: use a type field, don't rely on extensions
+
+  if ($mapinfo->{path}=~/\.tiff?$/) {
+
+    # use gdalwarp to send the data
+    
+
+  }
+  
 
   # if the name ends in shp, we use gdal_rasterize
 
