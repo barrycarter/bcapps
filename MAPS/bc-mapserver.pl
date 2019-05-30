@@ -7,17 +7,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
-debug(mapData(str2hashref("z=5&x=14&y=22")));
+# TODO: full pathify
 
-for $x (0..31) {
-  
-  for $y (0..31) {
-
-    mapData(str2hashref("z=5&x=$x&y=$y"));
-}
-
-}
-
+mapData(str2hashref("z=0&x=0&y=0&name=ne_10m_time_zones.shp&layer=objectid"));
 
 =item mapData(%hash)
 
@@ -26,6 +18,8 @@ Given hash below, return the associated data in the data field of a hash:
 name: name of the map, either a SHP file or a TIF
 
 z, x, y: the z/x/y tile desired, on a equirectanagular projection
+
+layer: the layer to burn
 
 =cut
 
@@ -46,17 +40,28 @@ sub mapData {
   my($nlat) = 90-$hashref->{y}*$width/2;
   my($slat) = $nlat - $width/2;
 
+  # with of a pixel, for gdal_rasterize or warp
+  my($tr) = $width/256;
+
+
   debug("RANGES ($hashref->{z}/$hashref->{x}/$hashref->{y}): $wlng - $elng and $slat - $nlat");
 
 
   # if the name ends in shp, we use gdal_rasterize
 
   if ($hashref->{name}=~/\.shp$/i) {
-    ($out, $err, $res);
+    # TODO: using Int16 here is unnecessary in some cases
+    # TODO: of course, we may need Float or something later, so bad both ways
+    # TODO: nonfixed tmpfile
+
+    my($cmd) = "gdal_rasterize -ot Int16 -tr $tr $tr -te $wlng $slat $elng $nlat -of Ehdr -a $hashref->{layer} $hashref->{name} /tmp/output.bin";
+
+    debug($cmd);
+
+    ($out, $err, $res) = cache_command2($cmd, "age=3600");
   }
 
-
-
+  return read_file("/tmp/output.bin");
 
 }
 

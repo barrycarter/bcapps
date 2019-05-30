@@ -6,9 +6,14 @@
 
 # --width: required option, how many pixels constitute a row
 
+# --bytesize: how many bytes constitute a data chunk (currently, '2'
+# is only supported value)
+
 # TODO: maybe don't assume file can be slupred into memory
 
 require "/usr/local/lib/bclib.pl";
+
+defaults("bytesize=1");
 
 my($data, $fname) = cmdfile();
 
@@ -20,7 +25,7 @@ my(@data) = split(//, $data);
 
 # figure out image size from length
 
-my($height) = ceil(length($data)/$globopts{width});
+my($height) = ceil(length($data)/$globopts{width}/$globopts{bytesize});
 
 my(%color);
 
@@ -39,6 +44,8 @@ for $row (0..$height-1) {
   for $col (0..$globopts{width}-1) {
 
     my($char) = shift(@data);
+
+    if ($globopts{bytesize}==2) {$char .= shift(@data)}
 
     # assign a color if we don't already have one
     # TODO: could theoretically get dupes
