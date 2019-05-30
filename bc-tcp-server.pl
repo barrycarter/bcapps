@@ -21,22 +21,23 @@ debug("SERVER: $server");
 
 while (my $conn = $server->accept()) {
 
-  # fork
+  # fork (parent ignores, child handles)
 
-  if (fork()) {
-    debug("I am the parent, I will just wait for the next connection");
-    next;
-  }
+  if (fork()) {next;}
 
-  debug("I am the child, I will handle this request");
+  # TODO: set ALRM to timeout to avoid hangs
 
-  sysseek(A, 123, SEEK_SET);
-  sysread(A, $buf, 100);
+  my(@data);
 
   while ($in = <$conn>) {
-    print $conn "You said: $in, have some $buf\n";
+    debug("GOT: $in");
+    push(@data, $in);
+    # the blank line means end of headers
+    if ($in=~/^\s*$/) {last;}
   }
 
+  print $conn "Content-type: text/html\n\nThis is some content";
+  
   # as the child, I must exit
   exit();
 
