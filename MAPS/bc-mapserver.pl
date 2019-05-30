@@ -1,15 +1,80 @@
-#!/bin/perl -0777
+#!/bin/perl
 
 # TODO: I might be able to use this via xinetd or websocket proxy, see
 # if I want do to that though
 
+# TODO: https (or proxy)
+
 # The main map server
 
 require "/usr/local/lib/bclib.pl";
+use IO::Socket::UNIX;
 
-# TODO: full pathify
+# ignore children completion
+$SIG{CHLD} = 'IGNORE';
 
-mapData(str2hashref("z=0&x=0&y=0&name=ne_10m_time_zones.shp&layer=objectid"));
+# for testing, seek to the first available port (when this prog dies,
+# the socket can keep living for a bit, sigh)
+
+# TODO: undo this
+
+warn "TESTING, socket varies";
+
+my $server;
+
+my($port) = 22779-1;
+
+do {
+  $port++;
+  $server = IO::Socket::INET->new(LocalAddr => "127.0.0.1", 
+   LocalPort => $port, Proto => "tcp", Listen => 20);
+
+} until $server;
+				  
+debug("LISTENING ON PORT $port");
+
+while (my $conn = $server->accept()) {
+
+  # fork (parent ignores, child handles)
+
+  debug("GOT CONNECTION, forking off");
+
+  if (fork()) {next;}
+
+  # TODO: set ALRM to timeout to avoid hangs
+
+  my(@data);
+  my($req);
+
+  while ($in = <$conn>) {
+    debug("GOT: $in");
+    push(@data, $in);
+    
+    # TODO: handle POST/etc requests nicely
+    
+    # the GET line (allows for non-HTTP/1.1 requests if they have no spaces
+    # note the / is not considered part of the request
+
+    if ($in=~m%^GET\s*/(\S+)%) {$request = $1; next;}
+
+    # the blank line means end of headers
+    if ($in=~/^\s*$/) {last;}
+  }
+
+  # process request
+
+  debug("PROCESSING: $request");
+  my($ret) = JSON::to_json(mapData(str2hashref($request)));
+
+  # TODO: this should print as header but isnt for some reason
+#  print $conn "Content-type: text/plain\n\n";
+  
+  print $conn $ret;
+
+  # as the child, I must exit
+  exit();
+
+}
 
 =item mapData(%hash)
 
@@ -25,50 +90,47 @@ layer: the layer to burn
 
 sub mapData {
 
-  my($hashref) = @_;
+  my($hr) = @_;
   my($out, $err, $res);
+
+  debug("mapData(", %{$hr},")");
 
   # determine lat/lng extents
 
   # tile width/height in degrees
 
-  my($width) = 360/2**$hashref->{z};
+  my($width) = 360/2**$hr->{z};
 
-  my($wlng) = $hashref->{x}*$width - 180;
+  my($wlng) = $hr->{x}*$width - 180;
   my($elng) = $wlng + $width;
 
-  my($nlat) = 90-$hashref->{y}*$width/2;
+  my($nlat) = 90-$hr->{y}*$width/2;
   my($slat) = $nlat - $width/2;
 
   # with of a pixel, for gdal_rasterize or warp
   my($tr) = $width/256;
 
-
-  debug("RANGES ($hashref->{z}/$hashref->{x}/$hashref->{y}): $wlng - $elng and $slat - $nlat");
-
-
   # if the name ends in shp, we use gdal_rasterize
 
-  if ($hashref->{name}=~/\.shp$/i) {
+  if ($hr->{name}=~/\.shp$/i) {
     # TODO: using Int16 here is unnecessary in some cases
     # TODO: of course, we may need Float or something later, so bad both ways
     # TODO: nonfixed tmpfile
 
-    my($cmd) = "gdal_rasterize -ot Int16 -tr $tr $tr -te $wlng $slat $elng $nlat -of Ehdr -a $hashref->{layer} $hashref->{name} /tmp/output.bin";
+    my($tmp) = my_tmpfile2();
 
-    debug($cmd);
+    my($cmd) = "gdal_rasterize -ot Int16 -tr $tr $tr -te $wlng $slat $elng $nlat -of Ehdr -a $hr->{layer} $hr->{name} $tmp";
+
+    debug("COMMAND: $cmd");
 
     ($out, $err, $res) = cache_command2($cmd, "age=3600");
   }
 
-  return read_file("/tmp/output.bin");
+  $hr->{data} = read_file($tmp);
+
+  return $hr;
 
 }
-
-
-
-
-
 
 die "TESTING";
 
