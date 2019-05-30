@@ -28,18 +28,43 @@ while (my $conn = $server->accept()) {
   # TODO: set ALRM to timeout to avoid hangs
 
   my(@data);
+  my($req);
 
   while ($in = <$conn>) {
     debug("GOT: $in");
     push(@data, $in);
+    
+    # TODO: handle POST/etc requests nicely
+    
+    # the GET line (allows for non-HTTP/1.1 requests if they have no spaces
+    # note the / is not considered part of the request
+    if ($in=~m%^GET\s*/(\S+)%) {$request = $1; next;}
+
+
     # the blank line means end of headers
     if ($in=~/^\s*$/) {last;}
   }
 
-  print $conn "Content-type: text/html\n\nThis is some content";
+  # process request
+
+  my($ret) = process_request(str2hashref($request));
+
+  # TODO: this should print as header but isnt for some reason
+  print $conn "Content-type: text/plain\n\n";
   
+  print $conn $ret;
+
   # as the child, I must exit
   exit();
 
 };
 
+sub process_request {
+
+  my($hr) = @_;
+
+
+  # TODO: allow other output types
+  return JSON::to_json($hr);
+
+}
