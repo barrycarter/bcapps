@@ -9,33 +9,23 @@
 
 # TODO: cleanup, this is ugly
 
+# NOTE: my tilesizes are 512 x 256 (other option was 256 x 128)
+
 # The main map server
 
 require "/usr/local/lib/bclib.pl";
+
+# TODO: pathify?
+require "$bclib{githome}/MAPS/bc-maps.pl";
+
 use IO::Socket::UNIX;
 
 # ignore children completion
 $SIG{CHLD} = 'IGNORE';
 
-# TODO: move this to a better place
 
-# info about maps
-
-# TODO: make this more flexible for local testing? (or just have a switch?)
-
-my($root) = "/mnt/volume_lon1_01/";
-
-if ($globopts{local}) {$root = "/home/user/NOBACKUP/EARTHDATA/";}
-
-$map{climate} = str2hashref(
- "path=$root/CLIMATE/Beck_KG_V1_present_0p0083.tif"
-);
-
-$map{timezones} = str2hashref(
- "path=$root/NATURALEARTH/10m_cultural/ne_10m_time_zones.shp&type=vector&attribute=zone&layer=ne_10m_time_zones"
-);
-
-print mapData(str2hashref("cmd=data&map=climate&z=0&x=0&y=0"));
+my($cmd, $map, $z, $x, $y) = @ARGV;
+print mapData(str2hashref("cmd=$cmd&map=$map&z=$z&x=$x&y=$y"));
 
 # print mapData(str2hashref("cmd=data&map=timezones&z=1&x=0&y=0"));
 
@@ -108,115 +98,57 @@ while (my $conn = $server->accept()) {
 
 Given hash below, return the associated data in the data field of a hash:
 
-name: name of the map, either a SHP file or a TIF
+name: short name of the path
 
 z, x, y: the z/x/y tile desired, on a equirectanagular projection
 
-layer: the layer to burn
+layer: the layer to query (vector maps)
+
+TODO: allow single pixel requests
 
 =cut
 
 sub mapData {
 
   my($hr) = @_;
-  my($out, $err, $res, $cmd);
 
   debug("mapData(", %{$hr},")");
 
-  # determine lat/lng extents
+  # determine lat/lng extents and tile width/height in degrees
 
-  # tile width/height in degrees
+  # TODO: adding this to $hr MIGHT be a bad idea, but could be useful
 
-  my($width) = 360/2**$hr->{z};
+  $hr->{width} = 360/2**$hr->{z};
+  $hr->{wlng} = $hr->{x}*$hr->{width} - 180;
+  $hr->{elng} = $hr->{wlng} + $hr->{width};
+  $hr->{nlat} = 90-$hr->{y}*$hr->{width}/2;
+  $hr->{slat} = $hr->{nlat} - $hr->{width}/2;
 
-  my($wlng) = $hr->{x}*$width - 180;
-  my($elng) = $wlng + $width;
+  # info on this map + tmpfile to store data
 
-  my($nlat) = 90-$hr->{y}*$width/2;
-  my($slat) = $nlat - $width/2;
-
-  # with of a pixel, for gdal_rasterize or warp
-#  my($tr) = $width/256;
-
-  # info on this map
-
-  my($mapinfo) = $map{$hr->{map}};
-  debug(var_dump("MAPINFO", $mapinfo));
-
-  unless (-f $mapinfo->{path}) {
-    warn("NO SUCH FILE: $mapinfo->{path}");
-    return;
-  }
-
-  # these options are the same for gdalwarp and gdal_rasterize
-
-  # TODO: -ot should probably be set by map
-  # NOTE: could also have used tr below
-
+  my($mi) = $maps{$hr->{map}};
   my($tmp) = my_tmpfile2();
-  my($opts) = "$mapinfo->{path} -ts 256 128 -te $wlng $slat $elng $nlat -ot Int16 -of Ehdr $tmp.bin";
+  my($cmd);
 
-  # TODO: use a type field, don't rely on extensions
-  # gdalwarp = raster, gdal_rasterize = vector
+  if ($mi->{type} eq "raster") {
 
-  if ($mapinfo->{path}=~/\.tiff?$/) {
-    $cmd = "gdalwarp $opts";
+    # NOTE TO SELF: 20190530/runme.sh contains test showing this is
+    # fastest or at least fast enough
+
+    # NOTE: $hr->{nlat} MUST come before $hr->{slat} even though it's larger
+    $cmd = "gdal_translate $mi->{filename} -outsize 512 256 -projwin $hr->{wlng} $hr->{nlat} $hr->{elng} $hr->{slat} -ot $mi->{size} -of Ehdr $tmp.bin";
+
+  } elsif ($mi->{type} eq "vector") {
+    $cmd = "gdal_rasterize $mi->{filename} -ts 512 256 -te $hr->{wlng} $hr->{slat} $hr->{elng} $hr->{nlat} -ot $mi->{size} -of Ehdr $tmp.bin";
   } else {
-    $cmd = "gdal_rasterize -a $mapinfo->{attribute} $opts";
+    $hr->{error} = "Map $hr->{map} can't determine type vector or raster";
+    return $hr;
   }
 
-  debug("CMD: $cmd");
+  # TODO: caching doesn't help here since tmpfile changes each time
 
-    # TODO: since I change $tmp each time, this cache_command is fairly useless
-    ($out, $err, $res) = cache_command2($cmd);
-    return read_file("$tmp.bin");
-
-}
-
-=item deleteme  
-
-  # if the name ends in shp, we use gdal_rasterize
-
-  if ($hr->{name}=~/\.shp$/i) {
-    # TODO: using Int16 here is unnecessary in some cases
-    # TODO: of course, we may need Float or something later, so bad both ways
-    # TODO: nonfixed tmpfile
-
-    my($cmd) = "gdal_rasterize -ot Int16 -tr $tr $tr -te $wlng $slat $elng $nlat -of Ehdr -a $hr->{layer} $hr->{name} $tmp";
-
-    debug("COMMAND: $cmd");
-
-    ($out, $err, $res) = cache_command2($cmd, "age=3600");
-  }
-
-  $hr->{data} = read_file($tmp);
-
-  return $hr;
+  my($out, $err, $res) = cache_command2($cmd);
+  debug("CMD: $cmd, ERR: $err, RES: $res");
+  return read_file("$tmp.bin");
 
 }
-
-die "TESTING";
-
-# TODO: generalize these paths
-require "$bclib{githome}/MAPS/bc-mapserver-lib.pl";
-require "$bclib{githome}/MAPS/bc-mapserver-commands.pl";
-
-my($ans) = process_command(str2hashref("cmd=time&foo=bar&i=hero"));
-
-# user won't be able to call this, but I can for testing
-
-for ($i=35; $i<36; $i += 1/$meta{landuse}{dataPointsPerDegree}) {
-  for ($j=-107; $j<-106; $j += 1/$meta{landuse}{dataPointsPerDegree}) {
-    $ans = landuse(str2hashref("lat=$i&lon=$j"));
-    print "$i $j $ans->{value}\n";
-  }
-}
-
-$ans = landuse(str2hashref("lat=35.05&lon=-106.5"));
-
-debug(var_dump("ans", $ans));
-
-=cut
-
-
-

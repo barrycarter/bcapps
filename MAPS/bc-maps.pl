@@ -13,7 +13,7 @@ my($rroot) = "/mnt/bcmapserver";
 # TODO: check maps actually exist on startup
 
 $maps{climate} = {
-   "filename" => "$rroot/climate.bin", "type" => "raster"
+   "filename" => "$rroot/climate.bin", "type" => "raster", "size" => "Byte"
 };
 
 # using this a library so returning true
