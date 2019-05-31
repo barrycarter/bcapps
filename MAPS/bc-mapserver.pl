@@ -35,9 +35,9 @@ $map{timezones} = str2hashref(
  "path=$root/NATURALEARTH/10m_cultural/ne_10m_time_zones.shp&type=vector&attribute=zone&layer=ne_10m_time_zones"
 );
 
-# print mapData(str2hashref("cmd=data&map=climate&z=0&x=0&y=0"));
+print mapData(str2hashref("cmd=data&map=climate&z=0&x=0&y=0"));
 
-print mapData(str2hashref("cmd=data&map=timezones&z=1&x=0&y=0"));
+# print mapData(str2hashref("cmd=data&map=timezones&z=1&x=0&y=0"));
 
 die "TESTING";
 
