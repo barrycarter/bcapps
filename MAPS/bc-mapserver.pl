@@ -1,5 +1,7 @@
 #!/bin/perl
 
+# --local: use local paths for local testing
+
 # TODO: I might be able to use this via xinetd or websocket proxy, see
 # if I want do to that though
 
@@ -21,7 +23,23 @@ $SIG{CHLD} = 'IGNORE';
 
 # TODO: make this more flexible for local testing? (or just have a switch?)
 
-$map{climate} = "path=/mnt/volume_lon1_01/CLIMATE/Beck_KG_V1_present_0p0083.tif";
+my($root) = "/mnt/volume_lon1_01/";
+
+if ($globopts{local}) {$root = "/home/user/NOBACKUP/EARTHDATA/";}
+
+$map{climate} = str2hashref(
+ "path=$root/CLIMATE/Beck_KG_V1_present_0p0083.tif"
+);
+
+$map{timezones} = str2hashref(
+ "path=$root/NATURALEARTH/10m_cultural/ne_10m_time_zones.shp&type=vector&attribute=zone&layer=ne_10m_time_zones"
+);
+
+# print mapData(str2hashref("cmd=data&map=climate&z=0&x=0&y=0"));
+
+print mapData(str2hashref("cmd=data&map=timezones&z=1&x=0&y=0"));
+
+die "TESTING";
 
 # for testing, seek to the first available port (when this prog dies,
 # the socket can keep living for a bit, sigh)
@@ -101,7 +119,7 @@ layer: the layer to burn
 sub mapData {
 
   my($hr) = @_;
-  my($out, $err, $res);
+  my($out, $err, $res, $cmd);
 
   debug("mapData(", %{$hr},")");
 
@@ -118,26 +136,44 @@ sub mapData {
   my($slat) = $nlat - $width/2;
 
   # with of a pixel, for gdal_rasterize or warp
-  my($tr) = $width/256;
+#  my($tr) = $width/256;
 
   # info on this map
 
-  unless ($map{$hr->{map}}) {
-    warn "Unknown map, returning";
+  my($mapinfo) = $map{$hr->{map}};
+  debug(var_dump("MAPINFO", $mapinfo));
+
+  unless (-f $mapinfo->{path}) {
+    warn("NO SUCH FILE: $mapinfo->{path}");
     return;
   }
 
-  my($mapinfo) = str2hashref($map{$hr->{map}});
+  # these options are the same for gdalwarp and gdal_rasterize
+
+  # TODO: -ot should probably be set by map
+  # NOTE: could also have used tr below
+
+  my($tmp) = my_tmpfile2();
+  my($opts) = "$mapinfo->{path} -ts 256 128 -te $wlng $slat $elng $nlat -ot Int16 -of Ehdr $tmp.bin";
 
   # TODO: use a type field, don't rely on extensions
+  # gdalwarp = raster, gdal_rasterize = vector
 
   if ($mapinfo->{path}=~/\.tiff?$/) {
-
-    # use gdalwarp to send the data
-    
-
+    $cmd = "gdalwarp $opts";
+  } else {
+    $cmd = "gdal_rasterize -a $mapinfo->{attribute} $opts";
   }
-  
+
+  debug("CMD: $cmd");
+
+    # TODO: since I change $tmp each time, this cache_command is fairly useless
+    ($out, $err, $res) = cache_command2($cmd);
+    return read_file("$tmp.bin");
+
+}
+
+=item deleteme  
 
   # if the name ends in shp, we use gdal_rasterize
 
@@ -145,8 +181,6 @@ sub mapData {
     # TODO: using Int16 here is unnecessary in some cases
     # TODO: of course, we may need Float or something later, so bad both ways
     # TODO: nonfixed tmpfile
-
-    my($tmp) = my_tmpfile2();
 
     my($cmd) = "gdal_rasterize -ot Int16 -tr $tr $tr -te $wlng $slat $elng $nlat -of Ehdr -a $hr->{layer} $hr->{name} $tmp";
 
@@ -182,6 +216,7 @@ $ans = landuse(str2hashref("lat=35.05&lon=-106.5"));
 
 debug(var_dump("ans", $ans));
 
+=cut
 
 
 

@@ -4986,7 +4986,7 @@ sub END {
   for $i (sort keys %is_tempfile) {
     # I sometimes wrongly use tempfile.[ext], so handle that too
     # TODO: change this to .* ?
-    for $j ("", ".res", ".out", ".err", ".kml", ".kmz") {
+    for $j ("", ".res", ".out", ".err", ".kml", ".kmz", ".bin.aux.xml", ".clr", ".hdr", ".prj", ".bin") {
       debug("DELETING: $i$j");
       system("rm -f $i$j");
     }
