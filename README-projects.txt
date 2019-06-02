@@ -1,42 +1,93 @@
-Subject: Internet
+Title: Better ad blocker: download ads but don't display them
+
 Code URL: none
-Description: Sites can detect ad blockers, so create a new one that downloads their ad but never displays it to you, making it much harder for them to tell you are blocking their ads.
 
-Subject: Internet
+Description: Sites can detect ad blockers, so create a new one that
+downloads their ad but never displays it to you, making it much harder
+for them to tell you are blocking their ads.
+
+====================================================================
+
+Title: Jekyll-Wordpress fusion: locally edited blog w/ WP features
+
 Code URL: none yet (but see "sub post_to_wp" in bclib.pl)
-Description: allow local editing of a wordpress wiki as though it were a jekyll wiki (ie, allow mirroring and easy post creations)
 
-Subject: Mathematics
+Description: allow local editing of a wordpress wiki as though it were
+a jekyll wiki (ie, allow mirroring and easy post creations)
+
+====================================================================
+
+Title: Rosetta: convert code (especially mathematical formulas) between languages
+
 Code URL: https://github.com/barrycarter/bcapps/blob/master/ROSETTA
-Description: Convert Mathematica formulas into various other programming languages
 
-Subject: Astronomy
+Description: Convert Mathematica formulas into various other
+programming languages
+
+====================================================================
+
+Title: Mt Fuji diamond: where can people see this phenomena?
+
+
 Code URL: https://github.com/barrycarter/bcapps/blob/master/STACK/bc-fuji.m
-Description: predict where people can see "Diamond Fuji", the sun appearing as a "diamond ring" as it sets over Mount Fuji. An extended version is https://github.com/barrycarter/bcapps/blob/master/DEM/ which attempts to determine the true horizon for any location using digital elevation map (DEM) data. Diamond Fuji URLS/images: https://www.tripadvisor.com/LocationPhotoDirectLink-g1104179-d1369080-i115862499-Lake_Yamanaka-Yamanakako_mura_Minamitsuru_gun_Yamanashi_Prefecture_Chub.html https://www.fujiyama-navi.jp/en/entries/xZ0rQ https://tripla.jp/cool-japan-diamond-fuji/ http://yamanakako.info/photo_diamond.php (page is in Japanese, and may do what this project tries to do) http://www2e.biglobe.ne.jp/%7Ewoody/mt97.jpg http://www.gettyimages.fr/%C3%A9v%C3%A9nement/diamond-fuji-observed-156231577 https://www.garyjwolff.com/diamond-fuji-viewing-spots-dates-and-times-in-tokyo.html
 
-Subject: Astronomy
+Description: predict where people can see "Diamond Fuji", the sun
+appearing as a "diamond ring" as it sets over Mount Fuji. An extended
+version is https://github.com/barrycarter/bcapps/blob/master/DEM/
+which attempts to determine the true horizon for any location using
+digital elevation map (DEM) data. Diamond Fuji URLS/images:
+https://www.tripadvisor.com/LocationPhotoDirectLink-g1104179-d1369080-i115862499-Lake_Yamanaka-Yamanakako_mura_Minamitsuru_gun_Yamanashi_Prefecture_Chub.html
+https://www.fujiyama-navi.jp/en/entries/xZ0rQ
+https://tripla.jp/cool-japan-diamond-fuji/
+http://yamanakako.info/photo_diamond.php (page is in Japanese, and may
+do what this project tries to do)
+http://www2e.biglobe.ne.jp/%7Ewoody/mt97.jpg
+http://www.gettyimages.fr/%C3%A9v%C3%A9nement/diamond-fuji-observed-156231577
+https://www.garyjwolff.com/diamond-fuji-viewing-spots-dates-and-times-in-tokyo.html
+
+====================================================================
+
+Title: Astronomical conjunctions
+
 Code URL: https://github.com/barrycarter/bcapps/blob/master/ASTRO 
+
 Showcase: http://search.astro.barrycarter.info/
 
-Subject: Astronomy
+Status: pretty much finished
+
+=====================================================================
+
+Title: OSM/Google Maps for stars, with a few more features
+
 Code URL: https://github.com/barrycarter/bcapps/blob/master/JAVA
-Showcase: none yet, help me create one
+
 Notes: Sort of google maps for stars, probably already done to death though
 
-Subject: Geography
+=====================================================================
+
+Title: Reprojected world maps from slippy tiles
+
 Code URL: https://github.com/barrycarter/bcapps/blob/master/MAPS
-Showcase: All GIFs in directory above are created from OSM slippy tiles
-Notes: possibly subsumed by qgis and similar
+
+Description: create images similar to the ones in the directory above,
+but qgis and other GIS programs may already do this
+
+=====================================================================
+
+Title: Auto-populated wikis using meta-wiki pages
+
+Code URL: https://github.com/barrycarter/bcapps/blob/master/METAWIKI/
+
+Showcase: http://pbs3.referata.com/wiki/Main_Page
+
+Description: create a semantic wiki from a single (or few) pages of data
+
+=====================================================================
 
 Subject: M.U.L.E. (game)
 Code URL: https://github.com/barrycarter/bcapps/blob/master/YAMC
 Showcase: none
 Notes: a M.U.L.E. clone that can be played on an arbitrary sized map
-
-Subject: Wikis
-Code URL: https://github.com/barrycarter/bcapps/blob/master/METAWIKI/
-Showcase: http://pbs3.referata.com/wiki/Main_Page
-Notes: a Pearls Before Swine wiki created in a "meta" style
 
 Subject: Geolocation
 Code URL: https://github.com/barrycarter/bcapps/blob/master/GEOLOCATION
@@ -84,7 +135,7 @@ Code URL: NA
 Description: Finish answering questions in STACK/README.status
 
 Subject: Blogging
-Code URL: @ORDPRESS/README
+Code URL: WORDPRESS/README
 Description: Command line Wordpress posting + actual things I want to post
 
 TODO: write up these mini-ideas

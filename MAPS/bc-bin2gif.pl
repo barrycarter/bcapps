@@ -43,9 +43,15 @@ MARK
 for $row (0..$height-1) {
   for $col (0..$globopts{width}-1) {
 
-    my($char) = shift(@data);
+    # TODO: this is ugly
 
-    if ($globopts{bytesize}==2) {$char .= shift(@data)}
+    my($char) = "";
+
+    for $i (1..$globopts{bytesize}) {
+      $char .= shift(@data);
+    }
+
+    debug("CHAR: $char");
 
     # assign a color if we don't already have one
     # TODO: could theoretically get dupes

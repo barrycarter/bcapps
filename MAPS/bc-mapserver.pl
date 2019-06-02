@@ -24,40 +24,18 @@ use IO::Socket::UNIX;
 $SIG{CHLD} = 'IGNORE';
 
 
-my($cmd, $map, $z, $x, $y) = @ARGV;
-print mapData(str2hashref("cmd=$cmd&map=$map&z=$z&x=$x&y=$y"));
-
+# my($cmd, $map, $z, $x, $y) = @ARGV;
+# print mapData(str2hashref("cmd=$cmd&map=$map&z=$z&x=$x&y=$y"));
 # print mapData(str2hashref("cmd=data&map=timezones&z=1&x=0&y=0"));
+# die "TESTING";
 
-die "TESTING";
-
-# for testing, seek to the first available port (when this prog dies,
-# the socket can keep living for a bit, sigh)
-
-# TODO: undo this
-
-warn "TESTING, socket varies";
-
-my $server;
-
-my($port) = 22779-1;
-
-do {
-  $port++;
-  $server = IO::Socket::INET->new(LocalAddr => "127.0.0.1", 
-   LocalPort => $port, Proto => "tcp", Listen => 20);
-
-} until $server;
-				  
-debug("LISTENING ON PORT $port");
+my $server = getServer();
 
 while (my $conn = $server->accept()) {
 
   # fork (parent ignores, child handles)
-
-  debug("GOT CONNECTION, forking off");
-
   if (fork()) {next;}
+
 
   # TODO: set ALRM to timeout to avoid hangs
 
@@ -112,8 +90,6 @@ sub mapData {
 
   my($hr) = @_;
 
-  debug("mapData(", %{$hr},")");
-
   # determine lat/lng extents and tile width/height in degrees
 
   # TODO: adding this to $hr MIGHT be a bad idea, but could be useful
@@ -139,7 +115,7 @@ sub mapData {
     $cmd = "gdal_translate $mi->{filename} -outsize 512 256 -projwin $hr->{wlng} $hr->{nlat} $hr->{elng} $hr->{slat} -ot $mi->{size} -of Ehdr $tmp.bin";
 
   } elsif ($mi->{type} eq "vector") {
-    $cmd = "gdal_rasterize $mi->{filename} -ts 512 256 -te $hr->{wlng} $hr->{slat} $hr->{elng} $hr->{nlat} -ot $mi->{size} -of Ehdr $tmp.bin";
+    $cmd = "gdal_rasterize $mi->{filename} -a $mi->{attribute} -ts 512 256 -te $hr->{wlng} $hr->{slat} $hr->{elng} $hr->{nlat} -ot $mi->{size} -of Ehdr $tmp.bin";
   } else {
     $hr->{error} = "Map $hr->{map} can't determine type vector or raster";
     return $hr;
@@ -149,6 +125,30 @@ sub mapData {
 
   my($out, $err, $res) = cache_command2($cmd);
   debug("CMD: $cmd, ERR: $err, RES: $res");
-  return read_file("$tmp.bin");
-
+  $hr->{data} = read_file("$tmp.bin");
+  return $hr;
 }
+
+# specific to this prog
+sub getServer {
+
+  my($server);
+
+  # TODO: this is ugly, kill pre-production
+  my($port) = 22779-1;
+
+  do {
+    $port++;
+    $server = IO::Socket::INET->new(LocalAddr => "0.0.0.0", 
+    LocalPort => $port, Proto => "tcp", Listen => 20);
+  } until $server;
+
+  debug("LISTENING ON PORT $port");
+
+  warn "TESTING, port number not constant varies";
+
+  return $server;
+}
+
+
+

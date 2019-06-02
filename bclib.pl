@@ -30,17 +30,17 @@ use Astro::MoonPhase qw(phase phasehunt);
 require JSON;
 
 # include sublibs
-push(@INC,"/home/barrycarter/BCGIT", "/usr/local/lib");
+push(@INC,"/home/user/BCGIT", "/usr/local/lib");
 
 # for X11 goodness (when starting Perl from nagios/cron or similar)
 $ENV{'DISPLAY'}=":0.0";
 
 # lets people use different home dirs
-our($homedir) = "/home/barrycarter";
+our($homedir) = "/home/user";
 
 # git home (and other bclib hash vars)
-$bclib{githome} = "/home/barrycarter/BCGIT";
-$bclib{home} = "/home/barrycarter";
+$bclib{githome} = "/home/user/BCGIT";
+$bclib{home} = "/home/user";
 $bclib{extdrive} = "/mnt/extdrive";
 
 # TODO: sort of bad to call this "abbrev" in global lib
