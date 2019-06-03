@@ -1,0 +1,5 @@
+<script>
+let data = fetch('http://test.barrycarter.info/bc-cors-test2.pl').then
+   (function (x) {console.log(x); return x.arrayBuffer();}).then
+   (function (y) {console.log(y)})
+</script>
