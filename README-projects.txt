@@ -1,3 +1,13 @@
+Title: GAIM-ify (not gamify) or Pidgin-ify the console
+
+Description: I use GAIM (Pidgin) for a variety of accounts, but it
+would be nice if I could access the console from GAIM, particularly
+since I could use command-line clients directly from Pidgin. This
+shouldn't be hard to do, since Pidgin already connects to IRC and it
+seems you could just hack around to get this to work.
+
+====================================================================
+
 Title: Better ad blocker: download ads but don't display them
 
 Code URL: none

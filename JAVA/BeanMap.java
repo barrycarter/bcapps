@@ -4,8 +4,8 @@ import java.io.*;
 import java.awt.event.*;
 
 class Space extends java.lang.Object {
-  Vector rrs= new Vector();
-  Vector rls= new Vector();
+  Vector<Object> rrs= new Vector<Object>();
+  Vector<Object> rls= new Vector<Object>();
 
   Spacerect makerect(double x0, double y0, double z0, double size) {
     Spacerect r= new Spacerect(x0,y0,z0,size);

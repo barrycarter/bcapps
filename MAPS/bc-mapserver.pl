@@ -1,7 +1,5 @@
 #!/bin/perl
 
-# --local: use local paths for local testing
-
 # TODO: I might be able to use this via xinetd or websocket proxy, see
 # if I want do to that though
 
@@ -23,7 +21,6 @@ use IO::Socket::UNIX;
 # ignore children completion
 $SIG{CHLD} = 'IGNORE';
 
-
 # my($cmd, $map, $z, $x, $y) = @ARGV;
 # print mapData(str2hashref("cmd=$cmd&map=$map&z=$z&x=$x&y=$y"));
 # print mapData(str2hashref("cmd=data&map=timezones&z=1&x=0&y=0"));
@@ -36,7 +33,6 @@ while (my $conn = $server->accept()) {
   # fork (parent ignores, child handles)
   if (fork()) {next;}
 
-
   # TODO: set ALRM to timeout to avoid hangs
 
   my(@data);
@@ -45,9 +41,9 @@ while (my $conn = $server->accept()) {
   while ($in = <$conn>) {
     debug("GOT: $in");
     push(@data, $in);
-    
+
     # TODO: handle POST/etc requests nicely
-    
+
     # the GET line (allows for non-HTTP/1.1 requests if they have no spaces
     # note the / is not considered part of the request
 
@@ -121,11 +117,17 @@ sub mapData {
     return $hr;
   }
 
+  # base64 encoding hopefully doesn't make space usage much worse
+  $hr->{encoding} = "base64";
+  
   # TODO: caching doesn't help here since tmpfile changes each time
 
   my($out, $err, $res) = cache_command2($cmd);
   debug("CMD: $cmd, ERR: $err, RES: $res");
-  $hr->{data} = read_file("$tmp.bin");
+
+  # JSON is actually WORSE with this than w/ base64
+  # $hr->{data} = read_file("$tmp.bin");
+  $hr->{data} = encode_base64(read_file("$tmp.bin"));
   return $hr;
 }
 

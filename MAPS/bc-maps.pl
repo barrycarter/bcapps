@@ -66,6 +66,26 @@ $maps{timezone} = {
    "source" => "TODO: add source"
 };
 
+$maps{countries} = {
+   "filename" => "$vroot/ne_10m_admin_0_countries.shp",
+   "type" => "vector", "size" => "Int32",
+   "description" => "TODO: add description",
+   "attribute" => "NE_ID",
+   "source" => "TODO: add source"
+};
+
+$maps{states} = {
+   "filename" => "$vroot/ne_10m_admin_1_states_provinces.shp",
+   "type" => "vector", "size" => "Int32",
+   "description" => "TODO: add description",
+   "attribute" => "gn_id",
+   "source" => "TODO: add source"
+};
+
+
+
+
+
 # TODO: allow aliases like timezones -> timezone?
 
 # using this a library so returning true

@@ -9,7 +9,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($out, $err, $res);
+my($out, $err, $res, %archive);
 
 # extra reminders for some sites
 
@@ -41,6 +41,11 @@ for $i (split(/\n/, $out)) {
 
   # ignore blank lines
   if ($i=~/^\s*$/) {next;}
+
+  # if the line has :ARCHIVE: I'm using Google's automated 2 month
+  # archives-- set archive hash to indicate
+
+  # remove the :ARCHIVE: code since we can still calculate latest stamp
 
   unless ($i=~m%^(.*?):(\S+)%) {push(@errors,"BAD LINE: $i"); next;}
   $latest{lc("$1:$2")} = 1;

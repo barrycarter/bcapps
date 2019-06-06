@@ -11,7 +11,8 @@ class Starmap extends Object {
     f.add(bean);
     bean.setSize(640,480);
     f.pack();
-    f.show();
+    //    f.show();
+    f.setVisible(true);
     beaninit();
   }
 
@@ -21,9 +22,9 @@ class Starmap extends Object {
     StringTokenizer st;
     int count=0;
     double ra,dec,mag,x,y,z,r,showsize;
-    Vector vx= new Vector();
-    Vector vy= new Vector();
-    Vector vz= new Vector();
+    Vector<Double> vx= new Vector<Double>();
+    Vector<Double> vy= new Vector<Double>();
+    Vector<Double> vz= new Vector<Double>();
 
     BufferedReader f = Utilities.stobr("namradecmagspec.txt","Starmap");
 
