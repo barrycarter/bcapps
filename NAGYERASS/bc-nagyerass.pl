@@ -7,6 +7,29 @@
 
 require "/usr/local/lib/bclib.pl";
 
+parse_nagyerass_cfg(read_file("nagyerass.cfg"));
+
+
+=item parse_nagyerass_cfg
+
+Parses the given string (which is the contents of one or more files)
+and writes to /usr/local/etc/nagyerass individual tests (and
+timestamps if needed), while checking for duplicate test names, etc
+
+=cut
+
+sub parse_nagyerass_cfg {
+
+  my($cfg) = @_;
+
+  while ($cfg=~s%<test>(.*?)</test>%%s) {
+    my($test) = $1;
+    debug("TEST: $test");
+  }
+}
+
+die "TESTING";
+
 $tests = read_file("nagyerass.txt");
 
 chdir(tmpdir());
