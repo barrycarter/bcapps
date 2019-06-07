@@ -6,6 +6,11 @@ since I could use command-line clients directly from Pidgin. This
 shouldn't be hard to do, since Pidgin already connects to IRC and it
 seems you could just hack around to get this to work.
 
+A telnet (or ncat) interface would suffice, and allow connections to
+MOOs, MUSHes, etc (like tinyfugue aka tf), although few exist today.
+
+My stack question on the subject: https://unix.stackexchange.com/questions/22791/can-i-use-gaim-pidgin-to-telnet-for-moos-mushes-muds-etc-like-tf/33518
+
 ====================================================================
 
 Title: Better ad blocker: download ads but don't display them
@@ -54,6 +59,16 @@ do what this project tries to do)
 http://www2e.biglobe.ne.jp/%7Ewoody/mt97.jpg
 http://www.gettyimages.fr/%C3%A9v%C3%A9nement/diamond-fuji-observed-156231577
 https://www.garyjwolff.com/diamond-fuji-viewing-spots-dates-and-times-in-tokyo.html
+
+====================================================================
+
+Title: True sunrise and sunset times allowing for local topography
+
+Code URL: https://github.com/barrycarter/bcapps/tree/master/DEM/
+
+Description: A generalization of sorts of the project above, this
+would use SRTM/DEM data to let people calculate where and when the sun
+will set over non-flat/mountainous horizons
 
 ====================================================================
 

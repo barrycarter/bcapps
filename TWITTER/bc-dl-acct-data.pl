@@ -46,10 +46,13 @@ for $i (split(/\n/, $out)) {
   # archives-- set archive hash to indicate
 
   # remove the :ARCHIVE: code since we can still calculate latest stamp
+  if ($i=~s/:ARCHIVE://) {$archive{$i} = 1;}
 
   unless ($i=~m%^(.*?):(\S+)%) {push(@errors,"BAD LINE: $i"); next;}
   $latest{lc("$1:$2")} = 1;
 }
+
+debug("ARCHIVE", %archive);
 
 # TODO: dont cache in production?
 # NOTE: bc-*-zip.pl creates symlinks, thus "-type l"
@@ -87,7 +90,7 @@ for $i (split(/\n/, $out)) {
 
   debug("$site/$acct/$date");
 
-  unless ($latest{"$site:$acct"}) {
+  unless ($latest{"$site:$acct"} || $archive{"$site:$acct"}) {
     push(@errors,"$site:$acct not in ~/myaccounts.txt, possible error");
   }
 
@@ -100,7 +103,15 @@ for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
   my($site) = $i;
   $site=~s/:.*$//;
 
-  print stardate($latest{$i})," $i $extra{$site}\n";
+
+  debug("I: $i");
+
+  # because $extra is local, don't really need else below
+
+  my($extra);
+  if ($archive{$i}) {$extra = "[ARCHIVE]";} else {$extra = "";}
+
+  print stardate($latest{$i})," $i $extra{$site} $extra\n";
 }
 
 for $i (@errors) {print "ERROR: $i\n";}
