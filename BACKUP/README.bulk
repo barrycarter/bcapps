@@ -58,6 +58,8 @@ gpg --batch --passphrase $passphrase -c -o
 # upload the files to idrive
 # which files to upload
 
+echo CHECK SPACE ON IDRIVE
+
 ls $cwd/*.gpg >! /home/user/bin/IDrive_for_Linux/idrive/user_profile/*/Backup/Manual/BackupsetFile.txt
 
 perl ~user/bin/IDrive_for_Linux/scripts/Backup_Script.pl

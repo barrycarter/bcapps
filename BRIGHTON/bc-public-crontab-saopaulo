@@ -332,6 +332,6 @@ XWIDTH=1600
 # later stopped: found betterish way to do this
 # 53 * * * * ls -l /mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/srtm1.bin
 
-# keep track of a 70GB upload rsync
+# keep track of a 70GB upload rsync, later other things
 
-30 * * * * tail /var/tmp/cache/77/43/77435cc8bb3057428e7d99bf80430d719fcdb1b2-user-out
+30 * * * * ls -l /mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM/srtm3.bin

@@ -521,3 +521,25 @@ unix2pos[t_] = (t-946622160+3600)/3600
 
 unixday2pos[d_] = unix2pos[d*86400]
 
+(* work below 8 Jun 2019 *)
+
+t0909 = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
+"Number", "RecordLists" -> True], 0];
+
+dates = Select[t0909, #[[2]] <= 2466154 &];
+
+ras = Transpose[dates][[3]];
+decs = Transpose[dates][[4]];
+
+diffra0 = Differences[ras];
+diffras = Table[If[i < -Pi, i+2*Pi, i], {i, diffra0}];
+
+fdec = FindFormula[decs, x]
+fras = FindFormula[diffras, x]
+
+
+
+
+
+
+

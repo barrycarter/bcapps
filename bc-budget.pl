@@ -31,6 +31,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# the current time
+
+my($now) = time();
+
 # convert options that are list values to hashes
 
 my(%exclbank) = list2hash(split(/\,/,$globopts{exclbank}));
@@ -88,6 +92,8 @@ for $i (@bankbals) {
 
 # I don't need all fields, but they are useful for debugging
 
+# TODO: could make the below a view for more flexibility
+
 my($query) = << "MARK";
 
 SELECT amount, date, description AS merchant, category, "bank", oid 
@@ -101,6 +107,36 @@ MARK
 
 my(@res) = mysqlhashlist($query, "test", "user");
 
+# TODO: if --start isn't set, find the oldest day and use that
+
+my(%catperday);
+
+for $i (@res) {
+
+  # TODO: there are many many reasons to not count a transaction, add
+  # them below
+
+  # number of days ago for this transaction
+  my($daysago) = floor(($now - str2time($i->{date}))/86400);
+
+  # record spending per category per day
+  $catperday{$daysago}{$i->{category}} += $i->{amount};
+
+}
+
+# total amount spend on category
+my(%totcat);
+
+# go through days in order (most recent first)
+
+# TODO: this loop is fixed for now, but make it depend on --start
+
+for $i (0..366) {
 
 
-debug(@res);
+
+}  
+
+# debug(@res);
+
+debug(var_dump(%catperday));
