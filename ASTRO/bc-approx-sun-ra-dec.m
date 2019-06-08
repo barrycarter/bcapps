@@ -537,6 +537,13 @@ diffras = Table[If[i < -Pi, i+2*Pi, i], {i, diffra0}];
 fdec = FindFormula[decs, x]
 fras = FindFormula[diffras, x]
 
+(* both above are constant! *)
+
+fdec2 = FindFormula[decs-fdec, x];
+
+fdec3 = FindFormula[10000*(decs-fdec), x];
+
+
 
 
 

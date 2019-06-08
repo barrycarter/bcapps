@@ -19,6 +19,19 @@ Climate: <input type="checkbox" id="climateMap" value="false">
 
 Land Use: <input type="checkbox" id="landUseMap" value="false">
 <input type="range" id="landUseMap.o" min="0" max="1" step="0.01"><br>
+
+Temperature: <input type="checkbox" id="owmTemp" value="false">
+<input type="range" id="owmTemp.o" min="0" max="1" step="0.01"><br>
+
+Clouds: <input type="checkbox" id="owmClouds" value="false">
+<input type="range" id="owmClouds.o" min="0" max="1" step="0.01"><br>
+
+Precipitation: <input type="checkbox" id="owmPrecip" value="false">
+<input type="range" id="owmPrecip.o" min="0" max="1" step="0.01"><br>
+
+Wind: <input type="checkbox" id="owmWind" value="false">
+<input type="range" id="owmWind.o" min="0" max="1" step="0.01"><br>
+
 <br>
 
 <div id="map"></div>
@@ -60,6 +73,22 @@ map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
 
 let maps = [];
+
+// I dislike sharing my API key here but see no way around it (I could
+// load it from a private library, but I'd still need to expose it in
+// production)
+
+// TODO: upgrade this to maps v2 which is currently not working for me
+
+// maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "http://maps.openweathermap.org/maps/2.0/weather/TA2/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
+
+maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/temp_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
+
+maps['owmClouds'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/clouds_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
+
+maps['owmPrecip'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/precipitation_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
+
+maps['owmWind'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/wind_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
 
 maps['osmMap'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"};
 
@@ -193,6 +222,12 @@ function redraw_map() {
   placeTilesOnMap(maps['infoMap']);
   placeImageTilesOnMap(maps['climateMap']);
   placeImageTilesOnMap(maps['landUseMap']);
+
+  // OWM testing
+  placeTilesOnMap(maps['owmTemp']);
+  placeTilesOnMap(maps['owmClouds']);
+  placeTilesOnMap(maps['owmPrecip']);
+  placeTilesOnMap(maps['owmWind']);
 
   // below takes forever, wrong way to draw pixels
 

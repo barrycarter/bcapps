@@ -4,6 +4,8 @@
 # that data, provided a width is given; assume each byte is a
 # different color (TODO: allow for 2 byte combos?)
 
+# --srand: use this number as a random seed for consistency
+
 # --width: required option, how many pixels constitute a row
 
 # --bytesize: how many bytes constitute a data chunk (currently, '2'
@@ -18,6 +20,8 @@ defaults("bytesize=1");
 my($data, $fname) = cmdfile();
 
 unless ($globopts{width}) {die ("--width required");}
+
+if ($globopts{srand}) {srand($globopts{srand});}
 
 # this is probably ugly
 

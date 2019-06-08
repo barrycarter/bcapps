@@ -303,9 +303,10 @@ t1824 = Flatten[
 Table[{i, j, k}, {i, 0, 1, 1/2}, {j, 0, 1, 1/2}, {k, 0, 1, 1/2}],
  2];
 
-color[i_] := LABColor[t1824[[i]]]
+Clear[color]
+color[i_] := color[i] = Apply[LABColor, t1824[[Floor[i]]]]
 
-ContourPlot[Floor[x], {x, 1, 27}, {y, 0, 1}, ColorFunction -> color]
+ContourPlot[x, {x, 1, 27}, {y, 0, 1}, ColorFunction -> color]
 
 ContourPlot[Floor[x], {x, 1, 27}, {y, 0, 1}, ColorFunction -> Hue/27]
 
@@ -527,12 +528,71 @@ t2129 = Select[t2128, #[[2]] > 0.007907-10^-6 &]
 
 Grid[Map[Hue,Sort[t2129[[1,1]]]]]                                      
 
+(* work below on 8 Jun 2019 *)
+
+Plot[ColorDistance[Hue[x+0.01], Hue[x-0.01]]*100, {x, 0, 1}]
+
+Plot[ColorDistance[Hue[x+10^-6], Hue[x-10^-6]]*10^6, {x, 0, 1}]
 
 
+t1510[x_] := ColorDistance[Hue[x+10^-6], Hue[x-10^-6]]*10^6
+
+Plot[t1510[x], {x, 0, 1}]
+
+t1511[x_] := NIntegrate[t1510[y], {y, 0, x}]
+
+(* the total int is 12.7557, but not helpful? *)
+
+hues = ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> Hue, Contours -> 256,
+ ContourLines -> False];
+
+Export["/tmp/hues.png", hues, ImageSize -> {1600, 900}]
+
+(* find the color delta away from Hue[x] in the forward direction *)
 
 
+f1518[x_, delta_] := y /. 
+ FindRoot[ColorDistance[Hue[y], Hue[x]] == delta, {y,x}]
+
+Clear[hueTest];
+hueTest[0] = 0;
+hueTest[i_] := hueTest[i] = f1518[hueTest[i-1], 0.01];
+
+above gives dupes though
+
+In[109]:= Length[DeleteDuplicates[Table[hueTest[i], {i, 1, 445}]]]              
+above shows 445 different hues
+
+t1529 = Table[hueTest[i], {i, 1, 445}]
+
+(* trying with 0.02 *)
+
+Clear[hueTest];
+hueTest[0] = 0;
+hueTest[i_] := hueTest[i] = f1518[hueTest[i-1], 0.02];
+
+Length[DeleteDuplicates[Table[hueTest[i], {i, 1, 445}]]]
+
+no dupes, but weird (bounces)
+
+ListPlot[Table[hueTest[i], {i,1,225}]]
+showit
+
+Clear[hueTest];
+hueTest[0] = 0;
+hueTest[i_] := hueTest[i] = f1518[hueTest[i-1], 0.1];
+
+ListPlot[Table[hueTest[i], {i,1,100}]]
+showit
+
+Clear[hueTest];
+hueTest[0] = 0;
+hueTest[i_] := hueTest[i] = f1518[hueTest[i-1], 0.2];
+
+ListPlot[Table[hueTest[i], {i,0,31}]]
+showit
 
 
+Length[DeleteDuplicates[Table[hueTest[i], {i, 1, 445}]]]
 
-
-
+no dupes, but weird (bounces)
