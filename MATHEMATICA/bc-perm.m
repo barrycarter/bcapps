@@ -596,3 +596,155 @@ showit
 Length[DeleteDuplicates[Table[hueTest[i], {i, 1, 445}]]]
 
 no dupes, but weird (bounces)
+
+t1559 = Table[x, {x, 0, 3/4, 3/4/255}];
+
+hue2[x_] = Hue[x*3/4]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> hue2]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> hue2, Contours -> 16]
+showit
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> hue2, Contours -> 32]
+showit
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> hue2, Contours ->
+256, ContourLines -> False]
+showit
+
+Table[hue2[x], {x, 0, 1, .01}]
+
+t1607 = Table[ColorConvert[Hue[x], "RGB"], {x, 0, 3/4, 3/4/255}]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> Hue, Contours -> 16]
+showit
+
+hue3[x_] = Hue[0.6 + x*(1-0.6)]
+ContourPlot[x, {x,0.6,1}, {y,0,1}, ColorFunction -> hue3, Contours -> 16]
+showit
+
+hue3[x_] = Hue[0.6 + x*(0.8-0.6)]
+ContourPlot[x, {x,0.6,0.8}, {y,0,1}, ColorFunction -> hue3, Contours -> 16]
+showit
+
+Plot[ColorConvert[Hue[x], "GrayScale"][[1]], {x, 0, 1}]
+
+f1624[x_] := ColorConvert[Hue[x], "GrayScale"][[1]]
+
+f1625[x_] := -f1624[x]
+
+f1624[0] == 0.299
+f1624[1/6] == 0.886
+f1624[1/3] == 0.587
+f1624[1/2] == 0.701
+f1624[2/3] == 0.114
+f1624[5/6] == 0.413
+
+f1624[0.269788] == f1624[1/2]
+
+f1638[x_] = Hue[x*2/3]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> f1638, Contours -> 32]
+
+
+
+
+
+NMaximize[f1624[x], {x, 0.2}]
+
+ternary[0.1, 0.3, f1625, 0.0001]
+ternary[0.2, 0.4, f1624, 0.0001]
+ternary[0.45, 0.6, f1625, 0.0001]
+ternary[0.6, 0.8, f1624, 0.0001]
+ternary[0.7, 0.9, f1625, 0.0001]
+
+NSolve[f1624[x] == f1624[1/2], {x,0.3}]
+
+f1626[x_] := f1624[x] - f1624[1/2]
+
+brent[f1626, 0.2, 0.4]
+
+t1646 = Table[ColorConvert[Hue[x], "RGB"], {x, 0, 2/3, 2/3/255}]
+
+Partition[t1646, 16]
+
+fake hues
+
+9.522 is sum of below
+
+255 0 0 to 255 255 0 is red to yellow is 256 steps (gray slope = 3.522)
+
+255 255 0 to 0 255 0 is yellow to green is 256 steps (gray slope = -1.794)
+
+0 255 0 to 0 255 255 is green to cyan is 256 steps (gray slope = 0.684)
+
+0 255 255 to 0 0 255 is cyan to blue is 256 steps (gray slope = -3.522)
+
+so 9.522 is total change
+
+3.522 is 0.36988 of that
+0.188406 for 1.794
+0.0718336 for 0.684
+
+
+
+
+fakehue[x_] := x /; x < 3.522/9.522
+
+fakehue[x_] := (x-3.522/9.522)/1.794/9.522 /; 
+ x >= 3.522/9.522 && x < (3.522+1.794)/9.522
+
+
+ramp[x_, {x0_, x1_}, {y0_, y1_}] = y0 + (x-x0)/(x1-x0)*(y1-y0)
+
+f1624[x_] := ColorConvert[Hue[x], "GrayScale"][[1]]
+
+t1716 = Accumulate[Abs[Table[f1624[x] - f1624[x-1/6], {x, 1/6, 2/3, 1/6}]]]
+
+t1717 = t1716/t1716[[-1]]
+
+Clear[fakehue];
+
+fakehue[x_] := ramp[x, {0, t1717[[1]]}, {0, 1/6}] /; x < t1717[[1]]
+
+fakehue[x_] := ramp[x, {t1717[[1]], t1717[[2]]}, {1/6, 1/3}] /; 
+ x >= t1717[[1]] && x < t1717[[2]]
+
+fakehue[x_] := ramp[x, {t1717[[2]], t1717[[3]]}, {1/3, 1/2}] /; 
+ x >= t1717[[2]] && x < t1717[[3]]
+
+fakehue[x_] := ramp[x, {t1717[[3]], 1}, {1/2, 2/3}] /; 
+ x >= t1717[[3]]
+
+fakehue2[x_] = Hue[fakehue[x]]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> Hue, Contours -> 32]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> fakehue2, Contours -> 32]
+
+Table[fakehue2[x], {x, 0, 1, 1/32}]
+
+Map[ColorConvert[#, "GrayScale"][[1]] &, Table[fakehue2[x], {x, 0, 1, 1
+/32}]]                                                                          
+
+In[42]:= ListPlot[Abs[Differences[Map[ColorConvert[#, "GrayScale"][[1]] &, Table
+[fakehue2[x], {x, 0, 1, 1/32}]]]]]                                              
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> fakehue2, Contours -> 256, 
+ ContourLines -> False]
+
+f1638[x_] = Hue[x*2/3]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> f1638, Contours -> 256, 
+ ContourLines -> False]
+
+ContourPlot[x, {x,0,1}, {y,0,1}, ColorFunction -> fakehue2, Contours -> 32, 
+ ContourLines -> False]
+
+(* making everything equally bright? *)
+
+redgray = ColorConvert[Hue[0], "GrayScale"][[1]]
+
+fake2hue[x_] := Hue[x, 1, ColorConvert[Hue[x], "GrayScale"][[1]]
+
+

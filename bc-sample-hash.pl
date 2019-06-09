@@ -41,9 +41,10 @@ for $i (@ARGV) {
   # TODO: it would be more efficient to just have a bunch of random
   # numbers pre-generated
   for $j (0..$chunks) {
-    my($rand) = int(rand(1000000));
+    debug("J: $j");
+    my($rand) = $j*1000000+int(rand(1000000));
     my($buf);
-#    debug("RAND: $rand");
+    debug("RAND: $rand");
     # seek and read the 10K bytes
     seek(A, $rand, SEEK_SET);
     read(A, $buf, 10000);

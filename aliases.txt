@@ -283,6 +283,10 @@ alias scanit "bc-scan-pic-brighton.pl"
 
 alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
+# 9 Jun 2019: stopit2 is a bit more aggressive
+
+alias stopit2 "sudo killall -STOP find bzip2 bc-format2altformat bc-unix-dump sort"
+
 # stopnet stops network intensive processes
 alias stopnet "sudo killall -STOP qbittorrent wget curl idevs; \pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
 
