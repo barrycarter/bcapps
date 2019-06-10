@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="MAPS/leaflet.css" />
 <script src="MAPS/leaflet.js"></script>
+<script src="MAPS/turf.min.js"></script>
 <script src="bclib.js"></script>
 <script src="bclib-staging.js"></script>
 
@@ -38,34 +39,18 @@ Wind: <input type="checkbox" id="owmWind" value="false">
 
 <script>
 
-// this canvas is never displayed, its just used to create PNGs
-
 // https://stackoverflow.com/questions/28405619/javascript-array-to-png-client-side
 
-console.log('alpha');
+let id = new ImageData(512, 256);
+for (i=0; i<512*256*4; i++) {id.data[i] = 120;}
 
-canvas = document.createElement('canvas'),
-ctx = canvas.getContext('2d');
+// this canvas is never displayed, its just used to create PNGs
 
-/*
+let canvas = document.createElement('canvas');
 
-for (i=0; i<=240000; i++) {
- x = Math.floor(Math.random()*1600);
- y = Math.floor(Math.random()*900);
-  ctx.fillRect(x,y,1,1);
-}
+canvas.getContext('2d').putImageData(id, 0, 0);
 
-*/
-
-for (i=0; i<=360; i++) {
- for (j=0; j<=180; j++) {
-   ctx.fillRect(i, j, 1, 1);
- }
-}
-
-let png = canvas.toDataURL('image/png');
-
-// console.log(png);
+var url = canvas.toDataURL();
 
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
@@ -100,6 +85,7 @@ maps['climateMap'] = {map: map, opacity: 1, width: 43200, height: 21600, origTil
 
 maps['landUseMap'] = {map: map, opacity: 0.5, width: 129600, fake: 1, height: 64800, origTileZoom: 9, maxZoom: 9, tileURL: 'http://ws.terramapadventure.com/LANDUSE/${z}/${x}/${y}.png'};
 
+console.log('maps defined');
 
 for (var key in maps) {
   document.getElementById(key).addEventListener('change', update);
@@ -109,6 +95,9 @@ for (var key in maps) {
 function update(e) {
 //  console.log(var_dump(e.target));
 //  console.log(e.target.id);
+
+  console.log('delta');
+
   let str = e.target.id.replace(".o", "");
 
   if (str === e.target.id) {
@@ -214,7 +203,7 @@ function redraw_map() {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
-//  L.imageOverlay(png, [ [-90, -180], [90, 180]]).addTo(map);
+  L.imageOverlay(url, [ [-90, -180], [90, 180]]).addTo(map);
 
   // the OSM map (comes first so others can overlay)
   placeTilesOnMap(maps['osmMap']);
