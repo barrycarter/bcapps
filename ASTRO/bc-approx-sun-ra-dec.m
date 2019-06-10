@@ -543,7 +543,22 @@ fdec2 = FindFormula[decs-fdec, x];
 
 fdec3 = FindFormula[10000*(decs-fdec), x];
 
+(* below on 9 Jun 2019, I may actually need two coords for Predict *)
 
+t0909 = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
+"Number", "RecordLists" -> True], 0];
+
+dates = Select[t0909, #[[2]] <= 2466154 &];
+
+decs = Table[i[[2]] -> i[[4]], {i, dates}];
+
+pdec = Predict[decs];
+
+decs2 = Table[{i[[2]], i[[4]]}, {i, dates}];
+
+fdecs = FindFormula[decs2];
+
+(* above gives 0 and thus fails miserably)
 
 
 

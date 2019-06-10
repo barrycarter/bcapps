@@ -20,8 +20,7 @@ p = Predict[hash];
 
 diffs = Table[p[Take[i,3]] - i[[4]], {i, a}];
 
-
-
+divs = Table[p[i[[1]]]/i[[2]], {i, hash}];
 
 test = Import["/home/user/20190602/rand2.txt", "CSV"];
 
@@ -52,18 +51,20 @@ p2 = Predict[data];
 
 ContourPlot[p2[{y,x,0}], {x, -180, 180}, {y, -90, 90}]
 
+(* below on 9 Jun 2019 *)
 
+t1628 = Table[RandomReal[1,{3}], {i, 1, 10000}];
 
+t1629 = Table[i -> Total[i], {i, t1628}];
 
+p1629 = Predict[t1629];
 
+t1630 = Table[p1629[i[[1]]] - i[[2]], {i, t1629}];
 
+(* maybe it doesnt like one param so much bigger than rest? *)
 
+hash2 = Table[{i[[1]], i[[2]], i[[3]]/10^9} -> i[[4]], {i, a}];
 
-
-
-
-
-
-
+phash2 = Predict[hash2];
 
 
