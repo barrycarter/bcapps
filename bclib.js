@@ -2,12 +2,16 @@
 
 General notes:
 
-lng = longitude (not lon or long)
+lng = longitude (do not use lon or long as var names)
 
-z = zoom (not zoom)
+z = zoom (do not use zoom as a var name)
+
+obj = hash passed in (do not use hash as a var name)
 
 
 */
+
+// TODO: just realized I'm mixing radians and degrees, which is bad
 
 
 // TODO: find a better way to store this constant as a lib constant
@@ -299,8 +303,6 @@ Place slippy tiles or equirectangular tiles on a Leaflet "map"
 
 map: put the tiles here
 
-z: the current zoom level
-
 tileURL: template for tile URLs
 
 minZoom: never get tiles lower than this zoom level
@@ -310,7 +312,7 @@ maxZoom: never get tiles higher than this zoom level
 projection: if 1, assume tiles are Mercator projected (slippy tiles);
 otherwise, assume they are equirectangular
 
-opacity; tile opacity
+opacity: tile opacity
 
 fake: if set to 1, don't do anything, just print out debugging info
 
@@ -370,6 +372,36 @@ function placeTilesOnMap(obj) {
 
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
 
+
+      // NOTE: experimental code for buffers below
+
+      console.log(`BOUNDS: ${bounds[0]}`);
+
+      console.log(`the map says: ${obj.lng}`);
+
+      console.log("START");
+      for (let i=0 ; i < 1; i += 1/256) {
+	for (let j=0 ; j < 1; j += 1/256) {
+
+	  let lng0 = nwBound.lng + i*(seBound.lng-nwBound.lng);
+	  let lat0 = nwBound.lat + i*(seBound.lng-nwBound.lng);
+
+	  console.log(`LNG0: ${lng0}, LAT0: ${lat0} and ${obj.lng} and ${obj.lat}`);
+
+	  turf.distance([lng0, lat0], [obj.lng, obj.lat]);
+
+	}
+      }
+
+      console.log("END");
+
+
+      
+
+
+
+
+
       // if bounded, don't print out of bound tiles
       // TODO: allow wraparound
 
@@ -378,6 +410,8 @@ function placeTilesOnMap(obj) {
       // determine URL from template sent (TODO: not working quite right)
 
       let url = convertStringTemplate(obj.tileURL, {x: x, y: y, z: z});
+
+      //      console.log(`Bounds ${bounds}, tile: ${url}`);
 
       // TODO: this is insanely specific to my test map, generalize
       //      let url = hack_beck2_tiles({z: z, x: x, y: y}).url;

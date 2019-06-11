@@ -33,6 +33,9 @@ Precipitation: <input type="checkbox" id="owmPrecip" value="false">
 Wind: <input type="checkbox" id="owmWind" value="false">
 <input type="range" id="owmWind.o" min="0" max="1" step="0.01"><br>
 
+Buffer: <input type="checkbox" id="buffer" value="false">
+<input type="range" id="buffer.o" min="0" max="1" step="0.01"><br>
+
 <br>
 
 <div id="map"></div>
@@ -63,6 +66,8 @@ map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
 
+// this works very poorly
+
 var point = turf.point([-106.651138463684, 35.0844869067959]);
 var buffered = turf.buffer(point, 5000, {units: 'miles', mercator: 'false'});
 var buff2 = turf.circle(point, 5000, {units: 'miles'});
@@ -75,11 +80,13 @@ let maps = [];
 // load it from a private library, but I'd still need to expose it in
 // production)
 
+maps['buffer'] = {map: map, projection: 1, opacity: 1, minZoom: 4, bounded: 1, lng: 0, lat: 0, dist: 5000, tileURL: ""};
+
 // TODO: upgrade this to maps v2 which is currently not working for me
 
-// maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "http://maps.openweathermap.org/maps/2.0/weather/TA2/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
+// maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "http://maps.openweathermap.org/maps/2.0/weather/TA2/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"};
 
-maps['osmMap'] = {map: map, fake: 0, projection: 1, opacity: 1, minZoom: 4, bounded: 1, tileURL: "https://tile.openstreetmap.org/${z}/${x}/${y}.png"};
+maps['osmMap'] = {map: map, fake: 1, projection: 1, opacity: 1, minZoom: 4, bounded: 1, tileURL: "https://tile.openstreetmap.org/${z}/${x}/${y}.png"};
 
 maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/temp_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
 
@@ -121,7 +128,7 @@ function update(e) {
   redraw_map();
 }
 
-/*  
+/**  
 
 Place equirectangular tilesfrom an image on a Leaflet "map" (canvas?) 
 given the following in a hash:
@@ -139,6 +146,11 @@ opacity; tile opacity
 fake: if set to 1, don't do anything, just print out debugging info
 
 TODO: document function here more
+
+TODO: this function IS different from placeTilesOnMap, because it uses
+the image's original width/height and then divides them into "slippy
+tiles". However, as I replace images with mapserver data, this
+function can probably be phased out
 
 */
 
@@ -215,14 +227,22 @@ function redraw_map() {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
+  placeTilesOnMap(maps['buffer']);
+
   //  L.imageOverlay(url, [ [-90, -180], [90, 180]]).addTo(map);
 
   // the OSM map (comes first so others can overlay)
   placeTilesOnMap(maps['osmMap']);
-  placeImageTilesOnMap(maps['tzMap']);
   placeTilesOnMap(maps['infoMap']);
+
+  // TODO: get rid of these and use data instead
+  placeImageTilesOnMap(maps['tzMap']);
   placeImageTilesOnMap(maps['climateMap']);
   placeImageTilesOnMap(maps['landUseMap']);
+
+  // placeTilesOnMap(maps['tzMap']);
+  //  placeTilesOnMap(maps['climateMap']);
+  //  placeTilesOnMap(maps['landUseMap']);
 
   // OWM testing
   placeTilesOnMap(maps['owmTemp']);
@@ -243,7 +263,7 @@ function redraw_map() {
 
   var latarc, lngarc;
 
-  L.geoJson(buffered).addTo(map);
+  //  L.geoJson(buffered).addTo(map);
   //  L.geoJson(buff2).addTo(map);
 
   [3600, 1200, 480, 120, 60].forEach(function (x) {
