@@ -63,10 +63,11 @@ map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
 
-var point = turf.point([-90.548630, 14.616599]);
-var buffered = turf.buffer(point, 14000, {units: 'miles'});
+var point = turf.point([-106.651138463684, 35.0844869067959]);
+var buffered = turf.buffer(point, 5000, {units: 'miles', mercator: 'false'});
+var buff2 = turf.circle(point, 5000, {units: 'miles'});
 
-console.log(buffered);
+// console.log(buffered);
 
 let maps = [];
 
@@ -78,6 +79,8 @@ let maps = [];
 
 // maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "http://maps.openweathermap.org/maps/2.0/weather/TA2/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
 
+maps['osmMap'] = {map: map, fake: 0, projection: 1, opacity: 1, minZoom: 4, bounded: 1, tileURL: "https://tile.openstreetmap.org/${z}/${x}/${y}.png"};
+
 maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/temp_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
 
 maps['owmClouds'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/clouds_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
@@ -85,8 +88,6 @@ maps['owmClouds'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4,
 maps['owmPrecip'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/precipitation_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
 
 maps['owmWind'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/wind_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
-
-maps['osmMap'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"};
 
 maps['tzMap'] = {map: map, opacity: 0.5, width:65536, height:32768, origTileZoom: 8, maxZoom: 8, fake: 1, tileURL: "http://ws.terramapadventure.com/TIMEZONES/${z}/${x}/${y}.png"};
 
@@ -214,7 +215,7 @@ function redraw_map() {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
-  L.imageOverlay(url, [ [-90, -180], [90, 180]]).addTo(map);
+  //  L.imageOverlay(url, [ [-90, -180], [90, 180]]).addTo(map);
 
   // the OSM map (comes first so others can overlay)
   placeTilesOnMap(maps['osmMap']);
@@ -243,12 +244,13 @@ function redraw_map() {
   var latarc, lngarc;
 
   L.geoJson(buffered).addTo(map);
+  //  L.geoJson(buff2).addTo(map);
 
   [3600, 1200, 480, 120, 60].forEach(function (x) {
      latarc = Math.floor(center.lat*x)/x;
      lngarc = Math.floor(center.lng*x)/x;
 //  console.log("COORDS",latarc,lngarc,latarc+1/3600,lngarc+1/3600);
-     L.rectangle([ [latarc, lngarc], [latarc+1/x, lngarc+1/x]]).addTo(map);
+//     L.rectangle([ [latarc, lngarc], [latarc+1/x, lngarc+1/x]]).addTo(map);
 });
   
 // L.rectangle([[35, -106.5], [36, -105.5]], {color: "#ff7800", weight: 1}).addTo(map);
