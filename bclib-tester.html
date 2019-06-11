@@ -39,6 +39,12 @@ Wind: <input type="checkbox" id="owmWind" value="false">
 
 <script>
 
+console.log(turf.distance(turf.point([-106, 35]), turf.point([-90, 40])));
+
+// below works
+console.log(turf.distance([-106, 35], [-90, 40]));
+
+
 // https://stackoverflow.com/questions/28405619/javascript-array-to-png-client-side
 
 let id = new ImageData(512, 256);
@@ -56,6 +62,11 @@ let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
 map.on('moveend', redraw_map);
+
+var point = turf.point([-90.548630, 14.616599]);
+var buffered = turf.buffer(point, 14000, {units: 'miles'});
+
+console.log(buffered);
 
 let maps = [];
 
@@ -230,6 +241,8 @@ function redraw_map() {
   let center = map.getCenter();
 
   var latarc, lngarc;
+
+  L.geoJson(buffered).addTo(map);
 
   [3600, 1200, 480, 120, 60].forEach(function (x) {
      latarc = Math.floor(center.lat*x)/x;
