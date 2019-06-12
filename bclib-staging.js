@@ -2,7 +2,8 @@
 
 /**
 
-Create a PNG image from an 3D array of (r, g, b, a) values. Obj fields:
+Create the base64 representation of PNG image from an 3D array of (r,
+g, b, a) values. Obj fields:
 
 arr - the 3D array
 
@@ -19,7 +20,14 @@ function array2PNG(obj) {
   for (let i=0; i < flat.length; i++) {imageData.data[i] = flat[i];}
 
   // the 'canvas' here is a tag/type name not a DOM element name
+
   let canvas = document.createElement('canvas');
+
+  // set width and height
+
+  canvas.height = obj.arr.length;
+  canvas.width = obj.arr[0].length;
+
   canvas.getContext('2d').putImageData(imageData, 0, 0);
   return canvas.toDataURL();
 }
@@ -76,35 +84,49 @@ TODO: add more here
 lng: longitude of target point
 lat: latitude of target point
 
-dist: the target distances in km (because turfjs defaults to that)
+distances: the target distances in km (because turfjs defaults to that)
+
+z/x/y: the z, x, and y values of the tile
 
 
 */
 
-function placeTileBuffersOnMap (obj) {
+function tilePixels2DistanceBand (obj) {
 
-  console.log("CALLED");
-
-  /* determine the nw corner of this tile */
-
-
+  /* determine the nw corner of this tile and of the tile to the SE */
 
   let nw = tile2LngLat(obj);
+  let se = tile2LngLat({x: obj.x+1, y: obj.y+1, z: obj.z});
 
-  /* and zoom level */
-  let z = boundNumber(obj.map.getZoom(), obj.minZoom, obj.maxZoom);
+  /* the results array */
 
-  /* the width of a pixel in both lng and lat */
+  let result = [];
 
-  let di = 360/2**z;
-  let dj = 180/2**z;
+  /* go through pixels row by row, col by col */
 
-  console.log(`NW: ${nw.lng} and ${nw.lng}, DI: ${di}, DJ: ${dj}`);
+  for (let i=0; i < 256; i++) {
+    result[i] = [];
+    for (let j=0; j < 256; j++) {
 
-  for (let i=nw.lng; i < nw.lng+256*di; i += di) {
-    for (let j=nw.lat; j > nw.lat-256*dj; j -= dj) {
-      console.log(`I: ${i}, J: ${j}`);
+      let plng = nw.lng + i/256*(se.lng-nw.lng);
+      let plat = nw.lat + j/256*(se.lat-nw.lat);
+      let dist = turf.distance([plng, plat], [obj.lng, obj.lat]);
+
+      // where in distances does this dist appear?
+      // TODO: binary search would be faster for large arrays
+      // NOTE: value of i means "less than the ith element"
+      
+      // start with assumption it's less than 0th element and then loop
+      
+      result[i][j] = 0;
+
+      for (let k=0; k < obj.distances.length; k++) {
+
+	// array is sorted, so this is early abort
+	if (dist < obj.distances[k]) {break;}
+	result[i][j] = k+1;
+      }
     }
   }
+  return result;
 }
-

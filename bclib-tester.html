@@ -42,6 +42,9 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <script>
 
+console.log(tilePixels2DistanceBand({z: 3, x: 1, y: 3, distances: [1000, 2000, 3000],
+	lat: 35, lng: -106}));
+
 console.log(turf.distance(turf.point([-106, 35]), turf.point([-90, 40])));
 
 // below works
@@ -54,7 +57,7 @@ let arr = [];
 
 for (i=0; i < 10; i++) {
   arr[i] = [];
-  for (j=0; j < 10; j++) {
+  for (j=0; j < 30; j++) {
     arr[i][j] = [255, 0, 0, 255];
   }
 }

@@ -395,13 +395,6 @@ function placeTilesOnMap(obj) {
 
       console.log("END");
 
-
-      
-
-
-
-
-
       // if bounded, don't print out of bound tiles
       // TODO: allow wraparound
 
