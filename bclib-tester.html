@@ -42,6 +42,12 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <script>
 
+console.log(grid2Distances({lng: -106, lat: 35, slat: -90, nlat: 90, wlng: -180, elng: 180, width: 10, height: 10}));
+
+
+// this is NOT a JS command, but causes a syntax error which stops the script
+die;
+
 let test1 = tilePixels2DistanceBand({z: 3, x: 1, y: 2, 
       distances: [1000, 2000, 3000], lat: 35, lng: -106});
 

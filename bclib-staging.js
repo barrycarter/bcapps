@@ -2,6 +2,40 @@
 
 /**
 
+Given a grid of longitude/latitude values, and a target point, determine the distance from each grid point to the target point. Input obj values:
+
+lng, lat - the target point longitude and latitude
+
+nlat, slat, wlng, elng - the grid boundaries
+
+width, height - the number of longitudes and latitudes in the grid
+
+TODO: computing great circle distance for a grid can be sped up a lot,
+either by caching, or by noting there are formulas that make it easier
+
+*/
+
+function grid2Distances(obj) {
+
+  let result = [];
+
+  for (let j=0; j < obj.height; j++) {
+    result[j] = [];
+  for (let i=0; i < obj.width; i++) {
+
+      // using 0.5 below chooses the center of each grid point
+      let lat = obj.nlat - ((j+0.5)/obj.height)*(obj.nlat - obj.slat);
+      let lng = obj.wlng + ((i+0.5)/obj.width)*(obj.elng - obj.wlng);
+      result[j][i] = turf.distance([lng, lat], [obj.lng, obj.lat]);
+      console.log(`LNG: ${lng}, LAT: ${lat}, RES: ${result[j][i]}`);
+    }
+  }
+
+  return result;
+}
+
+/**
+
 Create the base64 representation of PNG image from an 3D array of (r,
 g, b, a) values. Obj fields:
 
