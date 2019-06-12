@@ -67,9 +67,6 @@ function tile2LngLatPixels(obj) {
 
 /**
 
-WARNING: this functions signature will change to use multiple dist
-values-- DO NOT USE AS IS
-
 For a given slippy tile, determine which points are more distant than
 given distances
 
@@ -88,6 +85,7 @@ distances: the target distances in km (because turfjs defaults to that)
 
 z/x/y: the z, x, and y values of the tile
 
+TODO: add "scalable" distances (not array based)
 
 */
 
@@ -98,12 +96,21 @@ function tilePixels2DistanceBand (obj) {
   let nw = tile2LngLat(obj);
   let se = tile2LngLat({x: obj.x+1, y: obj.y+1, z: obj.z});
 
+  console.log(td(nw, "nw"), td(se, "se"));
+
   /* the results array */
 
   let result = [];
 
   /* go through pixels row by row, col by col */
 
+  // TODO: this uses the nw corner of each pixel, should use middle
+
+  // TODO: subroutinize below, could be useful in other contexts
+
+  // TODO: create function that returns distances, "banding" is too
+  // restrictive
+  
   for (let i=0; i < 256; i++) {
     result[i] = [];
     for (let j=0; j < 256; j++) {

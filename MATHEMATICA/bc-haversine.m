@@ -24,6 +24,22 @@ Plot[dist[0, 35*Degree, x*Degree, 40*Degree], {x, -180, 180}]
 FullSimplify[D[dist[lng1, lat1, lng2, lat2], lng1], conds]
 
 
+FullSimplify[
+ dist[lng1 + delta, lat1, lng2, lat2] - 
+ dist[lng1, lat1, lng2, lat2], 
+conds]
+
+FullSimplify[
+ Cos[dist[lng1 + delta, lat1, lng2, lat2]] - 
+ Cos[dist[lng1, lat1, lng2, lat2]], 
+conds]
+
+FullSimplify[
+ Cos[dist[lng1, lat1 + delta, lng2, lat2]] - 
+ Cos[dist[lng1, lat1, lng2, lat2]], 
+conds]
+
+
 
 
 

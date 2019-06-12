@@ -42,8 +42,18 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <script>
 
-console.log(tilePixels2DistanceBand({z: 3, x: 1, y: 3, distances: [1000, 2000, 3000],
-	lat: 35, lng: -106}));
+let test1 = tilePixels2DistanceBand({z: 3, x: 1, y: 2, 
+      distances: [1000, 2000, 3000], lat: 35, lng: -106});
+
+color = [];
+color[0] = [255, 0, 0, 255];
+color[1] = [0, 255, 0, 255];
+color[2] = [0, 0, 255, 255];
+color[3] = [0, 0, 0, 255];
+
+let colors = test1.map(x => x.map(y => color[y]));
+
+console.log("DIST", array2PNG({arr: colors}));
 
 console.log(turf.distance(turf.point([-106, 35]), turf.point([-90, 40])));
 
