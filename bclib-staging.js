@@ -2,6 +2,30 @@
 
 /**
 
+Create a PNG image from an 3D array of (r, g, b, a) values. Obj fields:
+
+arr - the 3D array
+
+*/
+
+function array2PNG(obj) {
+
+  let imageData = new ImageData(obj.arr[0].length, obj.arr.length);
+
+  // TODO: there must be a better way to do this
+
+  let flat = obj.arr.flat(3);
+
+  for (let i=0; i < flat.length; i++) {imageData.data[i] = flat[i];}
+
+  // the 'canvas' here is a tag/type name not a DOM element name
+  let canvas = document.createElement('canvas');
+  canvas.getContext('2d').putImageData(imageData, 0, 0);
+  return canvas.toDataURL();
+}
+
+/**
+
 TODO: this function is probably unnecessary
 
 Converts an equirectangular tile to an array of latitude and
@@ -62,6 +86,8 @@ function placeTileBuffersOnMap (obj) {
   console.log("CALLED");
 
   /* determine the nw corner of this tile */
+
+
 
   let nw = tile2LngLat(obj);
 

@@ -50,6 +50,17 @@ console.log(turf.distance([-106, 35], [-90, 40]));
 
 // https://stackoverflow.com/questions/28405619/javascript-array-to-png-client-side
 
+let arr = [];
+
+for (i=0; i < 10; i++) {
+  arr[i] = [];
+  for (j=0; j < 10; j++) {
+    arr[i][j] = [255, 0, 0, 255];
+  }
+}
+
+console.log("RED", array2PNG({arr: arr}));
+
 let id = new ImageData(512, 256);
 for (i=0; i<512*256*4; i++) {id.data[i] = 120;}
 
@@ -60,6 +71,8 @@ let canvas = document.createElement('canvas');
 canvas.getContext('2d').putImageData(id, 0, 0);
 
 var url = canvas.toDataURL();
+
+console.log(`URL: ${url}`);
 
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
@@ -80,7 +93,7 @@ let maps = [];
 // load it from a private library, but I'd still need to expose it in
 // production)
 
-maps['buffer'] = {map: map, projection: 1, opacity: 1, minZoom: 4, bounded: 1, lng: 0, lat: 0, dist: 5000, tileURL: ""};
+maps['buffer'] = {map: map, projection: 1, opacity: 1, minZoom: 4, bounded: 1, lng: 0, lat: 0, dist: [5000, 6000], tileURL: "", fake: 1};
 
 // TODO: upgrade this to maps v2 which is currently not working for me
 

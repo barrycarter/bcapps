@@ -386,7 +386,7 @@ function placeTilesOnMap(obj) {
 	  let lng0 = nwBound.lng + i*(seBound.lng-nwBound.lng);
 	  let lat0 = nwBound.lat + i*(seBound.lng-nwBound.lng);
 
-	  console.log(`LNG0: ${lng0}, LAT0: ${lat0} and ${obj.lng} and ${obj.lat}`);
+	  //	  console.log(`LNG0: ${lng0}, LAT0: ${lat0} and ${obj.lng} and ${obj.lat}`);
 
 	  turf.distance([lng0, lat0], [obj.lng, obj.lat]);
 
