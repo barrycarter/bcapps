@@ -2,6 +2,152 @@
 
 /**
 
+The URLCache object (not function) stores the base64 representations
+of URLs and returns those when possible; when not possible, returns
+the URL itself
+
+TODO: why can't I use 'this' deeper inside my promise function
+
+*/
+
+let URLCache = {cache: []};
+
+URLCache.get = function (url) {
+
+  // if we have it in the cache, return it
+  if (this.cache[url]) {
+    console.log(`Returning ${this.cache[url]} from cache`);
+    return this.cache[url];
+  }
+
+  // if not, return the URL itself, but fetch it and store it
+  fetch(url).then(function (response) {
+      response.arrayBuffer().then(function (blob) {
+	  console.log(`URL is ${url}`);
+	  console.log(`cache is ${URLCache.cache}`);
+	  console.log(`blob is ${blob}`);
+	  //	  let b64 = new Buffer(blob, 'binary').toString('base64');
+	  URLCache.cache[url] = blob;
+	  console.log(`Set cache value to ${this.cache[url]}`);
+	})
+	})
+
+  return url;
+}
+
+/**
+
+Places a buffer around a point on a map. Obj properties:
+
+map: put the tiles here
+
+lng, lat: the longitude and latitude of the target point
+
+TODO: allow multiple buffers?
+
+colorFunction: a function that translates distances into RGB color values
+
+minZoom: never get tiles lower than this zoom level
+
+maxZoom: never get tiles higher than this zoom level
+
+projection: if 1, assume tiles are Mercator projected (slippy tiles);
+otherwise, assume they are equirectangular
+
+opacity: tile opacity
+
+fake: if set to 1, don't do anything, just print out debugging info
+
+*/
+
+function placeBufferOnMap(obj) {
+
+  // figure out which tiles we need
+  let tiles = map2TilesNeeded(obj);
+
+  console.log(td(tiles));
+
+}
+
+/**
+
+Given a Leaflet map, determine which slippy tiles need to be painted
+on to it, and where; this function avoids repeating code in different
+map rendering functions. Obj properties:
+
+map: the map on which to render the tiles
+
+minZoom: never get tiles lower than this zoom level
+
+maxZoom: never get tiles higher than this zoom level
+
+projection: if 1, Mercator projection, otherwise Plate-Carree
+
+TODO: allow cylinderical wraparound for east/west
+
+TODO: dragon tiles?
+
+*/
+
+function map2TilesNeeded(obj) {
+
+  let result = [];
+
+  // defaults
+  obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&projection=0"));
+
+  // TODO: in theory, could determine optimal zoom from map height/width
+  
+  let z = boundNumber(obj.map.getZoom(), obj.minZoom, obj.maxZoom);
+
+  let mapBounds = obj.map.getBounds();
+
+  // for Mercator, latitude limit is special; otherwise, 90
+
+  // the +1 below is so we still get the northern/southernmost tiles
+
+  let latLimit = obj.projection==1?bclib.MERCATOR_LAT_LIMIT+1:90;
+
+  // compute min/max lat/lon truncating at limits
+
+  // NOTE: this could be done better if we let lngLat2Tile() truncate
+
+  let n = boundNumber(mapBounds.getNorth(), -latLimit, latLimit);
+  let s = boundNumber(mapBounds.getSouth(), -latLimit, latLimit);
+  let e = Math.min(Math.max(-180, mapBounds.getEast()), 180);
+  let w = Math.min(Math.max(-180, mapBounds.getWest()), 180);
+
+  // determine the x and y values corresponding to these extents (we
+  // use 'floor' here because a tile starts at its nw boundary)
+
+  // the corner boundaries (in this order so se > nw in both coords)
+
+  // TODO: not happy with the way I am floor-ifying these
+
+  let nw = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: n, lng: w, projection: obj.projection}), f: Math.floor}).hash;
+  let se = applyFunctionToHashValues({hash: lngLat2Tile({z: z, lat: s, lng: e, projection: obj.projection}), f: Math.floor}).hash;
+
+  // and now the loop to get the bounds and where to put them
+
+  for (let x = nw.x; x <= se.x; x++) {
+    for (let y = nw.y; y <= se.y; y++) {
+
+      // TODO: there should be a better way to find bounds
+      let nwBound = tile2LngLat({x: x, y: y, z: z, projection: obj.projection});
+      let seBound = tile2LngLat({x: x+1, y: y+1, z: z, projection: obj.projection});
+
+      // these are in lat/lng order, sigh
+      let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
+
+      result.push({x: x, y: y, z: z, bounds: bounds});
+    }
+  }
+
+  return result;
+}
+
+/**
+
 Given a grid of longitude/latitude values, and a target point, determine the distance from each grid point to the target point. Input obj values:
 
 lng, lat - the target point longitude and latitude
@@ -27,7 +173,6 @@ function grid2Distances(obj) {
       let lat = obj.nlat - ((j+0.5)/obj.height)*(obj.nlat - obj.slat);
       let lng = obj.wlng + ((i+0.5)/obj.width)*(obj.elng - obj.wlng);
       result[j][i] = turf.distance([lng, lat], [obj.lng, obj.lat]);
-      console.log(`LNG: ${lng}, LAT: ${lat}, RES: ${result[j][i]}`);
     }
   }
 

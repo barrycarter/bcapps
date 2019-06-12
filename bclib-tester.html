@@ -42,11 +42,31 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <script>
 
+td(URLCache.get("https://a.tile.openstreetmap.org/0/0/0.png"));
+
+console.log(URLCache);
+
+setTimeout(function () {td(URLCache.get("https://a.tile.openstreetmap.org/0/0/0.png")); console.log(URLCache)}, 3000);
+
+die;
+
+
+// As an opaque object, there is no exposed property.
+
+let c = document.createElement('canvas');
+let ctx = c.getContext("2d");
+
+let gr = ctx.createLinearGradient(0, 0, 200, 0);
+gr.addColorStop(0, "red");
+gr.addColorStop(1, "white");
+
+console.log(gr);
+
 console.log(grid2Distances({lng: -106, lat: 35, slat: -90, nlat: 90, wlng: -180, elng: 180, width: 10, height: 10}));
 
 
 // this is NOT a JS command, but causes a syntax error which stops the script
-die;
+// die;
 
 let test1 = tilePixels2DistanceBand({z: 3, x: 1, y: 2, 
       distances: [1000, 2000, 3000], lat: 35, lng: -106});
@@ -112,7 +132,7 @@ let maps = [];
 // load it from a private library, but I'd still need to expose it in
 // production)
 
-maps['buffer'] = {map: map, projection: 1, opacity: 1, minZoom: 4, bounded: 1, lng: 0, lat: 0, dist: [5000, 6000], tileURL: "", fake: 1};
+maps['buffer'] = {map: map, projection: 0, opacity: 1, lng: 0, lat: 0, dist: [5000, 6000], tileURL: "", fake: 1};
 
 // TODO: upgrade this to maps v2 which is currently not working for me
 
@@ -142,6 +162,8 @@ for (var key in maps) {
   document.getElementById(key).addEventListener('change', update);
   document.getElementById(`${key}.o`).addEventListener('change', update);
 }
+
+redraw_map();
 
 function update(e) {
 //  console.log(var_dump(e.target));
@@ -250,8 +272,6 @@ function placeImageTilesOnMap(obj) {
 }
 
 
-redraw_map();
-
 // TODO: pass image base too
 
 function redraw_map() {
@@ -259,7 +279,7 @@ function redraw_map() {
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
 
-  placeTilesOnMap(maps['buffer']);
+  placeBufferOnMap(maps['buffer']);
 
   //  L.imageOverlay(url, [ [-90, -180], [90, 180]]).addTo(map);
 
