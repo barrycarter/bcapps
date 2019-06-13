@@ -62,9 +62,28 @@ function placeBufferOnMap(obj) {
   let tiles = map2TilesNeeded(obj);
 
   for (let i=0; i < tiles.length; i++) {
-    console.log(`I: ${i}`);
-  }
 
+    console.log("TILE", tiles[i]);
+    
+    let bounds = tiles[i].bounds;
+
+    console.log("BOUNDS", bounds);
+
+    // get array of distances for this tile
+    let dists = grid2Distances({
+      lat: obj.lat, lng: obj.lng,
+      width: 256, height: 256, 
+      slat: bounds[0][0], nlat: bounds[1][0],
+      wlng: bounds[0][1], elng: bounds[1][1]});
+  
+     let cols = dists.map(arr => arr.map(dist => obj.colorFunction(dist)));
+
+     let img = array2PNG({arr: cols});
+
+     //     console.log("OVERLAYING");
+     L.imageOverlay(img, bounds, {opacity: obj.opacity}).addTo(obj.map);
+     //     console.log("DONE OVERLAYING");
+  }
 }
 
 /**

@@ -282,7 +282,12 @@ function lngLat2Tile(obj) {
 
   // for equirectangular
   if (obj.projection == 0) {
-    return {z: obj.z, x: x, y: (90-obj.lat)/180*2**obj.z};
+
+    // TODO: cleanup this code, maybe no ternary operator below
+    // special case: -90 itself touches 2**obj.z which it shouldn't
+    
+    return {z: obj.z, x: x,
+	y: obj.lat<=-90?2**obj.z-1:(90-obj.lat)/180*2**obj.z}
   }
 
   // for Mercator
@@ -371,29 +376,6 @@ function placeTilesOnMap(obj) {
       // these are in lat/lng order, sigh
 
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
-
-
-      // NOTE: experimental code for buffers below
-
-      console.log(`BOUNDS: ${bounds[0]}`);
-
-      console.log(`the map says: ${obj.lng}`);
-
-      console.log("START");
-      for (let i=0 ; i < 1; i += 1/256) {
-	for (let j=0 ; j < 1; j += 1/256) {
-
-	  let lng0 = nwBound.lng + i*(seBound.lng-nwBound.lng);
-	  let lat0 = nwBound.lat + i*(seBound.lng-nwBound.lng);
-
-	  //	  console.log(`LNG0: ${lng0}, LAT0: ${lat0} and ${obj.lng} and ${obj.lat}`);
-
-	  turf.distance([lng0, lat0], [obj.lng, obj.lat]);
-
-	}
-      }
-
-      console.log("END");
 
       // if bounded, don't print out of bound tiles
       // TODO: allow wraparound
