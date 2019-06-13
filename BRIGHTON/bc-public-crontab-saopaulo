@@ -334,4 +334,4 @@ XWIDTH=1600
 
 # keep track of a 70GB upload rsync, later other things
 
-30 * * * * ls -l /mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM/srtm3.bin
+# 30 * * * * ls -l /mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM/srtm3.bin

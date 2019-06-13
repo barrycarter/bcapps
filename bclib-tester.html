@@ -45,8 +45,12 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 // 20015.114442035923 is max distance turf.distance will report
 
 function cf(dist) {
-  let g = Math.floor(dist/20015.114442035923*256);
-  return [g, g, g, 255];
+
+  
+
+  if (dist < 10000) {return [255, 255, 255, 255];}
+
+  return [0,0,0,255];
 }
 
 console.log(turf.distance([0,0], [180,0]));
@@ -158,7 +162,8 @@ let maps = [];
 // load it from a private library, but I'd still need to expose it in
 // production)
 
-maps['buffer'] = {map: map, projection: 0, opacity: 0.8, lng: 0, lat: 0, tileURL: "", fake: 1, colorFunction: cf};
+maps['buffer'] = {map: map, projection: 0, opacity: 0.8, 
+		  lng: -106, lat: 35, fake: 1, colorFunction: cf};
 
 // TODO: upgrade this to maps v2 which is currently not working for me
 
