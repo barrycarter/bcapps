@@ -22,13 +22,9 @@ URLCache.get = function (url) {
 
   // if not, return the URL itself, but fetch it and store it
   fetch(url).then(function (response) {
-      response.arrayBuffer().then(function (blob) {
-	  console.log(`URL is ${url}`);
-	  console.log(`cache is ${URLCache.cache}`);
-	  console.log(`blob is ${blob}`);
-	  //	  let b64 = new Buffer(blob, 'binary').toString('base64');
-	  URLCache.cache[url] = blob;
-	  console.log(`Set cache value to ${this.cache[url]}`);
+      response.blob().then(function (b) {
+	  let blobURL = URL.createObjectURL(b);
+	  URLCache.cache[url] = blobURL;
 	})
 	})
 
@@ -65,7 +61,9 @@ function placeBufferOnMap(obj) {
   // figure out which tiles we need
   let tiles = map2TilesNeeded(obj);
 
-  console.log(td(tiles));
+  for (let i=0; i < tiles.length; i++) {
+    console.log(`I: ${i}`);
+  }
 
 }
 
