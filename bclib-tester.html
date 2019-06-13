@@ -3,6 +3,7 @@
 <script src="MAPS/turf.min.js"></script>
 <script src="bclib.js"></script>
 <script src="bclib-staging.js"></script>
+<script src="MAPS/bc-osmtilecache.js"></script>
 
 <style>html,body, #map {height:100%;}</style>
 
@@ -46,11 +47,24 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 function cf(dist) {
 
-  
+  // TODO: this is NOT accurate for sunlight, just playing around
 
-  if (dist < 10000) {return [255, 255, 255, 255];}
+  if (dist < 20015.114442035923/2) {
+    let sat = Math.floor((10000-dist)/10000*256);
 
-  return [0,0,0,255];
+    // banding
+    sat = 16*Math.floor(sat/16);
+
+    return [sat, sat, 255, 255];
+  }
+
+  // dist is more than 10K
+
+  let g = 128-128*(dist-10000)/10015;
+
+  g = 8*Math.floor(g/8);
+
+  return [g,g,g,255];
 }
 
 console.log(turf.distance([0,0], [180,0]));

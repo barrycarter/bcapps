@@ -377,6 +377,8 @@ function placeTilesOnMap(obj) {
 
       let bounds = [[seBound.lat, nwBound.lng], [nwBound.lat, seBound.lng]];
 
+      //      let bounds = [[seBound.lat, seBound.lng], [nwBound.lat, nwBound.lng]];
+
       // if bounded, don't print out of bound tiles
       // TODO: allow wraparound
 
@@ -393,7 +395,10 @@ function placeTilesOnMap(obj) {
       
       //      td([bounds, url], "BOUNDS/URL");
 
-      L.imageOverlay(url, bounds, {opacity: obj.opacity}).addTo(obj.map);
+      // TESTING caching
+
+      //      L.imageOverlay(url, bounds, {opacity: obj.opacity}).addTo(obj.map);
+      L.imageOverlay(URLCache.get(url), bounds, {opacity: obj.opacity}).addTo(obj.map);
 
     }
   }

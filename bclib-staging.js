@@ -16,7 +16,7 @@ URLCache.get = function (url) {
 
   // if we have it in the cache, return it
   if (this.cache[url]) {
-    console.log(`Returning ${this.cache[url]} from cache`);
+    console.log(`Returning ${url} value from cache`);
     return this.cache[url];
   }
 
@@ -63,11 +63,11 @@ function placeBufferOnMap(obj) {
 
   for (let i=0; i < tiles.length; i++) {
 
-    console.log("TILE", tiles[i]);
+    //    console.log("TILE", tiles[i]);
     
     let bounds = tiles[i].bounds;
 
-    console.log("BOUNDS", bounds);
+    //    console.log("BOUNDS", bounds);
 
     // get array of distances for this tile
     let dists = grid2Distances({
