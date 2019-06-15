@@ -5,7 +5,6 @@
 # otherwise 'zoomed' maps); future idea is to use slippy tiles (OSM)
 # and not try to recreate everything myself
 
-# --picloud: run CPU-intensive commands on picloud.com (requires account)
 # --gridonly: only draw the grid (useful for testing)
 # --nogrid: don't draw the grid (useful for testing)
 # --nogridstring: don't print most strings on the grid
@@ -161,20 +160,16 @@ for $x (0..(2**$zoomtile-1)) {
     debug("CONVERTING: $x,$y,$zoomtile");
     ($file) = osm_map($x,$y,$zoomtile,"xy=1");
 
-    if ($globopts{picloud}) {
-      $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file gif:- | od -v -x -An";
-    } else {
-      # $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
-      # experimental below
-      $cmd = "convert -mattecolor transparent -extent ${slipex}x$slipey -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xe}x$ye /tmp/bcdg-$x-$y.gif";
-    }
+    # $cmd = "convert -mattecolor transparent -extent ${xsize}x$ysize -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xsize}x$ysize /tmp/bcdg-$x-$y.gif";
+    # experimental below
+    $cmd = "convert -mattecolor transparent -extent ${slipex}x$slipey -background transparent -matte -virtual-pixel transparent -distort Perspective $distort $file -extent ${xe}x$ye /tmp/bcdg-$x-$y.gif";
 
     push(@cmds, $cmd);
     push(@outfiles, "/tmp/bcdg-$x-$y.gif");
 
 #    warn("only printing command, not running it");
     print "$cmd\n";
-    unless ($globopts{picloud}) {system($cmd);}
+    system($cmd);
 
     # fly gets annoyed if file doesn't exist, so check that above worked
     if (-f "/tmp/bcdg-$x-$y.gif") {
@@ -184,68 +179,7 @@ for $x (0..(2**$zoomtile-1)) {
   }
 }
 
-if ($globopts{picloud}) {
-  picloud_commands(@cmds);
-  # testing here
-  $piout = read_file("/tmp/piout.txt");
-
-  # answers are in Python list, so get them...
-  while ($piout=~s/\'(.*?)\'//) {
-    my($ans) = $1;
-    # remove spaces (and newlines, which are given as hard "\n")
-    $ans=~s/\s+//isg;
-    $ans=~s/\\n//isg;
-#    debug("PREBIN: $ans");
-    # od flip flop
-    $ans=~s/(..)(..)/$2$1/isg;
-     # convert to binary
-    $ans=~s/(..)/chr(hex($1))/iseg;
-#    debug("POSTBIN: $ans");
-#    die "TESTING";
-   # and write to file
-    write_file($ans, shift(@outfiles));
-  }
-#  debug("PIOUT: $piout");
-}
-
-
 close(A);
-
-# picloud_commands(@cmds);
-
-=item picloud_commands(@list)
-
-Given a @list of shell commands, execute them on picloud (via a Python
-script) and return the results as an array
-
-TODO: dont hardcode barryenv1 as environment
-
-=cut
-
-sub picloud_commands {
-  my(@list) = @_;
-  local(*A);
-
-  # TODO: better temp file names
-  open(A,">/tmp/picloudrun.py");
-
-  # headers
-  print A "import cloud\nimport os\ndef sysop(cmd): return os.popen(cmd).read()\n";
-  print A "jid=[]\n";
-
-  for $i (@list) {
-    print A qq%jid.append(cloud.call(sysop,"$i", _env="barryenv1"))\n%
-  }
-
-  # and the results
-  print A "print cloud.result(jid)\n";
-  close(A);
-
-  # run program and write results to file
-  # TODO: do this whole thing better later
-  system("python /tmp/picloudrun.py 1> /tmp/piout.txt 2> /tmp/pierr.txt");
-
-}
 
 system("fly -q -i /tmp/bdg.fly -o /tmp/bdg1.gif");
 
