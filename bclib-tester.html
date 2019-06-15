@@ -156,6 +156,9 @@ console.log(`URL: ${url}`);
 let map = L.map('map', {crs: L.CRS.Simple});
 map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
+
+// TODO: on move, dont need to erase existing stuff
+// TODO: on zoom, paint new first, THEN remove
 map.on('moveend', redraw_map);
 
 /*
@@ -319,7 +322,9 @@ function placeImageTilesOnMap(obj) {
 
 // TODO: pass image base too
 
-function redraw_map() {
+function redraw_map(obj) {
+
+  console.log("OBJ:", obj);
 
   // TODO: not this
   map.eachLayer(function(layer) {layer.remove()});
