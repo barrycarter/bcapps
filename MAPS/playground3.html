@@ -3,6 +3,18 @@
 
 <script>
 
+console.log(proj4("WGS84", "GOOGLE", [0, 0]));
+
+console.log(proj4("WGS84", "GOOGLE", [10, 0]));
+
+console.log(proj4("WGS84", "GOOGLE", [0, -90]));
+
+
+
+// not a real command, but forces eval stop
+
+die();
+
 var srcCorners = [158, 64, 494, 69, 495, 404, 158, 404];
 var dstCorners = [100, 500, 152, 564, 148, 604, 100, 560];
 var perspT = PerspT(srcCorners, dstCorners);

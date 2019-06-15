@@ -22,8 +22,8 @@ $latspace = 15;
 $lonspace = 20;
 
 # x/y of image
-$xsize = 12000;
-$ysize = 6000;
+$xsize = 1600;
+$ysize = 800;
 
 # use slippy tiles at this zoom level (prev hardcoded at 4)
 $zoomtile = 5;
@@ -43,10 +43,10 @@ sub pre {
 }
 
 # $proj = "etmerc"; $div = 20003931; $pre = \&pre;
-# $proj = "ortho"; $div = 6378137; $pre = \&pre;
+$proj = "ortho"; $div = 6378137; $pre = \&pre;
 # $proj = "merc"; $div = 20000000; $pre = \&pre;
 # <h>And here's to you...</h>
-$proj = "robin"; $div = 17005833; $pre = \&pre;
+# $proj = "robin"; $div = 17005833; $pre = \&pre;
 
 # making this more efficient and flexible by only calcing values once
 for ($lat=90; $lat>=-90; $lat-=$latspace) {
