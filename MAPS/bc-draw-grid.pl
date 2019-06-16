@@ -9,7 +9,6 @@
 # --nogrid: don't draw the grid (useful for testing)
 # --nogridstring: don't print most strings on the grid
 
-
 # TODO: adaptive zooming (zoom more where needed)
 
 require "/usr/local/lib/bclib.pl";
@@ -218,7 +217,13 @@ sub proj4 {
 
   # echoing back $lat/$lon is pointless here, but may be useful later
   # NOTE: +proj=latlon still requires lon/lat order
-  my($cmd) = "echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null";
+
+#  my($cmd) = "echo $lon $lat | cs2cs -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null";
+
+  my($cmd) = "echo $lon $lat | cs2cs +lat_0=-40 +lat_1=10 -E -e 'ERR ERR' +proj=latlon +to +proj=$proj 2> /dev/null";
+
+
+
   debug("CMD is: $cmd");
   my($res) = `$cmd`;
   debug("RESULT IS: $res");
