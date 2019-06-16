@@ -2,6 +2,30 @@
 
 /**
 
+Given the following, return the x and y coordinates of lng/lat after
+the globe has been rotated so that clng/clat is the center, north is
+still up:
+
+lng/lat: the longitude and latitude of the original point
+
+clng/clat: the longitude/latitude of the new central point
+
+*/
+
+function lngLat2Ortho(obj) {
+
+  // these formulas came from Mathematica
+
+  return {x: Math.cos(obj.lat)*Math.sin(obj.lng - obj.clng), 
+          y: 
+
+    Math.cos(obj.lat)*Math.cos(obj.lng-obj.clng)*Math.sin(obj.clat) + 
+      Math.cos(obj.clat)*Math.sin(obj.lat)};
+
+}
+
+/**
+
 The URLCache object (not function) stores the base64 representations
 of URLs and returns those when possible; when not possible, returns
 the URL itself

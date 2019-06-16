@@ -5,6 +5,9 @@
 <script src="bclib-staging.js"></script>
 <script src="MAPS/perspective-transform.min.js"></script>
 <script src="MAPS/proj4-compressed.js"></script>
+
+<script src="MAPS/proj4leaflet.js"></script>
+
 <script src="MAPS/bc-osmtilecache.js"></script>
 
 <style>html,body, #map {height:100%;}</style>
@@ -49,12 +52,34 @@ console.log("TESTING");
 
 // projecting level 4 slippys to standard orthographic projection
 
+// var crs = new L.Proj.CRS('EPSG:3006', '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+
+// let crs = new L.Proj.CRS('EPSG:4326', '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+
+// let crs = new L.Proj.CRS('EPSG:4326', '+proj=orth');
+
+// console.log("CRS", crs);
+
+// crs = L.Proj.CRS('WGS84', '+proj=ortho');
+
+// console.log(crs);
+
+pretend_to_die();
+
+// console.log(L.Proj.CRS('WGS84', '+proj=ortho', [0,0]));
+
 for (let i=0; i<16; i++) {
   for (let j=0; j<16; j++) {
 
     let latlon = tile2LngLat({z: 4, x: i, y: j, projection: 1});
 
-    console.log(proj4("WGS84", "GOOGLE", [latlon.lat, latlon.lon]));
+    //    let orth = "+proj=gnom";
+
+    //    orth = "+proj=geos";
+
+    proj4.defs('ortho', '+proj=gnom');
+
+    console.log(proj4('WGS84', 'ortho', [latlon.lat, latlon.lon]));
 
 
   }
