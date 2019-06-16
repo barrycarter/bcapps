@@ -131,12 +131,55 @@ ListPlot[Table[{newX[lng, lat, 0*Degree, 35*Degree],
 {lng, -Pi/2, Pi/2, 10*Degree}, {lat, -Pi/2, Pi/2, 10*Degree}], 
  AspectRatio -> 1]
 
-
-
-
-
-
-
-
 ListPlot[Table[{Cos[lat*Degree]*Sin[lng*Degree], Sin[lat*Degree]},
 {lng, -90, 90 , 10}, {lat, -90 ,90 ,10}], AspectRatio -> 1]
+
+(* work below 16 Jun 2019 copied from ../MATHEMATICA/playground.m to start *)
+
+(* Mercator stuff *)
+
+(* below from bclib.pl, trying to find inverse *)
+
+(* lat only, that's the hard one, first *)
+
+slippy2lat[x_,y_,z_,px_,py_] =
+ -90 + (360*ArcTan[Exp[Pi-2*Pi*((y+py/256)/2^z)]])/Pi
+
+slippy2latrad[x_,y_,z_,px_,py_] = 
+ FullSimplify[slippy2lat[x,y,z,px,py]/180*Pi]
+
+slippy2lonrad[x_,y_,z_,px_,py_] = FullSimplify[(x+px/256)*2*Pi/2^z-Pi]
+
+points[x_, y_, z_] = Flatten[Table[
+ {slippy2lonrad[x, y, z, i, j], slippy2latrad[x, y, z, i, j]},
+{j, {0,256}}, {i, {0,256}}], 1];
+
+
+points[x_, y_, z_] = {
+ {slippy2lonrad[x, y, z, 0, 0], slippy2latrad[x, y, z, 0, 0]},
+ {slippy2lonrad[x, y, z, 256, 0], slippy2latrad[x, y, z, 256, 0]},
+ {slippy2lonrad[x, y, z, 256, 256], slippy2latrad[x, y, z, 256, 256]},
+ {slippy2lonrad[x, y, z, 0, 256], slippy2latrad[x, y, z, 0, 256]}
+};
+
+newX[lng_, lat_, clng_, clat_] = Cos[lat]*Sin[lng - clng];
+
+newY[lng_, lat_, clng_, clat_] = Cos[lat]*Cos[lng - clng]*Sin[clat] + 
+ Cos[clat]*Sin[lat];
+
+newX[slippy2lonrad[x, y, z, px, py], slippy2latrad[x, y, z, px, py],
+ clng, clat]
+
+newY[slippy2lonrad[x, y, z, px, py], slippy2latrad[x, y, z, px, py],
+ clng, clat]
+
+
+
+
+
+
+
+
+
+
+

@@ -14,7 +14,12 @@ clng/clat: the longitude/latitude of the new central point
 
 function lngLat2Ortho(obj) {
 
+  // defaults
+  obj = mergeHashes(obj, str2hash("clat=0&clng=0"));
+
   // these formulas came from Mathematica
+
+  console.log(obj.lat, obj.lng, obj.clat, obj.clng);
 
   return {x: Math.cos(obj.lat)*Math.sin(obj.lng - obj.clng), 
           y: 

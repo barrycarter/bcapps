@@ -48,7 +48,13 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <script>
 
-console.log("TESTING");
+
+
+die_fake();
+				       
+//console.log("TESTING");
+
+// console.log(lngLat2Ortho({lat: 10*Math.PI/180, lng: -15*Math.PI/180, clat: 0, clng: 0}));
 
 // projecting level 4 slippys to standard orthographic projection
 
@@ -64,22 +70,25 @@ console.log("TESTING");
 
 // console.log(crs);
 
-pretend_to_die();
-
 // console.log(L.Proj.CRS('WGS84', '+proj=ortho', [0,0]));
 
 for (let i=0; i<16; i++) {
   for (let j=0; j<16; j++) {
 
-    let latlon = tile2LngLat({z: 4, x: i, y: j, projection: 1});
+    // TODO: this is inefficient, should cache or something
 
-    //    let orth = "+proj=gnom";
+    let lngLat1 = tile2LngLat({z: 4, x: i, y: j, projection: 1});
+    let lngLat2 = tile2LngLat({z: 4, x: i+1, y: j+1, projection: 1});
 
-    //    orth = "+proj=geos";
+    // trivial orthographic transformation for now
 
-    proj4.defs('ortho', '+proj=gnom');
+    let orth1 = lngLat2Ortho({
+      lng: lngLat1.lng*Math.PI/180, lat: lngLat1.lat*Math.PI/180});
 
-    console.log(proj4('WGS84', 'ortho', [latlon.lat, latlon.lon]));
+    let orth2 = lngLat2Ortho({
+      lng: lngLat2.lng*Math.PI/180, lat: lngLat2.lat*Math.PI/180});
+
+    console.log("ORTH1", orth1, "ORTH2", orth2);
 
 
   }
