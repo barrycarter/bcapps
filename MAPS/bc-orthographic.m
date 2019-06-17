@@ -2,8 +2,17 @@
 
 <formulas>
 
+lngLat2CenterLngLat[lng_, lat_, clng_, clat_] = 
+{ArcTan[Cos[clat]*Cos[lat]*Cos[clng - lng] + Sin[clat]*Sin[lat], 
+  -(Cos[lat]*Sin[clng - lng])], 
+ ArcTan[Sqrt[(Cos[clat]*Cos[lat]*Cos[clng - lng] + Sin[clat]*Sin[lat])^2 + 
+    Cos[lat]^2*Sin[clng - lng]^2], -(Cos[lat]*Cos[clng - lng]*Sin[clat]) + 
+   Cos[clat]*Sin[lat]]}
+
 slippyDecimal2LngLat[x_, y_, z_] = 
  {x/2^z*2*Pi-Pi, Gudermannian[Pi - 2^(1 - z)*Pi*y]};
+
+(* TODO: one below might be wrongish *)
 
 lngLat2OrthoXY[lng_, lat_, clng_, clat_] = {
  Cos[lat]*Sin[lng - clng], Cos[lat]*Cos[lng - clng]*Sin[clat] +  
@@ -112,6 +121,18 @@ fs = FullSimplify[xyz2sph[
  rotationMatrix[y, -clat].rotationMatrix[z, -clng].
  sph2xyz[lng, lat, 1]], conds]
 
+lngLat2CenterLngLat[lng_, lat_, clng_, clat_] = 
+{ArcTan[Cos[clat]*Cos[lat]*Cos[clng - lng] + Sin[clat]*Sin[lat], 
+  -(Cos[lat]*Sin[clng - lng])], 
+ ArcTan[Sqrt[(Cos[clat]*Cos[lat]*Cos[clng - lng] + Sin[clat]*Sin[lat])^2 + 
+    Cos[lat]^2*Sin[clng - lng]^2], -(Cos[lat]*Cos[clng - lng]*Sin[clat]) + 
+   Cos[clat]*Sin[lat]]}
+
+
+lngLat2CenterLngLat[lng, lat, 0, 0]
+
+
+
 after simplification, we project ortho
 
 FullSimplify[{Cos[fs[[2]]]*Sin[fs[[1]]], Sin[fs[[2]]]}, conds]
@@ -187,17 +208,29 @@ lngLat2OrthoXY[lng_, lat_, clng_, clat_] = {
  Cos[lat]*Sin[lng - clng], Cos[lat]*Cos[lng - clng]*Sin[clat] +  
  Cos[clat]*Sin[lat]}
 
-(* TODO: replace -1, -1 with something or ignore properly *)
+(* TODO: figure out how to avoid "through the Earth" crap *)
 
-lngLat2OrthoXY[lng_, lat_, clng_, clat_] = If[Abs[clng-lng] > Pi/2, {-1,-1}, {
+lngLat2OrthoXY[lng_, lat_, clng_, clat_] = {
  Cos[lat]*Sin[lng - clng], Cos[lat]*Cos[lng - clng]*Sin[clat] +  
- Cos[clat]*Sin[lat]}]
-
-
+ Cos[clat]*Sin[lat]};
 
 lngLatTable = Flatten[Table[{lng, lat}, 
  {lng, -180*Degree, 180*Degree, 10*Degree},
  {lat, -90*Degree, 90*Degree, 10*Degree}], 1];
+
+ListPlot[Table[lngLat2CenterLngLat[i[[1]], i[[2]], 0, 0], {i, lngLatTable}],
+ AspectRatio -> 1]
+
+ListPlot[Table[lngLat2CenterLngLat[i[[1]], i[[2]], 0, 40*Degree], 
+ {i, lngLatTable}],  AspectRatio -> 1]
+
+(* below, each line of longitude is separateish color *)
+
+ListPlot[Partition[Table[lngLat2CenterLngLat[i[[1]], i[[2]], 0, 0], {i,
+ lngLatTable}], 19], AspectRatio -> 1]
+
+ListPlot[Partition[Table[lngLat2CenterLngLat[i[[1]], i[[2]], 0, 45*Degree], {i,
+ lngLatTable}], 19], AspectRatio -> 1]
 
 ListPlot[Table[lngLat2OrthoXY[i[[1]], i[[2]], 0, 0], {i, lngLatTable}], 
  AspectRatio -> 1]
@@ -211,13 +244,9 @@ Flatten[Table[
  slippyDecimal2OrthoXY[x, y, 5, 0, 0], {x, 0, 31}, {y, 0, 31}], 
  1], AspectRatio -> 1]
 
-
-
-
-
-
 ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0], {lng, -Pi, Pi}, {lat,
 -Pi/2, Pi/2}]
+
 
 
 
