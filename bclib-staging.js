@@ -87,6 +87,8 @@ fake: if set to 1, don't do anything, just print out debugging info
 
 function placeBufferOnMap(obj) {
 
+  if (obj.fake == 1) {return;}
+
   // figure out which tiles we need
   let tiles = map2TilesNeeded(obj);
 

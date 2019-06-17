@@ -247,6 +247,29 @@ Flatten[Table[
 ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0], {lng, -Pi, Pi}, {lat,
 -Pi/2, Pi/2}]
 
+(* work below starts 6/17/19 *)
+
+
+ParametricPlot[slippyDecimal2OrthoXY[x, y, 4], {x, 0, 1}, {y, 0, 1}]
+
+ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0], 
+ {lng, -90*Degree, -80*Degree}, {lat, 20*Degree, 30*Degree},
+ PlotRange -> {-1, 1}]
+
+
+ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0], 
+ {lng, -90*Degree, -80*Degree}, {lat, 20*Degree, 30*Degree}]
+
+
+
+
+
+
+
+
+
+
+
 
 
 

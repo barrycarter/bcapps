@@ -123,6 +123,10 @@ httpd
 lighttpd
 xapian-core
 xapian-core-devel
+git-cola
+git-gui
+# below commented out, dependency issues
+# qgit
 git
 gitk
 binutils

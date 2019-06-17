@@ -44,9 +44,9 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <br>
 
-<canvas id="mylittlecanvas" width="800" height="600"></canvas>
-
 <div id="map"></div>
+
+<canvas id="mylittlecanvas" width="800" height="600"></canvas>
 
 <script>
 
@@ -63,7 +63,7 @@ ctx.transform(1,hs,vs,1,0,0);
 ctx.fillStyle='lightblue';
 ctx.fillRect(100,100,250,100);
 
-die_ha();
+// die_ha();
 
 //console.log("TESTING");
 
@@ -89,6 +89,7 @@ die_ha();
 
 console.log("START");
 
+/*
 for (let i=0; i<16; i++) {
   for (let j=0; j<16; j++) {
     for (let x=0; x<256; x++) {
@@ -107,6 +108,8 @@ for (let i=0; i<16; i++) {
 console.log("END");
 
 die();
+
+*/
 
 /*
 
@@ -131,7 +134,7 @@ die();
 
 */
 
-die_is_not_really_a_functio();
+// die_is_not_really_a_functio();
 
 // 20015.114442035923 is max distance turf.distance will report
 
@@ -243,7 +246,8 @@ console.log(`URL: ${url}`);
 
 */
 
-let map = L.map('map', {crs: L.CRS.Simple});
+// let map = L.map('map', {crs: L.CRS.Simple});
+let map = L.map('map', {crs: L.CRS.EPSG9839});
 map.fitBounds([[-90, -180], [90, 180]]);
 map.on('zoomend', redraw_map);
 
@@ -276,7 +280,7 @@ maps['buffer'] = {map: map, projection: 0, opacity: 0.8,
 
 // maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "http://maps.openweathermap.org/maps/2.0/weather/TA2/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"};
 
-maps['osmMap'] = {map: map, fake: 1, projection: 1, opacity: 1, minZoom: 4, bounded: 1, tileURL: "https://tile.openstreetmap.org/${z}/${x}/${y}.png"};
+maps['osmMap'] = {map: map, fake: 0, projection: 1, opacity: 1, minZoom: 4, bounded: 1, tileURL: "https://tile.openstreetmap.org/${z}/${x}/${y}.png"};
 
 maps['owmTemp'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://tile.openweathermap.org/map/temp_new/${z}/${x}/${y}.png?appid=797180fce0d1a2f2b07179b7c2caf8ed"}
 
