@@ -44,14 +44,27 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <br>
 
+<canvas id="mylittlecanvas" width="800" height="600"></canvas>
+
 <div id="map"></div>
 
 <script>
 
+var c=document.getElementById('mylittlecanvas');
+var ctx=c.getContext('2d');
 
 
-die_fake();
-				       
+let hs = 0.3;
+let vs = 0.5;
+
+ctx.strokeStyle='black';
+ctx.strokeRect(100,100,250,100);
+ctx.transform(1,hs,vs,1,0,0);
+ctx.fillStyle='lightblue';
+ctx.fillRect(100,100,250,100);
+
+die_ha();
+
 //console.log("TESTING");
 
 // console.log(lngLat2Ortho({lat: 10*Math.PI/180, lng: -15*Math.PI/180, clat: 0, clng: 0}));
@@ -72,8 +85,30 @@ die_fake();
 
 // console.log(L.Proj.CRS('WGS84', '+proj=ortho', [0,0]));
 
+// pixel by pixel? wow
+
+console.log("START");
+
 for (let i=0; i<16; i++) {
   for (let j=0; j<16; j++) {
+    for (let x=0; x<256; x++) {
+      for (let y=0; y<256; y++) {
+
+	// get latitude and longitude of this pixel (note 0.5 px adj)
+
+	let lngLat1 = tile2LngLat({z: 4, x: i+(x+1/2)/256, 
+	      y: j+(y+1/2)/256, projection: 1});
+
+      }
+    }
+  }
+}
+
+console.log("END");
+
+die();
+
+/*
 
     // TODO: this is inefficient, should cache or something
 
@@ -93,6 +128,8 @@ for (let i=0; i<16; i++) {
 
   }
  }
+
+*/
 
 die_is_not_really_a_functio();
 

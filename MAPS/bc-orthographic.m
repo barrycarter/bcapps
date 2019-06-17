@@ -1,8 +1,15 @@
-(*
+(* orthographic projection stuff *)
 
-orthographic projection stuff
+<formulas>
 
-*)
+slippyDecimal2LngLat[x_, y_, z_] = 
+ {x/2^z*2*Pi-Pi, Gudermannian[Pi - 2^(1 - z)*Pi*y]};
+
+lngLat2OrthoXY[lng_, lat_, clng_, clat_] = {
+ Cos[lat]*Sin[lng - clng], Cos[lat]*Cos[lng - clng]*Sin[clat] +  
+ Cos[clat]*Sin[lat]}
+
+</formulas>
 
 (*
 
@@ -146,9 +153,9 @@ slippy2lat[x_,y_,z_,px_,py_] =
  -90 + (360*ArcTan[Exp[Pi-2*Pi*((y+py/256)/2^z)]])/Pi
 
 slippy2latrad[x_,y_,z_,px_,py_] = 
- FullSimplify[slippy2lat[x,y,z,px,py]/180*Pi]
+ FullSimplify[slippy2lat[x,y,z,(px+1/2),(py+1/2)]/180*Pi]
 
-slippy2lonrad[x_,y_,z_,px_,py_] = FullSimplify[(x+px/256)*2*Pi/2^z-Pi]
+slippy2lonrad[x_,y_,z_,px_,py_] = FullSimplify[(x+(px+1/2)/256)*2*Pi/2^z-Pi]
 
 points[x_, y_, z_] = Flatten[Table[
  {slippy2lonrad[x, y, z, i, j], slippy2latrad[x, y, z, i, j]},
@@ -173,6 +180,44 @@ newX[slippy2lonrad[x, y, z, px, py], slippy2latrad[x, y, z, px, py],
 newY[slippy2lonrad[x, y, z, px, py], slippy2latrad[x, y, z, px, py],
  clng, clat]
 
+slippyDecimal2LngLat[x_, y_, z_] = 
+ {x/2^z*2*Pi-Pi, Gudermannian[Pi - 2^(1 - z)*Pi*y]};
+
+lngLat2OrthoXY[lng_, lat_, clng_, clat_] = {
+ Cos[lat]*Sin[lng - clng], Cos[lat]*Cos[lng - clng]*Sin[clat] +  
+ Cos[clat]*Sin[lat]}
+
+(* TODO: replace -1, -1 with something or ignore properly *)
+
+lngLat2OrthoXY[lng_, lat_, clng_, clat_] = If[Abs[clng-lng] > Pi/2, {-1,-1}, {
+ Cos[lat]*Sin[lng - clng], Cos[lat]*Cos[lng - clng]*Sin[clat] +  
+ Cos[clat]*Sin[lat]}]
+
+
+
+lngLatTable = Flatten[Table[{lng, lat}, 
+ {lng, -180*Degree, 180*Degree, 10*Degree},
+ {lat, -90*Degree, 90*Degree, 10*Degree}], 1];
+
+ListPlot[Table[lngLat2OrthoXY[i[[1]], i[[2]], 0, 0], {i, lngLatTable}], 
+ AspectRatio -> 1]
+
+slippyDecimal2OrthoXY[x_, y_, z_, clng_, clat_] = lngLat2OrthoXY[
+ slippyDecimal2LngLat[x,y,z][[1]], slippyDecimal2LngLat[x,y,z][[2]],
+ clng, clat];
+
+ListPlot[
+Flatten[Table[
+ slippyDecimal2OrthoXY[x, y, 5, 0, 0], {x, 0, 31}, {y, 0, 31}], 
+ 1], AspectRatio -> 1]
+
+
+
+
+
+
+ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0], {lng, -Pi, Pi}, {lat,
+-Pi/2, Pi/2}]
 
 
 
