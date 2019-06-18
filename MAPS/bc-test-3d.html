@@ -1,8 +1,14 @@
+<script src="../bclib.js"></script>
+<script src="../bclib-staging.js"></script>
+<script src="bc-osmtilecache.js"></script>
 <script src="../THREE.JS/three.min.js"></script>
+
 
 <div id="container"></div>
 
 <script>
+
+console.log(URLCache);
 
 // Set the scene size.
 const WIDTH = window.innerWidth;
@@ -50,7 +56,9 @@ scene.add(pointLight);
 // create the sphere's material
 const sphereMaterial =
 
-new THREE.MeshLambertMaterial({color: 0xCC0000});
+// new THREE.MeshLambertMaterial({color: 0xCC0000});
+
+new THREE.MeshLambertMaterial();
 
 // Set up the sphere vars
 
@@ -61,12 +69,16 @@ const RINGS = 16;
 // Create a new mesh with sphere geometry - we will cover 
 // the sphereMaterial next!
 
+sphereMaterial.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
+
 const sphere = new THREE.Mesh(
  new THREE.SphereGeometry(RADIUS, SEGMENTS, RINGS),
  sphereMaterial);
 
 // Move the Sphere back in Z so we can see it.
-sphere.position.z = -300;
+sphere.position.z = -150;
+
+
 
 // Finally, add the sphere to the scene.
 scene.add(sphere);
