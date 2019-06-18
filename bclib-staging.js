@@ -1,5 +1,41 @@
 // functions that will eventually be in bclib.js
 
+// the constant that converts degrees to radians
+
+const Pi = Math.PI;
+const Degree = Pi/180;
+
+// TODO: this is probably bad
+
+Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
+
+// console.log(Degree);
+
+// Directly from Mathematica via bc-rosetta.pl + edited for Math.if
+
+// <desc>The x and y coordinates of lng, lat in the standard orthographic projection</desc>
+
+function lngLat2OrthoXY(lng, lat) {return Math.abs(lng) > Pi/2?[-1,-1]:
+[(Math.cos(lat))*(Math.sin(lng)), Math.sin(lat)];}
+
+console.log(lngLat2OrthoXY(5*Degree, 20*Degree));
+
+// Directly from Mathematica via bc-rosetta.pl
+
+// <desc>The longitude and latitude of slippy tile x, y z. If x and y are integers, this is the nw corner of the tile, fractional values for pixels</desc>
+
+function slippyDecimal2LngLat(x, y, z) {return [((-1.0)*(Pi))+((Math.pow(2.0,(1.0)+((-1.0)*(z))))*(Pi)*(x)), Math.gudermannian((Pi)+((-1.0)*(Math.pow(2.0,(1.0)+((-1.0)*(z))))*(Pi)*(y)))];}
+
+// Directly from Mathematica via bc-rosetta.pl
+
+// <desc>If the world is rotated so that clng, clat are now at 0,0, return the new coordinates of lng, lat</desc>
+
+function lngLat2CenterLngLat(lng,lat,clng,clat) {return [Math.atan2(((-1.0)*(Math.cos(lat))*(Math.sin((clng)+((-1.0)*(lng))))), ((Math.cos(clat))*(Math.cos(lat))*(Math.cos((clng)+((-1.0)*(lng)))))+((Math.sin(clat))*(Math.sin(lat)))), Math.atan2((((-1.0)*(Math.cos(lat))*(Math.cos((clng)+((-1.0)*(lng))))*(Math.sin(clat)))+((Math.cos(clat))*(Math.sin(lat))) ), Math.pow((Math.pow(((Math.cos(clat))*(Math.cos(lat))*(Math.cos((clng)+((-1.0)*(lng)))))+((Math.sin(clat))*(Math.sin(lat))),2.0))+((Math.pow(Math.cos(lat),2.0))*(Math.pow(Math.sin((clng)+((-1.0)*(lng))),2.0))),(1.0)/(2.0)))];}
+
+// console.log(lngLat2CenterLngLat(35*Degree, 10*Degree, 0, 0));
+
+console.log(slippyDecimal2LngLat(0, 0, 0));
+
 /**
 
 Given the following, return the x and y coordinates of lng/lat after

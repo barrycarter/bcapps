@@ -12,6 +12,8 @@
 
 <style>html,body, #map {height:100%;}</style>
 
+<canvas id="mylittlecanvas" width="800" height="600"></canvas>
+
 OSM: <input type="checkbox" id="osmMap" value="false">
 <input type="range" id="osmMap.o" min="0" max="1" step="0.01"><br>
 
@@ -46,9 +48,17 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 <div id="map"></div>
 
-<canvas id="mylittlecanvas" width="800" height="600"></canvas>
-
 <script>
+
+let map = L.map('map', {crs: L.CRS.Simple});
+
+// let map = L.map('map', {crs: L.CRS.EPSG9839});
+map.fitBounds([[-90, -180], [90, 180]]);
+map.on('zoomend', redraw_map);
+
+// TODO: on move, dont need to erase existing stuff
+// TODO: on zoom, paint new first, THEN remove
+map.on('moveend', redraw_map);
 
 var c=document.getElementById('mylittlecanvas');
 var ctx=c.getContext('2d');
@@ -57,13 +67,20 @@ var ctx=c.getContext('2d');
 let hs = 0.3;
 let vs = 0.5;
 
+let im = new Image;
+im.src = URLCache.cache['https://tile.openstreetmap.org/0/0/0.png'];
+
+console.log(im);
+
 ctx.strokeStyle='black';
 ctx.strokeRect(100,100,250,100);
 ctx.transform(1,hs,vs,1,0,0);
 ctx.fillStyle='lightblue';
 ctx.fillRect(100,100,250,100);
 
-// die_ha();
+ctx.drawImage(im, 0, 0);
+
+die_ha();
 
 //console.log("TESTING");
 
@@ -245,15 +262,6 @@ var url = canvas.toDataURL();
 console.log(`URL: ${url}`);
 
 */
-
-// let map = L.map('map', {crs: L.CRS.Simple});
-let map = L.map('map', {crs: L.CRS.EPSG9839});
-map.fitBounds([[-90, -180], [90, 180]]);
-map.on('zoomend', redraw_map);
-
-// TODO: on move, dont need to erase existing stuff
-// TODO: on zoom, paint new first, THEN remove
-map.on('moveend', redraw_map);
 
 /*
 

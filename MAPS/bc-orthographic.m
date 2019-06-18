@@ -12,11 +12,13 @@ lngLat2CenterLngLat[lng_, lat_, clng_, clat_] =
 slippyDecimal2LngLat[x_, y_, z_] = 
  {x/2^z*2*Pi-Pi, Gudermannian[Pi - 2^(1 - z)*Pi*y]};
 
-(* TODO: one below might be wrongish *)
+(* This is in standard projection; TODO: -1,-1 is a bad choice *)
 
-lngLat2OrthoXY[lng_, lat_, clng_, clat_] = {
- Cos[lat]*Sin[lng - clng], Cos[lat]*Cos[lng - clng]*Sin[clat] +  
- Cos[clat]*Sin[lat]}
+lngLat2OrthoXY[lng_, lat_] = 
+ If[Abs[lng] > Pi/2, {-1, -1}, {Cos[lat] Sin[lng], Sin[lat]}];
+
+conds = {-Pi < lng, lng < Pi, -Pi/2 < lat, lat < Pi/2, -Pi < theta,
+theta < Pi, -Pi < clng, clng < Pi, -Pi/2 < clat, clat < Pi/2};
 
 </formulas>
 
@@ -78,9 +80,6 @@ ListPlot[Table[{Cos[lat*Degree]*Sin[lng*Degree], Sin[lat*Degree]},
 (* now, what if we rotate *)
 
 xyz2sph[rotationMatrix[z, theta].sph2xyz[lng, lat, 1]]
-
-conds = {-Pi < lng, lng < Pi, -Pi/2 < lat, lat < Pi/2, -Pi < theta,
-theta < Pi, -Pi < clng, clng < Pi, -Pi/2 < clat, clat < Pi/2};
 
 simp = {ArcTan[y_, x_] -> ArcTan[x/y]}
 
@@ -261,6 +260,51 @@ ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0],
  {lng, -90*Degree, -80*Degree}, {lat, 20*Degree, 30*Degree}]
 
 
+p1141 = ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0], 
+ {lng, -90*Degree, -80*Degree}, {lat, 45*Degree, 55*Degree}]
+
+p1142 = ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 20*Degree], 
+ {lng, -90*Degree, -80*Degree}, {lat, 45*Degree, 55*Degree}]
+
+N[lngLat2OrthoXY[-90*Degree, 45*Degree, 0, 20*Degree]]
+
+N[lngLat2OrthoXY[-90*Degree, 55*Degree, 0, 20*Degree]]
+
+N[lngLat2OrthoXY[-80*Degree, 55*Degree, 0, 20*Degree]]
+
+N[lngLat2OrthoXY[-80*Degree, 45*Degree, 0, 20*Degree]]
+
+left slope is 0.788491
+
+right slope is 0.740359
+
+g1137 = Graphics[{
+ Polygon[ { {-0.707107, 0.664463}, {-0.573576, 0.769751}, 
+            {-0.564863, 0.803817}, {-0.696364, 0.706459} }]
+
+}];
+
+Show[{p1142, g1137}]
+
+now, can we find the +- 90 degree stuff
+
+lngLat2CenterLngLat[lng, lat, clng, clat][[1]]
+
+Solve[lngLat2CenterLngLat[lng, lat, clng, clat][[1]] == Pi/2, lng]
+
+ParametricPlot[lngLat2OrthoXY[lng, lat], {lng, -80*Degree,
+-70*Degree}, {lat, 20*Degree, 30*Degree}]
+
+f1706[lng_, lat_, clng_, clat_] =
+FullSimplify[Apply[lngLat2OrthoXY, lngLat2CenterLngLat[lng, lat, clng, clat]],
+ conds];
+
+ParametricPlot[f1706[lng, lat, 0*Degree, 20*Degree], 
+ {lng, -80*Degree, -70*Degree}, {lat, 20*Degree, 30*Degree}]
+
+
+ParametricPlot[f1706[lng, lat, 0*Degree, 20*Degree], 
+ {lng, -50*Degree, -40*Degree}, {lat, 50*Degree, 60*Degree}]
 
 
 
@@ -268,15 +312,7 @@ ParametricPlot[lngLat2OrthoXY[lng, lat, 0, 0],
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+lngLat2OrthoXY[
+lng, lat], {lng, -80*Degree,
+-70*Degree}, {lat, 20*Degree, 30*Degree}]
 

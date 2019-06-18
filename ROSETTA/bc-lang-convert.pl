@@ -21,8 +21,9 @@ my($langs) = read_file("$bclib{githome}/ROSETTA/bc-languages.xml");
 my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions.xml");
 
 # TODO: temporary for astro testing
-warn "ASTRO TESTING";
-my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions-astro.xml");
+
+# warn "ASTRO TESTING";
+# my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions-astro.xml");
 
 # variable to hold languages info
 my(%lang);

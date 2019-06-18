@@ -132,6 +132,48 @@ List[ArcTan[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[l
 <body>List[ArcTan[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], Times[-1, Cos[dec], Sin[ha]]], ArcTan[Power[Plus[Times[Power[Cos[dec], 2], Power[Sin[ha], 2]], Power[Plus[Times[Cos[lat], Sin[dec]], Times[-1, Cos[dec], Cos[ha], Sin[lat]]], 2]], Rational[1, 2]], Plus[Times[Cos[dec], Cos[ha], Cos[lat]], Times[Sin[dec], Sin[lat]]]]]</body>
 </function>
 
+<function name="lngLat2CenterLngLat">
+<active>1</active>
+<nice>lngLat2CenterLngLat(lng, lat, clng, clat)</nice>
+<vars>lng,lat,clng,clat</vars>
+<desc>If the world is rotated so that clng, clat are now at 0,0, return the new coordinates of lng, lat</desc>
+<body>
+List[ArcTan[Plus[Times[Cos[clat], Cos[lat], 
+Cos[Plus[clng, Times[-1, lng]]]], Times[Sin[clat], Sin[lat]]], 
+Times[-1, Cos[lat], Sin[Plus[clng, Times[-1, lng]]]]], 
+ArcTan[Power[Plus[Power[Plus[Times[Cos[clat], Cos[lat], 
+Cos[Plus[clng, Times[-1, lng]]]], Times[Sin[clat], Sin[lat]]], 2], 
+Times[Power[Cos[lat], 2], Power[Sin[Plus[clng, Times[-1, lng]]], 2]]], 
+Rational[1, 2]], Plus[Times[-1, Cos[lat], 
+Cos[Plus[clng, Times[-1, lng]]], Sin[clat]], Times[Cos[clat], Sin[lat]]]
+]]
+</body>
+</function>
+
+<function name="slippyDecimal2LngLat">
+<active>1</active>
+<nice>slippyDecimal2LngLat(x, y, z)</nice>
+<vars>x, y, z</vars>
+<desc>The longitude and latitude of slippy tile x, y z. If x and y are integers, this is the nw corner of the tile, fractional values for pixels</desc>
+<body>
+List[Plus[Times[-1, Pi], Times[Power[2, Plus[1, Times[-1, z]]], Pi, x]], 
+Gudermannian[Plus[Pi, Times[-1, Power[2, Plus[1, Times[-1, z]]], Pi, y]]]]
+</body>
+</function>
+
+<function name="lngLat2OrthoXY">
+<active>1</active>
+<nice>lngLat2OrthoXY(lng, lat)</nice>
+<vars>lng, lat</vars>
+<desc>The x and y coordinates of lng, lat in the standard orthographic projection</desc>
+<body>
+If[Greater[Abs[lng], Times[Rational[1, 2], Pi]], List[-1, -1], 
+List[Times[Cos[lat], Sin[lng]], Sin[lat]]]
+</body>
+</function>
+
+# note, body = FullForm just in case not doc'd elsewhere
+
 # attempt to define a dictionary (using "key: val", not true XML)
 
 <dictionary name="constants">
