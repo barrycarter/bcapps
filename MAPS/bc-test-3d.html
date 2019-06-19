@@ -8,8 +8,6 @@
 
 <script>
 
-console.log(URLCache);
-
 // Set the scene size.
 const WIDTH = window.innerWidth;
 const HEIGHT = window.innerHeight;
@@ -70,6 +68,8 @@ const RINGS = 16;
 // the sphereMaterial next!
 
 sphereMaterial.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
+
+// sphereMaterial.map = THREE.TextureLoader(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
 
 const sphere = new THREE.Mesh(
  new THREE.SphereGeometry(RADIUS, SEGMENTS, RINGS),
