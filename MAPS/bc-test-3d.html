@@ -25,19 +25,12 @@ renderer.setSize(800, 800);
 // Attach the renderer-supplied DOM element.
 container.appendChild(renderer.domElement);
 
-
-const sphereMaterial = new THREE.MeshBasicMaterial();
-
 // Set up the sphere vars
 
-const RADIUS = 50;
-const SEGMENTS = 16;
-const RINGS = 16;
-
 const sphere = new THREE.Mesh(
- new THREE.SphereGeometry(50, 25, 25), sphereMaterial);
+ new THREE.SphereGeometry(50, 25, 25));
 
-sphereMaterial.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
+sphere.material.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
 
 // Move the Sphere back in Z so we can see it.
 sphere.position.z = -150;
