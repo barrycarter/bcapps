@@ -31,10 +31,29 @@ for (let i=0; i<16; i++) {
   for (let j=0; j<16; j++) {
     let nwtile = tile2LngLat({z: 4, x: i, y: j, projection: 1});
     let setile = tile2LngLat({z: 4, x: i+1, y: j+1, projection: 1});
-    console.log("TILES", nwtile, setile, "DONE");
+
+    // phistart doesn't take negative numbers?
+    if (setile.lat < 0) {setile.lat += 360; nwtile.lat += 360;}
+
+    // testing
+//    if (i != 5 | j != 8) {continue;}
+
+    console.log("TILES", nwtile, setile);
+
     shard[i][j] = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 10, 
                     nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree,
-                    setile.lat*Degree, (nwtile.lat-setile.lat)*Degree));
+                    setile.lat*Degree, (nwtile.lat-setile.lat)*Degree),
+		    new THREE.MeshBasicMaterial( {color: 0x8080ff} ));;
+
+
+   // put the correct slippy tile on it
+   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/4/${i}/${j}.png`]);
+
+//   console.log(shard[i][j].material);
+
+   // if not set, color is random		    
+//   shard[i][j].material.color = [0, 0, 255];
+
     scene.add(shard[i][j]);
   }
  }
