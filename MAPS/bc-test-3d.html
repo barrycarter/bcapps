@@ -3,62 +3,30 @@
 <script src="bc-osmtilecache.js"></script>
 <script src="../THREE.JS/three.min.js"></script>
 
-
 <div id="container"></div>
 
 <script>
-
-// Set the scene size.
-const WIDTH = window.innerWidth;
-const HEIGHT = window.innerHeight;
-
-// Set some camera attributes.
-const VIEW_ANGLE = 45;
-const ASPECT = WIDTH / HEIGHT;
-const NEAR = 0.1;
-const FAR = 10000;
 
 // Get the DOM element to attach to
 const container = document.querySelector('#container');
 
 // Create a WebGL renderer, camera and a scene
 
-const renderer = new THREE.WebGLRenderer();
-
-const camera =
-new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-
-const scene = new THREE.Scene();
+let renderer = new THREE.WebGLRenderer();
+let camera = new THREE.PerspectiveCamera(45);
+let scene = new THREE.Scene();
 
 // Add the camera to the scene.
 scene.add(camera);
 
 // Start the renderer.
-renderer.setSize(WIDTH, HEIGHT);
+renderer.setSize(800, 800);
 
 // Attach the renderer-supplied DOM element.
 container.appendChild(renderer.domElement);
 
 
-
-// create a point light
-// const pointLight = new THREE.PointLight(0xFFFFFF);
-
-// set its position
-
-// pointLight.position.x = 10;
-// pointLight.position.y = 50;
-// pointLight.position.z = 130;
-
-// add to the scene
-// scene.add(pointLight);
-
-// create the sphere's material
-const sphereMaterial =
-
-// new THREE.MeshLambertMaterial({color: 0xCC0000});
-
-new THREE.MeshBasicMaterial();
+const sphereMaterial = new THREE.MeshBasicMaterial();
 
 // Set up the sphere vars
 
@@ -67,19 +35,12 @@ const SEGMENTS = 16;
 const RINGS = 16;
 
 const sphere = new THREE.Mesh(
- new THREE.SphereGeometry(RADIUS, SEGMENTS, RINGS), sphereMaterial);
-
-// Create a new mesh with sphere geometry - we will cover 
-// the sphereMaterial next!
+ new THREE.SphereGeometry(50, 25, 25), sphereMaterial);
 
 sphereMaterial.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
 
-// sphereMaterial.map = THREE.TextureLoader(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
-
 // Move the Sphere back in Z so we can see it.
 sphere.position.z = -150;
-
-
 
 // Finally, add the sphere to the scene.
 scene.add(sphere);
