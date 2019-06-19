@@ -26,6 +26,47 @@ container.appendChild(renderer.domElement);
 
 let shard = [];
 
+for (let i=0; i<2; i++) {
+  shard[i] = [];
+  for (let j=0; j<2; j++) {
+
+    let nwtile = tile2LngLat({z: 1, x: i, y: j, projection: 1});
+    let setile = tile2LngLat({z: 1, x: i+1, y: j+1, projection: 1});
+
+    // i=0, j=1 prints, as does i=1, j=1, and i=1, j=0
+
+    // i=1, j=0 prints NE hemisphere in rightish place
+
+//    if (i != 1 || j!= 1) {continue;}
+
+    // phistart doesn't take negative numbers?
+//    if (setile.lat < 0) {setile.lat += 360; nwtile.lat += 360;}
+
+    // testing
+//    if (i != 5 | j != 8) {continue;}
+
+    console.log("TILES", nwtile, setile);
+
+    shard[i][j] = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 10, 
+                    nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree,
+                    -setile.lat*Degree, (nwtile.lat-setile.lat)*Degree),
+		    new THREE.MeshBasicMaterial( {color: 0x8080ff} ));;
+
+
+   // put the correct slippy tile on it
+   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/1/${i}/${j}.png`]);
+
+//   console.log(shard[i][j].material);
+
+   // if not set, color is random		    
+//   shard[i][j].material.color = [0, 0, 255];
+
+    scene.add(shard[i][j]);
+  }
+ }
+
+/*
+
 for (let i=0; i<16; i++) {
   shard[i] = [];
   for (let j=0; j<16; j++) {
@@ -57,6 +98,8 @@ for (let i=0; i<16; i++) {
     scene.add(shard[i][j]);
   }
  }
+
+*/
 
 // Set up the sphere vars
 
