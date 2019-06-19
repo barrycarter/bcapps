@@ -39,24 +39,26 @@ renderer.setSize(WIDTH, HEIGHT);
 // Attach the renderer-supplied DOM element.
 container.appendChild(renderer.domElement);
 
+
+
 // create a point light
-const pointLight = new THREE.PointLight(0xFFFFFF);
+// const pointLight = new THREE.PointLight(0xFFFFFF);
 
 // set its position
 
-pointLight.position.x = 10;
-pointLight.position.y = 50;
-pointLight.position.z = 130;
+// pointLight.position.x = 10;
+// pointLight.position.y = 50;
+// pointLight.position.z = 130;
 
 // add to the scene
-scene.add(pointLight);
+// scene.add(pointLight);
 
 // create the sphere's material
 const sphereMaterial =
 
 // new THREE.MeshLambertMaterial({color: 0xCC0000});
 
-new THREE.MeshLambertMaterial();
+new THREE.MeshBasicMaterial();
 
 // Set up the sphere vars
 
@@ -64,16 +66,15 @@ const RADIUS = 50;
 const SEGMENTS = 16;
 const RINGS = 16;
 
+const sphere = new THREE.Mesh(
+ new THREE.SphereGeometry(RADIUS, SEGMENTS, RINGS), sphereMaterial);
+
 // Create a new mesh with sphere geometry - we will cover 
 // the sphereMaterial next!
 
 sphereMaterial.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
 
 // sphereMaterial.map = THREE.TextureLoader(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
-
-const sphere = new THREE.Mesh(
- new THREE.SphereGeometry(RADIUS, SEGMENTS, RINGS),
- sphereMaterial);
 
 // Move the Sphere back in Z so we can see it.
 sphere.position.z = -150;
