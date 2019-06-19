@@ -6,19 +6,17 @@
 
 <script>
 
-// Get the DOM element to attach to
-let container = document.querySelector('#container');
-
-// Create a WebGL renderer, camera and a scene
-
+// Create renderer, camera, scne
 let renderer = new THREE.WebGLRenderer();
-let camera = new THREE.PerspectiveCamera(10);
+let camera = new THREE.PerspectiveCamera(90);
 let scene = new THREE.Scene();
 
-// Add the camera to the scene.
-scene.add(camera);
+// Put renderer in container above
+document.querySelector('#container').appendChild(renderer.domElement);
 
-// Start the renderer.
+// Set rendeer scene, add camera
+
+scene.add(camera);
 renderer.setSize(700, 700);
 
 // Attach the renderer-supplied DOM element.
@@ -31,7 +29,9 @@ const sphere = new THREE.Mesh(new THREE.SphereGeometry(1));
 sphere.material.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
 
 // Move the Sphere back in Z so we can see it.
-sphere.position.z = -25;
+// sphere.position.z = -1.5;
+
+camera.position.z = 1.5;
 
 // Finally, add the sphere to the scene.
 scene.add(sphere);
