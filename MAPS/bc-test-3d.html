@@ -8,7 +8,7 @@
 
 // Create renderer, camera, scne
 let renderer = new THREE.WebGLRenderer();
-let camera = new THREE.PerspectiveCamera(90);
+let camera = new THREE.PerspectiveCamera(36);
 let scene = new THREE.Scene();
 
 // Put renderer in container above
@@ -16,28 +16,114 @@ document.querySelector('#container').appendChild(renderer.domElement);
 
 // Set rendeer scene, add camera
 
+camera.position.z = 4;
+
+// The camera defaults to looking down the -Z axis with +Y up
+
 scene.add(camera);
 renderer.setSize(700, 700);
 
 // Attach the renderer-supplied DOM element.
 container.appendChild(renderer.domElement);
 
-// create sphere shards for zoom level 4
+// back to even more basics
+
+let sph = [];
+let ind = 0;
+
+
+for (let i=-1; i<=1; i++) {
+ for (let j=-1; j<=1; j++) {
+  for (let k=-1; k<=1; k++) {
+    sph[ind] = new THREE.Mesh(new THREE.SphereGeometry(0.1, 32, 32 ));
+    console.log(i,j,k);
+    sph[ind].position.x = i;
+    sph[ind].position.y = j;
+    sph[ind].position.z = k;
+    scene.add(sph[ind]);
+    ind++;
+  }
+ }
+}
+
+// we appear to be facing 90 lng in down direction
+
+// first param appears to be lon
+
+// second param is 90-lat
+
+var geometry = new THREE.SphereGeometry(0.5, 32, 32, 0*Degree, 180*Degree,
+ 0*Degree, 90*Degree);
+var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+var sphere = new THREE.Mesh( geometry, material );
+scene.add( sphere );
+
+/*
+
+var geometry = new THREE.CircleGeometry( 1, 32 );
+material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+var circle = new THREE.Mesh( geometry, material );
+scene.add( circle );
+
+*/
+
+// Trying to figure out shards
+
+// phi = firsts 2 params = lon, theta = last 2 = lat
+
+// phi 0 +90 draws left hemisphere
+// phi 90 +90 draws right hemisphere
+
+// theta 0 +90 draws top hemisphere
+// theta 90 +90 draws bottom hemisphere
+
+// correction: first 0 +45 starts drawing left crescent (so + 45 = left most)
+
+// first 45 +45 draws left hemi
+
+/*
+let test1= new THREE.Mesh(new THREE.SphereGeometry(1, 100, 100,
+ 30*Degree, 60*Degree, 0*Degree, 60*Degree));
+
+test1.material = new THREE.MeshBasicMaterial( {color: 0x8080ff});
+
+scene.add(test1);
+
+*/
+
+// create sphere shards for zoom level z
 
 let shard = [];
 
-for (let i=0; i<2; i++) {
-  shard[i] = [];
-  for (let j=0; j<2; j++) {
+let z = 2;
 
-    let nwtile = tile2LngLat({z: 1, x: i, y: j, projection: 1});
-    let setile = tile2LngLat({z: 1, x: i+1, y: j+1, projection: 1});
+for (let i=0; i<2**z; i++) {
+  shard[i] = [];
+  for (let j=0; j<2**z; j++) {
+
+  // testing
+
+    let nwtile = tile2LngLat({z: z, x: i, y: j, projection: 1});
+    let setile = tile2LngLat({z: z, x: i+1, y: j+1, projection: 1});
+
+    // the Three.js definition of theta is 90 degrees higher than ours
+
+    // 90 -> 0, 0 -> 90, -90 -> 180
+
+    nwtile.theta = 90-nwtile.lat;
+    setile.theta = 90-setile.lat;
+
+//    if (!(i==1 && j==0)) {continue;}
 
     // i=0, j=1 prints, as does i=1, j=1, and i=1, j=0
 
     // i=1, j=0 prints NE hemisphere in rightish place
 
-//    if (i != 1 || j!= 1) {continue;}
+//    if (i !=  || j!= 1) {continue;}
+
+    console.log("TILES", i, j, nwtile, setile);
+
+
 
     // phistart doesn't take negative numbers?
 //    if (setile.lat < 0) {setile.lat += 360; nwtile.lat += 360;}
@@ -45,16 +131,20 @@ for (let i=0; i<2; i++) {
     // testing
 //    if (i != 5 | j != 8) {continue;}
 
-    console.log("TILES", nwtile, setile);
+  console.log("PARAMS", nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree, nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree);
 
     shard[i][j] = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 10, 
                     nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree,
-                    -setile.lat*Degree, (nwtile.lat-setile.lat)*Degree),
-		    new THREE.MeshBasicMaterial( {color: 0x8080ff} ));;
+                    nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree),
+		    new THREE.MeshBasicMaterial( {color: 0x8080ff} ));
 
+//    shard[i][j] = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 10,
+//                  nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree,
+//                    -setile.lat*Degree, (nwtile.lat-setile.lat)*Degree
+// ));
 
    // put the correct slippy tile on it
-   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/1/${i}/${j}.png`]);
+   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
 
 //   console.log(shard[i][j].material);
 
@@ -103,14 +193,12 @@ for (let i=0; i<16; i++) {
 
 // Set up the sphere vars
 
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(1));
+// const sphere = new THREE.Mesh(new THREE.SphereGeometry(1));
 
-sphere.material.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
+// sphere.material.map = THREE.ImageUtils.loadTexture(URLCache.cache['https://tile.openstreetmap.org/0/0/0.png']);
 
 // Move the Sphere back in Z so we can see it.
 // sphere.position.z = -1.5;
-
-camera.position.z = 1.5;
 
 // Finally, add the sphere to the scene.
 // scene.add(sphere);
