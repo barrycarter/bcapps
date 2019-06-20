@@ -53,13 +53,14 @@ for (let i=0; i<2**z; i++) {
 //    console.log("TILES", i, j, nwtile, setile);
 //  console.log("PARAMS", nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree, nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree);
 
-    shard[i][j] = new THREE.Mesh(new THREE.SphereGeometry(1, 10, 10, 
+    shard[i][j] = new THREE.Mesh(new THREE.SphereGeometry(1, 0, 0, 
                     nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree,
                     nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree),
 		    new THREE.MeshBasicMaterial( {color: 0xffffff} ));
 
    // put the correct slippy tile on it
    shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
+//   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.get[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
 
     scene.add(shard[i][j]);
   }
@@ -70,7 +71,13 @@ function update () {
  // increment time and set position
  t++;
 
- let pos = sph2xyz({r: 3.5-t/1000, ph: Math.PI/2+t/100, th: Math.PI/2-t/100});
+ // ph = 90 deg = latitude 0 centered, 180 deg = S Pole centered, 0 = npole
+
+ // th = 90 
+
+// let pos = sph2xyz({r: 3.5-t/10000, ph: 90*Degree+t/2000, th: 0*Degree+t/1000});
+
+ let pos = sph2xyzHACK({r: 1.2, ph: 35*Degree, th: -106.5*Degree});
 
 // console.log(pos);
 
@@ -86,5 +93,16 @@ function update () {
 
 // Schedule the first frame.
 requestAnimationFrame(update);
+
+// hacked version of sph2xyz for z not being up
+
+function sph2xyzHACK(obj) {
+  return {x: -obj.r*Math.cos(obj.ph)*Math.cos(obj.th), 
+      z: obj.r*Math.cos(obj.ph)*Math.sin(obj.th), 
+      y: obj.r*Math.sin(obj.ph)};
+  };
+
+
+
 
 </script>
