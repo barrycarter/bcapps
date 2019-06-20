@@ -9,6 +9,14 @@ const Degree = Pi/180;
 
 Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
 
+// convert spherical to xyz coordinates, proper mathematics style
+
+function sph2xyz(obj) {
+  return {x: obj.r*Math.cos(obj.ph)*Math.cos(obj.th), 
+      y: obj.r*Math.cos(obj.ph)*Math.sin(obj.th), 
+      z: obj.r*Math.sin(obj.ph)};
+  };
+
 // console.log(Degree);
 
 // Directly from Mathematica via bc-rosetta.pl + edited for Math.if

@@ -6,7 +6,14 @@
 
 <script>
 
-// Create renderer, camera, scne
+// a zero pointing vector
+let zero = new THREE.Vector3(0, 0, 0);
+
+// time
+
+let t = 0;
+
+// Create renderer, camera, scene
 let renderer = new THREE.WebGLRenderer();
 let camera = new THREE.PerspectiveCamera(36);
 let scene = new THREE.Scene();
@@ -60,8 +67,18 @@ for (let i=0; i<2**z; i++) {
 
 function update () {
 
- camera.position.x -= 0.01;
- camera.lookAt(new THREE.Vector3(0, 0, 0));
+ // increment time and set position
+ t++;
+
+ let pos = sph2xyz({r: 3.5-t/1000, ph: Math.PI/2+t/100, th: Math.PI/2-t/100});
+
+// console.log(pos);
+
+ camera.position.x = pos.x;
+ camera.position.y = pos.y;
+ camera.position.z = pos.z;
+
+ camera.lookAt(zero);
 
  renderer.render(scene, camera);
  requestAnimationFrame(update);
