@@ -19,7 +19,9 @@ for $i (@ARGV) {
 
   $data=~s/\n//g;
 
-  print "URLCache.cache['https://tile.openstreetmap.org/$z/$x/$y.png'] = 'data:image/png;base64,$data';\n";
+  print "URLCache.cache['http://tile.thunderforest.com/transport/$z/$x/$y.png?apikey=c9475a1755034dd7a9effbd13f4390e9'] = 'data:image/png;base64,$data';\n";
+
+#  print "URLCache.cache['https://tile.openstreetmap.org/$z/$x/$y.png'] = 'data:image/png;base64,$data';\n";
 
 }
 
