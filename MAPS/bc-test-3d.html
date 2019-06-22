@@ -2,9 +2,20 @@
 <script src="../bclib-staging.js"></script>
 <script src="bc-osmtilecache.js"></script>
 <script src="../THREE.JS/three.min.js"></script>
+
+This demonstration uses only level 4 slippy tiles and is just for testing.<p>
+
+Latitude: <input type="range" id="lat" min="-90" max="90" step="0.01"><br>
+Longitude: <input type="range" id="lng" min="-180" max="180" step="0.01"><br>
+Distance: <input type="range" id="dist" min="1" max="10" step="0.01"><br>
+
 <div id="container"></div>
 
 <script>
+
+document.getElementById('lat').addEventListener('input', update);
+document.getElementById('lng').addEventListener('input', update);
+document.getElementById('dist').addEventListener('input', update);
 
 // a zero pointing vector
 let zero = new THREE.Vector3(0, 0, 0);
@@ -58,15 +69,37 @@ for (let i=0; i<2**z; i++) {
                     nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree),
 		    new THREE.MeshBasicMaterial( {color: 0xffffff} ));
 
+
+   // test of loading URLs directly (https://stackoverflow.com/questions/43698620/applying-textures-in-three-js-using-a-url)
+
+   // TODO: if this works, make it MUCH more efficient
+
+// let myUrl = `https://tile.openstreetmap.org/${z}/${i}/${j}.png`;
+
+let myUrl = `http://tile.thunderforest.com/transport/${z}/${i}/${j}.png?apikey=c9475a1755034dd7a9effbd13f4390e9`;
+
+let textureLoader = new THREE.TextureLoader()
+textureLoader.crossOrigin = "Anonymous"
+let myTexture = textureLoader.load(myUrl)
+
+shard[i][j].material.map = myTexture;
+
+
    // put the correct slippy tile on it
-   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
+
+//   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
+
+//   shard[i][j].material.map = THREE.ImageUtils.loadTexture(`https://tile.openstreetmap.org/${z}/${i}/${j}.png`);
+
 //   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.get[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
 
     scene.add(shard[i][j]);
   }
  }
 
-function update () {
+function update (e) {
+
+ console.log("EVENT", e);
 
  // increment time and set position
  t++;
@@ -77,7 +110,13 @@ function update () {
 
 // let pos = sph2xyz({r: 3.5-t/10000, ph: 90*Degree+t/2000, th: 0*Degree+t/1000});
 
- let pos = sph2xyzHACK({r: 1.2, ph: 35*Degree, th: -106.5*Degree});
+ let dist = document.getElementById('dist').value;
+ let lat = document.getElementById('lat').value;
+ let lng = document.getElementById('lng').value;
+
+ console.log("DIST", dist);
+
+ let pos = sph2xyzHACK({r: dist, ph: lat*Degree, th: lng*Degree});
 
 // console.log(pos);
 
@@ -88,11 +127,18 @@ function update () {
  camera.lookAt(zero);
 
  renderer.render(scene, camera);
- requestAnimationFrame(update);
+
+console.log("DONE RENDERING");
+
+// requestAnimationFrame(update);
+ 
+ 
+
 }
 
 // Schedule the first frame.
-requestAnimationFrame(update);
+update(0);
+// requestAnimationFrame(update);
 
 // hacked version of sph2xyz for z not being up
 

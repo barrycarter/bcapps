@@ -5,6 +5,10 @@
 const Pi = Math.PI;
 const Degree = Pi/180;
 
+// the Earth's average radius (https://en.wikipedia.org/wiki/Earth_radius#Global_average_radii), in km
+
+const earthRadius = 6371.0088;
+
 // TODO: this is probably bad
 
 Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
@@ -26,8 +30,6 @@ function sph2xyz(obj) {
 function lngLat2OrthoXY(lng, lat) {return Math.abs(lng) > Pi/2?[-1,-1]:
 [(Math.cos(lat))*(Math.sin(lng)), Math.sin(lat)];}
 
-console.log(lngLat2OrthoXY(5*Degree, 20*Degree));
-
 // Directly from Mathematica via bc-rosetta.pl
 
 // <desc>The longitude and latitude of slippy tile x, y z. If x and y are integers, this is the nw corner of the tile, fractional values for pixels</desc>
@@ -41,8 +43,6 @@ function slippyDecimal2LngLat(x, y, z) {return [((-1.0)*(Pi))+((Math.pow(2.0,(1.
 function lngLat2CenterLngLat(lng,lat,clng,clat) {return [Math.atan2(((-1.0)*(Math.cos(lat))*(Math.sin((clng)+((-1.0)*(lng))))), ((Math.cos(clat))*(Math.cos(lat))*(Math.cos((clng)+((-1.0)*(lng)))))+((Math.sin(clat))*(Math.sin(lat)))), Math.atan2((((-1.0)*(Math.cos(lat))*(Math.cos((clng)+((-1.0)*(lng))))*(Math.sin(clat)))+((Math.cos(clat))*(Math.sin(lat))) ), Math.pow((Math.pow(((Math.cos(clat))*(Math.cos(lat))*(Math.cos((clng)+((-1.0)*(lng)))))+((Math.sin(clat))*(Math.sin(lat))),2.0))+((Math.pow(Math.cos(lat),2.0))*(Math.pow(Math.sin((clng)+((-1.0)*(lng))),2.0))),(1.0)/(2.0)))];}
 
 // console.log(lngLat2CenterLngLat(35*Degree, 10*Degree, 0, 0));
-
-console.log(slippyDecimal2LngLat(0, 0, 0));
 
 /**
 
@@ -62,8 +62,6 @@ function lngLat2Ortho(obj) {
   obj = mergeHashes(obj, str2hash("clat=0&clng=0"));
 
   // these formulas came from Mathematica
-
-  console.log(obj.lat, obj.lng, obj.clat, obj.clng);
 
   return {x: Math.cos(obj.lat)*Math.sin(obj.lng - obj.clng), 
           y: 

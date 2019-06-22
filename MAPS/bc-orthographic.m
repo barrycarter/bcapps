@@ -18,7 +18,7 @@ lngLat2OrthoXY[lng_, lat_] =
  If[Abs[lng] > Pi/2, {-1, -1}, {Cos[lat] Sin[lng], Sin[lat]}];
 
 conds = {-Pi < lng, lng < Pi, -Pi/2 < lat, lat < Pi/2, -Pi < theta,
-theta < Pi, -Pi < clng, clng < Pi, -Pi/2 < clat, clat < Pi/2};
+theta < Pi, -Pi < clng, clng < Pi, -Pi/2 < clat, clat < Pi/2, d > 0};
 
 </formulas>
 
@@ -306,13 +306,29 @@ ParametricPlot[f1706[lng, lat, 0*Degree, 20*Degree],
 ParametricPlot[f1706[lng, lat, 0*Degree, 20*Degree], 
  {lng, -50*Degree, -40*Degree}, {lat, 50*Degree, 60*Degree}]
 
-
-
-
-
-
-
 lngLat2OrthoXY[
 lng, lat], {lng, -80*Degree,
 -70*Degree}, {lat, 20*Degree, 30*Degree}]
+
+(* on 20 Jun 2019, which lons at lat lat2 are d dist from lat1? *)
+
+(* great circle formula (why don't I have this already??) *)
+
+dist[lng1_, lat1_, lng2_, lat2_] = 
+   ArcCos[Cos[lat1]*Cos[lat2]*Cos[lng1 - lng2] + Sin[lat1]*Sin[lat2]]
+
+Solve[dist[0, lat1, lng2, lat2] == d, lng2]
+
+FullSimplify[Solve[dist[0, lat1, lng2, lat2] == d, lng2], conds]
+
+-ArcCos[Cos[d] Sec[lat1] Sec[lat2] - Tan[lat1] Tan[lat2]]
+
+(* what %age of earth do we see at angle theta from distance d? *)
+
+f1837[t_, d_, theta_] = {-d-1+t, t*Tan[theta]}
+
+at high zoom it would be (where 1 is earth rad)
+
+2*(d-1)*Tan[theta/2]
+
 

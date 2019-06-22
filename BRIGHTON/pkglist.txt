@@ -339,6 +339,8 @@ libmpg123-devel
 # graphics/images incl scanning and fonts
 # some of these may be installed by a groupinstall
 
+marble
+
 # qgis needs QScintilla for some plugins
 qscintilla-devel
 qscintilla-python

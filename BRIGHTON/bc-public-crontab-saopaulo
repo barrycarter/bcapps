@@ -335,3 +335,7 @@ XWIDTH=1600
 # keep track of a 70GB upload rsync, later other things
 
 # 30 * * * * ls -l /mnt/kemptown/NOBACKUP/EARTHDATA/ELEVATION/SRTM/srtm3.bin
+
+# odd behavior from X11 may be fixed by this
+
+* * * * * xrandr --size 1600x900
