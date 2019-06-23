@@ -9,9 +9,30 @@ const Degree = Pi/180;
 
 const earthRadius = 6371.0088;
 
+// TODO: cleanup unused and un-useful functions
+
 // TODO: this is probably bad
 
 Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
+
+// create an artificial slippy tile and return the data/url PNG
+// representation of it
+
+function createFakeSlippyTile(obj) {
+  let canvas = document.createElement('canvas');
+  canvas.height = 256;
+  canvas.width = 256;
+  let ctx = canvas.getContext('2d');
+
+  ctx.font = '30px Arial';
+  ctx.fillText(`z/x/y: ${obj.z}/${obj.x}/${obj.y}`, 15, 30);
+
+
+
+  return canvas.toDataURL('image/png');
+
+}
+
 
 // convert spherical to xyz coordinates, proper mathematics style
 
@@ -23,7 +44,13 @@ function sph2xyz(obj) {
 
 // console.log(Degree);
 
-// Directly from Mathematica via bc-rosetta.pl + edited for Math.if
+// Directly from Mathematica via bc-lang-covert.pl + edited slightly
+
+// <desc>the positive longitude at lat2 that is distance d from latitude lat1 and longitude 0</desc>
+
+function latsDist2LngRange(lat1, lat2, d) {return Math.arccos(((Math.cos(d))*((1/Math.cos(lat1)))*((1/Math.cos(lat2))))+((-1.0)*((Math.sin(lat1)/Math.cos(lat1)))*((Math.sin(lat2)/Math.cos(lat2)))));}
+
+// Directly from Mathematica via bc-lang-covert.pl + edited for Math.if
 
 // <desc>The x and y coordinates of lng, lat in the standard orthographic projection</desc>
 
@@ -101,6 +128,54 @@ URLCache.get = function (url) {
 
   return url;
 }
+
+/**
+
+Places an orthographic map on a Leaflet map. Obj properties:
+
+map: put the tiles here
+
+clng, clat: the longitude and latitude of the center point
+
+minZoom: never get tiles lower than this zoom level
+
+maxZoom: never get tiles higher than this zoom level
+
+projection: if 1, assume tiles are Mercator projected (slippy tiles);
+otherwise, assume they are equirectangular
+
+opacity: tile opacity
+
+fake: if set to 1, don't do anything, just print out debugging info
+
+*/
+
+
+
+function placeOrthographicOnMap(obj) {
+
+  if (obj.fake == 1) {return;}
+
+  // figure out which tiles we need
+  // TODO: this is almost definitely wrong for orthographic maps
+
+  let tiles = map2TilesNeeded(obj);
+
+  for (let i=0; i < tiles.length; i++) {
+
+    // get lngLat bounds for this tile
+    let bounds = tiles[i].bounds;
+
+    // convert them to orthographic x and y coords
+    
+    console.log(bounds);
+
+    //     L.imageOverlay(img, bounds, {opacity: obj.opacity}).addTo(obj.map);
+  }
+
+
+}
+
 
 /**
 

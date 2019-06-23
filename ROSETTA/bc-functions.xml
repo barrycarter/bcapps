@@ -172,6 +172,14 @@ List[Times[Cos[lat], Sin[lng]], Sin[lat]]]
 </body>
 </function>
 
+<function name="latsDist2LngRange">
+<active>1</active>
+<nice>latsDist2LngRange(lat1, lat2, d)</nice>
+<vars>lat1, lat2, d</vars>
+<desc>the positive longitude at lat2 that is distance d from latitude lat1 and longitude 0</desc>
+<body>ArcCos[Plus[Times[Cos[d], Sec[lat1], Sec[lat2]], Times[-1, Tan[lat1], Tan[lat2]]]]</body>
+</function>
+
 # note, body = FullForm just in case not doc'd elsewhere
 
 # attempt to define a dictionary (using "key: val", not true XML)

@@ -5,6 +5,19 @@
 
 <script>
 
+// can I draw my own "slippy tiles" for testing
+
+let canvas = document.createElement('canvas314');
+
+canvas314.width = 256;
+canvas314.height = 256;
+
+let ctx = canvas314.getContext('2d');
+
+let png2 = canvas314.toDataURL("image/png");
+
+die_testing();
+
 let png = 'iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAElBMVEVAygOW4HdEvwQ8zQA9ywRBygBw60gpAAABAUlEQVR4nO3PARGAMAwAsQKdf8vo+F3iIPO8387ZPXMrwz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+wz7DPsM+w7wfv64YnTVjj7gAAAAASUVORK5CYII=';
 
 
@@ -28,6 +41,15 @@ for (i=0; i < myImageData.data.length; i++) {
  }
 
 ctx.putImageData(myImageData, 0, 0);
+
+
+// this does not appear to work
+
+// ctx.globalAlpha = 0.0001;
+
+
+
+// ctx.putImageData(png, 0, 0);
 
 
 // for (i=0; i<=240000; i++) {

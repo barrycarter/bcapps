@@ -2,6 +2,9 @@
 
 <formulas>
 
+greatCircleDistance[lng1_, lat1_, lng2_, lat2_] = 
+ ArcCos[Cos[lat1]*Cos[lat2]*Cos[lng1 - lng2] + Sin[lat1]*Sin[lat2]];
+
 lngLat2CenterLngLat[lng_, lat_, clng_, clat_] = 
 {ArcTan[Cos[clat]*Cos[lat]*Cos[clng - lng] + Sin[clat]*Sin[lat], 
   -(Cos[lat]*Sin[clng - lng])], 
@@ -18,7 +21,10 @@ lngLat2OrthoXY[lng_, lat_] =
  If[Abs[lng] > Pi/2, {-1, -1}, {Cos[lat] Sin[lng], Sin[lat]}];
 
 conds = {-Pi < lng, lng < Pi, -Pi/2 < lat, lat < Pi/2, -Pi < theta,
-theta < Pi, -Pi < clng, clng < Pi, -Pi/2 < clat, clat < Pi/2, d > 0};
+ theta < Pi, -Pi < clng, clng < Pi, -Pi/2 < clat, clat < Pi/2, d > 0,
+ d < Pi, lat1 > -Pi/2, lat1 < Pi/2, lat2 > -Pi/2, lat2 < Pi/2,
+ lng1 > -Pi, lng1 < Pi, lng2 > -Pi, lng2 < Pi
+};
 
 </formulas>
 
@@ -330,5 +336,33 @@ f1837[t_, d_, theta_] = {-d-1+t, t*Tan[theta]}
 at high zoom it would be (where 1 is earth rad)
 
 2*(d-1)*Tan[theta/2]
+
+(* work below on 22 Jun 2019 *)
+
+Solve[greatCircleDistance[0, lat1, lng2, lat2] == d, lng2]
+
+temp1024 = 
+(Solve[{d>0, d<Pi, dist[0, lat1, lng2, lat2] == d}, lng2] /. C[1] -> 0)[[
+ 2,1,2,1]];
+
+temp1028 =
+ (FullSimplify[Solve[greatCircleDistance[0, lat1, lng2, lat2] == d, lng2],
+ conds] /. C[1] -> 0)[[2,1,2]];
+
+
+
+
+
+
+
+
+
+(* the range of longitudes at lat2 that are dist d from
+latitude lat1 and longitude 0 (translateable to any longitude) *)
+
+latsDist2LngRange[lat1_, lat2_, d_] = 
+ ArcCos[Cos[d] Sec[lat1] Sec[lat2] - Tan[lat1] Tan[lat2]];
+
+
 
 

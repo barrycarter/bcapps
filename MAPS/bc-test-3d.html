@@ -1,6 +1,7 @@
 <script src="../bclib.js"></script>
 <script src="../bclib-staging.js"></script>
 <script src="bc-osmtilecache.js"></script>
+<script src="bc-thunderforesttilecache.js"></script>
 <script src="../THREE.JS/three.min.js"></script>
 
 This demonstration uses only level 4 slippy tiles and is just for testing.<p>
@@ -48,6 +49,11 @@ container.appendChild(renderer.domElement);
 
 let shard = [];
 
+// create a "CORS compliant" textureLoader to get URLs
+
+let textureLoader = new THREE.TextureLoader();
+textureLoader.crossOrigin = "Anonymous"
+
 let z = 4;
 
 for (let i=0; i<2**z; i++) {
@@ -69,29 +75,11 @@ for (let i=0; i<2**z; i++) {
                     nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree),
 		    new THREE.MeshBasicMaterial( {color: 0xffffff} ));
 
-
-   // test of loading URLs directly (https://stackoverflow.com/questions/43698620/applying-textures-in-three-js-using-a-url)
-
-   // TODO: if this works, make it MUCH more efficient
-
-// let myUrl = `https://tile.openstreetmap.org/${z}/${i}/${j}.png`;
-
-let myUrl = `http://tile.thunderforest.com/transport/${z}/${i}/${j}.png?apikey=c9475a1755034dd7a9effbd13f4390e9`;
-
-let textureLoader = new THREE.TextureLoader()
-textureLoader.crossOrigin = "Anonymous"
-let myTexture = textureLoader.load(myUrl)
-
-shard[i][j].material.map = myTexture;
-
-
    // put the correct slippy tile on it
 
-//   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
+//   shard[i][j].material.map = textureLoader.load(URLCache.get(`http://tile.thunderforest.com/transport/${z}/${i}/${j}.png?apikey=c9475a1755034dd7a9effbd13f4390e9`));
 
-//   shard[i][j].material.map = THREE.ImageUtils.loadTexture(`https://tile.openstreetmap.org/${z}/${i}/${j}.png`);
-
-//   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.get[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
+   shard[i][j].material.map = textureLoader.load(URLCache.get(`http://test.barrycarter.info/bc-mytile4.pl?/${z}/${i}/${j}.png`));
 
     scene.add(shard[i][j]);
   }
