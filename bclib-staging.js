@@ -40,9 +40,17 @@ function createFakeSlippyTile(obj) {
   canvas.width = 256;
   let ctx = canvas.getContext('2d');
 
+  ctx.fillStyle = '#8080FF';
+  ctx.fillRect(0, 0, 256, 256);
+
   let fontSize = 20;
   ctx.font = `${fontSize}px Arial`;
   ctx.fillStyle = '#FF0000';
+  ctx.strokeStyle = '#FFFF00';
+
+  ctx.strokeRect(0, 0, 256, 256);
+
+  ctx.fillStyle = '#FFFFFF';
 
   for (let i=0; i < printArray.length; i++) {
     ctx.fillText(printArray[i], 5, fontSize*(i+1));

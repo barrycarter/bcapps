@@ -11,6 +11,10 @@ require "/usr/local/lib/bclib.pl";
 
 my($out, $err, $res, %archive);
 
+# the current time to avoid printing accts archived recently
+
+my($now) = time();
+
 # extra reminders for some sites
 
 my(%extra) = (
@@ -48,6 +52,9 @@ for $i (split(/\n/, $out)) {
   # remove the :ARCHIVE: code since we can still calculate latest stamp
   if ($i=~s/:ARCHIVE://) {$archive{$i} = 1;}
 
+  # and comments
+  if ($i=~s/:comment=(.*)//) {$comments{$i} = $1;}
+
   unless ($i=~m%^(.*?):(\S+)%) {push(@errors,"BAD LINE: $i"); next;}
   $latest{lc("$1:$2")} = 1;
 }
@@ -59,7 +66,7 @@ debug("ARCHIVE", %archive);
 # however, can also be files, so -o
 # TODO: try to add -iname '*.zip' to this w/o breaking OR condition
 
-($out, $err, $res) = cache_command2("find $dirspec -type l -o -type f", "age=3600");
+($out, $err, $res) = cache_command2("find $dirspec -type l -o -type f", "age=0");
 
 for $i (split(/\n/, $out)) {
 
@@ -108,8 +115,16 @@ for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
 
   # because $extra is local, don't really need else below
 
-  my($extra);
-  if ($archive{$i}) {$extra = "[ARCHIVE]";} else {$extra = "";}
+  my($extra) = "";
+  if ($archive{$i}) {$extra .= "[ARCHIVE]";}
+  if ($comments{$i}) {$extra .= "($comments{$i})";}
+
+  # experimental
+  if ($archive{$i}) {next;}
+
+  # this is two months
+
+  if ($now - $latest{$i} < 365.2425/12*2*86400) {next;}
 
   print stardate($latest{$i})," $i $extra{$site} $extra\n";
 }
