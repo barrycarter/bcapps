@@ -77,11 +77,24 @@ for (let i=0; i<2**z; i++) {
 
    // put the correct slippy tile on it
 
+  var url;
+
+  url = createFakeSlippyTile({x: i, y: j, z: z});
+
+//  url = URLCache.get(`http://test.barrycarter.info/bc-mytile4.pl?/${z}/${i}/${j}.png`);
+
+//  url = URLCache.get(`http://tile.thunderforest.com/transport/${z}/${i}/${j}.png?apikey=c9475a1755034dd7a9effbd13f4390e9`);
+
+  console.log("URL", url);	
+
 //   shard[i][j].material.map = textureLoader.load(URLCache.get(`http://tile.thunderforest.com/transport/${z}/${i}/${j}.png?apikey=c9475a1755034dd7a9effbd13f4390e9`));
 
-   shard[i][j].material.map = textureLoader.load(URLCache.get(`http://test.barrycarter.info/bc-mytile4.pl?/${z}/${i}/${j}.png`));
+//   shard[i][j].material.map = textureLoader.load(URLCache.get(`http://test.barrycarter.info/bc-mytile4.pl?/${z}/${i}/${j}.png`));
+
+   shard[i][j].material.map = textureLoader.load(url);
 
     scene.add(shard[i][j]);
+    console.log(`ADDING SHARD: ${i}, ${j}`);
   }
  }
 

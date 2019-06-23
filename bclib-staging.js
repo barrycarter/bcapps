@@ -19,15 +19,36 @@ Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
 // representation of it
 
 function createFakeSlippyTile(obj) {
+
+  // TODO: unify use of projection=1 and projection=mercator
+  obj = mergeHashes(obj, str2hash("projection=mercator"));
+
+  let bounds = tile2LngLat(obj);
+
+  // the array of things to print on tile
+  let printArray = [
+   `z/x/y: ${obj.z}/${obj.x}/${obj.y}`,
+   `NLat: ${bounds.nlat}`,
+   `SLat: ${bounds.slat}`,
+   `WLng: ${bounds.wlng}`,
+   `ELng: ${bounds.elng}`,
+   `EOF`
+		    ];
+
   let canvas = document.createElement('canvas');
   canvas.height = 256;
   canvas.width = 256;
   let ctx = canvas.getContext('2d');
 
-  ctx.font = '30px Arial';
-  ctx.fillText(`z/x/y: ${obj.z}/${obj.x}/${obj.y}`, 15, 30);
+  let fontSize = 20;
+  ctx.font = `${fontSize}px Arial`;
+  ctx.fillStyle = '#FF0000';
 
+  for (let i=0; i < printArray.length; i++) {
+    ctx.fillText(printArray[i], 5, fontSize*(i+1));
+  }
 
+  console.log("ABOUT TO RETURN", canvas.toDataURL('image/png'));
 
   return canvas.toDataURL('image/png');
 

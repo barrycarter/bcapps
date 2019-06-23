@@ -233,7 +233,8 @@ z: tile zoom value
 x: tile x value (may be fractional)
 y: tile y value (may be fractional)
 
-projection: if 1, Mercator project, otherwise equirectangular project
+projection: if 1 or "mercator", Mercator project, otherwise
+equirectangular project
 
 */
 
@@ -243,19 +244,29 @@ function tile2LngLat(obj) {
 
   obj = mergeHashes(obj, str2hash("projection=0"));
 
+  // use mercator instead of 1 in future
+  if (obj.projection == "mercator") {obj.projection = 1;}
+
   // true for both projections
-  let lng = obj.x/2**obj.z*360-180;
+
+  obj.lng = obj.x/2**obj.z*360-180;
+  obj.wlng = Math.floor(obj.x)/2**obj.z*360-180;
+  obj.elng = Math.floor(obj.x+1)/2**obj.z*360-180;
 
   if (obj.projection == 0) {
-    return {lng: lng, lat: 90-obj.y/2**obj.z*180}
+    obj.lat = 90-obj.y/2**obj.z*180;
+    obj.nlat = 90-Math.floor(obj.y)/2**obj.z*180;
+    obj.slat = 90-Math.floor(obj.y+1)/2**obj.z*180;
+  } else {
+
+    // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
+    // TODO: this is hideous
+    obj.lat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((obj.y/2**obj.z-1/2)*2*Math.PI)));
+    obj.nlat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((Math.floor(obj.y)/2**obj.z-1/2)*2*Math.PI)));
+    obj.slat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((Math.floor(obj.y+1)/2**obj.z-1/2)*2*Math.PI)));
   }
 
-  // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
-  // TODO: this is hideous
-
-  let lat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((obj.y/2**obj.z-1/2)*2*Math.PI)));
-
-  return {lng: lng, lat: lat};
+    return obj;
 
 }
 
