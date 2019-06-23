@@ -71,6 +71,17 @@ function sph2xyz(obj) {
       z: obj.r*Math.sin(obj.ph)};
   };
 
+// convert xyz coordinates to spherical, proper mathematics style
+
+function xyz2sph(obj) {
+
+  // square length in plane
+  let planeLength2 = obj.x**2 + obj.y**2;
+
+  return {r: Math.sqrt(planeLength2 + obj.z**2), th: Math.atan2(obj.y, obj.x),
+      ph: Math.atan2(obj.z, Math.sqrt(planeLength2))};
+}
+
 // console.log(Degree);
 
 // Directly from Mathematica via bc-lang-covert.pl + edited slightly
