@@ -20,23 +20,30 @@ console.log(Srand.random());
 
 let stars = [];
 
-for (let i=0; i < 10000; i++) {
+for (let i=0; i < 50000; i++) {
 
   // TODO: add "relative brightness"
   star = {x: Srand.random()-1/2, y: Srand.random()-1/2, z: Srand.random()-1/2,
           r: Math.floor(Srand.random()*256), g: Math.floor(Srand.random()*256),
-          b: Math.floor(Srand.random()*256)};
+          b: Math.floor(Srand.random()*256), 
+          sz: 1+Math.floor(Srand.random()*5)};
+
+  //  console.log(star);
 
   stars.push(star);
 }
 
-console.log(stars);
+// console.log(stars);
 
 // draw the stars
 
-f();
+setInterval(f, 10);
 
 function f() {
+
+  console.log("F CALLED");
+
+  ctx.clearRect(0, 0, width, height);
 
   for (let i=0; i < stars.length; i++) {
 
@@ -50,10 +57,14 @@ function f() {
     let x = (Math.cos(pos.ph)*pos.th/Math.PI/2 + 1/2)*width;
     let y = pos.ph/Math.PI*height + height/2;
 
-    ctx.fillRect(x,y,1,1);
+    ctx.fillStyle = '#ff0000';
+    ctx.fillRect(x,y, stars[i].sz, stars[i].sz);
 
-    //    console.log("POS", pos);
-
+    stars[i].x -= 0.001;
+    stars[i].y -= 0.001;
   }
 
+  //    requestAnimationFrame(f);
+
+    //    console.log("POS", pos.size);
 }
