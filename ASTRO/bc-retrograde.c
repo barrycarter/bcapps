@@ -39,6 +39,10 @@ int main (int argc, char **argv) {
 
   SpiceBoolean test;
 
+  // to hold the results
+  SPICEDOUBLE_CELL(result, 20000);
+  SPICEDOUBLE_CELL(cnfine, 2);
+
   // the standard ephemerides
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
@@ -49,7 +53,11 @@ int main (int argc, char **argv) {
   }
 
   // 1970 to 2038 (all "Unix time") for testing
-  //  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+
+  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+
+
+
 
 }
 
