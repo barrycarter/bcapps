@@ -54,7 +54,7 @@ if ($action=~/^(start|begin)$/i) {
 
 # stop = not finishing a task (TODO: better verbiage here)
 
-if ($action=~/^(stop|fail)$/i) {
+if ($action=~/^(stop|fail|abort)$/i) {
 
   # have I already started?
   unless (-f "$task.task.new") {die("$task: task not started");}

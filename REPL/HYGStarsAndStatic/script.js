@@ -7,6 +7,19 @@ let height = 700;
 c = document.getElementById("dots");
 ctx = c.getContext("2d");
 
+// real stars
+
+function draw_stars() {
+
+
+  
+
+
+}
+
+
+  die_or_live();
+
 // create some repeatable random numbers
 
 Srand.seed(20190623);

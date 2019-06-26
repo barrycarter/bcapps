@@ -363,6 +363,27 @@ latitude lat1 and longitude 0 (translateable to any longitude) *)
 latsDist2LngRange[lat1_, lat2_, d_] = 
  ArcCos[Cos[d] Sec[lat1] Sec[lat2] - Tan[lat1] Tan[lat2]];
 
+(* below 23 Jun 2019 *)
+
+(* from a zxy mercator tile given clat and clng, orthographic projection *)
+
+t2254 = slippyDecimal2LngLat[x,y,z]
+
+t2255 = Flatten[{t2254, clng, clat}]
+
+t2256 = FullSimplify[Apply[lngLat2CenterLngLat, t2255], conds]
+
+t2257 = FullSimplify[Apply[lngLat2OrthoXY, t2256], conds]
+
+
+
+
+
+
+
+
+
+
 
 
 
