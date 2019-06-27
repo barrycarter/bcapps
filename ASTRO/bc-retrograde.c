@@ -1,5 +1,7 @@
 /* Compute retrogrades for given planet */
 
+/* See https://astronomy.stackexchange.com/questions/27468/table-of-dates-for-planet-retrograde-motion */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,9 +10,9 @@
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
-// TODO: make this a parameter, not a constant
+// this has to be global
 
-SpiceInt planet = 4;
+SpiceInt planet;
 
 /* the psuedo-derivative of the ecliptic longitude for global `planet` */
 
@@ -26,9 +28,11 @@ void DEclipLong(SpiceDouble et, SpiceDouble *value) {
   spkezp_c(planet, et+10, "ECLIPDATE","CN+S", 399, v, &lt);
   lng1 = atan2(v[1], v[0]);
 
-  //  printf("%f %f\n", lng0, lng1);
+  // CSPICE seems to ignore this case anyway, but when a planet's
+  // ecliptic longitude 'decreases' from 359+ degress to ~0 degrees,
+  // this is actually an increase
 
-  // TODO: handle 2pi "wraparound" case
+  if (lng1-lng0 < -pi_c()) {lng1 += twopi_c();}
 
   *value = lng1-lng0;
 
@@ -39,47 +43,37 @@ void DEclipLong(SpiceDouble et, SpiceDouble *value) {
 // endpoint of each interval with prefix (which I will use to tell me
 // what I am computing)
 
-void show_results (char *prefix, SpiceCell result, 
-                   void(* udfuns)(SpiceDouble et,SpiceDouble * value)) {
+void show_results (SpiceCell result) {
 
   SpiceInt i;
   SpiceInt nres = wncard_c(&result);
-  SpiceDouble beg, end, vbeg, vend;
+  SpiceDouble beg, end;
 
   for (i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
-    udfuns(beg,&vbeg);
-    udfuns(end,&vend);
-    printf("%s %f %f %f %f\n",prefix,et2jd(beg),et2jd(end),vbeg,vend);
+    printf("%d %f %f\n", planet, beg, end);
   }
 }
 
 int main (int argc, char **argv) {
+
+  // the planet
+  planet = atoi(argv[1]);
 
   // to hold the results
   SPICEDOUBLE_CELL(result, 200000);
   SPICEDOUBLE_CELL(cnfine, 2);
 
   // the standard ephemerides
-
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
-
-  /*
-
-  for (double i=year2et(2018); i < year2et(2020); i+=3600) {
-    retrogradeQ(i, &test);
-    printf("TEST %f %d\n", et2unix(i), test);
-  }
-
-  */
 
   // 1970 to 2038 (all "Unix time") for testing
 
-  wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
+  wninsd_c(year2et(1970), year2et(1980), &cnfine);
 
-  gfuds_c(DEclipLong, isDecreasing, "<", 0, 0, 3600., 5000, &cnfine, &result);
+  gfuds_c(DEclipLong, isDecreasing, "<", 0, 0, 86400., 5000, &cnfine, &result);
 
-  show_results("TESTING", result, DEclipLong);
+  show_results(result);
 
 }
 
