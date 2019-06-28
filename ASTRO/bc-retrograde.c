@@ -87,11 +87,7 @@ int main (int argc, char **argv) {
   if (planet <= 6) {
     wninsd_c(STIME, ETIME, &cnfine);
   } else {
-    spkcov_c("/home/user/SPICE/KERNELS/de431_part-1.bsp", planet, &range);
-    wnfetd_c (&range, 0, &stime1, &etime1);
-    spkcov_c("/home/user/SPICE/KERNELS/de431_part-2.bsp", planet, &range);
-    wnfetd_c (&range, 0, &stime2, &etime2);
-    printf("TIMES: %f %f %f %f\n", stime1, etime1, stime2, etime2);
+    // TODO: why do I need this 86400?
     wninsd_c(STIME+86400, ETIME, &cnfine);
   }
 

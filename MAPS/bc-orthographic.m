@@ -375,6 +375,30 @@ t2256 = FullSimplify[Apply[lngLat2CenterLngLat, t2255], conds]
 
 t2257 = FullSimplify[Apply[lngLat2OrthoXY, t2256], conds]
 
+(* below on 28 Jun 2019, more about equirectangular distortion *)
+
+Plot[Gudermannian[x]/Degree, {x, -Pi, Pi}]
+
+t1230[z_] := Table[{x, Gudermannian[x]/Degree}, {x, -Pi, Pi, 2*Pi/2^z}];
+
+f1233[z_] := Interpolation[t1230[z], InterpolationOrder -> 1];
+
+Plot[{Gudermannian[x]/Degree, f1233[1][x]}, {x, -Pi, Pi}]
+
+Plot[{Gudermannian[x]/Degree-f1233[3][x]}, {x, -Pi, Pi}]
+
+(* in the mercator projection, latitude would be projected to this
+pixel, where we assume 256 * 2^z pixels total from +85 down to -85 *)
+
+mercator[lat_, z_] = -Gudermannian[lat*Degree]
+
+N[Table[mercator[lat, 0], {lat, -85, 85, 85}]]
+
+
+
+
+
+
 
 
 
