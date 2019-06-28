@@ -21,6 +21,39 @@
 #define STIME -479654740758.815430+4042
 #define ETIME 479386728067.184631-12
 
+// list of planets for prettyprinting (planet2str() function)
+
+// planets[0] = "SSB", solar system barycenter
+
+const char *planets[] = {"SSB", "MERCURY", "VENUS", "EARTH", "MARS", "JUPITER",
+                         "SATURN", "URANUS", "NEPTUNE", "PLUTO", "SUN"};
+
+// convert planet to string, optionally in terse format (meaning
+// return the planet number as a string or "M" for moon and "S" for
+// sun) if second argument is string "TERSE"
+
+char *planet2str(int planet, char *type) {
+
+  // in case we need to return a string
+  static char res[200];
+
+  if (strcmp(type, "TERSE") == 0) {
+
+    if (planet<=9) {
+      sprintf(res, "%d", planet);
+      return res;
+    }
+
+    if (planet==301) {return "M";}
+    if (planet==10) {return "S";}
+    return "?";
+  }
+
+  if (planet<=10) {return (char *) planets[planet];}
+  if (planet == 301) {return "MOON";}
+  return "?";
+}
+
 // convert miles to km and vice versa
 double mi2km(double d) {return d*1.609344;}
 double km2mi(double d) {return d/1.609344;}

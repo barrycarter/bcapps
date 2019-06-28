@@ -10,6 +10,10 @@
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
+#define MAXWIN 5000000
+#define TIMLEN 41
+#define TIMFMT "ERAYYYY##-MON-DD HR:MN ::MCAL ::RND"
+
 // this has to be global
 
 SpiceInt planet;
@@ -45,13 +49,20 @@ void DEclipLong(SpiceDouble et, SpiceDouble *value) {
 
 void show_results (SpiceCell result) {
 
+  SpiceChar begstr[TIMLEN], endstr[TIMLEN];
+
   SpiceInt i;
   SpiceInt nres = wncard_c(&result);
   SpiceDouble beg, end;
 
   for (i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
-    printf("%d %f %f\n", planet, beg, end);
+
+    timout_c (beg, TIMFMT, TIMLEN, begstr);
+    timout_c (end, TIMFMT, TIMLEN, endstr);
+
+    printf("%s %s STARTS RETROGRADE %f\n", begstr, planet2str(planet, ""), beg);
+    printf("%s %s ENDS RETROGRADE %f\n", endstr, planet2str(planet, ""), end);
   }
 }
 
@@ -61,17 +72,30 @@ int main (int argc, char **argv) {
   planet = atoi(argv[1]);
 
   // to hold the results
-  SPICEDOUBLE_CELL(result, 200000);
+  SPICEDOUBLE_CELL(result, 2000000);
   SPICEDOUBLE_CELL(cnfine, 2);
+
+  // special case for Uranus+
+  SPICEDOUBLE_CELL (range, 2);
+  SpiceDouble stime1, etime1, stime2, etime2;
 
   // the standard ephemerides
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
-  // 1970 to 2038 (all "Unix time") for testing
+  // thru Saturn, STIME and ETIME are good; for Uranus+, use spkcov()
 
-  wninsd_c(year2et(1970), year2et(1980), &cnfine);
+  if (planet <= 6) {
+    wninsd_c(STIME, ETIME, &cnfine);
+  } else {
+    spkcov_c("/home/user/SPICE/KERNELS/de431_part-1.bsp", planet, &range);
+    wnfetd_c (&range, 0, &stime1, &etime1);
+    spkcov_c("/home/user/SPICE/KERNELS/de431_part-2.bsp", planet, &range);
+    wnfetd_c (&range, 0, &stime2, &etime2);
+    printf("TIMES: %f %f %f %f\n", stime1, etime1, stime2, etime2);
+    wninsd_c(STIME+86400, ETIME, &cnfine);
+  }
 
-  gfuds_c(DEclipLong, isDecreasing, "<", 0, 0, 86400., 5000, &cnfine, &result);
+  gfuds_c(DEclipLong, isDecreasing, "<", 0, 0, 86400., 2000000, &cnfine, &result);
 
   show_results(result);
 
