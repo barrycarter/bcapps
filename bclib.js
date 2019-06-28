@@ -289,26 +289,42 @@ function lngLat2Tile(obj) {
   obj = mergeHashes(obj, str2hash("projection=0"));
 
   // true for both projections
-  let x = (obj.lng+180)/360*2**obj.z;
+  obj.x = (obj.lng+180)/360*2**obj.z;
+
+  let y = 0;
 
   // for equirectangular
   if (obj.projection == 0) {
 
+    if (obj.lat < -90) {
+      obj.y = 2**obj.z-1;
+      obj.err = "Input latitude less than -90, returning value for -90";
+    } else if (obj.lat > 90) {
+      obj.y = 0;
+      obj.err = "Input latitude greater than +90, returning value for +90";
+    } else {
     // TODO: cleanup this code, maybe no ternary operator below
     // special case: -90 itself touches 2**obj.z which it shouldn't
-    
-    return {z: obj.z, x: x,
-	y: obj.lat<=-90?2**obj.z-1:(90-obj.lat)/180*2**obj.z}
+      obj.y = (90-obj.lat)/180*2**obj.z;
+    }
+
+  } else {
+
+    // TODO: I copied this from somewhere else and am NOT happy about it
+    // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
+
+      if (obj.lat < -bclib.MERCATOR_LAT_LIMIT) {
+	obj.y = 2**obj.z-1;
+	obj.err = "Input latitude less than ~-85, returning value for ~-85";
+      } else if (obj.lat > bclib.MERCATOR_LAT_LIMIT) {
+	obj.y = 0;
+	obj.err = "Input latitude greater than ~+85, returning value for ~+85";
+      } else {
+	let lat_rad = obj.lat/180*Math.PI;
+	obj.y = 2**obj.z*(-Math.log(Math.tan(lat_rad) + 1/Math.cos(lat_rad))/2/Math.PI+1/2);
+      }
   }
-
-  // for Mercator
-  // TODO: I copied this from somewhere else and am NOT happy about it
-
-  // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
-
-  let lat_rad = obj.lat/180*Math.PI;
-  let y = 2**obj.z*(-Math.log(Math.tan(lat_rad) + 1/Math.cos(lat_rad))/2/Math.PI+1/2);
-  return {z: obj.z, x: x, y: y};
+  return obj;
 }
   
 

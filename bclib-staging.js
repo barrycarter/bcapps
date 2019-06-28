@@ -15,6 +15,36 @@ const earthRadius = 6371.0088;
 
 Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
 
+/**
+
+The tiles at a given zoom level that are a given distance or less from
+a given latitude and longitude. Input object parameters:
+
+clng, clat: the central longitude and latitude
+dist: the distance, in kilometers
+z: the zoom level
+
+*/
+
+function lngLatDistZ2Tiles(obj) {
+
+  // determine the north and south tiles
+  obj.nlat = obj.clat + obj.dist/(Pi*earthRadius)*180;
+  obj.slat = obj.clat - obj.dist/(Pi*earthRadius)*180;
+
+  obj.ntile = lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection});
+  obj.stile = lngLat2Tile({z: obj.z, lat: obj.slat, lng: obj.clng, projection: obj.projection});
+
+  console.log(`NLAT: ${obj.ntile}, SLAT: ${obj.stile}`);
+
+  // we don't care about the lng at the moment
+  console.log(lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection}));
+  console.log(lngLat2Tile({z: obj.z, lat: obj.slat, lng: obj.clng, projection: obj.projection}));
+
+
+
+}
+
 // create an artificial slippy tile and return the data/url PNG
 // representation of it
 
