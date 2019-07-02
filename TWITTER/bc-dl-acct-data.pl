@@ -26,7 +26,7 @@ my(%extra) = (
 # TODO: this is serious overkill, most aren't even backups
 
 my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE", "INSTAGRAM", 
-	     "DISCORD", "TUMBLR/BACKUPS");
+	     "DISCORD", "TUMBLR/BACKUPS", "DROPBOX");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # hash to keep latest save for each account
@@ -75,7 +75,8 @@ for $i (split(/\n/, $out)) {
   unless (
 	  $i=~m%/(GOOGLE)/(.*?)\-(\d{8}T\d{6})Z.zip$% ||
 	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
-	  $i=~m%/(INSTAGRAM)/(.*?)_(\d{8})\.zip$%
+	  $i=~m%/(INSTAGRAM)/(.*?)_(\d{8})\.zip$% ||
+	  $i=~m%/(DROPBOX)/dropbox\-(.*?)\-(\d{8})\.zip$%
 	 ) {
     debug("IGNORING: $i");
     next;
@@ -95,7 +96,7 @@ for $i (split(/\n/, $out)) {
   debug("DATE: $date");
   $date = str2time($date);
 
-  debug("$site/$acct/$date");
+  debug("SAD: $site/$acct/$date");
 
   unless ($latest{"$site:$acct"} || $archive{"$site:$acct"}) {
     push(@errors,"$site:$acct not in ~/myaccounts.txt, possible error");
