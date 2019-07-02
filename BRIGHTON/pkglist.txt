@@ -14,6 +14,17 @@ libcxx
 # drop but not select from browser (decided against later)
 # nautilus
 
+# below for dropbox
+nautilus
+nautilus-extensions
+nautilus-devel
+python-docutils
+
+python2-docutils
+python36-docutils
+python34-docutils
+python36-gobject
+
 screengrab
 tneg
 snapd
@@ -27,6 +38,7 @@ alien
 # teamviewer
 hwinfo
 yum-plugin-copr
+yum-utils
 epel-release
 curlftpfs
 dirsplit
@@ -42,6 +54,9 @@ testdisk
 squashfs-tools
 squashfuse
 bluez
+bluez-tools
+blueman
+rfkill
 symlinks
 libattr-devel
 xfsprogs-devel

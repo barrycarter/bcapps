@@ -363,6 +363,18 @@ latitude lat1 and longitude 0 (translateable to any longitude) *)
 latsDist2LngRange[lat1_, lat2_, d_] = 
  ArcCos[Cos[d] Sec[lat1] Sec[lat2] - Tan[lat1] Tan[lat2]];
 
+D[latsDist2LngRange[lat1, lat2, d], lat2]
+
+Solve[D[latsDist2LngRange[lat1, lat2, d], lat2] == 0, lat2]
+
+
+
+Plot[latsDist2LngRange[0*Degree, lat2*Degree, Pi/4]/Degree, {lat2, -90, 90}]
+
+Plot[latsDist2LngRange[40*Degree, lat2*Degree, Pi/8]/Degree, {lat2, -90, 90}]
+
+
+
 (* below 23 Jun 2019 *)
 
 (* from a zxy mercator tile given clat and clng, orthographic projection *)

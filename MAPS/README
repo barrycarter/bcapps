@@ -118,9 +118,39 @@ Data provided:
 
   - TODO: Islam prayer times? (like sunrise/sunset)
 
+  - TODO: point buffers (multiple point buffers?)
+
   - TODO: weather (but just proxying another source?)
 
   - TODO: allow opacity control
+
+  - TODO: add coastal distance data w caveats and maybe my own version
+
+  - TODO: for SHP files where layer has finite number of values,
+  enumerate these values
+
+  - TODO: go flat bin files for raster data, not gdal (for vector data, may need to rasterize however)
+
+  - TODO: in orthographic projection, looking near north pole means
+  looking at all values x tiles which is terrible-- find and create
+  better projection?
+
+  - TODO: add annual rainfal map?
+
+  - TODO: add wealth data? 
+  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5800392/
+
+  - TODO: add solar/lunar eclipse paths?
+
+  - TODO: overlay star map?
+
+  - TODO: since OSM tileservers send mercator tiles, may "have" to go
+  mercator all the way?
+
+  - TODO: transport tileserver has names in English, use it instead of
+  main tilserver?
+
+  - TODO: antipodal map
 
 TODO: let user "be" on a 1 arcsecond square as current virtual location
 and draw this square on the map
@@ -139,6 +169,8 @@ What I have:
 Data sources and information:
 
   - http://srtm.csi.cgiar.org/srtmdata/
+
+  - https://oceancolor.gsfc.nasa.gov/docs/distfromcoast/ (coastal distance)
 
 Help I need w/ map server:
 

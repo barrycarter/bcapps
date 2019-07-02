@@ -48,6 +48,7 @@ for $i (@files) {
     $j=~s/\"(.*?)\"//;
     # TODO: need to use hash here to allow for recursion and looping
     push(@files,$1);
+    debug("ADDING $1 FROM $i");
   }
 }
 
@@ -64,7 +65,7 @@ for $i (@phrases) {
 
 my($out, $err, $res) = cache_command2($cmd, "age=-1");
 
-debug("OUT: $out", "ERR: $err", "RES: $res");
+debug("CMD: $cmd", "OUT: $out", "ERR: $err", "RES: $res");
 
 print $out;
 
