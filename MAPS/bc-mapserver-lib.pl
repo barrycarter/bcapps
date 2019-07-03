@@ -87,19 +87,20 @@ sub landuse {
 
 Given the following information in a hash, return the corresponding data
 
+TODO: the first four rows belong in their own "map" hash
+
 filename: the filename holding the data
+
+bits: the number of bits per item for the existing data
+
+nData, wData, sData, eData: the extents of the existing data (degrees)
+
+lngRes, latRes: the longitude and latitude resolution of the existing
+data (degrees)
 
 wlng, nlat, elng, slat: the bounding box for the requested data (degrees)
 
 dlng, dlat: the requested delta of the longitude and latitude (degrees)
-
-bits: the number of bits per data item
-
-nwData, seData: the northwest and southeast extents of the existing
-data (degrees)
-
-lngRes, latRes: the longitude and latitude resolution of the existing
-data (degrees)
 
 =cut
 
@@ -107,17 +108,23 @@ sub mapData {
 
   my($hashref) = @_;
 
-  debug($hashref->{filename});
+  my($mapmeta) = $mapmeta{$hashref->{map}};
 
-  # open a filehandle to the data (TODO: using global var here, try not to)
-
-  unless ($fh{$hashref->{filename}}) {
-    $fh{$hashref->{filename}} = FileHandle->new($hashref->{filename}, "r");
+  # TODO: proper error function
+  unless ($mapmeta) {
+    return "ERROR: no such map as $hashref->{map}";
   }
+
+  # open a filehandle to the map if not already opened
+  unless ($mapmeta->{filehandle}) {
+    $mapmeta->{filehandle} = FileHandle->new($mapmeta->{filename}, "r");
+  }
+
+  # TODO: return actual data coords not always same as requested
 
   my($buf);
 
-  sysread($fh{$hashref->{filename}}, $buf, 100);
+  sysread($mapmeta->{filehandle}, $buf, 100);
 
   debug("BUF: $buf");
 

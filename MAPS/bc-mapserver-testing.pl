@@ -3,9 +3,23 @@
 require "/usr/local/lib/bclib.pl";
 require "bc-mapserver-lib.pl";
 
-%test = ("filename" => "/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin");
+# TODO: get some of this info from the .hdr and .prj files
 
-mapData(\%test);
+# TODO: worry about NODATA
+
+%{$mapmeta{"landuse"}} =(
+ "filename"=>"/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin",
+ "bits" => 8, "nData" => 90, "sData" => -90, "wData" => -180, "eData" => 180,
+ "lngRes" => 0.002777777777778, "latRes" => 0.002777777777778
+);
+
+# this would come from user
+
+%reqdata =(
+ "map" => "landuse"
+);
+
+mapData(\%reqdata);
 
 die "TESTING";
 
