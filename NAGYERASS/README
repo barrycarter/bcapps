@@ -39,4 +39,6 @@ TODO: test that drives are mounted correctly: ie, /mnt/villa and
 /mnt/villa/villa-files.txt as a test since I long term plan to copy
 file lists to multiple drives
 
+TODO: if qbittorrent is running there should be a process waiting for
+it to "end" since I need to know if it crashes
 

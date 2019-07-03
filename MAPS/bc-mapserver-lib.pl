@@ -1,3 +1,5 @@
+use FileHandle;
+
 # these are helper functions that the user cannot call directly
 
 # Meta values for the data sets
@@ -79,6 +81,47 @@ sub landuse {
   seek(LANDUSE, $ret->{byte}, SEEK_SET);
   sysread(LANDUSE, $data, 1);
   return str2hashref("cmd=landuse&lon=$hashref->{lon}&lat=$hashref->{lat}&adjlat=$hashref->{adjlat}&adjlon=$hashref->{adjlon}&value=".ord($data));
+}
+
+=item mapData(%hash)
+
+Given the following information in a hash, return the corresponding data
+
+filename: the filename holding the data
+
+wlng, nlat, elng, slat: the bounding box for the requested data (degrees)
+
+dlng, dlat: the requested delta of the longitude and latitude (degrees)
+
+bits: the number of bits per data item
+
+nwData, seData: the northwest and southeast extents of the existing
+data (degrees)
+
+lngRes, latRes: the longitude and latitude resolution of the existing
+data (degrees)
+
+=cut
+
+sub mapData {
+
+  my($hashref) = @_;
+
+  debug($hashref->{filename});
+
+  # open a filehandle to the data (TODO: using global var here, try not to)
+
+  unless ($fh{$hashref->{filename}}) {
+    $fh{$hashref->{filename}} = FileHandle->new($hashref->{filename}, "r");
+  }
+
+  my($buf);
+
+  sysread($fh{$hashref->{filename}}, $buf, 100);
+
+  debug("BUF: $buf");
+
+
 }
 
 return 1;

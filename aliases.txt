@@ -184,6 +184,12 @@ alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 
 
 alias feh "\feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
 
+# feh not full screen
+
+alias feh-small "\feh -geometry 1024x768 -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
+
+
+
 alias waitpid bc-waitpid.pl
 
 # can add --realsies to below when desired

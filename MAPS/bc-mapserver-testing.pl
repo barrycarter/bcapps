@@ -1,6 +1,13 @@
 #!/bin/perl
 
 require "/usr/local/lib/bclib.pl";
+require "bc-mapserver-lib.pl";
+
+%test = ("filename" => "/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin");
+
+mapData(\%test);
+
+die "TESTING";
 
 =item legend
 
