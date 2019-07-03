@@ -83,20 +83,45 @@ sub landuse {
   return str2hashref("cmd=landuse&lon=$hashref->{lon}&lat=$hashref->{lat}&adjlat=$hashref->{adjlat}&adjlon=$hashref->{adjlon}&value=".ord($data));
 }
 
+=item mapMeta(%hash)
+
+Given a hash containing a filename, return a hash with metadata about
+the data in the filename, including an opened filehandle to the
+filename
+
+=cut
+
+sub mapMeta {
+
+  my($hashref) = @_;
+
+  debug("HASHREF: $hashref");
+
+  # TODO: this doesn't check to see if an open filehandle exists, but
+  # that may be ok; however, if I'm forking, it may not be
+
+  $hashref->{filehandle} = FileHandle->new($hashref->{filename}, "r");
+
+  my($hdr) = $hashref->{filename};
+  $hdr=~s/\.bin/.hdr/;
+  debug("HDR: $hdr");
+  my($meta) = read_file($hdr);
+  for $i (split(/\n/, $meta)) {
+    $i=~m%^(.*?)\s+(.*)$%;
+    $hashref->{$1} = $2;
+  }
+
+  debug(var_dump("RETURNING", $hashref));
+
+  return $hashref;
+
+}
+
 =item mapData(%hash)
 
 Given the following information in a hash, return the corresponding data
 
-TODO: the first four rows belong in their own "map" hash
-
-filename: the filename holding the data
-
-bits: the number of bits per item for the existing data
-
-nData, wData, sData, eData: the extents of the existing data (degrees)
-
-lngRes, latRes: the longitude and latitude resolution of the existing
-data (degrees)
+map: the map from which data is requested
 
 wlng, nlat, elng, slat: the bounding box for the requested data (degrees)
 
@@ -108,19 +133,13 @@ sub mapData {
 
   my($hashref) = @_;
 
-  my($mapmeta) = $mapmeta{$hashref->{map}};
-
-  # TODO: proper error function
-  unless ($mapmeta) {
-    return "ERROR: no such map as $hashref->{map}";
-  }
-
-  # open a filehandle to the map if not already opened
-  unless ($mapmeta->{filehandle}) {
-    $mapmeta->{filehandle} = FileHandle->new($mapmeta->{filename}, "r");
-  }
+  my($meta) = $mapmeta{$hashref->{map}};
 
   # TODO: return actual data coords not always same as requested
+
+  # TODO: add checks here that data request does not exceed map extents
+
+  # figure out row and col for nw corner of requested data
 
   my($buf);
 

@@ -7,11 +7,18 @@ require "bc-mapserver-lib.pl";
 
 # TODO: worry about NODATA
 
-%{$mapmeta{"landuse"}} =(
- "filename"=>"/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin",
- "bits" => 8, "nData" => 90, "sData" => -90, "wData" => -180, "eData" => 180,
- "lngRes" => 0.002777777777778, "latRes" => 0.002777777777778
-);
+$mapmeta{landuse} = mapMeta({"filename" => "/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin"});
+
+debug(var_dump("MAPMETA", \%mapmeta));
+
+# %{$mapmeta{"landuse"}} =(
+#  "filename"=>"/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin",
+#  "bits" => 8, "nData" => 90, "sData" => -90, "wData" => -180, "eData" => 180,
+#  "lngRes" => 0.002777777777778, "latRes" => 0.002777777777778
+# );
+
+die "TESTING";
+
 
 # this would come from user
 
