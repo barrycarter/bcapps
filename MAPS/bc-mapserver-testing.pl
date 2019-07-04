@@ -9,7 +9,7 @@ require "bc-mapserver-lib.pl";
 
 $mapmeta{landuse} = mapMeta({"filename" => "/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin"});
 
-debug(var_dump("MAPMETA", \%mapmeta));
+# debug(var_dump("MAPMETA", \%mapmeta));
 
 # %{$mapmeta{"landuse"}} =(
 #  "filename"=>"/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin",
@@ -17,16 +17,19 @@ debug(var_dump("MAPMETA", \%mapmeta));
 #  "lngRes" => 0.002777777777778, "latRes" => 0.002777777777778
 # );
 
-die "TESTING";
+# die "TESTING";
 
 
 # this would come from user
 
 %reqdata =(
- "map" => "landuse"
+ map => "landuse", slat => 70, nlat => 80, wlng => -120, elng => -110,
+ dlat => 0.01, dlng => 0.01
 );
 
-mapData(\%reqdata);
+$data = mapData(\%reqdata);
+
+print $data->{data};
 
 die "TESTING";
 

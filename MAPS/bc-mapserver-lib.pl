@@ -111,7 +111,7 @@ sub mapMeta {
     $hashref->{$1} = $2;
   }
 
-  debug(var_dump("RETURNING", $hashref));
+#  debug(var_dump("RETURNING", $hashref));
 
   return $hashref;
 
@@ -139,15 +139,46 @@ sub mapData {
 
   # TODO: add checks here that data request does not exceed map extents
 
-  # figure out row and col for nw corner of requested data
+  # figure out which rows/columns desired and the resolution
 
+  my($startRow) = ($meta->{ULYMAP} - $hashref->{nlat})/$meta->{YDIM};
+  my($startCol) = ($hashref->{wlng} - $meta->{ULXMAP})/$meta->{XDIM};
+  my($endRow) = ($meta->{ULYMAP} - $hashref->{slat})/$meta->{YDIM};
+  my($endCol) = ($hashref->{elng} - $meta->{ULXMAP})/$meta->{XDIM};
+  my($rowRes) = $hashref->{dlat}/$meta->{YDIM};
+  my($colRes) = $hashref->{dlng}/$meta->{XDIM};
+
+  debug("ROWS: $startRow - $endRow ($rowRes)");
+  debug("COLS: $startCol - $endCol ($colRes)");
+
+  # to hold byte data
   my($buf);
 
-  sysread($mapmeta->{filehandle}, $buf, 100);
+  # to hold return data
+  my($str);
 
-  debug("BUF: $buf");
+  # get data
 
+  # TODO: this can probably be much more efficient, especially
+  # grabbing multiple columns at a time and returning substr
 
+  for ($i = $startRow; $i < $endRow; $i += $rowRes) {
+    for ($j = $startCol; $j < $endCol; $j += $colRes) {
+
+      # to actually get the data we do have to round
+      my($seek) = $meta->{NCOLS}*(round($i)-1)*$meta->{NBITS}/8 + 
+	round($j)*$meta->{NBITS}/8;
+
+      sysseek($meta->{filehandle}, $seek, SEEK_SET);
+      sysread($meta->{filehandle}, $buf, $meta->{NBITS}/8);
+
+      $str .= $buf;
+    }
+  }
+
+  $hashref->{data} = $str;
+
+  return $hashref;
 }
 
 return 1;
