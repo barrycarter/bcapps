@@ -1400,3 +1400,36 @@ Limit[LogIntegral[10^n]/LogIntegral[10^(n-1)]/10^n, n -> Infinity]
 
 above actually does go to 0
 
+(* unrelated to above, storing primes on 7/4/19 *)
+
+t1236 = Table[Prime[i], {i,1,4}]
+
+t1237 = Apply[Or, Table[Mod[x, Prime[i]]==0, {i,1,4}]]
+
+f[x_] = t1237
+
+Table[f[i], {i, 1, 2*3*5*7}]
+
+primes[n_] := Table[Prime[i], {i,1,n}]
+
+cond[n_][x_] := Apply[Or, Table[Mod[x, i] == 0, {i, primes[n]}]]
+
+product[n_] := Apply[Times, primes[n]]
+
+numTest[n_] := Length[Select[Table[cond[n][i], {i, 1, product[n]}], !# &]]
+
+Table[numTest[i]/product[i], {i, 1, 10}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+

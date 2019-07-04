@@ -81,6 +81,8 @@ Notes for map server:
 
   - TODO: create legends for all maps, automatically if possible
 
+  - TODO: see ~/NOBACKUP/EARTHDATA/*/README files
+
   - TODO: test and use geoserver features for both map "tiling" and
   feature location (ie, which polygons are you in, query feature)
 
@@ -94,6 +96,10 @@ Notes for map server:
 
   - NOT: considered overlaying entire large image on Leaflet (instead
   of breaking into tiles) but that doesn't work well
+
+  - TODO: consider adding Trewartha climate classification scheme
+
+  - TODO: climate-legend.txt has the color code/data for climates
 
 Data provided:
 

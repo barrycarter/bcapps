@@ -7,7 +7,19 @@ require "bc-mapserver-lib.pl";
 
 # TODO: worry about NODATA
 
-$mapmeta{landuse} = mapMeta({"filename" => "/mnt/villa/user/NOBACKUP/EARTHDATA/LANDUSE/landuse.bin"});
+for $i ("climate", "landuse", "popcount", "popdensity", "slope") {
+
+  # most of the data comes from mapMeta...
+  $mapmeta{$i} = mapMeta({"filename" => "/mnt/squash/$i.bin"});
+
+  # these are all raster maps
+  $mapmeta{$i}->{type} = "raster";
+
+  # TODO: add $extra array (currently maps) from bc-maps.pl
+
+}
+
+
 
 # debug(var_dump("MAPMETA", \%mapmeta));
 

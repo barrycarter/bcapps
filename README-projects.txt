@@ -183,3 +183,5 @@ TODO: write up these mini-ideas
   some project
 
 
+TODO: add line splitting question and prime number question
+

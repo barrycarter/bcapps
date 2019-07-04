@@ -748,3 +748,38 @@ redgray = ColorConvert[Hue[0], "GrayScale"][[1]]
 fake2hue[x_] := Hue[x, 1, ColorConvert[Hue[x], "GrayScale"][[1]]
 
 
+(* totally different problem on 7/4/19: 
+
+Given  a number n,  where 1 <  n < 80, your   program should print all
+combinations of numbers  ABCDE/FGHIJ that yield  n. Here, the  letters
+represent digits. Note that all digits 0..9 must be used. For example,
+for n = 62, we find that 79546/01283 = 62, and  94736/01528 = 62. Note
+that leading zeroes are allowed, so A or F may be  zero, but not both.
+The  input consists of  a single line, containing  the  number n. Your
+program should    output all divisions ABCDE/FGHIJ   that  yield n. If
+multiple    combinations exist,   then these  should   be printed   in
+descending order  for the number ABCDE.  If no division  is found, the
+program should output NONE.
+
+*)
+
+t1520 = Permutations[Table[i, {i,0,9}]];
+
+numerify[list_] := (list[[5]] + list[[4]]*10 + list[[3]]*10^2 +
+list[[2]]*10^3 + list[[1]]*10^4) / (list[[10]] + list[[9]]*10 +
+list[[8]]*10^2 + list[[7]]*10^3 + list[[6]]*10^4);
+
+t1525 = Table[{i, numerify[i]}, {i, t1520}];
+
+t1527 = Select[t1525, IntegerQ[#[[2]]] &];
+
+printify[list_] := StringJoin[Map[ToString,Take[list,5]], ""] <> "/" <>
+ StringJoin[Map[ToString,Take[list,-5]], ""]
+
+answer = Sort[Table[{i[[2]], printify[i[[1]]]}, {i, t1527}]]
+
+
+
+
+
+

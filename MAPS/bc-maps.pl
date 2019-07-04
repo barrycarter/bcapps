@@ -3,7 +3,7 @@
 # A list of maps available from bc-mapserver.pl. Notes:
 
 # For vector files, only the SHP file is given, but others are necessary
-# For raster files, only the BIN (EHdr main file) is given, but other needed
+# For raster files, only the BIN (EHdr main file) is given, but others needed
 
 our(%maps);
 
@@ -26,10 +26,9 @@ for $i ("/mnt/kemptown/NOBACKUP/EARTHDATA/NATURALEARTH/10m_cultural",
 # TODO: add resolution for raster maps
 
 $maps{climate} = {
-   "filename" => "$rroot/climate.bin", "type" => "raster", "size" => "Byte",
    "description" => "TODO: add description",
    "source" => "TODO: add source",
-   "processing" => "Converted from TIF to EHdr for speed"
+   "processing" => "Converted from TIF to EHdr for speed",
 };
 
 
