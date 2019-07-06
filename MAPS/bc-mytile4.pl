@@ -6,7 +6,9 @@
 
 # --noheaders: don't print headers, just output image
 
-# URL: test.barrycarter.info/bc-mytile4.pl?0/0/0.png for example
+# URL: test.barrycarter.info/bc-mytile4.pl?/0/0/0.png for example
+
+# NOTE: there must be a '/' immediately following the '?'
 
 require "/usr/local/lib/bclib.pl";
 
