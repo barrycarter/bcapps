@@ -35,7 +35,7 @@ function lngLatDistZ2Tiles(obj) {
   obj.ntile = lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection});
   obj.stile = lngLat2Tile({z: obj.z, lat: obj.slat, lng: obj.clng, projection: obj.projection});
 
-  console.log(`NLAT: ${obj.ntile}, SLAT: ${obj.stile}`);
+  console.log(`NLAT: ${obj.ntile.y}, SLAT: ${obj.stile.y}`);
 
   // we don't care about the lng at the moment
   console.log(lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection}));

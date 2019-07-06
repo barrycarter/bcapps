@@ -363,15 +363,103 @@ latitude lat1 and longitude 0 (translateable to any longitude) *)
 latsDist2LngRange[lat1_, lat2_, d_] = 
  ArcCos[Cos[d] Sec[lat1] Sec[lat2] - Tan[lat1] Tan[lat2]];
 
-D[latsDist2LngRange[lat1, lat2, d], lat2]
+DlatsDist2LngRange[lat1_, lat2_, d_]=D[latsDist2LngRange[lat1, lat2, d], lat2]
 
 Solve[D[latsDist2LngRange[lat1, lat2, d], lat2] == 0, lat2]
+
+temp1625[lat1_, d_] = lat2 /.
+ Solve[D[latsDist2LngRange[lat1, lat2, d], lat2] == 0, lat2]
+
+temp1626[lat1_, d_] = 
+ Table[{i, latsDist2LngRange[lat1, i, d]}, {i, temp1625[lat1, d]}];
+
+Plot[latsDist2LngRange[5*Degree, lat2*Degree, 5*Degree]/Degree, 
+ {lat2, 0, 10}]
+
+(* which of the 4 values of temp1625 is 'correct'? *)
+
+t1645 = Table[
+ {lat1, d, temp1625[lat1, d]}, {lat1, -90*Degree, 90*Degree, 10*Degree},
+ {d, 0*Degree, 180*Degree, 10*Degree}]/Degree
+
+ContourPlot[temp1625[lat1*Degree, d*Degree][[1]]/Degree, 
+ {lat1, -90, 90}, {d, 0, 180}, ColorFunction -> Hue, PlotLegends -> True,
+ Contours -> 16, ContourLines -> False]
+
+for [[1]], values are always negative
+
+ContourPlot[(temp1625[lat1*Degree, d*Degree][[1]]-lat1*Degree)/Degree, 
+ {lat1, -90, 90}, {d, 0, 180}, ColorFunction -> Hue, PlotLegends -> True,
+ Contours -> 16, ContourLines -> False]
+
+above looks good for souther hemi
+
+ContourPlot[(temp1625[lat1*Degree, d*Degree][[2]]-lat1*Degree)/Degree, 
+ {lat1, -90, 90}, {d, 0, 180}, ColorFunction -> Hue, PlotLegends -> True,
+ Contours -> 16, ContourLines -> False]
+
+above looks good for northern hemi
+
+ContourPlot[(temp1625[lat1*Degree, d*Degree][[3]]-lat1*Degree)/Degree, 
+ {lat1, -90, 90}, {d, 0, 180}, ColorFunction -> Hue, PlotLegends -> True,
+ Contours -> 16, ContourLines -> False]
+
+ContourPlot[(temp1625[lat1*Degree, d*Degree][[4]]-lat1*Degree)/Degree, 
+ {lat1, -90, 90}, {d, 0, 180}, ColorFunction -> Hue, PlotLegends -> True,
+ Contours -> 16, ContourLines -> False]
+
+above two look bad
+
+the latitude where the longitude range is greatest is:
+
+ArcSec[(2*Cos[d]^2*Sqrt[1 - Sec[d]^2*Sin[lat1]^2])/(Cos[2*d] + Cos[2*lat1])]*
+ Sign[lat1]
+
+or
+
+ArcCos[((Cos[2*d] + Cos[2*lat1])*Sec[d]^2)/(2*Sqrt[1 - Sec[d]^2*Sin[lat1]^2])]*
+ Sign[lat1]
+
+or
+
+Abs[Sec[d]] ArcSin[Abs[Sin[lat1]] Sec[d]] Cos[d] Sign[lat1]
+
+or testing
+
+MAGIC FORMULA BELOW (for lat at which lon range is maximal)
+
+ArcSin[Sin[lat1]/Cos[d]]
+
+t1717[lat1_, d_] = ArcSin[Sin[lat1]/Cos[d]]
+
+DlatsDist2LngRange[lat1, ArcSin[Sin[lat1]/Cos[d]], d]
+
+(* instant 0 from above *)
+
+ContourPlot[t1717[lat1*Degree, d*Degree]/Degree, 
+ {lat1, -90, 90}, {d, 0, 180}, ColorFunction -> Hue, PlotLegends -> True,
+ Contours -> 16, ContourLines -> False]
+
+ContourPlot[(t1717[lat1*Degree, d*Degree]-lat1*Degree)/Degree, 
+ {lat1, -90, 90}, {d, 0, 180}, ColorFunction -> Hue, PlotLegends -> True,
+ Contours -> 16, ContourLines -> False]
+
+
+
+
+
+
+
+
+
+
 
 
 
 Plot[latsDist2LngRange[0*Degree, lat2*Degree, Pi/4]/Degree, {lat2, -90, 90}]
 
 Plot[latsDist2LngRange[40*Degree, lat2*Degree, Pi/8]/Degree, {lat2, -90, 90}]
+
 
 
 
