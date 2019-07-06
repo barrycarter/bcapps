@@ -1,4 +1,5 @@
 <script src="../bclib.js"></script>
+<script src="../bclib-staging.js"></script>
 
 <canvas id="thefonz" width="800" height="600"></canvas>
 
@@ -24,10 +25,12 @@ fetch(url).then(function (response) {
 	console.log('blobURL', blobURL);
 	let i = new Image();
 	i.src = blobURL;
-	i.src = url;
+	//	i.src = url;
+	//	ctx.drawImage(i, 105, 105);
+	//	console.log(URLCache.get(url));
+	//	i.src = URLCache.get(url);
 	console.log('i', i);
-	ctx.drawImage(i, 100, 100);
-       	console.log(ctx.getImageData(0, 0, 800, 600));
+	i.onload = function() {ctx.drawImage(i, 105, 105);}
       })
       })
 
