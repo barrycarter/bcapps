@@ -20,6 +20,7 @@ let url = 'http://test.barrycarter.info/bc-mytile4.pl?/2/2/3.png';
 
 let img = new Image();
 img.onload = () => ctx.drawImage(img, 105, 105);
+//img.onload = {ctx.drawImage(img, 105, 105)};
 img.src = url;
 
 die_the_bread();

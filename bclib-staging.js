@@ -191,8 +191,7 @@ URLCache.get = function (url) {
   // if not, return the URL itself, but fetch it and store it
   fetch(url).then(function (response) {
       response.blob().then(function (b) {
-	  let blobURL = URL.createObjectURL(b);
-	  URLCache.cache[url] = blobURL;
+	  this.cache[url] = URL.createObjectURL(b);
 	})
 	})
 

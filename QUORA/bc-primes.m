@@ -1420,6 +1420,24 @@ numTest[n_] := Length[Select[Table[cond[n][i], {i, 1, product[n]}], !# &]]
 
 Table[numTest[i]/product[i], {i, 1, 10}]
 
+Table[numTest[i]/product[i], {i, 1, 7}]                               
+
+
+N of above:
+
+{0.5, 0.333333, 0.266667, 0.228571, 0.207792, 0.191808, 0.180525}
+
+52G the way he has it (he = www.primos.mat.br/dados)
+
+all the ones up to one trillion it appears
+
+to go one step higher would require 308457624821 more primes
+
+Timing[Table[Prime[37607912018+i], {i, 1, 10^6}]];
+
+24.794s per million so about 88.5 days for all up to 10^13
+
+
 
 
 
