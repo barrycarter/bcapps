@@ -9,8 +9,14 @@
 let fonz = document.getElementById('thefonz');
 let ctx = fonz.getContext('2d');
 
-// just to confirm I can draw *something*
-ctx.fillRect(100,100,10,10);
+// scale and translate for geowanking
+
+ctx.scale(td(fonz.width/360), td(-fonz.height/180));
+ctx.translate(180, -90);
+
+ctx.strokeRect(-180, -90, 360, 180);
+
+ctx.strokeRect(0, -20, 10, 10);
 
 // testing w "randomly selected" tile
 
@@ -19,7 +25,9 @@ let url = 'http://test.barrycarter.info/bc-mytile4.pl?/2/2/3.png';
 // url = 'http://ws.terramapadventure.com/CLIMATE/2/1/0.png'
 
 let img = new Image();
-img.onload = () => ctx.drawImage(img, 105, 105);
+img.onload = () => ctx.drawImage(img, 180, 90, -360, -180);
+
+// below doesn't work but I didn't expect it to
 //img.onload = {ctx.drawImage(img, 105, 105)};
 img.src = url;
 
