@@ -9,14 +9,52 @@
 let fonz = document.getElementById('thefonz');
 let ctx = fonz.getContext('2d');
 
+/**
+
+Given the follow information (in a hash), place image on given
+context, assuming latitude is reversed (since I can't seem to fix
+that):
+
+img: the image to place (for URLs, use different function)
+
+wlng, elng, slat, nlat: the coordinates of where to put the image
+
+ctx: the context where to place the image
+
+opacity: image opacity (TODO: implement)
+
+blank: whether to blank out the area before placing the image (TODO:
+implement this)
+
+*/
+
+function lngLatImage2Context(obj) {
+
+  // TODO: default opacity to 1
+
+  obj.ctx.globalAlpha= obj.opacity;
+  obj.ctx.drawImage(obj.img, obj.wlng, -obj.nlat, (obj.elng-obj.wlng),
+		    (obj.nlat-obj.slat));
+}
+
+
+
 // scale and translate for geowanking
 
-ctx.scale(td(fonz.width/360), td(-fonz.height/180));
-ctx.translate(180, -90);
+ctx.scale(fonz.width/360, fonz.height/180);
+ctx.translate(180, 90);
 
-ctx.strokeRect(-180, -90, 360, 180);
+ctx.font = "6px Arial";
 
-ctx.strokeRect(0, -20, 10, 10);
+// TODO: this is still flipped, reverse when actually adding images
+
+for (let i=-180; i<= 180; i+=30) {
+  for (let j=-90; j<=90; j+=30) {
+    ctx.fillText(`${i},${j}`, i, j);
+  }
+ }
+
+// ctx.strokeRect(-180, -90, 360, 180);
 
 // testing w "randomly selected" tile
 
@@ -25,7 +63,17 @@ let url = 'http://test.barrycarter.info/bc-mytile4.pl?/2/2/3.png';
 // url = 'http://ws.terramapadventure.com/CLIMATE/2/1/0.png'
 
 let img = new Image();
-img.onload = () => ctx.drawImage(img, 180, 90, -360, -180);
+
+// img.onload = () => ctx.drawImage(img, -180, 90, 360, 180);
+
+img.onload = () => lngLatImage2Context({img: img, ctx: ctx, opacity: 0.5,
+      wlng: -180, elng: 180, slat: -90, nlat: 90});
+
+// ctx.strokeRect(-180, 80, 10, 10);
+
+// this is context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+
+// img.onload = () => ctx.drawImage(img, 0, 0, 255, 255, -180, -90, 360, 180);
 
 // below doesn't work but I didn't expect it to
 //img.onload = {ctx.drawImage(img, 105, 105)};
