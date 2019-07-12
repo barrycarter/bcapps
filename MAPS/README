@@ -335,3 +335,10 @@ See also:
 
 http://gis.stackexchange.com/questions/29101/create-mercator-map-with-arbitrary-center-orientation
 
+http://iridl.ldeo.columbia.edu/docfind/facetedbrowser.html (lots of data)
+
+http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NCEP-NCAR/.CDAS-1/.mc6190/.Intrinsic/.MSL/.pressure/T/%28Jan%20%29VALUES/a-/-a/X+Y+fig-+colors+ (possible WCS server)
+
+http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NCEP-NCAR/.CDAS-1/.mc6190/.Intrinsic/.MSL/.pressure/T/%28Jan%20%29VALUES/a-/-a/X+Y+fig-+colors+ PIPE +contours+land+-fig+//pressure/98704.93/103623.7/plotrange/Y/-90/90/plotrange//XOVY+null+psdef//plotaxislength+432+psdef//plotborder+72+psdef//fnt+%28Helvetica%29+psdef/wms.xml (head of WMS data?)
+
+https://www.opendap.org/ to serve data?

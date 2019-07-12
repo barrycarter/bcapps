@@ -119,24 +119,43 @@ for $i (@res) {
   # number of days ago for this transaction
   my($daysago) = floor(($now - str2time($i->{date}))/86400);
 
+  debug("$i->{category}, $i->{amount}");
+
   # record spending per category per day
   $catperday{$daysago}{$i->{category}} += $i->{amount};
 
 }
 
-# total amount spend on category
-my(%totcat);
-
 # go through days in order (most recent first)
 
 # TODO: this loop is fixed for now, but make it depend on --start
 
+my(%runningTotal);
+
 for $i (0..366) {
 
+  debug("I: $i");
+
+  # TODO: this may NOT be a total list of categories (ie, fixed amounts)
+
+  my(%dayhash) = %{$catperday{$i}};
+
+  debug("DAYHASH <HASH>", %dayhash, "</HASH>");
+
+  for $j (sort keys %dayhash) {
+
+    debug("J: $j");
+
+    $runningTotal{$j} += $dayhash{$j};
+
+#    debug("DAYHASH: $dayhash{$i}{$j}");
+
+    debug("$i, $j, $runningTotal{$j}");
+  }
 
 
 }  
 
 # debug(@res);
 
-debug(var_dump(%catperday));
+# debug(var_dump("catsperday", \%catperday));
