@@ -22,15 +22,18 @@ require "/usr/local/lib/bclib.pl";
 defaults("width=1600");
 
 # TODO: this might be bad-- maybe required quoted arg[0]
+
 my($msg) = join(" ", @ARGV);
 
-debug("MSG: $msg");
-
 my($cmd) = "yad --text='$msg' --text-align='center' --width=$globopts{width} 
-            --button 1:1m --button 2:2m --button 3:3m 
-            --buttons-layout='center'";
+            --button 1m:1 --button 2m:2 --button 3m:3 
+            --buttons-layout='center' --sticky --undecorated 
+            --fontname='Serif bold italic 20' --always-print-result";
 
 $cmd=~s/\n/ /sg;
 
 my($out, $err, $res) = cache_command2($cmd);
 
+debug("OUT: $out, ERR: $err, RES: $res");
+
+# TODO: setting button tags to non-numeric runs command
