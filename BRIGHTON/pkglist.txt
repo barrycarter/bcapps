@@ -7,6 +7,9 @@ efibootmgr
 
 # libraries
 libcxx
+gstreamer-devel
+unique-devel
+libnotify-devel
 
 # system tools
 
