@@ -27,8 +27,10 @@ my($msg) = join(" ", @ARGV);
 
 # this maps exit values to button names (note: 0 = done)
 
-my(@times) = ("DONE", "1m", "5m", "10m", "15m", "30m", "45m", "1h", "90m",
-	      "2h", "4h", "8h", "16h");
+# 6 and 7m are important to me, though probably to no one else
+
+my(@times) = ("DONE", "1m", "5m", "6m", "7m", "10m", "15m", "30m",
+"45m", "1h", "90m", "2h", "4h", "8h", "16h");
 
 # build up the buttons option (intentional start at 1)
 

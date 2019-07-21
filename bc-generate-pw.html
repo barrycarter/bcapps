@@ -17,4 +17,37 @@ console.log(sha512('hello'));
 
 console.log(sha512.array('hello'));
 
+console.log(generatePassword({phrase: 'hello'}));
+
+/**
+
+Given a hash, generates a password using SHA512 (sort of). Keys:
+
+phrase - the pharse to convert
+
+TODO: allow limitations
+
+TODO: allow incrementation if first gen pw fails tests
+
+*/
+
+function generatePassword(hash) {
+
+  // hashify
+
+  let hashed = sha512.array(hash.phrase);
+
+  // TODO: allow arb length up to 64, this is 32
+
+  for (let i=0; i < hashed.length; i+=2) {
+
+    // convert array to character (TODO: allow restrictions)
+    
+    console.log(String.fromCharCode(Math.floor(33+(hashed[i]/256)*94)));
+
+    //    console.log(i, hashed[i]);
+  }
+
+}
+
 </script>
