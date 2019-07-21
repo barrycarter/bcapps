@@ -4,7 +4,17 @@
 
 <script>
 
+// to use this, do something like: (not currently working, use browser))
+// bc-html2js.pl bc-generate-pw.html | node -
 
+// to get matching results on unix: echo -n hello | sha512sum
 
+// be sure to use echo -n, not just echo
+
+console.log('hello');
+
+console.log(sha512('hello'));
+
+console.log(sha512.array('hello'));
 
 </script>

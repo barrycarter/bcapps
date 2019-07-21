@@ -15,6 +15,9 @@ my($data, $fname) = cmdfile();
 # case I do want to load URLs in the future
 
 $data=~s%<script src="(.*?)"></script>%read_file($1)%iseg;
+$data=~s%<script>(.*?)</script>%$1%isg;
 
-debug("DATA: $data");
+# TODO: this does NOT get rid of html tags
+
+print $data;
 
