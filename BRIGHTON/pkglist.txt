@@ -623,7 +623,15 @@ virtuoso-opensource
 blazegraph
 
 # emulators
-docker
+# docker later removed, version too old
+# docker
+
+# docker new
+docker-ce
+docker-ce-cli
+containerd.io
+docker-common
+
 android-tools
 dosbox
 dosemu

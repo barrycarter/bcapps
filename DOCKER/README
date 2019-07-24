@@ -1,0 +1,14 @@
+Experiments with Docker. Goal: create a CSPICE image
+
+# this does not work, centos quits instantly
+# sudo docker run -dP centos
+
+# this does work
+
+sudo docker run -it -d centos
+
+# attach to it in other window/screen
+
+
+
+

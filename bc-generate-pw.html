@@ -11,13 +11,17 @@
 
 // be sure to use echo -n, not just echo
 
+let phrase = 'hey now hey now, dont dream its over';
+
 console.log('hello');
 
 console.log(sha512('hello'));
 
 console.log(sha512.array('hello'));
 
-console.log(generatePassword({phrase: 'hello'}));
+console.log(generatePassword({phrase: phrase}));
+
+console.log(generatePassword({phrase: ''}));
 
 /**
 
@@ -36,6 +40,7 @@ function generatePassword(hash) {
   // hashify
 
   let hashed = sha512.array(hash.phrase);
+  let result = "";
 
   // TODO: allow arb length up to 64, this is 32
 
@@ -43,10 +48,16 @@ function generatePassword(hash) {
 
     // convert array to character (TODO: allow restrictions)
     
-    console.log(String.fromCharCode(Math.floor(33+(hashed[i]/256)*94)));
+    result += String.fromCharCode(Math.floor(33+(hashed[i]/256)*94));
 
     //    console.log(i, hashed[i]);
   }
+
+  // TODO: if result doesnt meet criteria, deterministically tweak
+
+  // TODO: however, criteria like "no x characters" should be pre-checked
+
+  return result;
 
 }
 
