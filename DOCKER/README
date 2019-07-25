@@ -7,7 +7,22 @@ Experiments with Docker. Goal: create a CSPICE image
 
 sudo docker run -it -d centos
 
-# attach to it in other window/screen
+# run /bin/bash on it in other window/screen
+
+sudo docker exec -it inspiring_leakey /bin/bash
+
+# TODO: later did this in the gcc docker
+
+# TODO: remove: tar file, tcsh (required for compilation), o files
+
+# remove test000 dir
+
+
+
+
+
+
+
 
 
 
