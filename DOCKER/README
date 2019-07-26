@@ -5,25 +5,31 @@ Experiments with Docker. Goal: create a CSPICE image
 
 # this does work
 
-sudo docker run -it -d centos
+sudo docker run -it -d --name cspice -d centos
 
 # run /bin/bash on it in other window/screen
 
-sudo docker exec -it inspiring_leakey /bin/bash
+sudo docker exec -it cspice /bin/bash
 
-# TODO: later did this in the gcc docker
+# need tcsh for install and gcc for many reasons
 
-# TODO: remove: tar file, tcsh (required for compilation), o files
+yum install tcsh gcc
 
-# remove test000 dir
+# TODO: remove tcsh
 
+# copy over tar file (below on local machine)
 
+sudo docker cp /mnt/kemptown/root/SPICE/cspice.tar cspice:/root/
 
+# extract it and build it
 
+# TODO: remove cspice.tar or leave just it and delete crap it
+# creates-- maybe compress it
 
+# TODO: this is overkill, trim it:
 
+sudo docker cp ~/BCGIT/ASTRO/ cspice:/root/samples
 
+# compile test
 
-
-
-
+gcc -std=gnu99 -Wall -O2 -I /home/user/SPICE/SPICE64/cspice/include $i -o $targ /home/user/SPICE/SPICE64/cspice/lib/cspice.a -lm

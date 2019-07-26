@@ -48,6 +48,10 @@ for $i (@ARGV) {
     $fname = handle_comcast($all);
   } elsif ($all=~/samsclub/) {
     $fname = handle_samsclub($all);
+  } elsif ($all=~/Medical and hospital claims processed/) {
+    $fname = handle_humana_ss($all);
+  } elsif ($all=~/SmartSummaryRx/) {
+    $fname = handle_humana_ssrx($all);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -59,7 +63,11 @@ for $i (@ARGV) {
   }
 
   # if filename already correct, do nothing
-  if ($i eq $fname) {next;}
+  if ($i eq $fname) {
+    debug("$i: correctly named");
+    next;
+  }
+
   # is someone else using this fname?
   if (-f $fname) {
     warn "can't mv $i $fname; target already exists";
@@ -75,6 +83,29 @@ for $i (@ARGV) {
   print "mv -i $i $fname\n";
 
 }
+
+sub handle_humana_ss {
+  my($all) = @_;
+
+  if ($all=~m%Statement date:\s*(...) 01\, (\d{4}) \- \1%is) {
+    return "smartsummary-".lc($1)."-$2.pdf";
+  }
+
+  return;
+}
+
+
+sub handle_humana_ssrx {
+  my($all) = @_;
+
+  if ($all=~m%Statement date: (...)\S+ 1\-\d{2}\, (\d{4})%is) {
+    return "smartsummaryrx-".lc($1)."-$2.pdf";
+  }
+
+  return;
+
+}
+
 
 sub handle_bluebird {
   my($all) = @_;
