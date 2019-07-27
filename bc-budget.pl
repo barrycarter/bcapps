@@ -89,6 +89,8 @@ total FROM credcardstatements2 GROUP BY whichcard", "test", "user");
 my($ccowed) = 0; 
 
 for $i (@ccowed) {
+  if ($exclcard{$i->{whichcard}}) {next;}
+  debug("CC: $i->{whichcard}, $i->{total}");
   $ccowed += $i->{total};
 }
 
@@ -104,10 +106,15 @@ my($bankbal) = 0;
 debug("EXCL", %bankexcl);
 
 for $i (@bankbals) {
-  debug("BANK: $i->{bank}");
+  debug("BANK: $i->{bank}, $i->{total}");
   if ($exclbank{$i->{bank}}) {next;}
   $bankbal += $i->{total};
 }
+
+# TODO: don't print here
+
+print "CC Bal: $ccowed\n";
+print "Bn Bal: $bankbal\n";
 
 # TODO: currently assuming I have 0 cash on hand (pretty close to
 # true), but try to compute cashtotal accurately later
@@ -157,7 +164,7 @@ for $i (@res) {
 
   if ($daysago > $maxdays) {next;}
 
-  print "$daysago $i->{category} $i->{amount}\n";
+#  print "$daysago $i->{category} $i->{amount}\n";
 
   # record spending per category per day
   $catperday{$daysago}{$i->{category}} += $i->{amount};
@@ -178,7 +185,7 @@ for $i (sort {$a <=> $b} keys %totalSpending) {
 
   $avg = $cumTotal/$i;
 
-#  print "$i $avg\n";
+  print "$i $avg\n";
 
   debug("I: $i, $totalSpending{$i}");
 }
