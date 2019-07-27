@@ -1,3 +1,49 @@
+Title: Solve special relativity problems from "eyeball" point of view
+
+Description: Physicists have developed formulas to solve relativity
+based problems (ie, Lorentz contraction and time dilation effects when
+objects are traveling a high relative velocity to each other), but
+almost all of these depend on assigning fictional times to events,
+leading to things like the Andromeda Paradox.
+
+I'd like to solve these problems with a "what would you see if you
+were actually doing this" approach. This would combine mundane effects
+such as the Doppler Effect with relativity equations.
+
+URL:
+
+https://github.com/barrycarter/bcapps/tree/master/STACK/bc-accel.m
+
+====================================================================
+
+Title: What great circle line splits US into equal areas and populations?
+
+Description: There are many ways to split the US into two pieces that
+have equal area or equal population, but only one line that does
+both. The goal is to find this line. I've done this incorrectly
+assuming equirectangular lines, but now want to do it correctly.
+
+Notes: Uses Census "blockgroup" data so lines can split cities, does
+not treat cities as "point masses".
+
+URL: 
+
+https://github.com/barrycarter/bcapps/tree/master/QUORA/bc-us-split.m
+https://github.com/barrycarter/bcapps/tree/master/QUORA/bc-us-split.pl
+
+====================================================================
+
+Title: Fix all git commits/comments
+
+Description: I've gotten very lazy with commenting git commits, partly
+because I often update multiple unrelated files at once. It would be
+nice to look at the diffs for each file individually and create a git
+commit/comment history from that. Of course, this would mean creating
+a new git repository entirely, or finding a way to "parallel" git's
+structure to add my own comments.
+
+====================================================================
+
 Title: Better coastal distance/water distance maps
 
 Description: There are existing maps that show a given point's
