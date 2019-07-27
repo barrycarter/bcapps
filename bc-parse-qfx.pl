@@ -4,6 +4,7 @@
 # shouldve been doing all along?
 
 require "/usr/local/lib/bclib.pl";
+require "/home/user/bc-private.pl";
 
 ($all,$name) = cmdfile();
 
@@ -17,6 +18,14 @@ $all=~s%<($regex)>\s*(.*?)\s*</\1>%$ofx{$1}=$2%iseg;
 
 # only use last four digits
 $ofx{ACCTID}=~s/^.*(.{4})$/$1/;
+
+debug(%ofx);
+
+# this is a hack just for me -- one of my credit cards is handled differently
+
+if ($ofx{ACCTID} eq $private{notcreditcard}) {
+  die "Can't use this program on that account";
+}
 
 # transactions
 while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
