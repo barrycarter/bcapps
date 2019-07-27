@@ -31,13 +31,38 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# if no start date set, set it to unix 0 time
+
+defaults("start=1970-01-01");
+
 # the current time
 
 my($now) = time();
 
+# compute how far back to go
+
+my($maxdays) = floor(($now - str2time($globopts{start}))/86400 + 1);
+
+# don't print if not set
+
+unless ($globopts{start} eq "1970-01-01") {
+  print "MAXDAYS: $maxdays\n";
+}
+
 # convert options that are list values to hashes
 
 my(%exclbank) = list2hash(split(/\,/,$globopts{exclbank}));
+my(%exclcat) = list2hash(split(/\,/,$globopts{exclcat}));
+
+
+debug($globopts{fixed});
+
+# this hideous code splits globopts{fixed} using commas and equals,
+# resulting in a list that Perl will auto-convert to a hash when
+# assigned to a hash (TODO: should I avoid language-specific hacks
+# like this?)
+
+my(%fixed) = split(/[\,|\=]\s*/, $globopts{fixed});
 
 # TODO: subroutinize?
 
@@ -116,15 +141,49 @@ for $i (@res) {
   # TODO: there are many many reasons to not count a transaction, add
   # them below
 
+  # categories I ignore
+  if ($exclcat{$i->{category}}) {next;}
+
+  # categories that I treat as fixed
+  if ($fixed{$i->{category}}) {next;}
+
+  # don't include positive amounts (TODO: maybe allow later)
+  if ($i->{amount} > 0) {next;}
+
   # number of days ago for this transaction
   my($daysago) = floor(($now - str2time($i->{date}))/86400);
 
-  debug("$i->{category}, $i->{amount}");
+  # TODO: in theory, could just break out of loop here (since sorted)
+
+  if ($daysago > $maxdays) {next;}
+
+  print "$daysago $i->{category} $i->{amount}\n";
 
   # record spending per category per day
   $catperday{$daysago}{$i->{category}} += $i->{amount};
 
+  # TODO: this is just temporary
+  $totalSpending{$daysago} += $i->{amount};
+
 }
+
+
+# TODO: just for fun temporary
+
+my $cumTotal, $avg;
+
+for $i (sort {$a <=> $b} keys %totalSpending) {
+
+  $cumTotal += $totalSpending{$i};
+
+  $avg = $cumTotal/$i;
+
+#  print "$i $avg\n";
+
+  debug("I: $i, $totalSpending{$i}");
+}
+
+die "TESTING";
 
 # go through days in order (most recent first)
 
