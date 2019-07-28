@@ -79,6 +79,9 @@ our(%ABBREV)=("BC" => lc("Patches"),
 our($abbrevs)= lc(join("|",sort keys %ABBREV));
 
 # HACK: defining constants here is probably bad
+
+# TODO: consider putting them in a bclib hash or something
+
 $PI = 4.*atan(1);
 $DEGRAD=$PI/180; # degrees to radians
 $RADDEG=180./$PI; # radians to degrees
@@ -93,6 +96,8 @@ our($HOURRAD)=$PI/12; # hours to radians
 our($RADHOUR)=12/$PI; # radians to hours
 our($DEGHOUR)=1/15; # degrees to hours
 our($HOURDEG)=15; # hours to degrees
+
+our($DAYSPERMONTH) = 365.2425/12;
 
 # this might be a bad idea
 our($now) = time();

@@ -29,6 +29,8 @@
 # --start=date: how far back to go when making calculations (default =
 # look at all categorized transactions)
 
+# NOTE: this program intentionally excludes interest
+
 require "/usr/local/lib/bclib.pl";
 
 # if no start date set, set it to unix 0 time
@@ -53,6 +55,7 @@ unless ($globopts{start} eq "1970-01-01") {
 
 my(%exclbank) = list2hash(split(/\,/,$globopts{exclbank}));
 my(%exclcat) = list2hash(split(/\,/,$globopts{exclcat}));
+my(%exclcard) = list2hash(split(/\,/,$globopts{exclcard}));
 
 
 debug($globopts{fixed});
@@ -63,6 +66,20 @@ debug($globopts{fixed});
 # like this?)
 
 my(%fixed) = split(/[\,|\=]\s*/, $globopts{fixed});
+
+# same for extra
+
+my(%extra) = split(/[\,|\=]\s*/, $globopts{extra});
+
+# compute total fixed spending
+
+my($fixedPerMonth) = 0;
+
+for $i (keys %fixed) {$fixedPerMonth += $fixed{$i};}
+
+my($fixedPerDay) = $fixedPerMonth/$DAYSPERMONTH;
+
+debug("FIXED: $fixedPerMonth .... $fixedPerDay");
 
 # TODO: subroutinize?
 
@@ -111,10 +128,22 @@ for $i (@bankbals) {
   $bankbal += $i->{total};
 }
 
+# total extra
+
+my($extra) = 0;
+
+for $i (keys %extra) {$extra += $extra{$i};}
+
+debug("TOTAL EXTRA: $extra");
+
+my($liquidAssets) = $bankbal + $ccowed + $extra;
+
+debug("LA: $liquidAssets");
+
 # TODO: don't print here
 
-print "CC Bal: $ccowed\n";
-print "Bn Bal: $bankbal\n";
+# print "CC Bal: $ccowed\n";
+# print "Bn Bal: $bankbal\n";
 
 # TODO: currently assuming I have 0 cash on hand (pretty close to
 # true), but try to compute cashtotal accurately later
@@ -177,15 +206,21 @@ for $i (@res) {
 
 # TODO: just for fun temporary
 
+my($incomePerDay) = $globopts{income}/$DAYSPERMONTH;
+
 my $cumTotal, $avg;
 
 for $i (sort {$a <=> $b} keys %totalSpending) {
 
   $cumTotal += $totalSpending{$i};
 
-  $avg = $cumTotal/$i;
+  # includes fixed daily expenses
+  $avg = $cumTotal/$i + $fixedPerDay;
 
-  print "$i $avg\n";
+  # years I have left given money I have
+  my($yearsLeft) = -$liquidAssets/($avg+$incomePerDay)/$DAYSPERMONTH/12;
+
+  print "$i $yearsLeft\n";
 
   debug("I: $i, $totalSpending{$i}");
 }
