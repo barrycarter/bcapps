@@ -62,15 +62,80 @@ above is da bomb
 
 constBounds[x_] := Module[{tr},
  tr = Transpose[x];
- {tr[[3,1]], Transpose[Take[tr, 2]]}
+ {tr[[3,1]], RegionMember[Polygon[Transpose[Take[tr, 2]]]]}
 ];
 
 constBounds[t0954[[8]]]
 
 above works
 
- 
- 
+constBounds[t0954[[8]]] [[2]][{x,y}]
+
+above works
+
+works, so...
+
+constBounds[x_] := Module[{tr},
+ tr = Transpose[x];
+ {tr[[3,1]], RegionMember[Polygon[Transpose[Take[tr, 2]]]][{x,y}]}
+];
+
+constBounds[x_] := Module[{tr},
+ tr = Transpose[x];
+ {tr[[3,1]], Apply[RegionMemberFunction[Polygon[Transpose[Take[tr, 2]]]], 
+ x, y]}
+];
+
+
+returning to..
+
+constBounds[x_] := Module[{tr},
+ tr = Transpose[x];
+ {tr[[3,1]], RegionMember[Polygon[Transpose[Take[tr, 2]]]]}
+];
+
+
+
+t1052 = Table[{i[[1]], 
+CForm[Simplify[constBounds[i][[2]][{x,y}], Element[{x,y}, Reals]]]
+}, {i, t0954}]
+
+(*
+
+do not do below, icky additional condition
+
+t1052 = Table[{constBounds[i][[1]], 
+CForm[Simplify[constBounds[i][[2]][{x,y}]]]
+}, {i, t0954}]
+
+*)
+
+actually do do above we can clean it up?
+
+t1052 = Table[{constBounds[i][[1]], 
+CForm[Simplify[constBounds[i][[2]][{x,y}]]]
+}, {i, t0954}]
+
+t1052 = Table[{constBounds[i][[1]], 
+CForm[Simplify[constBounds[i][[2]][{x/240,y/240}]]]
+}, {i, t0954}]
+
+t1052 = Table[{constBounds[i][[1]], 
+Simplify[constBounds[i][[2]][{x/240,y/240}]]
+}, {i, t0954}]
+
+(* cleanup the x and y condition *)
+
+t1111 = Table[{i[[1]], 
+ CForm[Simplify[i[[2]], Element[{x, y}, Reals]]]},
+ {i, t1052}]
+
+(* above takes too long, so lets just print indiv *)
+
+printThing[i_] := Print["if (", 
+ CForm[Simplify[i[[2]], Element[{x,y}, Reals]]],
+ ") {return \"", i[[1]], "\"}"
+]
 
 
 
@@ -81,6 +146,7 @@ above works
 
 
 
+printThing[t1052[[7]]]
 
 
 
@@ -88,7 +154,9 @@ above works
 
 
 
+(* TODO: remember the /240 *)
 
 
+foo = t0954[[7]]                                                      
 
 
