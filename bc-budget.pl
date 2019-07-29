@@ -48,7 +48,8 @@ my($maxdays) = floor(($now - str2time($globopts{start}))/86400 + 1);
 # don't print if not set
 
 unless ($globopts{start} eq "1970-01-01") {
-  print "MAXDAYS: $maxdays\n";
+  # TODO: print this elsewhere
+#  print "MAXDAYS: $maxdays\n";
 }
 
 # convert options that are list values to hashes
@@ -56,9 +57,6 @@ unless ($globopts{start} eq "1970-01-01") {
 my(%exclbank) = list2hash(split(/\,/,$globopts{exclbank}));
 my(%exclcat) = list2hash(split(/\,/,$globopts{exclcat}));
 my(%exclcard) = list2hash(split(/\,/,$globopts{exclcard}));
-
-
-debug($globopts{fixed});
 
 # this hideous code splits globopts{fixed} using commas and equals,
 # resulting in a list that Perl will auto-convert to a hash when
@@ -155,13 +153,20 @@ debug("LA: $liquidAssets");
 
 # TODO: could make the below a view for more flexibility
 
+# TODO: the 'comments' are multiline and not useful at least for now
+
+# TODO: neither HEX nor QUOTE work on strings with ctrl-ms in them
+
+# TODO: my version of MySQL doesn't support TO_BASE64 which might work
+
 my($query) = << "MARK";
 
-SELECT amount, date, description AS merchant, category, "bank", oid 
+SELECT amount, date, description AS merchant, category, comments, "bank", oid 
  FROM bankstatements UNION
-SELECT amount, date, merchant, category, "credit", oid FROM credcardstatements2
- UNION
-SELECT amount, date, merchant, category, "cash", oid FROM cashstatements
+SELECT amount, date, merchant, category, comments, "credit", oid 
+ FROM credcardstatements2 UNION
+SELECT amount, date, merchant, category, comments, "cash", oid
+ FROM cashstatements
 ORDER BY date DESC
 MARK
 ;
@@ -185,6 +190,11 @@ for $i (@res) {
 
   # don't include positive amounts (TODO: maybe allow later)
   if ($i->{amount} > 0) {next;}
+
+  # find high value transactions which I perhaps should exclude or something
+  if ($i->{amount} < -500) {
+    debug("HIGH VALUE:", unfold($i));
+  }
 
   # number of days ago for this transaction
   my($daysago) = floor(($now - str2time($i->{date}))/86400);

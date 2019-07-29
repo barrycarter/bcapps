@@ -79,7 +79,7 @@ unless ($res) {exit(0);}
 $times[$res]=~s/m/ minutes/;
 $times[$res]=~s/h/ hours/;
 
-open(A, "|at 'now + $times[$res]'");
+open(A, "|at -M 'now + $times[$res]'");
 
 # TODO: better way to do this?
 
