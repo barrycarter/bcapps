@@ -137,13 +137,15 @@ printThing[i_] := Print["if (",
  ") {return \"", i[[1]], "\"}"
 ]
 
+printThing[i_] := {"if (", 
+ CForm[Simplify[i[[2]], Element[{x,y}, Reals]]],
+ ") {return \"", i[[1]], "\"}"
+};
 
-
-
-
-
-
-
+printThing[i_] := StringJoin[{"if (", 
+ ToString[CForm[Simplify[i[[2]], Element[{x,y}, Reals]]]],
+ ") {return \"", i[[1]], "\"}"
+}];
 
 
 printThing[t1052[[7]]]
