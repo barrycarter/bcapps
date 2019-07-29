@@ -26,7 +26,9 @@ int main(int argc, char **argv) {
 
   int i, j;
 
-  for (i = 0; i <= 360; i++) {
+  // testing: I know 25, 25 is in ARI
+
+  for (i = 0; i <= 180; i++) {
     for (j = -90; j <= 90; j++) {
       printf("%d %d %s\n", i, j, constellation(i,j));
     }

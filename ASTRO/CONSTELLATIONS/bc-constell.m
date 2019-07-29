@@ -162,3 +162,13 @@ printThing[t1052[[7]]]
 foo = t0954[[7]]                                                      
 
 
+///// testing why aries failed
+
+Simplify[constBounds[t0954[[7]]][[2]][{x/240,y/240}]]                 
+
+Simplify[constBounds[t0954[[7]]][[2]][{x/240,y/240}]] /. {x -> 25*240,
+y -> 25*240}
+
+(* above is true *)
+
+
