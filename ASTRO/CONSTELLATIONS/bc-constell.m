@@ -172,3 +172,53 @@ y -> 25*240}
 (* above is true *)
 
 
+constBounds[t0954[[4]]]                                               
+
+is a good form
+
+In[419]:= Put["MARKER1", Simplify[constBounds[t0954[[4]]][[2]][{x,y}],
+Element[{ x,y}, Reals]], "MARKER2", "return
+"<>constBounds[t0954[[4]]][[1]], "/tmp/xyz.txt "]
+
+above works
+
+i = t0954[[5]]
+
+Put["ALPHA", 
+ Simplify[constBounds[i][[2]][{x,y}], Element[{x,y}, Reals]], 
+ "BETA", constBounds[i][[1]], "GAMMA", "/tmp/xyz.txt"];
+
+Put["/tmp/xyz.txt"]
+
+Table[
+PutAppend["ALPHA", 
+ Simplify[constBounds[i][[2]][{x,y}], Element[{x,y}, Reals]], 
+ "BETA", constBounds[i][[1]], "GAMMA", "/tmp/xyz.txt"], {i, t0954}];
+
+make a copy of /tmp/xyz.txt and edit as follows
+
+"ALPHA" => if (
+
+"BETA" => ) {return 
+
+"GAMMA" => ;}
+
+addl cleanup is required
+
+and need to do better for rect consts
+
+(* because some constellations "cross the 0h line", trying Mathematica version *)
+
+t2011 = Interpreter["Constellation"]["The Big Dipper"]["BoundaryLine"][[1]]
+
+t2012 = Region[Polygon[t2011]]
+
+RegionMember[t2012][{x,y}]
+
+(* doesn't work well, Mathematica won't simplify... unless... nope *)
+
+ListPlot[Transpose[Take[Transpose[t0953], 2]], PlotJoined -> True]   
+
+(* above is ugly *)
+
+  

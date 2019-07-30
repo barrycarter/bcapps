@@ -1,3 +1,27 @@
+Title: Brightest star in night sky of exoplanets + brightest city in location
+
+Description: Two very different but related projects:
+
+From various exoplanets, which stars are the brightest? For us,
+Sirius is the brightest star in the night sky. What is it for other
+exoplanets? A more general question is: how does the night sky differ
+between Earth and other exoplanets (since most exoplanets are fairly
+close, probably not by much, but the small changes that do occur might
+be interesting).
+
+From various places on the world, what is the "brightest" city
+visible, assuming city brightness is proportional to population (which
+isn't really true) and possible including "urban areas" instead of
+just cities.
+
+URL:
+
+https://github.com/barrycarter/bcapps/blob/master/ASTRO/bc-solve-astro-13115.m
+
+https://astronomy.stackexchange.com/questions/13115/from-which-exoplanets-is-our-sun-the-brightest-star-on-the-night-sky/13119?noredirect=1#comment60646_13119
+
+====================================================================
+
 Title: Solve special relativity problems from "eyeball" point of view
 
 Description: Physicists have developed formulas to solve relativity
@@ -65,7 +89,7 @@ https://github.com/barrycarter/bcapps/tree/master/STACK/bc-buffer-land.sql
 
 ====================================================================
 
-Title: Find trignometric properties of triangle algebratically
+Title: Find trigonometric properties of triangle algebraically
 
 Description: Given a triangle (possibly in the complex plane), compute
 the medians (lengths, formulas, intersections, etc), angle bisectors,
