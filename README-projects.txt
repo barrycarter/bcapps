@@ -1,3 +1,21 @@
+Title: JavaScript showing travel between stars
+
+Description: Using a list of stars whose three-dimensional positions
+are known (which is NOT GAIA2, since the parallaxes (and thus the
+computed distances) are too inaccurate), allow people to wander
+through our galaxy seeing the sky from different places.
+
+URL:
+
+https://github.com/barrycarter/bcapps/tree/master/ASTRO/hygdata_v3.csv.gz
+https://github.com/barrycarter/bcapps/tree/master/ASTRO/travel2orion.m
+https://github.com/barrycarter/bcapps/tree/master/ASTRO/travel2orion.pl
+https://repl.it/@barrycarter/HYGStarMap
+
+Note to self: This should really be bc-travel2orion to avoid naming conflicts
+
+====================================================================
+
 Title: Brightest star in night sky of exoplanets + brightest city in location
 
 Description: Two very different but related projects:
