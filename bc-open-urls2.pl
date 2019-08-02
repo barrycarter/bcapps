@@ -6,6 +6,8 @@
 
 # --sleep: sleep this many seconds between URLS (default 2)
 
+# --stdin: wait for newline on stdin instead of sleeping
+
 require "/usr/local/lib/bclib.pl";
 
 defaults("sleep=2");
@@ -18,6 +20,15 @@ while (<>) {
 
   # TODO: make this path to firefox canonical
   my($out,$err,$res) = cache_command2("/bin/firefox --new-tab '$_'");
-  # TODO: make sleep time an option
-  sleep($globopts{sleep});
+
+  if ($globopts{stdin}) {
+
+    system("xmessage -geometry +0+0 NEXT");
+
+    # TODO: can't use xmessage function here, too side
+    #xmessage("NEXT?");
+  } else {
+    sleep($globopts{sleep});
+  }
 }
+

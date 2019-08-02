@@ -186,7 +186,7 @@ alias feh "\feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-
 
 # feh not full screen
 
-alias feh-small "\feh -geometry 1024x768 -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
+alias feh-small "\feh -g 1024x768 -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
 
 
 
