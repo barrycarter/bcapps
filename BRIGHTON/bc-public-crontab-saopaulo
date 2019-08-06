@@ -71,8 +71,10 @@ XWIDTH=1600
 
 # errors occur occasionally and are ignorable
 # changed to bc-bg3 when testing 1600x900 resolution
+# 8/2/19: bc-bg4
 # * * * * * sudo /home/user/BCGIT/bc-bg2.pl >& /dev/null
-* * * * * sudo /home/user/BCGIT/bc-bg3.pl >& /dev/null
+# * * * * * sudo /home/user/BCGIT/bc-bg3.pl >& /dev/null
+* * * * * sudo /home/user/BCGIT/bc-bg4.pl >& /dev/null
 
 # snapshot my screen every minute
 # TODO: restore this, it saves to an external drive that isn't there yet
