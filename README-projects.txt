@@ -1,3 +1,49 @@
+Title: Convert particle systems from libgd to JavaScript
+
+Description: Convert the particle systems in
+https://github.com/barrycarter/bcapps/tree/master/PARTICLEMAN/ to
+JavaScript and perhaps create new ones.
+
+Note: This might be trivial.
+
+====================================================================
+
+Title: Determine which constellation a given ra/dec is
+
+Description: Using the original IAU boundaries, figure out a
+reasonably efficient way to determine what constellation a given
+right ascension/declination is.
+
+In practice, the target location will be precessed to B1875.0
+coordinates, which seems easier than precessing the constellation
+lines themselves.
+
+====================================================================
+
+Title: Implicit semantic information for OpenStreetMaps + more
+
+Description: Many OpenStreetMap tags are redundant; instead of
+massively tagging every feature, create a set of logic rules that
+determine which tags imply which other tags, and create an engine that
+adds these new "virtual" tags when someone requests an API call.
+
+Simple example: OSM recently decided that all Dunkin Donuts should
+have "amenity" tag "fast_food" (see
+https://maproulette.org/browse/challenges/3705). Currently, this is a
+manual task because it's possible the location is no longer a Dunkin
+Donuts. Part of this task could be automated by simply declaring all Dunkin Donuts are amenity:fast_food as a virtual tag.
+
+====================================================================
+
+Title: Text adventure "game" using OpenStreetMaps
+
+In client-side Javascript, use the OSM API to describe where someone
+is, allow them to move in cardinal directions, enter buildings,
+teleport, and so on. Mostly just for fun, provide a textual
+description of where they are using OSM API
+
+====================================================================
+
 Title: JavaScript showing travel between stars
 
 Description: Using a list of stars whose three-dimensional positions
@@ -282,6 +328,15 @@ URL: https://github.com/barrycarter/bcapps/blob/master/MAPS
 
 Description: create images similar to the ones in the directory above,
 but qgis and other GIS programs may already do this
+
+=====================================================================
+
+Title: Semantify existing wikis, eg, Full(er) House, maybe from wikia
+
+Description: Create semantic annotations for existing wikis by
+downloading the source, editing it, and republishing it with semantic
+information; similar to "Auto-populated wikis using meta-wiki pages"
+but for existing wikis.
 
 =====================================================================
 

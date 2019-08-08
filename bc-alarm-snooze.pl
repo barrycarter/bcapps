@@ -29,7 +29,9 @@ my($msg) = join(" ", @ARGV);
 
 # 6 and 7m are important to me, though probably to no one else
 
-my(@times) = ("DONE", "1m", "5m", "6m", "7m", "10m", "15m", "30m",
+# flipping 1m and DONE so hitting space won't kill it (didn't work)
+
+my(@times) = ("1m", "DONE", "5m", "6m", "7m", "10m", "15m", "30m",
 "45m", "1h", "90m", "2h", "4h", "8h", "16h");
 
 # build up the buttons option (intentional start at 1)
@@ -51,7 +53,8 @@ debug("BUTTONS: $buttons");
 
 $msg = qq%<span font="$globopts{fontsize}">$msg</span>%;
 
-my($cmd) = qq%yad --text='$msg' --text-align='center' --width=$globopts{width} 
+my($cmd) = qq%yad --no-escape --text='$msg' --text-align='center' 
+            --width=$globopts{width} 
             $buttons  --buttons-layout='spread' --sticky --undecorated%;
 
 
