@@ -146,9 +146,9 @@ sub parse_forecast_old {
 #  debug("HASH", keys %hash);
 
   for $i (keys %hash) {
-#    debug("OLD: $forecast, KEY: $i");
+    debug("OLD: $forecast, KEY: $i");
     $forecast=~s/\s*$i\s*/$hash{$i}/g;
-#    debug("NEW: $forecast, KEY WAS: $i");
+    debug("NEW: $forecast, KEY WAS: $i");
   }
 
   # can't get this working as a key sigh
@@ -334,7 +334,7 @@ sub parse_forecast {
 	       "Light" => "LT", "Chance of" => "?", "Slight Chance of" => "??",
 	       "Snow" => "SN", "Wintry Mix" => "(RA+SN)", "Likely" => "LKLY",
 	       "Very" => "V", "Windy" => "WNDY", "Numerous" => "NMRS",
-	       "Possible" => "?"
+	       "Possible" => "?", "Thunderstorms" => "TS"
 	       );
 
 #  debug("HASH", keys %hash);

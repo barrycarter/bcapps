@@ -16,6 +16,9 @@ use locale;
 my($key, $file) = @ARGV;
 my(%data);
 
+# whether we have seen a line before to avoid double push
+my(%seen);
+
 debug("FILE: $file");
 
 $size = -s $file;
@@ -61,7 +64,7 @@ my($pos) = max(tell(A)-2,0);
 # look at lines going forward
 while (substr($line,0,length($key)) eq $key) {
   chomp($line);
-  push(@for, $line);
+  unless ($seen{$line}) {push(@for, $line); $seen{$line} = 1;}
   $line = current_line(\*A, "\n");
   debug("FORWARD: $line");
 }
@@ -75,7 +78,7 @@ $line = current_line(\*A,"\n",-1);
 # look at lines going backwards
 while  (substr($line,0,length($key)) eq $key) {
   chomp($line);
-  push(@rev, $line);
+  unless ($seen{$line}) {push(@rev, $line); $seen{$line} = 1;}
   $line = current_line(\*A, "\n",-1);
   debug("REVERSE: $line");
 }

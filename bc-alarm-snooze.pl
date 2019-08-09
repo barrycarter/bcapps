@@ -82,7 +82,8 @@ unless ($res) {exit(0);}
 $times[$res]=~s/m/ minutes/;
 $times[$res]=~s/h/ hours/;
 
-open(A, "|at -M 'now + $times[$res]'");
+# TODO: this still generates stdout so redirecting to /dev/null
+open(A, "|at -M 'now + $times[$res]' > /dev/null");
 
 # TODO: better way to do this?
 
