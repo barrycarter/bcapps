@@ -28,9 +28,12 @@ for $i (@rev) {
 }
 
 # special cases that are no longer mounted but useful to search
-push(@rev, "/mnt/sshfs/bcmac-files-rev.txt.srt");
+
+push(@rev, "/mnt/villa/user/20190715/bcmac-files-rev.txt.srt");
+push(@rev, "/mnt/villa/user/20190715/extdrive5-files-rev.txt.srt");
 
 for $i (@rev) {
   # TODO: also search for $phrase.bz2 (reversed) and so on?
+  debug("LOOKING AT: $i");
   system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' $i | rev");
 }

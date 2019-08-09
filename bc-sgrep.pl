@@ -23,7 +23,7 @@ debug("FILE: $file");
 
 $size = -s $file;
 ($l, $r) = (0, $size);
-open(A,$file);
+open(A,$file)||die("Can't open $file, $!");
 
 for (;;) {
   # fail condition
