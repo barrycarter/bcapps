@@ -1,0 +1,205 @@
+TODO list:
+
+  - All TODOs from older Perl version (which is NOT open source,
+  though I am release it to open source at some point) still apply
+
+  - Most TODOs from
+  https://github.com/barrycarter/bcapps/tree/master/MAPS/README apply
+  (ie, show user what country/state/timezone/climate
+  zone/elevation/etc they are)
+
+  - Maybe add live traffic data (weather, astro phenomena already
+  mentioned in file above)
+
+  - Convert to JavaScript so no Docker/ruby required, just a browser
+
+  - `parse` should accept multiword arguments in quotes. EG, `attach
+  "My Way"` is currently parsed incorrectly as `attach("My", "Way")`
+  instead of correctly as `attach("My Way")`.
+
+  - Have backup tile server(s) for when OSM primary tileserver(s) unavailable
+
+  - Could I use websockets to run a shell in a Docker image (using
+  'ws' or whatever) so people could access game via web?
+
+  - Add readline support, `require 'readline'` does not suffice
+
+  - Remove dependence on imagemagick, fly, curl, xv by using native
+  methods (is there a "rubygd"?) and/or features requiring these
+  programs should downgrade gracefully if they are not available (not
+  an issue w/ the Docker image, of course)
+
+  - add error checking, user can currently "break" program
+
+  - decide what zoom level is best for browsing; using 16 for now
+  because original program used 16
+
+  - distinguish ways from polygons representing areas/buildings
+
+  - let user know if they are inside a polygon that is an area/building
+
+  - print foreign (non-ASCII) characters better [or convince all
+  foreign governments to use only English]
+
+  - remove or vastly improve the attach/unattach thing-- moving along
+  roads (instead of in straight lines) is interesting, but isn't
+  really working well in the current code
+
+  - the program is inefficient and can be sped up considerably
+
+  - spellcheck comments/documents
+
+  - on the 'fly' created images, user should be in center; currently,
+  tile center is the center
+
+  - add zoom levels for 'fly' map as well, though fly map shows all
+  features, so this may be unwiedly for lower zoom levels
+
+  - allow users to choose color schemes
+
+  - allow users to display images (not generally possible in Docker)
+  instead of just creating them
+
+  - confirm documentation from 'h' is accurate (some parts may not be)
+
+  - silence curl?
+
+  - add lots more debug statements?
+
+  - use try/catch for better exception handling
+
+  - better error handling when image has only partially loaded (will
+  become a bigger issue in JavaScript, which is asynchronous)
+
+  - download 9 slippy tile images (the 3x3 range where user is)
+  instead of just 1, glue the 9 tiles together, and give user's
+  location on center tile-- this provides a broader overview than
+  giving user's position on single tile, especially if user is near
+  edge of tile (note that 'display 15' sort of does this already, but
+  the resulting image is 256x256. not 768x768
+
+  - if user is on the intersection of two streets (ways), indicate so,
+  instead of saying "you are on way x; you are 0m from way y"
+
+  - in addition to allowing user to move "up" and "down" a way, allow
+  user to turn when at the intersection of two ways; this would also
+  be a better resolution when an "up" or "down" command takes you
+  beyond the end of a way
+
+  - when attached to a way, give user direction of travel instead of
+  just "up" or "down" (eg, "you are moving north along My Way"). This
+  gets weird for ways that curve more than 180 degrees (eg, moving
+  forward on a way, you could end up going north for a while, then
+  west, and then south!)
+
+  - similar to above, if user is attached to way and says "n", don't
+  go pure north: rather, move "north" along the way to the extent
+  possible
+
+  - similar to above, moving cardinal direction while attached to way
+  should at least yield error; currently, this results in confusing
+  movement
+
+  - handle case where one way is really the continuation of another way
+
+  - if user if very close to node/way, do not say "you are 0m from ..."
+
+  - add rdoc/jsdoc compliant comments, but perhaps wait until
+  converted to JavaScript
+
+  - PERHAPS use existing adventure game code (or text MMPORG-style
+  code) and merge it with this program to create a very large world
+  that is only created on an "as needed" basis.
+
+  - In theory, could create a "quantum mechanic-ish" universe, where
+  information is created as viewed and forgotten slowly over time.
+
+  - Better printing on fly map-- for example, for street addresses,
+  perhaps print only number to avoid crowding the map (though not
+  really an issue in most places)
+
+  - nodes that only exist to create ways may be unnecessary and add a
+  level of de-referencing; consider letting ways be just lists of
+  latitude/longitude points. However, some nodes have dual purpose:
+  they're both "waypoints" and true nodes
+
+  - not every command should re-calculate and re-print ways/nodes; in
+  particular, commands where the player doesn't move should just
+  reprint the same information, and commands that don't require
+  loading new tiles should just recalculate without assuming all data
+  is new
+
+  - encourage OSM to map near polar regions better by starting Antarctic colony
+
+NOTE TO SELF: I still have the older original versions of
+bc-osm-browser (when it was called something else) and may want to
+look at it to restore features or functions that I may have
+accidentally prunedx
+
+TODO: move all TODOs here
+
+NOTE: TODOs specific to a piece of code are left near that code (not
+moved here)
+
+Storing user information in map objects is bad
+==============================================
+
+This is a major issue: I currently store user specific information in
+nodes and ways, which is convenient, but inherently wrong.
+
+If anything, the information should be stored in the User object.
+
+Overriding and overloading Ruby functions is bad
+=================================================
+
+Much of bclib-temp.rb redefines standard functions in existing
+objects. This is useful and shows how powerful ruby is (or was, since
+it's no longer supported), but a bad idea overall.
+
+Additionally, it's one of the reasons I need to use "ruby 2.0.0p648
+(2015-12-16)" instead of a more modern version of ruby
+
+Possible game play based on map
+===============================
+
+This is a different game from YAMC:
+
+https://github.com/barrycarter/bcapps/tree/master/YAMC/
+
+and the related terramapadventure:
+
+https://github.com/barrycarter/YAMC
+
+(note that YAMC is a separate repository from bcapps, and the games
+the bcapps directory and YAMC repository represent are slightly
+different)
+
+This game would be more "Easter eggy":
+
+If $USER.EASTER_EGG is turned on (to avoid bothering those who don't
+want to see Easter eggs):
+
+Hashing below is just to avoid spoilers, not to obscure anything.
+
+Example: every turn, compute the 16 tiles a user is in (the level 16
+tile they're seeing, the level 15 tile the level 16 tile, the level 14
+tile containing the level 14 tile, etc), and compute the SHA1(?) hash
+of "Tile(x,y,z)" for each of the 16 tiles. If $EASTER_EGG[hash] is
+set, print it. This means you could set a Tile(0,0,0) egg that would
+always be displayed, and perhaps even lead the user to a specific
+tile.
+
+Example ("Find Wally"): a silly Easter egg game might be to find
+"Wally" (a reclusive celeberity whose autograph you want). The
+Tile(0,0,0) egg might say "Wally was last seen in the continent
+". That egg would be
+visible everywhere. There'd then be a second egg in Tile(0,1,1) [I'm
+making these numbers up] saying "Correct. The continent is North
+America. Wally was seen in the country founded in 1776". The Tile
+(1,2,2) egg would then direct the player to more and more specific
+tiles.
+
+Of course, Easter eggs would eventually come from a server, not be
+hardcoded into bc-osm-browser.rb itself
+
+

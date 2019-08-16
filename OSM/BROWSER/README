@@ -1,0 +1,59 @@
+Docker Instructions
+===================
+
+Do "ruby bc-osm-browser.rb" in the /root/ directory to start the program.
+
+NOTE: I'm distributing the code using docker because it *requires* an
+older version of Ruby that most people will not have.
+
+TODO: graphics commands create but don't show
+
+Contributing
+============
+
+Please don't edit the docker image; instead, use git/github:
+
+https://github.com/barrycarter/bcapps/tree/master/OSM/BROWSER
+
+(or contact me, Barry Carter, osmbrowse@barrycarter.info, directly)
+
+History
+=======
+
+In December 2007, I cowrote a Perl program to text browse OpenStreetMap.
+
+We later converted the Perl to Ruby in early 2008.
+
+The Ruby version works with "ruby 2.0.0p648 (2015-12-16)", but not
+with any Ruby versions after that. See "Overriding and overloading
+Ruby functions is bad" in TODO for why.
+
+Additionally, the Ruby version misuses object oriented programming
+horribly (see "Storing user information in map objects is bad" in the
+TODO file for why.
+
+The program was always intended to be open source, but we never got it
+cleaned up enough to share it.
+
+This is mostly the ugly Ruby version as is, with a few notes and minor
+changes. The other people who cowrote the program are OK with my
+releasing this to open source, but did not wish to be associated with
+this code (that's how bad it is!), so I have removed their information
+and am not mentioning it here.
+
+I am hoping to massively improve it with others, as noted in the TODO list.
+
+Notes
+=====
+
+All latitudes/longitudes are in decimal degree format
+
+The "short form" of an object is what's displayed in a list, the "long
+form" is displayed when a user uses "examine"
+
+TODO: create separate TODO file
+
+TODO: graphics commands won't work in docker, but...
+
+TODO: LC_ALL can NOT be blank or "C" but docker handles this
+

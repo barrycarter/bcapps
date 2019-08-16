@@ -2,6 +2,8 @@
 
 # Computes well known "important" dates [assuming no major schedule changes]
 
+# TODO: add computer conventions? other conventions?
+
 require "/usr/local/lib/bclib.pl";
 
 # experimental one off print of second wednesday each month

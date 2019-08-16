@@ -1,0 +1,44 @@
+These are just notes to myself on how I created this docker image
+
+# run the rigprog/ruby2.0 image (automatically creates new container)
+
+sudo docker run -e LC_ALL=C.UTF-8 --name bc-osm-browser -it rigprog/ruby2.0
+ /bin/bash
+
+# copy files to / directory (wanted to get this into /root, but / is easier)
+
+sudo docker cp /home/user/20190811/OSMBrowser/ bc-osm-browser:/
+
+# inside of container itself
+
+apt-get -y install imagemagick
+mkdir /usr/local/etc/OSM2020
+cd OSMBrowser
+mv startup.sh /
+chmod +x /startup.sh
+tar xvfz fly-1.6.5.tar.gz
+cd fly-1.6.5
+make
+cp fly /usr/bin/
+
+
+# this is just for testing
+
+/startup.sh
+
+# since testing is working, we commit the container
+
+sudo docker commit -a "Barry Carter <osmbrowser@barrycarter.info>" 
+ -m "prerelease image 1" bc-osm-browser
+
+# this returns a sha256sum:
+
+# 6401be0a8e4d5086180b61a75af1910b99bc40598a836aa33fe6487c3b93f270
+
+# this creates an image with the sha above
+
+sudo docker run --name bc-osm-browser -it 6401be0a8e4d
+
+
+
+
