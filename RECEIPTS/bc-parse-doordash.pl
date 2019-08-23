@@ -31,7 +31,7 @@ for $i (@list) {
   # shorten phrases
 
   $time=~s/Delivered: /D /;
-  $time=~s/Order for Pickup: /P /;
+  $time=~s/Order for Pickup: Ready by /P /;
 
   debug("BEFORE: $rest");
   $rest=~s/&amp;/&/g;
@@ -43,8 +43,8 @@ for $i (@list) {
 
   # TODO: this not really portable
 
-  substr($print, 50, length($items)) = $items;
-  substr($print, 30, length($time)) = $time;
+  substr($print, 69, length($items)) = $items;
+  substr($print, 42, length($time)) = $time;
   substr($print, 10, length($rest)) = $rest;
   substr($print, 0, length($order)) = $order;
 
