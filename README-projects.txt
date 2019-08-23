@@ -1,3 +1,12 @@
+Title: Download wordpress sites using Wordpress API
+
+Description: find or write program (like tumblr_backup.py) to download
+a wordpress blog, primarily from wordpress.com
+
+Note: This might be trivial.
+
+====================================================================
+
 Title: Convert particle systems from libgd to JavaScript
 
 Description: Convert the particle systems in
