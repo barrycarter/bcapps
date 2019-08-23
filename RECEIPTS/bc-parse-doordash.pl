@@ -30,10 +30,27 @@ for $i (@list) {
 
   # shorten phrases
 
-$time=~s/Delivered: /D /;
-$time=~s/Order for Pickup: /P /;
+  $time=~s/Delivered: /D /;
+  $time=~s/Order for Pickup: /P /;
 
-  print "$order $rest\t$time\t$items\n";
+  debug("BEFORE: $rest");
+  $rest=~s/&amp;/&/g;
+  debug("AFTER: $rest");
+
+  # nicely(?) formatted string
+
+  my($print) = " "x80;
+
+  # TODO: this not really portable
+
+  substr($print, 50, length($items)) = $items;
+  substr($print, 30, length($time)) = $time;
+  substr($print, 10, length($rest)) = $rest;
+  substr($print, 0, length($order)) = $order;
+
+  print "$print\n";
+
+#  print "$order $rest\t$time\t$items\n";
 
 #  print join("\t", $order, $rest, $time, $items),"\n";
   
