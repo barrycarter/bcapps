@@ -40,7 +40,8 @@ Simple example: OSM recently decided that all Dunkin Donuts should
 have "amenity" tag "fast_food" (see
 https://maproulette.org/browse/challenges/3705). Currently, this is a
 manual task because it's possible the location is no longer a Dunkin
-Donuts. Part of this task could be automated by simply declaring all Dunkin Donuts are amenity:fast_food as a virtual tag.
+Donuts. Part of this task could be automated by simply declaring all
+Dunkin Donuts are amenity:fast_food as a virtual tag.
 
 ====================================================================
 
