@@ -9,6 +9,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# this will be target source, since each target should have one source max
 my(%copy);
 
 while (<>) {
@@ -19,7 +20,50 @@ while (<>) {
 
   if (/sudo ln \-s \"(.*?)\" \"(.*?)\"/) {handle_files($1,$2); next;}
 
-  debug("GOT: $_");
+  warn("Can't handle: $_");
+}
+
+# TODO: handle odd case of multiple targets?
+
+for $i (sort keys %copy) {
+
+  # find the portion of the target after MP3/ put it under /home/user instead
+
+  my($relpath) = $i;
+  $relpath=~s%^.*/(MP[34])/%/$1/%;
+  $relpath = "/home/user/$relpath";
+
+  # if that already exists, we do not overwrite
+  # TODO: if this is a symlink to nowhere, it SHOULD be ovewritten
+
+  if (-f $relpath) {next;}
+
+  # if the directory in question doesn't exist create it
+
+  my($dir) = $relpath;
+  $dir=~s%/[^/]+?$%%;
+
+  unless (-d $dir) {
+    # this should really not be done here
+    my($out, $err, $res) = cache_command2("mkdir -p \"$dir\"");
+  }
+
+  # find (hopefully unique) source
+
+  my(@source) = keys %{$copy{$i}};
+
+  if ($#source > 0) {
+    warn "MULTIPLE SOURCES FOR $i, IGNORING";
+    next;
+  }
+
+  debug("SOURCES", @source);
+
+  # and print the cp command without actually runnning it
+  print "cp -n \"$source[0]\" \"$relpath\"\n";
+
+#   debug("I: $i", "RELPATH: $relpath, DIR: $dir");
+
 }
 
 # TODO: I *might* be able to use this program to restore files that
@@ -32,16 +76,16 @@ sub handle_files {
   # the file in FILESBYSHA1 will always be source, and the file in
   # MP(34) will always be target
 
-  if ($files[0]=~m%/FILESBYSHA1/% && $files[1]=~m%/MP[34]/%) {
+  if ($files[1]=~m%/FILESBYSHA1/% && $files[0]=~m%/MP[34]/%) {
     $copy{$files[0]}{$files[1]} = 1;
     return;
   }
 
-  if ($files[1]=~m%/FILESBYSHA1/% && $files[0]=~m%/MP[34]/%) {
+  if ($files[0]=~m%/FILESBYSHA1/% && $files[1]=~m%/MP[34]/%) {
     $copy{$files[1]}{$files[0]} = 1;
     return;
   }
 
-  debug("Can't handle:", @files);
+  warn("Can't handle: $files[0]/$files[1]");
 
 }

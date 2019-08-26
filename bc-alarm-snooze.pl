@@ -31,14 +31,17 @@ my($msg) = join(" ", @ARGV);
 
 # flipping 1m and DONE so hitting space won't kill it (didn't work)
 
-my(@times) = ("1m", "DONE", "5m", "6m", "7m", "10m", "15m", "30m",
+my(@times) = ("", "DONE", "1m", "5m", "6m", "7m", "10m", "15m", "30m",
 "45m", "1h", "90m", "2h", "4h", "8h", "16h");
 
 # build up the buttons option (intentional start at 1)
 
 my(@buttons);
 
-for $i (0..$#times) {
+# do not create button for null value, it's just there if someone
+# "spaces" it (ie, hits space to close the window)
+
+for $i (1..$#times) {
   debug("I: $i");
   push(@buttons, "--button $times[$i]:$i");
 }
@@ -72,6 +75,8 @@ debug("OUT: $out, ERR: $err, RES: $res");
 # Perl returns $res vals * 256
 
 $res>>=8;
+
+debug("RES: $res");
 
 # if done, do nothing
 
