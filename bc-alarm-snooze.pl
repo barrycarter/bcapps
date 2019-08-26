@@ -31,17 +31,14 @@ my($msg) = join(" ", @ARGV);
 
 # flipping 1m and DONE so hitting space won't kill it (didn't work)
 
-my(@times) = ("", "DONE", "1m", "5m", "6m", "7m", "10m", "15m", "30m",
+my(@times) = ("0m", "DONE", "1m", "5m", "6m", "7m", "10m", "15m", "30m",
 "45m", "1h", "90m", "2h", "4h", "8h", "16h");
 
 # build up the buttons option (intentional start at 1)
 
 my(@buttons);
 
-# do not create button for null value, it's just there if someone
-# "spaces" it (ie, hits space to close the window)
-
-for $i (1..$#times) {
+for $i (0..$#times) {
   debug("I: $i");
   push(@buttons, "--button $times[$i]:$i");
 }
@@ -54,9 +51,9 @@ debug("BUTTONS: $buttons");
 
 # --fontname doesn't work w/ text entry, this is the hack
 
-$msg = qq%<span font="$globopts{fontsize}">$msg</span>%;
+$msg2 = qq%<span font="$globopts{fontsize}">$msg</span>%;
 
-my($cmd) = qq%yad --no-escape --text='$msg' --text-align='center' 
+my($cmd) = qq%yad --no-escape --text='$msg2' --text-align='center' 
             --width=$globopts{width} 
             $buttons  --buttons-layout='spread' --sticky --undecorated%;
 
@@ -76,11 +73,11 @@ debug("OUT: $out, ERR: $err, RES: $res");
 
 $res>>=8;
 
-debug("RES: $res");
+# blank value disallowed, DONE value disallowed
 
-# if done, do nothing
+if ($times[$res] eq "DONE") {exit(0);}
 
-unless ($res) {exit(0);}
+# if user hits space (or 0m for some reason), just bring message back up again)
 
 # convert to time and send to at
 
@@ -92,7 +89,7 @@ open(A, "|at -M 'now + $times[$res]' > /dev/null");
 
 # TODO: better way to do this?
 
-print A $0, " ", join(" ", @ARGV);
+print A "$0 $msg";
 
 close(A);
 
