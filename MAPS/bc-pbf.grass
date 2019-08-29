@@ -1,0 +1,8 @@
+# attempt to load OSM PBF into grass
+
+# NOTE: may have tried this earlier and failed
+
+grass74 -c EPSG:4326 /home/user/GRASS/pbf
+
+v.import input=/home/user/NOBACKUP/EARTHDATA/OSM/planet-latest.osm.pbf
+ output=osm

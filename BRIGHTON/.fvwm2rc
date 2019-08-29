@@ -68,6 +68,9 @@ Style "*chrom*" Sticky
 # below added 05 Apr 2019 (for Visual Studio)
 Style "*Studio*" Sticky
 
+# below added 27 Aug 2019 (for Slack)
+Style "*Slack*" Sticky
+
 # if a window names itself "sticky", this makes it sticky
 Style "*sticky*" NoTitle, NoHandles, Sticky
 

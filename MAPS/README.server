@@ -11,4 +11,38 @@ yum -y install tcsh unzip screen gdal psmisc gdal-python
 gdal_translate -of aaigrid product/*.tif ESACCI.txt
 
 
+# below is what I am doing on time4vps server which is large enough to
+# hold Postgres OSM
+
+# install screen just so I can switch between terminals during long procs
+
+yum install postgis postgresql-server sudo osm2pgsql screen
+
+postgresql-setup initdb
+
+sudo -u postgres pg_ctl -D /var/lib/pgsql/data start
+
+sudo -u postgres psql
+
+CREATE USER "root" WITH CREATEDB;
+CREATE DATABASE gis;
+\c gis
+CREATE EXTENSION postgis;
+ALTER DATABASE gis OWNER TO "root";
+ALTER TABLE spatial_ref_sys OWNER TO "root";
+
+# trying with small subfile before cranking it
+
+osm2pgsql --slim --drop --cache 1000 central-america-latest.osm.pbf & 
+
+Osm2pgsql took 4671s overall
+
+# so, very roughly speaking, based on size ratio, expecting
+# 80170.6313423249 bytes per second or ... 7.2 days for whole thing
+
+osm2pgsql --slim --drop --cache 1000 planet-latest.osm.pbf &
+
+
+
+
 

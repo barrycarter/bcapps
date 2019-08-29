@@ -344,6 +344,7 @@ ears
 festival
 audacity
 sox
+sox-plugins-freeworld
 lame
 mp3gain
 alsa-utils
@@ -816,6 +817,10 @@ deluge
 qbittorrent
 qbittorrent-nox
 transmission-common
+
+# for slack app
+libappindicator-gtk3-devel
+
 
 # Blog
 # this wont really install from yum, just noting it here

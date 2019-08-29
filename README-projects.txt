@@ -1,3 +1,14 @@
+Title: Use SRTM1 data and Three.js for realilstic citiscapes
+
+Description: there's a program (TODO: fint its name) that uses
+openstreetmap.org data to create a 3D map of a city. Can we do the
+same thing just using SRTM1 data instead? openstreetmap.org has enough
+data to map some places really well, but not every place. SRTM1 is
+limited by latitude, but covers more major cities.
+
+
+====================================================================
+
 Title: Download wordpress sites using Wordpress API
 
 Description: find or write program (like tumblr_backup.py) to download

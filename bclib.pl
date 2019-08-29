@@ -4967,7 +4967,7 @@ sub mysqlhashlist {
   for $i (split(/\n/,$out)) {
     # new row
     if ($i=~/^\*+\s*(\d+)\. row\s*\*+$/) {$row = $1; $res[$row]={}; next;}
-    unless ($i=~/^\s*(.*?):\s*(.*)/) {warn("IGNORING: $_"); next;}
+    unless ($i=~/^\s*(.*?):\s*(.*)/) {debug("IGNORING: $_"); next;}
     $res[$row]->{$1}=$2;
   }
   return @res;

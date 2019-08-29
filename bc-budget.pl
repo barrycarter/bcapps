@@ -37,6 +37,8 @@ require "/usr/local/lib/bclib.pl";
 
 defaults("start=1970-01-01");
 
+# TODO: maybe warn if no arguments/options, normal invokation is via alias
+
 # the current time
 
 my($now) = time();
@@ -159,13 +161,15 @@ debug("LA: $liquidAssets");
 
 # TODO: my version of MySQL doesn't support TO_BASE64 which might work
 
+# NOTE: in cashstatements, positive = money I give to others
+
 my($query) = << "MARK";
 
 SELECT amount, date, description AS merchant, category, comments, "bank", oid 
  FROM bankstatements UNION
 SELECT amount, date, merchant, category, comments, "credit", oid 
  FROM credcardstatements2 UNION
-SELECT amount, date, merchant, category, comments, "cash", oid
+SELECT -amount, date, merchant, category, comments, "cash", oid
  FROM cashstatements
 ORDER BY date DESC
 MARK
@@ -199,11 +203,15 @@ for $i (@res) {
   # number of days ago for this transaction
   my($daysago) = floor(($now - str2time($i->{date}))/86400);
 
+  # to avoid division by 0
+  if ($daysago == 0) {$daysago = 1;}
+
   # TODO: in theory, could just break out of loop here (since sorted)
 
   if ($daysago > $maxdays) {next;}
 
 #  print "$daysago $i->{category} $i->{amount}\n";
+  debug("ALPHA: $daysago $i->{category} $i->{amount}");
 
   # record spending per category per day
   $catperday{$daysago}{$i->{category}} += $i->{amount};
@@ -232,7 +240,7 @@ for $i (sort {$a <=> $b} keys %totalSpending) {
 
   print "$i $yearsLeft\n";
 
-  debug("I: $i, $totalSpending{$i}");
+  debug("BETA: DAYS: $i, TOTAL: $totalSpending{$i}, CUM: $cumTotal, AVG: $avg, YL: $yearsLeft");
 }
 
 die "TESTING";
