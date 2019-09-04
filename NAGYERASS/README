@@ -52,6 +52,8 @@ that receipt numbers are in numerical order by date)
 TODO: make sure claim numbers in medical database are unique (and in
 order of date?)
 
+TODO: alert if my Ally bank balance falls below $15K, where Ally gives
+me a much lower interest rate
 
 
 

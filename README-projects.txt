@@ -6,7 +6,6 @@ same thing just using SRTM1 data instead? openstreetmap.org has enough
 data to map some places really well, but not every place. SRTM1 is
 limited by latitude, but covers more major cities.
 
-
 ====================================================================
 
 Title: Download wordpress sites using Wordpress API

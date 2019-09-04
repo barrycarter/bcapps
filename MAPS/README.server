@@ -16,7 +16,11 @@ gdal_translate -of aaigrid product/*.tif ESACCI.txt
 
 # install screen just so I can switch between terminals during long procs
 
-yum install postgis postgresql-server sudo osm2pgsql screen
+yum install postgis postgresql-server sudo osm2pgsql screen squashfuse
+yum install squashfs-tools fuse fuse-devel
+
+# must do this to get loop devices
+modprobe loop
 
 postgresql-setup initdb
 

@@ -364,4 +364,9 @@ alias vscode "/usr/share/code/bin/code&"
 # below hurts more than it helps
 # alias precmd 'if $? xmessage you have done something wrong &'
 
+# evince should start in bg by default
+# TODO: can't seem to fix evince size, no -g or --geometry option
+# can use .Xresources?
+
+alias evince "evince &"
 

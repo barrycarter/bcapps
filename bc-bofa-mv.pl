@@ -24,6 +24,8 @@ for $i (@ARGV) {
   # switch based on pdf or txt contents
   if ($all=~/CenturyLink/s) {
     $fname = handle_centurylink($all);
+  } elsif ($all=~/Popular Direct/i) {
+    $fname = handle_popular_direct($all);
   } elsif ($all=~/bluebird/i) {
     $fname = handle_bluebird($all);
   } elsif ($all=~/capitalone/i) {
@@ -82,6 +84,20 @@ for $i (@ARGV) {
   # otherwise, advise move
   print "mv -i $i $fname\n";
 
+}
+
+sub handle_popular_direct {
+
+  my($all) = @_;
+
+  unless ($all=~/Acct=(\d+)/m) {return;}
+  my($acct) = $1;
+
+  unless ($all=~/Date=([\d\-]+)/m) {return;}
+  my($date) = $1;
+
+
+  return "popular-direct-$acct-$date.pdf";
 }
 
 sub handle_humana_ss {

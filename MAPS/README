@@ -5,6 +5,15 @@ MAP SERVER
 
 Notes for map server:
 
+  - TODO: NOTE TO SELF: the stuff in ~/20190204/README should be
+  quasi-merged here
+
+  - TODO: add mineral and ore deposits data
+
+  - TODO: maybe use raster2pgsql to convert raster maps to
+  postgresql-- is that faster than using a binary file that's squashed
+  (probably not?)
+
   - TODO: figure out what color ramp to use for continuous values--
   the LGBTQ flag seems to use a nice ramp-- violet to purple to
   spectrum to red is nice too and can maybe be extended to black and
