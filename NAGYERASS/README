@@ -55,5 +55,7 @@ order of date?)
 TODO: alert if my Ally bank balance falls below $15K, where Ally gives
 me a much lower interest rate
 
+TODO: don't run tests if CPU it too low
+
 
 
