@@ -37,7 +37,7 @@ TODO: test that weather data is fairly recent
 TODO: test that drives are mounted correctly: ie, /mnt/villa and
 /mnt/lobos are mounting the correct drives-- do NOT use
 /mnt/villa/villa-files.txt as a test since I long term plan to copy
-file lists to multiple drives
+file lists to multiple drives (maybe use blkid and program I wrote?)
 
 TODO: if qbittorrent is running there should be a process waiting for
 it to "end" since I need to know if it crashes

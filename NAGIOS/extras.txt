@@ -5,3 +5,26 @@
 # turned off 3/6/19 as 1) I go flat rate via arcadiapower and
 # 2) it's slightly broken and i don't want to fix it
 # curl -s http://ted.local.lan/Footprints.html | zcat | grep 'TED 5000'
+
+# since I'm being too slow in getting nagyerass working, I'm adding
+# some extra tests here
+
+check_disk -v -c 10 -u GB /mnt/villa
+check_disk -v -c 10 -u GB /mnt/lobos
+check_disk -v -c 10 -u GB /mnt/kemptown/
+check_disk -v -c 10 -u GB /mnt/extdrive5/
+
+# RAM disk
+check_disk -v -c 10 -u GB /dev/shm
+
+# this test already exists in bc-services.cfg, but putting it here for
+# consistency and the goal of moving towards nagyerass
+
+check_disk -v -c 10 -u GB /
+
+# TODO: meta test to confirm each mounted disk (or each disk in list
+# of drives) has a check_disk test or is exempt for some reason
+
+check_mysql_query -q "SELECT SUM(amount) FROM bankstatements WHERE bank='ally'" -d test -w 20000: -c 15000:
+
+
