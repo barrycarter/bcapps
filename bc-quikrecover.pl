@@ -7,6 +7,8 @@
 # --notime: don't set the timestamp for older files
 # Usage: $0 /usr/local/etc/quikbak/dirpath/filename
 
+# TODO: this isn't working right when --notime option isnt given
+
 require "/usr/local/lib/bclib.pl";
 
 # quikbak dir must have current copy of file and file.quikbak
@@ -54,11 +56,19 @@ for $i (0..($#patches-1)) {
 
   # set timestamp (unless --notime or --fake)
   # couldn't get utime to work, had to use touch
+
+  # have to compute this outside statement since I use if fake/real
+  $then = scalar gmtime(datestar($patches[$i]));
+
   unless ($globopts{notime}||$globopts{fake}) {
     # convert "stardate" into format that 'touch' understands
     # TODO: this is ugly + could be much improved
-    $then = scalar gmtime(datestar($patches[$i]));
     system("touch -d '$then' quikrecover-$filename-$patches[$i]");
+  }
+
+  # ugly hack
+  if ($globopts{fake} && !$globopts{notime}) {
+    print "touch -d '$then' quikrecover-$filename-$patches[$i]";
   }
 
   # print or run commands, depending on --fake
