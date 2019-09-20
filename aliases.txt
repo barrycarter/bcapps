@@ -136,7 +136,12 @@ alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 # update git stuff (I should really pull before commit, but this lets
 # me push quickly, while the pull and new push can occur in the
 # background)
-alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  remotes master; popd"
+
+# minor change to alias 9/20/19-- only take steps if previous ones succeed
+
+# alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  remotes master; popd"
+
+alias bcgit "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v && git push  remotes master; popd"
 
 # this is for github pages https://barrycarter.github.io/pages/
 alias bcgitpages "pushd .; cd ~/BCGIT-PAGES/pages; git add .; git commit; git pull -v; git push origin master; popd"
