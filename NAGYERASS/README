@@ -63,6 +63,16 @@ TODO: fix-it scripts when something goes wrong
 
 TODO: REMINDER: can write tests even before nagyerass goes into production
 
+TODO: installed cron file should never be empty (+ should be certain
+min size?)
+
+TODO: see also ../NAGIOS/TODO and perhaps merge here
+
+TODO: categories in bankstatements, cashstatements,
+credcardstatements2 should be from a fixed list, and some should not
+be used after a given date
+
+
 
 
 

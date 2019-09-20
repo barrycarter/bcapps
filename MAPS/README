@@ -8,6 +8,8 @@ Notes for map server:
   - TODO: NOTE TO SELF: the stuff in ~/20190204/README should be
   quasi-merged here
 
+  - TODO: consider using opengeofiction's much smaller and more well-controlled map
+
   - TODO: add mineral and ore deposits data
 
   - TODO: maybe use raster2pgsql to convert raster maps to
@@ -351,3 +353,5 @@ http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NCEP-NCAR/.CDAS-1/.mc6190/.Intrins
 http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NCEP-NCAR/.CDAS-1/.mc6190/.Intrinsic/.MSL/.pressure/T/%28Jan%20%29VALUES/a-/-a/X+Y+fig-+colors+ PIPE +contours+land+-fig+//pressure/98704.93/103623.7/plotrange/Y/-90/90/plotrange//XOVY+null+psdef//plotaxislength+432+psdef//plotborder+72+psdef//fnt+%28Helvetica%29+psdef/wms.xml (head of WMS data?)
 
 https://www.opendap.org/ to serve data?
+
+

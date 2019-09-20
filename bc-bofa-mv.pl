@@ -168,6 +168,8 @@ sub handle_comcast {
   my($date) = $2;
   debug("DATE: $date");
 
+  unless ($date) {return "";}
+
   return strftime("comcast-%m-%d-%Y.pdf", gmtime(str2time($date)+43200));
 
   # first date is billing date

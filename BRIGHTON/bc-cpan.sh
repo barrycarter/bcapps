@@ -11,6 +11,10 @@
 
 cpan Statistics::Distributions Astro::Nova Astro::MoonPhase Net::Twitter Net:SSL Finance::Amortization osmDB Image::GeoTIFF::Tiled Geo::ShapeFile Geo::Proj4 Google::ProtocolBuffers XML::Bare Algorithm::GoldenSection FFI::Raw Flickr::API Astro::Coord::ECI::Moon Alien::ProtoBuf Alien::uPB Net::WebSocket::Server Image::Magick Protocol::WebSocket Devel::Trace String::Scanf Graphics::TIFF Linux::Perl::getdents
 
+# belos is later but could be part of above
+
+cpan Geo::OSM::DBI Geo::OSM::Primitive
+
 # below fails
 # cpan Google::ProtocolBuffers::Dynamic
 

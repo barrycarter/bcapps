@@ -81,7 +81,7 @@ while (<>) {
 
     %temphash = ();
     while (s/(\w+)\=\"(.*?)\"//) {$temphash{$1} = $2;}
-
+    
     $curitem = "way $temphash{id}";
     $nodecounter = 0;
 

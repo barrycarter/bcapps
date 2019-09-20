@@ -30,6 +30,7 @@ python36-docutils
 python34-docutils
 python36-gobject
 
+convmv
 screengrab
 tneg
 snapd
