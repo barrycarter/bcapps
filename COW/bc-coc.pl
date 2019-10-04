@@ -6,26 +6,78 @@
 
 # assumed input is zcat allCountries.zip | ...
 
+# TODO: use latest geonames
+
+# TODO: testing w/ single country data, but use all for production
+
 require "/usr/local/lib/bclib.pl";
+
+# load dependent data from dependentcountries_territories.csv
+
+my(%conversions);
+
+for $i (split(/\n/, read_file("$bclib{githome}/COW/dependentcountries_territories.csv"))) {
+
+  my($iso, $name, $admin0) = csv($i);
+
+  $conversions{$iso} = $admin0;
+
+}
 
 my(%totals);
 
 while (<>) {
+
+  # this just tests how fast it COULD go
+  # about 24s on my machine, so not fast
+#  next;
 
   my($geonameid, $name, $asciiname, $alternatenames, $latitude, $longitude,
    $featureclass, $featurecode, $admin0, $cc2, $admin1,
    $admin2, $admin3, $admin4, $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
 
+  # convert admin0 if needed
+
+  if ($conversions{$admin0}) {$admin0 = $conversions{$admin0};}
+
   # if population is 0 ignore
 
   if ($population == 0) {next;}
 
+  # only populated places count
   unless ($featurecode=~/^PPL/) {next;}
 
+  # taking the 3D average of the where the population is which will
+  # always be below the Earth's surface (since the Earth is spherical
+  # and thus everywhere convext); the amount below the surface will
+  # reflect how "spread out" the population is
 
+  # TODO: consider also calculation simple average
 
-  debug($admin0);
+  # TODO: compare my answers to wikipedia where it has this data
+
+  my($x, $y, $z) = sph2xyz($longitude, $latitude, 1, "degrees=1");
+
+  # keep track of the x/y/z total and the total population
+
+  $totals{$admin0}{x} += $x*$population;
+  $totals{$admin0}{y} += $y*$population;
+  $totals{$admin0}{z} += $z*$population;
+  $totals{$admin0}{population} += $population;
+}
+
+for $i (keys %totals) {
+
+  debug("I: $i");
+
+  my(@res) = xyz2sph(
+		     $totals{$i}->{x}/$totals{$i}->{population},
+		     $totals{$i}->{y}/$totals{$i}->{population},
+		     $totals{$i}->{z}/$totals{$i}->{population},
+		     "degrees=1");
+
+  print "$i $res[0] $res[1] $res[2]\n";
 
 }
 

@@ -1,0 +1,46 @@
+"iso code",name,"depends from",featurecode,children,
+AN,"Netherlands Antilles / Curaçao",NL,PCLIX,?,
+AQ,Antarctica,"12 countries",ADM1,-,
+AS,"American Samoa",US,ADMD,ADMD,
+AW,Aruba,NL,PCLIX,-,
+AX,"Åland Islands",FI,ISLS,-,
+BL,Saint-Barthélemy,FR,PCLIX,-,"Collectivité d'outre-mer"
+BV,"Bouvet Island",NO,PCLD,-,
+CK,"Cook Islands",NZ,PCLS,ADMD,
+CX,"Christmas Island",AU,PCLD,,
+FK,"Falklands Islands",GB,PCLD,-,
+FM,"Federated States of Micronesia",US,PCLF,ADM1,
+FO,"Faroe Islands",DK,ADM1,ADM2,
+GF,"French Guiana",FR,PCLD,ADM1,"département d'outre-mer (DOM)"
+GG,Guernsey,GB,PCLD,ADM1,
+GI,Gibraltar,GB,PCLD,-,
+GL,Greenland,DK,PCLD,ADM2,
+GP,Guadeloupe,FR,PCLD,ADM1,"département d'outre-mer (DOM)"
+"GU ",Guam,US,ISL,ADMD,
+HK,"Hong Kong",CN,PCLS,ADMD,
+HM,"Heard and McDonald Islands",AU,PCLD,-,
+IM,"Isle Of Man",GB,PCLD,(ADM1),
+IO,"British Indian Ocean Territory",GB,PCLD,(ADM1),
+JE,Jersey,GB,PCLD,ADM1,
+MF,Saint-Martin,FR/NL,PCLIX,ADM2,"Collectivité d'outre-mer"
+MH,"Marshall Islands",US,PCLF,ADMD,
+MO,Macau,CN,PCLS,ADM1,
+MP,"Northern Mariana Islands",US,ADMD,ADMD,
+MQ,Martinique,FR,PCLD,ADM1,"département d'outre-mer (DOM)"
+MS,Montserrat,GB,PCLD,ADM1,
+NU,Niue,NZ,PCLS,-,"free association"
+PF,"French Polynesia",FR,PCLD,"TERR / ADMD","Collectivité d'outre-mer"
+PM,"Saint Pierre and Miquelon",FR,PCLD,ADM1,"Collectivité d'outre-mer"
+PN,Pitcairn,GB,PCLD,,"British overseas territory"
+PR,"Puerto Rico",US,PCLD,ADMD,"Associated Free State of Puerto Rico"
+RE,Réunion,FR,PCLD,ADM1,"département d'outre-mer (DOM)"
+SH,"Saint Helena",GB,PCLD,"PCLD ?","British overseas territory"
+SJ,Svalbard,NO,TERR,-,
+TC,"Turks and Caicos",GB,PCLD,-,"British overseas territory"
+TF,"French Southern Territories",FR,PCLIX,ADM1,
+TK,Tokelau,NZ,PCLD,-,
+UM,"United States Minor Outlying Islands",US,ADMD,?,
+VG,"Virgin Islands, British",GB,PCLD,-,"British overseas territory"
+VI,"Virgin Islands of the United States",US,ADMD,?,
+WF,"Wallis and Futuna",FR,PCLD,ADM2,"Collectivité d'outre-mer"
+YT,Mayotte,FR,PCLD,-,"Collectivité d'outre-mer"

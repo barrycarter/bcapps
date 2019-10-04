@@ -8,4 +8,8 @@ bigcit.txt.bz2 created from (unzipped) geonames cities1000.txt using:
 perl -F"\t" -anle 'print "$F[14] $F[4] $F[5] $F[1]"' cities1000.txt | sort -nr > bigcit.txt
 
 
+The file dependentcountries_territories.csv is a CSVd version of
+https://spreadsheets.google.com/ccc?key=pJpyPy-J5JSNhe7F_KxwiCA&hl=en
+which is listed in geonames.org's countryInfo.txt file as being a
+source of dependent countries
 
