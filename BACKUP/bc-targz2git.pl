@@ -55,8 +55,12 @@ while (<>) {
 
 }
 
-debug(%dates);
+# sort by date order (this makes this sort of a one off, icky)
 
-
+for $i (sort keys %dates) {
+  for $j (@{$dates{$i}}) {
+    debug("I: $i, J: $j");
+  }
+}
 
 

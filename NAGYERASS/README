@@ -72,6 +72,9 @@ TODO: categories in bankstatements, cashstatements,
 credcardstatements2 should be from a fixed list, and some should not
 be used after a given date
 
+TODO: any entries that have order number (such as shipt purchases)
+should have unique ones
+
 
 
 

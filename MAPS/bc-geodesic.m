@@ -1,4 +1,85 @@
-(* geodesics using planes *)
+<formulas>
+
+conds = {
+ -Pi <= theta1 <= Pi, -Pi <= theta2 <= Pi, -Pi <= theta3 <= Pi,
+ -Pi/2 <= phi1 <= Pi/2, -Pi/2 <= phi2 <= Pi/2, -Pi/2 <= phi3 <= Pi/2,
+ t > 0, t < 1
+};
+
+(* these do not always apply *)
+
+simps = {ArcTan[y_, x_] -> ArcTan[x/y]}
+
+fullmat = 
+
+{{Cos[phi1]*Cos[theta1], Cos[phi1]*Sin[theta1], Sin[phi1]}, 
+ {(-Sin[theta1] + Cos[theta1]*Sin[phi1]*(-(Cot[theta1 - theta2]*Sin[phi1]) + 
+      Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2]))/
+   Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+        Tan[phi2])^2], (Cos[theta1] + Sin[phi1]*Sin[theta1]*
+     (-(Cot[theta1 - theta2]*Sin[phi1]) + Cos[phi1]*Csc[theta1 - theta2]*
+       Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2], 
+  (Cos[phi1]*(Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+      Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]}, 
+ {(Csc[theta1 - theta2]*(Sin[phi1]*Sin[theta2] - Cos[phi1]*Sin[theta1]*
+      Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2], 
+  (Csc[theta1 - theta2]*(-(Cos[theta2]*Sin[phi1]) + Cos[phi1]*Cos[theta1]*
+      Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2], 
+  Cos[phi1]/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]}}
+
+invfullmat = Inverse[fullmat]
+
+</formulas>
+
+temp1343 = FullSimplify[sph2xyz[theta3, phi3, 1], conds]
+
+temp1344 = Simplify[fullmat.temp1343, conds]
+
+temp1345 = Simplify[xyz2sph[temp1344], conds]
+
+Simplify[temp1345[[1]], conds]
+
+Simplify[temp1345[[2]], conds]
+
+newLng[theta1_, phi1_, theta2_, phi2_, theta3_, phi3_] =
+
+ArcTan[Cos[phi1]*Cos[phi3]*Cos[theta1 - theta3] + Sin[phi1]*Sin[phi3], 
+ (Cos[phi1]*Sin[phi3]*(Cot[theta1 - theta2]*Sin[phi1] - 
+     Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2]) + 
+   Cos[phi3]*(-(Sin[theta1]*(Cos[theta3] + Sin[phi1]*Sin[theta3]*
+         (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+           Tan[phi2]))) + Cos[theta1]*(Sin[theta3] + Cos[theta3]*Sin[phi1]*
+        (-(Cot[theta1 - theta2]*Sin[phi1]) + Cos[phi1]*Csc[theta1 - theta2]*
+          Tan[phi2]))))/
+  Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+       Tan[phi2])^2]]
+
+newLat[theta1_, phi1_, theta2_, phi2_, theta3_, phi3_] =
+
+ArcTan[Sqrt[(Cos[phi1]*Cos[phi3]*Cos[theta1 - theta3] + Sin[phi1]*Sin[phi3])^
+    2 + (Cos[phi1]*Sin[phi3]*(Cot[theta1 - theta2]*Sin[phi1] - 
+        Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2]) + 
+      Cos[phi3]*(-(Sin[theta1]*(Cos[theta3] + Sin[phi1]*Sin[theta3]*
+            (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+              Tan[phi2]))) + Cos[theta1]*(Sin[theta3] + Cos[theta3]*Sin[phi1]*
+           (-(Cot[theta1 - theta2]*Sin[phi1]) + Cos[phi1]*Csc[theta1 - theta2]*
+             Tan[phi2]))))^2/(1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2)], 
+ (Cos[phi3]*Csc[theta1 - theta2]*Sin[phi1]*Sin[theta2 - theta3] + 
+   Cos[phi1]*(Sin[phi3] - Cos[phi3]*Csc[theta1 - theta2]*Sin[theta1 - theta3]*
+      Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+      Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]]
+
+
+
+FullSimplify[fullmat.FullSimplify[xyz2sph[theta3, phi3, 1], conds], conds]
+
+(* geodesics using planes? *)
 
 
 (*
@@ -12,12 +93,6 @@ Claim: any great circle plane is z = ax + by because 0,0,0 must be in plane.
 xyz1 = sph2xyz[{theta1, phi1, 1}]
 xyz2 = sph2xyz[{theta2, phi2, 1}]
 xyz3 = sph2xyz[{theta3, phi3, 1}]
-
-conds = {
- -Pi <= theta1 <= Pi, -Pi <= theta2 <= Pi, -Pi <= theta3 <= Pi,
- -Pi/2 <= phi1 <= Pi/2, -Pi/2 <= phi2 <= Pi/2, -Pi/2 <= phi3 <= Pi/2,
- t > 0, t < 1
-};
 
 Solve[{
  a*xyz1[[1]] + b*xyz1[[2]] == xyz1[[3]],
@@ -156,29 +231,7 @@ mat3 =
   1/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
         Tan[phi2])^2]}}
 
-fullmat = 
-
-{{Cos[phi1]*Cos[theta1], Cos[phi1]*Sin[theta1], Sin[phi1]}, 
- {(-Sin[theta1] + Cos[theta1]*Sin[phi1]*(-(Cot[theta1 - theta2]*Sin[phi1]) + 
-      Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2]))/
-   Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
-        Tan[phi2])^2], (Cos[theta1] + Sin[phi1]*Sin[theta1]*
-     (-(Cot[theta1 - theta2]*Sin[phi1]) + Cos[phi1]*Csc[theta1 - theta2]*
-       Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
-       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2], 
-  (Cos[phi1]*(Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
-      Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
-       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]}, 
- {(Csc[theta1 - theta2]*(Sin[phi1]*Sin[theta2] - Cos[phi1]*Sin[theta1]*
-      Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
-       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2], 
-  (Csc[theta1 - theta2]*(-(Cos[theta2]*Sin[phi1]) + Cos[phi1]*Cos[theta1]*
-      Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
-       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2], 
-  Cos[phi1]/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
-       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]}}
-
-to test above:
+to test fullmat:
 
 
 conds = {
@@ -263,20 +316,4 @@ xyz2sph[f[sol2]][[1]]
 FullSimplify[xyz2sph[f[sol2]] /. {r -> 0, s -> 0, u -> 0}, conds]
 
 VectorAngle[Flatten[f[sol2]], sph2xyz[x, y, 1]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

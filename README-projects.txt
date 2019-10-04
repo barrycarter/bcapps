@@ -1,6 +1,25 @@
+Title: Determine center of population for all countries
+
+Description: Somewhat surpringly, I couldn't find a site that lists
+the mean center of population for countries like Norway. Neither of
+these pages has it:
+
+https://en.wikipedia.org/wiki/Demographics_of_Norway
+
+https://en.wikipedia.org/wiki/Norway
+
+and a google search for "norway center of population" (without quotes)
+yields nothing helpful.
+
+This doesn't appear to be a difficult problem, so I am coding it.
+
+Code: https://github.com/barrycarter/bcapps/tree/master/COW/bc-coc.pl
+
+====================================================================
+
 Title: Use SRTM1 data and Three.js for realilstic citiscapes
 
-Description: there's a program (TODO: fint its name) that uses
+Description: there's a program (TODO: find its name) that uses
 openstreetmap.org data to create a 3D map of a city. Can we do the
 same thing just using SRTM1 data instead? openstreetmap.org has enough
 data to map some places really well, but not every place. SRTM1 is
