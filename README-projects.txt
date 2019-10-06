@@ -1,6 +1,18 @@
+Title: Find formula for geodesic minimum distance to given point
+
+Description: Find the minimum distance between a given geodesic and a
+given point on the sphere, and also the point on the geodesic where
+this minimum occurs. This answers the stackexchange question below:
+
+Reference: https://math.stackexchange.com/questions/23054/how-to-find-the-distance-between-a-point-and-line-joining-two-points-on-a-sphere
+
+Code: https://github.com/barrycarter/bcapps/tree/master/MAPS/bc-geodesic.m
+
+====================================================================
+
 Title: Determine center of population for all countries
 
-Description: Somewhat surpringly, I couldn't find a site that lists
+Description: Somewhat surprisingly, I couldn't find a site that lists
 the mean center of population for countries like Norway. Neither of
 these pages has it:
 
@@ -8,7 +20,7 @@ https://en.wikipedia.org/wiki/Demographics_of_Norway
 
 https://en.wikipedia.org/wiki/Norway
 
-and a google search for "norway center of population" (without quotes)
+and a google search for "Norway center of population" (without quotes)
 yields nothing helpful.
 
 This doesn't appear to be a difficult problem, so I am coding it.
@@ -17,7 +29,7 @@ Code: https://github.com/barrycarter/bcapps/tree/master/COW/bc-coc.pl
 
 ====================================================================
 
-Title: Use SRTM1 data and Three.js for realilstic citiscapes
+Title: Use SRTM1 data and Three.js for realistic citiscapes
 
 Description: there's a program (TODO: find its name) that uses
 openstreetmap.org data to create a 3D map of a city. Can we do the
@@ -473,12 +485,12 @@ Description: Command line Wordpress posting + actual things I want to post
 
 TODO: write up these mini-ideas
 
-  - fictious unix time zones
+  - fictitious UNIX time zones
 
   - abusing dns text records to provide small chunks of info over UDP
 
   - automated character time measurement, scene measurement is another
-  (in tv shows) [ie, conclusively figure out how much screen time each
+  (in TV shows) [ie, conclusively figure out how much screen time each
   actor/character has w/o watching the movie/show]
 
   - GAIA2 star catalog in 3D
