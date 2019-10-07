@@ -1,0 +1,43 @@
+This directory contains the output of ../bc-planet-conjuncts.c run on
+various subsets of planets. The filenames represent which planets are
+in conjunction, with each number standing for one planet:
+
+1: Mercury
+2: Venus
+4: Mars
+5: Jupiter
+6: Saturn
+7: Uranus
+
+These numbers follow the official NAIF IDs in ../naif_ids.html
+
+Inside the files (which are bzip2 compressed), lines starting with "R"
+represent the Julian day range where the planets are within 6 degrees
+of each other. For example, the line:
+
+R 1122664.638620 1122672.220301
+
+in 147.bz2 means that the 3 planets Mercury (1), Mars (4), and Uranus
+(7) are within 6 degrees of each other between Julian days
+1122664.638620 and 1122672.220301
+
+The following line:
+
+M 1121948.064577 2.183128 13.429573
+
+means:
+
+  - The minimum separation occurs at Julian day 1121948.064577
+
+  - The minimum separation is 2.183128 degrees
+
+  - The minimum distance betgween the Sun and any of the 3 planets is
+  13.429573 degrees
+
+This conjunction can be viewed in Stellarium at:
+
+http://search.astro.barrycarter.info/STELLARIUM/stellarium-005.png
+
+Other conjunctions can be viewed at:
+
+http://search.astro.barrycarter.info/table.html

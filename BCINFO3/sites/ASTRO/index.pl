@@ -76,8 +76,8 @@ email astro\@barrycarter.info
 <tr><th>Planet 1</th><td>$planets
 <br><em><font size=-1>
 
-The first conjuncting planet, the one closer to the Sun (use "all
-planets" to see all conjunctions; Uranus is not on this list, since it can never be the nearer planet)
+The first conjuncting planet, the one closer to the Sun (use "any
+planet" to see all conjunctions; Uranus is not on this list, since it can never be the nearer planet)
 
 </font></em>
 </td></tr>
@@ -85,7 +85,7 @@ planets" to see all conjunctions; Uranus is not on this list, since it can never
 <tr><th>Planet 2</th><td>$planets2
 <br><em><font size=-1>
 
-The second conjuncting planet, the one farther from the Sun (use "all planets" to see all conjunctions; Mercury is not on the list, since it can never be the farther planet).<br>
+The second conjuncting planet, the one farther from the Sun (use "any planet" to see all conjunctions; Mercury is not on the list, since it can never be the farther planet).<br>
 
 </font></em>
 </td></tr>

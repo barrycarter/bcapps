@@ -1,7 +1,8 @@
 Known issues as of 11 Mar 2018:
 
   - Both the MySQL and SQLite3 versions of the astronomical
-  conjunctions database are missing or broken, which affects:
+  conjunctions database are missing or broken, which affects (on
+  10/7/19, I fixed the MySQL version):
 
     - http://astro.db.mysql.barrycarter.info/
 
