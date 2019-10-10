@@ -630,6 +630,11 @@ blazegraph
 # docker later removed, version too old
 # docker
 
+atari++
+snes9x
+dosbox
+
+
 # docker new
 docker-ce
 docker-ce-cli
