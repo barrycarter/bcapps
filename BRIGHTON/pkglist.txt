@@ -765,6 +765,8 @@ qt-config
 bison
 flex
 readline
+readline-devel
+libXaw-devel
 
 # required for gnumeric
 intltool

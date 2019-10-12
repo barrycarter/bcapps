@@ -53,10 +53,15 @@ debug("BUTTONS: $buttons");
 
 $msg2 = qq%<span font="$globopts{fontsize}">$msg</span>%;
 
+# undecorated is a real pain, so changing 10/12/19
+
+# my($cmd) = qq%yad --no-escape --text='$msg2' --text-align='center' 
+#            --width=$globopts{width} 
+#            $buttons  --buttons-layout='spread' --sticky --undecorated%;
+
 my($cmd) = qq%yad --no-escape --text='$msg2' --text-align='center' 
             --width=$globopts{width} 
-            $buttons  --buttons-layout='spread' --sticky --undecorated%;
-
+            $buttons  --buttons-layout='spread' --sticky%;
 
 $cmd=~s/\n/ /sg;
 

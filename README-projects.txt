@@ -1,3 +1,24 @@
+Title: Find correlations in weather data
+
+Description: There's a lot of weather data out there, including both
+time series data (temperature, dew point, sky cover, etc) and fixed
+data (latitude, longitude, elevation). It would be interesting to see
+if there are any correlations in such data by putting it into some
+program (or writing one) that does basic correlation analysis.
+
+Of course, the actual formula between some of these data may be far
+from linear, so additional "correlation" functions may be needed.
+
+This "mass correlation" project could be used to answer questions like:
+
+https://earthscience.stackexchange.com/questions/18151/deserts-and-humidity
+
+https://earthscience.stackexchange.com/questions/18158/precipitation-and-elevation
+
+and probably many others.
+
+====================================================================
+
 Title: Find formula for geodesic minimum distance to given point
 
 Description: Find the minimum distance between a given geodesic and a
@@ -181,6 +202,9 @@ nice to look at the diffs for each file individually and create a git
 commit/comment history from that. Of course, this would mean creating
 a new git repository entirely, or finding a way to "parallel" git's
 structure to add my own comments.
+
+Note that these per-file changes could also be documented separately,
+outside of gits own log structure.
 
 ====================================================================
 
