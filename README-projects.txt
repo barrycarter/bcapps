@@ -1,3 +1,14 @@
+Title: Convert series of complete backups to incremental backups
+
+Description: Perhaps using git, convert a series of complete backups
+that are nearly identical and fairly large (thus taking up a lot of
+space) into incremental backups that are much smaller, perhaps using
+something like git to store incrementals
+
+Code: https://github.com/barrycarter/bcapps/tree/master/BACKUP/bc-targz2git.pl
+
+====================================================================
+
 Title: Find correlations in weather data
 
 Description: There's a lot of weather data out there, including both
@@ -89,6 +100,9 @@ right ascension/declination is.
 In practice, the target location will be precessed to B1875.0
 coordinates, which seems easier than precessing the constellation
 lines themselves.
+
+Note: https://github.com/skyfielders/python-skyfield/commit/348f03caa3e0398dbce02d8be15117d851782f26
+may be useful here
 
 ====================================================================
 

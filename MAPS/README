@@ -12,6 +12,8 @@ Notes for map server:
 
   - TODO: add mineral and ore deposits data
 
+  - TODO: add continental plate boundaries
+
   - TODO: maybe use raster2pgsql to convert raster maps to
   postgresql-- is that faster than using a binary file that's squashed
   (probably not?)

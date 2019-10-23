@@ -19,7 +19,7 @@ require "/usr/local/lib/bclib.pl";
 
 # default option values
 
-defaults("width=1600&fontsize=30");
+defaults("width=1600&fontsize=20");
 
 # TODO: this might be bad-- maybe required quoted arg[0]
 
@@ -33,8 +33,6 @@ my($msg) = join(" ", @ARGV);
 
 my(@times) = ("0m", "DONE", "1m", "2m", "3m", "4m", "5m", "6m", "7m", 
 	      "15m", "30m", "45m", "1h", "90m", "2h", "4h", "8h");
-
-# build up the buttons option (intentional start at 1)
 
 my(@buttons);
 
