@@ -24,7 +24,3 @@ check_disk -v -c 10 -u GB /
 
 # TODO: meta test to confirm each mounted disk (or each disk in list
 # of drives) has a check_disk test or is exempt for some reason
-
-check_mysql_query -q "SELECT SUM(amount) FROM bankstatements WHERE bank='ally'" -d test -w 20000: -c 15000:
-
-
