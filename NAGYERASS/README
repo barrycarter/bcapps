@@ -78,9 +78,8 @@ should have unique ones
 TODO: saved-messages should never contain certain types of messages,
 such as uptimerobot notifications
 
-
-
-
+TODO: confirm that fixed monthly payments are actually constant and
+occur only once a month
 
 
 

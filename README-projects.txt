@@ -1,9 +1,30 @@
+Title: How does number of electoral votes relate to coalition "power"?
+
+Description:
+http://politics.stackexchange.com/questions/15180/number-of-winning-coalitions-of-state-in-the-electoral-college
+asks a seemingly political question that, as some comments note, is
+actually mathematical.
+
+The question: if a state has k votes out of n votes total, what is the
+state's "power" in terms of forming coalitions with other states. More
+specifically:
+
+  - If a state is part of a winning coalition and leaves, what are the
+  chances the coalition will not become a losing coalition?
+
+  - If a state is NOT part of a losing coalition and joins, what are
+  the chances the coalition will now become a winning coalition.
+
+Code: https://github.com/barrycarter/bcapps/tree/master/STACK/bc-coalition.m
+
+====================================================================
+
 Title: Convert series of complete backups to incremental backups
 
-Description: Perhaps using git, convert a series of complete backups
-that are nearly identical and fairly large (thus taking up a lot of
-space) into incremental backups that are much smaller, perhaps using
-something like git to store incrementals
+Description: Convert a series of complete backups that are nearly
+identical and fairly large (thus taking up a lot of space) into
+incremental backups that are much smaller, perhaps using something
+like git to store incrementals
 
 Code: https://github.com/barrycarter/bcapps/tree/master/BACKUP/bc-targz2git.pl
 

@@ -6,7 +6,7 @@
 
 # --sleep: sleep this many seconds between URLS (default 2)
 
-# --stdin: wait for newline on stdin instead of sleeping
+# --stdin: wait for newline on stdin instead of sleeping (actually pops up an xmessage)
 
 require "/usr/local/lib/bclib.pl";
 
