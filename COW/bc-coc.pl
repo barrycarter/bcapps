@@ -8,13 +8,11 @@
 
 # TODO: use latest geonames
 
-# TODO: testing w/ single country data, but use all for production
-
 require "/usr/local/lib/bclib.pl";
 
 # load dependent data from dependentcountries_territories.csv
 
-my(%conversions);
+my(%conversions, %countrydata);
 
 for $i (split(/\n/, read_file("$bclib{githome}/COW/dependentcountries_territories.csv"))) {
 
@@ -37,6 +35,14 @@ while (<>) {
    $admin2, $admin3, $admin4, $population, $elevation,
    $gtopo30, $timezone, $modificationdate) = split("\t",$_);
 
+  # if this is a PCLI, we have country data
+
+  if ($featurecode eq "PCLI") {
+    $country{$admin0}{total} = $population;
+    $country{$admin0}{name} = $name;
+    next;
+  }
+
   # convert admin0 if needed
 
   if ($conversions{$admin0}) {$admin0 = $conversions{$admin0};}
@@ -46,14 +52,20 @@ while (<>) {
   if ($population == 0) {next;}
 
   # only populated places count
-  unless ($featurecode=~/^PPL/) {next;}
+
+  unless ($featurecode=~/^PPL/) {
+    debug("Non PPL population: $population ($featurecode) $name");
+    next;
+  }
+
+  
 
   # taking the 3D average of the where the population is which will
   # always be below the Earth's surface (since the Earth is spherical
   # and thus everywhere convext); the amount below the surface will
   # reflect how "spread out" the population is
 
-  # TODO: consider also calculation simple average
+  # TODO: consider also calculation simple average (but longitude issue)
 
   # TODO: compare my answers to wikipedia where it has this data
 
@@ -77,7 +89,10 @@ for $i (keys %totals) {
 		     $totals{$i}->{z}/$totals{$i}->{population},
 		     "degrees=1");
 
-  print "$i $res[0] $res[1] $res[2]\n";
+  # longitude range -180 to 180
+  if ($res[0] > 180) {$res[0] -= 360;}
+
+  print "$i $res[0] $res[1] $res[2] $totals{$i}->{population} $country{$i}{total} ", $totals{$i}->{population}/$country{$i}{total}, " $country{$i}{name}\n";
 
 }
 

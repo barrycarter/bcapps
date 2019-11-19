@@ -1,0 +1,14 @@
+TODO: everything
+
+TODO: geonames not 100%, program I used, link to page of multiple ways to determine center of popular, create csv, explain csv here, reference this file in CSV
+
+Source dependentcountries_territories.csv
+
+2019-11-19 03:14  345M
+
+used PPL (see notes in Perl script)
+
+TODO: find total world and country pops
+
+see also readme
+
