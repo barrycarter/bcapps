@@ -27,5 +27,7 @@ check_disk -v -c 10 -u GB /
 
 # see README.nagyerass
 
-check_mysql_query -q "SELECT SUM(amount) FROM bankstatements WHERE bank='ally'" -d test -w 19000: -c 15000:
+check_mysql_query -q "SELECT SUM(amount) FROM bankstatements WHERE bank='ally'" -d test -w 18000: -c 15000:
+
+
 

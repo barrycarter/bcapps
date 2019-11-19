@@ -171,6 +171,15 @@ Data provided:
 
   - TODO: antipodal map
 
+  - TODO: longitude shift maps: is Albuquerque really south of Tokyo? 
+  Not just as a point but if the two cities were overlaid by moving
+  them east and west. This works for longitudes because, at the same
+  latitude, everything is at the same scale. This won't work for
+  latitude because, on a Mercator map, the distance between latitudes
+  is not equal.
+
+  - TODO: use mapbox as free tile server (?)
+
 TODO: let user "be" on a 1 arcsecond square as current virtual location
 and draw this square on the map
 

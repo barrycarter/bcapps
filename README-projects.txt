@@ -1,3 +1,37 @@
+Title: Display shadows of tall buildings using OpenStreetMap or similar
+
+Description: Using the sun's altitude and azimuth at a given point,
+show where the tip of the shadow of tall buildings would touch the
+ground.
+
+Note: In this project, I plan to assume the Earth is locally flat, the
+surface elevation doesn't change drastically, there are no major
+obscurations between the building and where the shadow falls, and
+that, if the shadow falls on another building, that building is small
+enough that we can assume it's effectively at ground level.
+
+Can't do this for mountains (like Mount Fuji diamond below) because
+curvature of the Earth, change in surface elevation, and obscuration
+are all issues, since mountains are much taller than buildings (in
+general).
+
+List of tall buildings: https://en.wikipedia.org/wiki/List_of_tallest_towers and https://en.wikipedia.org/wiki/List_of_tallest_buildings
+
+
+====================================================================
+
+Title: Rewrite Firefox notification code to run external command instead
+
+Description: Firefox's pop-up notification feature is nice, but you
+can't control how long the pop-ups remain on screen, and can miss them
+entirely if you're away from the computer for more than a few seconds.
+
+This project seeks to rewrite the notification functions so they call
+an external program with the text of the notification, adding much
+needed flexibility to this feature.
+
+====================================================================
+
 Title: How does number of electoral votes relate to coalition "power"?
 
 Description:
@@ -546,7 +580,7 @@ TODO: write up these mini-ideas
 
   - fictitious UNIX time zones
 
-  - abusing dns text records to provide small chunks of info over UDP
+  - abusing DNS text records to provide small chunks of info over UDP
 
   - automated character time measurement, scene measurement is another
   (in TV shows) [ie, conclusively figure out how much screen time each
@@ -556,7 +590,7 @@ TODO: write up these mini-ideas
 
   - triangle dissection/shapes in general
 
-  - game on real world map ('yamc'/'terramapadventure')
+  - game on real world map ('YAMC'/'terramapadventure')
 
   - most files in my git that are not answers to questions relate to
   some project

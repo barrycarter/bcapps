@@ -26,7 +26,7 @@ require "/usr/local/lib/bclib.pl";
 # get data, split into lines
 # TODO: error check here and stop if $out is too small, $err exists,
 # $res is non-zero or something
-$url = "http://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt";
+$url = "https://www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt";
 my($out,$err,$res) = cache_command2("curl $url", "age=150");
 # this file is important enough to keep around
 write_file($out, "/var/tmp/noaa.buoy.txt");

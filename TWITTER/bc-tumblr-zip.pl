@@ -1,6 +1,6 @@
 #!/bin/perl
 
-# does what bc-twitter-zip.pl does but for discord takeout
+# does what bc-twitter-zip.pl does but for tumblr
 
 use Archive::Zip;
 require "/usr/local/lib/bclib.pl";

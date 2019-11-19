@@ -25,6 +25,10 @@ We can get much better precision by adjusting this number using the [Equation of
 
 loy = 24*365.2425;
 
+(* from http://hpiers.obspm.fr/eop-pc/models/constants.html *)
+
+loy = 24*365.242190402;
+
 decf = Interpolation[decs]
 
 n = 4;
@@ -50,7 +54,7 @@ Plot[{(g[x]-decf[x])/Degree*60}, {x, 1, Length[decs]}, PlotRange->All]
 Plot[ ((g[x]-decf[x])/Degree*60) / (x-Length[decs]/2), 
  {x, 1, Length[decs]}, PlotRange->All]
 
-(* above = w/in 30' of arc for n = 1, 10' of arc for n=2, 0.5 for n = 3  *)
+(* above = w/in 30' of arc for n = 1, 10' of arc for n=2, 0.5 for n = 3, n=10 still gives 0.4 minutes  *)
 
 
 

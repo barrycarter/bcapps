@@ -137,7 +137,10 @@ sub bc_extras {
       if ($j=~/^\#/ || $j=~/^\s*$/) {next;}
       debug("RUNNING: $j");
       my($out,$err,$res) = cache_command2($j);
-      if ($res) {$count++;}
+      if ($res) {
+	debug("TEST FAILED");
+	$count++;
+      }
     }
   }
 

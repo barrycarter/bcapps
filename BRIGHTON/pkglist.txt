@@ -829,6 +829,11 @@ transmission-common
 # for slack app
 libappindicator-gtk3-devel
 
+# for pspp
+gsl-devel
+gsl
+gtksourceview3-devel
+gtksourceview3
 
 # Blog
 # this wont really install from yum, just noting it here
