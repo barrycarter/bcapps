@@ -39,7 +39,7 @@ while (<>) {
 
   if ($featurecode eq "PCLI") {
     $country{$admin0}{total} = $population;
-    $country{$admin0}{name} = $name;
+    $country{$admin0}{name} = $asciiname;
     next;
   }
 
@@ -57,6 +57,10 @@ while (<>) {
     debug("Non PPL population: $population ($featurecode) $name");
     next;
   }
+
+#  unless ($featurecode eq "ADM2") {
+#    next;
+#  }
 
   
 
