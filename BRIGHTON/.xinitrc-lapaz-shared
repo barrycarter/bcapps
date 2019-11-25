@@ -1,0 +1,39 @@
+# this runs (automagically) whenever I start X11
+
+# TODO: this does not work
+xrandr --size 1600x900
+
+# CentOS defaults to emulate 3button off for some weird reason; this fixes it
+# TODO: this seems kludgey, especially if I change mouses/trackballs
+
+xinput set-prop "Logitech USB Trackball" "Evdev Middle Button Emulation" 1
+
+# TODO: there really really must be a better way to do this
+
+xrdb ~/.Xresources
+
+# these can be set in xorg.conf but it's easier to do it this way
+
+xset -dpms
+xset r rate 250 25
+
+# this turns off screensaver too, which appears to be different from DPMS
+
+xset s off off
+
+# per
+# http://unix.stackexchange.com/questions/39518/turn-off-beep-of-xorg
+# there may not actually be an option for this in xorg.conf, so doing
+# it here
+
+xset b off
+
+# stickly digital xclock in lower right hand corner
+# TODO: nanoseconds (%N doesn't work after -strftime)
+
+xclock -norender -font -misc-fixed-bold-r-normal--14-130-75-75-c-70-iso8859-1 -padding 0 -digital -update 1 -strftime '%a %d %b %Y %H:%M:%S' -geometry 170x19+1430+881 &
+
+# The exec below replaces the xinit process (which is no longer
+# necessary after the above) with the fvwm2 window manager-- I think
+
+exec fvwm2
