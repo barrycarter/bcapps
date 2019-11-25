@@ -6,6 +6,14 @@ bc-calendar.pl screenshot (I put this on my X root window):
 
 TODO:
 
+https://nationaldaycalendar.com/calendar-at-a-glance/ (but possibly
+companies can "buy into" this, not a "real" calendar)
+
+https://www.congress.gov/congressional-record/congressional-record-index/114th-congress/2nd-session/special-days-and-holidays/234037
+(and previous Congresses or find list of observances somewhere)
+
+ping gcal folks on making holiday lists more complete
+
 Draconids not listed in SKYCAL (astro) calendar, and maybe other
 meteor showers as well
 

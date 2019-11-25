@@ -180,6 +180,12 @@ Data provided:
 
   - TODO: use mapbox as free tile server (?)
 
+  - TODO: add voronoi maps
+
+  - TODO: add "borderline" maps that aren't quite the same as voronoi/buffer
+
+  - TODO: add radar maps
+
 TODO: let user "be" on a 1 arcsecond square as current virtual location
 and draw this square on the map
 

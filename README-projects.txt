@@ -1,3 +1,17 @@
+Title: Solar system eclipses, occultations  and transits from various locations
+
+Description: Inspired by https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051#34051 we ask the question: when seen from X, how often does Y appear to be obscured, even partially, by any third object Z. Examples for Earth:
+
+  - solar eclipse: X = Earth, Y = Sun, Z = Moon
+
+  - lunar eclipse: X = Earth, Y = Moon, Z = Earth
+
+  - Venus transit: X = Earth, Y = Sun, Z = Venus
+
+This should be solvable by running through all the combinations in CSPICE, but it might be useful to find "interesting" obscurations such as where X, Y, or Z is a planet and/or a large planetary moon.
+
+====================================================================
+
 Title: Display shadows of tall buildings using OpenStreetMap or similar
 
 Description: Using the sun's altitude and azimuth at a given point,
@@ -16,7 +30,6 @@ are all issues, since mountains are much taller than buildings (in
 general).
 
 List of tall buildings: https://en.wikipedia.org/wiki/List_of_tallest_towers and https://en.wikipedia.org/wiki/List_of_tallest_buildings
-
 
 ====================================================================
 
