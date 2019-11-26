@@ -19,6 +19,8 @@ REMOVED FOR TESTING:
 '/home/barrycarter/SPICE/KERNELS/nep081.bsp',
 '/home/barrycarter/BCGIT/ASTRO/iss.bsp',
 
+'/home/user/SPICE/KERNELS/earth_000101_160314_151222.bpc',
+
 \begindata
 
 KERNELS_TO_LOAD = (
@@ -31,7 +33,6 @@ KERNELS_TO_LOAD = (
 '/home/user/BCGIT/ASTRO/eqeqdate.tf',
 '/home/user/SPICE/KERNELS/earth_assoc_itrf93.tf',
 '/home/user/SPICE/KERNELS/gm_de431.tpc',
-'/home/user/SPICE/KERNELS/earth_000101_160314_151222.bpc',
 '/home/user/SPICE/KERNELS/earth_720101_070426.bpc'
 
 )
