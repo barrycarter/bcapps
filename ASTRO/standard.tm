@@ -12,7 +12,6 @@ REMOVED FOR TESTING:
 '/home/barrycarter/SPICE/KERNELS/de434.bsp',
 '/home/barrycarter/SPICE/KERNELS/de435.bsp',
 '/home/barrycarter/SPICE/KERNELS/de436.bsp',
-'/home/barrycarter/SPICE/KERNELS/jup310.bsp',
 '/home/barrycarter/SPICE/KERNELS/jup300.bsp',
 '/home/barrycarter/SPICE/KERNELS/sat365.bsp',
 '/home/barrycarter/SPICE/KERNELS/ura111.bsp',
@@ -33,6 +32,7 @@ KERNELS_TO_LOAD = (
 '/home/user/BCGIT/ASTRO/eqeqdate.tf',
 '/home/user/SPICE/KERNELS/earth_assoc_itrf93.tf',
 '/home/user/SPICE/KERNELS/gm_de431.tpc',
-'/home/user/SPICE/KERNELS/earth_720101_070426.bpc'
+'/home/user/SPICE/KERNELS/earth_720101_070426.bpc',
+'/home/user/SPICE/KERNELS/jup310.bsp'
 
 )
