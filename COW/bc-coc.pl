@@ -40,8 +40,17 @@ while (<>) {
   if ($featurecode eq "PCLI") {
     $country{$admin0}{total} = $population;
     $country{$admin0}{name} = $asciiname;
+    debug("$asciiname: $population");
     next;
   }
+
+  # special case to handle dependencies not listed in dependentcountries_territories.csv
+
+  if ($featurecode eq "PCLD") {
+    $country{$admin0}{name} = $asciiname;
+    next;
+  }
+
 
   # convert admin0 if needed
 
@@ -54,9 +63,11 @@ while (<>) {
   # only populated places count
 
   unless ($featurecode=~/^PPL/) {
-    debug("Non PPL population: $population ($featurecode) $name");
+#    debug("Non PPL population: $population ($featurecode) $name");
     next;
   }
+
+#  debug($admin0);
 
 #  unless ($featurecode eq "ADM2") {
 #    next;
@@ -95,6 +106,12 @@ for $i (keys %totals) {
 
   # longitude range -180 to 180
   if ($res[0] > 180) {$res[0] -= 360;}
+
+  unless ($country{$i}{total}) {
+    warn("WTF: $i,$res[0],$res[1],$res[2],$totals{$i}->{population},$country{$i}{total},$country{$i}{name}");
+  print "$i,$res[0],$res[1],$res[2],$totals{$i}->{population},NA,", "NA", ",$country{$i}{name}\n";
+    next;
+  }
 
   print "$i,$res[0],$res[1],$res[2],$totals{$i}->{population},$country{$i}{total},", $totals{$i}->{population}/$country{$i}{total}, ",$country{$i}{name}\n";
 
