@@ -1,0 +1,82 @@
+Columns for bc-coc-results.csv:
+
+1: two letter ISO code for country
+2: longitude of center of population (as computed by bc-coc.pl)
+3: latitude of center of population (as computed by bc-coc.pl)
+4: length of central vector (see below for details)
+5: total urban population (see below for details)
+6: total country population
+7: percentage of population that is urban
+
+(StackExchange non-answer to
+https://opendata.stackexchange.com/questions/15731/ explains many
+above)
+
+This is not an answer.
+
+Non-answer: It's almost definitely Iceland, whose center of population has a latidude of 64.37.
+
+A full list of population centers (subject to caveats below which pretty much invalidate the list) at https://github.com/barrycarter/bcapps/tree/master/COW/bc-coc-results.csv with the readme at https://github.com/barrycarter/bcapps/tree/master/COW/README.coc (the README contains this entire answer as well). The program used to compute these: https://github.com/barrycarter/bcapps/tree/master/COW/bc-coc.pl
+
+##Caveats, Methodology, and Extrema##
+
+  - I used the 18 Nov 2019 geonames data to find the center of population of each country by taking the weighted average of all populated places in that country.
+
+  - I weighted averaged the vectors from the center of the Earth (and assumed a spherical Earth) to the populated places
+
+  - As https://en.wikipedia.org/wiki/Center_of_population#Definitions notes, there are several ways to compute center of population, each of which may give different results. I believe the definition I used corresponds to "the mean centre, also known as the centroid or centre of gravity"
+
+  - Since the Earth is everywhere convex, the vector average is inside the Earth, and so I extended it to touch the surface of the Earth (wikipedia also mentions the need for doing this)
+
+  - The length of the central vector gives a general idea of how close large population centers in a given country are to each other.
+
+  - Countries that essentially consist of a single city (such as the Holy See of Vatican City and Monaco) have central vector lengths close to 1.
+
+  - The countries with the most "spread out" population are the Russian Federatoin (number 1), the United States (number 2), and France (number 3). Except for France (which seems like a relatively small country), this didn't surprise me.
+
+  - I also computed the total population of the populated places in a country, and compared it to the total population of the country itself.
+
+  - I was concerned when I noted only 6.73% of the people in Burundi lived in populated places, but https://en.wikipedia.org/wiki/Burundi semi-validates this by noting "Burundi remains an overwhelmingly rural society, with just 13.4% of the population living in urban areas in 2019". That's much larger than my number, but still a good indication that a lot of people in Burundi don't live in what geonames considers to be "populated places".
+
+  - Of course, the lower the percentage of people living in populated places in a country, the less accurate the center of population will be.
+
+  - There are handful of cases where the number of people living in populated places in a country exceed the number of people living in the country, which is, of course, impossible. Errors like this are because geonames' sources for country population and populated place population are different.
+
+  - I attempted to compensate for dependencies by using https://spreadsheets.google.com/ccc?key=pJpyPy-J5JSNhe7F_KxwiCA&hl=en which geonames.org's countryInfo.txt file lists as being a source of dependent countries
+
+  - Unfortunately, this file is highly incomplete. For example, New Caledonia is actually a dependency of France and Curacao is actually a dependency of the Netherlands, but neither appear in the spreadsheet above.
+
+  - 
+
+
+
+
+
+
+
+
+
+
+HOW I LIST TERR, COUNTRY DFINED, ALT METHOD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TODO: sort -t, -- stackexchange post, dependce
+
+go thru bc-coc, date geonames
+
+13% case and extema
+
+must push!
