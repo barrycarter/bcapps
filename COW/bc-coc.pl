@@ -46,7 +46,7 @@ while (<>) {
 
   # special case to handle dependencies not listed in dependentcountries_territories.csv
 
-  if ($featurecode eq "PCLD") {
+  if ($featurecode=~/^PCL[DSF]/ || $featurecode eq "PCLIX" || $featurecode eq "TERR") {
     $country{$admin0}{name} = $asciiname;
     next;
   }
