@@ -96,7 +96,7 @@ for $i (keys %totals) {
   # longitude range -180 to 180
   if ($res[0] > 180) {$res[0] -= 360;}
 
-  print "$i $res[0] $res[1] $res[2] $totals{$i}->{population} $country{$i}{total} ", $totals{$i}->{population}/$country{$i}{total}, " $country{$i}{name}\n";
+  print "$i,$res[0],$res[1],$res[2],$totals{$i}->{population},$country{$i}{total},", $totals{$i}->{population}/$country{$i}{total}, ",$country{$i}{name}\n";
 
 }
 

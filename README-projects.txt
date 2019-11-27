@@ -1,3 +1,22 @@
+Title: Find formula for sun/moon etc positions
+
+Description: Find reasonably accurate functions that return the Sun,
+Moon, etc's right ascension and declination at any time. The actual
+computations are quite complex, but, using existing data, we might be
+able to curve-fit, at least for a given time period (eg, a year)
+within a certain tolerance.
+
+Code: 
+
+https://github.com/barrycarter/bcapps/tree/master/bc-approx-sun-ra-dec.m
+https://github.com/barrycarter/bcapps/tree/master/bc-approx-ra-dec.pl
+https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-approx-sun-ra-dec.m
+
+(yes, I have a file called bc-approx-sun-ra-dec.m in two locations and
+they are not equal-- and yes, that is a mistake I need to fix)
+
+====================================================================
+
 Title: Solar system eclipses, occultations  and transits from various locations
 
 Description: Inspired by https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051#34051 we ask the question: when seen from X, how often does Y appear to be obscured, even partially, by any third object Z. Examples for Earth:

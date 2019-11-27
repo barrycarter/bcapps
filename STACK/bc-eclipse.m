@@ -1,3 +1,41 @@
+(* work below on 27 Nov 2019 *)
+
+(*
+
+find umbral point of two spheres and thus the umbral cone
+(intersecting a third sphere)
+
+sphere 1: sx, sy, sz with radius sr
+sphere 2: tx, ty, tz with radius tr
+
+umbral point is on conneting line + angular diameter of two sphers is equal
+
+*)
+
+line[t_] = (1-t)*{sx, sy, sz} + t*{tx, ty, tz}
+
+angrad2 = ArcTan[tr/Norm[line[t]-{tx, ty, tz}]]
+angrad1 = ArcTan[sr/Norm[line[t]-{sx, sy, sz}]]
+
+Solve[angrad1 == angrad2, t]
+
+t = sr/(sr +- tr)
+
+FullSimplify[line[sr/(sr+tr)]]
+
+{(sx*tr + sr*tx)/(sr + tr), (sy*tr + sr*ty)/(sr + tr), 
+ (sz*tr + sr*tz)/(sr + tr)}
+
+(* umbral angle is *)
+
+angrad1 /. t -> sr/(sr+tr)
+angrad2 /. t -> sr/(sr+tr)
+
+
+
+
+
+
 (* fun with 2017 Aug solar eclipse *)
 
 (*
@@ -560,7 +598,5 @@ Graphics3D[obj]
 Show[%, ViewPoint -> earth, ViewVector -> earth-sun, ImageSize -> {1024,768},
  ViewCenter -> Sun, SphericalRegion -> True, Lighting -> None]
 showit
-
-
 
 TODO: test vs horizons
