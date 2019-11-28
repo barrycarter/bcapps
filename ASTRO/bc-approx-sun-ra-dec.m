@@ -19,36 +19,31 @@ We can get much better precision by adjusting this number using the [Equation of
 
 (* work below on 27 Nov 2019 *)
 
-data = Rationalize[ReadList["/mnt/villa/user/20191127/sun-2020-per-minute.txt",
+(* data = Rationalize[ReadList["/mnt/villa/user/20191127/sun-2020-per-minute.txt", 
+"Number", "RecordLists" -> True], 0]; *)
+
+data = Rationalize[ReadList["/mnt/villa/user/20191127/year-2020.txt",
 "Number", "RecordLists" -> True], 0];
 
-ras = Transpose[data][[3]];
-decs = Transpose[data][[4]];
-
-diffra0 = Differences[ras];
-
-diffras = Table[If[i < -Pi, i+2*Pi, i], {i, diffra0}];
-
-(* below is in arcseconds *)
-
-ListPlot[superleft[decs, 1]/Degree*3600, PlotRange -> All]
-
-ListPlot[superleft[decs, 2]/Degree*3600, PlotRange -> All]
-
-(* above takes forever *)
+ras = Transpose[data][[4]];
+decs = Transpose[data][[5]];
 
 loy = Rationalize[24*60*365.242190402,0]
 
 decf = Interpolation[decs]
 
-n = 5;
+(* reusing variable as test *)
+
+decf = Interpolation[ras];
+
+n = 7;
 
 f[x_] = c[0] + e[1]*(x-Length[decs]/2)*Cos[h[1]-1*2*Pi/loy*x] + 
         Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
 
 vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
 
-ff = FindFit[decs, f[x], vars, x];
+ff = FindFit[ras, f[x], vars, x];
 
 g[x_] = N[f[x] /. ff];
 
@@ -70,11 +65,15 @@ n=7 about 3 seconds consistently
 
 *)
 
+diffras = Table[If[i < -Pi, i+2*Pi, i], {i, diffra0}];
 
+(* below is in arcseconds *)
 
+ListPlot[superleft[decs, 1]/Degree*3600, PlotRange -> All]
 
+ListPlot[superleft[decs, 2]/Degree*3600, PlotRange -> All]
 
-
+(* above takes forever *)
 
 (* work below 26 Mar 2019 *)
 
