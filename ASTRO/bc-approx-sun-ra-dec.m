@@ -15,7 +15,228 @@ We can get much better precision by adjusting this number using the [Equation of
 
 <formulas>
 
+showit2 := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
+     Export[file, %, ImageSize -> {1600, 900}]; 
+     Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
+
 </formulas>
+
+(* below also on 28 Nov 2019, splining attempt *)
+
+decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}];
+
+temp5 = decs2[[;;;;5]];
+
+int1 = Interpolation[decs2];
+int5 = Interpolation[temp5];
+
+Plot[{int1[x], int5[x]}, {x, 1, Length[decs]}]
+
+Plot[{int1[x]-int5[x]}, {x, 1, Length[decs]}, PlotRange->All]
+
+int24 = Interpolation[decs2[[;;;;24]]];
+
+Plot[{int1[x]-int24[x]}, {x, 1, Length[decs]}, PlotRange->All]
+
+Clear[everyNth];
+Clear[interNth];
+Clear[diffNth];
+Clear[maxDiffNth];
+
+everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[
+ Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]
+];
+
+interNth[list_, n_] := interNth[list, n] = Interpolation[everyNth[list,n]]
+
+diffNth[list_, n_] := diffNth[list, n] = 
+ Table[{i, list[[i,2]] - interNth[list, n][i]}, {i, 1, Length[list]}]
+
+maxDiffNth[list_, n_] := maxDiffNth[list, n] = 
+ Max[Abs[Transpose[diffNth[list, n]][[2]]]]
+
+(* test table *)
+
+test1 = Table[{i, Sin[i/24]}, {i,1,10}];
+
+Append[Append[test1[[;;;;2]], {1, test1[[1]]}], {Length[test1],
+test1[[Length[test1]]]}]
+
+
+
+
+{ {1, test1[[1]]}, test1[[;;;;7]], {Length[test1], test1[[Length[test1]]]} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(* work below on 28 Nov 2019 - envelope functions *)
+
+data = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
+"Number", "RecordLists" -> True], 0];
+
+ras = Transpose[data][[3]];
+decs = Transpose[data][[4]];
+
+loy = Rationalize[24*365.242190402,0]
+
+decf = Interpolation[decs]
+
+n = 1;
+
+f[x_] = c[0] + e[1]*(x-Length[decs]/2)*Cos[h[1]-1*2*Pi/loy*x] + 
+        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
+vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
+
+ff = FindFit[decs, f[x], vars, x];
+
+g[x_] = N[f[x] /. ff];
+
+Plot[{(g[x]-decf[x])/Degree*60*60}, {x, 1, Length[decs]}, PlotRange->All]
+
+(* envelope *)
+
+temp0854 = Table[decs[[i]]-g[i], {i,1,Length[decs]}];
+
+Plot[1500+500*Cos[x*2*Pi/24/365], {x, 0, 24*365}]
+
+temp0835[x_] = 1500+500*Cos[x*2*Pi/24/365]
+
+Plot[{(g[x]-decf[x])/Degree*60*60/temp0835[x]}, {x, 1, 24*365}, 
+ PlotRange->All]
+
+temp0836[x_] = (1500+500*Cos[x*2*Pi/24/365])*Cos[2*Pi*x/365/12]
+
+Plot[{(g[x]-decf[x])/Degree*60*60-temp0836[x]}, 
+ {x, 1, Length[decs]}, PlotRange->All]
+
+temp0847[x_] = c[0] + (c[1]*Cos[x*2*Pi/loy-c[2]]*Cos[2*Pi*x/loy*2-c[3]])
+
+vars = {c[0], c[1], c[2], c[3]}
+
+ff0852 = FindFit[temp0854, temp0847[x], vars, x]
+
+temp0919[x_] = temp0847[x] /. ff0852
+
+Plot[{g[x] - temp0919[x]}, {x, 1, Length[decs]}]
+
+ff0906 = NonlinearModelFit[temp0854, temp0847[x], vars, x]
+
+temp052[x_] = temp0847[x] /. ff0852
+
+temp0910[x_] = c[0] + (c[1]*Cos[x*2*Pi/loy-c[2]]*Cos[2*Pi*x/loy*2-c[2]])
+
+ff0910 = FindFit[temp0854, temp0910[x], vars, x]
+
+temp0913[x_] = c[0] + c[1]*Cos[x*2*Pi/loy]*Cos[2*Pi*x/loy*2] + 
+ c[2]*Sin[x*2*Pi/loy]*Sin[2*Pi*x/loy*2]
+
+ff0915 = FindFit[temp0854, temp0913[x], vars, x]
+
+(* generalizing concept of adding cosine products *)
+
+temp0922[x_] = c[0] + a[1]*Cos[x*2*Pi/loy-p[1]] + 
+ a[2]*Cos[x*2*Pi/loy-p[2]]*Cos[x*2*Pi/loy*2-p[3]]
+
+vars = {c[0], a[1], a[2], p[1], p[2], p[3]}
+
+ff0925 = FindFit[decs, temp0922[x], vars, x]
+
+f0925[x_] = temp0922[x] /. ff0925
+
+Plot[g[x]-f0925[x], {x,1,Length[decs]}]
+
+(* lets try using residuals *)
+
+(* first, basic cos with 1 yr pd *)
+
+ff0931[x_] = c[0] + a[1]*Cos[2*Pi*x/loy - p[1]]
+
+vars = {c[0], a[1], p[1]}
+
+ff0932 = FindFit[decs, ff0931[x], vars, x]
+
+f0933[x_] = ff0931[x] /. ff0932
+
+res1 = Table[decs[[i]] - f0933[i], {i, 1, Length[decs]}];
+
+(* now, approx res1 with cosine prodct *)
+
+f0936[x_] = c[0] + (c[1]*Cos[x*2*Pi/loy-c[2]]*Cos[2*Pi*x/loy*2-c[3]])
+
+vars = {c[0], c[1], c[2], c[3]}
+
+ff0936 = FindFit[res1, f0936[x], vars, x]
+
+f0937[x_] = f0936[x] /. ff0936
+
+res2 = Table[res1[[i]] - f0937[i], {i, 1, Length[res1]}];
+
+f0953[x_] = c[0] +(c[1]*Cos[x*2*Pi/loy-c[2]]+c[4])*(c[5]Cos[2*Pi*x/loy*2-c[3]])
+
+f0953[x_] = c[0] + (c[4] + Cos[x*2*Pi/loy-c[2]]) * Cos[2*Pi*x/loy*2-c[3]]
+
+f0953[x_] = c[0] + (c[4] + c[1]*Cos[x*2*Pi/loy-c[2]]) * Cos[2*Pi*x/loy*2-c[3]]
+
+vars = {c[0], c[1], c[2], c[3], c[4]}
+
+ff0953 = FindFit[res1, f0953[x], vars, x]
+
+f0954[x_] = f0953[x] /. ff0953
+
+t1118 = Table[f0954[i], {i, 1, Length[res1]}];
+
+ListPlot[{res1, t1118}]
+
+res2 = Table[res1[[i]] - f0954[i], {i, 1, Length[res1]}];
+
+res3 = Table[res1[[i]] - f0954[i]/2, {i, 1, Length[res1]}];
+
+ListPlot[res2]
+showit2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (* work below on 27 Nov 2019 *)
 
@@ -28,22 +249,28 @@ data = Rationalize[ReadList["/mnt/villa/user/20191127/year-2020.txt",
 ras = Transpose[data][[4]];
 decs = Transpose[data][[5]];
 
+raSlope = (ras[[-1]] - ras[[1]])/(Length[ras]-1)
+
+ras2 = Table[ras[[i]] - (i-1)*raSlope, {i, 1, Length[ras]}];
+
+
+
 loy = Rationalize[24*60*365.242190402,0]
 
 decf = Interpolation[decs]
 
 (* reusing variable as test *)
 
-decf = Interpolation[ras];
+decf = Interpolation[ras2];
 
-n = 7;
+n = 5;
 
 f[x_] = c[0] + e[1]*(x-Length[decs]/2)*Cos[h[1]-1*2*Pi/loy*x] + 
         Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
 
 vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
 
-ff = FindFit[ras, f[x], vars, x];
+ff = FindFit[decs, f[x], vars, x];
 
 g[x_] = N[f[x] /. ff];
 

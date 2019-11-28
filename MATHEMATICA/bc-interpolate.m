@@ -1,3 +1,9 @@
+(* work below 28 Nov 2019 *)
+
+
+
+
+
 (*
 
 figuring out mathematica's linear interpolation
