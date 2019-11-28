@@ -17,6 +17,65 @@ We can get much better precision by adjusting this number using the [Equation of
 
 </formulas>
 
+(* work below on 27 Nov 2019 *)
+
+data = Rationalize[ReadList["/mnt/villa/user/20191127/sun-2020-per-minute.txt",
+"Number", "RecordLists" -> True], 0];
+
+ras = Transpose[data][[3]];
+decs = Transpose[data][[4]];
+
+diffra0 = Differences[ras];
+
+diffras = Table[If[i < -Pi, i+2*Pi, i], {i, diffra0}];
+
+(* below is in arcseconds *)
+
+ListPlot[superleft[decs, 1]/Degree*3600, PlotRange -> All]
+
+ListPlot[superleft[decs, 2]/Degree*3600, PlotRange -> All]
+
+(* above takes forever *)
+
+loy = Rationalize[24*60*365.242190402,0]
+
+decf = Interpolation[decs]
+
+n = 5;
+
+f[x_] = c[0] + e[1]*(x-Length[decs]/2)*Cos[h[1]-1*2*Pi/loy*x] + 
+        Sum[c[i]*Cos[d[i] - i*2*Pi/loy*x], {i,1,n}];
+
+vars = Flatten[{e[1], h[1], c[0], Table[{c[i], d[i]}, {i,1,n}]}];
+
+ff = FindFit[decs, f[x], vars, x];
+
+g[x_] = N[f[x] /. ff];
+
+Plot[{(g[x]-decf[x])/Degree*60*60}, {x, 1, Length[decs]}, PlotRange->All]
+
+(*
+
+n=1 about 1500 seconds, 500 seconds except for end
+
+n=2 about 1100 seconds, 500 seconds except for end
+
+n=3 about 75 seconds, 30 seconds except for end
+
+n=4 about 25 seconds, 12 seconds except for end
+
+n=5 about 4 seconds consistently
+
+n=7 about 3 seconds consistently
+
+*)
+
+
+
+
+
+
+
 (* work below 26 Mar 2019 *)
 
 (* math2 bc-astro-formulas.m *)

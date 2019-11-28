@@ -28,7 +28,7 @@ KERNELS_TO_LOAD = (
 '/home/user/SPICE/KERNELS/pck00010.tpc',
 '/home/user/SPICE/KERNELS/naif0012.tls',
 '/home/user/SPICE/KERNELS/earth_latest_high_prec.bpc',
-'/home/user/SPICE/KERNELS/earth_070425_370426_predict-alt-source.bpc',
+'/home/user/SPICE/KERNELS/earth_070425_370426_predict.bpc',
 '/home/user/BCGIT/ASTRO/eqeqdate.tf',
 '/home/user/SPICE/KERNELS/earth_assoc_itrf93.tf',
 '/home/user/SPICE/KERNELS/gm_de431.tpc',

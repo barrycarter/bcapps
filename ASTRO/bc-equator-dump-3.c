@@ -1,12 +1,12 @@
 // dumps the equatorial coordinates for planet as viewed from earth in format useful to bc-equator-map.pl
 
+// -3.c is identical to -2.c but goes per minute
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "SpiceUsr.h"
-#include "SpiceZfc.h"
-#include "SpiceZpr.h"
+
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
@@ -47,14 +47,14 @@ int main (int argc, char **argv) {
 
   
 
-  for (i=(syear-2000.)*31556952-86400; i<=(eyear-2000.)*31556952+86400; i+=3600) {
+  for (i=(syear-2000.)*31556952-86400; i<=(eyear-2000.)*31556952+86400; i+=60) {
 
     // planet equatorial coords as viewed from earth, converted to spherical
     spkezp_c(planet,i,"EQEQDATE","NONE",obs,v,&lt);
     recrad_c(v,&range,&ra,&dec);
     
     // 8 decimal digits is sort of a compromise
-    printf("%d %.8f %.8f %.8f %.8f\n", planet, et2jd(i), ra, dec,
+    printf("%d %.8f %.8f %.8f %.8f %.8f\n", planet, et2unix(i), et2jd(i), ra, dec,
 	   earthangle(i,planet,10));
 
   }
