@@ -20,11 +20,107 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
      Export[file, %, ImageSize -> {1600, 900}]; 
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
 
+(* every nth element of a list, but always include first and last
+elements; list must in {xi, yi} form, not just a list of values *)
+
+everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[
+ Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]];
+
+(* create an interpolation function of order order for every nth
+element of list, as defined above *)
+
+interNth[list_, n_, order_:3] := interNth[list, n, order] = 
+ Interpolation[everyNth[list,n], InterpolationOrder -> order]
+
+(* the differences between the original list and the interpolation
+derived from taking every nth element at order order *)
+
+diffNth[list_, n_, order_:3] := diffNth[list, n, order] = 
+ Table[{i, list[[i,2]] - interNth[list, n, order][i]}, {i, 1, Length[list]}]
+
+(* the absolute maximum difference between the original list and the
+interpolation derived from taking every nth element at order order *)
+
+maxDiffNth[list_, n_, order_:3] := maxDiffNth[list, n, order] = 
+ Max[Abs[Transpose[diffNth[list, n, order]][[2]]]]
+
 </formulas>
 
 (* below also on 28 Nov 2019, splining attempt *)
 
+data = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
+"Number", "RecordLists" -> True], 0];
+
+ras = Transpose[data][[3]];
+decs = Transpose[data][[4]];
+
 decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}];
+
+maxDiffNth[decs2, 1]
+
+maxDiffNth[decs2, 24]/Degree*3600.
+
+maxDiffNth[decs2, 2^8]/Degree*3600.
+
+maxDiffNth[decs2, 2^7]/Degree*3600.
+
+maxDiffNth[decs2, 181]/Degree*3600.
+
+maxDiffNth[decs2, 150]/Degree*3600.
+
+
+maxDiffNth[decs2, 2^8, 4]/Degree*3600.
+
+(* lets use 150 and 3 to get to the next point *)
+
+interNth[decs2, 150]
+
+Chop[N[Expand[Normal[Series[interNth[decs2, 150][x], {x, 75, 5}]]]]]
+
+Chop[N[Expand[Normal[Series[interNth[decs2, 150][x], {x, 75+150*1, 5}]]]]]
+
+Chop[N[Expand[Normal[Series[interNth[decs2, 150][x], {x, 75+150*10, 5}]]]]]
+
+t1622 = Table[
+ Chop[N[Expand[Normal[Series[interNth[decs2, 150][x], {x, 75+150*i, 5}]]]]],
+ {i, 0, 5843}];
+
+maxDiffNth[decs2, 1000, 6]/Degree*3600
+
+maxDiffNth[decs2, 1000, 10]/Degree*3600
+
+maxDiffNth[decs2, 200, 3]/Degree*3600.
+
+maxDiffNth[decs2, 200, 4]/Degree*3600.
+
+maxDiffNth[decs2, 256, 4]/Degree*3600.
+
+maxDiffNth[decs2, 256, 5]/Degree*3600.
+
+maxDiffNth[decs2, 256, 3]/Degree*3600.
+
+(* 4th degree seems best *)
+
+(* 24*9 hours = 1.01809 seconds error *)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 temp5 = decs2[[;;;;5]];
 
@@ -45,16 +141,19 @@ Clear[diffNth];
 Clear[maxDiffNth];
 
 everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[
- Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]
-];
+ Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]];
 
 interNth[list_, n_] := interNth[list, n] = Interpolation[everyNth[list,n]]
 
-diffNth[list_, n_] := diffNth[list, n] = 
- Table[{i, list[[i,2]] - interNth[list, n][i]}, {i, 1, Length[list]}]
+maxDiffNth[decs2, 1]
 
-maxDiffNth[list_, n_] := maxDiffNth[list, n] = 
- Max[Abs[Transpose[diffNth[list, n]][[2]]]]
+t1557 = Table[maxDiffNth[decs2, i]/Degree*3600, {i, 1, 10}]
+
+t1558 = Table[{i, maxDiffNth[decs2, i]/Degree*3600}, {i, 1, 24*30, 24}]
+
+
+
+
 
 (* test table *)
 
@@ -85,9 +184,6 @@ test1[[Length[test1]]]}]
 
 data = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
 "Number", "RecordLists" -> True], 0];
-
-ras = Transpose[data][[3]];
-decs = Transpose[data][[4]];
 
 loy = Rationalize[24*365.242190402,0]
 

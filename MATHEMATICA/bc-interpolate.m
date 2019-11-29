@@ -1,5 +1,9 @@
 (* work below 28 Nov 2019 *)
 
+t1545 = Table[Random[], {i, 1, 10}]
+
+i1546 = Interpolation[t1545]
+
 
 
 
