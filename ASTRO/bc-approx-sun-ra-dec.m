@@ -23,8 +23,11 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
 (* every nth element of a list, but always include first and last
 elements; list must in {xi, yi} form, not just a list of values *)
 
+(* everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[ 
+ Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]]; *)
+
 everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[
- Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]];
+ Join[list[[;;;;n]], {list[[1]]}, {list[[-1]]}]];
 
 (* create an interpolation function of order order for every nth
 element of list, as defined above *)
@@ -36,7 +39,7 @@ interNth[list_, n_, order_:3] := interNth[list, n, order] =
 derived from taking every nth element at order order *)
 
 diffNth[list_, n_, order_:3] := diffNth[list, n, order] = 
- Table[{i, list[[i,2]] - interNth[list, n, order][i]}, {i, 1, Length[list]}]
+ Table[{list[[i,1]], list[[i,2]] - interNth[list, n, order][list[[i,1]]]}, {i, 1, Length[list]}]
 
 (* the absolute maximum difference between the original list and the
 interpolation derived from taking every nth element at order order *)
@@ -46,6 +49,16 @@ maxDiffNth[list_, n_, order_:3] := maxDiffNth[list, n, order] =
 
 </formulas>
 
+(* on 30 Nov 2019, year by year since we'll prob need that for moon anyway? *)
+
+data = ReadList["/mnt/villa/user/20191127/sun-per-minute-2000-2040.txt",
+"Number", "RecordLists" -> True];
+
+
+
+
+
+
 (* below also on 28 Nov 2019, splining attempt *)
 
 data = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
@@ -54,7 +67,135 @@ data = Rationalize[ReadList["/mnt/villa/user/20180205/solar.txt",
 ras = Transpose[data][[3]];
 decs = Transpose[data][[4]];
 
+(* below is just numbered hours *)
+
 decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}];
+
+t1315 = Interpolation[decs2];
+
+i1316 = interNth[decs2, 24*9, 4];
+
+f1320[x_, i_] = x*24*9/2 + 24*9*(i+1/2);
+
+Series[i1316[x/24/9*2 + 24*9*(5+1/2)], 
+
+i1327 = Interpolation[decs[[;;;;24*9]], InterpolationOrder -> 4];
+
+coeffize[p_] := Table[Coefficient[p, x, i], {i,0,4}]
+
+N[Normal[Series[i1327[x/2+17+1/2], {x, 0, 5}]]]
+
+N[Normal[Series[i1327[x/2+0+1/2], {x, 0, 5}]]]
+
+t1337 = Table[coeffize[N[Normal[Series[i1327[x/2+i+1/2], {x, 0, 5}]]]],
+ {i, 1, 4059}];
+
+Round[t1337*10^6] >> /home/barrycarter/20191129/decsmrad.txt
+
+
+
+
+
+
+
+
+
+(* below is Unix days *)
+
+decs2 = Table[{i/24 + 10957+1/2 - 1/24, decs[[i]]}, {i, 1, Length[decs]}];
+
+maxDiffNth[decs2, 24*9, 4]/Degree*3600.
+
+Chop[N[Expand[Normal[Series[interNth[decs2, 24*9, 4][x], 
+ {x, decs2[[24*9/2,1]], 5}]]]]]
+
+Chop[N[Expand[Normal[Series[interNth[decs2, 24*9, 4][x], 
+ {x, decs2[[24*9/2+24*9,1]], 5}]]]]]
+
+(* might be easier with just plain numbers *)
+
+decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}];
+
+Chop[N[Expand[Normal[Series[interNth[decs2, 24*9, 4][x], 
+ {x, 24*9/2, 5}]]]]]
+
+int1 = Interpolation[decs2, InterpolationOrder -> 4];
+
+int2 = Interpolation[decs2[[;;;;24*9]], InterpolationOrder -> 4];
+
+Plot[(int1[x]-int2[x])/Degree*3600, {x, decs2[[1,1]], decs2[[-1,1]]},
+PlotRange -> All]
+
+Length[int2[[4]]]
+
+(* above is 4059 meaning 4059 polynomials *)
+
+Length[int2[[3,1]]] = the actual x values
+
+Series[int2[x], {x, int2[[3,1,1]], 5}]
+
+Table[Series[int2[x], {x, int2[[3,1,i]], 5}], {i, 1, 4059}];
+
+Table[Normal[N[Series[int2[x], {x, int2[[3,1,i]], 5}]]], {i, 1, 4059}];
+
+Table[Expand[Normal[N[Series[int2[x], {x, int2[[3,1,i]], 5}]]]], {i, 1, 4059}];
+
+t2234 = Table[Chop[Expand[Normal[N[Series[int2[x], {x, int2[[3,1,i]], 5}]]]]], 
+ {i, 1, 4059}];
+
+(* given an interpolatio object... *)
+
+f2239[int_] := Table[(int[[3,1,i]] + int[[3,1,i+1]])/2, 
+ {i, 1, Length[int[[3,1]]]-1}]
+
+Series[int2[x+46899], {x, 0, 5}]
+
+Chop[N[Normal[Series[int2[x+46899], {x, 0, 5}] ]]]
+
+Chop[N[Normal[Series[int2[(x/9*2+46899)], {x, 0, 5}]]]]
+
+Chop[N[Normal[Series[int2[(x*9/2+46899)], {x, 0, 5}]]]]
+
+(int2[[3,1,-1]]-int2[[3,1,1]])/(Length[int2[[3,1]]]-1)
+
+Exponent[1 + x^2 + a x^3, x] = highest power
+
+(* the polynomial associated with the nth interval of an
+interpolation, where the interval is treated as [-1, 1] *)
+
+polynomial[int_, n_] :=
+ (int[[3,1,n]] + int[[3,1,n+1]])/2
+
+int[[2,4,1]] = interp order
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(* decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}]; *)
 
 maxDiffNth[decs2, 1]
 

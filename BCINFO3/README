@@ -198,7 +198,9 @@ ln -s /var/tmp/DONE /mnt/ramdisk/querys/
 bc-metar-db.pl&
 bc-get-radar.pl&
 bc-get-all-weather.pl &
-/sites/YAMC/game-engine-websocket.pl --debug &
+
+# we no longer start this
+# /sites/YAMC/game-engine-websocket.pl --debug &
 
 # dropped below 14 Aug 2017, gocomics.com seriously changed comments
 # bc-gocomics-comments2.pl&

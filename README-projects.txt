@@ -48,6 +48,8 @@ curvature of the Earth, change in surface elevation, and obscuration
 are all issues, since mountains are much taller than buildings (in
 general).
 
+Inspired by https://astronomy.stackexchange.com/questions/33902/can-i-use-the-tokyo-skytree-as-clock (using Tokyo Skytree as a clock)
+
 List of tall buildings: https://en.wikipedia.org/wiki/List_of_tallest_towers and https://en.wikipedia.org/wiki/List_of_tallest_buildings
 
 ====================================================================
