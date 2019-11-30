@@ -25,6 +25,8 @@ eyear: the decimal ending year (approx) (syear < eyear < 17191.1606672279)
 
 int main (int argc, char **argv) {
 
+  SpiceChar s[255];
+
   // if insufficient argc, complain, don't just seg fault
   if (argc != 5) {
     printf("Usage: observed observer syear eyear\n");
@@ -52,10 +54,10 @@ int main (int argc, char **argv) {
     // planet equatorial coords as viewed from earth, converted to spherical
     spkezp_c(planet,i,"EQEQDATE","NONE",obs,v,&lt);
     recrad_c(v,&range,&ra,&dec);
+
+    timout_c(i,"YYYYMMDD.HRMNSC ::MCAL",255,s);
     
-    // 8 decimal digits is sort of a compromise
-    printf("%d %.8f %.8f %.8f %.8f %.8f\n", planet, et2unix(i), et2jd(i), ra, dec,
-	   earthangle(i,planet,10));
+    printf("%s %d %f %f %f %f\n", s, planet, i, et2unix(i), ra, dec);
 
   }
   return(0);

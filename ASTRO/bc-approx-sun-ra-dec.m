@@ -51,8 +51,21 @@ maxDiffNth[list_, n_, order_:3] := maxDiffNth[list, n, order] =
 
 (* on 30 Nov 2019, year by year since we'll prob need that for moon anyway? *)
 
-data = ReadList["/mnt/villa/user/20191127/sun-per-minute-2000-2040.txt",
+data =
+ReadList["/mnt/villa/user/20191130/ASTRO/sun-2020-per-minute.txt",
 "Number", "RecordLists" -> True];
+
+decs = Transpose[data][[6]];
+
+decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}];
+
+
+
+maxDiffNth[decs, 
+
+
+
+
 
 
 
