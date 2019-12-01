@@ -55,13 +55,152 @@ data =
 ReadList["/mnt/villa/user/20191130/ASTRO/sun-2020-per-minute.txt",
 "Number", "RecordLists" -> True];
 
-decs = Transpose[data][[6]];
+decs = Table[{i[[4]], i[[6]]}, {i, data}];
 
-decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}];
+maxDiffNth[decs, 128]/Degree*3600
+
+maxDiffNth[decs, 65536]/Degree*3600
+
+(above is 771 seconds, too much)
+
+maxDiffNth[decs, 32768]/Degree*3600
+
+(above is 58.5356 seconds, too much)
+
+maxDiffNth[decs, 16384]/Degree*3600
+
+(above is 6.39784 seconds, too much)
+
+maxDiffNth[decs, 8192]/Degree*3600
+
+(above is 0.533645 seconds, fine)
+
+t1330 = Table[{i, maxDiffNth[decs, 2^i]/Degree*3600}, {i, 0, 20}]
+
+ListLogPlot[t1330]
+
+maxDiffNth[decs, 7*24*60]/Degree*3600
+
+trying 4th
+
+maxDiffNth[decs, 9*24*60, 4]/Degree*3600
+
+maxDiffNth[decs, 32940, 4]/Degree*3600
+
+(* above much too big at 64 seconds *)
+
+maxDiffNth[decs, 32940/2, 4]/Degree*3600
+
+(* still too big at 2.9 seconds *)
+
+maxDiffNth[decs, 9*24*60, 4]/Degree*3600
+
+(* lets go w/ 9 days *)
+
+(* trying moon *)
+
+data =
+ReadList["/mnt/villa/user/20191130/ASTRO/moon-2020-per-minute.txt",
+"Number", "RecordLists" -> True];
+
+ra0 = Transpose[data][[5]];
+ListPlot[ra0];
+showit2
+
+radiff = Mod[Differences[ra0], 2*Pi];
+
+ra1 = Accumulate[radiff];
+
+ListPlot[ra1, PlotRange -> All];
+showit2
+
+ra2 = ra0[[1]] + ra1
+
+continify[list_] := Module[{d},
+ d = Flatten[{0, Mod[Differences[list], 2*Pi]}];
+ Return[list[[1]] + Accumulate[d]];
+];
+
+test1708 = continify[ra0];
+
+maxDiffNth[test1708, 60*24, 4]
 
 
 
-maxDiffNth[decs, 
+
+decs = Table[{i[[4]], i[[6]]}, {i, data}];
+
+ras = Table[{i[[4]], i[[5]]}, {i, data}];
+
+maxDiffNth[decs, 24*60*30]/Degree*3600
+
+maxDiffNth[decs, 24*60*10]/Degree*3600
+
+maxDiffNth[decs, 60*12]/Degree*3600                                    
+
+1.31923
+
+maxDiffNth[decs, 60*18, 4]/Degree*3600
+
+1.18951
+
+ListPlot[ras]
+
+t1619 = Table[{0, Mod[-2*Pi/40320*i, 2*Pi]}, {i, 1, Length[ras]}];
+
+ListPlot[Mod[ras+t1619,2*Pi]]
+
+ListPlot[ras+t1619]
+showit2
+
+(* rectify list *)
+
+(*
+continify[list_] := Module[{ret, count},
+ ret = {}; count = 0;
+ For[i=1, i < Length[list], i++, 
+  ret = Append[ret, list[[i]] + count*2*Pi];
+  If[ Mod[list[[i]],Pi] > Mod[list[[i+1]],2*Pi], count++]
+];
+ Return[ret];
+]
+
+*)
+
+t1647 = Table[Mod[i/10*Pi, 2*Pi], {i, 1, 1000}]
+
+ListPlot[t1647, PlotJoined -> True]
+
+
+
+
+
+
+t1643 = Table[i, {i,1,20}];
+
+Print[continify[t1643]]
+
+
+
+For[i=1, i<=10, i++, If[i<5, Print["less"]]; Print[i]];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
