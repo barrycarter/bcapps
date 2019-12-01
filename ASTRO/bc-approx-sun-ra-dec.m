@@ -27,7 +27,7 @@ elements; list must in {xi, yi} form, not just a list of values *)
  Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]]; *)
 
 everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[
- Join[list[[;;;;n]], {list[[1]]}, {list[[-1]]}]];
+ Join[list[[;;;;n]], {list[[-1]]}]];
 
 (* create an interpolation function of order order for every nth
 element of list, as defined above *)
@@ -47,13 +47,86 @@ interpolation derived from taking every nth element at order order *)
 maxDiffNth[list_, n_, order_:3] := maxDiffNth[list, n, order] = 
  Max[Abs[Transpose[diffNth[list, n, order]][[2]]]]
 
+continify[list_] := Module[{d},
+ d = Flatten[{0, Mod[Differences[list], 2*Pi]}];
+ Return[list[[1]] + Accumulate[d]];
+];
+
 </formulas>
+
+(* not happy with how ;;;; behaves *)
+
+Table[i, {i, 1, 100}][[;;;;7]]
+
+(* oh, that always includes first element, hmmm *)
+
+(* look at interpolation *)
+
+i1755 = interNth[ras2, 60*7*24, 4];
+
+(* first element and interval *)
+
+i1755[[3,1,1]]
+
+i1755[[3,1,2]] - i1755[[3,1,1]]
+
+Series[i1755[x+i1755[[3,1,1]]], {x, 0, 5}]
+
+(*
+
+Given an interpolation, return first and last point, interval length,
+number of intervals, and coefficicents for each interval, where value
+runs from 0 to 1 [not -1 to 1]; interpolation is assumed to have equal
+length segments except possibly last segment
+
+*)
+
+intData[intpl_] := Module[{intLen, order, pts, t0}, 
+ pts = intpl[[3,1]];
+ order = intpl[[2,5,1]];
+ intLen = intpl[[3,1,2]] - intpl[[3,1,1]];
+ t0 = Table[Series[intpl[pt + x*intLen], {x, 0, order}], {pt, pts}];
+ Return[{order, intLen, t0}];
+];
+
+intData[interNth[ras2, 60*7*24, 4]];
+
+
+
+
+ 
+ 
+
+
+i1755[[1]]
 
 (* on 30 Nov 2019, year by year since we'll prob need that for moon anyway? *)
 
 data =
 ReadList["/mnt/villa/user/20191130/ASTRO/sun-2020-per-minute.txt",
 "Number", "RecordLists" -> True];
+
+ras = continify[Transpose[data][[5]]];
+
+ras2 = Table[{data[[i,4]], ras[[i]]}, {i, 1, Length[ras]}];
+
+maxDiffNth[ras2, 60*24*30, 4]/Degree*3600
+
+(* 241s above is too much! *)
+
+maxDiffNth[ras2, 60*24*20, 4]/Degree*3600
+
+(* above is 24s *)
+
+maxDiffNth[ras2, 60*24*18, 4]/Degree*3600
+
+(* 18s *)
+
+maxDiffNth[ras2, 60*24*16, 4]/Degree*3600
+
+(* 12s *)
+
+maxDiffNth[ras2, 60*24*7, 4]/Degree*3600
 
 decs = Table[{i[[4]], i[[6]]}, {i, data}];
 
@@ -115,11 +188,6 @@ ListPlot[ra1, PlotRange -> All];
 showit2
 
 ra2 = ra0[[1]] + ra1
-
-continify[list_] := Module[{d},
- d = Flatten[{0, Mod[Differences[list], 2*Pi]}];
- Return[list[[1]] + Accumulate[d]];
-];
 
 test1708 = continify[ra0];
 
