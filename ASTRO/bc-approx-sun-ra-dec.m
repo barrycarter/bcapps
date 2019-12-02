@@ -54,7 +54,7 @@ continify[list_] := Module[{d},
 
 </formulas>
 
-(* not happy with how ;;;; behaves *)
+(* not happy with how ;;;; behaves -- it turns out I am after all *)
 
 Table[i, {i, 1, 100}][[;;;;7]]
 
@@ -83,13 +83,15 @@ length segments except possibly last segment
 
 intData[intpl_] := Module[{intLen, order, pts, t0}, 
  pts = intpl[[3,1]];
- order = intpl[[2,5,1]];
+ order = intpl[[2,5,1]]-1;
  intLen = intpl[[3,1,2]] - intpl[[3,1,1]];
- t0 = Table[CoefficientList[
+ t0 = Round[10^6*Table[CoefficientList[
   Chop[Normal[Series[intpl[pt + x*intLen], {x, 0, order}]]], x],
- {pt, pts}];
- Return[{pts[[1]], pts[[-1]], intLen, Length[pts], t0}];
+ {pt, pts}]];
+ Return[{pts[[1]], pts[[-1]], intLen, Length[pts], order, t0}];
 ];
+
+s = "{firstPt: 123, lastPt: 456, intLen: 789, numPts: 1000, order: 4}";
 
 intData[interNth[ras2, 60*7*24, 4]]
 
@@ -103,6 +105,26 @@ ras2[[373315]] // InputForm
 
 x1831 = intData[interNth[ras2, 60*7*24, 4]];
 
+(* lets try to JS print ths mother *)
+
+jsify[out_] := 
+ StringForm["{firstPt: ``, lastPt: ``, intLen: ``, nInts: ``, order: ``}",
+ ToString[Round[out[[1]]]],
+ Round[out[[2]][, Round[out[[3]]], out[[4]], out[[5]]];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 1 + (1.600235690817571*^9 - x1831[[1]])/x1831[[3]]
 
 38.0351 so 38th poly at .0351
@@ -111,6 +133,12 @@ x1831[[5,38]] get 9.32598
 
 worked!
 
+(* someting still lookks wrong *)
+
+rand1844 = Table[{i, Random[]}, {i, 1, 10}];
+int1845 = Interpolation[rand1844];
+
+intData[int1845]
 
 
 
