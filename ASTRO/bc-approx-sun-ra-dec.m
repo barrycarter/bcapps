@@ -11,9 +11,37 @@ We can get much better precision by adjusting this number using the [Equation of
 
 </writeup>
 
+<reference>
+
+regenerator.min.js is 979790b amd leaflet.js is 129192 so in that range
+
+</reference>
+
 *)
 
 <formulas>
+
+(*
+
+Given an interpolation, return first and last point, interval length,
+number of intervals, and coefficicents for each interval, where value
+runs from 0 to 1 [not -1 to 1]; interpolation is assumed to have equal
+length segments except possibly last segment;
+
+THE RESULTS OF THE ARRAY ARE ROUNDED AND MULTIPLIED THIS IS NOT A
+GENERAL FUNCTION
+
+*)
+
+intData[intpl_] := Module[{intLen, order, pts, t0}, 
+ pts = intpl[[3,1]];
+ order = intpl[[2,5,1]]-1;
+ intLen = intpl[[3,1,2]] - intpl[[3,1,1]];
+ t0 = Round[10^6*Table[CoefficientList[
+  Chop[Normal[Series[intpl[pt + x*intLen], {x, 0, order}]]], x],
+ {pt, pts}]];
+ Return[{pts[[1]], pts[[-1]], intLen, Length[pts], order, t0}];
+];
 
 showit2 := Module[{file}, file = StringJoin["/tmp/math", 
        ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".gif"]; 
@@ -23,11 +51,19 @@ showit2 := Module[{file}, file = StringJoin["/tmp/math",
 (* every nth element of a list, but always include first and last
 elements; list must in {xi, yi} form, not just a list of values *)
 
-(* everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[ 
- Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]]; *)
+(*
+
+everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[ 
+ Join[list[[;;;;n]], {{1, list[[1,2]]}}, {{Length[list], list[[-1,2]]}}]];
+
+*)
 
 everyNth[list_, n_] := everyNth[list, n] = DeleteDuplicates[
- Join[list[[;;;;n]], {list[[-1]]}]];
+ Join[list[[;;;;n]], {{list[[-1,1]], list[[-1,2]]}}]];
+
+(* the alternate function does NOT include the last element *)
+
+everyNthAlter[list_, n_] := everyNthAlter[list, n] = list[[;;;;n]];
 
 (* create an interpolation function of order order for every nth
 element of list, as defined above *)
@@ -35,11 +71,17 @@ element of list, as defined above *)
 interNth[list_, n_, order_:3] := interNth[list, n, order] = 
  Interpolation[everyNth[list,n], InterpolationOrder -> order]
 
+interNthAlter[list_, n_, order_:3] := interNthAlter[list, n, order] = 
+ Interpolation[everyNthAlter[list,n], InterpolationOrder -> order]
+
 (* the differences between the original list and the interpolation
 derived from taking every nth element at order order *)
 
 diffNth[list_, n_, order_:3] := diffNth[list, n, order] = 
  Table[{list[[i,1]], list[[i,2]] - interNth[list, n, order][list[[i,1]]]}, {i, 1, Length[list]}]
+
+diffNthAlter[list_, n_, order_:3] := diffNthAlter[list, n, order] = 
+ Table[{list[[i,1]], list[[i,2]] - interNthAlter[list, n, order][list[[i,1]]]}, {i, 1, Length[list]}]
 
 (* the absolute maximum difference between the original list and the
 interpolation derived from taking every nth element at order order *)
@@ -47,12 +89,173 @@ interpolation derived from taking every nth element at order order *)
 maxDiffNth[list_, n_, order_:3] := maxDiffNth[list, n, order] = 
  Max[Abs[Transpose[diffNth[list, n, order]][[2]]]]
 
+maxDiffNthAlter[list_, n_, order_:3] := maxDiffNthAlter[list, n, order] = 
+ Max[Abs[Transpose[diffNthAlter[list, n, order]][[2]]]]
+
 continify[list_] := Module[{d},
  d = Flatten[{0, Mod[Differences[list], 2*Pi]}];
  Return[list[[1]] + Accumulate[d]];
 ];
 
 </formulas>
+
+(* the moon will be worse, 2015-2024 *)
+
+data =
+ReadList["/mnt/villa/user/20191130/ASTRO/somemoon.txt",
+"Number", "RecordLists" -> True];
+
+decs = Table[{i[[4]], i[[6]]}, {i, data}];
+
+maxDiffNth[decs, 24*60, 4]
+
+(* 7.41 arcsecons *)
+
+maxDiffNth[decs, 18*60, 4]
+
+(* 2 arc seconds *)
+
+
+
+(* doing 2015-2024 for now and may actually finalize as that *)
+
+(* and since superleft doesn't help, lets do it again the right way *)
+
+data =
+ReadList["/mnt/villa/user/20191130/ASTRO/somesun.txt",
+"Number", "RecordLists" -> True];
+
+decs = Table[{i[[4]], i[[6]]}, {i, data}];
+
+t1212 = interNth[decs, 24*60*9, 4];
+
+intData[t1212]
+
+(* output above is small enough to easily be a JS lib *)
+
+ras = Table[{i[[4]], i[[5]]}, {i, data}];
+
+ListPlot[ras, PlotRange->All]
+showit2
+
+t1219 = continify[Transpose[data][[5]]];
+
+ListPlot[t1219, PlotRange->All]
+showit2
+
+t1223 = Transpose[{Transpose[data][[4]], t1219}];
+
+maxDiffNth[t1223, 24*60*9, 4]
+
+(* above is 3 seconds of arc *)
+
+maxDiffNth[t1223, 24*60*7, 4]
+
+(* above is 1.24146 seconds of arc which is acceptable *)
+
+
+
+
+
+
+maxDiffNth[decs, 24*60*9, 4]
+
+(* this is 4.33474 arcseconds hmmm-- because the last term is off? *)
+
+maxDiffNthAlter[decs, 24*60*9, 4]
+
+(* ok, after fix, the real one is 1.16598 seconds, and alter is ... 4.33 arcseconds??? *)
+
+(* but... what if we ignore the last interpolation which is extrapolation *)
+
+diffNthAlter[decs, 24*60*9, 4]
+
+Max[Abs[Transpose[diffNthAlter[decs, 24*60*9, 4]][[2]]]]
+
+0.0000210154
+
+but if we drop the last elts of diff?
+
+t1209 = Drop[diffNthAlter[decs, 24*60*9, 4], -24*60*9];
+
+Max[Abs[Transpose[t1209][[2]]]]
+
+1.16598 arcsec, so no help there
+
+
+
+
+(* because superleft doesn't take double lists... *)
+
+data =
+ReadList["/mnt/villa/user/20191130/ASTRO/somesun.txt",
+"Number", "RecordLists" -> True];
+
+decs = Transpose[data][[6]];
+
+decs2 = Table[{i, decs[[i]]}, {i, 1, Length[decs]}];
+
+maxDiffNth[decs2, 24*60*9, 4]
+
+t1142 = interNth[decs2, 24*60*9, 4];
+
+(* above is 5.65283*10^-6 or 1.16598 arcseconds *)
+
+t1113 = superleft[decs, 1];
+
+ListPlot[t1113, PlotRange -> All];
+
+t1114 = Table[{i, t1113[[i]]}, {i, 1, Length[t1113]}];
+
+maxDiffNth[t1114, 24*60*9, 4]
+
+(* above is 6.04046*10^-6 or 1.24593 arcseconds, hmmm *)
+
+t1134 = superleft[decs, 2];
+
+ListPlot[t1134, PlotRange -> All];
+showit2
+
+t1135 = Table[{i, t1134[[i]]}, {i, 1, Length[t1134]}];
+
+maxDiffNth[t1135, 24*60*9, 4]
+
+(* above is 6.05541*10^-6, slightly worse *)
+
+(* note 1 arcsecond = 4.84814 microradians *)
+
+(* answer is 0.0000210154 which is 4.33474s of arc *)
+
+t1113 = superleft[decs, 1];
+
+(* decs = Table[{i[[4]], i[[6]]}, {i, data}]; *)
+
+(* finding error in something above, argh I changed it to use list with single elements, not lists of 2 elements *)
+
+t1102 = everyNth[decs, 24*60*9];
+
+
+
+t1059 = maxDiffNth[decs, 24*60*9, 4];
+
+
+
+
+(* question on 2 Dec 2019: does removing linear/sin term help a lot *)
+
+data =
+ReadList["/mnt/villa/user/20191130/ASTRO/allsun.txt",
+"Number", "RecordLists" -> True];
+
+(* about 21M records above *)
+
+(* decs = Transpose[data][[6]]; * )
+
+decs = Table[{i[[4]], i[[6]]}, {i, data}];
+
+maxDiffNth[decs, 24*60*9, 4]
+
+
 
 (* not happy with how ;;;; behaves -- it turns out I am after all *)
 
@@ -71,25 +274,6 @@ i1755[[3,1,1]]
 i1755[[3,1,2]] - i1755[[3,1,1]]
 
 Series[i1755[x+i1755[[3,1,1]]], {x, 0, 5}]
-
-(*
-
-Given an interpolation, return first and last point, interval length,
-number of intervals, and coefficicents for each interval, where value
-runs from 0 to 1 [not -1 to 1]; interpolation is assumed to have equal
-length segments except possibly last segment
-
-*)
-
-intData[intpl_] := Module[{intLen, order, pts, t0}, 
- pts = intpl[[3,1]];
- order = intpl[[2,5,1]]-1;
- intLen = intpl[[3,1,2]] - intpl[[3,1,1]];
- t0 = Round[10^6*Table[CoefficientList[
-  Chop[Normal[Series[intpl[pt + x*intLen], {x, 0, order}]]], x],
- {pt, pts}]];
- Return[{pts[[1]], pts[[-1]], intLen, Length[pts], order, t0}];
-];
 
 s = "{firstPt: 123, lastPt: 456, intLen: 789, numPts: 1000, order: 4}";
 
@@ -112,19 +296,6 @@ jsify[out_] :=
  ToString[Round[out[[1]]]],
  Round[out[[2]][, Round[out[[3]]], out[[4]], out[[5]]];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 1 + (1.600235690817571*^9 - x1831[[1]])/x1831[[3]]
 
 38.0351 so 38th poly at .0351
@@ -139,15 +310,6 @@ rand1844 = Table[{i, Random[]}, {i, 1, 10}];
 int1845 = Interpolation[rand1844];
 
 intData[int1845]
-
-
-
-
-
-
- 
- 
-
 
 i1755[[1]]
 
