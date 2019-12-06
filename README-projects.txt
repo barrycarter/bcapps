@@ -1,3 +1,17 @@
+Title: Find position of planet using osculating elliptical parameters
+
+Description: Finding the position of a planet in an elliptical orbit
+is non-trivial, primarily because the "first" step involves solving
+Kepler's Equation (converting mean anomaly to true anomaly). There is
+no closed form solution, but an approximation or iterative approach
+might work.
+
+Code: https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-elliptical-orbit.m
+
+See also: https://github.com/skyfielders/python-skyfield/issues/302
+
+====================================================================
+
 Title: Find formula for sun/moon etc positions
 
 Description: Find reasonably accurate functions that return the Sun,

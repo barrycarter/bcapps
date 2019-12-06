@@ -28,18 +28,14 @@ number of intervals, and coefficicents for each interval, where value
 runs from 0 to 1 [not -1 to 1]; interpolation is assumed to have equal
 length segments except possibly last segment;
 
-THE RESULTS OF THE ARRAY ARE ROUNDED AND MULTIPLIED THIS IS NOT A
-GENERAL FUNCTION
-
 *)
 
 intData[intpl_] := Module[{intLen, order, pts, t0}, 
  pts = intpl[[3,1]];
  order = intpl[[2,5,1]]-1;
  intLen = intpl[[3,1,2]] - intpl[[3,1,1]];
- t0 = Round[10^6*Table[CoefficientList[
-  Chop[Normal[Series[intpl[pt + x*intLen], {x, 0, order}]]], x],
- {pt, pts}]];
+ t0 = Table[CoefficientList[Normal[Series[intpl[pt + x*intLen], 
+ {x, 0, order}]], x], {pt, pts}];
  Return[{pts[[1]], pts[[-1]], intLen, Length[pts], order, t0}];
 ];
 
@@ -107,6 +103,52 @@ ReadList["/mnt/villa/user/20191130/ASTRO/somemoon.txt",
 
 decs = Table[{i[[4]], i[[6]]}, {i, data}];
 
+ras = Transpose[{Transpose[data][[4]], continify[Transpose[data][[5]]]}];
+
+maxDiffNth[ras, 15*60, 4] /Degree*3600 (* this is 1.75 *)
+maxDiffNth[decs, 15*60, 4] /Degree*3600 (* this is 0.917038 *)
+
+raI = intData[interNth[ras, 15*60, 4]];
+decsI = intData[interNth[decs, 15*60, 4]];
+
+raFinal = Join[Round[Take[raI, 5]], {Round[10^6*raI[[6]]]}];
+decsFinal = Join[Round[Take[decsI, 5]], {Round[10^6*decsI[[6]]]}];
+
+raFinal >> /tmp/ra-final.txt
+decsFinal >> /tmp/decs-final.txt
+
+(* and now, the Sun *)
+
+data =
+ReadList["/mnt/villa/user/20191130/ASTRO/somesun.txt",
+"Number", "RecordLists" -> True];
+
+decs = Table[{i[[4]], i[[6]]}, {i, data}];
+
+ras = Transpose[{Transpose[data][[4]], continify[Transpose[data][[5]]]}];
+
+maxDiffNth[ras, 24*60*7, 4] /Degree*3600 (* 1.24 seconds *)
+maxDiffNth[decs, 24*60*7, 4] /Degree*3600 (* 0.62 seconds *)
+
+raI = intData[interNth[ras, 24*60*7, 4]];
+decsI = intData[interNth[decs, 24*60*7, 4]];
+
+raFinal = Join[Round[Take[raI, 5]], {Round[10^6*raI[[6]]]}];
+decsFinal = Join[Round[Take[decsI, 5]], {Round[10^6*decsI[[6]]]}];
+
+raFinal >> /tmp/ra-sun-final.txt
+decsFinal >> /tmp/decs-sun-final.txt
+
+
+
+
+
+maxDiffNth[ras, 18*60, 4]
+
+(above is 4.06 arcseconds)
+
+maxDiffNth[ras, 12*60, 4]
+
 maxDiffNth[decs, 24*60, 4]
 
 (* 7.41 arcsecons *)
@@ -114,6 +156,7 @@ maxDiffNth[decs, 24*60, 4]
 maxDiffNth[decs, 18*60, 4]
 
 (* 2 arc seconds *)
+
 
 
 

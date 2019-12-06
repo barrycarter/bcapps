@@ -8,6 +8,7 @@ Measurement units: km, radians
 
 Time units used:
 
+  - jd: the Julian date (number of days that have passed since the initial epoch defined as noon Universal Time (UT) Monday, 1 January 4713 BC)
   - mjd: modified Julian date [number of days since 2000 January 1, at 12h UT]
          (equal to unix time 946728000, true JD 2451545.0)
   - gmst: Greenwich mean sidereal time (radians)

@@ -25,7 +25,7 @@ if ($globopts{srand}) {srand($globopts{srand});}
 
 # this is probably ugly
 
-my(@data) = split(//, $data);
+# my(@data) = split(//, $data);
 
 # figure out image size from length
 
@@ -42,6 +42,10 @@ setpixel 0,0,0,0,0
 MARK
 ;
 
+# using substr
+
+my($byte) = 0;
+
 # there are other ways to do this
 
 for $row (0..$height-1) {
@@ -52,7 +56,8 @@ for $row (0..$height-1) {
     my($char) = "";
 
     for $i (1..$globopts{bytesize}) {
-      $char .= shift(@data);
+#      $char .= shift(@data);
+      $char .= substr($data, $byte++, 1);
     }
 
     debug("CHAR: $char");

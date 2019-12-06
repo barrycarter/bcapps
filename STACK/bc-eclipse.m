@@ -10,6 +10,8 @@ sphere 2: tx, ty, tz with radius tr
 
 umbral point is on conneting line + angular diameter of two sphers is equal
 
+third sphere is q below
+
 *)
 
 line[t_] = (1-t)*{sx, sy, sz} + t*{tx, ty, tz}
@@ -30,6 +32,90 @@ FullSimplify[line[sr/(sr+tr)]]
 
 angrad1 /. t -> sr/(sr+tr)
 angrad2 /. t -> sr/(sr+tr)
+
+(* our first transform moves umbral point to origin *)
+
+(* being lazy w/ vars here *)
+
+transform =
+-{(sx*tr + sr*tx)/(sr + tr), (sy*tr + sr*ty)/(sr + tr),  
+ (sz*tr + sr*tz)/(sr + tr)} 
+
+(* the spehres transformed centers are now at: *)
+
+{sx,sy,sz} - transform
+
+{tx,ty,tz} - transform
+
+(* actually, these might cancel *)
+
+(* so the rotation to make t to s line the z axis is... any of *)
+
+matrix = Table[m[i][j], {i,1,3}, {j,1,3}];
+
+Solve[matrix.{tx-sx, ty-sy, tz-sz} == {0,0,1}, Flatten[matrix]]
+
+(* we can rotate things so the third sphere center is in the xy plane at {*)
+
+(* then we have *)
+
+(* x^2 + y^2 < z^2 && Norm[{qx, qy, 0}-{x,y,z}] < qr *)
+
+Solve[{x^2 + y^2 < z^2, Norm[{qx, qy, 0}-{x,y,z}] < qr}]
+
+(* generically *)
+
+transform[{a_, b_, c_}, {x_, y_, z_}] = {a-x, b-y, c-z}
+
+(* takes {qx, qy, qz} to xy plane, {tx-sx, ty-sy, tz-sz} to vertical *)
+
+Solve[{
+ (matrix.{qx, qy, qz})[[3]] == 0, 
+ (matrix.{tx-sx, ty-sy, tz-sz})[[1]] == 0,
+ (matrix.{tx-sx, ty-sy, tz-sz})[[2]] == 0
+}, Flatten[matrix]];
+
+(* not working above, why? *)
+
+c1 = Solve[(matrix.{qx, qy, qz})[[3]] == 0, Flatten[matrix]]
+c2 = Solve[(matrix.{tx-sx, ty-sy, tz-sz})[[1]] == 0, Flatten[matrix]]
+c3 = Solve[(matrix.{tx-sx, ty-sy, tz-sz})[[2]] == 0, Flatten[matrix]]
+
+conds = {
+ Element[qx, Reals], Element[qy, Reals], Element[qz, Reals],
+ Element[tx, Reals], Element[ty, Reals], Element[tz, Reals], 
+ Element[sx, Reals], Element[sy, Reals], Element[sz, Reals], 
+ qr > 0, tr > 0, sr > 0};
+
+mtemp = matrix /. {c1[[1,1]], c2[[1,1]], c3[[1,1]]}
+
+Simplify[mtemp.{qx, qy, qz}]
+
+Simplify[mtemp.{tx-sx, ty-sy, tz-sz}]
+
+mtemp2 = mtemp /. {m[1][1] -> 1, m[1][2] -> 1, m[2][1] -> 1, m[2][2] -> 1, 
+ m[3][1] -> 1, m[3][2] -> 1}
+
+Simplify[mtemp2.{qx,qy,qz}]
+Simplify[mtemp2.{tx-sx, ty-sy, tz-sz}]
+
+Simplify[Norm[mtemp2], conds];
+
+(* not quite right because transform will change target planet *)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
