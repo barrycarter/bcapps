@@ -63,7 +63,7 @@ while (<>) {
   # only populated places count
 
   unless ($featurecode=~/^PPL/) {
-#    debug("Non PPL population: $population ($featurecode) $name");
+    debug("Non PPL population: $population ($featurecode) $name");
     next;
   }
 

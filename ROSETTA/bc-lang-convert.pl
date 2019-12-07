@@ -286,6 +286,11 @@ sub multiline_parse {
     return "var$varcount";
   }
 
+  # arccos is acos in many languages
+  if ($f eq "ArcCos") {
+      $hash{$varcount} = "(${math}acos($args[0]))";
+      return "var$varcount";
+  }
 
   # the hideousness that is ArcTan
   if ($f eq "ArcTan") {
