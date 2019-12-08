@@ -12,10 +12,18 @@ my(%cc223, %cc322);
 
 for $i (split(/\n/, read_file("$dir/bc-cc2cc3.csv"))) {
 
-    my($name, $cc2, $cc3, $ccnum) = csv($i);
-    $cc223{$cc2} = $cc3;
-    $cc322{$cc3} = $cc2;
+    $i=~/^(.*?),([A-Z]+),([A-Z]+),(\d+)$/;
+
+    my($name, $cc2, $cc3, $ccnum) = ($1, $2, $3, $4);
+
+    $name=~s/\xc3\xa7/c/g;
+    $name=~s/\xc3\xb4/o/g;
+    $name=~s/\xc3\xa9/e/g;
+    $name=~s/\xc3\x85/a/g;
+    $name = ucfirst($name);
 }
+
+die "TESTING";
 
 # load dependent data from dependentcountries_territories.csv
 
@@ -55,15 +63,43 @@ for $i (split(/\n/, read_file("$dir/bc-gpw-natl-grid.txt"))) {
 
 print "CC2,CC3,Name,clng,clat,r_value,MEANUNITKM\n";
 
+my(%cinfo);
+
 for $i (split(/\n/, $data)) {
 
     my(%hash);
 
     while ($i=~s/([a-z]+): ([\d\.\-]+)//i) {$hash{$1} = $2;}
 
-    my($avgx) = $hash{x}/$hash{pop};
-    my($avgy) = $hash{y}/$hash{pop};
-    my($avgz) = $hash{z}/$hash{pop};
+    my($country) = $chash{$hash{cc}}{ISOCODE};
+
+    if ($cc322{$country}) {$country = $cc322{$country};}
+    if ($conversions{$country}) {$country = $conversions{$country};}
+
+#    debug("$hash{cc} -> $country");
+
+    # add values for country + all deps
+    for $j ("x", "y", "z", "pop", "points", "parea") {
+	$cinfo{$country}{$j} += $hash{$j};
+    }
+}
+
+for $i (sort keys %cinfo) {
+
+    debug("I: $i");
+
+}
+
+
+
+
+
+
+
+
+
+
+=item comment
 
     my($lng, $lat, $r) = xyz2sph($avgx, $avgy, $avgz);
 
@@ -79,3 +115,5 @@ for $i (split(/\n/, $data)) {
     print "$cc322{$cinfo{ISOCODE}},$cinfo{ISOCODE},$cinfo{NAME0},$lng,$lat,$r,$cinfo{MEANUNITKM}\n"
 
 }
+
+=cut
