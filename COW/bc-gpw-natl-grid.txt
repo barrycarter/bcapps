@@ -1,0 +1,4492 @@
+INFO: Open of `/home/user/20191204/gpw_v4_national_identifier_grid_rev11_30_sec.shp'
+      using driver `ESRI Shapefile' successful.
+
+Layer name: gpw_v4_national_identifier_grid_rev11_30_sec
+Feature Count: 248
+Extent: (-180.000000, -59.491667) - (180.000000, 83.633333)
+Layer SRS WKT:
+GEOGCS["GCS_WGS_1984",
+    DATUM["WGS_1984",
+        SPHEROID["WGS_84",6378137.0,298.257223563]],
+    PRIMEM["Greenwich",0.0],
+    UNIT["Degree",0.0174532925199433]]
+Value: Integer (10.0)
+ISOCODE: String (5.0)
+UNSDCODE: Integer (10.0)
+NAME0: String (100.0)
+CIESINCODE: Integer (10.0)
+DATATYPE: String (75.0)
+DATACODE: Integer (10.0)
+DATAYEAR: Integer (10.0)
+DATALEVEL: Integer (10.0)
+SEXLEVEL: Integer (10.0)
+AGELEVEL: Integer (10.0)
+GRSTART: Integer (10.0)
+GREND: Integer (10.0)
+GRLEVEL: Integer (10.0)
+LASTCENSUS: Integer (10.0)
+MEANUNITKM: Real (19.11)
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):0
+  Value (Integer) = 4
+  ISOCODE (String) = AFG
+  UNSDCODE (Integer) = 4
+  NAME0 (String) = Afghanistan
+  CIESINCODE (Integer) = 4
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 1979
+  MEANUNITKM (Real) = 4507.46675078000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):1
+  Value (Integer) = 8
+  ISOCODE (String) = ALB
+  UNSDCODE (Integer) = 8
+  NAME0 (String) = Albania
+  CIESINCODE (Integer) = 8
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 115.94983544900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):2
+  Value (Integer) = 12
+  ISOCODE (String) = DZA
+  UNSDCODE (Integer) = 12
+  NAME0 (String) = Algeria
+  CIESINCODE (Integer) = 12
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 50884.79487840000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):3
+  Value (Integer) = 16
+  ISOCODE (String) = ASM
+  UNSDCODE (Integer) = 16
+  NAME0 (String) = American Samoa
+  CIESINCODE (Integer) = 16
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 7.61246845075
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):4
+  Value (Integer) = 20
+  ISOCODE (String) = AND
+  UNSDCODE (Integer) = 20
+  NAME0 (String) = Andorra
+  CIESINCODE (Integer) = 20
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 79.90282249450
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):5
+  Value (Integer) = 24
+  ISOCODE (String) = AGO
+  UNSDCODE (Integer) = 24
+  NAME0 (String) = Angola
+  CIESINCODE (Integer) = 24
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 17505.19519310000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):6
+  Value (Integer) = 28
+  ISOCODE (String) = ATG
+  UNSDCODE (Integer) = 28
+  NAME0 (String) = Antigua and Barbuda
+  CIESINCODE (Integer) = 28
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 82.24028143020
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):7
+  Value (Integer) = 31
+  ISOCODE (String) = AZE
+  UNSDCODE (Integer) = 31
+  NAME0 (String) = Azerbaijan
+  CIESINCODE (Integer) = 31
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 1431.93975491000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):8
+  Value (Integer) = 32
+  ISOCODE (String) = ARG
+  UNSDCODE (Integer) = 32
+  NAME0 (String) = Argentina
+  CIESINCODE (Integer) = 32
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 14167.92425850000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):9
+  Value (Integer) = 36
+  ISOCODE (String) = AUS
+  UNSDCODE (Integer) = 36
+  NAME0 (String) = Australia
+  CIESINCODE (Integer) = 36
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 5
+  AGELEVEL (Integer) = 5
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 4
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 73230.76028639999
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):10
+  Value (Integer) = 40
+  ISOCODE (String) = AUT
+  UNSDCODE (Integer) = 40
+  NAME0 (String) = Austria
+  CIESINCODE (Integer) = 40
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 4
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 74.38597591180
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):11
+  Value (Integer) = 44
+  ISOCODE (String) = BHS
+  UNSDCODE (Integer) = 44
+  NAME0 (String) = Bahamas
+  CIESINCODE (Integer) = 44
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 2425.90472264000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):12
+  Value (Integer) = 48
+  ISOCODE (String) = BHR
+  UNSDCODE (Integer) = 48
+  NAME0 (String) = Bahrain
+  CIESINCODE (Integer) = 48
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 236.77490053400
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):13
+  Value (Integer) = 50
+  ISOCODE (String) = BGD
+  UNSDCODE (Integer) = 50
+  NAME0 (String) = Bangladesh
+  CIESINCODE (Integer) = 50
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 389.92702825900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):14
+  Value (Integer) = 51
+  ISOCODE (String) = ARM
+  UNSDCODE (Integer) = 51
+  NAME0 (String) = Armenia
+  CIESINCODE (Integer) = 51
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 847.81055801000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):15
+  Value (Integer) = 52
+  ISOCODE (String) = BRB
+  UNSDCODE (Integer) = 52
+  NAME0 (String) = Barbados
+  CIESINCODE (Integer) = 52
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 43.01802244980
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):16
+  Value (Integer) = 56
+  ISOCODE (String) = BEL
+  UNSDCODE (Integer) = 56
+  NAME0 (String) = Belgium
+  CIESINCODE (Integer) = 56
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 4
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 78.83905686480
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):17
+  Value (Integer) = 60
+  ISOCODE (String) = BMU
+  UNSDCODE (Integer) = 60
+  NAME0 (String) = Bermuda
+  CIESINCODE (Integer) = 60
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 8.19235303140
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):18
+  Value (Integer) = 64
+  ISOCODE (String) = BTN
+  UNSDCODE (Integer) = 64
+  NAME0 (String) = Bhutan
+  CIESINCODE (Integer) = 64
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2005
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2005
+  MEANUNITKM (Real) = 598.63976412600
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):19
+  Value (Integer) = 68
+  ISOCODE (String) = BOL
+  UNSDCODE (Integer) = 68
+  NAME0 (String) = Bolivia (Plurinational State of)
+  CIESINCODE (Integer) = 68
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 16539.95947250000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):20
+  Value (Integer) = 70
+  ISOCODE (String) = BIH
+  UNSDCODE (Integer) = 70
+  NAME0 (String) = Bosnia and Herzegovina
+  CIESINCODE (Integer) = 70
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 563.66110789800
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):21
+  Value (Integer) = 72
+  ISOCODE (String) = BWA
+  UNSDCODE (Integer) = 72
+  NAME0 (String) = Botswana
+  CIESINCODE (Integer) = 72
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 39354.19035160000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):22
+  Value (Integer) = 76
+  ISOCODE (String) = BRA
+  UNSDCODE (Integer) = 76
+  NAME0 (String) = Brazil
+  CIESINCODE (Integer) = 76
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 5
+  AGELEVEL (Integer) = 5
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 1886.89264871000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):23
+  Value (Integer) = 84
+  ISOCODE (String) = BLZ
+  UNSDCODE (Integer) = 84
+  NAME0 (String) = Belize
+  CIESINCODE (Integer) = 84
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 4184.48652539000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):24
+  Value (Integer) = 90
+  ISOCODE (String) = SLB
+  UNSDCODE (Integer) = 90
+  NAME0 (String) = Solomon Islands
+  CIESINCODE (Integer) = 90
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 91.17955421840
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):25
+  Value (Integer) = 92
+  ISOCODE (String) = VGB
+  UNSDCODE (Integer) = 92
+  NAME0 (String) = British Virgin Islands
+  CIESINCODE (Integer) = 92
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1991
+  GREND (Integer) = 2001
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 38.95106104050
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):26
+  Value (Integer) = 96
+  ISOCODE (String) = BRN
+  UNSDCODE (Integer) = 96
+  NAME0 (String) = Brunei Darussalam
+  CIESINCODE (Integer) = 96
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 454.79188289000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):27
+  Value (Integer) = 100
+  ISOCODE (String) = BGR
+  UNSDCODE (Integer) = 100
+  NAME0 (String) = Bulgaria
+  CIESINCODE (Integer) = 100
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 568.19500671900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):28
+  Value (Integer) = 104
+  ISOCODE (String) = MMR
+  UNSDCODE (Integer) = 104
+  NAME0 (String) = Myanmar
+  CIESINCODE (Integer) = 104
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 2917.59931105000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):29
+  Value (Integer) = 108
+  ISOCODE (String) = BDI
+  UNSDCODE (Integer) = 108
+  NAME0 (String) = Burundi
+  CIESINCODE (Integer) = 108
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 265.12258772900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):30
+  Value (Integer) = 112
+  ISOCODE (String) = BLR
+  UNSDCODE (Integer) = 112
+  NAME0 (String) = Belarus
+  CIESINCODE (Integer) = 112
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 1921.86809119000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):31
+  Value (Integer) = 116
+  ISOCODE (String) = KHM
+  UNSDCODE (Integer) = 116
+  NAME0 (String) = Cambodia
+  CIESINCODE (Integer) = 116
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 472.52980984100
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):32
+  Value (Integer) = 120
+  ISOCODE (String) = CMR
+  UNSDCODE (Integer) = 120
+  NAME0 (String) = Cameroon
+  CIESINCODE (Integer) = 120
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1987
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2005
+  MEANUNITKM (Real) = 17306.14649590000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):33
+  Value (Integer) = 124
+  ISOCODE (String) = CAN
+  UNSDCODE (Integer) = 124
+  NAME0 (String) = Canada
+  CIESINCODE (Integer) = 124
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 111089.74226299999
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):34
+  Value (Integer) = 132
+  ISOCODE (String) = CPV
+  UNSDCODE (Integer) = 132
+  NAME0 (String) = Cape Verde
+  CIESINCODE (Integer) = 132
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 314.16295594100
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):35
+  Value (Integer) = 136
+  ISOCODE (String) = CYM
+  UNSDCODE (Integer) = 136
+  NAME0 (String) = Cayman Islands
+  CIESINCODE (Integer) = 136
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 63.42095436170
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):36
+  Value (Integer) = 140
+  ISOCODE (String) = CAF
+  UNSDCODE (Integer) = 140
+  NAME0 (String) = Central African Republic
+  CIESINCODE (Integer) = 140
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2003
+  MEANUNITKM (Real) = 13719.46787310000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):37
+  Value (Integer) = 144
+  ISOCODE (String) = LKA
+  UNSDCODE (Integer) = 144
+  NAME0 (String) = Sri Lanka
+  CIESINCODE (Integer) = 144
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 47.96567888620
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):38
+  Value (Integer) = 148
+  ISOCODE (String) = TCD
+  UNSDCODE (Integer) = 148
+  NAME0 (String) = Chad
+  CIESINCODE (Integer) = 148
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1993
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 70637.39638130000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):39
+  Value (Integer) = 152
+  ISOCODE (String) = CHL
+  UNSDCODE (Integer) = 152
+  NAME0 (String) = Chile
+  CIESINCODE (Integer) = 152
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 12827.11832470000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):40
+  Value (Integer) = 156
+  ISOCODE (String) = CHN
+  UNSDCODE (Integer) = 156
+  NAME0 (String) = China
+  CIESINCODE (Integer) = 156
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 10756.48729280000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):41
+  Value (Integer) = 158
+  ISOCODE (String) = TWN
+  UNSDCODE (Integer) = 158
+  NAME0 (String) = Taiwan
+  CIESINCODE (Integer) = 158
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 418.68149643300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):42
+  Value (Integer) = 170
+  ISOCODE (String) = COL
+  UNSDCODE (Integer) = 170
+  NAME0 (String) = Colombia
+  CIESINCODE (Integer) = 170
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1993
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2005
+  MEANUNITKM (Real) = 10950.59104470000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):43
+  Value (Integer) = 174
+  ISOCODE (String) = COM
+  UNSDCODE (Integer) = 174
+  NAME0 (String) = Comoros
+  CIESINCODE (Integer) = 174
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2003
+  MEANUNITKM (Real) = 747.68358194200
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):44
+  Value (Integer) = 175
+  ISOCODE (String) = MYT
+  UNSDCODE (Integer) = 175
+  NAME0 (String) = Mayotte
+  CIESINCODE (Integer) = 175
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 28.16709580450
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):45
+  Value (Integer) = 178
+  ISOCODE (String) = COG
+  UNSDCODE (Integer) = 178
+  NAME0 (String) = Congo
+  CIESINCODE (Integer) = 178
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2007
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 42614.38580510000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):46
+  Value (Integer) = 180
+  ISOCODE (String) = COD
+  UNSDCODE (Integer) = 180
+  NAME0 (String) = Democratic Republic of the Congo
+  CIESINCODE (Integer) = 180
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 1984
+  MEANUNITKM (Real) = 21383.72080240000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):47
+  Value (Integer) = 184
+  ISOCODE (String) = COK
+  UNSDCODE (Integer) = 184
+  NAME0 (String) = Cook Islands
+  CIESINCODE (Integer) = 184
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 18.38976238400
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):48
+  Value (Integer) = 188
+  ISOCODE (String) = CRI
+  UNSDCODE (Integer) = 188
+  NAME0 (String) = Costa Rica
+  CIESINCODE (Integer) = 188
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 436.30808647600
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):49
+  Value (Integer) = 191
+  ISOCODE (String) = HRV
+  UNSDCODE (Integer) = 191
+  NAME0 (String) = Croatia
+  CIESINCODE (Integer) = 191
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 224.74233911200
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):50
+  Value (Integer) = 192
+  ISOCODE (String) = CUB
+  UNSDCODE (Integer) = 192
+  NAME0 (String) = Cuba
+  CIESINCODE (Integer) = 192
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 1026.82367688000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):51
+  Value (Integer) = 196
+  ISOCODE (String) = CYP
+  UNSDCODE (Integer) = 196
+  NAME0 (String) = Cyprus
+  CIESINCODE (Integer) = 196
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 1139.82437428000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):52
+  Value (Integer) = 203
+  ISOCODE (String) = CZE
+  UNSDCODE (Integer) = 203
+  NAME0 (String) = Czech Republic
+  CIESINCODE (Integer) = 203
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 34.18798341400
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):53
+  Value (Integer) = 204
+  ISOCODE (String) = BEN
+  UNSDCODE (Integer) = 204
+  NAME0 (String) = Benin
+  CIESINCODE (Integer) = 204
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 3456.12172562000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):54
+  Value (Integer) = 208
+  ISOCODE (String) = DNK
+  UNSDCODE (Integer) = 208
+  NAME0 (String) = Denmark
+  CIESINCODE (Integer) = 208
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2007
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 33.24739329820
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):55
+  Value (Integer) = 212
+  ISOCODE (String) = DMA
+  UNSDCODE (Integer) = 212
+  NAME0 (String) = Dominica
+  CIESINCODE (Integer) = 212
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 111.28692653500
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):56
+  Value (Integer) = 214
+  ISOCODE (String) = DOM
+  UNSDCODE (Integer) = 214
+  NAME0 (String) = Dominican Republic
+  CIESINCODE (Integer) = 214
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 277.12405868700
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):57
+  Value (Integer) = 218
+  ISOCODE (String) = ECU
+  UNSDCODE (Integer) = 218
+  NAME0 (String) = Ecuador
+  CIESINCODE (Integer) = 218
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 1460.57888917000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):58
+  Value (Integer) = 222
+  ISOCODE (String) = SLV
+  UNSDCODE (Integer) = 222
+  NAME0 (String) = El Salvador
+  CIESINCODE (Integer) = 222
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1992
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 170.82618329300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):59
+  Value (Integer) = 226
+  ISOCODE (String) = GNQ
+  UNSDCODE (Integer) = 226
+  NAME0 (String) = Equatorial Guinea
+  CIESINCODE (Integer) = 226
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2015
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2015
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 6387.12987806000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):60
+  Value (Integer) = 231
+  ISOCODE (String) = ETH
+  UNSDCODE (Integer) = 231
+  NAME0 (String) = Ethiopia
+  CIESINCODE (Integer) = 231
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1994
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 5119.69657410000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):61
+  Value (Integer) = 232
+  ISOCODE (String) = ERI
+  UNSDCODE (Integer) = 232
+  NAME0 (String) = Eritrea
+  CIESINCODE (Integer) = 232
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 1997
+  MEANUNITKM (Real) = 26701.57506360000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):62
+  Value (Integer) = 233
+  ISOCODE (String) = EST
+  UNSDCODE (Integer) = 233
+  NAME0 (String) = Estonia
+  CIESINCODE (Integer) = 233
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 23.80706930790
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):63
+  Value (Integer) = 234
+  ISOCODE (String) = FRO
+  UNSDCODE (Integer) = 234
+  NAME0 (String) = Faeroe Islands
+  CIESINCODE (Integer) = 234
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 20.11171821180
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):64
+  Value (Integer) = 238
+  ISOCODE (String) = FLK
+  UNSDCODE (Integer) = 238
+  NAME0 (String) = Falkland Islands (Malvinas)
+  CIESINCODE (Integer) = 238
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2006
+  MEANUNITKM (Real) = 4839.86939082000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):65
+  Value (Integer) = 242
+  ISOCODE (String) = FJI
+  UNSDCODE (Integer) = 242
+  NAME0 (String) = Fiji
+  CIESINCODE (Integer) = 242
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1996
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 61.76959882840
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):66
+  Value (Integer) = 246
+  ISOCODE (String) = FIN
+  UNSDCODE (Integer) = 246
+  NAME0 (String) = Finland
+  CIESINCODE (Integer) = 246
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2011
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 3674.64767301000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):67
+  Value (Integer) = 248
+  ISOCODE (String) = ALA
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Aland Islands
+  CIESINCODE (Integer) = 248
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 102.96366200000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):68
+  Value (Integer) = 250
+  ISOCODE (String) = FRA
+  UNSDCODE (Integer) = 250
+  NAME0 (String) = France
+  CIESINCODE (Integer) = 250
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 4
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 29.47804154640
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):69
+  Value (Integer) = 254
+  ISOCODE (String) = GUF
+  UNSDCODE (Integer) = 254
+  NAME0 (String) = French Guiana
+  CIESINCODE (Integer) = 254
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 8997.20222588000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):70
+  Value (Integer) = 258
+  ISOCODE (String) = PYF
+  UNSDCODE (Integer) = 258
+  NAME0 (String) = French Polynesia
+  CIESINCODE (Integer) = 258
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 62.94894943420
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):71
+  Value (Integer) = 262
+  ISOCODE (String) = DJI
+  UNSDCODE (Integer) = 262
+  NAME0 (String) = Djibouti
+  CIESINCODE (Integer) = 262
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 5156.75691503000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):72
+  Value (Integer) = 266
+  ISOCODE (String) = GAB
+  UNSDCODE (Integer) = 266
+  NAME0 (String) = Gabon
+  CIESINCODE (Integer) = 266
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2003
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1993
+  GREND (Integer) = 2003
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 8464.53912352000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):73
+  Value (Integer) = 268
+  ISOCODE (String) = GEO
+  UNSDCODE (Integer) = 268
+  NAME0 (String) = Georgia
+  CIESINCODE (Integer) = 268
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 1334.54892517000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):74
+  Value (Integer) = 270
+  ISOCODE (String) = GMB
+  UNSDCODE (Integer) = 270
+  NAME0 (String) = Gambia
+  CIESINCODE (Integer) = 270
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 536.18101212900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):75
+  Value (Integer) = 275
+  ISOCODE (String) = PSE
+  UNSDCODE (Integer) = 275
+  NAME0 (String) = State of Palestine
+  CIESINCODE (Integer) = 275
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1997
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 5287.80880215000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):76
+  Value (Integer) = 276
+  ISOCODE (String) = DEU
+  UNSDCODE (Integer) = 276
+  NAME0 (String) = Germany
+  CIESINCODE (Integer) = 276
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 80.47753947390
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):77
+  Value (Integer) = 288
+  ISOCODE (String) = GHA
+  UNSDCODE (Integer) = 288
+  NAME0 (String) = Ghana
+  CIESINCODE (Integer) = 288
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 2923.61504834000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):78
+  Value (Integer) = 292
+  ISOCODE (String) = GIB
+  UNSDCODE (Integer) = 292
+  NAME0 (String) = Gibraltar
+  CIESINCODE (Integer) = 292
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 0
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 7.97339252804
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):79
+  Value (Integer) = 296
+  ISOCODE (String) = KIR
+  UNSDCODE (Integer) = 296
+  NAME0 (String) = Kiribati
+  CIESINCODE (Integer) = 296
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2005
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 547.03505835600
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):80
+  Value (Integer) = 300
+  ISOCODE (String) = GRC
+  UNSDCODE (Integer) = 300
+  NAME0 (String) = Greece
+  CIESINCODE (Integer) = 300
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 49.46971831730
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):81
+  Value (Integer) = 304
+  ISOCODE (String) = GRL
+  UNSDCODE (Integer) = 304
+  NAME0 (String) = Greenland
+  CIESINCODE (Integer) = 304
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 52140.00945780000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):82
+  Value (Integer) = 308
+  ISOCODE (String) = GRD
+  UNSDCODE (Integer) = 308
+  NAME0 (String) = Grenada
+  CIESINCODE (Integer) = 308
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 59.84901803420
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):83
+  Value (Integer) = 312
+  ISOCODE (String) = GLP
+  UNSDCODE (Integer) = 312
+  NAME0 (String) = Guadeloupe
+  CIESINCODE (Integer) = 312
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 69.44763495240
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):84
+  Value (Integer) = 316
+  ISOCODE (String) = GUM
+  UNSDCODE (Integer) = 316
+  NAME0 (String) = Guam
+  CIESINCODE (Integer) = 316
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 11.72383727440
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):85
+  Value (Integer) = 320
+  ISOCODE (String) = GTM
+  UNSDCODE (Integer) = 320
+  NAME0 (String) = Guatemala
+  CIESINCODE (Integer) = 320
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2010
+  GREND (Integer) = 2015
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2002
+  MEANUNITKM (Real) = 2048.31394923000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):86
+  Value (Integer) = 324
+  ISOCODE (String) = GIN
+  UNSDCODE (Integer) = 324
+  NAME0 (String) = Guinea
+  CIESINCODE (Integer) = 324
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1996
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 1315.79852453000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):87
+  Value (Integer) = 328
+  ISOCODE (String) = GUY
+  UNSDCODE (Integer) = 328
+  NAME0 (String) = Guyana
+  CIESINCODE (Integer) = 328
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2002
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 22202.93354920000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):88
+  Value (Integer) = 332
+  ISOCODE (String) = HTI
+  UNSDCODE (Integer) = 332
+  NAME0 (String) = Haiti
+  CIESINCODE (Integer) = 332
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2003
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 4
+  LASTCENSUS (Integer) = 2003
+  MEANUNITKM (Real) = 76.89690242360
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):89
+  Value (Integer) = 336
+  ISOCODE (String) = VAT
+  UNSDCODE (Integer) = 336
+  NAME0 (String) = Holy See
+  CIESINCODE (Integer) = 336
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 0
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = 2012
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 0.26985085010
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):90
+  Value (Integer) = 340
+  ISOCODE (String) = HND
+  UNSDCODE (Integer) = 340
+  NAME0 (String) = Honduras
+  CIESINCODE (Integer) = 340
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 433.65670200600
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):91
+  Value (Integer) = 344
+  ISOCODE (String) = HKG
+  UNSDCODE (Integer) = 344
+  NAME0 (String) = China Hong Kong Special Administrative Region
+  CIESINCODE (Integer) = 344
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 40.95188951040
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):92
+  Value (Integer) = 348
+  ISOCODE (String) = HUN
+  UNSDCODE (Integer) = 348
+  NAME0 (String) = Hungary
+  CIESINCODE (Integer) = 348
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2010
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 71.77436629870
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):93
+  Value (Integer) = 352
+  ISOCODE (String) = ISL
+  UNSDCODE (Integer) = 352
+  NAME0 (String) = Iceland
+  CIESINCODE (Integer) = 352
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 3031.91505150000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):94
+  Value (Integer) = 356
+  ISOCODE (String) = IND
+  UNSDCODE (Integer) = 356
+  NAME0 (String) = India
+  CIESINCODE (Integer) = 356
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 1801.81211116000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):95
+  Value (Integer) = 360
+  ISOCODE (String) = IDN
+  UNSDCODE (Integer) = 360
+  NAME0 (String) = Indonesia
+  CIESINCODE (Integer) = 360
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 12114.08189570000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):96
+  Value (Integer) = 364
+  ISOCODE (String) = IRN
+  UNSDCODE (Integer) = 364
+  NAME0 (String) = Iran (Islamic Republic of)
+  CIESINCODE (Integer) = 364
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 12472.90275010000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):97
+  Value (Integer) = 368
+  ISOCODE (String) = IRQ
+  UNSDCODE (Integer) = 368
+  NAME0 (String) = Iraq
+  CIESINCODE (Integer) = 368
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2003
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1997
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 1997
+  MEANUNITKM (Real) = 31805.50291120000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):98
+  Value (Integer) = 372
+  ISOCODE (String) = IRL
+  UNSDCODE (Integer) = 372
+  NAME0 (String) = Ireland
+  CIESINCODE (Integer) = 372
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 16.73965949750
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):99
+  Value (Integer) = 376
+  ISOCODE (String) = ISR
+  UNSDCODE (Integer) = 376
+  NAME0 (String) = Israel
+  CIESINCODE (Integer) = 376
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 1895.22954916000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):100
+  Value (Integer) = 380
+  ISOCODE (String) = ITA
+  UNSDCODE (Integer) = 380
+  NAME0 (String) = Italy
+  CIESINCODE (Integer) = 380
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 24.52736782420
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):101
+  Value (Integer) = 384
+  ISOCODE (String) = CIV
+  UNSDCODE (Integer) = 384
+  NAME0 (String) = Cote d'Ivoire
+  CIESINCODE (Integer) = 384
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 1226.86049600000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):102
+  Value (Integer) = 388
+  ISOCODE (String) = JAM
+  UNSDCODE (Integer) = 388
+  NAME0 (String) = Jamaica
+  CIESINCODE (Integer) = 388
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 931.52676074300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):103
+  Value (Integer) = 392
+  ISOCODE (String) = JPN
+  UNSDCODE (Integer) = 392
+  NAME0 (String) = Japan
+  CIESINCODE (Integer) = 392
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2005
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 495.94889965300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):104
+  Value (Integer) = 398
+  ISOCODE (String) = KAZ
+  UNSDCODE (Integer) = 398
+  NAME0 (String) = Kazakhstan
+  CIESINCODE (Integer) = 398
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 31755.77549190000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):105
+  Value (Integer) = 400
+  ISOCODE (String) = JOR
+  UNSDCODE (Integer) = 400
+  NAME0 (String) = Jordan
+  CIESINCODE (Integer) = 400
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2004
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1994
+  GREND (Integer) = 2004
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 14973.76113380000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):106
+  Value (Integer) = 404
+  ISOCODE (String) = KEN
+  UNSDCODE (Integer) = 404
+  NAME0 (String) = Kenya
+  CIESINCODE (Integer) = 404
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 5
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 976.18778231400
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):107
+  Value (Integer) = 408
+  ISOCODE (String) = PRK
+  UNSDCODE (Integer) = 408
+  NAME0 (String) = Democratic People's Republic of Korea
+  CIESINCODE (Integer) = 408
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 952.81114387100
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):108
+  Value (Integer) = 410
+  ISOCODE (String) = KOR
+  UNSDCODE (Integer) = 410
+  NAME0 (String) = Republic of Korea
+  CIESINCODE (Integer) = 410
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 735.02119822200
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):109
+  Value (Integer) = 414
+  ISOCODE (String) = KWT
+  UNSDCODE (Integer) = 414
+  NAME0 (String) = Kuwait
+  CIESINCODE (Integer) = 414
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1995
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 10190.27885140000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):110
+  Value (Integer) = 417
+  ISOCODE (String) = KGZ
+  UNSDCODE (Integer) = 417
+  NAME0 (String) = Kyrgyzstan
+  CIESINCODE (Integer) = 417
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 6976.63629808000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):111
+  Value (Integer) = 418
+  ISOCODE (String) = LAO
+  UNSDCODE (Integer) = 418
+  NAME0 (String) = Lao People's Democratic Republic
+  CIESINCODE (Integer) = 418
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1995
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 100.50093575500
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):112
+  Value (Integer) = 422
+  ISOCODE (String) = LBN
+  UNSDCODE (Integer) = 422
+  NAME0 (String) = Lebanon
+  CIESINCODE (Integer) = 422
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2002
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1996
+  GREND (Integer) = 2002
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 1932
+  MEANUNITKM (Real) = 37.94382511300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):113
+  Value (Integer) = 426
+  ISOCODE (String) = LSO
+  UNSDCODE (Integer) = 426
+  NAME0 (String) = Lesotho
+  CIESINCODE (Integer) = 426
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2006
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1996
+  GREND (Integer) = 2006
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2006
+  MEANUNITKM (Real) = 740.88760132500
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):114
+  Value (Integer) = 428
+  ISOCODE (String) = LVA
+  UNSDCODE (Integer) = 428
+  NAME0 (String) = Latvia
+  CIESINCODE (Integer) = 428
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2011
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 991.10591841600
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):115
+  Value (Integer) = 430
+  ISOCODE (String) = LBR
+  UNSDCODE (Integer) = 430
+  NAME0 (String) = Liberia
+  CIESINCODE (Integer) = 430
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1984
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 1228.85526923000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):116
+  Value (Integer) = 434
+  ISOCODE (String) = LBY
+  UNSDCODE (Integer) = 434
+  NAME0 (String) = Libya
+  CIESINCODE (Integer) = 434
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2006
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1995
+  GREND (Integer) = 2006
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2006
+  MEANUNITKM (Real) = 212115.33638299999
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):117
+  Value (Integer) = 438
+  ISOCODE (String) = LIE
+  UNSDCODE (Integer) = 438
+  NAME0 (String) = Liechtenstein
+  CIESINCODE (Integer) = 438
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2010
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 23.17218328810
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):118
+  Value (Integer) = 440
+  ISOCODE (String) = LTU
+  UNSDCODE (Integer) = 440
+  NAME0 (String) = Lithuania
+  CIESINCODE (Integer) = 440
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 1366.86204249000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):119
+  Value (Integer) = 442
+  ISOCODE (String) = LUX
+  UNSDCODE (Integer) = 442
+  NAME0 (String) = Luxembourg
+  CIESINCODE (Integer) = 442
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 30.10202664130
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):120
+  Value (Integer) = 446
+  ISOCODE (String) = MAC
+  UNSDCODE (Integer) = 446
+  NAME0 (String) = China Macao Special Administrative Region
+  CIESINCODE (Integer) = 446
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 6.81864168357
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):121
+  Value (Integer) = 450
+  ISOCODE (String) = MDG
+  UNSDCODE (Integer) = 450
+  NAME0 (String) = Madagascar
+  CIESINCODE (Integer) = 450
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 1993
+  MEANUNITKM (Real) = 1118.07532713000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):122
+  Value (Integer) = 454
+  ISOCODE (String) = MWI
+  UNSDCODE (Integer) = 454
+  NAME0 (String) = Malawi
+  CIESINCODE (Integer) = 454
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 185.32660480400
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):123
+  Value (Integer) = 458
+  ISOCODE (String) = MYS
+  UNSDCODE (Integer) = 458
+  NAME0 (String) = Malaysia
+  CIESINCODE (Integer) = 458
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 4858.81565049000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):124
+  Value (Integer) = 462
+  ISOCODE (String) = MDV
+  UNSDCODE (Integer) = 462
+  NAME0 (String) = Maldives
+  CIESINCODE (Integer) = 462
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2006
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2006
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 4.71832514869
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):125
+  Value (Integer) = 466
+  ISOCODE (String) = MLI
+  UNSDCODE (Integer) = 466
+  NAME0 (String) = Mali
+  CIESINCODE (Integer) = 466
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 79610.37756080000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):126
+  Value (Integer) = 470
+  ISOCODE (String) = MLT
+  UNSDCODE (Integer) = 470
+  NAME0 (String) = Malta
+  CIESINCODE (Integer) = 470
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2005
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 10.67203865050
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):127
+  Value (Integer) = 474
+  ISOCODE (String) = MTQ
+  UNSDCODE (Integer) = 474
+  NAME0 (String) = Martinique
+  CIESINCODE (Integer) = 474
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 39.28418789520
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):128
+  Value (Integer) = 478
+  ISOCODE (String) = MRT
+  UNSDCODE (Integer) = 478
+  NAME0 (String) = Mauritania
+  CIESINCODE (Integer) = 478
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 74902.94380199999
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):129
+  Value (Integer) = 480
+  ISOCODE (String) = MUS
+  UNSDCODE (Integer) = 480
+  NAME0 (String) = Mauritius
+  CIESINCODE (Integer) = 480
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 21.99522563060
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):130
+  Value (Integer) = 484
+  ISOCODE (String) = MEX
+  UNSDCODE (Integer) = 484
+  NAME0 (String) = Mexico
+  CIESINCODE (Integer) = 484
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2005
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 341.10496747500
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):131
+  Value (Integer) = 492
+  ISOCODE (String) = MCO
+  UNSDCODE (Integer) = 492
+  NAME0 (String) = Monaco
+  CIESINCODE (Integer) = 492
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 1.03455542028
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):132
+  Value (Integer) = 496
+  ISOCODE (String) = MNG
+  UNSDCODE (Integer) = 496
+  NAME0 (String) = Mongolia
+  CIESINCODE (Integer) = 496
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 8147.14160158000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):133
+  Value (Integer) = 498
+  ISOCODE (String) = MDA
+  UNSDCODE (Integer) = 498
+  NAME0 (String) = Republic of Moldova
+  CIESINCODE (Integer) = 498
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2004
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1989
+  GREND (Integer) = 2004
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 947.49277994100
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):134
+  Value (Integer) = 499
+  ISOCODE (String) = MNE
+  UNSDCODE (Integer) = 499
+  NAME0 (String) = Montenegro
+  CIESINCODE (Integer) = 499
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 976.00346079700
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):135
+  Value (Integer) = 500
+  ISOCODE (String) = MSR
+  UNSDCODE (Integer) = 500
+  NAME0 (String) = Montserrat
+  CIESINCODE (Integer) = 500
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 50.13255442210
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):136
+  Value (Integer) = 504
+  ISOCODE (String) = MAR
+  UNSDCODE (Integer) = 504
+  NAME0 (String) = Morocco
+  CIESINCODE (Integer) = 504
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 1536.77406386000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):137
+  Value (Integer) = 508
+  ISOCODE (String) = MOZ
+  UNSDCODE (Integer) = 508
+  NAME0 (String) = Mozambique
+  CIESINCODE (Integer) = 508
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1997
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 3463.34732746000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):138
+  Value (Integer) = 512
+  ISOCODE (String) = OMN
+  UNSDCODE (Integer) = 512
+  NAME0 (String) = Oman
+  CIESINCODE (Integer) = 512
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 23405.88790880000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):139
+  Value (Integer) = 516
+  ISOCODE (String) = NAM
+  UNSDCODE (Integer) = 516
+  NAME0 (String) = Namibia
+  CIESINCODE (Integer) = 516
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 3652.72436453000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):140
+  Value (Integer) = 520
+  ISOCODE (String) = NRU
+  UNSDCODE (Integer) = 520
+  NAME0 (String) = Nauru
+  CIESINCODE (Integer) = 520
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 1.99710041743
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):141
+  Value (Integer) = 524
+  ISOCODE (String) = NPL
+  UNSDCODE (Integer) = 524
+  NAME0 (String) = Nepal
+  CIESINCODE (Integer) = 524
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 193.45706517100
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):142
+  Value (Integer) = 528
+  ISOCODE (String) = NLD
+  UNSDCODE (Integer) = 528
+  NAME0 (String) = Netherlands
+  CIESINCODE (Integer) = 528
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 145.20663017400
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):143
+  Value (Integer) = 531
+  ISOCODE (String) = CUW
+  UNSDCODE (Integer) = 531
+  NAME0 (String) = Curacao
+  CIESINCODE (Integer) = 531
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 19.65145300000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):144
+  Value (Integer) = 533
+  ISOCODE (String) = ABW
+  UNSDCODE (Integer) = 533
+  NAME0 (String) = Aruba
+  CIESINCODE (Integer) = 533
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 6.48101329518
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):145
+  Value (Integer) = 534
+  ISOCODE (String) = SXM
+  UNSDCODE (Integer) = 534
+  NAME0 (String) = Sint Maarten (Dutch part)
+  CIESINCODE (Integer) = 534
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 0
+  MEANUNITKM (Real) = 9.49257872395
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):146
+  Value (Integer) = 535
+  ISOCODE (String) = BES
+  UNSDCODE (Integer) = 535
+  NAME0 (String) = Bonaire Saint Eustatius and Saba
+  CIESINCODE (Integer) = 535
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2001
+  MEANUNITKM (Real) = 220.18509181300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):147
+  Value (Integer) = 540
+  ISOCODE (String) = NCL
+  UNSDCODE (Integer) = 540
+  NAME0 (String) = New Caledonia
+  CIESINCODE (Integer) = 540
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 752.27372611700
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):148
+  Value (Integer) = 548
+  ISOCODE (String) = VUT
+  UNSDCODE (Integer) = 548
+  NAME0 (String) = Vanuatu
+  CIESINCODE (Integer) = 548
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 89.14322494550
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):149
+  Value (Integer) = 554
+  ISOCODE (String) = NZL
+  UNSDCODE (Integer) = 554
+  NAME0 (String) = New Zealand
+  CIESINCODE (Integer) = 554
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 269.52491870700
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):150
+  Value (Integer) = 558
+  ISOCODE (String) = NIC
+  UNSDCODE (Integer) = 558
+  NAME0 (String) = Nicaragua
+  CIESINCODE (Integer) = 558
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1995
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2005
+  MEANUNITKM (Real) = 2716.04513354000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):151
+  Value (Integer) = 562
+  ISOCODE (String) = NER
+  UNSDCODE (Integer) = 562
+  NAME0 (String) = Niger
+  CIESINCODE (Integer) = 562
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 112392.05503500000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):152
+  Value (Integer) = 566
+  ISOCODE (String) = NGA
+  UNSDCODE (Integer) = 566
+  NAME0 (String) = Nigeria
+  CIESINCODE (Integer) = 566
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2006
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1991
+  GREND (Integer) = 2006
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2006
+  MEANUNITKM (Real) = 2898.28484821000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):153
+  Value (Integer) = 570
+  ISOCODE (String) = NIU
+  UNSDCODE (Integer) = 570
+  NAME0 (String) = Niue
+  CIESINCODE (Integer) = 570
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 31.98217856120
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):154
+  Value (Integer) = 574
+  ISOCODE (String) = NFK
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Norfolk Island
+  CIESINCODE (Integer) = 574
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 33.55050251760
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):155
+  Value (Integer) = 578
+  ISOCODE (String) = NOR
+  UNSDCODE (Integer) = 578
+  NAME0 (String) = Norway
+  CIESINCODE (Integer) = 578
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 1836.60267655000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):156
+  Value (Integer) = 580
+  ISOCODE (String) = MNP
+  UNSDCODE (Integer) = 580
+  NAME0 (String) = Northern Mariana Islands
+  CIESINCODE (Integer) = 580
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 19.19799036190
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):157
+  Value (Integer) = 583
+  ISOCODE (String) = FSM
+  UNSDCODE (Integer) = 583
+  NAME0 (String) = Micronesia (Federated States of)
+  CIESINCODE (Integer) = 583
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 5.48331437709
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):158
+  Value (Integer) = 584
+  ISOCODE (String) = MHL
+  UNSDCODE (Integer) = 584
+  NAME0 (String) = Marshall Islands
+  CIESINCODE (Integer) = 584
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 15.74015810700
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):159
+  Value (Integer) = 585
+  ISOCODE (String) = PLW
+  UNSDCODE (Integer) = 585
+  NAME0 (String) = Palau
+  CIESINCODE (Integer) = 585
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 50.35500678510
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):160
+  Value (Integer) = 586
+  ISOCODE (String) = PAK
+  UNSDCODE (Integer) = 586
+  NAME0 (String) = Pakistan
+  CIESINCODE (Integer) = 586
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 6682.89609979000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):161
+  Value (Integer) = 591
+  ISOCODE (String) = PAN
+  UNSDCODE (Integer) = 591
+  NAME0 (String) = Panama
+  CIESINCODE (Integer) = 591
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 478.97003012800
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):162
+  Value (Integer) = 598
+  ISOCODE (String) = PNG
+  UNSDCODE (Integer) = 598
+  NAME0 (String) = Papua New Guinea
+  CIESINCODE (Integer) = 598
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 15589.31158680000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):163
+  Value (Integer) = 600
+  ISOCODE (String) = PRY
+  UNSDCODE (Integer) = 600
+  NAME0 (String) = Paraguay
+  CIESINCODE (Integer) = 600
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 21892.44269360000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):164
+  Value (Integer) = 604
+  ISOCODE (String) = PER
+  UNSDCODE (Integer) = 604
+  NAME0 (String) = Peru
+  CIESINCODE (Integer) = 604
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1993
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 6780.03331527000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):165
+  Value (Integer) = 608
+  ISOCODE (String) = PHL
+  UNSDCODE (Integer) = 608
+  NAME0 (String) = Philippines
+  CIESINCODE (Integer) = 608
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2007
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 51.21813025110
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):166
+  Value (Integer) = 612
+  ISOCODE (String) = PCN
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Pitcairn
+  CIESINCODE (Integer) = 612
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 0
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 54.43437194820
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):167
+  Value (Integer) = 616
+  ISOCODE (String) = POL
+  UNSDCODE (Integer) = 616
+  NAME0 (String) = Poland
+  CIESINCODE (Integer) = 616
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 4
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 172.80832452200
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):168
+  Value (Integer) = 620
+  ISOCODE (String) = PRT
+  UNSDCODE (Integer) = 620
+  NAME0 (String) = Portugal
+  CIESINCODE (Integer) = 620
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 6
+  SEXLEVEL (Integer) = 6
+  AGELEVEL (Integer) = 5
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 4
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 11.42142078760
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):169
+  Value (Integer) = 624
+  ISOCODE (String) = GNB
+  UNSDCODE (Integer) = 624
+  NAME0 (String) = Guinea-Bissau
+  CIESINCODE (Integer) = 624
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1991
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 1219.23748176000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):170
+  Value (Integer) = 626
+  ISOCODE (String) = TLS
+  UNSDCODE (Integer) = 626
+  NAME0 (String) = Timor-Leste
+  CIESINCODE (Integer) = 626
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 76.70621979070
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):171
+  Value (Integer) = 630
+  ISOCODE (String) = PRI
+  UNSDCODE (Integer) = 630
+  NAME0 (String) = Puerto Rico
+  CIESINCODE (Integer) = 630
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 1.10111221504
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):172
+  Value (Integer) = 634
+  ISOCODE (String) = QAT
+  UNSDCODE (Integer) = 634
+  NAME0 (String) = Qatar
+  CIESINCODE (Integer) = 634
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 933.78819189200
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):173
+  Value (Integer) = 638
+  ISOCODE (String) = REU
+  UNSDCODE (Integer) = 638
+  NAME0 (String) = Reunion
+  CIESINCODE (Integer) = 638
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 139.58471700000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):174
+  Value (Integer) = 642
+  ISOCODE (String) = ROU
+  UNSDCODE (Integer) = 642
+  NAME0 (String) = Romania
+  CIESINCODE (Integer) = 642
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 4
+  SEXLEVEL (Integer) = 4
+  AGELEVEL (Integer) = 4
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 114.95637615300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):175
+  Value (Integer) = 643
+  ISOCODE (String) = RUS
+  UNSDCODE (Integer) = 643
+  NAME0 (String) = Russian Federation
+  CIESINCODE (Integer) = 643
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 201128.54917099999
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):176
+  Value (Integer) = 646
+  ISOCODE (String) = RWA
+  UNSDCODE (Integer) = 646
+  NAME0 (String) = Rwanda
+  CIESINCODE (Integer) = 646
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 78.08412576820
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):177
+  Value (Integer) = 652
+  ISOCODE (String) = BLM
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Saint-Barthelemy
+  CIESINCODE (Integer) = 652
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 0
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 24.68903732300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):178
+  Value (Integer) = 654
+  ISOCODE (String) = SHN
+  UNSDCODE (Integer) = 654
+  NAME0 (String) = Saint Helena
+  CIESINCODE (Integer) = 654
+  DATATYPE (String) = Final census, population register
+  DATACODE (Integer) = 2
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1998
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 77.26755616590
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):179
+  Value (Integer) = 659
+  ISOCODE (String) = KNA
+  UNSDCODE (Integer) = 659
+  NAME0 (String) = Saint Kitts and Nevis
+  CIESINCODE (Integer) = 659
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2001
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1991
+  GREND (Integer) = 2001
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 21.97007756060
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):180
+  Value (Integer) = 660
+  ISOCODE (String) = AIA
+  UNSDCODE (Integer) = 660
+  NAME0 (String) = Anguilla
+  CIESINCODE (Integer) = 660
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 0
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 82.29259490970
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):181
+  Value (Integer) = 662
+  ISOCODE (String) = LCA
+  UNSDCODE (Integer) = 662
+  NAME0 (String) = Saint Lucia
+  CIESINCODE (Integer) = 662
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 71.51135603700
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):182
+  Value (Integer) = 663
+  ISOCODE (String) = MAF
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Saint-Martin (French part)
+  CIESINCODE (Integer) = 663
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 0
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 49.19289831320
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):183
+  Value (Integer) = 666
+  ISOCODE (String) = SPM
+  UNSDCODE (Integer) = 666
+  NAME0 (String) = Saint Pierre and Miquelon
+  CIESINCODE (Integer) = 666
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 170.26795377900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):184
+  Value (Integer) = 670
+  ISOCODE (String) = VCT
+  UNSDCODE (Integer) = 670
+  NAME0 (String) = Saint Vincent and the Grenadines
+  CIESINCODE (Integer) = 670
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 39.74858261260
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):185
+  Value (Integer) = 674
+  ISOCODE (String) = SMR
+  UNSDCODE (Integer) = 674
+  NAME0 (String) = San Marino
+  CIESINCODE (Integer) = 674
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 7.02797183212
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):186
+  Value (Integer) = 678
+  ISOCODE (String) = STP
+  UNSDCODE (Integer) = 678
+  NAME0 (String) = Sao Tome and Principe
+  CIESINCODE (Integer) = 678
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 191.14378378200
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):187
+  Value (Integer) = 682
+  ISOCODE (String) = SAU
+  UNSDCODE (Integer) = 682
+  NAME0 (String) = Saudi Arabia
+  CIESINCODE (Integer) = 682
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 103620.91745300000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):188
+  Value (Integer) = 686
+  ISOCODE (String) = SEN
+  UNSDCODE (Integer) = 686
+  NAME0 (String) = Senegal
+  CIESINCODE (Integer) = 686
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 8458.22383807000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):189
+  Value (Integer) = 688
+  ISOCODE (String) = SRB
+  UNSDCODE (Integer) = 688
+  NAME0 (String) = Serbia
+  CIESINCODE (Integer) = 688
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 5
+  AGELEVEL (Integer) = 5
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 43.24934259000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):190
+  Value (Integer) = 690
+  ISOCODE (String) = SYC
+  UNSDCODE (Integer) = 690
+  NAME0 (String) = Seychelles
+  CIESINCODE (Integer) = 690
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 177.16156366700
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):191
+  Value (Integer) = 694
+  ISOCODE (String) = SLE
+  UNSDCODE (Integer) = 694
+  NAME0 (String) = Sierra Leone
+  CIESINCODE (Integer) = 694
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2004
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1985
+  GREND (Integer) = 2004
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 773.10572675100
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):192
+  Value (Integer) = 702
+  ISOCODE (String) = SGP
+  UNSDCODE (Integer) = 702
+  NAME0 (String) = Singapore
+  CIESINCODE (Integer) = 702
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 19.95205902090
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):193
+  Value (Integer) = 703
+  ISOCODE (String) = SVK
+  UNSDCODE (Integer) = 703
+  NAME0 (String) = Slovakia
+  CIESINCODE (Integer) = 703
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 36.57065290840
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):194
+  Value (Integer) = 704
+  ISOCODE (String) = VNM
+  UNSDCODE (Integer) = 704
+  NAME0 (String) = Viet Nam
+  CIESINCODE (Integer) = 704
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2009
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 1999
+  GREND (Integer) = 2009
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2009
+  MEANUNITKM (Real) = 912.33310864800
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):195
+  Value (Integer) = 705
+  ISOCODE (String) = SVN
+  UNSDCODE (Integer) = 705
+  NAME0 (String) = Slovenia
+  CIESINCODE (Integer) = 705
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2008
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 12.82923776420
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):196
+  Value (Integer) = 706
+  ISOCODE (String) = SOM
+  UNSDCODE (Integer) = 706
+  NAME0 (String) = Somalia
+  CIESINCODE (Integer) = 706
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2005
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 1987
+  MEANUNITKM (Real) = 12401.69165410000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):197
+  Value (Integer) = 710
+  ISOCODE (String) = ZAF
+  UNSDCODE (Integer) = 710
+  NAME0 (String) = South Africa
+  CIESINCODE (Integer) = 710
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 6
+  SEXLEVEL (Integer) = 6
+  AGELEVEL (Integer) = 6
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 1588.21153456000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):198
+  Value (Integer) = 716
+  ISOCODE (String) = ZWE
+  UNSDCODE (Integer) = 716
+  NAME0 (String) = Zimbabwe
+  CIESINCODE (Integer) = 716
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 9407.68502927000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):199
+  Value (Integer) = 724
+  ISOCODE (String) = ESP
+  UNSDCODE (Integer) = 724
+  NAME0 (String) = Spain
+  CIESINCODE (Integer) = 724
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 197.83832641000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):200
+  Value (Integer) = 728
+  ISOCODE (String) = SSD
+  UNSDCODE (Integer) = 728
+  NAME0 (String) = South Sudan
+  CIESINCODE (Integer) = 728
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 1983
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 15907.02625660000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):201
+  Value (Integer) = 729
+  ISOCODE (String) = SDN
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Sudan
+  CIESINCODE (Integer) = 729
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1993
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2008
+  MEANUNITKM (Real) = 57595.72733140000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):202
+  Value (Integer) = 732
+  ISOCODE (String) = ESH
+  UNSDCODE (Integer) = 732
+  NAME0 (String) = Western Sahara
+  CIESINCODE (Integer) = 732
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 0
+  MEANUNITKM (Real) = 13529.92493030000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):203
+  Value (Integer) = 740
+  ISOCODE (String) = SUR
+  UNSDCODE (Integer) = 740
+  NAME0 (String) = Suriname
+  CIESINCODE (Integer) = 740
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 20170.87622020000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):204
+  Value (Integer) = 744
+  ISOCODE (String) = SJM
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Svalbard and Jan Mayen Islands
+  CIESINCODE (Integer) = 744
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 0
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2010
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 25632.14843750000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):205
+  Value (Integer) = 748
+  ISOCODE (String) = SWZ
+  UNSDCODE (Integer) = 748
+  NAME0 (String) = Swaziland
+  CIESINCODE (Integer) = 748
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2007
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1997
+  GREND (Integer) = 2007
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2007
+  MEANUNITKM (Real) = 416.40345428600
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):206
+  Value (Integer) = 752
+  ISOCODE (String) = SWE
+  UNSDCODE (Integer) = 752
+  NAME0 (String) = Sweden
+  CIESINCODE (Integer) = 752
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2005
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 3958.55184099000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):207
+  Value (Integer) = 756
+  ISOCODE (String) = CHE
+  UNSDCODE (Integer) = 756
+  NAME0 (String) = Switzerland
+  CIESINCODE (Integer) = 756
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 58.63479505200
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):208
+  Value (Integer) = 760
+  ISOCODE (String) = SYR
+  UNSDCODE (Integer) = 760
+  NAME0 (String) = Syrian Arab Republic
+  CIESINCODE (Integer) = 760
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2004
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2004
+  MEANUNITKM (Real) = 4906.73800014000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):209
+  Value (Integer) = 762
+  ISOCODE (String) = TJK
+  UNSDCODE (Integer) = 762
+  NAME0 (String) = Tajikistan
+  CIESINCODE (Integer) = 762
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 11757.91547550000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):210
+  Value (Integer) = 764
+  ISOCODE (String) = THA
+  UNSDCODE (Integer) = 764
+  NAME0 (String) = Thailand
+  CIESINCODE (Integer) = 764
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 999.61777156600
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):211
+  Value (Integer) = 768
+  ISOCODE (String) = TGO
+  UNSDCODE (Integer) = 768
+  NAME0 (String) = Togo
+  CIESINCODE (Integer) = 768
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 2846.94039816000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):212
+  Value (Integer) = 772
+  ISOCODE (String) = TKL
+  UNSDCODE (Integer) = 772
+  NAME0 (String) = Tokelau
+  CIESINCODE (Integer) = 772
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 5.31326145172
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):213
+  Value (Integer) = 776
+  ISOCODE (String) = TON
+  UNSDCODE (Integer) = 776
+  NAME0 (String) = Tonga
+  CIESINCODE (Integer) = 776
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 196.13268749900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):214
+  Value (Integer) = 780
+  ISOCODE (String) = TTO
+  UNSDCODE (Integer) = 780
+  NAME0 (String) = Trinidad and Tobago
+  CIESINCODE (Integer) = 780
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 593.61894004500
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):215
+  Value (Integer) = 784
+  ISOCODE (String) = ARE
+  UNSDCODE (Integer) = 784
+  NAME0 (String) = United Arab Emirates
+  CIESINCODE (Integer) = 784
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1995
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 58247.82604390000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):216
+  Value (Integer) = 788
+  ISOCODE (String) = TUN
+  UNSDCODE (Integer) = 788
+  NAME0 (String) = Tunisia
+  CIESINCODE (Integer) = 788
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 6172.01480111000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):217
+  Value (Integer) = 792
+  ISOCODE (String) = TUR
+  UNSDCODE (Integer) = 792
+  NAME0 (String) = Turkey
+  CIESINCODE (Integer) = 792
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 1364.73133504000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):218
+  Value (Integer) = 795
+  ISOCODE (String) = TKM
+  UNSDCODE (Integer) = 795
+  NAME0 (String) = Turkmenistan
+  CIESINCODE (Integer) = 795
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2005
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 0
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 1995
+  GREND (Integer) = 2005
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 95107.56896520000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):219
+  Value (Integer) = 796
+  ISOCODE (String) = TCA
+  UNSDCODE (Integer) = 796
+  NAME0 (String) = Turks and Caicos Islands
+  CIESINCODE (Integer) = 796
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 187.64489016500
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):220
+  Value (Integer) = 798
+  ISOCODE (String) = TUV
+  UNSDCODE (Integer) = 798
+  NAME0 (String) = Tuvalu
+  CIESINCODE (Integer) = 798
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 19.08916891110
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):221
+  Value (Integer) = 800
+  ISOCODE (String) = UGA
+  UNSDCODE (Integer) = 800
+  NAME0 (String) = Uganda
+  CIESINCODE (Integer) = 800
+  DATATYPE (String) = Preliminary/provisional census
+  DATACODE (Integer) = 4
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2014
+  MEANUNITKM (Real) = 452.45449087500
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):222
+  Value (Integer) = 804
+  ISOCODE (String) = UKR
+  UNSDCODE (Integer) = 804
+  NAME0 (String) = Ukraine
+  CIESINCODE (Integer) = 804
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2001
+  MEANUNITKM (Real) = 1285.87936398000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):223
+  Value (Integer) = 807
+  ISOCODE (String) = MKD
+  UNSDCODE (Integer) = 807
+  NAME0 (String) = The former Yugoslav Republic of Macedonia
+  CIESINCODE (Integer) = 807
+  DATATYPE (String) = Population estimate/projection
+  DATACODE (Integer) = 6
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2002
+  MEANUNITKM (Real) = 472.61037329300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):224
+  Value (Integer) = 818
+  ISOCODE (String) = EGY
+  UNSDCODE (Integer) = 818
+  NAME0 (String) = Egypt
+  CIESINCODE (Integer) = 818
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2006
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2006
+  MEANUNITKM (Real) = 78965.00962640000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):225
+  Value (Integer) = 826
+  ISOCODE (String) = GBR
+  UNSDCODE (Integer) = 826
+  NAME0 (String) = United Kingdom of Great Britain and Northern Ireland
+  CIESINCODE (Integer) = 826
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 6
+  SEXLEVEL (Integer) = 6
+  AGELEVEL (Integer) = 6
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 49.15835847630
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):226
+  Value (Integer) = 831
+  ISOCODE (String) = GGY
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Guernsey
+  CIESINCODE (Integer) = 831
+  DATATYPE (String) = Final census, population register, population estimate/projection
+  DATACODE (Integer) = 3
+  DATAYEAR (Integer) = 2014
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2007
+  GREND (Integer) = 2014
+  GRLEVEL (Integer) = 0
+  LASTCENSUS (Integer) = 2015
+  MEANUNITKM (Real) = 6.99783172823
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):227
+  Value (Integer) = 832
+  ISOCODE (String) = JEY
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Jersey
+  CIESINCODE (Integer) = 832
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 11.31135671330
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):228
+  Value (Integer) = 833
+  ISOCODE (String) = IMN
+  UNSDCODE (Integer) = 833
+  NAME0 (String) = Isle of Man
+  CIESINCODE (Integer) = 833
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2006
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 34.89819367860
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):229
+  Value (Integer) = 834
+  ISOCODE (String) = TZA
+  UNSDCODE (Integer) = 834
+  NAME0 (String) = United Republic of Tanzania
+  CIESINCODE (Integer) = 834
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2012
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2002
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2012
+  MEANUNITKM (Real) = 1779.60246069000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):230
+  Value (Integer) = 840
+  ISOCODE (String) = USA
+  UNSDCODE (Integer) = 840
+  NAME0 (String) = United States of America
+  CIESINCODE (Integer) = 840
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 5
+  SEXLEVEL (Integer) = 5
+  AGELEVEL (Integer) = 5
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 1090.86165853000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):231
+  Value (Integer) = 850
+  ISOCODE (String) = VIR
+  UNSDCODE (Integer) = 850
+  NAME0 (String) = United States Virgin Islands
+  CIESINCODE (Integer) = 850
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 27.04298247580
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):232
+  Value (Integer) = 854
+  ISOCODE (String) = BFA
+  UNSDCODE (Integer) = 854
+  NAME0 (String) = Burkina Faso
+  CIESINCODE (Integer) = 854
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2006
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 1996
+  GREND (Integer) = 2006
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2006
+  MEANUNITKM (Real) = 1448.73535706000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):233
+  Value (Integer) = 858
+  ISOCODE (String) = URY
+  UNSDCODE (Integer) = 858
+  NAME0 (String) = Uruguay
+  CIESINCODE (Integer) = 858
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 3
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 316.44118961400
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):234
+  Value (Integer) = 860
+  ISOCODE (String) = UZB
+  UNSDCODE (Integer) = 860
+  NAME0 (String) = Uzbekistan
+  CIESINCODE (Integer) = 860
+  DATATYPE (String) = Population register
+  DATACODE (Integer) = 5
+  DATAYEAR (Integer) = 2013
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 0
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2013
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 1989
+  MEANUNITKM (Real) = 90470.38365920000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):235
+  Value (Integer) = 862
+  ISOCODE (String) = VEN
+  UNSDCODE (Integer) = 862
+  NAME0 (String) = Venezuela (Bolivarian Republic of)
+  CIESINCODE (Integer) = 862
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 20267.06784080000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):236
+  Value (Integer) = 876
+  ISOCODE (String) = WLF
+  UNSDCODE (Integer) = 876
+  NAME0 (String) = Wallis and Futuna Islands
+  CIESINCODE (Integer) = 876
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2008
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2003
+  GREND (Integer) = 2008
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2013
+  MEANUNITKM (Real) = 34.85942879880
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):237
+  Value (Integer) = 882
+  ISOCODE (String) = WSM
+  UNSDCODE (Integer) = 882
+  NAME0 (String) = Western Samoa
+  CIESINCODE (Integer) = 882
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2001
+  GREND (Integer) = 2011
+  GRLEVEL (Integer) = 2
+  LASTCENSUS (Integer) = 2016
+  MEANUNITKM (Real) = 114.27348635900
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):238
+  Value (Integer) = 887
+  ISOCODE (String) = YEM
+  UNSDCODE (Integer) = 887
+  NAME0 (String) = Yemen
+  CIESINCODE (Integer) = 887
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2004
+  DATALEVEL (Integer) = 2
+  SEXLEVEL (Integer) = 2
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2004
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2004
+  MEANUNITKM (Real) = 10769.60973470000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):239
+  Value (Integer) = 894
+  ISOCODE (String) = ZMB
+  UNSDCODE (Integer) = 894
+  NAME0 (String) = Zambia
+  CIESINCODE (Integer) = 894
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2010
+  DATALEVEL (Integer) = 3
+  SEXLEVEL (Integer) = 3
+  AGELEVEL (Integer) = 2
+  GRSTART (Integer) = 2000
+  GREND (Integer) = 2010
+  GRLEVEL (Integer) = 3
+  LASTCENSUS (Integer) = 2010
+  MEANUNITKM (Real) = 9631.24844626000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):240
+  Value (Integer) = 902
+  ISOCODE (String) = ATF
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = French Southern Territories
+  CIESINCODE (Integer) = 902
+  DATATYPE (String) = Not applicable
+  DATACODE (Integer) = 0
+  DATAYEAR (Integer) = -9999
+  DATALEVEL (Integer) = -9999
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = -9999
+  GREND (Integer) = -9999
+  GRLEVEL (Integer) = -9999
+  LASTCENSUS (Integer) = -9999
+  MEANUNITKM (Real) = 6939.79199219000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):241
+  Value (Integer) = 903
+  ISOCODE (String) = BVT
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Bouvet Island
+  CIESINCODE (Integer) = 903
+  DATATYPE (String) = Not applicable
+  DATACODE (Integer) = 0
+  DATAYEAR (Integer) = -9999
+  DATALEVEL (Integer) = -9999
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = -9999
+  GREND (Integer) = -9999
+  GRLEVEL (Integer) = -9999
+  LASTCENSUS (Integer) = -9999
+  MEANUNITKM (Real) = 77.40554046630
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):242
+  Value (Integer) = 904
+  ISOCODE (String) = HMD
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Heard Island and McDonald Islands
+  CIESINCODE (Integer) = 904
+  DATATYPE (String) = Not applicable
+  DATACODE (Integer) = 0
+  DATAYEAR (Integer) = -9999
+  DATALEVEL (Integer) = -9999
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = -9999
+  GREND (Integer) = -9999
+  GRLEVEL (Integer) = -9999
+  LASTCENSUS (Integer) = -9999
+  MEANUNITKM (Real) = 108.71304321300
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):243
+  Value (Integer) = 905
+  ISOCODE (String) = IOT
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = British Indian Ocean Territory
+  CIESINCODE (Integer) = 905
+  DATATYPE (String) = Not applicable
+  DATACODE (Integer) = 0
+  DATAYEAR (Integer) = -9999
+  DATALEVEL (Integer) = -9999
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = -9999
+  GREND (Integer) = -9999
+  GRLEVEL (Integer) = -9999
+  LASTCENSUS (Integer) = -9999
+  MEANUNITKM (Real) = 64.37323760990
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):244
+  Value (Integer) = 906
+  ISOCODE (String) = SGS
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = South Georgia and the South Sandwich Islands
+  CIESINCODE (Integer) = 906
+  DATATYPE (String) = Not applicable
+  DATACODE (Integer) = 0
+  DATAYEAR (Integer) = -9999
+  DATALEVEL (Integer) = -9999
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = -9999
+  GREND (Integer) = -9999
+  GRLEVEL (Integer) = -9999
+  LASTCENSUS (Integer) = -9999
+  MEANUNITKM (Real) = 1605.27770996000
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):245
+  Value (Integer) = 907
+  ISOCODE (String) = SPR
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Spratly Islands
+  CIESINCODE (Integer) = 907
+  DATATYPE (String) = Not applicable
+  DATACODE (Integer) = 0
+  DATAYEAR (Integer) = -9999
+  DATALEVEL (Integer) = -9999
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = -9999
+  GREND (Integer) = -9999
+  GRLEVEL (Integer) = -9999
+  LASTCENSUS (Integer) = -9999
+  MEANUNITKM (Real) = 1.88642585278
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):246
+  Value (Integer) = 908
+  ISOCODE (String) = UMI
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = United States Minor Outlying Islands
+  CIESINCODE (Integer) = 908
+  DATATYPE (String) = Not applicable
+  DATACODE (Integer) = 0
+  DATAYEAR (Integer) = -9999
+  DATALEVEL (Integer) = -9999
+  SEXLEVEL (Integer) = -9999
+  AGELEVEL (Integer) = -9999
+  GRSTART (Integer) = -9999
+  GREND (Integer) = -9999
+  GRLEVEL (Integer) = -9999
+  LASTCENSUS (Integer) = -9999
+  MEANUNITKM (Real) = 41.58976745610
+
+OGRFeature(gpw_v4_national_identifier_grid_rev11_30_sec):247
+  Value (Integer) = 999
+  ISOCODE (String) = KOS
+  UNSDCODE (Integer) = 0
+  NAME0 (String) = Kosovo
+  CIESINCODE (Integer) = 999
+  DATATYPE (String) = Final census
+  DATACODE (Integer) = 1
+  DATAYEAR (Integer) = 2011
+  DATALEVEL (Integer) = 1
+  SEXLEVEL (Integer) = 1
+  AGELEVEL (Integer) = 1
+  GRSTART (Integer) = 2011
+  GREND (Integer) = 2012
+  GRLEVEL (Integer) = 1
+  LASTCENSUS (Integer) = 2011
+  MEANUNITKM (Real) = 405.64244125100
+
