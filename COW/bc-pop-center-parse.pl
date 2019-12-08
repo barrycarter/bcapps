@@ -4,6 +4,18 @@ require "/usr/local/lib/bclib.pl";
 
 my($data, $file) = cmdfile();
 
+# load dependent data from dependentcountries_territories.csv
+
+my(%conversions);
+
+for $i (split(/\n/, read_file("$bclib{githome}/COW/dependentcountries_territories.csv"))) {
+
+  my($iso, $name, $admin0) = csv($i);
+
+  $conversions{$iso} = $admin0;
+
+}
+
 # grab natgrid data
 
 open(A, "ogrinfo -al /home/user/20191204/gpw_v4_national_identifier_grid_rev11_30_sec.shp | fgrep -v POLYGON|");
@@ -45,28 +57,11 @@ for $i (split(/\n/, $data)) {
 
     if ($lng>180) {$lng-=360;}
 
+    %cinfo = %{$chash{$hash{cc}}};
 
-#    debug("OSM($hash{cc}): $lat,$lng");
-#    debug("$hash{cc}/$lng,$lat/$r");
-
-    for $j ("x", "y", "z") {$hash{"avg$j"} = $hash{$j}/$hash{pop};}
-
-    @{$hash{sph}} = xyz2sph($hash{avgx}, $hash{avgy}, $hash{avgz});
-
-    $hash{lng} = @{$hash{sph}}[0]*$RAD2DEG;
-    $hash{lat} = @{$hash{sph}}[1]*$RAD2DEG;
-    $hash{r} = $hash{sph}[2];
-
-    debug($hash{cc}, unfold($chash{$hash{cc}}));
-
-#    debug("$hash{cc}, $hash{lng}, $hash{lat}, $hash{r}");
-#    debug(%hash);
-
-#    debug("I: $i");
+    print "$cinfo{ISOCODE},$cinfo{NAME0},$lng,$lat,$r,$cinfo{MEANUNITKM}\n"
 
 }
-
-
 
 
 
