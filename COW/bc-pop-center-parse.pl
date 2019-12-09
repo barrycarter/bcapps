@@ -16,14 +16,9 @@ for $i (split(/\n/, read_file("$dir/bc-cc2cc3.csv"))) {
 
     my($name, $cc2, $cc3, $ccnum) = ($1, $2, $3, $4);
 
-    $name=~s/\xc3\xa7/c/g;
-    $name=~s/\xc3\xb4/o/g;
-    $name=~s/\xc3\xa9/e/g;
-    $name=~s/\xc3\x85/a/g;
-    $name = ucfirst($name);
+    $cc223{$cc2} = $cc3;
+    $cc322{$cc3} = $cc2;
 }
-
-die "TESTING";
 
 # load dependent data from dependentcountries_territories.csv
 
@@ -55,11 +50,10 @@ for $i (split(/\n/, read_file("$dir/bc-gpw-natl-grid.txt"))) {
 	next;
     }
 
-    $i=~s/^\s*(\S+?)\s+\(\S+\)\s+\=\s+(.*?)$//;
-
-    $chash{$country}{$1} = $2;
-
+    while ($i=~s/^\s*(\S+?)\s+\(\S+\)\s+\=\s+(.*?)$//) {$chash{$country}{$1} = $2;}
 }
+
+# debug("ETA", $chash{100}{ISOCODE}, $chash{100}{NAME0});
 
 print "CC2,CC3,Name,clng,clat,r_value,MEANUNITKM\n";
 
@@ -73,8 +67,21 @@ for $i (split(/\n/, $data)) {
 
     my($country) = $chash{$hash{cc}}{ISOCODE};
 
+    my($name) = $chash{$hash{cc}}{NAME0};
+    debug("$i -> $name");
+
+#    $cinfo{$country}{CC3} = $country;
+		       
     if ($cc322{$country}) {$country = $cc322{$country};}
-    if ($conversions{$country}) {$country = $conversions{$country};}
+    
+    if ($conversions{$country}) {
+	debug("DESTROYING NAME FOR: $country -> $conversions{$country}");
+	$country = $conversions{$country};
+	$name ="";
+    }
+
+    debug("ASSIGNING $country name to $name");
+    if ($name) {$cinfo{$country}{name} = $name;}
 
 #    debug("$hash{cc} -> $country");
 
@@ -86,20 +93,17 @@ for $i (split(/\n/, $data)) {
 
 for $i (sort keys %cinfo) {
 
-    debug("I: $i");
+    debug("IBETA: $i");
 
-}
+#    debug("I: $i", "HASH", keys %{$cinfo{$i}});
 
+#    debug("ALPHA", "$i, $cinfo{$i}{CC3}");
 
+#    next; # TESTING
 
-
-
-
-
-
-
-
-=item comment
+    my($avgx) = $cinfo{$i}{x}/$cinfo{$i}{pop};
+    my($avgy) = $cinfo{$i}{y}/$cinfo{$i}{pop};
+    my($avgz) = $cinfo{$i}{z}/$cinfo{$i}{pop};
 
     my($lng, $lat, $r) = xyz2sph($avgx, $avgy, $avgz);
 
@@ -107,6 +111,15 @@ for $i (sort keys %cinfo) {
     $lat *= $RADDEG;
 
     if ($lng>180) {$lng-=360;}
+
+    unless ($cc223{$i}) {$cc223{$i} = "N/A";}
+
+    print "$i,$cc223{$i},$cinfo{$i}{name},$lng,$lat,$r,$cinfo{MEANUNITKM}\n";
+
+}
+
+=item comment
+
 
     %cinfo = %{$chash{$hash{cc}}};
 
