@@ -1,5 +1,7 @@
 #!/bin/perl
 
+# --deps: include dependencies as separate countries
+
 require "/usr/local/lib/bclib.pl";
 
 my($dir) = "$bclib{githome}/COW/";
@@ -55,7 +57,7 @@ for $i (split(/\n/, read_file("$dir/bc-gpw-natl-grid.txt"))) {
 
 # debug("ETA", $chash{100}{ISOCODE}, $chash{100}{NAME0});
 
-print "CC2,CC3,Name,clng,clat,r_value,MEANUNITKM\n";
+print "CC2,CC3,Name,clng,clat,r_value,population,numPoints\n";
 
 my(%cinfo);
 
@@ -73,11 +75,14 @@ for $i (split(/\n/, $data)) {
 #    $cinfo{$country}{CC3} = $country;
 		       
     if ($cc322{$country}) {$country = $cc322{$country};}
+
+    unless ($globopts{deps}) {
     
-    if ($conversions{$country}) {
-	debug("DESTROYING NAME FOR: $country -> $conversions{$country}");
-	$country = $conversions{$country};
-	$name ="";
+	if ($conversions{$country}) {
+	    debug("DESTROYING NAME FOR: $country -> $conversions{$country}");
+	    $country = $conversions{$country};
+	    $name ="";
+	}
     }
 
     debug("ASSIGNING $country name to $name");
@@ -112,9 +117,9 @@ for $i (sort keys %cinfo) {
 
     if ($lng>180) {$lng-=360;}
 
-    unless ($cc223{$i}) {$cc223{$i} = "N/A";}
+#    unless ($cc223{$i}) {$cc223{$i} = "N/A";}
 
-    print "$i,$cc223{$i},$cinfo{$i}{name},$lng,$lat,$r,$cinfo{MEANUNITKM}\n";
+    print "$i,$cc223{$i},$cinfo{$i}{name},$lng,$lat,$r,$cinfo{$i}{pop},$cinfo{$i}{points}\n";
 
 }
 
