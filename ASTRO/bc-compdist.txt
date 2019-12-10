@@ -1,0 +1,54 @@
+Short answer: the Earth is closer to the Sun than to Mars about 77.9% of the time.
+
+## Methodology ##
+
+I wrote https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-compdist.c to compute when and how long Mars was further from the Earth than the Sun. In the ~30,000 year period covered by DE431, this happens 14,231 times for an average duration of 607.93 days, followed by an average of 172.00 days where Mars is closer. Notes:
+
+  - The actual duration Mars is further varies from 546.55 days to 648.41 days.
+
+  - The duration between when Mars is further away varies from 760.96 days to 814.51 days. The Earth-Mars sydonic period is 779.9 days.
+
+  - Both variances above can be explained by the eccentricity of Mars' orbit. As noted in https://en.wikipedia.org/wiki/Orbit_of_Mars#Close_approaches_to_Earth the Earth-Mars distance when the Sun-Earth-Mars are lined up varies considerably, so the time it takes Mars to get further than the Sun varies considerably.
+
+  - I livestreamed my solving this problem and the videos are available at https://www.youtube.com/watch?v=s2gmWhW0QZY&list=PLQiTKaefaTLpfUVJETwWX31IxLypqA7xy with the titles "Earth-Sun-Mars distances".
+
+1.850 degrees ..... 227.9GM semimajor axis 
+
+7.36113 million km above or below ecliptic
+
+747533170204 seconds mars is further 
+
+959041464772.000061
+
+0.77945865498288598584 mars is further
+
+14233 times mars is further
+
+excl first and last: 747533170204 - 36036716 - 10083060
+
+747487050428 so actual % is
+
+-479599561761 is first
+
+479376644995 is last
+
+958976206756 is total number
+
+calc 747487050428/958976206756
+
+0.77946360416655167276
+
+47221883 = min, 546.54957175925925925926 days
+
+56022754 = max, 648.41150462962962962963 days
+
+sydonic based on mars further: 65747021 - 70373643
+
+760.96089120370370370370 to 814.50975694444444444444
+
+sydonic: mars orbit: 779.9
+
+orbital period: 687.0
+
+
+
