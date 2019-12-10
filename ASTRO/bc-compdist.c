@@ -37,11 +37,11 @@ int main( int argc, char **argv ) {
  SpiceInt count,i;
  furnsh_c( "standard.tm" );
 
- // 1970 to 2038 (all "Unix time")
- //  wninsd_c (STIME, ETIME, &cnfine);
+
+ wninsd_c (-500*365.2425*86400, 500*365.2425*86400, &cnfine);
 
  // TEST
- wninsd_c (0, 86400*365.2425*60, &cnfine);
+ // wninsd_c (0, 86400*365.2425*60, &cnfine);
 
  //  for (i = 0; i < 1000; i++) {gfq(i*86400, &step);}
 
