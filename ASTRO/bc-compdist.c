@@ -11,22 +11,14 @@
 
 void gfq ( SpiceDouble et, SpiceDouble *value ) {
 
-  SpiceDouble sun[6], earth[6], mars[6], earthmars[6], earthsun[6], ltsun, ltmars, ltearth;
+  SpiceDouble sun[6], mars[6], ltsun, ltmars;
 
-  spkezr_c("Sun", et, "J2000", "CN+S", "0", sun, &ltsun);
-  spkezr_c("4", et, "J2000", "CN+S", "0", mars, &ltmars);
-  spkezr_c("Earth", et, "J2000", "CN+S", "0", earth, &ltearth);
-
-  vsub_c(earth, mars, earthmars);
-  vsub_c(earth, sun, earthsun);
-
-  SpiceDouble em = vnorm_c(earthmars);
-  SpiceDouble es = vnorm_c(earthsun);
-
-  //  printf("%f %f\n", em, es);
+  spkezr_c("Sun", et, "J2000", "CN+S", "Earth", sun, &ltsun);
+  spkezr_c("4", et, "J2000", "CN+S", "Earth", mars, &ltmars);
 
   // positive means that mars is further
-  *value = em-es;
+
+  *value = vnorm_c(mars) - vnorm_c(sun);
 }
  
 int main( int argc, char **argv ) {
