@@ -1,26 +1,80 @@
-(this is for the second answer using GPW)
+One word answer: Iceland
 
-TODO:
+One sentence answer: Subject to the methodology and caveats below, with an estimated 2020 poulation center latitude of 64.336, Iceland has the northernmost population center among soverign nations, with Finland coming in second at 61.715, and Norway coming in third at 61.049
 
-mention gpw sources and urls + ancillary information
+## Methodology ##
 
-point to the perl scirpts i used
+  - Using CIESIN gridded population data and national identifier grid at
 
-point to twitch streams (on youtube)
+https://sedac.ciesin.columbia.edu/data/sets/browse?facets=theme:population
 
-mention unix commands i used (ogrinfo -al)
+under "UN WPP-Adjusted Population Count, v4.11 (2000, 2005, 2010, 2015, 2020)" and "National Identifier Grid, v4.11 (2010)" respectively, I wrote bc-pop-center.pl and bc-pop-center-parse.pl in https://github.com/barrycarter/bcapps/tree/master/COW/ to compute the national centers of population.
 
+  - As https://en.wikipedia.org/wiki/Center_of_population#Definitions notes, there are several ways to compute center of population, each of which may give different results. I used "the mean centre, also known as the centroid or centre of gravity"
 
-note iso code is 3 letters, 2 letters
+  - The full results are in the files "bc-pop-centers-no-deps.csv" and "bc-pop-centers-with-deps.csv" in https://github.com/barrycarter/bcapps/tree/master/COW/ where the former treats dependencies as belonging to their parent nations, and the latter treats dependencies as separate nations.
+
+## Highlights ##
+
+  - If dependencies are counted as separate nations, the Svalbard and Jan Mayen Islands has the northernmost center of population at 78.596 latitude, with Greenland at 66.070 coming in second. Iceland is then third.
+
+  - If dependencies are counted as separate nations, the Falkland Islands (Islas Malvinas) are southernmost at -58.083 latitude, but the other southernmost centers of population belong to sovereign nations.
+
+  - The sovereign with the southernmost centers of population are New Zealand with -39.374 latitude, Uruguay with -34.073 latitude, and Chile with -34.059 latitude.
+
+  - There are 933,120,000 gridpoints (of 30 arcseconds by 30 arcseconds each) of varying size total on the Earth. The Holy See of Vatican City covers only 1 of these gridpoints, whereas the Russian Federation covers 41,463,394 gridpoints. Because each gridpoint does not have the same area, it's a coincidence of sorts that these are also the smallest and largest countries by area.
+
+## Caveats ##
+
+  - The national grid data treats dependencies as separate countries, so I used https://spreadsheets.google.com/ccc?key=pJpyPy-J5JSNhe7F_KxwiCA&hl=en (which geonames.org's countryInfo.txt file lists as being a source of dependent countries) to convert. This list does not appear to be complete, and my results reflect this. For example, New Caledonia is actually a dependency of France and Curacao is a dependency of the Netherlands. I briefly tried to add to the google spreadsheet, but only got as far as these two examples before giving up.
+
+  - The line starting with FR/NL refers to Saint-Martin, which is apparently not sovereign, but co-owned by two nations. In theory, Andorra should be listed as "ES/FR" as it belongs to both Spain and France (for 6 months a year each), but I treat it as a separate entity.
+
+  - According to geonames, Antarctica has a permanent population, but, since it is not owned by any nation (and since the gridded population data doesn't cover it), it does not appear in my results. If it did, it would by far have the southernmost center of population (at the Amundsen-Scott base, which is only a few hundred feet from the South Pole).
+
+  - The national and population grid data is based on 30 arcsecond by 30 arcsecond grids, so the latitudes and longitudes are accurate only to 1/120 degree, so I give only three digits of precision above, though the files use full floating point precision, but, of course, the accuracy is still limited.
+
+## Other Notes ##
+
+  - The national grid data uses three letter country codes, which I converted to two letter country codes using https://www.iban.com/country-codes which I converted to bc-cc2cc3.csv in https://github.com/barrycarter/bcapps/tree/master/COW/
+
+  - I live streamed solving this and the recordings are available on my bccoding playlist at https://www.youtube.com/watch?v=s2gmWhW0QZY&list=PLQiTKaefaTLpfUVJETwWX31IxLypqA7xy with titles "National centers of population (or something)"
+
+  - This was actually my second approach. My first approach was to use populated places in geonames, but this misses a lot of non-urban areas. My partial writeup for this approach is at: https://github.com/barrycarter/bcapps/tree/master/COW/README.coc
+
+  - My writeup for the approach I am using here is at https://github.com/barrycarter/bcapps/tree/master/COW/README.coc2 ; it includes this answer and a more thorough explanation of the columns in the CSV files mentioned earlier.
+
+## To Do ##
+
+  - I'd like to create an KML of these population centers just for fun.
+
+CSV File Column Explanation
+===========================
+
+CC2: the two character country code
+
+CC3: the three character country code
+
+Name: the country's name
+
+clng: the longitude of the country's population center
+
+clat: the latitude of the country's population center
+
+r_value: the length of the central vector as a fraction of the Earth's radius; this measures how "spread out" the population is. A value of 1 means the population is effectively in one location, where as lower values mean the population is more spread out. Unsurprisingly, the Russian Federation has the lowest r_value at 0.967, where as the Holy See of Vatican City has the highest r_value at 1.
+
+population: the total population as computed by the population grid; since I used the UN-adjusted population count, this should be close to the nation's actual population
+
+numPoints: the number of gridpoints included in this country
+
+Notes
+=====
+
+The bc-gpw-natl-grid.txt was created using `ogrinfo -al gpw_v4_national_identifier_grid_rev11_30_sec.shp | fgrep -v POLYGON|");` to obtain meta information about countries without seeing their polygon data.
+
+My Personal Notes
+=================
+
+weird linesin file
 
 explain columns in spreadhseet
-
-mention thsi file as answer
-
-special cases like FLK + AND
-
-mention other answer as well and point to it
-
-
-
-
