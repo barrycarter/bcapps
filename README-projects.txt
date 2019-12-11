@@ -1,3 +1,17 @@
+Title: OSM data server that only returns "information you'd want to show"
+
+Description: There are existing OSM dataservers (eg, http://lz4.overpass-api.de/) that will return *all* data in a given latitude/longitude bounding box.
+
+However, this is generally far more data than is required to render a slippy tile.
+
+For example, to render the 0/0/0 slippy tile, we need data for pretty much the entire world. However, we don't need *all* the data for the world: just the shapes and names of the larger continents and countries for example.
+
+In theory, any existing tileserver could be modified to give text output instead of image output.
+
+A major advantage would be that the end user how to display various types of features, choose what language they want to see those features in, choose what meta-data they want to see, and even dynamically control the display of these features.
+
+====================================================================
+
 Title: Find position of planet using osculating elliptical parameters
 
 Description: Finding the position of a planet in an elliptical orbit
@@ -128,6 +142,24 @@ This "mass correlation" project could be used to answer questions like:
 https://earthscience.stackexchange.com/questions/18151/deserts-and-humidity
 
 https://earthscience.stackexchange.com/questions/18158/precipitation-and-elevation
+
+https://earthscience.stackexchange.com/questions/18663/weather-forecast
+
+https://earthscience.stackexchange.com/questions/18591/is-there-any-link-between-the-weekly-human-cycle-and-weather (using weekday as an input variable)
+
+https://earthscience.stackexchange.com/questions/18183/local-weather-forecast-self-learning-algorithm
+
+https://earthscience.stackexchange.com/questions/3160/statistical-weather-prediction
+
+https://earthscience.stackexchange.com/questions/4480/predicting-school-closures-with-historical-weather-prediction-data (using school closure as an output variable)
+
+https://earthscience.stackexchange.com/questions/8716/how-does-elevation-affect-the-amount-of-rainfall-received
+
+https://earthscience.stackexchange.com/questions/18447/predicting-the-weather-in-two-months
+
+https://earthscience.stackexchange.com/questions/16366/weather-forecast-based-on-pressure-temperature-and-humidity-only-for-implement
+
+https://earthscience.stackexchange.com/questions/9306/is-it-typically-colder-after-a-storm
 
 and probably many others.
 
