@@ -374,3 +374,18 @@ alias vscode "/usr/share/code/bin/code&"
 # can use .Xresources?
 
 alias evince "evince \!* &"
+
+# dir -t in some sense
+alias dirt "ls -lat \!* | less"
+
+# cleanup junk emacs creates
+alias cleanup "/bin/rm *~ ,* #*# .*~"
+
+# make a directory including any parents if needed, and cd to it
+alias mdcd "mkdir -p \!*; cd \!*"
+
+# dir should use ls -l not ls (this is probably bad because it
+# overwrites and existing command, but I'm so used to it from the
+# olden days of DOS)
+
+alias dir "\ls -l \!* | less"

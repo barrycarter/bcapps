@@ -1,0 +1,41 @@
+One word answer: skyfield
+
+One sentence answer: Per https://github.com/skyfielders/python-skyfield/issues/228 the most recent versions of Brandon Rhodes' skyfield (https://github.com/skyfielders/python-skyfield) can now compute what constellation a given object is in by precessing the right ascension and declination to B1875 (the epoch where the constellations were defined with "straight" lines) and using a nonuniform grid to determine the constellation.
+
+Notes:
+
+  - Stellarium can display precessed constellation boundaries (and names). Example:
+
+[[stellarium-000.png]]]
+
+  - Skyfield returns the International Astronomical Union's (IAU) constellation definitions as per https://www.iau.org/public/themes/constellations/ which isn't necessarily ideal.
+
+[[PSC-final.gif]]
+
+For example, in the image above, you couldn't really tell which constellation the stars inside the red box just by looking at the constellation figures without knowing the boundaries in advance. Since archeoastronomy predates the IAU's definitions, the IAU's boundaries wouldn't be helpful. I suspect you're more looking for when an object is "really" inside a given constellation.
+
+This is also why determining the start of the "Age of Aquarius" is non-trivial, since it's unlikely that ancient peoples knew of or could predict IAU's boundaries.
+
+  - Unlike the 12 astrological signs of the zodiac (see https://astronomy.stackexchange.com/questions/19301/), there are 13 signs in the IAU "zodiac", and the Sun doesn't spend even nearly the same amount of time in each constellation.
+
+[[stellarium-003.png]]
+
+As shown above, the Sun spends much more time in Virgo than in Scorpio.
+
+  - Although the Sun stays pretty close to the ecliptic, the other planets and Moon do not, which means that the Moon (for example) can be in "non-zodiacal" constellations: https://astronomy.stackexchange.com/questions/13086/
+
+  - The technique Rhodes uses is fairly generic and should be easily portable to other languages. I'm looking into porting it to C myself, so I can use it with CSPICE. My version would also return how close to a boundary line a given object is, so I could use CSPICE's "geometry finder" functions.
+
+  - I livestreamed my answering this question at:
+
+    - https://youtu.be/Tbr8j_ozO3w
+
+
+mention this video
+
+
+western boundaries dont look like signs (screenshot)
+
+harey make fun of (deferred)
+
+const chart 10 on page 48

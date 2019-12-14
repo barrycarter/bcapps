@@ -14,6 +14,9 @@ Notes for map server:
 
   - TODO: add continental plate boundaries
 
+  - TODO: maybe add HBASE and GIMS data
+  https://sedac.ciesin.columbia.edu/mapping/gmis-hbase/explore-view/
+
   - TODO: maybe use raster2pgsql to convert raster maps to
   postgresql-- is that faster than using a binary file that's squashed
   (probably not?)

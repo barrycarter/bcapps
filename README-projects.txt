@@ -6,7 +6,7 @@ However, this is generally far more data than is required to render a slippy til
 
 For example, to render the 0/0/0 slippy tile, we need data for pretty much the entire world. However, we don't need *all* the data for the world: just the shapes and names of the larger continents and countries for example.
 
-In theory, any existing tileserver could be modified to give text output instead of image output.
+In theory, any existing tileserver could be modified to give text output instead of image output. The key appears to be in the SELECT queries used to select features at a given zoom level
 
 A major advantage would be that the end user how to display various types of features, choose what language they want to see those features in, choose what meta-data they want to see, and even dynamically control the display of these features.
 
