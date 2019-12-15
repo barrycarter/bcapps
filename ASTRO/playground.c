@@ -14,15 +14,39 @@
 
 int main (int argc, char **argv) {
 
-  SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq;
-  SpiceDouble pos[3], newpos[3];
+  SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq, umbPt[3], umbVec[3], umbAng;
+  SpiceDouble pos[3], newpos[3], sun[3], moon[3], earth[3], mr[3], sr[3], er[3];
   SpiceDouble lt;
-  SpiceInt planets[6], i;
+  SpiceInt planets[6], i, n;
   SPICEDOUBLE_CELL (range, 2);
   SpiceDouble beg,end,stime,etime,*array;
   char test2[2000];
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+
+  et = 0;
+
+  spkezp_c(301, et, "J2000", "NONE", 0, moon, &lt);
+  spkezp_c(10, et, "J2000", "NONE", 0, sun, &lt);
+  spkezp_c(399, et, "J2000", "NONE", 0, earth, &lt);
+
+  bodvrd_c("MOON", "RADII", 3, &n, mr);
+  bodvrd_c("SUN", "RADII", 3, &n, sr);
+  bodvrd_c("EARTH", "RADII", 3, &n, er);
+
+  printf("MOON: %f %f %f (%f)\n", moon[0], moon[1], moon[2], vnorm_c(moon));
+  printf("SUN: %f %f %f (%f)\n", sun[0], sun[1], sun[2], vnorm_c(sun));
+  printf("EARTH: %f %f %f (%f)\n", earth[0], earth[1], earth[2], vnorm_c(earth));
+
+  printf("MR: %f %f %f\n", mr[0], mr[1], mr[2]);
+  printf("SR: %f %f %f\n", sr[0], sr[1], sr[2]);
+  printf("ER: %f %f %f\n", er[0], er[1], er[2]);
+
+  umbralData(sun, sr[0], moon, mr[0], umbPt, umbVec, &umbAng);
+
+  printf("UD: %f %f %f\n", umbPt[0], umbPt[1], umbPt[2]);
+  printf("UV: %f %f %f\n", umbVec[0], umbVec[1], umbVec[2]);
+  printf("UA: %f\n", umbAng);
 
   exit(-1);
 

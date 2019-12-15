@@ -7,7 +7,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# TODO: this should check standard.tm time too
+# TODO: this should check standard.tm + bclib.h time too
 for $i (glob("*.c")) {
 
   my($targ) = $i;
