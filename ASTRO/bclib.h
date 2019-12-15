@@ -561,3 +561,36 @@ SpiceDouble prevOrNextTime2(SpiceInt target, SpiceDouble et, SpiceDouble elev,
   return beg;
 
 }
+
+/**
+
+Given the following: 
+
+  - A light-generating object s (eg, "Sun") as a 3 elt position vector
+  - Radius of s as sr
+  - Another object t (eg, "Jupiter") as a 3 elt position vector
+  - Radius of t as tr
+
+Assumptions:
+
+  - tr < sr (TODO: lift this assumption)
+
+Returns:
+
+  - umbPt: the point of the umbral cone
+  - umbVec: the vector pointing from t to s
+  - umbAng: the angle of the umbral cone
+
+*/
+
+void umbralData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3], SpiceDouble tr,
+		SpiceDouble umbPt[3], SpiceDouble umbVec[3], SpiceDouble umbAng) {
+
+  umbPt[0] = (-sr*t[0] + s[0]*tr) / (sr - tr);
+  umbPt[1] = (-sr*t[1] + s[1]*tr) / (sr - tr);
+  umbPt[2] = (-sr*t[2] + s[2]*tr) / (sr - tr);
+
+  vsub_c(t, umbPt, umbVec);
+
+  umbAng = atan(tr/vnorm_c(vsub_c));
+}

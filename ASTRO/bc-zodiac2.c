@@ -30,10 +30,6 @@ const char *houses[] = {"ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO",
 			"LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN",
 			"AQUARIUS", "PISCES"};
 
-// planets[0] is the barycenter, never used
-const char *planets[] = {"SSB", "MERCURY", "VENUS", "EARTH", "MARS", "JUPITER",
-			 "SATURN", "URANUS", "NEPTUNE", "PLUTO", "SUN"};
-
 // convert house to string, optionally in terse format
 char *house2str(int house, char *type) {
 
@@ -52,29 +48,6 @@ char *house2str(int house, char *type) {
   }
 
   return (char *) houses[house];
-}
-
-// convert planet to string, optionally in terse format
-char *planet2str(int planet, char *type) {
-
-  // in case we need to return a string
-  static char res[200];
-
-  if (strcmp(type, "TERSE") == 0) {
-
-    if (planet<=9) {
-      sprintf(res, "%d", planet);
-      return res;
-    }
-
-    if (planet==301) {return "M";}
-    if (planet==10) {return "S";}
-    return "?";
-  }
-
-  if (planet<=10) {return (char *) planets[planet];}
-  if (planet == 301) {return "MOON";}
-  return "?";
 }
 
 // returns the sine of the angular distance to the nearest cusp
