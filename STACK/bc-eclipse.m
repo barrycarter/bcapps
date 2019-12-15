@@ -8,7 +8,7 @@ find umbral point of two spheres and thus the umbral cone
 sphere 1: sx, sy, sz with radius sr
 sphere 2: tx, ty, tz with radius tr
 
-umbral point is on conneting line + angular diameter of two sphers is equal
+umbral point is on connecting line + angular diameter of two spheres is equal
 
 third sphere is q below
 

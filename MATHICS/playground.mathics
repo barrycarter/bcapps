@@ -1,14 +1,38 @@
+{sx, sy, sz, sr} = {0, 0, 0, 1};
+{tx, ty, tz, tr} = {1, 2, 3, 0.5};
 
+{t1, t2} = {sr/(sr+tr), sr/(sr-tr)};
+
+line[t_] = (1-t)*{sx, sy, sz} + t*{tx, ty, tz}
+
+conePoint = line[t2]
+
+ang1 = tr/Norm[{tx,ty,tz}-conePoint]
+ang2 = sr/Norm[{sx,sy,sz}-conePoint]
+
+
+showElts :=
+ Graphics3D[{
+ Sphere[{sx,sy,sz}, sr],
+ Sphere[{tx,ty,tz}, tr],
+ Line[{ {sx,sy,sz}, {tx,ty,tz}}],
+ Line[{ {sx,sy,sz}, conePoint}]
+}, Axes -> True];
+
+
+showElts
 
 
 (* Graphics3D[{Orange, Polygon[{{0,0,0}, {1,1,1}, {1,0,0}}]},Axes->True] *)
 
+(*
 t1734 = Graphics3D[{
  Sphere[{1,2,3}, 0.4],
  Sphere[{0,0,0}, 0.5],
  Line[{ {0,0,0}, {1,2,3} }]
  
 }]
+*)
 
 
 
@@ -22,7 +46,7 @@ ParametricPlot[{t, t+1, t+2}, {t, 0, 5}]
 
 *)
 
-(* $ExportFormats
+(* 
 
 formats = {BMP,CSV,GIF,JPEG,JPEG2000,PBM,PCX,PGM,PNG,PPM,SVG,TIFF,Text};
 
@@ -37,9 +61,6 @@ t1740 = Graphics[{
  Axes -> True
 ];
 *)
-
-
-
 
 (* Show[{Graphics[RGBColor[1,0,0]], t1734}] *)
 
