@@ -1,0 +1,46 @@
+
+
+
+(* Graphics3D[{Orange, Polygon[{{0,0,0}, {1,1,1}, {1,0,0}}]},Axes->True] *)
+
+t1734 = Graphics3D[{
+ Sphere[{1,2,3}, 0.4],
+ Sphere[{0,0,0}, 0.5],
+ Line[{ {0,0,0}, {1,2,3} }]
+ 
+}]
+
+
+
+(*
+
+Binarize[t1734]
+
+ParametricPlot[{t, t+1}, {t, 0, 5}]
+
+ParametricPlot[{t, t+1, t+2}, {t, 0, 5}]
+
+*)
+
+(* $ExportFormats
+
+formats = {BMP,CSV,GIF,JPEG,JPEG2000,PBM,PCX,PGM,PNG,PPM,SVG,TIFF,Text};
+
+Export["/tmp/foo.pcx", t1734]
+
+*)
+
+(*
+t1740 = Graphics[{
+ Red, Circle[{0,0}, 1],
+ Blue, Circle[{1,1}, 0.5]},
+ Axes -> True
+];
+*)
+
+
+
+
+(* Show[{Graphics[RGBColor[1,0,0]], t1734}] *)
+
+
