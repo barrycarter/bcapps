@@ -18,7 +18,7 @@ Red, Circle[{cx,cy}, cr], Disk[{cx, cy}, 0.01],
 Blue, Line[{{0,0}, {cx,cy}}],
 Line[drawAngle[.3, ArcTan[cy/cx]]],
 Purple, Line[{{cx,cy}, termPt}],
-Green, Line[{{0,0}, termPt}]
+Green, Line[{{0,0}, termPt}], Line[drawAngle[0.4, desAng]]
 }, Axes -> True, PlotRange -> {{-0.1,2}, {0,1}}]
 
 (* Line[AnglePath[{45*Degree, 20*Degree, 30*Degree}]], *)
