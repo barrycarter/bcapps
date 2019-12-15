@@ -1,0 +1,22 @@
+ang = 30*Degree
+{cx, cy, cr} = {0.85, 0.8, 0.25}
+
+perAng = ang-90*Degree
+
+termPt = {cx, cy} + cr*{Cos[perAng], Sin[perAng]}
+
+desAng = ArcTan[termPt[[2]]/termPt[[1]]]
+
+lineCircle = Table[N[{Cos[t*Degree], Sin[t*Degree]}], {t, 1, 30}]
+
+Graphics[{
+Line[lineCircle],
+Line[{{0,0}, 2*{Cos[ang],Sin[ang]}}],
+Line[{{0,0}, 2*{Cos[ang],-Sin[ang]}}],
+Red, Circle[{cx,cy}, cr], Disk[{cx, cy}, 0.01],
+Line[{{0,0}, {cx,cy}}],
+Line[{{cx,cy}, termPt}],
+Line[{{0,0}, termPt}]
+}, Axes -> True, PlotRange -> {{0,2}, {-1,1}}]
+
+(* Line[AnglePath[{45*Degree, 20*Degree, 30*Degree}]], *)

@@ -19,8 +19,8 @@ showElts :=
  Sphere[{sx,sy,sz}, sr],
  Sphere[{tx,ty,tz}, tr],
  Sphere[{qx,qy,qz}, qr],
- Line[{ {sx,sy,sz}, {tx,ty,tz}}],
- Line[{ {sx,sy,sz}, conePoint}]
+ Line[{{sx,sy,sz}, conePoint}],
+ Line[{{qx,qy,qz}, conePoint}]
 }, Axes -> True];
 
 
