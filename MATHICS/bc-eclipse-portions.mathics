@@ -1,10 +1,6 @@
 
-(*
-
 ang = 30*Degree
 {cx, cy, cr} = {0.55, 0.7, 0.25}
-
-*)
 
 perAng = ang-90*Degree
 
@@ -17,8 +13,6 @@ desAng = ArcTan[termPt[[2]]/termPt[[1]]]
 lineCircle = Table[N[{Cos[t*Degree], Sin[t*Degree]}], {t, 1, 30}]
 
 Graphics[{
-Line[drawAngle[0.2, ang]],
-Line[{{0,0}, 2*{Cos[ang],Sin[ang]}}],
 Red, Circle[{cx,cy}, cr], Disk[{cx, cy}, 0.01],
 Blue, Line[{{0,0}, {cx,cy}}],
 Line[drawAngle[.3, ArcTan[cy/cx]]],

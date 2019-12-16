@@ -586,6 +586,8 @@ Returns:
 void umbralData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3], SpiceDouble tr,
 		SpiceDouble umbPt[3], SpiceDouble umbVec[3], SpiceDouble *umbAng) {
 
+  // TODO: why do I need negative sign here?
+
   umbPt[0] = -(-sr*t[0] + s[0]*tr) / (sr - tr);
   umbPt[1] = -(-sr*t[1] + s[1]*tr) / (sr - tr);
   umbPt[2] = -(-sr*t[2] + s[2]*tr) / (sr - tr);

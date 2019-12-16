@@ -1,0 +1,25 @@
+{sx, sy, sr} = {0, 0, 0.05};
+{mx, my, mr} = {0.1, 0, 0.015};
+{ex, ey, er} = {0.15, 0, 0.025};
+
+tval = sr/(sr-mr)
+
+line[t_] = (1-t)*{sx, sy} + t*{mx, my};
+
+conePt = line[tval];
+
+ang = ArcTan[mr/Norm[conePt - {mx, my}]]
+
+Print[ang];
+
+viewLine[t_] = (1-t)*conePt + t*{sx, sy+sr}
+
+Graphics[{
+ Yellow, Disk[{sx, sy}, sr],
+ Red, Disk[{mx, my}, mr],
+ Blue, Circle[{ex, ey}, er], Point[{ex, ey}],
+ Black, Line[{line[0], line[1]}],
+ Line[{viewLine[0], viewLine[1]}],
+ Purple, Line[{line[1], line[tval]}]
+}]
+

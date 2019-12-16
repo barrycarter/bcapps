@@ -26,6 +26,10 @@ int main (int argc, char **argv) {
 
   et = 0;
 
+  for (int i=0; i<366; i++) {
+
+    et = i*86400;
+
   spkezp_c(301, et, "J2000", "NONE", 0, moon, &lt);
   spkezp_c(10, et, "J2000", "NONE", 0, sun, &lt);
   spkezp_c(399, et, "J2000", "NONE", 0, earth, &lt);
@@ -34,24 +38,33 @@ int main (int argc, char **argv) {
   bodvrd_c("SUN", "RADII", 3, &n, sr);
   bodvrd_c("EARTH", "RADII", 3, &n, er);
 
-  printf("MOON: %f %f %f (%f)\n", moon[0], moon[1], moon[2], vnorm_c(moon));
-  printf("SUN: %f %f %f (%f)\n", sun[0], sun[1], sun[2], vnorm_c(sun));
-  printf("EARTH: %f %f %f (%f)\n", earth[0], earth[1], earth[2], vnorm_c(earth));
-
-  printf("MR: %f %f %f\n", mr[0], mr[1], mr[2]);
-  printf("SR: %f %f %f\n", sr[0], sr[1], sr[2]);
-  printf("ER: %f %f %f\n", er[0], er[1], er[2]);
-
   umbralData(sun, sr[0], moon, mr[0], umbPt, umbVec, &umbAng);
   // umbralData(moon, mr[0], sun, sr[0], umbPt, umbVec, &umbAng);
   
   vsub_c(earth, umbPt, dist);
 
+  SpiceDouble ear = asin(er[0]/vnorm_c(dist));
+
+  //  printf("UA: %d %f %f %f\n", i, umbAng, vsep_c(dist, umbVec), ear);
+
+  //  printf("NDIST: %d %f\n", i, vnorm_c(dist));
+
+
+  printf("\nDAY :%d\n", i);
+  printf("MOON: %f %f %f (%f)\n", moon[0], moon[1], moon[2], vnorm_c(moon));
+  printf("SUN: %f %f %f (%f)\n", sun[0], sun[1], sun[2], vnorm_c(sun));
+  printf("EARTH: %f %f %f (%f)\n", earth[0], earth[1], earth[2], vnorm_c(earth));
+  printf("DIST: %f %f %f (%f)\n", dist[0], dist[1], dist[2], vnorm_c(dist));
+
+  printf("MR: %f %f %f\n", mr[0], mr[1], mr[2]);
+  printf("SR: %f %f %f\n", sr[0], sr[1], sr[2]);
+  printf("ER: %f %f %f\n", er[0], er[1], er[2]);
+
   printf("UD: %f %f %f\n", umbPt[0], umbPt[1], umbPt[2]);
   printf("UV: %f %f %f\n", umbVec[0], umbVec[1], umbVec[2]);
-  printf("UA: %f\n", umbAng);
-  printf("NDIST: %f\n", vnorm_c(dist));
+  printf("UA: %f %f %f\n", umbAng, vsep_c(dist, umbVec), ear);
 
+    }
   exit(-1);
 
   for (i=-20000; i<=20000; i++) {
