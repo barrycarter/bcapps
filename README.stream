@@ -1,4 +1,6 @@
-Stuff I plan to stream 15 Dec 2019, primarily for my reference
+Stuff I plan to stream 16 Dec 2019, primarily for my reference
+
+two cases for umbral cone: inside planet and outside, not unifiable
 
 Transfer umbral cone stuff to CSPICE
 
@@ -10,5 +12,10 @@ Compute jovian eclipses, write up results to stack, say "confirm by
 looking at target, not from Jupiter"
 
 Ask Stellarium to show Jovian lunar eclipses incl one moon eclipses another
+
+If partial solar eclipse on moon from earth, that part of moon
+receives less sunlight = what does earth see if anything (thought:
+moon still looks fine because even a sliver of sunlight is enough to
+"fully" illuminate moon?)
 
 
