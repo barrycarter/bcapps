@@ -131,19 +131,23 @@ our(@globopts) = ("debug", "nocache", "tmpdir", "nowarn", "fake", "ignorelock",
 		  "affirm", "keeptemp", "xmessage", "bgend", "filedebug");
 
 # global options this library supports
-#
-# --debug: print debugging messages
-# --filedebug=file: send debugging messages to file, not STDERR
-# --nocache: do not cache results
-# --tmpdir=x: use x as temporary directory when needed
-# --nowarn: if using warnlocal(), suppress warnings
-# --fake: do not actually post to WP, just fake it
-# --ignorelock: ignore any locks held by mylock()
-# --affirm: assume affirmative responses to anything affirm() asks
-# --keeptemp: keep temporary files
-# --xmessage: pop up xmessage when program ends
-# --bgend: write to background image when program ends
-# --nodetach: don't detach from the terminal even if program normally would
+
+$bclib{options_supported} = << "MARK";
+--debug: print debugging messages
+--filedebug=file: send debugging messages to file, not STDERR
+--nocache: do not cache results
+--tmpdir=x: use x as temporary directory when needed
+--nowarn: if using warnlocal(), suppress warnings
+--fake: do not actually post to WP, just fake it
+--ignorelock: ignore any locks held by mylock()
+--affirm: assume affirmative responses to anything affirm() asks
+--keeptemp: keep temporary files
+--xmessage: pop up xmessage when program ends
+--bgend: write to background image when program ends
+--nodetach: don't detach from the terminal even if program normally would
+--help: show help on program, don't run it
+MARK
+;
 
 # largest possible path (really?)
 
@@ -5016,5 +5020,39 @@ sub var_dump {return dump_var(@_);}
 
 # automatically call parse_options (don't expect calling prog to do this)
 &parse_options;
+
+# after parsing options, if --help called, print out "help" on the
+# program instead of running it-- by looking at comments prior to code
+
+# TODO: should probably subroutinize this
+
+if ($globopts{help}) {
+
+  # open the code file...
+  local(*A);
+
+  open(A,$0)||die("Can't open $0: $!");
+
+  # first line should have Perl interpreter somewhere
+
+  unless (<A>=~/perl/i) {die "Script doesn't start with Perl interpreter";}
+
+  # print lines until first code line (nonblank/noncomment line)
+
+  while (<A>) {
+
+    if (/^\#/) {print $_; next;}
+    if (/^\s*$/) {next;}
+    last;
+  }
+
+  # global options supported by library
+  print "\nLibrary options:\n\n";
+  print $bclib{options_supported};
+
+  # when using --help don't run code
+  exit(0);
+
+}
 
 1;
