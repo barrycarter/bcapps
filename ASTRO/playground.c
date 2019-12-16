@@ -14,7 +14,7 @@
 
 int main (int argc, char **argv) {
 
-  SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq, umbPt[3], umbVec[3], umbAng;
+  SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq, umbPt[3], umbVec[3], umbAng, dist[3];
   SpiceDouble pos[3], newpos[3], sun[3], moon[3], earth[3], mr[3], sr[3], er[3];
   SpiceDouble lt;
   SpiceInt planets[6], i, n;
@@ -43,10 +43,14 @@ int main (int argc, char **argv) {
   printf("ER: %f %f %f\n", er[0], er[1], er[2]);
 
   umbralData(sun, sr[0], moon, mr[0], umbPt, umbVec, &umbAng);
+  // umbralData(moon, mr[0], sun, sr[0], umbPt, umbVec, &umbAng);
+  
+  vsub_c(earth, umbPt, dist);
 
   printf("UD: %f %f %f\n", umbPt[0], umbPt[1], umbPt[2]);
   printf("UV: %f %f %f\n", umbVec[0], umbVec[1], umbVec[2]);
   printf("UA: %f\n", umbAng);
+  printf("NDIST: %f\n", vnorm_c(dist));
 
   exit(-1);
 
