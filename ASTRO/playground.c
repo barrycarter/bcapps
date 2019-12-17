@@ -15,7 +15,7 @@
 int main (int argc, char **argv) {
 
   SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq, umbPt[3], umbVec[3], umbAng, dist[3];
-  SpiceDouble pos[3], newpos[3], sun[3], moon[3], earth[3], mr[3], sr[3], er[3];
+  SpiceDouble pos[3], newpos[3], sun[3], moon[3], earth[3], mr[3], sr[3], er[3], em[3];
   SpiceDouble lt;
   SpiceInt planets[6], i, n;
   SPICEDOUBLE_CELL (range, 2);
@@ -26,9 +26,10 @@ int main (int argc, char **argv) {
 
   et = 0;
 
-  for (int i=0; i<366; i++) {
+  //  for (int i=0; i<366; i++) {
+  for (double i=35; i<36; i+=0.01) {
 
-    et = i*86400;
+    et = i*86400.;
 
   spkezp_c(301, et, "J2000", "NONE", 0, moon, &lt);
   spkezp_c(10, et, "J2000", "NONE", 0, sun, &lt);
@@ -43,6 +44,10 @@ int main (int argc, char **argv) {
   
   vsub_c(earth, umbPt, dist);
 
+  // from earth to moon
+
+  vsub_c(moon, earth, em);
+
   SpiceDouble ear = asin(er[0]/vnorm_c(dist));
 
   //  printf("UA: %d %f %f %f\n", i, umbAng, vsep_c(dist, umbVec), ear);
@@ -50,7 +55,7 @@ int main (int argc, char **argv) {
   //  printf("NDIST: %d %f\n", i, vnorm_c(dist));
 
 
-  printf("\nDAY :%d\n", i);
+  printf("\nDAY :%f\n", i);
   printf("MOON: %f %f %f (%f)\n", moon[0], moon[1], moon[2], vnorm_c(moon));
   printf("SUN: %f %f %f (%f)\n", sun[0], sun[1], sun[2], vnorm_c(sun));
   printf("EARTH: %f %f %f (%f)\n", earth[0], earth[1], earth[2], vnorm_c(earth));
@@ -62,7 +67,7 @@ int main (int argc, char **argv) {
 
   printf("UD: %f %f %f\n", umbPt[0], umbPt[1], umbPt[2]);
   printf("UV: %f %f %f\n", umbVec[0], umbVec[1], umbVec[2]);
-  printf("UA: %f %f %f\n", umbAng, vsep_c(dist, umbVec), ear);
+  printf("UA: %f %f %f %f\n", umbAng, vsep_c(dist, umbVec), ear, vsep_c(umbVec, em));
 
     }
   exit(-1);

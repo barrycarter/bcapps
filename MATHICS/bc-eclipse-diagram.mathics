@@ -1,6 +1,9 @@
-{sx, sy, sr} = {0, 0, 0.03};
-{mx, my, mr} = {0.1, 0, 0.015};
-{ex, ey, er} = {0.15, -0.02, 0.025};
+scale = 300;
+
+
+{sx, sy, sr} = scale*{0, 0, 0.03};
+{mx, my, mr} = scale*{0.1, 0, 0.015};
+{ex, ey, er} = scale*{0.15, -0.03, 0.025};
 
 tval = sr/(sr-mr)
 
@@ -10,17 +13,43 @@ conePt = line[tval];
 
 ang = ArcTan[mr/Norm[conePt - {mx, my}]]
 
-Print[ang];
+(* Print[ang]; *)
 
 viewLine[t_] = (1-t)*conePt + t*{sx, sy+sr}
 viewLine2[t_] = (1-t)*conePt + t*{sx, sy-sr}
 
-Graphics[{
+g1 = Graphics[{
  Yellow, Disk[{sx, sy}, sr],
  Red, Disk[{mx, my}, mr],
  Blue, Circle[{ex, ey}, er], Point[{ex, ey}],
  Black, Line[{line[0], line[1]}],
  Line[{viewLine[0], viewLine[1]}], Line[{viewLine2[0], viewLine2[1]}],
  Purple, Line[{line[1], line[tval]}]
-}]
+}];
+
+
+g2 = Graphics[{
+ Yellow, Disk[{sx, sy}, sr],
+ Red, Disk[{mx, my}, mr],
+ Blue, Circle[{ex, ey}, er], Point[{ex, ey}],
+ Black, Line[{line[0], line[1]}],
+ Purple, Line[{line[1], line[tval]}],
+ Black, Line[{conePt, {ex, ey}}]
+}];
+
+g3 = Graphics[{
+ Thick, Yellow, Circle[{sx, sy}, sr], Point[{sx, sy}],
+ Red, Circle[{mx, my}, mr], Point[{mx, my}],
+ Blue, Circle[{ex, ey}, er], Point[{ex, ey}],
+ Orange, Line[{line[0], line[1]}],
+ Orange, Line[{line[1], line[tval]}],
+ White, Line[{conePt, {ex, ey}}],
+ Text["hello", {0,0}]
+}, Background -> Black, ImageSize -> {800, 300}
+];
+
+g3
+
+
+
 
