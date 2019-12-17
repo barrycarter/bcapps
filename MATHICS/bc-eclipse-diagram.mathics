@@ -1,5 +1,7 @@
 scale = 300;
 
+padding = scale/100;
+
 
 {sx, sy, sr} = scale*{0, 0, 0.03};
 {mx, my, mr} = scale*{0.1, 0, 0.015};
@@ -45,7 +47,8 @@ g3 = Graphics[{
  Orange, Line[{line[1], line[tval]}],
  White, Line[{conePt, {ex, ey}}],
  Text["hello", {0,0}]
-}, Background -> Black, ImageSize -> {800, 300}
+}, Background -> Black,
+ PlotRange -> { {sx-sr-padding, conePt[[1]]+padding}, {ey-er-padding, sy+sr+padding}}
 ];
 
 g3
