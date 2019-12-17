@@ -5,8 +5,8 @@ padding = scale/10;
 textpad = scale/400;
 
 {sx, sy, sr} = scale*{0, 0, 0.03*20};
-{mx, my, mr} = scale*{3, 0, 0.08*4};
-{ex, ey, er} = scale*{5, -0.3, 0.64};
+{mx, my, mr} = scale*{3, 0, 0.08*5};
+{ex, ey, er} = scale*{5, -0.7, 0.64};
 
 (*
 {sx, sy, sr} = {0, 0, 696/10};
@@ -52,14 +52,31 @@ maxx = Max[sx+sr, mx+mr, ex+er, conePt[[1]]]
 miny = Min[sy-sr, my-mr, ey-er, conePt[[2]]]
 maxy = Max[sy+sr, my+mr, ey+er, conePt[[2]]]
 
+(* Arrowheads[{{s, pos}}] *)
+
 g3 = Graphics[{
- Thick, Yellow, Circle[{sx, sy}, sr], Point[{sx, sy}],
- Red, Circle[{mx, my}, mr], Point[{mx, my}],
- Blue, Circle[{ex, ey}, er], Point[{ex, ey}],
- Orange, Line[{line[0], line[1]}],
+ Arrowheads[{{ 0.01, 0.9}}],
+
+ Yellow, Circle[{sx, sy}, sr], Point[{sx, sy}], Arrow[{{sx,sy}, {sx, sy-sr}}],
+ Point[{sx, sy+sr}], Point[{sx, sy-sr}],
+
+ Red, Circle[{mx, my}, mr], Point[{mx, my}], Arrow[{ {mx,my}, {mx, my-mr}}],
+ Point[{mx, my+mr}], Point[{mx, my-mr}],
+
+
+ Blue, Circle[{ex, ey}, er], Point[{ex, ey}], Arrow[{ {ex,ey}, {ex, ey-er}}],
+ Point[{ex, ey+er}], Point[{ex, ey-er}],
+
+ Arrowheads[{{ 0.03, 0.5}}],
+ Orange, Arrow[{line[0], line[1]}],
  Orange, Line[{line[1], line[tval]}],
- White, Line[{conePt, {ex, ey}}],
- Text["S", {sx+padding, sy-padding}]
+ Arrowheads[{{0.03, 0.45}}],
+ White, Arrow[{{sx, sy-sr}, conePt}],
+ White, Arrow[{{sx, sy+sr}, conePt}],
+ Arrowheads[{{0.01, 0.9}}],
+
+ Green, Arrow[{conePt, {ex,ey}}], Point[conePt], Arrow[{conePt, {ex, ey-er}}]
+
 }, Background -> Black,
  PlotRange -> { {minx-padding, maxx+padding}, {miny-padding, maxy+padding}}
 

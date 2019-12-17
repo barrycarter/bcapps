@@ -1,4 +1,10 @@
-Stuff I plan to stream 16 Dec 2019, primarily for my reference
+Stuff I plan to stream 17 Dec 2019, primarily for my reference
+
+correct atan to asin w diagram
+
+setup "mini git" on vm w/o pushing remotely
+
+new approach re angular distance + size from center + surface
 
 two cases for umbral cone: inside planet and outside, not unifiable
 
@@ -18,4 +24,5 @@ receives less sunlight = what does earth see if anything (thought:
 moon still looks fine because even a sliver of sunlight is enough to
 "fully" illuminate moon?)
 
+look more into straight line cutting into sun and moon if moon is small enough
 
