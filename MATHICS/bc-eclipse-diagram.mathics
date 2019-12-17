@@ -1,11 +1,18 @@
-scale = 300;
+scale = 1;
 
-padding = scale/100;
+padding = scale/10;
 
+textpad = scale/400;
 
-{sx, sy, sr} = scale*{0, 0, 0.03};
-{mx, my, mr} = scale*{0.1, 0, 0.015};
-{ex, ey, er} = scale*{0.15, -0.03, 0.025};
+{sx, sy, sr} = scale*{0, 0, 0.03*20};
+{mx, my, mr} = scale*{3, 0, 0.08*4};
+{ex, ey, er} = scale*{5, -0.3, 0.64};
+
+(*
+{sx, sy, sr} = {0, 0, 696/10};
+{ex, ey, er} = {93, 0, 6.4/10};
+{mx, my, mr} = {92.8, 0, 1.7/10};
+*)
 
 tval = sr/(sr-mr)
 
@@ -39,6 +46,12 @@ g2 = Graphics[{
  Black, Line[{conePt, {ex, ey}}]
 }];
 
+minx = Min[sx-sr, mx-mr, ex-er, conePt[[1]]]
+maxx = Max[sx+sr, mx+mr, ex+er, conePt[[1]]]
+
+miny = Min[sy-sr, my-mr, ey-er, conePt[[2]]]
+maxy = Max[sy+sr, my+mr, ey+er, conePt[[2]]]
+
 g3 = Graphics[{
  Thick, Yellow, Circle[{sx, sy}, sr], Point[{sx, sy}],
  Red, Circle[{mx, my}, mr], Point[{mx, my}],
@@ -46,9 +59,10 @@ g3 = Graphics[{
  Orange, Line[{line[0], line[1]}],
  Orange, Line[{line[1], line[tval]}],
  White, Line[{conePt, {ex, ey}}],
- Text["hello", {0,0}]
+ Text["S", {sx+padding, sy-padding}]
 }, Background -> Black,
- PlotRange -> { {sx-sr-padding, conePt[[1]]+padding}, {ey-er-padding, sy+sr+padding}}
+ PlotRange -> { {minx-padding, maxx+padding}, {miny-padding, maxy+padding}}
+
 ];
 
 g3
