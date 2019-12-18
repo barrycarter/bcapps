@@ -389,3 +389,7 @@ alias mdcd "mkdir -p \!*; cd \!*"
 # olden days of DOS)
 
 alias dir "\ls -l \!* | less"
+
+# to do local git stuff w/o pushing to remote
+
+alias bcgit-mini "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v; popd"
