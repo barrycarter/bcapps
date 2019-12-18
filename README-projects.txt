@@ -280,7 +280,8 @@ https://github.com/barrycarter/bcapps/tree/master/ASTRO/travel2orion.m
 https://github.com/barrycarter/bcapps/tree/master/ASTRO/travel2orion.pl
 https://repl.it/@barrycarter/HYGStarMap
 
-Note to self: This should really be bc-travel2orion to avoid naming conflicts
+Note to self: This should really be bc-travel2orion (not simply
+travel2orion) to avoid naming conflicts
 
 ====================================================================
 

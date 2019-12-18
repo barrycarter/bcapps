@@ -77,4 +77,39 @@ t1740 = Graphics[{
 
 (* Show[{Graphics[RGBColor[1,0,0]], t1734}] *)
 
+(* work below 18 Dec 2019, offstream *)
+
+(* best fit prediction of primes from other primes *)
+
+t1210 = Table[{Prime[i-3], Prime[i-2], Prime[i-1], Prime[i]}, 
+ {i, 4, 10}];
+
+LinearModelFit[t1210, {x1, x2, x3}]
+
+LinearModelFit[t1210, {x}]
+
+t1217 = Table[{Prime[i-3], Prime[i]}, 
+ {i, 4, 10}];
+
+LinearModelFit[t1217, x, x]
+
+LinearModelFit[t1210, x1, x2, x3]
+
+LinearModelFit[t1210, {x1, x2, x3}, {x1, x2, x3}]
+
+(* above works on both Mathics and Mathematica *)
+
+Table[{3.93118 + 0.425806*Prime[i-3] + 0.552688*Prime[i-2] +
+0.266667*Prime[i-1], Prime[i]}, {i, 4, 10}]
+
+lm = LinearModelFit[t1210, {x1, x2, x3}, {x1, x2, x3}]
+
+lm2 = LinearModelFit[t1210, {x1, x2, x3, x1*x2, x1*x3, x2*x3}, {x1, x2, x3}]
+
+(* mathics won't do lm2 above, mathematica will *)
+
+
+
+
+
 
