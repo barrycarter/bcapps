@@ -4,9 +4,11 @@ padding = scale/10;
 
 textpad = scale/400;
 
+(*
 {sx, sy, sr} = scale*{0, 0, 0.03*20};
 {mx, my, mr} = scale*{3, 0, 0.08*5};
 {ex, ey, er} = scale*{5, -0.7, 0.64};
+*)
 
 (*
 {sx, sy, sr} = {0, 0, 696/10};
@@ -90,7 +92,130 @@ g4 = Graphics[{
  Text["P", {100,96}] 
 }, PlotRange -> {{-5, 200}, {-100, 100}}];
 
-g4
+line[t_] = {t, m*t}
+
+(* Solve[Norm[{t, m*t} - {c, 0}] == r] *)
+
+t1807 = Solve[(t-c)^2 + (m*t-0)^2 == r^2, t]
+
+t1807[[1]]
+t1807[[2]]
+
+Solve[Sqrt[-c ^ 2 m ^ 2 + r ^ 2 + m ^ 2 r ^ 2] == 0, m]
+
+(* m -> Sqrt[r ^ 2 / (c ^ 2 - r ^ 2)] *)
+
+slope = Sqrt[0.9^2/(1-0.9^2)]
+
+tp = {19.0213, 19.0213*slope};
+
+mid = (tp + {100,0})/2;
+
+g5 = Graphics[{
+ Blue, Point[{0, 0}],
+ Red, Circle[{100, 0}, 90], Point[{100,0}],
+ Black, Line[{{0,0}, {100, 0}}], Line[{{0,0}, tp}], Line[{tp, {100,0}}],
+ Text["O", {0,-6}], Text["d", {50, -6}],  Text["C", {100, -6}],
+ Text["P", {tp[[1]], tp[[2]]+6}], Text["r", {mid[[1]], mid[[2]]+10}]
+}, PlotRange -> {{-5, 200}, {-100, 100}}];
+
+g5
+
+angrad[r_, d_] = ArcSin[r/d];
+
+(*
+
+Let S, T, and Q be any three spherical objects such that S emits
+light, T does not emit light, and S is potentially eclipsed on Q by T
+
+Since the centers of S, T, and Q are three points, they necessarily
+form a plane; without loss of generality, we can coordinate-ify for
+this plane by choosing Q to be at the origin, S to be on the x axis,
+and T to be in the upper half plane
+
+*)
+
+g6 = Graphics[{
+ Blue, Point[{0,0}], Text["Q", {0,-6}],
+ Orange, Point[{200, 0}], Text["S", {200, -6}],
+ Red, Point[{100, 50}], Text["T", {106, 53}],
+ Black, Arrow[{ {0,0}, {200, 0}} ], Arrow[{ {0,0}, {100,50} }]
+}, PlotRange -> {{-6, 200}, {-12, 56}}]
+
+theta2 = -60*Degree;
+spt = 35*{Cos[theta2], Sin[theta2]};
+
+g7 = Graphics[{
+ Blue, Point[{0,0}], Text["Q", {0,-6}], Circle[{0,0}, 35], Line[{{0,0}, spt}],
+ Purple, Point[spt], 
+  Arrow[{spt, {200, 0}}], Arrow[{spt, {100, 50}}],
+ Orange, Point[{200, 0}], Text["S", {200, -6}], Circle[{200, 0}, 55],
+ Red, Point[{100, 50}], Text["T", {106, 53}], Circle[{100, 50}, 25],
+ Black, Arrow[{ {0,0}, {200, 0}} ], Arrow[{ {0,0}, {100,50} }]
+}, PlotRange -> {{-40, 260}, {-60, 80}}]
+
+g7
+
+Unset[qr]
+Unset[theta]
+Unset[sx]
+Unset[sr]
+Unset[tx]
+Unset[ty]
+Unset[tr]
+Unset[qr]
+
+point[theta_] = {qr*Cos[theta], qr*Sin[theta]}
+
+vec2t[theta_] = {tx, ty} - point[theta]
+
+vec2s[theta_] = {sx, 0} - point[theta]
+
+angradt[theta_] = ArcSin[tr/Norm[vec2t[theta]]]
+
+angrads[theta_] = ArcSin[sr/Norm[vec2s[theta]]]
+
+angsep[theta_] = VectorAngle[vec2t[theta], vec2s[theta]]
+
+angsep2[theta_] = angsep[theta] /. Sqrt[Abs[x_]]^2 -> x
+
+angsep2'[theta]
+
+params = {qr -> 35, ty -> 50, tx -> 100, sx -> 200, tr -> 25};
+
+t1907[theta_] = angsep[theta] /. params
+
+Plot[angradt[theta*Degree]/Degree /. params, {theta, 0, 360}]
+
+(* below this line, Mathematica *)
+
+conds = {Element[{theta, sx, tx, ty}, Reals], qr > 0}
+
+angsep3[theta_] = Simplify[angsep[theta], conds]
+
+Solve[angsep3'[theta] == 0, theta]
+
+(* what we really want... *)
+
+f2154[theta_] = Simplify[ 
+  angsep[theta] - angradt[theta] - angrads[theta], conds
+];
+
+f2155[theta_] = Simplify[f2154'[theta], conds]
+
+(* with some randoms, qr = observer radius *)
+
+params = {qr -> Random[], sx -> Random[]*1000, tx -> Random[]*30,
+ ty -> Random[], sr -> Random[]*100, tr -> Random[]}
+
+f2154[theta] /. params
+
+Plot[(f2154[theta*Degree] /. params)/Degree, {theta, 0, 360}]
+
+(* earth moon sun *)
+
+params = {qr -> 1, sx -> 14000, tx -> 60, ty -> 1, sr -> 109, tr -> 0.2727}
+
 
 
 
