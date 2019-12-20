@@ -53,10 +53,19 @@ for $i (split(/\n/, $out)) {
   if ($i=~s/:ARCHIVE://) {$archive{$i} = 1;}
 
   # and comments
-  if ($i=~s/:comment=(.*)//) {$comments{$i} = $1;}
+  if ($i=~s/:comment=([^:]*)//) {$comments{$i} = $1;}
+
+  # some accounts specify their latest in the myaccount.txt file itself
+  if ($i=~s/:latest=([^:]*)//) {$override{$i} = $1;}
 
   unless ($i=~m%^(.*?):(\S+)%) {push(@errors,"BAD LINE: $i"); next;}
-  $latest{lc("$1:$2")} = 1;
+
+  my($site, $acct) = ($1, $2);
+
+  $latest{lc("$site:$acct")} = 1;
+
+  if ($override{$i}) {$latest{lc("$site:$acct")} = str2time($override{$i});}
+
 }
 
 debug("ARCHIVE", %archive);

@@ -1,0 +1,47 @@
+Edit to answer comments + other notes:
+
+Just as a note, your post seems more like a warning/call to action than an actual question.
+
+`"a 5C increase may open new areas to human colonization, or increase colonization in areas that are considered too cold" citation needed.`
+
+My thinking here is that Antarctica is mostly uninhabited and uninhabitable, but a 5-10C increase would make it a lot more inhabitable. Also, while there are cities that are fairly far north, they have small populations, and more people may move there as the weather becomes clement.
+
+`It seems to me that the only possible way to make projections into the future must be based to some degree on extrapolating current trends.`
+
+True, but the projection here is exponential, and, though it's wrong to generalize in statistics, I would argue that exponential trends are usually short-lived. Therefore, it's unlikely that CO2 levels will continue to rise exponentially. And, of course, CO2 levels can't rise after they reach 100%. Therefore, it's not a question of IF CO2 levels will stop rising exponentially, but rather when.
+
+`I have no idea how many degrees correspond to one standard deviation and no basis for determining this. This seems to be undocumented.`
+
+In the OP, you say "a single degree of temperature anomaly is associated with a shift of the whole temperature bell curve two standard deviations". If I'm understanding you correctly, that one degree equals 2 standard deviations. Am I misunderstanding?
+
+My own projections of the current trend are a little more pessimistic than IPCC RCP8.5 projections. They simply extrapolate the current exponential increase of atmospheric CO2 and project 877 PPM by 2100 then apply the current IPCC equilibrium CO2 sensitivity formula
+
+`We also need to know the actual correlation between temperature anomaly and bell curve shift. We certainly cannot assume that 1C anomaly to 2-sigma is a linear relationship. It seems ridiculously implausible that 5C anomaly would correspond to a 10-sigma shift.`
+
+OK, I'm confused. If the distribution of temperatures remains normal, then a 5C increase WOULD correspond to a 10 sigma increase. Are you saying that:
+
+  - the temperature distribution will no longer be normal after the  increase?
+
+  - the temperature distribution will remain normal, but both the mean and standard deviation will increase; in other words, the globe will get hotter in general AND the extreme temperatures will even further from the mean
+
+`My projections correspond to the IPCC RCP8.5 projections.`
+
+Only to a point. As you note "[m]y own projections of the current trend are a little more pessimistic".
+
+`Air conditioners typically only drop the temperature a maximum of 7C`
+
+Quoting https://www.jerrykelly.com/blog/how-many-degrees-cooler-can-your-air-conditioner-actually-make-your-home
+
+<blockquote>
+
+When air blows over your air conditioner’s cooling coils, the temperature of the air drops about 20 degrees. If your system were to cool down the temperature of your air any lower, the air coming out of your vents would be frigid and uncomfortable
+
+</blockquote>
+
+The first sentence suggests the limit is actually 20 degrees Fahrenheit (11 degrees Celsius), but the second sentence suggests you can even go even cooler if you're OK with frigid vent air.
+
+Further, this applies only to current air conditioners. In theory, there is no limit to how cold an air conditioner can cool except, of course, 0 Kelvins, and newer models of air conditioners might cool much more efficiently.
+
+There's also swamp cooling (evaporative cooling) that works well in deserts, or simply cooling things with water, which doesn't heat up as much as land.
+
+The worst case scenario is that portions of the Earth become too hot to be habitable. This isn't a huge deal, because there are already larger portions of the Earth that are essentially uninhabitable because they are too cold. 60C heat waves in the desert will simply mean people move closer to the poles.
