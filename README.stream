@@ -50,3 +50,9 @@ https://www.skyandtelescope.com/observing/a-jupiter-almanac/
 
 (note: could use this data to compute actual times)
 
+This is not not a list of possible future streams
+=================================================
+
+  - how does Stellarium compute magnitude (Lambertian reflectors?) + port to CSPICE
+
+

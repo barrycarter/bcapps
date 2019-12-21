@@ -1,3 +1,44 @@
+Title: Find or create calendar that gives dates in various formats
+
+Description: I vaguely remember a calendar program that would give
+dates in various formats, such as Chinese calendar, Muslim calendar,
+Discordian calendar, and many others; either find this program or
+create one that replicates it.
+
+See also:
+
+  - https://en.wikipedia.org/wiki/Solar_term
+
+  - http://www.public.asu.edu/~checkma/today.html
+
+  - https://isotropic.org/date/
+
+  - https://askubuntu.com/questions/909908/linux-program-with-hebrew-islamic-coptic-discordian-and-other-calendars (my question)
+
+  - https://github.com/vinc/cadate (written by someone else as an answer to my question above, uses Javascript's Luxon library, but still not complete)
+
+Notes:
+
+  - List of calendar systems I could find so far:
+
+  - Emacs `calendar` mode does this to some extent, and has extensions for more calendar systems
+
+  - Per emacs "bindings for calendar-mode", some calendar systems are: Chinese,Bahai, Ethiopic, French, Hebrew, Islamic, Coptic, Persian
+
+  - Other calendars include Discordian, but there are others
+
+  - gcal can show Chinese calendar months and holidays, but I haven't found out how to make it show the actual Chinese calendar itself
+
+  - It's possible the program I remember was just a shell script
+  around programs like `ddate` and `hebcal` (which does this for the Discordian and Hebrew calendars)
+
+  - This program is not related to https://github.com/barrycarter/bcapps/tree/master/CALENDAR/ which is a standard Gregorian calendar that strives to list "important" dates
+
+
+
+
+====================================================================
+
 Title: OSM data server that only returns "information you'd want to show"
 
 Description: There are existing OSM dataservers (eg, http://lz4.overpass-api.de/) that will return *all* data in a given latitude/longitude bounding box.
