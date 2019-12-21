@@ -19,12 +19,50 @@ See also:
 
 Notes:
 
-  - List of calendar systems I could find so far:
+  - List of calendar systems I could find so far (striving to keep these in alpabetical order, some have been Romanicized):
+
+    - (French) Republican
+    - Aztec
+    - Bahai
+    - Chinese
+    - Church of the SubGenius
+    - Coptic
+    - Discordian
+    - Ethiopic (Coptic)
+    - French 
+    - Galactic Milieu
+    - Goddess Lunar Calendar
+    - Gregorian [this is the most commonly used system]
+    - Hebrew 
+    - Hindu (Civil)
+    - Human Calendar
+    - Illuminati
+    - International Fixed Calendar
+    - Islamic 
+    - Jalali/Persian
+    - Jusanotoron
+    - Mayan
+    - Millennium Mars Calendar
+    - Moonwise Calendar
+    - New Science Calendar
+    - Pataphysique
+    - Positivist
+    - Quaker (Friend)
+    - Symmetry
+    - Thelema
+    - World Season Calendar
+    - Worldsday
+    - Zoroastrian (Fasli)
+
+  - TODO: maybe trim the list of calendars above to ones that realistically exist and not completely invented and were never used
+
+  - TODO: some of the calendar systems above are reformatting of the Gregorian calendar; identify these are they don't actually use separate "dates"
+
+  - TODO: The weekdays and months in the Gregorian calendar are different in different languages, but I do not consider these to be separate calendars
 
   - Emacs `calendar` mode does this to some extent, and has extensions for more calendar systems
 
-  - Per emacs "bindings for calendar-mode", some calendar systems are: Chinese,Bahai, Ethiopic, French, Hebrew, Islamic, Coptic, Persian
-
+  - Per emacs "bindings for calendar-mode", some calendar systems are: 
   - Other calendars include Discordian, but there are others
 
   - gcal can show Chinese calendar months and holidays, but I haven't found out how to make it show the actual Chinese calendar itself
