@@ -62,6 +62,8 @@ for $i (split(/\n/, $out)) {
 
   my($site, $acct) = ($1, $2);
 
+  debug("SITEACCT: $site:$acct");
+
   $latest{lc("$site:$acct")} = 1;
 
   if ($override{$i}) {$latest{lc("$site:$acct")} = str2time($override{$i});}
