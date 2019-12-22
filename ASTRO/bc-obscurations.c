@@ -16,8 +16,8 @@ int main(int argc, char **argv) {
   // variables we will use
 
   SpiceChar obscuredFrame[STRLENGTH], obscuringFrame[STRLENGTH];
-  SpiceInt obscuredCode, obscuringCode, ocltid1, ocltid2, ocltid3;
-  SpiceDouble observerRad, obscuredRad, obscuringRad, dim, tempRad[3], obscuredPos[3], obscuringPos[3], observerPos[3];
+  SpiceInt obscuredCode, obscuringCode, ocltid1, ocltid2, ocltid3, dim;
+  SpiceDouble observerRad, obscuredRad, obscuringRad, tempRad[3], obscuredPos[6], obscuringPos[6], lt, ang1, ang2, ang3, temp1[3], temp2[3];
   SpiceBoolean obscuredFound, obscuringFound;
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
@@ -90,7 +90,35 @@ int main(int argc, char **argv) {
 
     occult_c(obscuring, "ELLIPSOID", obscuringFrame, obscured, "ELLIPSOID", obscuredFrame, "XCN", observer, (beg+end)/2, &ocltid2);
 
-    printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), ocltid1, ocltid2, ocltid3);
+    spkezr_c(obscuring, beg+1, obscuringFrame, "CN+S", observer, obscuringPos, &lt);
+    spkezr_c(obscured, beg+1, obscuredFrame, "CN+S", observer, obscuredPos, &lt);
+    //    ang1 = vsep_c(obscuringPos, obscuredPos);
+
+    temp1[0] = obscuringPos[0];
+    temp1[1] = obscuringPos[1];
+    temp1[2] = obscuringPos[2];
+
+    temp2[0] = obscuredPos[0];
+    temp2[1] = obscuredPos[1];
+    temp2[2] = obscuredPos[2];
+
+    ang1 = vsep_c(temp1, temp2);
+
+    printf("ANG1: %f %f %f / %f %f %f\n", obscuringPos[0], obscuringPos[1], obscuringPos[2], obscuredPos[0], obscuredPos[1], obscuredPos[2]);
+
+    spkezr_c(obscuring, (beg+end)/2, obscuringFrame, "CN+S", observer, obscuringPos, &lt);
+    spkezr_c(obscured, (beg+end)/2, obscuredFrame, "CN+S", observer, obscuredPos, &lt);
+    ang2 = vsep_c(obscuringPos, obscuredPos);
+
+    printf("ANG2: %f %f %f / %f %f %f\n", obscuringPos[0], obscuringPos[1], obscuringPos[2], obscuredPos[0], obscuredPos[1], obscuredPos[2]);
+
+    spkezr_c(obscuring, end-1, obscuringFrame, "CN+S", observer, obscuringPos, &lt);
+    spkezr_c(obscured, end-1, obscuredFrame, "CN+S", observer, obscuredPos, &lt);
+    ang3 = vsep_c(obscuringPos, obscuredPos);
+
+    printf("ANG3: %f %f %f / %f %f %f\n", obscuringPos[0], obscuringPos[1], obscuringPos[2], obscuredPos[0], obscuredPos[1], obscuredPos[2]);
+
+    printf("%f %f %d %d %d %f %f %f\n", et2unix(beg), et2unix(end), ocltid1, ocltid2, ocltid3, ang1*dpr_c(), ang2*dpr_c(), ang3*dpr_c());
   }
 	    	    
 }
