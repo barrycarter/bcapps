@@ -1,0 +1,22 @@
+(*
+
+Let S, T, and Q be any three spherical objects such that S emits
+light, T does not emit light, and S is potentially eclipsed on Q by T. In the below:
+
+  - sr, tr, and qr refer to the radii of the spheres
+
+  - st, sq, and tq are the distances between the centers of the spheres
+
+Since the centers of S, T, and Q are three points, they necessarily
+form a plane; without loss of generality, we can coordinate-ify for
+this plane by choosing Q to be at the origin, S to be on the x axis,
+and T to be in the upper half plane
+
+*)
+
+angrad[r_, d_] = ArcSin[r/d];
+
+parallax[r_, d_] = ArcTan[r/d];
+
+angrad[r, sq] - angrad[r, sq-qr]
+
