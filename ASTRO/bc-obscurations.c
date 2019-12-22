@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
 
   SpiceChar obscuredFrame[STRLENGTH], obscuringFrame[STRLENGTH];
   SpiceInt obscuredCode, obscuringCode;
+  SpiceDouble observerRad, obscuredRad, obscuringRad, dim, tempRad[3];
   SpiceBoolean obscuredFound, obscuringFound;
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
@@ -52,6 +53,22 @@ int main(int argc, char **argv) {
   syear = year2et(syear);
   eyear = year2et(eyear);
 
+  // radii of observer, obscured, obscuring
+
+  bodvrd_c(observer, "RADII", 3, &dim, tempRad);
+  observerRad = tempRad[0];
+
+  bodvrd_c(obscured, "RADII", 3, &dim, tempRad);
+  obscuredRad = tempRad[0];
+
+  bodvrd_c(obscuring, "RADII", 3, &dim, tempRad);
+  obscuringRad = tempRad[0];
+
+  printf("VIEWER, SUN, BLOCKER: %f %f %f\n", observerRad, obscuredRad, obscuringRad);
+
+  printf("TESTING\n");
+  exit(0);
+
   // TODO: do not treat observer as single point
 
   wninsd_c(syear, eyear, &cnfine);
@@ -63,6 +80,13 @@ int main(int argc, char **argv) {
 
   for (int i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
+
+
+
+    
+
+
+
     printf("%f %f\n",et2unix(beg),et2unix(end));
   }
 	    	    
