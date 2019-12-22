@@ -16,8 +16,8 @@ int main(int argc, char **argv) {
   // variables we will use
 
   SpiceChar obscuredFrame[STRLENGTH], obscuringFrame[STRLENGTH];
-  SpiceInt obscuredCode, obscuringCode;
-  SpiceDouble observerRad, obscuredRad, obscuringRad, dim, tempRad[3];
+  SpiceInt obscuredCode, obscuringCode, ocltid1, ocltid2, ocltid3;
+  SpiceDouble observerRad, obscuredRad, obscuringRad, dim, tempRad[3], obscuredPos[3], obscuringPos[3], observerPos[3];
   SpiceBoolean obscuredFound, obscuringFound;
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
@@ -66,9 +66,6 @@ int main(int argc, char **argv) {
 
   printf("VIEWER, SUN, BLOCKER: %f %f %f\n", observerRad, obscuredRad, obscuringRad);
 
-  printf("TESTING\n");
-  exit(0);
-
   // TODO: do not treat observer as single point
 
   wninsd_c(syear, eyear, &cnfine);
@@ -78,16 +75,22 @@ int main(int argc, char **argv) {
   SpiceInt nres = wncard_c(&result);
   SpiceDouble beg, end;
 
+  // ocltid: 
+  // 0 = No occultation or transit: both objects are completely visible to the observer.
+  // 1 = Partial occultation of second target by first target.
+  // 2 = Annular occultation of second target by first.
+  // 3 = Total occultation of second target by first.
+
   for (int i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
 
+    occult_c(obscuring, "ELLIPSOID", obscuringFrame, obscured, "ELLIPSOID", obscuredFrame, "XCN", observer, beg+1, &ocltid1);
 
+    occult_c(obscuring, "ELLIPSOID", obscuringFrame, obscured, "ELLIPSOID", obscuredFrame, "XCN", observer, end-1, &ocltid3);
 
-    
+    occult_c(obscuring, "ELLIPSOID", obscuringFrame, obscured, "ELLIPSOID", obscuredFrame, "XCN", observer, (beg+end)/2, &ocltid2);
 
-
-
-    printf("%f %f\n",et2unix(beg),et2unix(end));
+    printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), ocltid1, ocltid2, ocltid3);
   }
 	    	    
 }
