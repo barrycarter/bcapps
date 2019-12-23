@@ -599,32 +599,66 @@ void umbralData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3], SpiceDouble 
 
 /**
 
-TODO: could always make p the origin
-
 Given the following: 
 
   - A light-generating object s (eg, "Sun") as a 3 elt position vector
   - Radius of s as sr
   - Another object t (eg, "Jupiter") as a 3 elt position vector
   - Radius of t as tr
-  - A point p as a 3 elt position vector
 
 Returns:
 
-  - 0 if sum of angular radii equals separation angle (sep == tar + sar)
+  - 0 if sum of angular radii equals separation angle (sep == tar +
+    sar) (as viewed from the origin)
 
-  - -1 if seperation angle plus angular of radius of s equals angular radius of t (sep + sar == tar or sep == tar - sar)
+  - -1 if seperation angle plus angular of radius of s equals angular
+     radius of t (sep + sar == tar or sep == tar - sar) (as viewed
+     from the origin)
 
-Thus, ((sep-tar)/sar-1)/2
-
-
+Thus, ((sep-tar)/sar-1)/2 as viewed from the origin
 
 */
 
 SpiceDouble separationData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3], 
-			   SpiceDouble tr, SpiceDouble p[3]) {
+			   SpiceDouble tr) {
 
-  SpiceDouble 
+  //  SpiceDouble sep = vsep_c(s,t);
+  //  SpiceDouble tar = asin(tr/vnorm_c(t));
+  //  SpiceDouble sar = asin(sr/vnorm_c(s));
+  //  SpiceDouble ret = ((sep-tar)/sar-1)/2;
 
-  
+  //  printf("SEP: %f %f %f %f\n", dpr_c()*sep, dpr_c()*tar, dpr_c()*sar, );
 
+  //  return ((sep-tar)/sar-1)/2;
+  return ((vsep_c(s,t)-asin(tr/vnorm_c(t)))/asin(sr/vnorm_c(s))-1)/2;
+}
+
+/**
+
+Given the following: 
+
+  - Radius qr of a viewing object q at the origin
+  - A light-generating object s (eg, "Sun") as a 3 elt position vector
+
+Returns:
+
+  - A vector p perpendicular to S of length qr
+
+*/
+
+void perpVector(SpiceDouble qr, SpiceDouble s[3], SpiceDouble p[3])  {
+
+  SpiceDouble origin[3] = {0, 0, 0}, pt[3], vec1[3], vec2[3];
+  SpicePlane perp;
+
+  nvp2pl_c(s, origin, &perp);
+
+  pl2psv_c(&perp, pt, vec1, vec2);
+
+  p[0] = qr*vec1[0];
+  p[1] = qr*vec1[1];
+  p[2] = qr*vec1[2];
+
+  //  printf("S: %f %f %f, PERPVECTOR: %f %f %f %f, OTHERPERP: %f %f %f %f\n", s[0], s[1], s[2], vec1[0], vec1[1], vec1[2], vnorm_c(vec1), vec2[0], vec2[1], vec2[2], vnorm_c(vec2));
+
+}

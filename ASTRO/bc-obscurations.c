@@ -96,6 +96,12 @@ int main(int argc, char **argv) {
     spkezp_c(obscuredID, beg+1, "J2000", "CN+S", observerID, obscuredPos, &lt);
     ang1 = vsep_c(obscuringPos, obscuredPos);
 
+    printf("TESTB: %f vs %f\n", separationData(obscuredPos, obscuredRad, obscuringPos, obscuringRad), dpr_c()*ang1);
+
+    perpVector(observerRad, obscuredPos, tempRad);
+
+    printf("RESULT: %f %f %f %f\n", tempRad[0], tempRad[1], tempRad[2], vnorm_c(tempRad));
+
     recsph_c(obscuringPos, &r1, &colat1, &lon1);
     recsph_c(obscuredPos, &r2, &colat2, &lon2);
     printf("OBSCURING: %f %f %f, OBSCURED: %f %f %f\n", r1, 90-colat1*dpr_c(), lon1*dpr_c(), r2, 90-colat2*dpr_c(), lon2*dpr_c());
@@ -104,6 +110,8 @@ int main(int argc, char **argv) {
     spkezp_c(obscuredID, (beg+end)/2, "J2000", "CN+S", observerID, obscuredPos, &lt);
     ang2 = vsep_c(obscuringPos, obscuredPos);
 
+    printf("TESTD: %f vs %f\n", separationData(obscuredPos, obscuredRad, obscuringPos, obscuringRad), dpr_c()*ang1);
+
     recsph_c(obscuringPos, &r1, &colat1, &lon1);
     recsph_c(obscuredPos, &r2, &colat2, &lon2);
     printf("OBSCURING: %f %f %f, OBSCURED: %f %f %f\n", r1, 90-colat1*dpr_c(), lon1*dpr_c(), r2, 90-colat2*dpr_c(), lon2*dpr_c());
@@ -111,6 +119,8 @@ int main(int argc, char **argv) {
     spkezp_c(obscuringID, end-1, "J2000", "CN+S", observerID, obscuringPos, &lt);
     spkezp_c(obscuredID, end-1, "J2000", "CN+S", observerID, obscuredPos, &lt);
     ang3 = vsep_c(obscuringPos, obscuredPos);
+
+    printf("TESTA: %f vs %f\n", separationData(obscuredPos, obscuredRad, obscuringPos, obscuringRad), dpr_c()*ang1);
 
     recsph_c(obscuringPos, &r1, &colat1, &lon1);
     recsph_c(obscuredPos, &r2, &colat2, &lon2);
