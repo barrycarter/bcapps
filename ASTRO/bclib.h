@@ -596,3 +596,35 @@ void umbralData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3], SpiceDouble 
 
   *umbAng = atan(tr/vnorm_c(umbVec));
 }
+
+/**
+
+TODO: could always make p the origin
+
+Given the following: 
+
+  - A light-generating object s (eg, "Sun") as a 3 elt position vector
+  - Radius of s as sr
+  - Another object t (eg, "Jupiter") as a 3 elt position vector
+  - Radius of t as tr
+  - A point p as a 3 elt position vector
+
+Returns:
+
+  - 0 if sum of angular radii equals separation angle (sep == tar + sar)
+
+  - -1 if seperation angle plus angular of radius of s equals angular radius of t (sep + sar == tar or sep == tar - sar)
+
+Thus, ((sep-tar)/sar-1)/2
+
+
+
+*/
+
+SpiceDouble separationData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3], 
+			   SpiceDouble tr, SpiceDouble p[3]) {
+
+  SpiceDouble 
+
+  
+
