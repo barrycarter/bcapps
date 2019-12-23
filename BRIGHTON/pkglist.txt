@@ -16,6 +16,9 @@ libnotify-devel
 taskjuggler
 meld
 
+calligra-krita
+pinta
+
 # below only because netlify.com lets you upload files using drag and
 # drop but not select from browser (decided against later)
 # nautilus

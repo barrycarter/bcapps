@@ -95,22 +95,26 @@ int main(int argc, char **argv) {
     spkezp_c(obscuringID, beg+1, "J2000", "CN+S", observerID, obscuringPos, &lt);
     spkezp_c(obscuredID, beg+1, "J2000", "CN+S", observerID, obscuredPos, &lt);
     ang1 = vsep_c(obscuringPos, obscuredPos);
+
     recsph_c(obscuringPos, &r1, &colat1, &lon1);
     recsph_c(obscuredPos, &r2, &colat2, &lon2);
-
     printf("OBSCURING: %f %f %f, OBSCURED: %f %f %f\n", r1, 90-colat1*dpr_c(), lon1*dpr_c(), r2, 90-colat2*dpr_c(), lon2*dpr_c());
 
-    spkezp_c(obscuringID, (beg+end)/2, obscuringFrame, "CN+S", observerID, obscuringPos, &lt);
-    spkezp_c(obscuredID, (beg+end)/2, obscuredFrame, "CN+S", observerID, obscuredPos, &lt);
+    spkezp_c(obscuringID, (beg+end)/2, "J2000", "CN+S", observerID, obscuringPos, &lt);
+    spkezp_c(obscuredID, (beg+end)/2, "J2000", "CN+S", observerID, obscuredPos, &lt);
     ang2 = vsep_c(obscuringPos, obscuredPos);
 
-    //    printf("ANG2: %f %f %f / %f %f %f\n", obscuringPos[0], obscuringPos[1], obscuringPos[2], obscuredPos[0], obscuredPos[1], obscuredPos[2]);
+    recsph_c(obscuringPos, &r1, &colat1, &lon1);
+    recsph_c(obscuredPos, &r2, &colat2, &lon2);
+    printf("OBSCURING: %f %f %f, OBSCURED: %f %f %f\n", r1, 90-colat1*dpr_c(), lon1*dpr_c(), r2, 90-colat2*dpr_c(), lon2*dpr_c());
 
-    spkezp_c(obscuringID, end-1, obscuringFrame, "CN+S", observerID, obscuringPos, &lt);
-    spkezp_c(obscuredID, end-1, obscuredFrame, "CN+S", observerID, obscuredPos, &lt);
+    spkezp_c(obscuringID, end-1, "J2000", "CN+S", observerID, obscuringPos, &lt);
+    spkezp_c(obscuredID, end-1, "J2000", "CN+S", observerID, obscuredPos, &lt);
     ang3 = vsep_c(obscuringPos, obscuredPos);
 
-    //    printf("ANG3: %f %f %f / %f %f %f\n", obscuringPos[0], obscuringPos[1], obscuringPos[2], obscuredPos[0], obscuredPos[1], obscuredPos[2]);
+    recsph_c(obscuringPos, &r1, &colat1, &lon1);
+    recsph_c(obscuredPos, &r2, &colat2, &lon2);
+    printf("OBSCURING: %f %f %f, OBSCURED: %f %f %f\n", r1, 90-colat1*dpr_c(), lon1*dpr_c(), r2, 90-colat2*dpr_c(), lon2*dpr_c());
 
     printf("%f %f %d %d %d %f %f %f\n", et2unix(beg), et2unix(end), ocltid1, ocltid2, ocltid3, ang1*dpr_c(), ang2*dpr_c(), ang3*dpr_c());
   }
