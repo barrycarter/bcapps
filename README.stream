@@ -14,8 +14,6 @@ table error for io disappears doesnt reappear very unrealistic
 
 bug sky + telescope-- can't be right
 
-ignore your problems: is good!
-
 how big is on-surface error in terms of both parallax and angular size
 (and can we just show these and ignore them?)
 
@@ -28,10 +26,6 @@ maybe do combos for all 4 moons
 check for metis + decide (angular radius, parallax)
 
 consider or mention 90 degree vector approach
-
-asked meta re may i announce these things?
-
-https://meta.stackexchange.com/questions/340820/ok-to-comment-im-livestreaming-an-attempt-to-answer
 
 https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis
 
@@ -85,4 +79,5 @@ This is not not a list of possible future streams
 
   - how does Stellarium compute magnitude (Lambertian reflectors?) + port to CSPICE
 
+  - multi calendar project
 

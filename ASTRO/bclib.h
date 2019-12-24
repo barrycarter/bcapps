@@ -301,7 +301,7 @@ SpiceDouble *bc_between (int num,...) {
 
   int count = wncard_c(&result); 
 
-  printf("NUMBER OF RSULTS: %d\n",count);
+  //  printf("NUMBER OF RSULTS: %d\n",count);
 
   for (int i=0; i<count; i++) {
     wnfetd_c(&result,i,&beg,&end);
@@ -720,7 +720,7 @@ SpiceDouble minCornerEclipse(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q)
 
   seps = separationData(spos, sr[0], tpos, tr[0]);
 
-  printf("SEPNS: %f %f\n", sepn, seps);
+  //  printf("SEPNS: %f %f\n", sepn, seps);
 
   return sepn>seps?sepn:seps;
 }

@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     *value = minCornerEclipse(et, sunID, planetID, moonID);
   }
 
-  gfuds_c(gfq, isDecreasing, "<", -1, 0, 1, MAXWIN, &cnfine, &result);
+  gfuds_c(gfq, isDecreasing, "<", -1, 0, 3600, MAXWIN, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 
