@@ -662,3 +662,68 @@ void perpVector(SpiceDouble qr, SpiceDouble s[3], SpiceDouble p[3])  {
   //  printf("S: %f %f %f, PERPVECTOR: %f %f %f %f, OTHERPERP: %f %f %f %f\n", s[0], s[1], s[2], vec1[0], vec1[1], vec1[2], vnorm_c(vec1), vec2[0], vec2[1], vec2[2], vnorm_c(vec2));
 
 }
+
+/**
+
+Given the following: 
+
+  - An epehemeris time et
+  - A light-generating object s (eg, "Sun") as a NAIF id
+  - An eclipsing object t (eg, "Jupiter") as a NAIF id
+  - An eclipsed object q (eg, "Io") as a NAIF id
+
+Returns:
+
+  - The minimum eclipse (as measured by separationData) at time et of the two
+    points on q that are perpendicular to the vector qs
+
+If the return value is <= -1, the all of q is eclipsed from s by t
+
+*/
+
+SpiceDouble minCornerEclipse(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
+  
+  SpiceInt n;
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], perp[3], sepn, seps;
+
+  // radii of all 3 objects
+
+  bodvcd_c(s, "RADII", 3, &n, sr);
+  bodvcd_c(t, "RADII", 3, &n, tr);
+  bodvcd_c(q, "RADII", 3, &n, qr);
+
+  // position from q to s
+
+  spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
+  spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
+
+  perpVector(qr[0], spos, perp);
+
+  // compute the position from the "southern" side of q by adding perp
+  // vector to spos and tpos
+
+  for (int i=0; i<3; i++) {
+    spos[i] += perp[i];
+    tpos[i] += perp[i];
+  }
+
+  sepn = separationData(spos, sr[0], tpos, tr[0]);
+
+  // compute the position from the "northern" side of q by undoing
+  // first transformation and then subtracting perp vector from spos
+  // and tpos
+
+  for (int i=0; i<3; i++) {
+    spos[i] -= 2*perp[i];
+    tpos[i] -= 2*perp[i];
+  }
+
+  seps = separationData(spos, sr[0], tpos, tr[0]);
+
+  printf("SEPNS: %f %f\n", sepn, seps);
+
+  return sepn>seps?sepn:seps;
+}
+
+  
+

@@ -86,6 +86,12 @@ int main(int argc, char **argv) {
   for (int i=0; i<nres; i++) {
     wnfetd_c(&result,i,&beg,&end);
 
+    printf("<minCornerEclipse>\n");
+    minCornerEclipse(beg, obscuredID, obscuringID, observerID);
+    minCornerEclipse((beg+end)/2, obscuredID, obscuringID, observerID);
+    minCornerEclipse(end, obscuredID, obscuringID, observerID);
+    printf("/<minCornerEclipse>\n");
+
     occult_c(obscuring, "ELLIPSOID", obscuringFrame, obscured, "ELLIPSOID", obscuredFrame, "XCN", observer, beg+1, &ocltid1);
 
     occult_c(obscuring, "ELLIPSOID", obscuringFrame, obscured, "ELLIPSOID", obscuredFrame, "XCN", observer, end-1, &ocltid3);
