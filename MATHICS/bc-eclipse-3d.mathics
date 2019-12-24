@@ -1,0 +1,55 @@
+{sx, sy, sz, sr} = {0, 0, 0, 1};
+{tx, ty, tz, tr} = {1, 2, 3, 0.5};
+{qx, qy, qz, qr} = {2, 3, 4, 0.3};
+
+{t1, t2} = {sr/(sr+tr), sr/(sr-tr)};
+
+line[t_] = (1-t)*{sx, sy, sz} + t*{tx, ty, tz}
+
+conePoint = line[t2]
+
+ang1 = tr/Norm[{tx,ty,tz}-conePoint]
+ang2 = sr/Norm[{sx,sy,sz}-conePoint]
+
+angQ = VectorAngle[{qx,qy,qz} - conePoint, {sx,sy,sz} - {tx,ty,tz}]
+
+showElts :=
+ Graphics3D[{
+ Sphere[{sx,sy,sz}, sr],
+ Sphere[{tx,ty,tz}, tr],
+ Sphere[{qx,qy,qz}, qr],
+ Line[{{sx,sy,sz}, conePoint}],
+ Line[{{qx,qy,qz}, conePoint}]
+}, Axes -> True];
+
+t1743 = Table[Polygon[{
+{0,0,0}, {1, N[Cos[n*Degree]], N[Sin[n*Degree]]}, 
+         {1, N[Cos[(n+10)*Degree]], N[Sin[(n+10)*Degree]]}
+}], {n, 0, 350, 10}];
+
+
+cone := Graphics3D[{
+
+ Point[{0,0,0}],
+ t1743
+
+(*
+ Polygon[{{0,0,0}, {1, 1, 0}, {1, N[Cos[60*Degree]], N[Sin[60*Degree]]}}],
+ Polygon[{{0,0,0}, {1, N[Cos[60*Degree]], N[Sin[60*Degree]]}, {1, N[Cos[120*Degree]], N[Sin[120*Degree]]}}]
+*)
+}];
+
+cone
+
+Graphics3D[t1743]
+
+(*
+
+TODO: draw as single polygon instead of multiples?
+
+TODO: reposition cone for arbitray point and angle
+
+TODO: make it transclucent
+
+*)
+
