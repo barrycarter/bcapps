@@ -107,7 +107,9 @@ lm2 = LinearModelFit[t1210, {x1, x2, x3, x1*x2, x1*x3, x2*x3}, {x1, x2, x3}]
 
 (* mathics won't do lm2 above, mathematica will *)
 
-mycf[x_] = ColorConvert[Hue[x, 1, 1], "RGB"]
+(* mycf[x_] := ColorConvert[Hue[x, 1, 1], "RGB"] *)
+
+mycf[x_] := ColorConvert[Hue[Round[x, 1/8], 1, 1], "RGB"]
 
 DensityPlot[x+y, {x, 0, 1}, {y, 0, 1}, ColorFunction -> mycf]
 
