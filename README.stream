@@ -1,4 +1,7 @@
-Stuff I plan to stream 23 Dec 2019, primarily for my reference
+Stuff I plan to stream 25 Dec 2019, primarily for my reference
+
+get images working on command line mathics via Image and similar since
+web interface sucks
 
 confirm 90 degree calcs and correct and then try alt vector (the other
 basis vectors) and formula for span and min/max coverage on side
@@ -86,3 +89,6 @@ This is not not a list of possible future streams
   - multi calendar project
 
   - nagyerass tests writing
+
+  - bc-rename.pl (since convmv failing)
+
