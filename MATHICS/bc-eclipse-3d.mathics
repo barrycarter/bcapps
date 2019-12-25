@@ -55,9 +55,11 @@ TODO: make it transclucent
 
 *)
 
-
-t1644[s_, sr_, t_, tr_] := 
+ST2EclipseValue[s_, sr_, t_, tr_] := 
 ((VectorAngle[s, t] - ArcSin[tr/Norm[t]])/ArcSin[sr/Norm[s]] -1)/2;
+
+STQRLngLat2EclipseValue[s_, sr_, t_, tr_, qr_, lng_, lat_] :=
+ ST2EclipseValue[s-xyz2sph[lng, lat, qr], sr, t-xyz2sph[lng, lat, qr], tr];
 
 s = {63862119.740111, 126464643.726144, 54818849.300533};
 sr = 696000.000000;

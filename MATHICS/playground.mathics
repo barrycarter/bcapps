@@ -2,7 +2,6 @@
 
 {sx, sy, sz, sr} = {0, 0, 0, 1};
 {tx, ty, tz, tr} = {1, 2, 3, 0.5};
-
 {qx, qy, qz, qr} = {2, 3, 4, 0.3};
 
 *)
@@ -107,6 +106,16 @@ lm = LinearModelFit[t1210, {x1, x2, x3}, {x1, x2, x3}]
 lm2 = LinearModelFit[t1210, {x1, x2, x3, x1*x2, x1*x3, x2*x3}, {x1, x2, x3}]
 
 (* mathics won't do lm2 above, mathematica will *)
+
+mycf[x_] = ColorConvert[Hue[x, 1, 1], "RGB"]
+
+DensityPlot[x+y, {x, 0, 1}, {y, 0, 1}, ColorFunction -> mycf]
+
+(* DensityPlot[x ^ 2 + 1 / y, {x,-1, 1}, {y, 1, 4}, ColorFunction->
+(Blend[{Red, Green, Blue},#]&)] *)
+
+(* DensityPlot[x ^ 2 + 1 / y, {x,-1, 1}, {y, 1, 4}, ColorFunction->
+(Blend[{Red, Orange, Yellow, Green, Blue},#]&)] *)
 
 
 
