@@ -622,14 +622,11 @@ Thus, ((sep-tar)/sar-1)/2 as viewed from the origin
 SpiceDouble separationData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3], 
 			   SpiceDouble tr) {
 
-  //  SpiceDouble sep = vsep_c(s,t);
-  //  SpiceDouble tar = asin(tr/vnorm_c(t));
-  //  SpiceDouble sar = asin(sr/vnorm_c(s));
-  //  SpiceDouble ret = ((sep-tar)/sar-1)/2;
 
-  //  printf("SEP: %f %f %f %f\n", dpr_c()*sep, dpr_c()*tar, dpr_c()*sar, );
+  printf("S: {%f, %f, %f} SR: %f\n", s[0], s[1], s[2], sr);
+  printf("T: {%f, %f, %f} TR: %f\n", t[0], t[1], t[2], tr);
+  printf("RET: %f\n", ((vsep_c(s,t)-asin(tr/vnorm_c(t)))/asin(sr/vnorm_c(s))-1)/2);
 
-  //  return ((sep-tar)/sar-1)/2;
   return ((vsep_c(s,t)-asin(tr/vnorm_c(t)))/asin(sr/vnorm_c(s))-1)/2;
 }
 
@@ -682,7 +679,7 @@ If the return value is <= -1, the all of q is eclipsed from s by t
 */
 
 SpiceDouble minCornerEclipse(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
-  
+
   SpiceInt n;
   SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], perp[3], sepn, seps;
 

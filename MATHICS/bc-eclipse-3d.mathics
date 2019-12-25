@@ -1,3 +1,5 @@
+<</home/user/BCGIT/bclib.mathics
+
 {sx, sy, sz, sr} = {0, 0, 0, 1};
 {tx, ty, tz, tr} = {1, 2, 3, 0.5};
 {qx, qy, qz, qr} = {2, 3, 4, 0.3};
@@ -53,3 +55,29 @@ TODO: make it transclucent
 
 *)
 
+
+t1644[s_, sr_, t_, tr_] := 
+((VectorAngle[s, t] - ArcSin[tr/Norm[t]])/ArcSin[sr/Norm[s]] -1)/2;
+
+s = {63862119.740111, 126464643.726144, 54818849.300533};
+sr = 696000.000000;
+t = {151315.898622, 298202.375921, 126333.617461};
+tr = 6378.136600;
+
+qr = 1737.400000;
+
+positions = Flatten[Table[N[sph2xyz[lon*Degree, lat*Degree, qr]],
+ {lon, -180, 180, 20}, {lat, -90, 90, 20}], 1];
+
+t1704 = Table[t1644[s-positions[[i]], sr, t-positions[[i]], tr], {i,
+1, Length[positions]}];
+
+ListPlot[t1704]
+
+(*
+
+S: {63862119.740111, 126464643.726144, 54818849.300533} SR: 696000.000000
+T: {151315.898622, 298202.375921, 126333.617461} TR: 6378.136600
+RET: -1.554757
+
+*)

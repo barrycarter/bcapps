@@ -4,11 +4,9 @@ padding = scale/10;
 
 textpad = scale/400;
 
-(*
 {sx, sy, sr} = scale*{0, 0, 0.03*20};
 {mx, my, mr} = scale*{3, 0, 0.08*5};
 {ex, ey, er} = scale*{5, -0.7, 0.64};
-*)
 
 (*
 {sx, sy, sr} = {0, 0, 696/10};
@@ -156,6 +154,8 @@ g7 = Graphics[{
 
 g7
 
+(*
+
 Unset[qr]
 Unset[theta]
 Unset[sx]
@@ -216,9 +216,6 @@ Plot[(f2154[theta*Degree] /. params)/Degree, {theta, 0, 360}]
 
 params = {qr -> 1, sx -> 14000, tx -> 60, ty -> 1, sr -> 109, tr -> 0.2727}
 
+*)
 
-
-
-
-
-
+g7
