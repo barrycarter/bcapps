@@ -1,0 +1,11 @@
+dir = "/usr/local/lib/python3.6/site-packages/mathics/data/ExampleData/";
+
+
+im = Import[dir<>"sunflowers.jpg"];
+
+im2 = Colorize[Table[Prime[i]+Prime[j], {i, 1, 100}, {j, 1, 100}]];
+
+
+
+
+

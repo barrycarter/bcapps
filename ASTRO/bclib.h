@@ -623,9 +623,9 @@ SpiceDouble separationData(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3],
 			   SpiceDouble tr) {
 
 
-  printf("S: {%f, %f, %f} SR: %f\n", s[0], s[1], s[2], sr);
-  printf("T: {%f, %f, %f} TR: %f\n", t[0], t[1], t[2], tr);
-  printf("RET: %f\n", ((vsep_c(s,t)-asin(tr/vnorm_c(t)))/asin(sr/vnorm_c(s))-1)/2);
+  //  printf("S: {%f, %f, %f} SR: %f\n", s[0], s[1], s[2], sr);
+  //  printf("T: {%f, %f, %f} TR: %f\n", t[0], t[1], t[2], tr);
+  //  printf("RET: %f\n", ((vsep_c(s,t)-asin(tr/vnorm_c(t)))/asin(sr/vnorm_c(s))-1)/2);
 
   return ((vsep_c(s,t)-asin(tr/vnorm_c(t)))/asin(sr/vnorm_c(s))-1)/2;
 }
@@ -722,5 +722,50 @@ SpiceDouble minCornerEclipse(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q)
   return sepn>seps?sepn:seps;
 }
 
-  
+/**
 
+Given the following: 
+
+  - An epehemeris time et
+  - A light-generating object s (eg, "Sun") as a NAIF id
+  - An eclipsing object t (eg, "Jupiter") as a NAIF id
+  - An eclipsed object q (eg, "Io") as a NAIF id
+
+Prints the value of the eclipse at various points on the surface of q
+
+*/
+
+void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
+
+  SpiceInt n;
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], sepData;
+
+  // radii of all 3 objects
+
+  bodvcd_c(s, "RADII", 3, &n, sr);
+  bodvcd_c(t, "RADII", 3, &n, tr);
+  bodvcd_c(q, "RADII", 3, &n, qr);
+
+  // position from q to s
+
+  spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
+  spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
+
+  for (double lat=-90; lat<=90; lat+=5) {
+    for (double lng=-180; lng<=180; lng+=5) {
+
+      sphrec_c(qr[0], rpd_c()*(90-lat), rpd_c()*lng, qtemp);
+
+      vsub_c(spos, qtemp, stemp);
+      vsub_c(tpos, qtemp, ttemp);
+
+      //      printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
+      //      printf("QTEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]);
+      //      printf("STEMP: %f %f %f\n", stemp[0], stemp[1], stemp[2]);
+
+      sepData = separationData(stemp, sr[0], ttemp, tr[0]);
+
+      printf("%f %f %f\n", lng, lat, sepData);
+    }
+  }
+}

@@ -11,6 +11,8 @@
 
 // Usage: $0 moon sun planet syear eyear
 
+// moon = observer, sun = shinything, planet = blockything
+
 int main(int argc, char **argv) {
 
   // variables we will use
@@ -62,6 +64,8 @@ int main(int argc, char **argv) {
   for (int i=0; i<nres; i++) {
 
     wnfetd_c(&result,i,&beg,&end);
+
+    eclipseAroundTheWorld(beg, sunID, planetID, moonID);
 
     printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
   }
