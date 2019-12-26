@@ -746,7 +746,7 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
   bodvcd_c(t, "RADII", 3, &n, tr);
   bodvcd_c(q, "RADII", 3, &n, qr);
 
-  // position from q to s
+  // position from q to s and q to t
 
   spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);

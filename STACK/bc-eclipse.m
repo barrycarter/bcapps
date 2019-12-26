@@ -1,3 +1,86 @@
+(* work below on 25 Dec 2019 *)
+
+(*
+
+we can put s on the x axis at t in xy plane
+
+sdist = distance to spos
+tdist = distance to tpos
+
+sr = radius of s
+tr = radius of t
+qr = radius of q
+
+alpha = just some known angle
+
+sr, tr, qr, alpha are known below
+
+*)
+
+conds = {sr > 0, tr > 0, qr > 0, theta > -Pi, theta < Pi, phi < Pi/2,
+phi > -Pi/2, alpha > -Pi, alpha < Pi, sdist > 0, tdist > 0, tdist < sdist,
+qr < tdist, sr < tdist, tr < tdist}
+
+spos = {sdist, 0, 0};
+tpos = {tdist*Cos[alpha], tdist*Sin[alpha], 0};
+
+qsurf[theta_, phi_] = sph2xyz[theta, phi, qr];
+
+sposnew = spos - qsurf[theta, phi];
+tposnew = tpos - qsurf[theta, phi];
+
+(* I THINK this is the value of interest *)
+
+val = Simplify[VectorAngle[sposnew, tposnew] - ArcSin[tr/Norm[tposnew]] -
+ArcSin[sr/Norm[sposnew]], conds];
+
+dvaltheta = Simplify[D[val, theta], conds]
+
+dvalphi = Simplify[D[val, phi], conds]
+
+Clear[val]
+
+angradt[theta_, phi_] = ArcSin[tr/Norm[tposnew]];
+angrads[theta_, phi_] = ArcSin[sr/Norm[sposnew]];
+angsep[theta_, phi_] = VectorAngle[sposnew, tposnew]
+
+val[theta_, phi_] = 
+ Simplify[VectorAngle[sposnew, tposnew] - ArcSin[tr/Norm[tposnew]] -
+ArcSin[sr/Norm[sposnew]], conds];
+
+
+
+repls = {
+ sr -> Random[Real, {0, 10^6}], tr -> Random[Real, {0, 10^4}],
+ qr -> Random[Real, {0, 10^3}], sdist -> Random[Real, {0, 150*10^6}],
+ tdist -> Random[Real, {0, 10^6}], 
+ alpha -> Random[Real, {-1*Degree, 1*Degree}]
+}
+
+repls
+
+ContourPlot[val[theta*Degree , phi*Degree] /. repls, {theta, -180, 180},
+ {phi, -90, 90}, PlotLegends -> True, ColorFunction -> Hue]
+showit
+
+ContourPlot[angradt[theta*Degree, phi*Degree] /. repls, 
+ {theta, -180, 180}, {phi, -90, 90}, PlotLegends -> True, ColorFunction -> Hue]
+showit
+
+ContourPlot[angrads[theta*Degree, phi*Degree] /. repls, 
+ {theta, -180, 180}, {phi, -90, 90}, PlotLegends -> True, ColorFunction -> Hue]
+showit
+
+ContourPlot[angsep[theta*Degree, phi*Degree] /. repls, 
+ {theta, -180, 180}, {phi, -90, 90}, PlotLegends -> True, ColorFunction -> Hue]
+showit
+
+(* with this setup, t has 0 latitude, alpha longitude *)
+
+
+
+
+
 (* work below on 27 Nov 2019 *)
 
 (*
