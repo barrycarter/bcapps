@@ -748,6 +748,8 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   // position from q to s and q to t
 
+  // TODO: use twovec_c to create frame where s is x axis and t is in xy-plane
+
   spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
 

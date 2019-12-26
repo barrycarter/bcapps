@@ -1,3 +1,89 @@
+(*
+
+Subject: Minimal and maximal angular separation of two spheres as viewed from surface of third sphere
+
+Short form: find the minimum and maximum value of 
+
+***something***
+
+subject to ****something****
+
+Long form:
+
+<pre><code>
+
+(*
+
+Let S, T, and Q be three spheres with radii sr, tr, and qr respectively.
+
+Without loss of generality, we can create Cartesian coordinate system such that:
+
+  - the center of Q is at the origin
+
+  - the center of S is on the x axis
+
+  - the center of T is in the xy plane
+
+Thus, we can write the coordinates of the center as follows:
+
+*)
+
+q = {0, 0, 0};
+s = {sx, 0, 0};
+t = {tx, ty, 0};
+
+(* The angular separation between S and T as viewed from any point {px, py, pz} is: *)
+
+angsep[px_, py_, pz_] = VectorAngle[s-{px, py, pz}, t-{px, py, pz}]
+
+(* the angular radii of s and t as viewed from any point {px, py, pz} is: *)
+
+angradS[px_, py_, pz_] = ArcSin[sr/Norm[s-{px, py, pz}]]
+angradT[px_, py_, pz_] = ArcSin[tr/Norm[t-{px, py, pz}]]
+
+(*
+
+From any point P (`{px, py, pz}`), we can measure the quantity `val = ((sep-tar)/sar-1)/2` where:
+
+    - `sep` is the angular separation between the centers of S and T as viewed from P
+    - `sar` is the angular radius of S as viewed from P
+    - `tar` is the angular radius of T as viewed from P
+
+Note that `val` gives us the following:
+
+  - if `val > 0`, the two spheres are not overlapping as viewed from P
+
+  - if `val > -1` and `val < 0`, the two spheres are partially overlapping as viewed from P
+
+  - if `val < -1`, one sphere is completely overlapping the other as viewed from P
+
+*)
+
+val[px_, py_, pz_] = ((angsep[px, py, pz] - angradT[px, py,
+pz])/angradS[px, py, pz]-1)/2
+
+
+
+(* the angular radius of a sphere with radius r0 and centered at s0 as viewed from a point p0 *)
+
+angrad[p0_, s0_, r0_] = ArcSin[r0/Norm[s0-p0]];
+
+(* the value val we want to measure at a given point p0 *)
+
+val[p0_] =  ((angsep[p0, s, t]-angrad[p0, t, tr])/angrad[p0, s, sr]-1)/2
+
+
+
+
+</code></pre>
+
+
+
+****TODO: create function for angsep and angrads
+   
+
+
+
 (* work below on 25 Dec 2019 *)
 
 (*
@@ -28,6 +114,12 @@ qsurf[theta_, phi_] = sph2xyz[theta, phi, qr];
 
 sposnew = spos - qsurf[theta, phi];
 tposnew = tpos - qsurf[theta, phi];
+
+val = Simplify[((VectorAngle[sposnew, tposnew] -
+ ArcSin[tr/Norm[tposnew]])/ArcSin[sr/Norm[sposnew]]-1)/2]
+
+(* return ((vsep_c(s,t)-asin(tr/vnorm_c(t)))/asin(sr/vnorm_c(s))-1)/2; *)
+
 
 (* I THINK this is the value of interest *)
 
