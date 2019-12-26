@@ -738,7 +738,7 @@ Prints the value of the eclipse at various points on the surface of q
 void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   SpiceInt n;
-  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], sepData;
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], sepData, tposr, tposcolat, tposlng, sposr, sposcolat, sposlng;
 
   // radii of all 3 objects
 
@@ -751,10 +751,21 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
   spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
 
-  for (double lat=-90; lat<=90; lat+=5) {
-    for (double lng=-180; lng<=180; lng+=5) {
+  recsph_c(spos, &sposr, &sposcolat, &sposlng);
+  recsph_c(tpos, &tposr, &tposcolat, &tposlng);
+
+  printf("SPOS(SPH): %f %f %f\n", sposlng*dpr_c(), 90-sposcolat*dpr_c(), sposr);
+  printf("TPOS(SPH): %f %f %f\n", tposlng*dpr_c(), 90-tposcolat*dpr_c(), tposr);
+
+  for (double lat=-90; lat<=90; lat+=1) {
+    for (double lng=-180; lng<=180; lng+=1) {
 
       sphrec_c(qr[0], rpd_c()*(90-lat), rpd_c()*lng, qtemp);
+
+      if (abs(vsep_c(qtemp, spos)) > pi_c()/2) {
+	printf("%f %f -2.0\n", lng, lat);
+	continue;
+      }
 
       vsub_c(spos, qtemp, stemp);
       vsub_c(tpos, qtemp, ttemp);
