@@ -96,7 +96,11 @@ This is not not a list of possible future streams
 
   - multi calendar project
 
-  - nagyerass tests writing
+  - nagyerass tests writing (in particular, push to git reminder)
 
-  - bc-rename.pl (since convmv failing)
+  - bc-rename-bad-files.pl (since convmv failing)
+
+  - convert skyfield constellation determination to CSPICE
+
+  - elliptical orbits using (not) Mathics
 
