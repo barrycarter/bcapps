@@ -2,11 +2,30 @@
 
 Subject: Minimal and maximal angular separation of two spheres as viewed from surface of third sphere
 
-Short form: find the minimum and maximum value of 
+Short form:
 
-***something***
+<pre><code>
+(* 
 
-subject to ****something****
+Find the values of theta and phi that make overlapValue maximal and
+the values of theta and phi that make it minimal, given that all other
+values are constants
+
+*)
+
+overlapValue[theta_, phi_] = 
+
+-(-ArcCos[(qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + ty*Sin[theta]))/
+      Sqrt[(qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*(qr^2 + tx^2 + ty^2 - 
+         2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta]))]] + 
+   ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]] + 
+   ArcSin[tr/Sqrt[qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+         ty*Sin[theta])]])/
+ (2*ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]])
+
+(* subject to the constraint `-Pi/2 &lt; theta &lt; Pi/2` *)
+
+</code></pre>
 
 Long form:
 
@@ -14,13 +33,23 @@ Long form:
 
 (*
 
-Let S, T, and Q be three spheres with radii sr, tr, and qr respectively.
+We will establish these conditions below, but need to pre-declare them
+for simplication.
+
+*)
+
+conds = {sx > 0, Element[{tx, ty, px, py, pz}, Reals], sr > 0, tr > 0, qr > 0,
+ theta > -Pi, theta &lt; Pi, phi > -Pi/2, phi &lt; Pi/2};
+
+(*
+
+Let S, T, and Q be three spheres with (positive) radii sr, tr, and qr respectively.
 
 Without loss of generality, we can create Cartesian coordinate system such that:
 
   - the center of Q is at the origin
 
-  - the center of S is on the x axis
+  - the center of S is on the positive x axis
 
   - the center of T is in the xy plane
 
@@ -32,18 +61,31 @@ q = {0, 0, 0};
 s = {sx, 0, 0};
 t = {tx, ty, 0};
 
-(* The angular separation between S and T as viewed from any point {px, py, pz} is: *)
+(*
 
-angsep[px_, py_, pz_] = VectorAngle[s-{px, py, pz}, t-{px, py, pz}]
+where sx is positive, and tx and ty are Real.
+
+*)
+
+(* 
+
+The angular separation between S and T as viewed from any
+(real-valued) point {px, py, pz} is:
+
+*)
+
+angsep[px_, py_, pz_] = Simplify[VectorAngle[s-{px, py, pz}, t-{px,
+py, pz}], conds];
 
 (* the angular radii of s and t as viewed from any point {px, py, pz} is: *)
 
-angradS[px_, py_, pz_] = ArcSin[sr/Norm[s-{px, py, pz}]]
-angradT[px_, py_, pz_] = ArcSin[tr/Norm[t-{px, py, pz}]]
+angradS[px_, py_, pz_] = Simplify[ArcSin[sr/Norm[s-{px, py, pz}]], conds];
+angradT[px_, py_, pz_] = Simplify[ArcSin[tr/Norm[t-{px, py, pz}]], conds];
 
 (*
 
-From any point P (`{px, py, pz}`), we can measure the quantity `val = ((sep-tar)/sar-1)/2` where:
+From any point P (`{px, py, pz}`), we can measure the quantity `val =
+((sep-tar)/sar-1)/2` where:
 
     - `sep` is the angular separation between the centers of S and T as viewed from P
     - `sar` is the angular radius of S as viewed from P
@@ -51,36 +93,154 @@ From any point P (`{px, py, pz}`), we can measure the quantity `val = ((sep-tar)
 
 Note that `val` gives us the following:
 
-  - if `val > 0`, the two spheres are not overlapping as viewed from P
+  - if `val &gt; 0`, the two spheres are not overlapping as viewed from P
 
-  - if `val > -1` and `val < 0`, the two spheres are partially overlapping as viewed from P
+  - if `val &gt; -1` and `val &lt; 0`, the two spheres are partially
+    overlapping as viewed from P
 
-  - if `val < -1`, one sphere is completely overlapping the other as viewed from P
+  - if `val &lt; -1`, one sphere is completely overlapping the other as viewed from P
 
 *)
 
-val[px_, py_, pz_] = ((angsep[px, py, pz] - angradT[px, py,
-pz])/angradS[px, py, pz]-1)/2
+val[px_, py_, pz_] = Simplify[((angsep[px, py, pz] - angradT[px, py,
+pz])/angradS[px, py, pz]-1)/2, conds];
 
+(*
 
+Any point on the surface of sphere Q has spherical coordinates
+`{theta, phi, qr}` for some theta ("longitude") between -Pi and Pi and
+some phi ("latitude") between -Pi/2 and Pi/2. Converting to
+rectangular coordinates, we have:
 
-(* the angular radius of a sphere with radius r0 and centered at s0 as viewed from a point p0 *)
+*)
 
-angrad[p0_, s0_, r0_] = ArcSin[r0/Norm[s0-p0]];
+pointQ[theta_, phi_] = Simplify[{qr*Cos[phi]*Cos[theta],
+qr*Cos[phi]*Sin[theta], qr*Sin[phi]}, conds];
 
-(* the value val we want to measure at a given point p0 *)
+(*
 
-val[p0_] =  ((angsep[p0, s, t]-angrad[p0, t, tr])/angrad[p0, s, sr]-1)/2
+Computing val given theta and phi (and calling in overlapValue)
 
+*)
 
+overlapValue[theta_, phi_] = Simplify[val[qr*Cos[phi]*Cos[theta],
+qr*Cos[phi]*Sin[theta], qr*Sin[phi]], conds]
 
+(*
+
+Im trying to find the minimum and maximum of overlapValue on the part
+of Q that "faces" S (in other words, -Pi/2 &lt; theta &lt; Pi/2).
+
+I tried setting the partials with respect to theta and phi to 0, but
+my Mathematica just hung.
+
+*)
 
 </code></pre>
 
+overlapValueDPhi[theta_, phi_] = 
+ Simplify[D[overlapValue[theta, phi], phi], conds];
+
+overlapValueDTheta[theta_, phi_] = 
+ Simplify[D[overlapValue[theta, phi], theta], conds];
+
+overlapValueDPhi is:
+
+-(qr*sr*sx*(-ArcCos[(qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + 
+           ty*Sin[theta]))/Sqrt[(qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+          (qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+             ty*Sin[theta]))]] + 
+     ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]] + 
+     ArcSin[tr/Sqrt[qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+           ty*Sin[theta])]])*Cos[theta]*Sin[phi])/
+  (2*ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]]^2*
+   (qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+   Sqrt[qr^2 - sr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]) - 
+ (-((qr*sr*sx*Cos[theta]*Sin[phi])/((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+      Sqrt[qr^2 - sr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]])) - 
+   (qr*tr*Sin[phi]*(tx*Cos[theta] + ty*Sin[theta]))/
+    ((qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta]))^(3/2)*
+     Sqrt[1 - tr^2/(qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+           ty*Sin[theta]))]) + 
+   (qr*Sin[phi]*((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+       ((sx + tx)*Cos[theta] + ty*Sin[theta])*(qr^2 + tx^2 + ty^2 - 
+        2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta])) - 
+      (qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + ty*Sin[theta]))*
+       (-4*qr*sx*tx*Cos[phi]*Cos[theta]^2 + (qr^2 + sx^2)*ty*Sin[theta] + 
+        Cos[theta]*(qr^2*(sx + tx) + sx*(sx*tx + tx^2 + ty^2) - 
+          4*qr*sx*ty*Cos[phi]*Sin[theta]))))/
+    (((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*(qr^2 + tx^2 + ty^2 - 
+        2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta])))^(3/2)*
+     Sqrt[1 - (qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + 
+            ty*Sin[theta]))^2/((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+         (qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+            ty*Sin[theta])))]))/
+  (2*ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]])
+
+overlapValueDTheta is:
+
+ -(qr*sr*sx*(-ArcCos[(qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + 
+        ty*Sin[theta]))/Sqrt[(qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+               (qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+                 ty*Sin[theta]))]] + 
+     ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]] + 
+      ArcSin[tr/Sqrt[qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+        ty*Sin[theta])]])*Cos[phi]*Sin[theta])/
+ (2*ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]]^2*
+  (qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+  Sqrt[qr^2 - sr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]) - 
+(-((qr*sr*sx*Cos[phi]*Sin[theta])/((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+        Sqrt[qr^2 - sr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]])) + 
+  (qr*tr*Cos[phi]*(ty*Cos[theta] - tx*Sin[theta]))/
+  ((qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta]))^(3/2)*
+   Sqrt[1 - tr^2/(qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+            ty*Sin[theta]))]) + 
+  (qr*Cos[phi]*((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+  (-(ty*Cos[theta]) + (sx + tx)*Sin[theta])*(qr^2 + tx^2 + ty^2 - 
+          2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta])) - 
+  (qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + ty*Sin[theta]))*
+  (-((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*(ty*Cos[theta] - 
+        tx*Sin[theta])) + sx*Sin[theta]*(qr^2 + tx^2 + ty^2 - 
+             2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta])))))/
+  (((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*(qr^2 + tx^2 + ty^2 - 
+       2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta])))^(3/2)*
+   Sqrt[1 - (qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + 
+      ty*Sin[theta]))^2/((qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*
+           (qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+             ty*Sin[theta])))]))/
+ (2*ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]])
+
+Solve[overlapValueDPhi[theta, phi] == 0, phi]
+
+Solve[overlapValueDTheta[theta, phi] == 0, theta]
 
 
-****TODO: create function for angsep and angrads
-   
+
+
+
+The final formula is (just for us):
+
+-(-ArcCos[(qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + ty*Sin[theta]))/
+      Sqrt[(qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*(qr^2 + tx^2 + ty^2 - 
+         2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta]))]] + 
+   ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]] + 
+   ArcSin[tr/Sqrt[qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+         ty*Sin[theta])]])/
+ (2*ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]])
+
+   -\frac{\sin ^{-1}\left(\frac{\text{sr}}{\sqrt{-2 \text{qr} \text{sx} \cos
+    (\phi ) \cos (\theta )+\text{qr}^2+\text{sx}^2}}\right)-\cos
+   ^{-1}\left(\frac{-\text{qr} \cos (\phi ) ((\text{sx}+\text{tx}) \cos (\theta
+    )+\text{ty} \sin (\theta ))+\text{qr}^2+\text{sx} \text{tx}}{\sqrt{\left(-2
+    \text{qr} \text{sx} \cos (\phi ) \cos (\theta
+    )+\text{qr}^2+\text{sx}^2\right) \left(-2 \text{qr} \cos (\phi ) (\text{tx}
+    \cos (\theta )+\text{ty} \sin (\theta
+    ))+\text{qr}^2+\text{tx}^2+\text{ty}^2\right)}}\right)+\sin
+    ^{-1}\left(\frac{\text{tr}}{\sqrt{-2 \text{qr} \cos (\phi ) (\text{tx} \cos
+    (\theta )+\text{ty} \sin (\theta
+    ))+\text{qr}^2+\text{tx}^2+\text{ty}^2}}\right)}{2 \sin
+    ^{-1}\left(\frac{\text{sr}}{\sqrt{-2 \text{qr} \text{sx} \cos (\phi ) \cos
+    (\theta )+\text{qr}^2+\text{sx}^2}}\right)}
 
 
 
