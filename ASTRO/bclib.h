@@ -726,6 +726,55 @@ SpiceDouble minCornerEclipse(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q)
 
 Given the following: 
 
+  - A light-generating object s (eg, "Sun") as a 3 elt position vector
+  - Radius of s as sr
+  - Another object t (eg, "Jupiter") as a 3 elt position vector
+  - Radius of t as tr
+  - Radius of q as qr
+  - delta as a value to estimate the derviatve
+
+Returns the gradient of separationData as a three-element vector of length qr
+
+*/
+
+void separationDataDerv(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3],
+			SpiceDouble tr, SpiceDouble qr, SpiceDouble delta, 
+			SpiceDouble result[3]) {
+
+  SpiceDouble deltas[6], stemp[3], ttemp[3];
+  SpiceInt count = 0;
+
+  for (int i=0; i<3; i++) {
+    for (int j=-1; j<=1; j+=2) {
+
+      // reset stemp and ttemp to srot and trot
+      for (int k=0; k<3; k++) {stemp[k] = s[k]; ttemp[k] = t[k];}
+
+      // change stemp and ttemp to view from delta away from origin in ith axis
+      stemp[i] -= j*delta;
+      ttemp[i] -= j*delta;
+
+      deltas[count++] = separationData(stemp, sr, ttemp, tr);
+    }
+  }
+
+  SpiceDouble dx  = (deltas[1]-deltas[0])/2/delta;
+  SpiceDouble dy = (deltas[3]-deltas[2])/2/delta;
+  SpiceDouble dz = (deltas[5]-deltas[4])/2/delta;
+
+  SpiceDouble dnorm = sqrt(dx*dx + dy*dy + dz*dz);
+
+  result[0] = qr*dx/dnorm;
+  result[1] = qr*dy/dnorm;
+  result[2] = qr*dz/dnorm;
+
+}
+
+
+/**
+
+Given the following: 
+
   - An epehemeris time et
   - A light-generating object s (eg, "Sun") as a NAIF id
   - An eclipsing object t (eg, "Jupiter") as a NAIF id
@@ -738,7 +787,7 @@ Prints the value of the eclipse at various points on the surface of q
 void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   SpiceInt n;
-  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], tposr, tposcolat, tposlng, sposr, sposcolat, sposlng, mat[3][3], srot[3], trot[3], sepData;
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], tposr, tposcolat, tposlng, sposr, sposcolat, sposlng, mat[3][3], srot[3], trot[3], sepData, temp[3];
 
   // radii of all 3 objects
 
@@ -764,6 +813,10 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
   // TODO: maybe functionalize this
 
   SpiceDouble delta = qr[0]/1000.;
+
+  separationDataDerv(srot, sr[0], trot, tr[0], qr[0], delta, temp);
+
+  printf("SDD: %f %f %f\n", temp[0], temp[1], temp[2]);
 
   SpiceDouble deltas[6];
 
