@@ -1,8 +1,22 @@
-Stuff I plan to stream 26 Dec 2019, primarily for my reference
+Current stream description:
+
+ASTRO/eclipse-diagram.gif
+
+Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
+
+Stuff I plan to stream 27 Dec 2019, primarily for my reference
+
+summary reminder! (series of streams, bccoding)
+
+gradients
 
 try substitution?
 
 let others solve the problem?
+
+TODO: cache trig functions for voronoi (and more?)
+
+TODO: look into https://github.com/Fil/d3-geo-voronoi
 
 mathics libraries?
 
@@ -106,3 +120,4 @@ This is not not a list of possible future streams
 
   - parallel editable comments to git structure
 
+  - categorize jokes and annoy people on reddit project?

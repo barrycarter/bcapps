@@ -738,7 +738,7 @@ Prints the value of the eclipse at various points on the surface of q
 void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   SpiceInt n;
-  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], sepData, tposr, tposcolat, tposlng, sposr, sposcolat, sposlng;
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], sepData, tposr, tposcolat, tposlng, sposr, sposcolat, sposlng, mat[3][3], srot[3], trot[3];
 
   // radii of all 3 objects
 
@@ -748,16 +748,54 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   // position from q to s and q to t
 
-  // TODO: use twovec_c to create frame where s is x axis and t is in xy-plane
-
   spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
+
+  // TODO: use twovec_c to create frame where s is x axis and t is in xy-plane
+
+  twovec_c(spos, 1, tpos, 2, mat);
+
+  mxv_c(mat, spos, srot);
+  mxv_c(mat, tpos, trot);
+
+  printf("SROT: %f %f %f\n", srot[0], srot[1], srot[2]);
+  printf("TROT: %f %f %f\n", trot[0], trot[1], trot[2]);
+
+  // TODO: maybe functionalize this
+
+  SpiceDouble delta = qr[0]/1000.;
+
+  SpiceDouble deltas[6];
+
+  SpiceInt count = 0;
+
+  printf("DATA FROM ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
+
+  for (int i=0; i<3; i++) {
+    for (int j=-1; j<=1; j+=2) {
+
+      // reset stemp and ttemp to srot and trot
+      for (int k=0; k<3; k++) {stemp[k] = srot[k]; ttemp[k] = trot[k];}
+
+      // change stemp and ttemp to view from delta away from origin in ith axis
+      stemp[i] -= j*delta;
+      ttemp[i] -= j*delta;
+
+      deltas[count++] = separationData(stemp, sr[0], ttemp, tr[0]);
+    }
+  }
+
+  SpiceDouble dx = (deltas[1]-deltas[0])/2/delta;
+  SpiceDouble dy = (deltas[3]-deltas[2])/2/delta;
+  SpiceDouble dz = (deltas[5]-deltas[4])/2/delta;
+
+  printf("DELTAS: %f %f %f %f %f %f\n", deltas[0], deltas[1], deltas[2], deltas[3], deltas[4], deltas[5]);
 
   recsph_c(spos, &sposr, &sposcolat, &sposlng);
   recsph_c(tpos, &tposr, &tposcolat, &tposlng);
 
-  printf("SPOS(SPH): %f %f %f\n", sposlng*dpr_c(), 90-sposcolat*dpr_c(), sposr);
-  printf("TPOS(SPH): %f %f %f\n", tposlng*dpr_c(), 90-tposcolat*dpr_c(), tposr);
+  //  printf("SPOS(SPH): %f %f %f\n", sposlng*dpr_c(), 90-sposcolat*dpr_c(), sposr);
+  //  printf("TPOS(SPH): %f %f %f\n", tposlng*dpr_c(), 90-tposcolat*dpr_c(), tposr);
 
   for (double lat=-90; lat<=90; lat+=1) {
     for (double lng=-180; lng<=180; lng+=1) {
@@ -765,7 +803,7 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
       sphrec_c(qr[0], rpd_c()*(90-lat), rpd_c()*lng, qtemp);
 
       if (abs(vsep_c(qtemp, spos)) > pi_c()/2) {
-	printf("%f %f -2.0\n", lng, lat);
+	//	printf("%f %f -2.0\n", lng, lat);
 	continue;
       }
 
@@ -778,7 +816,7 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
       sepData = separationData(stemp, sr[0], ttemp, tr[0]);
 
-      printf("%f %f %f\n", lng, lat, sepData);
+      //      printf("%f %f %f\n", lng, lat, sepData);
     }
   }
 }

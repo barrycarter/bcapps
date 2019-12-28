@@ -1021,3 +1021,14 @@ Show[%, ViewPoint -> earth, ViewVector -> earth-sun, ImageSize -> {1024,768},
 showit
 
 TODO: test vs horizons
+
+(* below 26 Dec 2019 *)
+
+t2125 = Grad[val[px, py, pz], {px, py, pz}] /. {px -> 0, py -> 0, pz -> 0}
+
+Simplify[t2125[[2]]/t2125[[1]], conds]
+
+Simplify[ArcTan[t2125[[2]]/t2125[[1]]], conds]
+
+
+
