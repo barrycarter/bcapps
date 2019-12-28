@@ -818,44 +818,18 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   printf("SDD: %f %f %f\n", temp[0], temp[1], temp[2]);
 
-  SpiceDouble deltas[6];
-
-  SpiceInt count = 0;
-
-  for (int i=0; i<3; i++) {
-    for (int j=-1; j<=1; j+=2) {
-
-      // reset stemp and ttemp to srot and trot
-      for (int k=0; k<3; k++) {stemp[k] = srot[k]; ttemp[k] = trot[k];}
-
-      // change stemp and ttemp to view from delta away from origin in ith axis
-      stemp[i] -= j*delta;
-      ttemp[i] -= j*delta;
-
-      deltas[count++] = separationData(stemp, sr[0], ttemp, tr[0]);
-    }
-  }
-
-  SpiceDouble dx = (deltas[1]-deltas[0])/2/delta;
-  SpiceDouble dy = (deltas[3]-deltas[2])/2/delta;
-  SpiceDouble dz = (deltas[5]-deltas[4])/2/delta;
-
-  // the gradient and the gradient normalized to length qr
-  SpiceDouble dnorm = sqrt(dx*dx + dy*dy + dz*dz);
-  SpiceDouble gnorm[3] = {qr[0]*dx/dnorm, qr[0]*dy/dnorm, qr[0]*dz/dnorm};
-
   for (int k=0; k<3; k++) {
-    stemp[k] = srot[k]-gnorm[k];
-    ttemp[k] = trot[k]-gnorm[k];
+    stemp[k] = srot[k]-temp[k];
+    ttemp[k] = trot[k]-temp[k];
   }
 
   printf("DATA FROM ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
   printf("DATA FROM GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
-  printf("GNORM: %f %f %f\n", gnorm[0], gnorm[1], gnorm[2]);
+  printf("TEMP: %f %f %f\n", temp[0], temp[1], temp[2]);
 
   for (int k=0; k<3; k++) {
-    stemp[k] = srot[k]+gnorm[k];
-    ttemp[k] = trot[k]+gnorm[k];
+    stemp[k] = srot[k]+temp[k];
+    ttemp[k] = trot[k]+temp[k];
   }
 
   printf("DATA FROM -GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
