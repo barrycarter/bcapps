@@ -4,11 +4,19 @@ ASTRO/eclipse-diagram.gif
 
 Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 27 Dec 2019, primarily for my reference
+Stuff I plan to stream 28 Dec 2019, primarily for my reference
+
+TODO: can Mathematica give partial answers
+
+derv for phi is 0 at equator
+
+value is symmetric in +- phi
+
+look at given comment answer
+
+gradients?
 
 summary reminder! (series of streams, bccoding)
-
-gradients
 
 try substitution?
 

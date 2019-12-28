@@ -812,20 +812,18 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   // TODO: maybe functionalize this
 
-  SpiceDouble delta = qr[0]/1000.;
+  SpiceDouble delta = qr[0]/1.;
 
   separationDataDerv(srot, sr[0], trot, tr[0], qr[0], delta, temp);
-
-  printf("SDD: %f %f %f\n", temp[0], temp[1], temp[2]);
+  printf("SDD AT ORIGIN: %f %f %f\n", temp[0], temp[1], temp[2]);
+  printf("DATA FROM ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
 
   for (int k=0; k<3; k++) {
     stemp[k] = srot[k]-temp[k];
     ttemp[k] = trot[k]-temp[k];
   }
 
-  printf("DATA FROM ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
   printf("DATA FROM GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
-  printf("TEMP: %f %f %f\n", temp[0], temp[1], temp[2]);
 
   for (int k=0; k<3; k++) {
     stemp[k] = srot[k]+temp[k];
@@ -834,23 +832,15 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   printf("DATA FROM -GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
 
-  separationDataDerv(stemp, sr[0], ttemp, tr[0], qr[0], delta, temp);
-  printf("SDD@-GRADPT: %f %f %f\n", temp[0], temp[1], temp[2]);
-
-  //  printf("DELTAS: %f %f %f\n", dx, dy, dz);
-
   recsph_c(spos, &sposr, &sposcolat, &sposlng);
   recsph_c(tpos, &tposr, &tposcolat, &tposlng);
-
-  //  printf("SPOS(SPH): %f %f %f\n", sposlng*dpr_c(), 90-sposcolat*dpr_c(), sposr);
-  //  printf("TPOS(SPH): %f %f %f\n", tposlng*dpr_c(), 90-tposcolat*dpr_c(), tposr);
 
   for (double lat=-90; lat<=90; lat+=1) {
     for (double lng=-180; lng<=180; lng+=1) {
 
       sphrec_c(qr[0], rpd_c()*(90-lat), rpd_c()*lng, qtemp);
 
-      if (abs(vsep_c(qtemp, spos)) > pi_c()/2) {
+      if (abs(vsep_c(qtemp, srot)) > pi_c()/2) {
 	//	printf("%f %f -2.0\n", lng, lat);
 	// continue;
       }
