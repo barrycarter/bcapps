@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
     wnfetd_c(&result,i,&beg,&end);
 
     //    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID);
-    eclipseAroundTheWorld(end, sunID, planetID, moonID);
+    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
 
     printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
   }

@@ -58,6 +58,9 @@ char *planet2str(int planet, char *type) {
 double mi2km(double d) {return d*1.609344;}
 double km2mi(double d) {return d/1.609344;}
 
+SpiceDouble min(SpiceDouble x, SpiceDouble y) {return x<y?x:y;}
+SpiceDouble max(SpiceDouble x, SpiceDouble y) {return x>y?x:y;}
+
 // TODO: have this routine return STIME or ETIME if out of bounds
 
 // this routine *very roughly* converts years to to et for testing only
@@ -779,61 +782,74 @@ Given the following:
   - A light-generating object s (eg, "Sun") as a NAIF id
   - An eclipsing object t (eg, "Jupiter") as a NAIF id
   - An eclipsed object q (eg, "Io") as a NAIF id
+  - A flag val (0 = give min eclipse, 1 = give max eclipse)
 
-Prints the value of the eclipse at various points on the surface of q
+Returns the minimum or maximum of the eclipse on q at time et for
+portions of q facing s
 
 */
 
-void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
+SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt val) {
 
   SpiceInt n;
-  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], tposr, tposcolat, tposlng, sposr, sposcolat, sposlng, mat[3][3], srot[3], trot[3], sepData, temp[3];
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], mat[3][3], srot[3], trot[3], grad[3];
 
   // radii of all 3 objects
-
   bodvcd_c(s, "RADII", 3, &n, sr);
   bodvcd_c(t, "RADII", 3, &n, tr);
   bodvcd_c(q, "RADII", 3, &n, qr);
 
   // position from q to s and q to t
-
   spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
 
-  // TODO: use twovec_c to create frame where s is x axis and t is in xy-plane
+  // create matrix that puts s on the x axis and t in the xy-plane,
+  // and apply that matrix
 
   twovec_c(spos, 1, tpos, 2, mat);
-
   mxv_c(mat, spos, srot);
   mxv_c(mat, tpos, trot);
 
-  printf("SROT: %f %f %f\n", srot[0], srot[1], srot[2]);
-  printf("TROT: %f %f %f\n", trot[0], trot[1], trot[2]);
+  SpiceDouble delta = qr[0]/1000000.;
 
-  // TODO: maybe functionalize this
+  // compute separationData where sun is rising/setting on equator
 
-  SpiceDouble delta = qr[0]/1.;
+  SpiceDouble eastViewS[3] = {srot[0], srot[1]-qr[0], srot[2]};
+  SpiceDouble eastViewT[3] = {trot[0], trot[1]-qr[0], trot[2]};
 
-  separationDataDerv(srot, sr[0], trot, tr[0], qr[0], delta, temp);
-  printf("SDD AT ORIGIN: %f %f %f\n", temp[0], temp[1], temp[2]);
-  printf("DATA FROM ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
+  SpiceDouble westViewS[3] = {srot[0], srot[1]+qr[0], srot[2]};
+  SpiceDouble westViewT[3] = {trot[0], trot[1]+qr[0], trot[2]};
 
-  for (int k=0; k<3; k++) {
-    stemp[k] = srot[k]-temp[k];
-    ttemp[k] = trot[k]-temp[k];
+  SpiceDouble westSep = separationData(westViewS, sr[0], westViewT, tr[0]);
+  SpiceDouble eastSep = separationData(eastViewS, sr[0], eastViewT, tr[0]);
+
+  //  printf("EASTSEP: %f\nWESTSEP: %f\n", westSep, eastSep);
+
+  // compute gradient at origin
+  separationDataDerv(srot, sr[0], trot, tr[0], qr[0], delta, grad);
+
+  // if gradient has negative x value, flip all gradient signs
+
+  if (grad[0] < 0) {
+    for (int i=0; i<3; i++) {grad[i] *= -1;}
   }
 
-  printf("DATA FROM GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
-
   for (int k=0; k<3; k++) {
-    stemp[k] = srot[k]+temp[k];
-    ttemp[k] = trot[k]+temp[k];
+    stemp[k] = srot[k]-grad[k];
+    ttemp[k] = trot[k]-grad[k];
   }
 
-  printf("DATA FROM -GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
+  SpiceDouble gradVal = separationData(stemp, sr[0], ttemp, tr[0]);
 
-  recsph_c(spos, &sposr, &sposcolat, &sposlng);
-  recsph_c(tpos, &tposr, &tposcolat, &tposlng);
+  if (val == 0) {
+    return min(min(gradVal, westSep), eastSep);
+  } else if (val == 1) {
+    return max(max(gradVal, westSep), eastSep);
+  } else {
+    return 999999999;
+  }
+
+  /*
 
   for (double lat=-90; lat<=90; lat+=1) {
     for (double lng=-180; lng<=180; lng+=1) {
@@ -860,4 +876,6 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
       printf("%f %f %f\n", lng, lat, sepData);
     }
   }
+  */
 }
+
