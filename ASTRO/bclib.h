@@ -738,7 +738,7 @@ Prints the value of the eclipse at various points on the surface of q
 void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   SpiceInt n;
-  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], sepData, tposr, tposcolat, tposlng, sposr, sposcolat, sposlng, mat[3][3], srot[3], trot[3];
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], qtemp[3], tposr, tposcolat, tposlng, sposr, sposcolat, sposlng, mat[3][3], srot[3], trot[3], sepData;
 
   // radii of all 3 objects
 
@@ -769,8 +769,6 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   SpiceInt count = 0;
 
-  printf("DATA FROM ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
-
   for (int i=0; i<3; i++) {
     for (int j=-1; j<=1; j+=2) {
 
@@ -789,7 +787,27 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
   SpiceDouble dy = (deltas[3]-deltas[2])/2/delta;
   SpiceDouble dz = (deltas[5]-deltas[4])/2/delta;
 
-  printf("DELTAS: %f %f %f %f %f %f\n", deltas[0], deltas[1], deltas[2], deltas[3], deltas[4], deltas[5]);
+  // the gradient and the gradient normalized to length qr
+  SpiceDouble dnorm = sqrt(dx*dx + dy*dy + dz*dz);
+  SpiceDouble gnorm[3] = {qr[0]*dx/dnorm, qr[0]*dy/dnorm, qr[0]*dz/dnorm};
+
+  for (int k=0; k<3; k++) {
+    stemp[k] = srot[k]-gnorm[k];
+    ttemp[k] = trot[k]-gnorm[k];
+  }
+
+  printf("DATA FROM ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
+  printf("DATA FROM GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
+  printf("GNORM: %f %f %f\n", gnorm[0], gnorm[1], gnorm[2]);
+
+  for (int k=0; k<3; k++) {
+    stemp[k] = srot[k]+gnorm[k];
+    ttemp[k] = trot[k]+gnorm[k];
+  }
+
+  printf("DATA FROM -GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
+
+  //  printf("DELTAS: %f %f %f\n", dx, dy, dz);
 
   recsph_c(spos, &sposr, &sposcolat, &sposlng);
   recsph_c(tpos, &tposr, &tposcolat, &tposlng);
