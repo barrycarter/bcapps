@@ -834,6 +834,9 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
   printf("DATA FROM -GRADPT: %f\n", separationData(stemp, sr[0], ttemp, tr[0]));
 
+  separationDataDerv(stemp, sr[0], ttemp, tr[0], qr[0], delta, temp);
+  printf("SDD@-GRADPT: %f %f %f\n", temp[0], temp[1], temp[2]);
+
   //  printf("DELTAS: %f %f %f\n", dx, dy, dz);
 
   recsph_c(spos, &sposr, &sposcolat, &sposlng);
@@ -849,11 +852,14 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
       if (abs(vsep_c(qtemp, spos)) > pi_c()/2) {
 	//	printf("%f %f -2.0\n", lng, lat);
-	continue;
+	// continue;
       }
 
-      vsub_c(spos, qtemp, stemp);
-      vsub_c(tpos, qtemp, ttemp);
+      //      vsub_c(spos, qtemp, stemp);
+      //      vsub_c(tpos, qtemp, ttemp);
+
+      vsub_c(srot, qtemp, stemp);
+      vsub_c(trot, qtemp, ttemp);
 
       //      printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
       //      printf("QTEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]);
@@ -861,7 +867,7 @@ void eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
 
       sepData = separationData(stemp, sr[0], ttemp, tr[0]);
 
-      //      printf("%f %f %f\n", lng, lat, sepData);
+      printf("%f %f %f\n", lng, lat, sepData);
     }
   }
 }

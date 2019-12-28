@@ -1,3 +1,27 @@
+<formulas>
+
+conds = {sx > 0, Element[{tx, ty, px, py, pz}, Reals], sr > 0, tr > 0, qr > 0,
+ theta > -Pi, theta < Pi, phi > -Pi/2, phi < Pi/2};
+
+overlapValue[theta_, phi_] = 
+
+-(-ArcCos[(qr^2 + sx*tx - qr*Cos[phi]*((sx + tx)*Cos[theta] + ty*Sin[theta]))/
+      Sqrt[(qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta])*(qr^2 + tx^2 + ty^2 - 
+         2*qr*Cos[phi]*(tx*Cos[theta] + ty*Sin[theta]))]] + 
+   ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]] + 
+   ArcSin[tr/Sqrt[qr^2 + tx^2 + ty^2 - 2*qr*Cos[phi]*(tx*Cos[theta] + 
+         ty*Sin[theta])]])/
+ (2*ArcSin[sr/Sqrt[qr^2 + sx^2 - 2*qr*sx*Cos[phi]*Cos[theta]]])
+
+overlapValueDPhi[theta_, phi_] = 
+ Simplify[D[overlapValue[theta, phi], phi], conds];
+
+overlapValueDTheta[theta_, phi_] = 
+ Simplify[D[overlapValue[theta, phi], theta], conds];
+
+</formulas>
+
+
 (*
 
 Subject: Minimal and maximal angular separation of two spheres as viewed from surface of third sphere
@@ -140,6 +164,10 @@ my Mathematica just hung.
 
 overlapValueDPhi[theta_, phi_] = 
  Simplify[D[overlapValue[theta, phi], phi], conds];
+
+(* somehow qr tx Cos[theta] and qr ty Sin[theta] seem to keep coming up *)
+
+
 
 overlapValueDTheta[theta_, phi_] = 
  Simplify[D[overlapValue[theta, phi], theta], conds];
@@ -310,6 +338,17 @@ repls = {
 }
 
 repls
+
+repls2 = {
+ qr -> Random[], sx -> Random[], tx -> Random[], ty -> Random[],
+ tr -> Random[], sr -> Random[]
+};
+
+overlapValue[theta, phi] - overlapValue[theta, -phi]
+
+(above is always 0 )
+
+
 
 ContourPlot[val[theta*Degree , phi*Degree] /. repls, {theta, -180, 180},
  {phi, -90, 90}, PlotLegends -> True, ColorFunction -> Hue]
