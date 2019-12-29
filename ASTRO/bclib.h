@@ -800,19 +800,25 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   bodvcd_c(t, "RADII", 3, &n, tr);
   bodvcd_c(q, "RADII", 3, &n, qr);
 
+  // position from q to s and q to t
+
+  spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
+  spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
+
+  vsub_c(tpos, spos, qtemp);
+
   // vector from t to s
   spkezp_c(t, et, "J2000", "CN+S", s, t2s, &lt);
+
+  printf("TEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]); 
+  printf("T2S: %f %f %f\n", t2s[0], t2s[1], t2s[2]);
 
   // to J2000 north
   SpiceDouble north[3] = {0, 0, 1};
 
   // matrix that makes vector from s to t parallel to x axis and makes
   // the y axis point to J2000 north pole
-  twovec_c(t2s, 1, north, 2, mat);
-
-  // position from q to s and q to t
-  spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
-  spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
+  twovec_c(qtemp, 1, north, 2, mat);
 
   // apply matrix of rotation
   twovec_c(spos, 1, tpos, 2, mat);
@@ -822,6 +828,8 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
   printf("TPOS: %f %f %f\n", tpos[0], tpos[1], tpos[2]);
   printf("T2S: %f %f %f\n", t2s[0], t2s[1], t2s[2]);
+  printf("SROT: %f %f %f\n", srot[0], srot[1], srot[2]);
+  printf("TROT: %f %f %f\n", trot[0], trot[1], trot[2]);
 
   return 0;
 
