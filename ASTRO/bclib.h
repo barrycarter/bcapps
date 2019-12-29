@@ -793,7 +793,8 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
   SpiceInt n;
   SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], mat[3][3], srot[3], trot[3];
-
+  SpiceDouble qtemp[3], stemp[3], ttemp[3];
+  
   // radii of all 3 objects
   bodvcd_c(s, "RADII", 3, &n, sr);
   bodvcd_c(t, "RADII", 3, &n, tr);
@@ -809,8 +810,6 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   twovec_c(spos, 1, tpos, 2, mat);
   mxv_c(mat, spos, srot);
   mxv_c(mat, tpos, trot);
-
-  //  SpiceDouble delta = qr[0];
 
   // compute separationData where sun is rising/setting on equator
 
@@ -834,54 +833,13 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
     printf("WESTSEP: %f\n", westSep);
     printf("STARIGHTSEP: %f\n", straightSep);
 
--  /*
--
--  for (double lat=-90; lat<=90; lat+=1) {
--    for (double lng=-180; lng<=180; lng+=1) {
--
--      sphrec_c(qr[0], rpd_c()*(90-lat), rpd_c()*lng, qtemp);
--
--      if (abs(vsep_c(qtemp, srot)) > pi_c()/2) {
--	//	printf("%f %f -2.0\n", lng, lat);
--	// continue;
--      }
--
--      //      vsub_c(spos, qtemp, stemp);
--      //      vsub_c(tpos, qtemp, ttemp);
--
--      vsub_c(srot, qtemp, stemp);
--      vsub_c(trot, qtemp, ttemp);
--
--      //      printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
--      //      printf("QTEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]);
--      //      printf("STEMP: %f %f %f\n", stemp[0], stemp[1], stemp[2]);
--
--      sepData = separationData(stemp, sr[0], ttemp, tr[0]);
--
--      printf("%f %f %f\n", lng, lat, sepData);
--    }
--  }
--  */
-
-
-  // compute gradient at origin
-  //  separationDataDerv(srot, sr[0], trot, tr[0], qr[0], delta, grad);
-
-  //  printf("GRAD: %f %f %f\n", grad[0], grad[1], grad[2]);
-
-  // if gradient has negative x value, flip all gradient signs
-
-  //  if (grad[0] < 0) {
-  //    for (int i=0; i<3; i++) {grad[i] *= -1;}
-  //  }
-
-  //  for (int k=0; k<3; k++) {
-  //    stemp[k] = srot[k]-grad[k];
-  //    ttemp[k] = trot[k]-grad[k];
-  //  }
-
-  //  SpiceDouble gradVal = separationData(stemp, sr[0], ttemp, tr[0]);
-  //  printf("GRADVAL: %f\n", gradVal);
+    for (double lng=90.; lng<=270.; lng+=1.) {
+      sphrec_c(qr[0], -halfpi_c(), rpd_c()*lng, qtemp);
+      // printf("QTEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]);
+      vsub_c(srot, qtemp, stemp);
+      vsub_c(trot, qtemp, ttemp);
+      printf("%f 0 %f\n", lng, separationData(stemp, sr[0], ttemp, tr[0]));
+    }
 
   if (val == 0) {
     return min(min(straightSep, westSep), eastSep);
