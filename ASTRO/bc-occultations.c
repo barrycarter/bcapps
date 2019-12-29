@@ -9,7 +9,7 @@
 #define MAXWIN 10000
 #define STRLENGTH 32
 
-// Usage: $0 moon sun planet syear eyear
+// Usage: $0 moon=observer sun=lightsource planet=shadower syear eyear
 
 // moon = observer, sun = shinything, planet = blockything
 
@@ -54,10 +54,11 @@ int main(int argc, char **argv) {
   // defining geometry finder function via given arguments
 
   void gfq (SpiceDouble et, SpiceDouble *value) {
-    *value = minCornerEclipse(et, sunID, planetID, moonID);
+    //    *value = minCornerEclipse(et, sunID, planetID, moonID);
+    *value = eclipseAroundTheWorld(et, sunID, planetID, moonID, 0);
   }
 
-  gfuds_c(gfq, isDecreasing, "<", -1, 0, 3600, MAXWIN, &cnfine, &result);
+  gfuds_c(gfq, isDecreasing, "<", 0, 0, 3600, MAXWIN, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 
@@ -66,7 +67,7 @@ int main(int argc, char **argv) {
     wnfetd_c(&result,i,&beg,&end);
 
     //    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID);
-    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
+    //    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
 
     printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
   }

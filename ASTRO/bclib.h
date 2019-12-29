@@ -849,33 +849,5 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
     return 999999999;
   }
 
-  /*
-
-  for (double lat=-90; lat<=90; lat+=1) {
-    for (double lng=-180; lng<=180; lng+=1) {
-
-      sphrec_c(qr[0], rpd_c()*(90-lat), rpd_c()*lng, qtemp);
-
-      if (abs(vsep_c(qtemp, srot)) > pi_c()/2) {
-	//	printf("%f %f -2.0\n", lng, lat);
-	// continue;
-      }
-
-      //      vsub_c(spos, qtemp, stemp);
-      //      vsub_c(tpos, qtemp, ttemp);
-
-      vsub_c(srot, qtemp, stemp);
-      vsub_c(trot, qtemp, ttemp);
-
-      //      printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
-      //      printf("QTEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]);
-      //      printf("STEMP: %f %f %f\n", stemp[0], stemp[1], stemp[2]);
-
-      sepData = separationData(stemp, sr[0], ttemp, tr[0]);
-
-      printf("%f %f %f\n", lng, lat, sepData);
-    }
-  }
-  */
 }
 
