@@ -58,7 +58,8 @@ int main(int argc, char **argv) {
     *value = eclipseAroundTheWorld(et, sunID, planetID, moonID, 0);
   }
 
-  gfuds_c(gfq, isDecreasing, "<", 0, 0, 3600, MAXWIN, &cnfine, &result);
+  //  gfuds_c(gfq, isDecreasing, "<", 0, 0, 3600, MAXWIN, &cnfine, &result);
+  gfuds_c(gfq, isDecreasing, "<", -1, 0, 3600, MAXWIN, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 
@@ -66,8 +67,11 @@ int main(int argc, char **argv) {
 
     wnfetd_c(&result,i,&beg,&end);
 
-    //    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID);
-    //    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
+    printf("<DEBUG>\n");
+    eclipseAroundTheWorld(beg, sunID, planetID, moonID, 1);
+    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
+    eclipseAroundTheWorld(end, sunID, planetID, moonID, 1);
+    printf("</DEBUG>\n");
 
     printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
   }

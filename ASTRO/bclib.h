@@ -792,7 +792,7 @@ portions of q facing s
 SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt val) {
 
   SpiceInt n;
-  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], stemp[3], ttemp[3], mat[3][3], srot[3], trot[3], grad[3];
+  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], mat[3][3], srot[3], trot[3];
 
   // radii of all 3 objects
   bodvcd_c(s, "RADII", 3, &n, sr);
@@ -810,7 +810,7 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   mxv_c(mat, spos, srot);
   mxv_c(mat, tpos, trot);
 
-  SpiceDouble delta = qr[0]/1000000.;
+  //  SpiceDouble delta = qr[0];
 
   // compute separationData where sun is rising/setting on equator
 
@@ -823,31 +823,71 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   SpiceDouble westSep = separationData(westViewS, sr[0], westViewT, tr[0]);
   SpiceDouble eastSep = separationData(eastViewS, sr[0], eastViewT, tr[0]);
 
-  //  printf("EASTSEP: %f\nWESTSEP: %f\n", westSep, eastSep);
+  SpiceDouble straightViewS[3] = {srot[0]-qr[0], srot[1], srot[2]};
+  SpiceDouble straightViewT[3] = {trot[0]-qr[0], trot[1], trot[2]};
+
+  SpiceDouble straightSep = separationData(straightViewS, sr[0], straightViewT, tr[0]);
+
+    printf("VAL AT ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
+
+    printf("EASTSEP: %f\n", eastSep);
+    printf("WESTSEP: %f\n", westSep);
+    printf("STARIGHTSEP: %f\n", straightSep);
+
+-  /*
+-
+-  for (double lat=-90; lat<=90; lat+=1) {
+-    for (double lng=-180; lng<=180; lng+=1) {
+-
+-      sphrec_c(qr[0], rpd_c()*(90-lat), rpd_c()*lng, qtemp);
+-
+-      if (abs(vsep_c(qtemp, srot)) > pi_c()/2) {
+-	//	printf("%f %f -2.0\n", lng, lat);
+-	// continue;
+-      }
+-
+-      //      vsub_c(spos, qtemp, stemp);
+-      //      vsub_c(tpos, qtemp, ttemp);
+-
+-      vsub_c(srot, qtemp, stemp);
+-      vsub_c(trot, qtemp, ttemp);
+-
+-      //      printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
+-      //      printf("QTEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]);
+-      //      printf("STEMP: %f %f %f\n", stemp[0], stemp[1], stemp[2]);
+-
+-      sepData = separationData(stemp, sr[0], ttemp, tr[0]);
+-
+-      printf("%f %f %f\n", lng, lat, sepData);
+-    }
+-  }
+-  */
+
 
   // compute gradient at origin
-  separationDataDerv(srot, sr[0], trot, tr[0], qr[0], delta, grad);
+  //  separationDataDerv(srot, sr[0], trot, tr[0], qr[0], delta, grad);
+
+  //  printf("GRAD: %f %f %f\n", grad[0], grad[1], grad[2]);
 
   // if gradient has negative x value, flip all gradient signs
 
-  if (grad[0] < 0) {
-    for (int i=0; i<3; i++) {grad[i] *= -1;}
-  }
+  //  if (grad[0] < 0) {
+  //    for (int i=0; i<3; i++) {grad[i] *= -1;}
+  //  }
 
-  for (int k=0; k<3; k++) {
-    stemp[k] = srot[k]-grad[k];
-    ttemp[k] = trot[k]-grad[k];
-  }
+  //  for (int k=0; k<3; k++) {
+  //    stemp[k] = srot[k]-grad[k];
+  //    ttemp[k] = trot[k]-grad[k];
+  //  }
 
-  SpiceDouble gradVal = separationData(stemp, sr[0], ttemp, tr[0]);
+  //  SpiceDouble gradVal = separationData(stemp, sr[0], ttemp, tr[0]);
+  //  printf("GRADVAL: %f\n", gradVal);
 
   if (val == 0) {
-    return min(min(gradVal, westSep), eastSep);
+    return min(min(straightSep, westSep), eastSep);
   } else if (val == 1) {
-    return max(max(gradVal, westSep), eastSep);
+    return max(max(straightSep, westSep), eastSep);
   } else {
     return 999999999;
   }
-
 }
-
