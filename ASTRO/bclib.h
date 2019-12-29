@@ -793,23 +793,37 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
   SpiceInt n;
   SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], mat[3][3], srot[3], trot[3];
-  SpiceDouble qtemp[3], stemp[3], ttemp[3];
+  SpiceDouble qtemp[3], stemp[3], ttemp[3], t2s[3];
   
   // radii of all 3 objects
   bodvcd_c(s, "RADII", 3, &n, sr);
   bodvcd_c(t, "RADII", 3, &n, tr);
   bodvcd_c(q, "RADII", 3, &n, qr);
 
+  // vector from t to s
+  spkezp_c(t, et, "J2000", "CN+S", s, t2s, &lt);
+
+  // to J2000 north
+  SpiceDouble north[3] = {0, 0, 1};
+
+  // matrix that makes vector from s to t parallel to x axis and makes
+  // the y axis point to J2000 north pole
+  twovec_c(t2s, 1, north, 2, mat);
+
   // position from q to s and q to t
   spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
 
-  // create matrix that puts s on the x axis and t in the xy-plane,
-  // and apply that matrix
-
+  // apply matrix of rotation
   twovec_c(spos, 1, tpos, 2, mat);
   mxv_c(mat, spos, srot);
   mxv_c(mat, tpos, trot);
+
+  printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
+  printf("TPOS: %f %f %f\n", tpos[0], tpos[1], tpos[2]);
+  printf("T2S: %f %f %f\n", t2s[0], t2s[1], t2s[2]);
+
+  return 0;
 
   // compute separationData where sun is rising/setting on equator
 

@@ -6,9 +6,17 @@ Figuring out how to calculate solar and lunar eclipses, partly in order to solve
 
 Stuff I plan to stream 29 Dec 2019, primarily for my reference
 
-ternary method
+NO,BESSEL: ternary method
 
-exclude obvious non-eclipses for speed
+NO,BESSEL: exclude obvious non-eclipses for speed
+
+NO,BESSEL: look beyond beg/end into middle of eclipse
+
+NO,BESSEL: closed form formula?
+
+TODO: asin vs atan or position from which umbral cone is drawn makes a difference?
+
+Bessel http://www.eclipsewise.com/solar/SEhelp/SEbeselm.html#
 
 fix debug function
 
