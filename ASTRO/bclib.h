@@ -816,12 +816,24 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   mxv_c(mat, tpos, trot);
   mxv_c(mat, t2s, temp);
 
-  printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
-  printf("TPOS: %f %f %f\n", tpos[0], tpos[1], tpos[2]);
+  // TODO: can we force coneX to be positive without breaking things
+
+  // x value of umbral cone
+
+  SpiceDouble coneX = (sr[0]*trot[0] - srot[0]*tr[0])/(sr[0] - tr[0]);
+
+  SpiceDouble coneAngle1 = asin(tr[0]/(trot[0]-coneX));
+  SpiceDouble coneAngle2 = asin(sr[0]/(srot[0]-coneX));
+
+  //  (sr*tx-sx*tr)/(sr-tr)
+
+  //  printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
+  //  printf("TPOS: %f %f %f\n", tpos[0], tpos[1], tpos[2]);
   printf("T2S: %f %f %f\n", t2s[0], t2s[1], t2s[2]);
   printf("SROT: %f %f %f\n", srot[0], srot[1], srot[2]);
   printf("TROT: %f %f %f\n", trot[0], trot[1], trot[2]);
   printf("T2SROT: %f %f %f\n", temp[0], temp[1], temp[2]);
+  printf("CONEX: %f, CA1: %f, CA2: %f\n", coneX, coneAngle1, coneAngle2);
 
   return 0;
 

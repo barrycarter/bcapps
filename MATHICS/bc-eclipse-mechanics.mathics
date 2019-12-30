@@ -5,14 +5,71 @@ light, T does not emit light, and S is potentially eclipsed on Q by T. In the be
 
   - sr, tr, and qr refer to the radii of the spheres
 
-  - st, sq, and tq are the distances between the centers of the spheres
+  - sx is the x value of the center of S
+
+  - tx is the x value of the center of T
+
+  - y is the shared y value of S and T
 
 Since the centers of S, T, and Q are three points, they necessarily
 form a plane; without loss of generality, we can coordinate-ify for
-this plane by choosing Q to be at the origin, S to be on the x axis,
-and T to be in the upper half plane
+this plane by choosing Q to be at the origin, S and T to have the same y coordinate
 
 *)
+
+line[m_, b_, x_] = m*x + b
+
+Solve[D[x^2 + (m*x+b)^2, x] == 0, x]
+
+x -> -b m / (1 + m ^ 2)
+
+b ^ 2 / (1 + m ^ 2) = square min distance
+
+(*
+
+{x, mx+b}
+
+*)
+
+t1801 = Solve[(x-tx)^2 + (m*x+b-y)^2 == tr, x]
+
+t1802 = x /. t1801[[1]]
+
+t1803 = x /. t1801[[2]]
+
+t1804 = Simplify[t1802 - t1803]
+
+
+going sx-tx horizontally our radius shrinks from sr to tr
+
+radius = tr at tx, sr at sx
+
+rad[x_] = tr + (x - tx)/(sx - tx)*(sr-tr)
+
+
+rad[x_] = tr + (x - tx)/(sx - tx)*(sr-tr)
+
+{{x -> (sr tx - sx tr) / (sr - tr)}} (that's the umbral cone x value)
+
+sin(angle from horizontal) = tr/(tx - (sr tx - sx tr) / (sr - tr))
+
+Tan[ArcSin[x]] == x / Sqrt[1 - x ^ 2]
+
+sinAng = tr/(tx - (sr tx - sx tr) / (sr - tr))
+
+sinAng = (sr - tr) / (sx - tx)
+
+tanAng = sinAng/Sqrt[1-sinAng^2]
+
+Solve[y == tanAng*(sr tx - sx tr) / (sr - tr) + b, b]
+
+(if moved down to where y -> 0 )
+
+(sr tx - sx tr) / (sr - tr) would be xval, y would val 0
+
+Solve[0 == tanAng*(sr tx - sx tr) / (sr - tr) + b, b]
+
+
 
 angrad[r_, d_] = ArcSin[r/d];
 
