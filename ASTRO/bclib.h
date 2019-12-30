@@ -822,8 +822,15 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
   SpiceDouble coneX = (sr[0]*trot[0] - srot[0]*tr[0])/(sr[0] - tr[0]);
 
-  SpiceDouble coneAngle1 = asin(tr[0]/(trot[0]-coneX));
-  SpiceDouble coneAngle2 = asin(sr[0]/(srot[0]-coneX));
+  // TODO: simpler formula for tan(asin()) exists
+
+  SpiceDouble coneSlope = tan(asin(sr[0]/(srot[0]-coneX)));
+
+  SpiceDouble coneYIntercept = srot[1] - coneX*coneSlope;
+
+  SpiceDouble coneMinDistOrigin2 = coneYIntercept*coneYIntercept/(1+coneSlope)/(1+coneSlope);
+
+  if (coneMinDistOrigin2 > qr[0]*qr[0]) {return 0.;}
 
   //  (sr*tx-sx*tr)/(sr-tr)
 
@@ -833,7 +840,7 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   printf("SROT: %f %f %f\n", srot[0], srot[1], srot[2]);
   printf("TROT: %f %f %f\n", trot[0], trot[1], trot[2]);
   printf("T2SROT: %f %f %f\n", temp[0], temp[1], temp[2]);
-  printf("CONEX: %f, CA1: %f, CA2: %f\n", coneX, coneAngle1, coneAngle2);
+  printf("CONEX: %f, CS: %f\n", coneX, coneSlope);
 
   return 0;
 

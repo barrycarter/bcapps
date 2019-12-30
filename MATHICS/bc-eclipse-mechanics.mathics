@@ -69,11 +69,31 @@ Solve[y == tanAng*(sr tx - sx tr) / (sr - tr) + b, b]
 
 Solve[0 == tanAng*(sr tx - sx tr) / (sr - tr) + b, b]
 
-
-
 angrad[r_, d_] = ArcSin[r/d];
 
 parallax[r_, d_] = ArcTan[r/d];
 
 angrad[r, sq] - angrad[r, sq-qr]
+
+pLine[t_] = {coneX + t, y + m*t}
+
+dist2[t_] = (coneX + t)^2 + (y + m*t)^2
+
+nearest[coneX_, m_] = (-coneX - m y) / (1 + m ^ 2);
+
+{coneX + (-coneX - m y) / (1 + m ^ 2), y + m*((-coneX - m y) / (1 + m ^ 2))}
+
+y (free variable) = x*coneSlope + b
+
+y - coneX*ConeSlope = b
+
+{x, m*x + b}
+
+dist2[x_] = x^2 + (m*x+b)^2
+
+Out[25]= {{x -> -b m / (1 + m ^ 2)}}
+
+b ^ 2 / (1 + m ^ 2)
+
+(y0 - coneX*coneSlope)^2 / (1 + coneSlope^2)
 
