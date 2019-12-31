@@ -824,13 +824,16 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
   // TODO: simpler formula for tan(asin()) exists
 
-  SpiceDouble coneSlope = tan(asin(sr[0]/(srot[0]-coneX)));
+  SpiceDouble coneSlope1 = tan(asin(sr[0]/(srot[0]-coneX)));
+  SpiceDouble coneSlope2 = -tan(asin(sr[0]/(srot[0]-coneX)));
 
-  SpiceDouble coneYIntercept = srot[1] - coneX*coneSlope;
+  SpiceDouble coneYIntercept1 = srot[1] - coneX*coneSlope1;
+  SpiceDouble coneYIntercept2 = srot[1] - coneX*coneSlope2;
 
-  SpiceDouble coneMinDistOrigin2 = coneYIntercept*coneYIntercept/(1+coneSlope)/(1+coneSlope);
+  SpiceDouble coneMinDistSquared1 = coneYIntercept1*coneYIntercept1/(1+coneSlope1)/(1+coneSlope1);
+  SpiceDouble coneMinDistSquared2 = coneYIntercept2*coneYIntercept2/(1+coneSlope2)/(1+coneSlope2);
 
-  if (coneMinDistOrigin2 > qr[0]*qr[0]) {return 0.;}
+  if (coneMinDistSquared1 > qr[0]*qr[0] && coneMinDistSquared2 > qr[0]*qr[0]) {return 0.;}
 
   //  (sr*tx-sx*tr)/(sr-tr)
 
@@ -840,7 +843,7 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
   printf("SROT: %f %f %f\n", srot[0], srot[1], srot[2]);
   printf("TROT: %f %f %f\n", trot[0], trot[1], trot[2]);
   printf("T2SROT: %f %f %f\n", temp[0], temp[1], temp[2]);
-  printf("CONEX: %f, CS: %f\n", coneX, coneSlope);
+  printf("CONEX: %f, CS: %f\n", coneX, coneSlope1);
 
   return 0;
 
