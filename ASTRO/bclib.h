@@ -791,97 +791,70 @@ portions of q facing s
 
 SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt val) {
 
-  SpiceInt n;
-  SpiceDouble lt, sr[3], tr[3], qr[3], spos[3], tpos[3], mat[3][3], srot[3], trot[3];
-  SpiceDouble qtemp[3], stemp[3], ttemp[3], t2s[3], temp[3];
-  
-  // radii of all 3 objects
-  bodvcd_c(s, "RADII", 3, &n, sr);
-  bodvcd_c(t, "RADII", 3, &n, tr);
-  bodvcd_c(q, "RADII", 3, &n, qr);
+  // TODO: functionalize
 
-  // position from q to s and q to t
+  // radii of all 3 objects (get 3 radii, use first of each)
+
+  SpiceDouble srtemp[3], trtemp[3], qrtemp[3], sr, tr, qr;
+  SpiceInt n;
+
+  bodvcd_c(s, "RADII", 3, &n, srtemp);
+  bodvcd_c(t, "RADII", 3, &n, trtemp);
+  bodvcd_c(q, "RADII", 3, &n, qrtemp);
+
+  sr = srtemp[0];
+  tr = trtemp[0];
+  qr = qrtemp[0];
+
+  // compute position of s and t with respect to Q
+
+  SpiceDouble spos[3], tpos[3], lt;
 
   spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
 
-  // from t2s
-  vsub_c(tpos, spos, t2s);
+  // TODO: declare and use variable at same time in pass-by-ref?
 
-  // matrix that makes vector from s to t parallel to x and keeps s and t in xy plane
-  twovec_c(t2s, 1, spos, 2, mat);
+  // TODO: make sure umbral planet is within correct distance
 
-  // apply matrix of rotation
-  mxv_c(mat, spos, srot);
-  mxv_c(mat, tpos, trot);
-  mxv_c(mat, t2s, temp);
+  // compute umbral vector and then umbral point
 
-  // TODO: can we force coneX to be positive without breaking things
+  SpiceDouble umbVec[3];
+  vsub_c(spos, tpos, umbVec);
 
-  // x value of umbral cone
+  // distance between s and t
 
-  SpiceDouble coneX = (sr[0]*trot[0] - srot[0]*tr[0])/(sr[0] - tr[0]);
+  SpiceDouble st = vnorm_c(umbVec);
 
-  // TODO: simpler formula for tan(asin()) exists
+  // distance from umbral point "p" to t
 
-  SpiceDouble coneSlope1 = tan(asin(sr[0]/(srot[0]-coneX)));
-  SpiceDouble coneSlope2 = -tan(asin(sr[0]/(srot[0]-coneX)));
+  SpiceDouble pt = st*tr/(sr-tr);
 
-  SpiceDouble coneYIntercept1 = srot[1] - coneX*coneSlope1;
-  SpiceDouble coneYIntercept2 = srot[1] - coneX*coneSlope2;
+  //  make umbVec length pt, subtract from t
 
-  SpiceDouble coneMinDistSquared1 = coneYIntercept1*coneYIntercept1/(1+coneSlope1)/(1+coneSlope1);
-  SpiceDouble coneMinDistSquared2 = coneYIntercept2*coneYIntercept2/(1+coneSlope2)/(1+coneSlope2);
+  SpiceDouble umbPt[3];
 
-  if (coneMinDistSquared1 > qr[0]*qr[0] && coneMinDistSquared2 > qr[0]*qr[0]) {return 0.;}
+  for (int i=0; i<3; i++) {umbPt[i] = tpos[i] - umbVec[i]/st*pt;}
 
-  //  (sr*tx-sx*tr)/(sr-tr)
+  // TODO: what if this value > 1
 
-  //  printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
-  //  printf("TPOS: %f %f %f\n", tpos[0], tpos[1], tpos[2]);
-  printf("T2S: %f %f %f\n", t2s[0], t2s[1], t2s[2]);
-  printf("SROT: %f %f %f\n", srot[0], srot[1], srot[2]);
-  printf("TROT: %f %f %f\n", trot[0], trot[1], trot[2]);
-  printf("T2SROT: %f %f %f\n", temp[0], temp[1], temp[2]);
-  printf("CONEX: %f, CS: %f\n", coneX, coneSlope1);
+  SpiceDouble umbAngle =  asin((sr-tr)/st);
 
-  return 0;
+  // where is Q wrt to P
 
-  // compute separationData where sun is rising/setting on equator
+  SpiceDouble qpos[3];
 
-  SpiceDouble eastViewS[3] = {srot[0], srot[1]-qr[0], srot[2]};
-  SpiceDouble eastViewT[3] = {trot[0], trot[1]-qr[0], trot[2]};
+  for (int i=0; i<3; i++) {qpos[i] = umbVec[i]/st*pt-tpos[i];}
 
-  SpiceDouble westViewS[3] = {srot[0], srot[1]+qr[0], srot[2]};
-  SpiceDouble westViewT[3] = {trot[0], trot[1]+qr[0], trot[2]};
+  SpiceDouble angleQ = vsep_c(qpos, umbVec);
 
-  SpiceDouble westSep = separationData(westViewS, sr[0], westViewT, tr[0]);
-  SpiceDouble eastSep = separationData(eastViewS, sr[0], eastViewT, tr[0]);
+  printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
+  printf("TPOS: %f %f %f\n", tpos[0], tpos[1], tpos[2]);
+  printf("UMBVEC: %f %f %f\n", umbVec[0], umbVec[1], umbVec[2]);
+  printf("LEN(ST), LEN(PT): %f %f\n", st, pt);
+  printf("UMBPT %f %f %f\n", umbPt[0], umbPt[1], umbPt[2]);
+  printf("ANG(UMB) %f, ANG(Q) %f\n", umbAngle, angleQ);
 
-  SpiceDouble straightViewS[3] = {srot[0]-qr[0], srot[1], srot[2]};
-  SpiceDouble straightViewT[3] = {trot[0]-qr[0], trot[1], trot[2]};
+  return -99999999;
 
-  SpiceDouble straightSep = separationData(straightViewS, sr[0], straightViewT, tr[0]);
-
-    printf("VAL AT ORIGIN: %f\n", separationData(srot, sr[0], trot, tr[0]));
-
-    printf("EASTSEP: %f\n", eastSep);
-    printf("WESTSEP: %f\n", westSep);
-    printf("STARIGHTSEP: %f\n", straightSep);
-
-    for (double lng=90.; lng<=270.; lng+=1.) {
-      sphrec_c(qr[0], -halfpi_c(), rpd_c()*lng, qtemp);
-      // printf("QTEMP: %f %f %f\n", qtemp[0], qtemp[1], qtemp[2]);
-      vsub_c(srot, qtemp, stemp);
-      vsub_c(trot, qtemp, ttemp);
-      printf("%f 0 %f\n", lng, separationData(stemp, sr[0], ttemp, tr[0]));
-    }
-
-  if (val == 0) {
-    return min(min(straightSep, westSep), eastSep);
-  } else if (val == 1) {
-    return max(max(straightSep, westSep), eastSep);
-  } else {
-    return 999999999;
-  }
 }
