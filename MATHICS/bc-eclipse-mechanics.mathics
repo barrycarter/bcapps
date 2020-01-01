@@ -97,3 +97,58 @@ b ^ 2 / (1 + m ^ 2)
 
 (y0 - coneX*coneSlope)^2 / (1 + coneSlope^2)
 
+(* work started 31 Dec 2019 *)
+
+(* using x as a free variable *)
+
+sr/(x+st) == tr/x
+
+Out[2]= {{x -> st tr / (sr - tr)}}
+
+u = arcsin((st-tr)/st)
+
+ArcSin[(sr - tr) / st
+
+Sin[u] == sr/sp
+
+Sin[u] == tr/(st-sp)
+
+Solve[sr/sp == tr/(st-sp), sp]
+
+
+Solve[sr/sp == tr/(st-sp), sp]
+
+Out[59]= {{sp -> sr st / (sr + tr)}}
+
+pt = st tr / (sr + tr)
+
+Solve[tr/pt == sr/(st-pt), pt]
+
+
+Solve[tr/pt == sr/(st-pt), pt]
+
+
+Out[3]= {{pt -> st tr / (sr + tr)}}
+
+pt = st*tr/(sr+tr)
+sp = st-pt
+u = arcsin((sr+tr)/st)
+m^2 = (sr+tr)^2/(st^2-(sr + tr)^2)
+b = -m*pt
+
+https://www.geogebra.org/classic/mnfrfsby = inumbra
+
+
+https://www.geogebra.org/classic/eq8km64v = umbra
+
+u = ArcSin[qy/pq]
+v = ArcSin[qr/pq]
+
+
+Out[4]= ArcSin[qr / pq] - ArcSin[qy / pq]
+Out[7]= ArcSin[qr / pq] + ArcSin[qy / pq]
+
+
+
+
+

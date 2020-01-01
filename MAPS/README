@@ -183,7 +183,7 @@ Data provided:
 
   - TODO: use mapbox as free tile server (?)
 
-  - TODO: add voronoi maps
+  - TODO: add voronoi maps (look into d3.geo.voronoi)
 
   - TODO: add "borderline" maps that aren't quite the same as voronoi/buffer
 
