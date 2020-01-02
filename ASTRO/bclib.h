@@ -815,8 +815,6 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
   // TODO: declare and use variable at same time in pass-by-ref?
 
-  // TODO: make sure umbral planet is within correct distance
-
   // compute umbral vector and then umbral point
 
   SpiceDouble umbVec[3];
@@ -840,27 +838,74 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
   SpiceDouble umbAngle =  asin((sr-tr)/st);
 
-  // where is Q wrt to P
-
-  SpiceDouble qpos[3];
-
-  for (int i=0; i<3; i++) {qpos[i] = umbVec[i]/st*pt-tpos[i];}
-
-  SpiceDouble angleQ = vsep_c(qpos, umbVec);
+  SpiceDouble angleQ = pi_c()-vsep_c(umbPt, umbVec);
+  SpiceDouble angQDelta = asin(qr/vnorm_c(umbPt));
 
   SpiceDouble au = 150e6;
+
+  /*
+
+  // TODO: make sure umbral planet is within correct distance
+
+  if (vnorm_c(umbPt) > pt) {return -999999;}
+
+  // TODO: mod by 2pi
+
+  if ((fabs(angleQ + angQDelta) < umbAngle) || (fabs(angleQ-angQDelta) < umbAngle)) {
+    printf("ALPHA: %f %f %f %f %f\n", angleQ, angQDelta, umbAngle, fabs(angleQ + angQDelta),  fabs(angleQ-angQDelta));
+    printf("ECLIPSE?\n");
+  } else {
+    return -99999;
+  }
+
+  */
+    //  if (angleQ-angQDelta < umbAngle) {printf("ECLIPSE?\n");} else {return -99999;}
 
   printf("UNIX: %f\n", et2unix(et));
   printf("SPOS: (%f, %f, %f)\n", spos[0]/au, spos[1]/au, spos[2]/au);
   printf("TPOS: (%f, %f, %f)\n", tpos[0]/au, tpos[1]/au, tpos[2]/au);
-  printf("QPOS: (%f, %f, %f)\n", qpos[0]/au, qpos[1]/au, qpos[2]/au);
   printf("UMBVEC: (%f, %f, %f)\n", umbVec[0]/au, umbVec[1]/au, umbVec[2]/au);
   printf("LEN(ST), LEN(PT): %f %f\n", st/au, pt/au);
   printf("UMBPT (%f, %f, %f)\n", umbPt[0]/au, umbPt[1]/au, umbPt[2]/au);
-  printf("ANG(UMB) %f, ANG(Q) %f\n", umbAngle, angleQ);
-
-  if (angleQ < umbAngle) {printf("ECLIPSE?\n");}
+  printf("ANG(UMB) %f, ANG(Q) %f, ANG(DELTA) %f\n", umbAngle*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
 
   return -99999999;
+
+}
+
+SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
+
+  SpiceDouble srtemp[3], trtemp[3], qrtemp[3], sr, tr, qr;
+  SpiceInt n;
+
+  bodvcd_c(s, "RADII", 3, &n, srtemp);
+  bodvcd_c(t, "RADII", 3, &n, trtemp);
+  bodvcd_c(q, "RADII", 3, &n, qrtemp);
+
+  sr = srtemp[0];
+  tr = trtemp[0];
+  qr = qrtemp[0];
+
+  // compute position of s and t with respect to Q
+
+  SpiceDouble spos[3], tpos[3], lt;
+
+  spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
+  spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
+
+  SpiceDouble penUmbVec[3];
+  vsub_c(spos, tpos, umbVec);
+
+  // distance between s and t
+
+  SpiceDouble st = vnorm_c(umbVec);
+
+  // distance from to the penumbral point "p"
+
+  SpiceDouble pt = st*tr/(sr+tr);
+
+  SpiceDouble penUmbPt[3];
+
+  for (int i=0; i<3; i++) {penUmbPt[i] = tpos[i] + umbVec[i]/st*pt;}
 
 }

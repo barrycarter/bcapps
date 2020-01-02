@@ -48,6 +48,14 @@ int main(int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
+  
+  for (int i = 1577836800; i < 1577836800+86400*366; i+=60) {
+    eclipseAroundTheWorld(unix2et(i), sunID, planetID, moonID, 0);
+  }
+
+  printf("TESTING!!!!\n");
+  exit(0);
+
   // start and end times for window
   wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
