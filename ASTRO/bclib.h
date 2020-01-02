@@ -848,12 +848,18 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
   SpiceDouble angleQ = vsep_c(qpos, umbVec);
 
-  printf("SPOS: %f %f %f\n", spos[0], spos[1], spos[2]);
-  printf("TPOS: %f %f %f\n", tpos[0], tpos[1], tpos[2]);
-  printf("UMBVEC: %f %f %f\n", umbVec[0], umbVec[1], umbVec[2]);
-  printf("LEN(ST), LEN(PT): %f %f\n", st, pt);
-  printf("UMBPT %f %f %f\n", umbPt[0], umbPt[1], umbPt[2]);
+  SpiceDouble au = 150e6;
+
+  printf("UNIX: %f\n", et2unix(et));
+  printf("SPOS: (%f, %f, %f)\n", spos[0]/au, spos[1]/au, spos[2]/au);
+  printf("TPOS: (%f, %f, %f)\n", tpos[0]/au, tpos[1]/au, tpos[2]/au);
+  printf("QPOS: (%f, %f, %f)\n", qpos[0]/au, qpos[1]/au, qpos[2]/au);
+  printf("UMBVEC: (%f, %f, %f)\n", umbVec[0]/au, umbVec[1]/au, umbVec[2]/au);
+  printf("LEN(ST), LEN(PT): %f %f\n", st/au, pt/au);
+  printf("UMBPT (%f, %f, %f)\n", umbPt[0]/au, umbPt[1]/au, umbPt[2]/au);
   printf("ANG(UMB) %f, ANG(Q) %f\n", umbAngle, angleQ);
+
+  if (angleQ < umbAngle) {printf("ECLIPSE?\n");}
 
   return -99999999;
 

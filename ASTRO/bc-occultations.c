@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
 
   // check for correct number or arguments and assign to strings
   if (argc != 6) {
-    printf("Usage: %s moon sun planet syear eyear\n", argv[0]);
+    printf("Usage: %s moon=observer sun=lightsource planet=shadower syear eyear\n", argv[0]);
     exit(-1);
   }
 
