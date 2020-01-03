@@ -883,12 +883,13 @@ Given the following:
   - An eclipsed object q (eg, "Ganymede") as a NAIF id
   - A currently unused integer parameter param (set to 0 for now)
 
-Returns the minimum or maximum of the eclipse on q at time et for
-portions of q facing s
+Returns:
+
+  - When param=0, true if any part of q is experiencing partial eclipse
 
 */
 
-SpiceInt penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt param) {
+SpiceBoolean penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt param) {
 
   SpiceDouble srtemp[3], trtemp[3], qrtemp[3], sr, tr, qr;
   SpiceInt n;
@@ -932,10 +933,13 @@ SpiceInt penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Spice
   SpiceDouble angleQ = vsep_c(penUmbPt, penUmbVec);
   SpiceDouble angQDelta = asin(qr/vnorm_c(penUmbPt));
 
+  /*
+
   // purely for understanding (temporarily), reduce problem to 2 dimensions
 
   SpiceDouble mat[3][3];
   twovec_c(penUmbVec, 1, spos, 2, mat);
+
 
   SpiceDouble stemp[3], ttemp[3], penumbvectemp[3], penumbpttemp[3];
 
@@ -959,12 +963,8 @@ SpiceInt penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Spice
  
   printf("VN %f PT %f ANGQ %f PENUMBANG %f ANGQDELTA %f\n", 
 	 vnorm_c(penUmbPt), pt, angleQ, penUmbAng, angQDelta);
+  */
 
-  //  if (vnorm_c(penUmbPt) > pt && fabs(angleQ) < penUmbAng + angQDelta) {
-  if (fabs(angleQ) < penUmbAng + angQDelta) {
-    printf("RETURNING ONE\n");
-    return 1;
-  }
-
-  return 0;
+  return (vnorm_c(penUmbPt) > pt && fabs(angleQ) < penUmbAng + angQDelta);
 }
+

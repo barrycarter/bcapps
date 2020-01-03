@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
-
+  /*
   //  for (int i = 1577836800; i < 1577836800+86400*366; i+=60) {
   for (int i = 1592697600; i < 1592697600+86400; i+=60) {
     penUmbralData(unix2et(i), sunID, planetID, moonID, 0);
@@ -56,19 +56,22 @@ int main(int argc, char **argv) {
 
   printf("TESTING!!!!\n");
   exit(0);
-
+  */
 
   wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
   // defining geometry finder function via given arguments
 
-  void gfq (SpiceDouble et, SpiceDouble *value) {
+  void gfq (SpiceDouble et, SpiceBoolean *value) {
     //    *value = minCornerEclipse(et, sunID, planetID, moonID);
     *value = penUmbralData(et, sunID, planetID, moonID, 0);
   }
 
   //  gfuds_c(gfq, isDecreasing, "<", 0, 0, 3600, MAXWIN, &cnfine, &result);
-  gfuds_c(gfq, isDecreasing, "=", 1, 0, 3600, MAXWIN, &cnfine, &result);
+  //  gfuds_c(gfq, isDecreasing, "=", 1, 0, 3600, MAXWIN, &cnfine, &result);
+
+  // TODO: 3600 too big
+  gfudb_c(udf_c, gfq, 3600, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 
