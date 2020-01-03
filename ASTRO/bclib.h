@@ -846,32 +846,38 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
 
   SpiceDouble umbAng = asin(tr/pt);
 
-  angleQ = vsep_c(umbPt, penUmbVec);
+  angleQ = pi_c()-vsep_c(umbPt, penUmbVec);
   angQDelta = asin(qr/vnorm_c(umbPt));
 
-  //  if (vnorm_c(umbPt) > pt) {return -1;}
+  if (vnorm_c(umbPt) > pt) {return -1;}
+
+  SpiceDouble umbpttemp[3];
+  mxv_c(mat, umbPt, umbpttemp);
 
   //  printf("POSSIBLE UMBRAL\n");
 
-  printf("UNIX: %f\n", et2unix(et));
-  printf("STEMP: (%f, %f, %f)\n", stemp[0], stemp[1], stemp[2]);
-  printf("TTEMP: (%f, %f, %f)\n", ttemp[0], ttemp[1], ttemp[2]);
+    printf("UNIX: %f\n", et2unix(et));
+    printf("STEMP: (%f, %f, %f)\n", stemp[0], stemp[1], stemp[2]);
+    printf("TTEMP: (%f, %f, %f)\n", ttemp[0], ttemp[1], ttemp[2]);
+    printf("UMBPT (%f, %f, %f)\n", umbpttemp[0], umbpttemp[1], umbpttemp[2]);
+    printf("ANGQ: %f\n", angleQ*dpr_c());
+    printf("ANGDELTA: %f\n", angQDelta*dpr_c());
+    printf("UMBANG: %f\n", umbAng*dpr_c());
   //  printf("PUVECTEMP: (%f, %f, %f)\n", penumbvectemp[0], penumbvectemp[1], penumbvectemp[2]);
   //  printf("PUPTTEMP: (%f, %f, %f)\n", penumbpttemp[0], penumbpttemp[1], penumbpttemp[2]);
 
   //  printf("SPOS: (%f, %f, %f)\n", spos[0], spos[1], spos[2]);
   //  printf("TPOS: (%f, %f, %f)\n", tpos[0], tpos[1], tpos[2]);
   //  printf("PENUMBVEC: (%f, %f, %f)\n", penUmbVec[0], penUmbVec[1], penUmbVec[2]);
-  printf("LEN(ST), LEN(PT): %f %f\n", st, pt);
-  //  printf("PENUMBPT (%f, %f, %f)\n", penUmbPt[0], penUmbPt[1], penUmbPt[2]);
+  //  printf("LEN(ST), LEN(PT): %f %f\n", st, pt);
   //  printf("ANG(PENUMB) %f, ANG(Q) %f, ANG(DELTA) %f\n", penUmbAng*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
  
   //  printf("VN %f PT %f ANGQ %f PENUMBANG %f ANGQDELTA %f\n", vnorm_c(penUmbPt), pt, angleQ, penUmbAng, angQDelta);
 
-  printf("UNIXTIME: %f UMGANG: %f, ANGLEQ: %f, ANGQDELTA: %f\n", et2unix(et), umbAng*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
+  //  printf("UNIXTIME: %f UMGANG: %f, ANGLEQ: %f, ANGQDELTA: %f\n", et2unix(et), umbAng*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
 
-  printf("RETURNING: %f\n", 0.5 - (umbAng - angleQ)/(2*angQDelta));
-
-  return 0.5 - (umbAng - angleQ)/(2*angQDelta);
+    printf("RETURNING: %f\n", 0.5 - (umbAng - angleQ)/(2*angQDelta));
+    
+    return 0.5 - fabs((umbAng - angleQ))/(2*angQDelta);
 }
 

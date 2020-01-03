@@ -76,6 +76,6 @@ int main(int argc, char **argv) {
   for (int i=0; i<nres; i++) {
 
     wnfetd_c(&result,i,&beg,&end);
-    printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
+    printf("OUTPUT: %f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
   }
 }
