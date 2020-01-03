@@ -62,16 +62,18 @@ int main(int argc, char **argv) {
 
   // defining geometry finder function via given arguments
 
-  void gfq (SpiceDouble et, SpiceBoolean *value) {
+  void gfq (SpiceDouble et, SpiceDouble *value) {
     //    *value = minCornerEclipse(et, sunID, planetID, moonID);
     *value = penUmbralData(et, sunID, planetID, moonID, 0);
   }
 
-  //  gfuds_c(gfq, isDecreasing, "<", 0, 0, 3600, MAXWIN, &cnfine, &result);
+  // TODO: 3600 too big?
+
+  gfuds_c(gfq, isDecreasing, ">", 0, 0, 3600, MAXWIN, &cnfine, &result);
+
   //  gfuds_c(gfq, isDecreasing, "=", 1, 0, 3600, MAXWIN, &cnfine, &result);
 
-  // TODO: 3600 too big
-  gfudb_c(udf_c, gfq, 3600, &cnfine, &result);
+  // gfudb_c(udf_c, gfq, 3600, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 

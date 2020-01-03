@@ -885,11 +885,15 @@ Given the following:
 
 Returns:
 
-  - When param=0, true if any part of q is experiencing partial eclipse
+  - When param=0, return:
 
+    - < 0 if no eclipse of Q by T
+    - 1 if central eclipse and center of Q
+    - -1 if Q is closer to penumbral point than T
+    - between 0 and 1 if partial eclipse somewhere on Q
 */
 
-SpiceBoolean penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt param) {
+SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt param) {
 
   SpiceDouble srtemp[3], trtemp[3], qrtemp[3], sr, tr, qr;
   SpiceInt n;
@@ -965,6 +969,10 @@ SpiceBoolean penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, S
 	 vnorm_c(penUmbPt), pt, angleQ, penUmbAng, angQDelta);
   */
 
-  return (vnorm_c(penUmbPt) > pt && fabs(angleQ) < penUmbAng + angQDelta);
+  // TODO: find smoother way of returning function
+
+  if (vnorm_c(penUmbPt) < pt) {return -1.;}
+
+  return -fabs(angleQ)/(penUmbAng + angQDelta) + 1;
 }
 
