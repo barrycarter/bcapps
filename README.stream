@@ -4,7 +4,85 @@ ASTRO/eclipse-diagram.gif
 
 Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 2 Jan 2020, primarily for my reference
+Stuff I plan to stream 3 Jan 2020, primarily for my reference
+
+for umbra:
+
+  - pq > pt return -1
+
+  - abs(angq - angqdelta) < umbang (less than 0)
+
+  - abs(angq + angqdelta) < umbang (this is greater 1)
+
+(abs(angq) - angdelta - umbang, 0)
+(1 - abs(angq) - angdelta + umbang, 1)
+
+1 - (umbang - angleQ) - angdelta - umbang
+
+1 - (umbang - angleQ) - angdelta - umbang
+
+1 - (umbang - (umbang - angdelta)) - angdelta - umbang
+
+abs(angQ) = umbAng + angDelta, then value should be 0
+
+abs(angQ) = umbAng - angDelta, then value should be 1
+
+(umbAng + angDelta, 0)
+(umbAng - angDelta, 1)
+
+1/( (umbAng - angDelta) - (umbAng + angDelta) )
+
+x/(-2 angDelta) + b
+
+
+Solve[(umbAng + angDelta)/(-2 angDelta) + b == 0, b]
+
+Solve[(umbAng + angDelta)/(-2 angDelta) + b == 0, b]
+
+Out[7]= {{b -> (angDelta + umbAng) / (2 angDelta)}}
+
+
+x/(-2*angDelta) + (angDelta + umbAng) / (2 angDelta)
+
+MAGIC FUNCTION: (x -> angleQ) Out[9]= (angDelta + umbAng - x) / (2 angDelta)
+
+MAGIC FUNCTION: 1/2 - (umbAng - angleQ)/(2*AngDelta)
+
+
+
+(angDelta + umbAng - (umbAng + angDelta))/(2 angDelta)
+
+
+(angDelta + umbAng - (umbAng - angDelta)) / (2 angDelta)
+
+
+
+
+
+
+1/
+
+(abs(angq+angdelta) - umbang) - (abs(angq-angdelta) - umbang)
+
+(Abs[angq+angdelta] - umbang) - (Abs[angq-angdelta] - umbang)
+
+Abs[angdelta + angq] - Abs[angdelta - angq]
+
+
+
+
+
+NOT: 2*angq - 2*angdelta 
+
+
+
+low BS again (but it's BS)
+
+maybe use NASA for better eclipse predictions
+
+TODO: in answer, metnion penumbral eclipses suck
+
+TODO: maybe use avg radius not longest radius??
 
 0 = no eclipse (but touching)
 

@@ -63,30 +63,19 @@ int main(int argc, char **argv) {
   // defining geometry finder function via given arguments
 
   void gfq (SpiceDouble et, SpiceDouble *value) {
-    //    *value = minCornerEclipse(et, sunID, planetID, moonID);
-    *value = penUmbralData(et, sunID, planetID, moonID, 0);
+    //    *value = penUmbralData(et, sunID, planetID, moonID, 0);
+    *value = penUmbralData(et, sunID, planetID, moonID, 1);
   }
 
   // TODO: 3600 too big?
 
   gfuds_c(gfq, isDecreasing, ">", 0, 0, 3600, MAXWIN, &cnfine, &result);
 
-  //  gfuds_c(gfq, isDecreasing, "=", 1, 0, 3600, MAXWIN, &cnfine, &result);
-
-  // gfudb_c(udf_c, gfq, 3600, &cnfine, &result);
-
   SpiceInt nres = wncard_c(&result);
 
   for (int i=0; i<nres; i++) {
 
     wnfetd_c(&result,i,&beg,&end);
-
-    // printf("<DEBUG>\n");
-    //    eclipseAroundTheWorld(beg, sunID, planetID, moonID, 1);
-    //    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
-    //    eclipseAroundTheWorld(end, sunID, planetID, moonID, 1);
-    //    printf("</DEBUG>\n");
-
     printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
   }
 }

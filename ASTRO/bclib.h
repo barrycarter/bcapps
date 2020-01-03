@@ -729,154 +729,6 @@ SpiceDouble minCornerEclipse(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q)
 
 Given the following: 
 
-  - A light-generating object s (eg, "Sun") as a 3 elt position vector
-  - Radius of s as sr
-  - Another object t (eg, "Jupiter") as a 3 elt position vector
-  - Radius of t as tr
-  - Radius of q as qr
-  - delta as a value to estimate the derviatve
-
-Returns the gradient of separationData as a three-element vector of length qr
-
-*/
-
-void separationDataDerv(SpiceDouble s[3], SpiceDouble sr, SpiceDouble t[3],
-			SpiceDouble tr, SpiceDouble qr, SpiceDouble delta, 
-			SpiceDouble result[3]) {
-
-  SpiceDouble deltas[6], stemp[3], ttemp[3];
-  SpiceInt count = 0;
-
-  for (int i=0; i<3; i++) {
-    for (int j=-1; j<=1; j+=2) {
-
-      // reset stemp and ttemp to srot and trot
-      for (int k=0; k<3; k++) {stemp[k] = s[k]; ttemp[k] = t[k];}
-
-      // change stemp and ttemp to view from delta away from origin in ith axis
-      stemp[i] -= j*delta;
-      ttemp[i] -= j*delta;
-
-      deltas[count++] = separationData(stemp, sr, ttemp, tr);
-    }
-  }
-
-  SpiceDouble dx  = (deltas[1]-deltas[0])/2/delta;
-  SpiceDouble dy = (deltas[3]-deltas[2])/2/delta;
-  SpiceDouble dz = (deltas[5]-deltas[4])/2/delta;
-
-  SpiceDouble dnorm = sqrt(dx*dx + dy*dy + dz*dz);
-
-  result[0] = qr*dx/dnorm;
-  result[1] = qr*dy/dnorm;
-  result[2] = qr*dz/dnorm;
-
-}
-
-
-/**
-
-Given the following: 
-
-  - An epehemeris time et
-  - A light-generating object s (eg, "Sun") as a NAIF id
-  - An eclipsing object t (eg, "Jupiter") as a NAIF id
-  - An eclipsed object q (eg, "Io") as a NAIF id
-  - A flag val (0 = give min eclipse, 1 = give max eclipse)
-
-Returns the minimum or maximum of the eclipse on q at time et for
-portions of q facing s
-
-*/
-
-SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt val) {
-
-  // TODO: functionalize
-
-  // radii of all 3 objects (get 3 radii, use first of each)
-
-  SpiceDouble srtemp[3], trtemp[3], qrtemp[3], sr, tr, qr;
-  SpiceInt n;
-
-  bodvcd_c(s, "RADII", 3, &n, srtemp);
-  bodvcd_c(t, "RADII", 3, &n, trtemp);
-  bodvcd_c(q, "RADII", 3, &n, qrtemp);
-
-  sr = srtemp[0];
-  tr = trtemp[0];
-  qr = qrtemp[0];
-
-  // compute position of s and t with respect to Q
-
-  SpiceDouble spos[3], tpos[3], lt;
-
-  spkezp_c(s, et, "J2000", "CN+S", q, spos, &lt);
-  spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
-
-  // TODO: declare and use variable at same time in pass-by-ref?
-
-  // compute umbral vector and then umbral point
-
-  SpiceDouble umbVec[3];
-  vsub_c(spos, tpos, umbVec);
-
-  // distance between s and t
-
-  SpiceDouble st = vnorm_c(umbVec);
-
-  // distance from umbral point "p" to t
-
-  SpiceDouble pt = st*tr/(sr-tr);
-
-  //  make umbVec length pt, subtract from t
-
-  SpiceDouble umbPt[3];
-
-  for (int i=0; i<3; i++) {umbPt[i] = tpos[i] - umbVec[i]/st*pt;}
-
-  // TODO: what if this value > 1
-
-  SpiceDouble umbAngle =  asin((sr-tr)/st);
-
-  SpiceDouble angleQ = pi_c()-vsep_c(umbPt, umbVec);
-  SpiceDouble angQDelta = asin(qr/vnorm_c(umbPt));
-
-  SpiceDouble au = 150e6;
-
-  /*
-
-  // TODO: make sure umbral planet is within correct distance
-
-  if (vnorm_c(umbPt) > pt) {return -999999;}
-
-  // TODO: mod by 2pi
-
-  if ((fabs(angleQ + angQDelta) < umbAngle) || (fabs(angleQ-angQDelta) < umbAngle)) {
-    printf("ALPHA: %f %f %f %f %f\n", angleQ, angQDelta, umbAngle, fabs(angleQ + angQDelta),  fabs(angleQ-angQDelta));
-    printf("ECLIPSE?\n");
-  } else {
-    return -99999;
-  }
-
-  */
-    //  if (angleQ-angQDelta < umbAngle) {printf("ECLIPSE?\n");} else {return -99999;}
-
-  printf("UNIX: %f\n", et2unix(et));
-  printf("SPOS: (%f, %f, %f)\n", spos[0]/au, spos[1]/au, spos[2]/au);
-  printf("TPOS: (%f, %f, %f)\n", tpos[0]/au, tpos[1]/au, tpos[2]/au);
-  printf("UMBVEC: (%f, %f, %f)\n", umbVec[0]/au, umbVec[1]/au, umbVec[2]/au);
-  printf("LEN(ST), LEN(PT): %f %f\n", st/au, pt/au);
-  printf("UMBPT (%f, %f, %f)\n", umbPt[0]/au, umbPt[1]/au, umbPt[2]/au);
-  printf("ANG(UMB) %f, ANG(Q) %f, ANG(DELTA) %f\n", umbAngle*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
-
-  return -99999999;
-
-}
-
-/**
-
-Given the following: 
-
   - An epehemeris time et
   - A light-generating object s (eg, "Sun") as a NAIF id
   - An eclipsing object t (eg, "Jupiter") as a NAIF id
@@ -891,6 +743,12 @@ Returns:
     - 1 if central eclipse and center of Q
     - -1 if Q is closer to penumbral point than T
     - between 0 and 1 if partial eclipse somewhere on Q
+
+   - When param=1, return:
+
+     - < 0 if there is no total eclipse anywhere on Q
+     - > 1 when all of Q is totally eclipsed
+     - -1 if Q is further umbral point than T or is there is no penumbral eclipse
 */
 
 SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt param) {
@@ -930,14 +788,12 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
   SpiceDouble penUmbPt[3];
   for (int i=0; i<3; i++) {penUmbPt[i] = tpos[i] + penUmbVec[i]/st*pt;}
 
-  SpiceDouble penUmbAng = asin((sr-tr)/st);
+  SpiceDouble penUmbAng = asin(tr/pt);
 
   // angle from penUmbVec to Q from P
 
   SpiceDouble angleQ = vsep_c(penUmbPt, penUmbVec);
   SpiceDouble angQDelta = asin(qr/vnorm_c(penUmbPt));
-
-  /*
 
   // purely for understanding (temporarily), reduce problem to 2 dimensions
 
@@ -952,6 +808,7 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
   mxv_c(mat, penUmbVec, penumbvectemp);
   mxv_c(mat, penUmbPt, penumbpttemp);
 
+  /*
   printf("STEMP: (%f, %f, %f)\n", stemp[0], stemp[1], stemp[2]);
   printf("TTEMP: (%f, %f, %f)\n", ttemp[0], ttemp[1], ttemp[2]);
   printf("PUVECTEMP: (%f, %f, %f)\n", penumbvectemp[0], penumbvectemp[1], penumbvectemp[2]);
@@ -967,12 +824,54 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
  
   printf("VN %f PT %f ANGQ %f PENUMBANG %f ANGQDELTA %f\n", 
 	 vnorm_c(penUmbPt), pt, angleQ, penUmbAng, angQDelta);
+
   */
 
   // TODO: find smoother way of returning function
 
   if (vnorm_c(penUmbPt) < pt) {return -1.;}
 
-  return -fabs(angleQ)/(penUmbAng + angQDelta) + 1;
+  SpiceDouble penValue = -fabs(angleQ)/(penUmbAng + angQDelta) + 1;
+
+  if (param == 0) {return penValue;}
+
+  if (penValue < 0 && param == 1) {return -1;}
+
+  // compute pt from umbral case (reassign)
+
+  pt = st*tr/(sr-tr);
+
+  SpiceDouble umbPt[3];
+  for (int i=0; i<3; i++) {umbPt[i] = tpos[i] - penUmbVec[i]/st*pt;}
+
+  SpiceDouble umbAng = asin(tr/pt);
+
+  angleQ = vsep_c(umbPt, penUmbVec);
+  angQDelta = asin(qr/vnorm_c(umbPt));
+
+  //  if (vnorm_c(umbPt) > pt) {return -1;}
+
+  //  printf("POSSIBLE UMBRAL\n");
+
+  printf("UNIX: %f\n", et2unix(et));
+  printf("STEMP: (%f, %f, %f)\n", stemp[0], stemp[1], stemp[2]);
+  printf("TTEMP: (%f, %f, %f)\n", ttemp[0], ttemp[1], ttemp[2]);
+  //  printf("PUVECTEMP: (%f, %f, %f)\n", penumbvectemp[0], penumbvectemp[1], penumbvectemp[2]);
+  //  printf("PUPTTEMP: (%f, %f, %f)\n", penumbpttemp[0], penumbpttemp[1], penumbpttemp[2]);
+
+  //  printf("SPOS: (%f, %f, %f)\n", spos[0], spos[1], spos[2]);
+  //  printf("TPOS: (%f, %f, %f)\n", tpos[0], tpos[1], tpos[2]);
+  //  printf("PENUMBVEC: (%f, %f, %f)\n", penUmbVec[0], penUmbVec[1], penUmbVec[2]);
+  printf("LEN(ST), LEN(PT): %f %f\n", st, pt);
+  //  printf("PENUMBPT (%f, %f, %f)\n", penUmbPt[0], penUmbPt[1], penUmbPt[2]);
+  //  printf("ANG(PENUMB) %f, ANG(Q) %f, ANG(DELTA) %f\n", penUmbAng*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
+ 
+  //  printf("VN %f PT %f ANGQ %f PENUMBANG %f ANGQDELTA %f\n", vnorm_c(penUmbPt), pt, angleQ, penUmbAng, angQDelta);
+
+  printf("UNIXTIME: %f UMGANG: %f, ANGLEQ: %f, ANGQDELTA: %f\n", et2unix(et), umbAng*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
+
+  printf("RETURNING: %f\n", 0.5 - (umbAng - angleQ)/(2*angQDelta));
+
+  return 0.5 - (umbAng - angleQ)/(2*angQDelta);
 }
 
