@@ -6,7 +6,34 @@ Figuring out how to calculate solar and lunar eclipses, partly in order to solve
 
 Stuff I plan to stream 2 Jan 2020, primarily for my reference
 
-penumbral includes umbral, so do umbral as subtest of penumbral
+0 = no eclipse (but touching)
+
+1 = central eclipse
+
+angle(-pt . planet) = pang + radang = umbang
+
+if angle is 0, return 1, central eclipse
+
+pang-radang: 0 to 0 -> 1
+
+1 - planetangle/(pang-radang)
+
+pang = umbang + radang, then return 0
+
+pang = 0 return 1
+
+(0, 1) (umbang+radang, 0) 
+
+y = mx+b
+
+y = -x/(umbang+radang) + 1
+
+pe < pt then -2u/(u+radang) + 1
+
+
+
+
+
 
 use diagrams but don't transform coordinates in C (masochism)
 

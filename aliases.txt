@@ -393,3 +393,15 @@ alias dir "\ls -l \!* | less"
 # to do local git stuff w/o pushing to remote
 
 alias bcgit-mini "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v; popd"
+
+# xmessages that are not full screen wide get lost -- also auto bg
+
+alias xmessage "xmessage -geometry 1600 \!* &"
+
+# save mv/cp/rm
+
+alias mv mv -i
+alias cp cp -i
+alias rm rm -i
+
+
