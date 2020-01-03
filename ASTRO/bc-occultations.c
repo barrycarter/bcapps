@@ -48,26 +48,27 @@ int main(int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
-  
-  for (int i = 1577836800; i < 1577836800+86400*366; i+=60) {
-    eclipseAroundTheWorld(unix2et(i), sunID, planetID, moonID, 0);
+
+  //  for (int i = 1577836800; i < 1577836800+86400*366; i+=60) {
+  for (int i = 1592697600; i < 1592697600+86400; i+=60) {
+    penUmbralData(unix2et(i), sunID, planetID, moonID, 0);
   }
 
   printf("TESTING!!!!\n");
   exit(0);
 
-  // start and end times for window
+
   wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
   // defining geometry finder function via given arguments
 
   void gfq (SpiceDouble et, SpiceDouble *value) {
     //    *value = minCornerEclipse(et, sunID, planetID, moonID);
-    *value = eclipseAroundTheWorld(et, sunID, planetID, moonID, 0);
+    *value = penUmbralData(et, sunID, planetID, moonID, 0);
   }
 
   //  gfuds_c(gfq, isDecreasing, "<", 0, 0, 3600, MAXWIN, &cnfine, &result);
-  gfuds_c(gfq, isDecreasing, "<", -1, 0, 3600, MAXWIN, &cnfine, &result);
+  gfuds_c(gfq, isDecreasing, "=", 1, 0, 3600, MAXWIN, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 
@@ -75,11 +76,11 @@ int main(int argc, char **argv) {
 
     wnfetd_c(&result,i,&beg,&end);
 
-    printf("<DEBUG>\n");
-    eclipseAroundTheWorld(beg, sunID, planetID, moonID, 1);
-    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
-    eclipseAroundTheWorld(end, sunID, planetID, moonID, 1);
-    printf("</DEBUG>\n");
+    // printf("<DEBUG>\n");
+    //    eclipseAroundTheWorld(beg, sunID, planetID, moonID, 1);
+    //    eclipseAroundTheWorld((beg+end)/2, sunID, planetID, moonID, 1);
+    //    eclipseAroundTheWorld(end, sunID, planetID, moonID, 1);
+    //    printf("</DEBUG>\n");
 
     printf("%f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
   }

@@ -873,11 +873,27 @@ SpiceDouble eclipseAroundTheWorld(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceI
 
 }
 
-SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
+/**
+
+Given the following: 
+
+  - An epehemeris time et
+  - A light-generating object s (eg, "Sun") as a NAIF id
+  - An eclipsing object t (eg, "Jupiter") as a NAIF id
+  - An eclipsed object q (eg, "Ganymede") as a NAIF id
+  - A currently unused integer parameter param (set to 0 for now)
+
+Returns the minimum or maximum of the eclipse on q at time et for
+portions of q facing s
+
+*/
+
+SpiceInt penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, SpiceInt param) {
 
   SpiceDouble srtemp[3], trtemp[3], qrtemp[3], sr, tr, qr;
   SpiceInt n;
 
+  // radii of all 3 objects
   bodvcd_c(s, "RADII", 3, &n, srtemp);
   bodvcd_c(t, "RADII", 3, &n, trtemp);
   bodvcd_c(q, "RADII", 3, &n, qrtemp);
@@ -894,18 +910,61 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q) {
   spkezp_c(t, et, "J2000", "CN+S", q, tpos, &lt);
 
   SpiceDouble penUmbVec[3];
-  vsub_c(spos, tpos, umbVec);
+  vsub_c(spos, tpos, penUmbVec);
 
   // distance between s and t
 
-  SpiceDouble st = vnorm_c(umbVec);
+  SpiceDouble st = vnorm_c(penUmbVec);
 
-  // distance from to the penumbral point "p"
+  // distance from to the penumbral point "p" to t
 
   SpiceDouble pt = st*tr/(sr+tr);
 
+  // make penUmbVec length pt, subtract from t to find penUmbPt
+
   SpiceDouble penUmbPt[3];
+  for (int i=0; i<3; i++) {penUmbPt[i] = tpos[i] + penUmbVec[i]/st*pt;}
 
-  for (int i=0; i<3; i++) {penUmbPt[i] = tpos[i] + umbVec[i]/st*pt;}
+  SpiceDouble penUmbAng = asin((sr-tr)/st);
 
+  // angle from penUmbVec to Q from P
+
+  SpiceDouble angleQ = vsep_c(penUmbPt, penUmbVec);
+  SpiceDouble angQDelta = asin(qr/vnorm_c(penUmbPt));
+
+  // purely for understanding (temporarily), reduce problem to 2 dimensions
+
+  SpiceDouble mat[3][3];
+  twovec_c(penUmbVec, 1, spos, 2, mat);
+
+  SpiceDouble stemp[3], ttemp[3], penumbvectemp[3], penumbpttemp[3];
+
+  mxv_c(mat, spos, stemp);
+  mxv_c(mat, tpos, ttemp);
+  mxv_c(mat, penUmbVec, penumbvectemp);
+  mxv_c(mat, penUmbPt, penumbpttemp);
+
+  printf("STEMP: (%f, %f, %f)\n", stemp[0], stemp[1], stemp[2]);
+  printf("TTEMP: (%f, %f, %f)\n", ttemp[0], ttemp[1], ttemp[2]);
+  printf("PUVECTEMP: (%f, %f, %f)\n", penumbvectemp[0], penumbvectemp[1], penumbvectemp[2]);
+  printf("PUPTTEMP: (%f, %f, %f)\n", penumbpttemp[0], penumbpttemp[1], penumbpttemp[2]);
+
+  printf("UNIX: %f\n", et2unix(et));
+  printf("SPOS: (%f, %f, %f)\n", spos[0], spos[1], spos[2]);
+  printf("TPOS: (%f, %f, %f)\n", tpos[0], tpos[1], tpos[2]);
+  printf("PENUMBVEC: (%f, %f, %f)\n", penUmbVec[0], penUmbVec[1], penUmbVec[2]);
+  printf("LEN(ST), LEN(PT): %f %f\n", st, pt);
+  printf("PENUMBPT (%f, %f, %f)\n", penUmbPt[0], penUmbPt[1], penUmbPt[2]);
+  printf("ANG(PENUMB) %f, ANG(Q) %f, ANG(DELTA) %f\n", penUmbAng*dpr_c(), angleQ*dpr_c(), angQDelta*dpr_c());
+ 
+  printf("VN %f PT %f ANGQ %f PENUMBANG %f ANGQDELTA %f\n", 
+	 vnorm_c(penUmbPt), pt, angleQ, penUmbAng, angQDelta);
+
+  //  if (vnorm_c(penUmbPt) > pt && fabs(angleQ) < penUmbAng + angQDelta) {
+  if (fabs(angleQ) < penUmbAng + angQDelta) {
+    printf("RETURNING ONE\n");
+    return 1;
+  }
+
+  return 0;
 }
