@@ -317,3 +317,58 @@ FullSimplify[xyz2sph[f[sol2]] /. {r -> 0, s -> 0, u -> 0}, conds]
 
 VectorAngle[Flatten[f[sol2]], sph2xyz[x, y, 1]]
 
+(*
+
+https://gis.stackexchange.com/questions/346381/calculate-way-points-between-departure-and-destination
+
+https://math.stackexchange.com/questions/23054/how-to-find-the-distance-between-a-point-and-line-joining-two-points-on-a-sphere
+
+https://math.stackexchange.com/questions/161335/coordinates-of-interception-point-y-with-xy-being-the-shortest-distance-of-x-to?noredirect=1&lq=1
+
+*)
+
+(* different approach 3 Jan 2020 *)
+
+(* {lngB, latB} to {lngD, latD} closest to {lngC, latC} *)
+
+ptB = sph2xyz[lngB, latB, 1];
+ptD = sph2xyz[lngD, latD, 1];
+ptC = sph2xyz[lngC, latC, 1];
+
+path[t_] = ptB + t*(ptD - ptB)
+
+
+
+(* TODO: if f(x) < f(y) => g(x) < g(y) what is the name of the relation between f and g *)
+
+(* below from Wolfram Cloud comps *)
+
+ptB = sph2xyz[lngB, latB, 1];
+ptD = sph2xyz[lngD, latD, 1];
+ptC = sph2xyz[lngC, latC, 1];
+
+path[t_] = ptB  + t*(ptD-ptB);
+
+rules = {Cos[latB]* Cos[lngB] -> a, -Cos[latB] *Cos[lngB] + Cos[latD]*
+Cos[lngD] -> b, -Cos[latB]* Sin[lngB] + Cos[latD]* Sin[lngD] -> c,
+Cos[latB]*Sin[lngB] -> d, Sin[latB] -> e, Sin[latD] - Sin[latB] -> f,
+Cos[latC]*Cos[lngC] -> x, Cos[latC]*Sin[lngC] -> y, Sin[latC] -> z };
+
+rules2 = {a -> Cos[latB]* Cos[lngB] , b -> -Cos[latB] *Cos[lngB] +
+Cos[latD]* Cos[lngD], c -> -Cos[latB]* Sin[lngB] + Cos[latD]*
+Sin[lngD] , d -> Cos[latB]*Sin[lngB], e -> Sin[latB], f -> Sin[latD] -
+Sin[latB], x -> Cos[latC]*Cos[lngC] , y -> Cos[latC]*Sin[lngC] , z ->
+Sin[latC] };
+
+(*
+Out[19]= {t (-Cos[latB] Cos[lngB] + Cos[latD] Cos[lngD]) + Cos[latB] Cos[lngB], t (-Cos[latB] Sin[lngB] + Cos[latD] Sin[lngD]) + Cos[latB] Sin[lngB], t (Sin[latD] - Sin[latB]) + Sin[latB]}
+*)
+
+temp2006[t_] = Total[(path[t]-ptC)^2] /. rules;
+temp2007[t_] = D[temp2006[t], t];
+sol[t_] = t /.Simplify[Solve[temp2007[t] == 0, t]][[1]];
+
+simps = Element[{lngB, latB, lngC, latC, lngD, latD}, Reals];
+
+FullSimplify[sol[t] /. rules2, simps];
+sol[t]

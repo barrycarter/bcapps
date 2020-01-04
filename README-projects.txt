@@ -473,7 +473,7 @@ and probably many others.
 
 ====================================================================
 
-Title: Find formula for geodesic minimum distance to given point
+Title: Find formula for geodesic (great circle) minimum distance to given point
 
 Description: Find the minimum distance between a given geodesic and a
 given point on the sphere, and also the point on the geodesic where
