@@ -6,6 +6,27 @@ Figuring out how to calculate solar and lunar eclipses, partly in order to solve
 
 Stuff I plan to stream 3 Jan 2020, primarily for my reference
 
+bsp files:
+
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html
+
+TODO: mention bc-jupiter.tpc
+
+TODO IN WRITEUP: completely misses 2021 eclipse (But weird) (total lunar eclipse of moon by earth)
+
+TODO: complain about 26 May 2021 eclipse
+
+eclipse of May 26, 2021 total lunar
+
+1622018859 Penumbral Eclipse begins May 26 at 08:47:39
+1622022298 Partial Eclipse begins May 26 at 09:44:58
+1622027486 Full Eclipse begins May 26 at 11:11:26
+1622027922 Maximum Eclipse May 26 at 11:18:42
+1622028354 Full Eclipse ends May 26 at 11:25:54
+
+Partial Eclipse ends May 26 at 12:52:23
+Penumbral Eclipse ends May 26 at 13:49:44
+
 for umbra:
 
   - pq > pt return -1

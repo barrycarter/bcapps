@@ -33,6 +33,7 @@ KERNELS_TO_LOAD = (
 '/home/user/SPICE/KERNELS/earth_assoc_itrf93.tf',
 '/home/user/SPICE/KERNELS/gm_de431.tpc',
 '/home/user/SPICE/KERNELS/earth_720101_070426.bpc',
-'/home/user/SPICE/KERNELS/jup310.bsp'
-
+'/home/user/SPICE/KERNELS/jup310.bsp',
+'/home/user/SPICE/KERNELS/jup343.bsp',
+'/home/user/BCGIT/ASTRO/bc-jupiter.tpc'
 )

@@ -69,13 +69,13 @@ int main(int argc, char **argv) {
 
   // TODO: 3600 too big?
 
-  gfuds_c(gfq, isDecreasing, ">", 0, 0, 3600, MAXWIN, &cnfine, &result);
+  gfuds_c(gfq, isDecreasing, ">", 1, 0, 3600, MAXWIN, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 
   for (int i=0; i<nres; i++) {
 
     wnfetd_c(&result,i,&beg,&end);
-    printf("OUTPUT: %f %f %d %d %d\n", et2unix(beg), et2unix(end), moonID, sunID, planetID);
+    printf("OUTPUT: %f %f %d %d %d %f\n", et2unix(beg), et2unix(end), moonID, sunID, planetID, end-beg);
   }
 }

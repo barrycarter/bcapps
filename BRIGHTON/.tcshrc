@@ -17,7 +17,8 @@ set ignoreeof
 
 set path = (/usr/local/bin /bin /usr/bin /sbin /usr/sbin /usr/local/sbin \
            /home/user/BCGIT /home/user/BCGIT/*/ \
-           /home/user/bin /home/user/PERL /usr/lib64/nagios/plugins/)
+           /home/user/bin /home/user/PERL /usr/lib64/nagios/plugins/ \
+           /home/user/SPICE/SPICE64/cspice/exe/)
 
 # for QT to work properly
 
