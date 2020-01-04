@@ -29,7 +29,7 @@
 <active>1</active>
 <nice>xsol(h,r,theta)</nice>
 <vars>h,r,theta</vars>
-<desc>see bc-fuji.m</descc>
+<desc>see bc-fuji.m</desc>
 <argtest>4.0, 7000.0, 0.0523599</argtest>
 <answer>86.5298</answer>
 <body>
@@ -44,7 +44,7 @@
 <active>1</active>
 <nice>zsol(h,r,theta)</nice>
 <vars>h,r,theta</vars>
-<desc>see bc-fuji.m</descc>
+<desc>see bc-fuji.m</desc>
 <argtest>4.0, 7000.0, 0.0523599</argtest>
 <answer>6999.47</answer>
 <body>
@@ -62,7 +62,7 @@
 <active>1</active>
 <nice>ang(h,r,theta)</nice>
 <vars>h,r,theta</vars>
-<desc>see bc-fuji.m</descc>
+<desc>see bc-fuji.m</desc>
 <argtest>4.0, 7000.0, 0.0523599</argtest>
 <answer>0.0123617</answer>
 <body>
@@ -75,7 +75,7 @@ ArcTan[1,Times[Plus[Times[Plus[h, r], Cos[theta], Sin[theta]], Times[-1, Power[P
 <active>1</active>
 <nice>dist(h,r,theta)</nice>
 <vars>h,r,theta</vars>
-<desc>see bc-fuji.m</descc>
+<desc>see bc-fuji.m</desc>
 <argtest>4.0, 7000.0, 0.0523599</argtest>
 <answer>86.532</answer>
 <body>
@@ -90,7 +90,7 @@ Times[r, ArcTan[1,Times[Plus[Times[Plus[h, r], Cos[theta], Sin[theta]], Times[-1
 <active>1</active>
 <nice>newcoords(h,r,theta,az,lat,lon)</nice>
 <vars>h,r,theta,az,lat,lon</vars>
-<desc>see bc-fuji.m</descc>
+<desc>see bc-fuji.m</desc>
 # TODO: must convert argtest numbers to .0 decimals too
 <argtest>4.0, 7000.0, 0.0698132, 1.65806, 0.610865, -1.85878</argtest>
 <answer>{-1623.7, -5462.79, 4064.66}</answer>
@@ -103,7 +103,7 @@ List[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], T
 <active>1</active>
 <nice>newangles(h,r,theta,az,lat,lon)</nice>
 <vars>h,r,theta,az,lat,lon</vars>
-<desc>see bc-fuji.m</descc>
+<desc>see bc-fuji.m</desc>
 # TODO: must convert argtest numbers to .0 decimals too
 <argtest>4.0, 7000.0, 0.0698132, 1.65806, 0.610865, -1.85878</argtest>
 <answer>{-1.85971, 0.619547, 7000.}</answer>

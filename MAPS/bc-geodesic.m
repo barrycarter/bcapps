@@ -372,3 +372,22 @@ simps = Element[{lngB, latB, lngC, latC, lngD, latD}, Reals];
 
 FullSimplify[sol[t] /. rules2, simps];
 sol[t]
+
+(* work below 4 Jan 2020 *)
+
+a = {ax, ay, az};
+b = {bx, by, bz};
+c = {cx, cy, cz};
+
+(* from a to b and how close do we get to c *)
+
+pt[t_] = a  + t*(b-a);
+
+cang[t_] = (pt[t].{cx, cy, cz})/Norm[pt[t]]
+
+cang2[t_] = cang[t]^2
+
+tval = (ax cx+ay cy+az cz)/(ax cx-bx cx+ay cy-by cy+az cz-bz cz);
+
+cang2[tval]
+
