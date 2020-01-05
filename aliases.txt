@@ -404,4 +404,9 @@ alias mv mv -i
 alias cp cp -i
 alias rm rm -i
 
+# experimental realiasing of calc (my private version was:
+# (echo scale=10; echo '!*') | bc
+
+alias calc "\calc '\!*'"
+
 

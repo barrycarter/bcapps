@@ -54,13 +54,55 @@ for $i (@{$arrref}) {
 #    debug("VALS", $faainfo{$key}{lat}, $faainfo{$key}{lng});
 }
 
-# debug(keys %faainfo);
+print "faa = [];\n";
+
+for $j (keys %faainfo) {
+
+    my(@obj);
+
+    for $i (keys %{$faainfo{$j}}) {
+
+	if ($faainfo{$j}{$i} =~/\"/) {die "BAD: $faainfo{$j}{$i}";}
+
+	if ($i=~/ARPL(ong|at)itude/) {next;}
+	push(@obj, "$i: \"$faainfo{$j}{$i}\"");
+    }
+
+    print "faa['$j'] = {",join(", ", @obj),"};\n";
+
+#    debug(@obj);
+#     debug($j, $faainfo{$j});
+}
+
+
+
+die "TESTING";
 
 $p1 = "04740.1*H";
 $p2 = "27041.*A";
+$n = 10;
 
-debug($faainfo{$p1}{lng}, $faainfo{$p1}{lat}, $faainfo{$p2}{lng}, $faainfo{$p2}{lat});
+for ($i = 0; $i <= 1+(1/($n+1))/2; $i+=1/($n+1)) {
 
-debug(gcstats($faainfo{$p1}{lat}, $faainfo{$p1}{lng}, $faainfo{$p2}{lat}, $faainfo{$p2}{lng}, 0.1));
+    my($lat, $lng) = gcstats($faainfo{$p1}{lat}, $faainfo{$p1}{lng}, $faainfo{$p2}{lat}, $faainfo{$p2}{lng}, $i);
+
+    my($min, $minstat) = (+Infinity, "");
+
+    for $j (keys %faainfo) {
+	my($dist) = gcdist($lat, $lng, $faainfo{$j}{lat}, $faainfo{$j}{lng});
+	if ($dist < $min) {
+	    $min = $dist;
+	    $minstat = $j;
+	}
+    }
+
+    debug("I: $i, MINSTAT/DIST: $minstat/$min");
+
+}
+
+
+# debug($faainfo{$p1}{lng}, $faainfo{$p1}{lat}, $faainfo{$p2}{lng}, $faainfo{$p2}{lat});
+
+# debug(gcstats($faainfo{$p1}{lat}, $faainfo{$p1}{lng}, $faainfo{$p2}{lat}, $faainfo{$p2}{lng}, 0.1));
 
 # TODO: allow reference by IcaoIdentifier, etc

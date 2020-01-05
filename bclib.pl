@@ -777,7 +777,7 @@ sub warnlocal {
 =item gcdist($x,$y,$u,$v)
 
 Great circle distance between latitude/longitude x,y and
-latitude/longitude u,v in miles
+latitude/longitude u,v in miles; given coordinates must be in degrees
 
 Source: http://williams.best.vwh.net/avform.htm
 
@@ -785,7 +785,7 @@ Source: http://williams.best.vwh.net/avform.htm
 
 sub gcdist {
     my(@x)=@_;
-    debug("GCDIST GOT:",@x);
+#    debug("GCDIST GOT:",@x);
     my($x,$y,$u,$v)=map {$_*=$PI/180} @x;
     my($c1) = cos($x)*cos($y)*cos($u)*cos($v);
     my($c2) = cos($x)*sin($y)*cos($u)*sin($v);
