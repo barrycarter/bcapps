@@ -3433,9 +3433,10 @@ sub vecapply {
 
 =item gcstats($lat1,$lon1,$lat2,$lon2,$r)
 
-Given two latitudes/longitudes, find the lat/lon point r percentage of
-the way (0<=r<=1) between the first and second points (true parametric
-circle, not projected parametrization of line)
+Given two latitudes/longitudes in degrees, find the lat/lon point r
+percentage of the way (0<=r<=1) between the first and second points
+(true parametric circle, not projected parametrization of line);
+return value is also in degrees
 
 TODO: expand this to give more, incl distances and bearing
 
