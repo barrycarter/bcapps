@@ -62,7 +62,7 @@ for $j (keys %faainfo) {
 
     for $i (keys %{$faainfo{$j}}) {
 
-	if ($faainfo{$j}{$i} =~/\"/) {die "BAD: $faainfo{$j}{$i}";}
+	$faainfo{$j}{$i} =~s/[\"\']//g;
 
 	if ($i=~/ARPL(ong|at)itude/) {next;}
 	push(@obj, "$i: \"$faainfo{$j}{$i}\"");
