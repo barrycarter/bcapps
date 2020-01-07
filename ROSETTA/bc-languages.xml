@@ -132,7 +132,7 @@
 <mcomment>/* <comment> */</mcomment>
 # prefix/postfix required for standard "php codefile" run
 # TODO: find php options that dont require prefix/postfix?
-<prefix><?</prefix>
+<prefix><?php</prefix>
 <postfix>?></postfix>
 <run>php <file></run>
 </language>

@@ -22,8 +22,7 @@ my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions.xml");
 
 # TODO: temporary for astro testing
 
-warn "ASTRO TESTING";
-my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions-astro.xml");
+my($funcs) = read_file("$bclib{githome}/ROSETTA/bc-functions.xml");
 
 # variable to hold languages info
 my(%lang);
@@ -76,6 +75,9 @@ while ($funcs=~s%<function name="(.*?)">(.*?)</function>%%s) {
 
   # special case for mathics (and Mathematica itself?)
   $func{$name}{mvars}=join(",",map($_="$_\_",split(/\,/,$func{$name}{vars})));
+
+  # special case for JavaScript
+  $func{$name}{body}=~s/Pi/Math.PI/g;
 
 }
 
@@ -279,6 +281,19 @@ sub multiline_parse {
     $hash{$varcount} = "(1/${math}cos($args[0]))";
     return "var$varcount";
   }
+
+  # cotangent function
+  if ($f eq "Cot") {
+    $hash{$varcount} = "(1/${math}tan($args[0]))";
+    return "var$varcount";
+  }
+
+  # cosecant function
+  if ($f eq "Csc") {
+    $hash{$varcount} = "(1/${math}sin($args[0]))";
+    return "var$varcount";
+  }
+
 
   # Perl doesn't have a Tan function, so I define it here for all langs
   if ($f eq "Tan") {

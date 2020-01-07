@@ -4,7 +4,18 @@ ASTRO/eclipse-diagram.gif
 
 Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 5 Jan 2020, primarily for my reference
+Stuff I plan to stream 7 Jan 2020, primarily for my reference
+
+problem: vectors aren't of unit length (cross product doesn't
+guarentee that, even w/ unit vector inputs)
+
+can vector idea be used for simple formula?
+
+can I publish multiple formulas and say to combine these for stack person?
+
+is v1*sin(th) + v2*cos(th) a psuedo-basis if v1/v2 not ortho (probably not)
+
+monte carlo testing as method
 
 TODO: post to github pages
 
@@ -309,3 +320,14 @@ This is not not a list of possible future streams
   - parallel editable comments to git structure
 
   - categorize jokes and annoy people on reddit project?
+
+  - steal guys idea (and SimEarth idea) of using Stefan-Boltzmann law
+  to determine temperature?
+
+  - helical rising (https://astronomy.stackexchange.com/questions/25677/when-does-a-star-rise-with-the-sun)
+
+  - create stream buffer on stream (or do I want to use streamelements
+  cause I want it going before VM is live?) (but could create on
+  stream and use off stream?)
+
+

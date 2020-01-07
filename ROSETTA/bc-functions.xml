@@ -25,8 +25,32 @@
 
 # <LANG>: the language into which the function is being translated
 
-<function name="xsol">
+<function name="translatedLngLat2OrigLngLat">
 <active>1</active>
+<nice>translatedLngLat2OrigLngLat(tha, pha, thb, phb, thc, phc)</nice>
+<vars>tha,pha,thb,phb,thc,phc</vars>
+<desc>Does the inverse of lnglat2translatedLngLat-- returns {0,0} to {tha, pha}, returns other translated points to original longitude/longitude</desc>
+<argtest>0.56979, -0.00200045, -1.59657, 0.344406, 0.94131, -0.898082</argtest>
+<answer>(0.964949, -1.1642)</answer>
+<body>
+List[ArcTan[Plus[Times[Cos[pha],Cos[phc],Cos[tha],Cos[thc]],Times[-32,Power[Cos[phb],2],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Sin[phc],Sin[Plus[tha,Times[-1,thb]]],Plus[Times[Sin[pha],Sin[thb]],Times[-1,Cos[pha],Sin[tha],Tan[phb]]],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]],Times[32,Power[Cos[phb],2],Cos[phc],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Power[Sin[Plus[tha,Times[-1,thb]]],2],Sin[thc],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]],Plus[Times[Cos[thb],Csc[Plus[tha,Times[-1,thb]]],Power[Sin[pha],2]],Times[Cos[pha],Plus[Times[Cos[pha],Sin[tha]],Times[-1,Cos[tha],Csc[Plus[tha,Times[-1,thb]]],Sin[pha],Tan[phb]]]]]]],Plus[Times[Cos[pha],Cos[phc],Cos[thc],Sin[tha]],Times[-32,Power[Cos[phb],2],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Sin[phc],Sin[Plus[tha,Times[-1,thb]]],Plus[Times[-1,Cos[thb],Sin[pha]],Times[Cos[pha],Cos[tha],Tan[phb]]],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]],Times[-32,Power[Cos[phb],2],Cos[phc],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Power[Sin[Plus[tha,Times[-1,thb]]],2],Sin[thc],Plus[Times[Power[Cos[pha],2],Cos[tha]],Times[-1,Csc[Plus[tha,Times[-1,thb]]],Power[Sin[pha],2],Sin[thb]],Times[Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Sin[pha],Sin[tha],Tan[phb]]],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]]]],ArcTan[Power[Plus[Power[Plus[Times[Cos[pha],Cos[phc],Cos[thc],Sin[tha]],Times[-32,Power[Cos[phb],2],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Sin[phc],Sin[Plus[tha,Times[-1,thb]]],Plus[Times[-1,Cos[thb],Sin[pha]],Times[Cos[pha],Cos[tha],Tan[phb]]],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]],Times[-32,Power[Cos[phb],2],Cos[phc],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Power[Sin[Plus[tha,Times[-1,thb]]],2],Sin[thc],Plus[Times[Power[Cos[pha],2],Cos[tha]],Times[-1,Csc[Plus[tha,Times[-1,thb]]],Power[Sin[pha],2],Sin[thb]],Times[Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Sin[pha],Sin[tha],Tan[phb]]],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]]],2],Power[Plus[Times[Cos[pha],Cos[phc],Cos[tha],Cos[thc]],Times[-32,Power[Cos[phb],2],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Sin[phc],Sin[Plus[tha,Times[-1,thb]]],Plus[Times[Sin[pha],Sin[thb]],Times[-1,Cos[pha],Sin[tha],Tan[phb]]],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]],Times[32,Power[Cos[phb],2],Cos[phc],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Power[Sin[Plus[tha,Times[-1,thb]]],2],Sin[thc],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]],Plus[Times[Cos[thb],Csc[Plus[tha,Times[-1,thb]]],Power[Sin[pha],2]],Times[Cos[pha],Plus[Times[Cos[pha],Sin[tha]],Times[-1,Cos[tha],Csc[Plus[tha,Times[-1,thb]]],Sin[pha],Tan[phb]]]]]]],2]],Rational[1,2]],Plus[Times[Cos[phc],Cos[thc],Sin[pha]],Times[-32,Cos[pha],Power[Cos[phb],2],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Sin[phc],Power[Sin[Plus[tha,Times[-1,thb]]],2],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]],Times[-32,Cos[pha],Power[Cos[phb],2],Cos[phc],Power[Plus[-20,Times[-4,Cos[Times[2,pha]]],Times[6,Cos[Plus[Times[2,pha],Times[-2,phb]]]],Times[-4,Cos[Times[2,phb]]],Times[6,Cos[Times[2,Plus[pha,phb]]]],Times[4,Cos[Plus[Times[2,tha],Times[-2,thb]]]],Times[2,Cos[Times[2,Plus[pha,tha,Times[-1,thb]]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],tha,Times[-1,thb]]]],Cos[Times[2,Plus[pha,Times[-1,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[phb,tha,Times[-1,thb]]]]],Cos[Times[2,Plus[pha,phb,tha,Times[-1,thb]]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],tha,Times[-1,thb]]]],Times[2,Cos[Times[2,Plus[pha,Times[-1,tha],thb]]]],Times[4,Cos[Plus[Times[2,pha],Times[-2,phb],Times[-1,tha],thb]]],Cos[Times[2,Plus[pha,Times[-1,phb],Times[-1,tha],thb]]],Times[2,Cos[Times[2,Plus[phb,Times[-1,tha],thb]]]],Cos[Times[2,Plus[pha,phb,Times[-1,tha],thb]]],Times[-4,Cos[Plus[Times[2,pha],Times[2,phb],Times[-1,tha],thb]]]],-1],Sin[Plus[tha,Times[-1,thb]]],Sin[thc],Plus[Times[Cos[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Tan[phb]]],Power[Plus[1,Power[Plus[Times[Cot[Plus[tha,Times[-1,thb]]],Sin[pha]],Times[-1,Cos[pha],Csc[Plus[tha,Times[-1,thb]]],Tan[phb]]],2]],Rational[1,2]]]]]]
+</body>
+</function>
+
+<function name="lnglat2translatedLngLat">
+<active>1</active>
+<nice>lnglat2translatedLngLat(tha, pha, thb, phb, thc, phc)</nice>
+<vars>tha,pha,thb,phb,thc,phc</vars>
+<desc>If longitude/latitude theta1/phi1 are rotated the intersection of the prime meridian and the equator, and theta2/phi2 are rotated to be on the equator, return the new coordinates of theta3, phi3</desc>
+<argtest>0.56979, -0.00200045, -1.59657, 0.344406, 0.964949, -1.1642</argtest>
+<answer>{0.94131, -0.898082}</answer>
+<body>
+List[ArcTan[Plus[Times[Cos[pha], Cos[phc], Cos[Plus[tha, Times[-1, thc]]]], Times[Sin[pha], Sin[phc]]], Times[Plus[Times[Cos[pha], Plus[Times[-1, Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]], Times[Cot[Plus[tha, Times[-1, thb]]], Sin[pha]]], Sin[phc]], Times[Cos[phc], Plus[Times[Cos[tha], Plus[Sin[thc], Times[Cos[thc], Plus[Times[-1, Cot[Plus[tha, Times[-1, thb]]], Sin[pha]], Times[Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]]], Sin[pha]]]], Times[Plus[Times[-1, Cos[thc]], Times[Plus[Times[-1, Cot[Plus[tha, Times[-1, thb]]], Sin[pha]], Times[Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]]], Sin[pha], Sin[thc]]], Sin[tha]]]]], Power[Plus[1, Power[Plus[Times[-1, Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]], Times[Cot[Plus[tha, Times[-1, thb]]], Sin[pha]]], 2]], Rational[-1, 2]]]], ArcTan[Power[Plus[Power[Plus[Times[Cos[pha], Cos[phc], Cos[Plus[tha, Times[-1, thc]]]], Times[Sin[pha], Sin[phc]]], 2], Times[Power[Plus[1, Power[Plus[Times[-1, Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]], Times[Cot[Plus[tha, Times[-1, thb]]], Sin[pha]]], 2]], -1], Power[Plus[Times[Cos[pha], Plus[Times[-1, Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]], Times[Cot[Plus[tha, Times[-1, thb]]], Sin[pha]]], Sin[phc]], Times[Cos[phc], Plus[Times[Cos[tha], Plus[Sin[thc], Times[Cos[thc], Plus[Times[-1, Cot[Plus[tha, Times[-1, thb]]], Sin[pha]], Times[Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]]], Sin[pha]]]], Times[Plus[Times[-1, Cos[thc]], Times[Plus[Times[-1, Cot[Plus[tha, Times[-1, thb]]], Sin[pha]], Times[Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]]], Sin[pha], Sin[thc]]], Sin[tha]]]]], 2]]], Rational[1, 2]], Times[Plus[Times[Cos[pha], Plus[Sin[phc], Times[-1, Cos[phc], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Sin[Plus[tha, Times[-1, thc]]], Tan[phb]]]], Times[Cos[phc], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Sin[pha], Sin[Plus[thb, Times[-1, thc]]]]], Power[Plus[1, Power[Plus[Times[-1, Cos[pha], Power[Sin[Plus[tha, Times[-1, thb]]], -1], Tan[phb]], Times[Cot[Plus[tha, Times[-1, thb]]], Sin[pha]]], 2]], Rational[-1, 2]]]]]
+</body>
+</function>
+
+<function name="xsol">
+<active>0</active>
 <nice>xsol(h,r,theta)</nice>
 <vars>h,r,theta</vars>
 <desc>see bc-fuji.m</desc>
@@ -41,7 +65,7 @@
 </function>
 
 <function name="zsol">
-<active>1</active>
+<active>0</active>
 <nice>zsol(h,r,theta)</nice>
 <vars>h,r,theta</vars>
 <desc>see bc-fuji.m</desc>
@@ -59,7 +83,7 @@
 # handle single argument arctan
 
 <function name="ang">
-<active>1</active>
+<active>0</active>
 <nice>ang(h,r,theta)</nice>
 <vars>h,r,theta</vars>
 <desc>see bc-fuji.m</desc>
@@ -72,7 +96,7 @@ ArcTan[1,Times[Plus[Times[Plus[h, r], Cos[theta], Sin[theta]], Times[-1, Power[P
 
 # again had to add ArcTan[1, ...]
 <function name="dist">
-<active>1</active>
+<active>0</active>
 <nice>dist(h,r,theta)</nice>
 <vars>h,r,theta</vars>
 <desc>see bc-fuji.m</desc>
@@ -87,7 +111,7 @@ Times[r, ArcTan[1,Times[Plus[Times[Plus[h, r], Cos[theta], Sin[theta]], Times[-1
 # TODO: for php and perl need some sort of array vs scalar printer (print_r?)
 
 <function name="newcoords">
-<active>1</active>
+<active>0</active>
 <nice>newcoords(h,r,theta,az,lat,lon)</nice>
 <vars>h,r,theta,az,lat,lon</vars>
 <desc>see bc-fuji.m</desc>
@@ -100,7 +124,7 @@ List[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[lat]], T
 </function>
 
 <function name="newangles">
-<active>1</active>
+<active>0</active>
 <nice>newangles(h,r,theta,az,lat,lon)</nice>
 <vars>h,r,theta,az,lat,lon</vars>
 <desc>see bc-fuji.m</desc>
@@ -123,7 +147,7 @@ List[ArcTan[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[l
 
 # TODO: not really crazy about this function, should be RADecLatLon2azEl
 <function name="HADecLat2azEl">
-<active>1</active>
+<active>0</active>
 <nice>HADecLat2azEl(ha, dec, lat)</nice>
 <vars>ha,dec,lat</vars>
 <desc>Given the hour angle and declination of a celestial object and the latitude of the observer, return the azimuth and elevation of the object as viewed by the observer</desc>
@@ -133,7 +157,7 @@ List[ArcTan[Plus[Times[Power[Cos[theta], 2], Plus[Times[Cos[lon], Sin[az], Sin[l
 </function>
 
 <function name="lngLat2CenterLngLat">
-<active>1</active>
+<active>0</active>
 <nice>lngLat2CenterLngLat(lng, lat, clng, clat)</nice>
 <vars>lng,lat,clng,clat</vars>
 <desc>If the world is rotated so that clng, clat are now at 0,0, return the new coordinates of lng, lat</desc>
@@ -151,7 +175,7 @@ Cos[Plus[clng, Times[-1, lng]]], Sin[clat]], Times[Cos[clat], Sin[lat]]]
 </function>
 
 <function name="slippyDecimal2LngLat">
-<active>1</active>
+<active>0</active>
 <nice>slippyDecimal2LngLat(x, y, z)</nice>
 <vars>x, y, z</vars>
 <desc>The longitude and latitude of slippy tile x, y z. If x and y are integers, this is the nw corner of the tile, fractional values for pixels</desc>
@@ -162,7 +186,7 @@ Gudermannian[Plus[Pi, Times[-1, Power[2, Plus[1, Times[-1, z]]], Pi, y]]]]
 </function>
 
 <function name="lngLat2OrthoXY">
-<active>1</active>
+<active>0</active>
 <nice>lngLat2OrthoXY(lng, lat)</nice>
 <vars>lng, lat</vars>
 <desc>The x and y coordinates of lng, lat in the standard orthographic projection</desc>
@@ -173,7 +197,7 @@ List[Times[Cos[lat], Sin[lng]], Sin[lat]]]
 </function>
 
 <function name="latsDist2LngRange">
-<active>1</active>
+<active>0</active>
 <nice>latsDist2LngRange(lat1, lat2, d)</nice>
 <vars>lat1, lat2, d</vars>
 <desc>the positive longitude at lat2 that is distance d from latitude lat1 and longitude 0</desc>

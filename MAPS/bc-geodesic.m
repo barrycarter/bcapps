@@ -11,7 +11,6 @@ conds = {
 simps = {ArcTan[y_, x_] -> ArcTan[x/y]}
 
 fullmat = 
-
 {{Cos[phi1]*Cos[theta1], Cos[phi1]*Sin[theta1], Sin[phi1]}, 
  {(-Sin[theta1] + Cos[theta1]*Sin[phi1]*(-(Cot[theta1 - theta2]*Sin[phi1]) + 
       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2]))/
@@ -47,7 +46,6 @@ Simplify[temp1345[[1]], conds]
 Simplify[temp1345[[2]], conds]
 
 newLng[theta1_, phi1_, theta2_, phi2_, theta3_, phi3_] =
-
 ArcTan[Cos[phi1]*Cos[phi3]*Cos[theta1 - theta3] + Sin[phi1]*Sin[phi3], 
  (Cos[phi1]*Sin[phi3]*(Cot[theta1 - theta2]*Sin[phi1] - 
      Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2]) + 
@@ -60,7 +58,6 @@ ArcTan[Cos[phi1]*Cos[phi3]*Cos[theta1 - theta3] + Sin[phi1]*Sin[phi3],
        Tan[phi2])^2]]
 
 newLat[theta1_, phi1_, theta2_, phi2_, theta3_, phi3_] =
-
 ArcTan[Sqrt[(Cos[phi1]*Cos[phi3]*Cos[theta1 - theta3] + Sin[phi1]*Sin[phi3])^
     2 + (Cos[phi1]*Sin[phi3]*(Cot[theta1 - theta2]*Sin[phi1] - 
         Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2]) + 
@@ -74,6 +71,301 @@ ArcTan[Sqrt[(Cos[phi1]*Cos[phi3]*Cos[theta1 - theta3] + Sin[phi1]*Sin[phi3])^
    Cos[phi1]*(Sin[phi3] - Cos[phi3]*Csc[theta1 - theta2]*Sin[theta1 - theta3]*
       Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
       Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]]
+
+oldLngLat[theta1_, phi_, theta2_, phi2_, thc_, phc_] =
+
+{ArcTan[Cos[phc]*Cos[phi1]*Cos[thc]*Cos[theta1] - 
+    (32*Cos[phi2]^2*Sin[phc]*Sin[theta1 - theta2]*(Sin[phi1]*Sin[theta2] - 
+       Cos[phi1]*Sin[theta1]*Tan[phi2])*
+      Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+           Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+      6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+      4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+      Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+      2*Cos[2*(phi2 + theta1 - theta2)] + 
+      Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+      2*Cos[2*(phi1 - theta1 + theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+      Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+      2*Cos[2*(phi2 - theta1 + theta2)] + 
+      Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) + 
+    (32*Cos[phc]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]^2*
+      Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+           Csc[theta1 - theta2]*Tan[phi2])^2]*
+      (Cos[theta2]*Csc[theta1 - theta2]*Sin[phi1]^2 + 
+       Cos[phi1]*(Cos[phi1]*Sin[theta1] - Cos[theta1]*Csc[theta1 - theta2]*
+          Sin[phi1]*Tan[phi2])))/(-20 - 4*Cos[2*phi1] + 
+      6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+      4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+      Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+      2*Cos[2*(phi2 + theta1 - theta2)] + 
+      Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+      2*Cos[2*(phi1 - theta1 + theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+      Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+      2*Cos[2*(phi2 - theta1 + theta2)] + 
+      Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]), 
+   Cos[phc]*Cos[phi1]*Cos[thc]*Sin[theta1] - 
+    (32*Cos[phi2]^2*Sin[phc]*Sin[theta1 - theta2]*((-Cos[theta2])*Sin[phi1] + 
+       Cos[phi1]*Cos[theta1]*Tan[phi2])*
+      Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+           Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+      6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+      4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+      Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+      2*Cos[2*(phi2 + theta1 - theta2)] + 
+      Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+      2*Cos[2*(phi1 - theta1 + theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+      Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+      2*Cos[2*(phi2 - theta1 + theta2)] + 
+      Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) - 
+    (32*Cos[phc]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]^2*
+      (Cos[phi1]^2*Cos[theta1] - Csc[theta1 - theta2]*Sin[phi1]^2*
+        Sin[theta2] + Cos[phi1]*Csc[theta1 - theta2]*Sin[phi1]*Sin[theta1]*
+        Tan[phi2])*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+          Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])/
+     (-20 - 4*Cos[2*phi1] + 6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 
+      6*Cos[2*(phi1 + phi2)] + 4*Cos[2*theta1 - 2*theta2] + 
+      2*Cos[2*(phi1 + theta1 - theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+      Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+      2*Cos[2*(phi2 + theta1 - theta2)] + 
+      Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+      2*Cos[2*(phi1 - theta1 + theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+      Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+      2*Cos[2*(phi2 - theta1 + theta2)] + 
+      Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 - theta1 + theta2])], 
+  ArcTan[Sqrt[(Cos[phc]*Cos[phi1]*Cos[thc]*Sin[theta1] - 
+       (32*Cos[phi2]^2*Sin[phc]*Sin[theta1 - theta2]*
+         ((-Cos[theta2])*Sin[phi1] + Cos[phi1]*Cos[theta1]*Tan[phi2])*
+         Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+              Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+         6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+         4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) - 
+       (32*Cos[phc]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]^2*
+         (Cos[phi1]^2*Cos[theta1] - Csc[theta1 - theta2]*Sin[phi1]^2*
+           Sin[theta2] + Cos[phi1]*Csc[theta1 - theta2]*Sin[phi1]*Sin[theta1]*
+           Tan[phi2])*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+             Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])/
+        (-20 - 4*Cos[2*phi1] + 6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 
+         6*Cos[2*(phi1 + phi2)] + 4*Cos[2*theta1 - 2*theta2] + 
+         2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]))^2 + 
+     (Cos[phc]*Cos[phi1]*Cos[thc]*Cos[theta1] - 
+       (32*Cos[phi2]^2*Sin[phc]*Sin[theta1 - theta2]*(Sin[phi1]*Sin[theta2] - 
+          Cos[phi1]*Sin[theta1]*Tan[phi2])*
+         Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+              Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+         6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+         4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) + 
+       (32*Cos[phc]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]^2*
+         Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+              Csc[theta1 - theta2]*Tan[phi2])^2]*
+         (Cos[theta2]*Csc[theta1 - theta2]*Sin[phi1]^2 + 
+          Cos[phi1]*(Cos[phi1]*Sin[theta1] - Cos[theta1]*Csc[theta1 - theta2]*
+             Sin[phi1]*Tan[phi2])))/(-20 - 4*Cos[2*phi1] + 
+         6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+         4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]))^2], 
+   Cos[phc]*Cos[thc]*Sin[phi1] - (32*Cos[phi1]*Cos[phi2]^2*Sin[phc]*
+      Sin[theta1 - theta2]^2*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+          Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])/
+     (-20 - 4*Cos[2*phi1] + 6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 
+      6*Cos[2*(phi1 + phi2)] + 4*Cos[2*theta1 - 2*theta2] + 
+      2*Cos[2*(phi1 + theta1 - theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+      Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+      2*Cos[2*(phi2 + theta1 - theta2)] + 
+      Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+      2*Cos[2*(phi1 - theta1 + theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+      Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+      2*Cos[2*(phi2 - theta1 + theta2)] + 
+      Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) - 
+    (32*Cos[phc]*Cos[phi1]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]*
+      (Cos[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Tan[phi2])*
+      Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+           Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+      6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+      4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+      Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+      2*Cos[2*(phi2 + theta1 - theta2)] + 
+      Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+      2*Cos[2*(phi1 - theta1 + theta2)] + 
+      4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+      Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+      2*Cos[2*(phi2 - theta1 + theta2)] + 
+      Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+      4*Cos[2*phi1 + 2*phi2 - theta1 + theta2])], 
+  Sqrt[Abs[Cos[phc]*Cos[thc]*Sin[phi1] - (32*Cos[phi1]*Cos[phi2]^2*Sin[phc]*
+         Sin[theta1 - theta2]^2*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+             Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])/
+        (-20 - 4*Cos[2*phi1] + 6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 
+         6*Cos[2*(phi1 + phi2)] + 4*Cos[2*theta1 - 2*theta2] + 
+         2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) - 
+       (32*Cos[phc]*Cos[phi1]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]*
+         (Cos[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Tan[phi2])*
+         Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+              Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+         6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+         4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2])]^2 + 
+    Abs[Cos[phc]*Cos[phi1]*Cos[thc]*Sin[theta1] - 
+       (32*Cos[phi2]^2*Sin[phc]*Sin[theta1 - theta2]*
+         ((-Cos[theta2])*Sin[phi1] + Cos[phi1]*Cos[theta1]*Tan[phi2])*
+         Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+              Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+         6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+         4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) - 
+       (32*Cos[phc]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]^2*
+         (Cos[phi1]^2*Cos[theta1] - Csc[theta1 - theta2]*Sin[phi1]^2*
+           Sin[theta2] + Cos[phi1]*Csc[theta1 - theta2]*Sin[phi1]*Sin[theta1]*
+           Tan[phi2])*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+             Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])/
+        (-20 - 4*Cos[2*phi1] + 6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 
+         6*Cos[2*(phi1 + phi2)] + 4*Cos[2*theta1 - 2*theta2] + 
+         2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2])]^2 + 
+    Abs[Cos[phc]*Cos[phi1]*Cos[thc]*Cos[theta1] - 
+       (32*Cos[phi2]^2*Sin[phc]*Sin[theta1 - theta2]*(Sin[phi1]*Sin[theta2] - 
+          Cos[phi1]*Sin[theta1]*Tan[phi2])*
+         Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+              Csc[theta1 - theta2]*Tan[phi2])^2])/(-20 - 4*Cos[2*phi1] + 
+         6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+         4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2]) + 
+       (32*Cos[phc]*Cos[phi2]^2*Sin[thc]*Sin[theta1 - theta2]^2*
+         Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+              Csc[theta1 - theta2]*Tan[phi2])^2]*
+         (Cos[theta2]*Csc[theta1 - theta2]*Sin[phi1]^2 + 
+          Cos[phi1]*(Cos[phi1]*Sin[theta1] - Cos[theta1]*Csc[theta1 - theta2]*
+             Sin[phi1]*Tan[phi2])))/(-20 - 4*Cos[2*phi1] + 
+         6*Cos[2*phi1 - 2*phi2] - 4*Cos[2*phi2] + 6*Cos[2*(phi1 + phi2)] + 
+         4*Cos[2*theta1 - 2*theta2] + 2*Cos[2*(phi1 + theta1 - theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 + theta1 - theta2] + 
+         Cos[2*(phi1 - phi2 + theta1 - theta2)] + 
+         2*Cos[2*(phi2 + theta1 - theta2)] + 
+         Cos[2*(phi1 + phi2 + theta1 - theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 + theta1 - theta2] + 
+         2*Cos[2*(phi1 - theta1 + theta2)] + 
+         4*Cos[2*phi1 - 2*phi2 - theta1 + theta2] + 
+         Cos[2*(phi1 - phi2 - theta1 + theta2)] + 
+         2*Cos[2*(phi2 - theta1 + theta2)] + 
+         Cos[2*(phi1 + phi2 - theta1 + theta2)] - 
+         4*Cos[2*phi1 + 2*phi2 - theta1 + theta2])]^2]};
+
+
 
 
 
@@ -391,3 +683,173 @@ tval = (ax cx+ay cy+az cz)/(ax cx-bx cx+ay cy-by cy+az cz-bz cz);
 
 cang2[tval]
 
+(* work below 6 Jan 2020 *)
+
+s = {sx, sy, sz};
+
+t = {tx, ty, tz};
+
+Cross[s,t]
+
+In[4]:= Cross[Cross[s,t], s]
+
+Out[4]= {-sy (sx ty - sy tx) + sz (-sx tz + sz tx), sx (sx ty - sy tx) - sz (sy tz - sz ty), -sx (-sx tz + sz tx) + sy (sy tz - sz ty)}
+
+pplane = Cross[s,t]
+
+perp = Cross[Cross[s,t], s]
+
+s*Cos[th] + perp*Sin[th]
+
+loc[th_] = Simplify[s*Cos[th] + perp*Sin[th]]
+
+ang[th_] = {qx, qy, qz} . loc[th]
+
+dang[th_] = D[ang[th], th]
+
+m1 = Transpose[{s, perp, pplane}]
+
+Simplify[m1, Element[{sx, sy, sz, tx, ty, tz}, Reals]]
+
+Simplify[m1 /. {tz^2 -> 1-tx^2-ty^2, sz^2 -> 1-sx^2-sy^2}, 
+ Element[{sx, sy, sz, tx, ty, tz}, Reals]]
+
+m2 = Simplify[Inverse[m1]]
+
+conds2 = {Element[{sx, sy, sz, tx, ty, tz, qx, qy, qz}, Reals],
+ sx^2 + sy^2 + sz^2 == 1, tx^2 + ty^2 + tz^2 == 1, qx^2 + qy^2 + qz^2 == 1}
+
+random := Module[{t}, t = RandomReal[{-1, 1}, 3]; Return[t/Norm[t]]];
+
+Clear[pplane];
+pplane[u1_, u2_] = Cross[u1,u2]/Norm[Cross[u1, u2]];
+
+Clear[perp];
+perp[u1_, u2_] = Cross[pplane[u1, u2], u1]/Norm[Cross[pplane[u1, u2], u1]]
+
+Clear[m1];
+m1[u1_, u2_] := Transpose[{u1, perp[u1, u2], pplane[u1, u2]}]
+
+Clear[m2];
+m2[u1_, u2_] := Inverse[m1[u1,u2]]
+
+v1 = random
+v2 = random
+
+pplane[v1, v2]
+perp[v1, v2]
+m1[v1, v2]
+
+RANDOM NUMBERS:
+
+0.56979, -0.00200045, -1.59657, 0.344406, 0.964949, -1.1642
+
+(* work below 7 Jan 2020 *)
+
+fullmat = {{Cos[phi1]*Cos[theta1], Cos[phi1]*Sin[theta1], Sin[phi1]}, 
+  {(Csc[theta1 - theta2]*((-6 + 2*Cos[2*phi1] + Cos[2*phi1 - 2*theta1] + 
+        2*Cos[2*theta1] + Cos[2*(phi1 + theta1)])*Cos[theta2] - 
+      2*Sin[phi1]^2*Sin[2*theta1]*Sin[theta2] + 4*Cos[theta1]*
+       ((1 + Cos[phi1]^2)*Sin[theta1]*Sin[theta2] + Sin[2*phi1]*Tan[phi2])))/
+    (8*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+         Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]), 
+   -((Csc[theta1 - theta2]*((-(3 + Cos[2*phi1]))*Cos[theta1]*Cos[theta2]*
+        Sin[theta1] + Cos[theta2]*Sin[phi1]^2*Sin[2*theta1] + Sin[theta2] - 
+       Cos[phi1]^2*Sin[theta2] + (3 + Cos[2*phi1])*Cos[theta1]^2*
+        Sin[theta2] + Sin[phi1]^2*Sin[theta2] + Sin[theta1]^2*Sin[theta2] - 
+       Cos[phi1]^2*Sin[theta1]^2*Sin[theta2] + Sin[phi1]^2*Sin[theta1]^2*
+        Sin[theta2] - 4*Cos[phi1]*Sin[phi1]*Sin[theta1]*Tan[phi2]))/
+     (4*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*
+           Csc[theta1 - theta2]*Tan[phi2])^2])), 
+   (Cos[phi1]*Csc[theta1 - theta2]*(Cos[theta1 - theta2]*Sin[phi1] - 
+      Cos[phi1]*Tan[phi2]))/
+    Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+         Tan[phi2])^2]}, 
+  {(Csc[theta1 - theta2]*(Sin[phi1]*Sin[theta2] - Cos[phi1]*Sin[theta1]*
+       Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+        Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2], 
+   (Csc[theta1 - theta2]*((-Cos[theta2])*Sin[phi1] + 
+      Cos[phi1]*Cos[theta1]*Tan[phi2]))/
+    Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+         Tan[phi2])^2], Cos[phi1]/
+    Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - Cos[phi1]*Csc[theta1 - theta2]*
+         Tan[phi2])^2]}}
+
+{ArcTan[Cos[phc]*Cos[phi1]*Cos[thc - theta1] + Sin[phc]*Sin[phi1], 
+   (Csc[theta1 - theta2]*(Cos[phc]*(2*Cos[2*phi1 - phi2 + thc - theta1] - 
+        2*Cos[2*phi1 + phi2 + thc - theta1] + 
+        2*Cos[2*phi1 - phi2 - thc + theta1] - 
+        2*Cos[2*phi1 + phi2 - thc + theta1] + Cos[2*phi1 - phi2 + thc - 
+          theta2] - 6*Cos[phi2 + thc - theta2] + 
+        Cos[2*phi1 + phi2 + thc - theta2] + Cos[2*phi1 - phi2 - thc + 
+          2*theta1 - theta2] + 2*Cos[phi2 - thc + 2*theta1 - theta2] + 
+        Cos[2*phi1 + phi2 - thc + 2*theta1 - theta2] + 
+        Cos[2*phi1 - phi2 - thc + theta2] - 6*Cos[phi2 - thc + theta2] + 
+        Cos[2*phi1 + phi2 - thc + theta2] + Cos[2*phi1 - phi2 + thc - 
+          2*theta1 + theta2] + 2*Cos[phi2 + thc - 2*theta1 + theta2] + 
+        Cos[2*phi1 + phi2 + thc - 2*theta1 + theta2])*Sec[phi2] + 
+      8*Sin[phc]*(Cos[theta1 - theta2]*Sin[2*phi1] - 
+        2*Cos[phi1]^2*Tan[phi2])))/
+    (16*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+         Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])], 
+  ArcTan[Sqrt[(Cos[phc]*Cos[phi1]*Cos[thc - theta1] + Sin[phc]*Sin[phi1])^2 + 
+     (Csc[theta1 - theta2]^2*(Cos[phc]*(2*Cos[2*phi1 - phi2 + thc - theta1] - 
+           2*Cos[2*phi1 + phi2 + thc - theta1] + 
+           2*Cos[2*phi1 - phi2 - thc + theta1] - 
+           2*Cos[2*phi1 + phi2 - thc + theta1] + Cos[2*phi1 - phi2 + thc - 
+             theta2] - 6*Cos[phi2 + thc - theta2] + 
+           Cos[2*phi1 + phi2 + thc - theta2] + Cos[2*phi1 - phi2 - thc + 
+             2*theta1 - theta2] + 2*Cos[phi2 - thc + 2*theta1 - theta2] + 
+           Cos[2*phi1 + phi2 - thc + 2*theta1 - theta2] + 
+           Cos[2*phi1 - phi2 - thc + theta2] - 6*Cos[phi2 - thc + theta2] + 
+           Cos[2*phi1 + phi2 - thc + theta2] + Cos[2*phi1 - phi2 + thc - 
+             2*theta1 + theta2] + 2*Cos[phi2 + thc - 2*theta1 + theta2] + 
+           Cos[2*phi1 + phi2 + thc - 2*theta1 + theta2])*Sec[phi2] + 
+         8*Sin[phc]*(Cos[theta1 - theta2]*Sin[2*phi1] - 2*Cos[phi1]^2*
+            Tan[phi2]))^2)/(256*(1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+          Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2))], 
+   ((-Cos[phc])*Csc[theta1 - theta2]*Sin[phi1]*Sin[thc - theta2] + 
+     Cos[phi1]*(Sin[phc] + Cos[phc]*Csc[theta1 - theta2]*Sin[thc - theta1]*
+        Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+        Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]], 
+  Sqrt[Abs[Cos[phc]*Cos[phi1]*Cos[thc - theta1] + Sin[phc]*Sin[phi1]]^2 + 
+    (1/256)*Abs[(Csc[theta1 - theta2]*
+         (Cos[phc]*(2*Cos[2*phi1 - phi2 + thc - theta1] - 
+            2*Cos[2*phi1 + phi2 + thc - theta1] + 
+            2*Cos[2*phi1 - phi2 - thc + theta1] - 
+            2*Cos[2*phi1 + phi2 - thc + theta1] + Cos[2*phi1 - phi2 + thc - 
+              theta2] - 6*Cos[phi2 + thc - theta2] + 
+            Cos[2*phi1 + phi2 + thc - theta2] + Cos[2*phi1 - phi2 - thc + 
+              2*theta1 - theta2] + 2*Cos[phi2 - thc + 2*theta1 - theta2] + 
+            Cos[2*phi1 + phi2 - thc + 2*theta1 - theta2] + 
+            Cos[2*phi1 - phi2 - thc + theta2] - 6*Cos[phi2 - thc + theta2] + 
+            Cos[2*phi1 + phi2 - thc + theta2] + Cos[2*phi1 - phi2 + thc - 
+              2*theta1 + theta2] + 2*Cos[phi2 + thc - 2*theta1 + theta2] + 
+            Cos[2*phi1 + phi2 + thc - 2*theta1 + theta2])*Sec[phi2] + 
+          8*Sin[phc]*(Cos[theta1 - theta2]*Sin[2*phi1] - 2*Cos[phi1]^2*
+             Tan[phi2])))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+            Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]]^2 + 
+    Abs[((-Cos[phc])*Csc[theta1 - theta2]*Sin[phi1]*Sin[thc - theta2] + 
+        Cos[phi1]*(Sin[phc] + Cos[phc]*Csc[theta1 - theta2]*Sin[thc - theta1]*
+           Tan[phi2]))/Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+           Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2]]^2]}
+
+
+
+ArcTan[Cos[phc]*Cos[phi1]*Cos[thc - theta1] + Sin[phc]*Sin[phi1], 
+  (Csc[theta1 - theta2]*(Cos[phc]*(2*Cos[2*phi1 - phi2 + thc - theta1] - 
+       2*Cos[2*phi1 + phi2 + thc - theta1] + 
+       2*Cos[2*phi1 - phi2 - thc + theta1] - 
+       2*Cos[2*phi1 + phi2 - thc + theta1] + 
+       Cos[2*phi1 - phi2 + thc - theta2] - 6*Cos[phi2 + thc - theta2] + 
+       Cos[2*phi1 + phi2 + thc - theta2] + Cos[2*phi1 - phi2 - thc + 
+         2*theta1 - theta2] + 2*Cos[phi2 - thc + 2*theta1 - theta2] + 
+       Cos[2*phi1 + phi2 - thc + 2*theta1 - theta2] + 
+       Cos[2*phi1 - phi2 - thc + theta2] - 6*Cos[phi2 - thc + theta2] + 
+       Cos[2*phi1 + phi2 - thc + theta2] + Cos[2*phi1 - phi2 + thc - 
+         2*theta1 + theta2] + 2*Cos[phi2 + thc - 2*theta1 + theta2] + 
+       Cos[2*phi1 + phi2 + thc - 2*theta1 + theta2])*Sec[phi2] + 
+     8*Sin[phc]*(Cos[theta1 - theta2]*Sin[2*phi1] - 
+       2*Cos[phi1]^2*Tan[phi2])))/
+   (16*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
+        Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])]
