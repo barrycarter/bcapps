@@ -853,3 +853,88 @@ ArcTan[Cos[phc]*Cos[phi1]*Cos[thc - theta1] + Sin[phc]*Sin[phi1],
        2*Cos[phi1]^2*Tan[phi2])))/
    (16*Sqrt[1 + (Cot[theta1 - theta2]*Sin[phi1] - 
         Cos[phi1]*Csc[theta1 - theta2]*Tan[phi2])^2])]
+
+(*
+
+****** TODO: SUMMARY
+
+I couldn't find a closed form solution to this question, but I got pretty close.
+
+If the longitude and latitude of point A is `{tha, pha}` and the latitude of point B is `{thb, phb}`, there is a rigid rotation that maps A to longitude and latitude 0 and maps B to latitude 0, with longitude determined by its distance from A. The matrix that performs this rotation is:
+
+$
+\left(
+\begin{array}{ccc}
+ \cos (\text{pha}) \cos (\text{tha}) & \cos (\text{pha}) \sin (\text{tha}) & \sin
+   (\text{pha}) \\
+ \frac{\sin (\text{pha}) \cos (\text{tha}) (\tan (\text{ph}) \cos (\text{pha}) \csc
+   (\text{tha}-\text{thb})-\sin (\text{pha}) \cot (\text{tha}-\text{thb}))-\sin
+   (\text{tha})}{\sqrt{(\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\tan
+   (\text{ph}) \cos (\text{pha}) \csc (\text{tha}-\text{thb}))^2+1}} & \frac{\sin
+   (\text{pha}) \sin (\text{tha}) (\tan (\text{ph}) \cos (\text{pha}) \csc
+   (\text{tha}-\text{thb})-\sin (\text{pha}) \cot (\text{tha}-\text{thb}))+\cos
+   (\text{tha})}{\sqrt{(\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\tan
+   (\text{ph}) \cos (\text{pha}) \csc (\text{tha}-\text{thb}))^2+1}} & \frac{\cos
+   (\text{pha}) (\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\tan (\text{ph}) \cos
+   (\text{pha}) \csc (\text{tha}-\text{thb}))}{\sqrt{(\sin (\text{pha}) \cot
+   (\text{tha}-\text{thb})-\tan (\text{ph}) \cos (\text{pha}) \csc
+   (\text{tha}-\text{thb}))^2+1}} \\
+ \frac{\csc (\text{tha}-\text{thb}) (\sin (\text{pha}) \sin (\text{thb})-\tan
+   (\text{ph}) \cos (\text{pha}) \sin (\text{tha}))}{\sqrt{(\sin (\text{pha}) \cot
+   (\text{tha}-\text{thb})-\tan (\text{ph}) \cos (\text{pha}) \csc
+   (\text{tha}-\text{thb}))^2+1}} & \frac{\csc (\text{tha}-\text{thb}) (\tan
+   (\text{ph}) \cos (\text{pha}) \cos (\text{tha})-\sin (\text{pha}) \cos
+   (\text{thb}))}{\sqrt{(\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\tan
+   (\text{ph}) \cos (\text{pha}) \csc (\text{tha}-\text{thb}))^2+1}} & \frac{\cos
+   (\text{pha})}{\sqrt{(\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\tan
+   (\text{ph}) \cos (\text{pha}) \csc (\text{tha}-\text{thb}))^2+1}} \\
+\end{array}
+\right)
+$
+
+If your point X (which we'll call C since I am generalizing this answer) originally had longitude/latitude of {thc, phc}, it's latitude and longitude after transformation will be:
+
+$
+\left\{\tan ^{-1}\left(\sqrt{\frac{(\cos (\text{phc}) (\cos (\text{tha}) (\sin
+   (\text{pha}) \cos (\text{thc}) (\cos (\text{pha}) \tan (\text{phb}) \csc
+   (\text{tha}-\text{thb})-\sin (\text{pha}) \cot (\text{tha}-\text{thb}))+\sin
+   (\text{thc}))-\sin (\text{tha}) (\sin (\text{pha}) \sin (\text{thc}) (\sin
+   (\text{pha}) \cot (\text{tha}-\text{thb})-\cos (\text{pha}) \tan (\text{phb}) \csc
+   (\text{tha}-\text{thb}))+\cos (\text{thc})))+\cos (\text{pha}) \sin (\text{phc})
+   (\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\cos (\text{pha}) \tan
+   (\text{phb}) \csc (\text{tha}-\text{thb})))^2}{(\sin (\text{pha}) \cot
+   (\text{tha}-\text{thb})-\cos (\text{pha}) \tan (\text{phb}) \csc
+   (\text{tha}-\text{thb}))^2+1}+(\cos (\text{pha}) \cos (\text{phc}) \cos
+   (\text{tha}-\text{thc})+\sin (\text{pha}) \sin (\text{phc}))^2},\frac{\cos
+   (\text{pha}) (\sin (\text{phc})-\tan (\text{phb}) \cos (\text{phc}) \csc
+   (\text{tha}-\text{thb}) \sin (\text{tha}-\text{thc}))+\sin (\text{pha}) \cos
+   (\text{phc}) \csc (\text{tha}-\text{thb}) \sin
+   (\text{thb}-\text{thc})}{\sqrt{(\sin (\text{pha}) \cot
+   (\text{tha}-\text{thb})-\cos (\text{pha}) \tan (\text{phb}) \csc
+   (\text{tha}-\text{thb}))^2+1}}\right),\tan ^{-1}\left(\sqrt{\frac{(\cos
+   (\text{phc}) (\cos (\text{tha}) (\sin (\text{pha}) \cos (\text{thc}) (\cos
+   (\text{pha}) \tan (\text{phb}) \csc (\text{tha}-\text{thb})-\sin (\text{pha}) \cot
+   (\text{tha}-\text{thb}))+\sin (\text{thc}))-\sin (\text{tha}) (\sin (\text{pha})
+   \sin (\text{thc}) (\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\cos
+   (\text{pha}) \tan (\text{phb}) \csc (\text{tha}-\text{thb}))+\cos
+   (\text{thc})))+\cos (\text{pha}) \sin (\text{phc}) (\sin (\text{pha}) \cot
+   (\text{tha}-\text{thb})-\cos (\text{pha}) \tan (\text{phb}) \csc
+   (\text{tha}-\text{thb})))^2}{(\sin (\text{pha}) \cot (\text{tha}-\text{thb})-\cos
+   (\text{pha}) \tan (\text{phb}) \csc (\text{tha}-\text{thb}))^2+1}+(\cos
+   (\text{pha}) \cos (\text{phc}) \cos (\text{tha}-\text{thc})+\sin (\text{pha}) \sin
+   (\text{phc}))^2},\frac{\cos (\text{pha}) (\sin (\text{phc})-\tan (\text{phb}) \cos
+   (\text{phc}) \csc (\text{tha}-\text{thb}) \sin (\text{tha}-\text{thc}))+\sin
+   (\text{pha}) \cos (\text{phc}) \csc (\text{tha}-\text{thb}) \sin
+   (\text{thb}-\text{thc})}{\sqrt{(\sin (\text{pha}) \cot
+   (\text{tha}-\text{thb})-\cos (\text{pha}) \tan (\text{phb}) \csc
+   (\text{tha}-\text{thb}))^2+1}}\right)\right\}
+$
+
+The translated latitude of C gives its distance from the equator, and thus the distance from the original C to the great circle connecting A and B.
+
+The translated longitude of C tells where on the equator C is closest to the great circle connecting A and B, 
+
+**** the issue is if not between A and B
+
+**** TODO: diagrams (Geogebra)
+

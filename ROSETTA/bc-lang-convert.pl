@@ -284,7 +284,7 @@ sub multiline_parse {
 
   # cotangent function
   if ($f eq "Cot") {
-    $hash{$varcount} = "(1/${math}tan($args[0]))";
+    $hash{$varcount} = "(${math}cos($args[0])/${math}sin($args[0]))";
     return "var$varcount";
   }
 
@@ -379,6 +379,9 @@ lua /tmp/blc.lua
 php /tmp/blc.php
 python /tmp/blc.py
 ruby /tmp/blc.rb
+
+
+# perl /tmp/blc.pl (not working for some reason)
 
 =cut
 
