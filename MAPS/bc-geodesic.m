@@ -938,3 +938,37 @@ The translated longitude of C tells where on the equator C is closest to the gre
 
 **** TODO: diagrams (Geogebra)
 
+*)
+
+(* work below 8 Jan 2020 *)
+
+points A and B and C
+
+cross A and B to get vect v1 perp to both
+
+cross A and v1 to get vect v2 in plane of A and B and perp to A
+
+note v1 and v2 form basis for great circle through A and B
+
+v1*cos(th) + v2*sin(th)
+
+cross v1 and C and call it v3
+
+cross v3 and v1 call it v4
+
+TO DO: note normality
+
+a = sph2xyz[tha, pha, 1]
+
+b = sph2xyz[thb, phb, 1]
+
+c = sph2xyz[thc, phc, 1]
+
+v1 = Simplify[Cross[a,b]]
+
+v2 = Simplify[Cross[a, v1]]
+
+v3 = Simplify[Cross[v1, c]]
+
+v4 = Simplify[Cross[v3, v1]]
+

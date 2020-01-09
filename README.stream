@@ -4,11 +4,24 @@ ASTRO/eclipse-diagram.gif
 
 Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 8 Jan 2020, primarily for my reference
+Stuff I plan to stream 9 Jan 2020, primarily for my reference
+
+try running slow JS locally not on repl.it + try hack fixes like global vars or something
+
+merge all bclib and staging across multiple repls (tedious, make
+audience suffer)
+
+yad --notification --width 1024 --text-align='center' --text '<span font="40">message</span>' &
+
+[user@lapaz-shared ~]$ xmessage -font -adobe-courier-medium-o-normal--34-240-100-100-m-200-iso10646-1 test --no-dialog
+
+[user@lapaz-shared ~]$ \xmessage -geometry 1024 -font -adobe-courier-medium-o-normal--34-240-100-100-m-200-iso10646-1 -buttons "" -file -                                                           hello
 
 use the cross product, Luke (all the way down)
 
 ping mathematica.stack on matrix simplifcation + final result simplifcation
+
+AMOQ?: https://mathematica.stackexchange.com/questions/212007/minimal-and-maximal-angular-separation-of-two-spheres-as-viewed-from-surface-of (based on comments)
 
 problem: vectors aren't of unit length (cross product doesn't
 guarentee that, even w/ unit vector inputs)
@@ -333,5 +346,8 @@ This is not not a list of possible future streams
   - create stream buffer on stream (or do I want to use streamelements
   cause I want it going before VM is live?) (but could create on
   stream and use off stream?)
+
+  - vblog all the crap I wanted to write up and maybe write it up at
+  the same time
 
 
