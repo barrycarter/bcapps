@@ -1,12 +1,15 @@
-Current stream description:
+Current stream description: ???
 
-ASTRO/eclipse-diagram.gif
 
 Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
 Stuff I plan to stream 9 Jan 2020, primarily for my reference
 
+add bcgit on other machine pre stream
+
 try running slow JS locally not on repl.it + try hack fixes like global vars or something
+
+https://astronomy.stackexchange.com/questions/34654/does-mean-solar-time-and-sidereal-time-sometimes-indicate-the-same-time
 
 merge all bclib and staging across multiple repls (tedious, make
 audience suffer)
@@ -318,6 +321,9 @@ look more into straight line cutting into sun and moon if moon is small enough
 https://www.skyandtelescope.com/observing/a-jupiter-almanac/
 
 (note: could use this data to compute actual times)
+
+TODO: maybe one day post-edit stream titles for what was done vs what
+I planned to do?
 
 This is not not a list of possible future streams
 =================================================

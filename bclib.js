@@ -16,14 +16,153 @@ obj = hash passed in (do not use hash as a var name)
 
 // TODO: find a better way to store this constant as a lib constant
 
-bclib = {};
-bclib.MERCATOR_LAT_LIMIT = 85.0511;
+bclib = {
+  earthRadius: 6371.0088,
+  MERCATOR_LAT_LIMIT: 85.0511,
+  Degree: Math.PI/180
+};
+
+bclib.Math = {
+  gudermannian: function (x) {return Math.atan(Math.sinh(x))},
+  Degree: Math.PI/180
+};
+
 
 // taken directly from
 // https://stackoverflow.com/questions/4467539/javascript-modulo-gives-a-negative-result-for-negative-numbers
 // (possibly a bad idea)
 
 Number.prototype.mod = function(n) {return ((this%n)+n)%n;}
+
+
+/**
+
+Input object:
+
+data: the data value to convert to element number
+max: the data value of the 0th row (-1/2)
+min: the data value of the last row (+1/2)
+delta: the difference between adjacent data input values
+
+bounds: if set, bound result between 0 and max possible value
+floor: if set, return floor of value
+ceil: if set, return ceiling of value
+
+Return:
+
+relt: the floating point value of where the data be found
+
+ */
+
+function data2EltNum(obj) {
+
+  let lastRowIndex = Math.abs((obj.min-obj.max)/obj.delta)-1;
+
+  obj.relt = (obj.data-obj.min)/obj.delta - 1/2;
+
+  if (obj.bounds) {obj.relt = boundNumber(obj.relt, 0, lastRowIndex);}
+
+  if (obj.floor) {obj.relt = Math.floor(obj.relt)};
+  if (obj.ceil) {obj.relt = Math.ceil(obj.relt)};
+
+  return obj;
+}
+
+/**
+
+Input object:
+
+elt: the element number we are converting to data
+max: the data value of the 0th row
+delta: the difference between adjacent data input values
+
+Return:
+
+rdata: the value of the data at elt
+
+ */
+
+function eltNum2Data(obj) {
+  obj.rdata = obj.max + (obj.elt+1/2)*obj.delta;
+  return obj;
+}
+
+/**
+
+Given a latitude/longitude range, and parameters about a given file representing a dataset, return the byte values at which the data is found and ...
+
+Input object parameters (all in degrees):
+
+filename: the name of the file with the data
+lngres: resolution in longitude
+latres: resolution in latitude
+maxlat: maximum value of latitude
+minlat: minimum value of latitude
+
+TODO: make this cleaner
+
+PERHAPS: [ [lng1, lat1], [lng2, lat2] ]
+
+nlat: north latitude of the request
+slat: south latitude of the request
+wlng: west longitude of the request
+elng: east longitude of the request
+
+Return:
+
+mnlat/mslat/mwlng/melng: the actual boundaries of the returned data
+
+bytes: an array of bytes
+
+TODO: allow for incomplete latitude ranges
+
+TODO: assume maxlat = 90 if not defined
+
+TODO: check boundary conditions
+
+ */
+
+function getDataFromFile(obj) {
+
+let row1 = data2EltNum({data: obj.nlat, max: obj.maxlat, min: obj.minlat, delta: -obj.latres, bounds: true, floor: true}).relt;
+
+let row2 = data2EltNum({data: obj.slat, max: obj.maxlat, min: obj.minlat, delta: -obj.latres, bounds: true, ceil: true}).relt;
+
+let col1 = data2EltNum({data: obj.wlng, min: -180, max: 180, delta: obj.lngres, bounds: true, floor: true }).relt;
+
+let col2 = data2EltNum({data: obj.elng, min: -180, max: 180, delta: obj.lngres, bounds: true, ceil: true }).relt;
+
+// Math.max(0, Math.floor(data2EltNum({data: obj.nlat, max: obj.maxlat, delta: -obj.latres}).relt));
+
+// let row2 = data2EltNum({data: obj.slat, max: obj.maxlat, min: obj.minlat, delta: -obj.latres}).relt;
+  
+console.log("ROW1", row1, "ROW2", row2, "COL1", col1, "COL2", col2);
+
+return;
+
+
+Math.floor((90-obj.nlat)/obj.latres-0.5);
+// let row2 = Math.ceil((90-obj.slat)/obj.latres+0.5);
+
+//let col1 = Math.floor((180+obj.wlng)/obj.lngres-0.5);
+// let col2 = Math.ceil((180+obj.elng)/obj.lngres+0.5);
+
+obj.bytes = [];
+
+for (let i = row1; i <= row2; i++) {
+  for (let j = col1; j <= col2; j++) {
+    obj.bytes.push(i*(360/obj.lngres) + j);
+  }
+}
+
+obj.mnlat = 90-((row1+0.5)*obj.latres);
+obj.mslat = 90-((row2+0.5)*obj.latres);
+obj.mwlng = -180+((col1+0.5)*obj.lngres);
+obj.melng = -180+((col2+0.5)*obj.lngres);
+
+return obj;
+
+}
 
 /**
 
@@ -227,106 +366,83 @@ function lngLatRange2ImageTiles(obj) {
 
 /**
 
-Converts a slippy tile or an equirectangular tile to a latitude and longitude:
+Converts a slippy tile to a latitude and longitude value:
+
+Input object:
 
 z: tile zoom value
-x: tile x value (may be fractional)
-y: tile y value (may be fractional)
+x: tile x value (may be fractional, 0 = left edge of tile, 0.5 = middle of leftmost pixel)
+y: tile y value (may be fractional, 0 = top edge of tile, 0.5 = middle of top pixel of tile)
 
-projection: if 1 or "mercator", Mercator project, otherwise
-equirectangular project
+Output object:
+
+lng: longitude in radians corresponding to z/x/y
+lat: latitude in radians corresponding to z/x/y
 
 */
 
 function tile2LngLat(obj) {
 
-  // set defaults
-
-  obj = mergeHashes(obj, str2hash("projection=0"));
-
-  // use mercator instead of 1 in future
-  if (obj.projection == "mercator") {obj.projection = 1;}
+  let ret = {};
 
   // true for both projections
 
-  obj.lng = obj.x/2**obj.z*360-180;
-  obj.wlng = Math.floor(obj.x)/2**obj.z*360-180;
-  obj.elng = Math.floor(obj.x+1)/2**obj.z*360-180;
+  ret.lng = obj.x / 2 ** obj.z * 2 * Math.PI - Math.PI;
 
-  if (obj.projection == 0) {
-    obj.lat = 90-obj.y/2**obj.z*180;
-    obj.nlat = 90-Math.floor(obj.y)/2**obj.z*180;
-    obj.slat = 90-Math.floor(obj.y+1)/2**obj.z*180;
-  } else {
+  // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
+  // TODO: this is hideous
+  ret.lat = Math.PI / 2 - 2 * Math.atan(Math.exp((obj.y / 2 ** obj.z - 1 / 2) * 2 * Math.PI))
 
-    // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
-    // TODO: this is hideous
-    obj.lat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((obj.y/2**obj.z-1/2)*2*Math.PI)));
-    obj.nlat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((Math.floor(obj.y)/2**obj.z-1/2)*2*Math.PI)));
-    obj.slat = 180/Math.PI*(Math.PI/2-2*Math.atan(Math.exp((Math.floor(obj.y+1)/2**obj.z-1/2)*2*Math.PI)));
+  if (obj.units === 'degrees') {
+    ret.lat *= 180/Math.PI;
+    ret.lng *= 180/Math.PI;
   }
 
-    return obj;
+return ret;
 
 }
 
 /**
 
-Converts a latitude and longitude to a slippy tile or an equirectangular tile
+Converts a latitude and longitude to a slippy tile
+
+Input object:
 
 z: tile zoom value
-lat: the latitude
-lng: tile longitude
-
+lat: the latitude in radians
+lng: the longitude in radians
+units: if 'degrees', lat and lng are in degrees
 projection: if 1, Mercator project, otherwise equirectangular project
+
+Output object:
+
+x: possibly fractional x value of tile (integer x is left edge of tile)
+y: possibly fractional y value of tile (integer y is top edge of tile)
+
+Note: no error checking (caller should error check)
 
 */
 
-function lngLat2Tile(obj) {
+function lngLatZ2Tile(obj) {
 
-  // set defaults
+  let ret = {};
 
-  obj = mergeHashes(obj, str2hash("projection=0"));
+  let lat = obj.lat;
+  let lng = obj.lng;
 
-  // true for both projections
-  obj.x = (obj.lng+180)/360*2**obj.z;
-
-  let y = 0;
-
-  // for equirectangular
-  if (obj.projection == 0) {
-
-    if (obj.lat < -90) {
-      obj.y = 2**obj.z-1;
-      obj.err = "Input latitude less than -90, returning value for -90";
-    } else if (obj.lat > 90) {
-      obj.y = 0;
-      obj.err = "Input latitude greater than +90, returning value for +90";
-    } else {
-    // TODO: cleanup this code, maybe no ternary operator below
-    // special case: -90 itself touches 2**obj.z which it shouldn't
-      obj.y = (90-obj.lat)/180*2**obj.z;
-    }
-
-  } else {
-
-    // TODO: I copied this from somewhere else and am NOT happy about it
-    // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
-
-      if (obj.lat < -bclib.MERCATOR_LAT_LIMIT) {
-	obj.y = 2**obj.z-1;
-	obj.err = "Input latitude less than ~-85, returning value for ~-85";
-      } else if (obj.lat > bclib.MERCATOR_LAT_LIMIT) {
-	obj.y = 0;
-	obj.err = "Input latitude greater than ~+85, returning value for ~+85";
-      } else {
-	let lat_rad = obj.lat/180*Math.PI;
-	obj.y = 2**obj.z*(-Math.log(Math.tan(lat_rad) + 1/Math.cos(lat_rad))/2/Math.PI+1/2);
-      }
+  if (obj.units === 'degrees') {
+    lat *= Math.PI / 180;
+    lng *= Math.PI / 180;
   }
-  return obj;
+
+  ret.x = (lng + Math.PI) / 2 / Math.PI * 2 ** obj.z;
+
+  // TODO: I copied this from somewhere else and am NOT happy about it for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
+
+  ret.y = 2 ** obj.z * (-Math.log(Math.tan(lat) + 1 / Math.cos(lat)) / 2 / Math.PI + 1 / 2);
+
+  return ret;
 }
-  
 
 /**
 

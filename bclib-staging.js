@@ -1,19 +1,72 @@
 // functions that will eventually be in bclib.js
 
-// the constant that converts degrees to radians
-
-const Pi = Math.PI;
-const Degree = Pi/180;
+// Degree = the constant that converts degrees to radians
 
 // the Earth's average radius (https://en.wikipedia.org/wiki/Earth_radius#Global_average_radii), in km
 
-const earthRadius = 6371.0088;
+bclib = {
+  earthRadius: 6371.0088,
+  MERCATOR_LAT_LIMIT: 85.0511,
+  Degree: Math.PI/180
+};
+
+bclib.Math = {
+  gudermannian: function (x) {return Math.atan(Math.sinh(x))},
+  Degree: Math.PI/180
+};
 
 // TODO: cleanup unused and un-useful functions
 
 // TODO: this is probably bad
 
 Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
+
+/**
+ * 
+ * Given an interpolation object and a value of x, return the corresponding value of interpX2Y
+ * 
+ * Input object:
+ * 
+ * interp: the interpolation object
+ * x: the value at which to evaluate
+ * 
+ * div: if given, divide result by this value (before modding)
+ * mod: if given, mod result by this value (after dividing)
+ * 
+ * Output object:
+ * 
+ * y: the value of the interpolation at x
+ * 
+ * 
+ */
+
+function interpX2Y (obj) {
+
+  // TODO: error checking (out of bounds)
+
+let pos = (obj.x - obj.interp.minX)/obj.interp.intLength;
+
+// TODO: improve this error handling
+if (pos < 0) {return "Too early";}
+
+let posI = Math.floor(pos);
+let posF = pos - posI;
+
+let arr = obj.interp.coeffs[posI];
+
+
+let sum = 0;
+
+for (i = 0; i < arr.length; i++) {
+  sum += arr[i]*posF**i;
+}
+
+if (obj.div) {sum /= obj.div};
+if (obj.mod) {sum %= obj.mod}
+
+return {y: sum};
+
+}
 
 /**
 
@@ -35,13 +88,11 @@ function lngLatDistZ2Tiles(obj) {
   obj.ntile = lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection});
   obj.stile = lngLat2Tile({z: obj.z, lat: obj.slat, lng: obj.clng, projection: obj.projection});
 
-  console.log(`NLAT: ${obj.ntile.y}, SLAT: ${obj.stile.y}`);
+//  console.log(`NLAT: ${obj.ntile.y}, SLAT: ${obj.stile.y}`);
 
   // we don't care about the lng at the moment
-  console.log(lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection}));
-  console.log(lngLat2Tile({z: obj.z, lat: obj.slat, lng: obj.clng, projection: obj.projection}));
-
-
+//  console.log(lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection}));
+//  console.log(lngLat2Tile({z: obj.z, lat: obj.slat, lng: obj.clng, projection: obj.projection}));
 
 }
 
@@ -86,20 +137,23 @@ function createFakeSlippyTile(obj) {
     ctx.fillText(printArray[i], 5, fontSize*(i+1));
   }
 
-  console.log("ABOUT TO RETURN", canvas.toDataURL('image/png'));
+ // console.log("ABOUT TO RETURN", canvas.toDataURL('image/png'));
 
   return canvas.toDataURL('image/png');
 
 }
 
-
+// TODO: document this and following function
 // convert spherical to xyz coordinates, proper mathematics style
 
 function sph2xyz(obj) {
-  return {x: obj.r*Math.cos(obj.ph)*Math.cos(obj.th), 
-      y: obj.r*Math.cos(obj.ph)*Math.sin(obj.th), 
-      z: obj.r*Math.sin(obj.ph)};
-  };
+
+  arr = [obj.r * Math.cos(obj.ph) * Math.cos(obj.th),
+  obj.r * Math.cos(obj.ph) * Math.sin(obj.th),
+  obj.r * Math.sin(obj.ph)];
+
+  return {x: arr[0], y: arr[1], z: arr[2], arr:arr};
+};
 
 // convert xyz coordinates to spherical, proper mathematics style
 
@@ -108,8 +162,11 @@ function xyz2sph(obj) {
   // square length in plane
   let planeLength2 = obj.x**2 + obj.y**2;
 
-  return {r: Math.sqrt(planeLength2 + obj.z**2), th: Math.atan2(obj.y, obj.x),
-      ph: Math.atan2(obj.z, Math.sqrt(planeLength2))};
+  let arr = [Math.atan2(obj.y, obj.x), 
+  Math.atan2(obj.z, Math.sqrt(planeLength2)),
+  Math.sqrt(planeLength2 + obj.z ** 2)];
+
+  return {th: arr[0], ph: arr[1], r: arr[2], arr: arr};
 }
 
 // console.log(Degree);
@@ -184,7 +241,7 @@ URLCache.get = function (url) {
 
   // if we have it in the cache, return it
   if (this.cache[url]) {
-    console.log(`Returning ${url} value from cache`);
+//    console.log(`Returning ${url} value from cache`);
     return this.cache[url];
   }
 
@@ -219,8 +276,6 @@ fake: if set to 1, don't do anything, just print out debugging info
 
 */
 
-
-
 function placeOrthographicOnMap(obj) {
 
   if (obj.fake == 1) {return;}
@@ -237,7 +292,7 @@ function placeOrthographicOnMap(obj) {
 
     // convert them to orthographic x and y coords
     
-    console.log(bounds);
+//    console.log(bounds);
 
     //     L.imageOverlay(img, bounds, {opacity: obj.opacity}).addTo(obj.map);
   }
@@ -549,4 +604,21 @@ function tilePixels2DistanceBand (obj) {
     }
   }
   return result;
+}
+
+/** Given an object with a vector v and a constant c, return the vector res that is c*v */
+
+function vectorMultiply(obj) {
+  return {res: obj.v.map((x) => {return x*obj.c})};
+}
+
+/** Given an object with vectors v1 and v2, return as res the vector v3 that is the sum of v1 and v2 */
+
+function vectorsAdd(obj) {
+  console.log("vectorsAdd", obj);
+  let res = [0, 0, 0];
+  for (i=0; i < obj.v1.length; i++) {
+    res[i] = obj.v1[i] + obj.v2[i]
+    }
+  return {res: res};
 }
