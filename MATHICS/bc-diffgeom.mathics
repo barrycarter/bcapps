@@ -1,0 +1,11 @@
+
+(*
+
+call our pts a and b and c, and alng, alat, blng, blat, clng, clat
+
+*)
+
+ds^2 = R^2 dθ^2 + R^2 (dφ^2) sin^2(θ )
+
+
+

@@ -617,7 +617,7 @@ function vectorMultiply(obj) {
 function vectorsAdd(obj) {
   console.log("vectorsAdd", obj);
   let res = [0, 0, 0];
-  for (i=0; i < obj.v1.length; i++) {
+  for (let i=0; i < obj.v1.length; i++) {
     res[i] = obj.v1[i] + obj.v2[i]
     }
   return {res: res};
