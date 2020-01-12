@@ -7,19 +7,19 @@
 bclib = {
   earthRadius: 6371.0088,
   MERCATOR_LAT_LIMIT: 85.0511,
-  Degree: Math.PI/180
+  Degree: Math.PI / 180
 };
 
 bclib.Math = {
-  gudermannian: function (x) {return Math.atan(Math.sinh(x))},
-  Degree: Math.PI/180
+  gudermannian: function (x) { return Math.atan(Math.sinh(x)) },
+  Degree: Math.PI / 180
 };
 
 // TODO: cleanup unused and un-useful functions
 
 // TODO: this is probably bad
 
-Math.gudermannian = function (x) {return Math.atan(Math.sinh(x))};
+Math.gudermannian = function (x) { return Math.atan(Math.sinh(x)) };
 
 /**
  * 
@@ -181,8 +181,10 @@ function latsDist2LngRange(lat1, lat2, d) {return Math.arccos(((Math.cos(d))*((1
 
 // <desc>The x and y coordinates of lng, lat in the standard orthographic projection</desc>
 
-function lngLat2OrthoXY(lng, lat) {return Math.abs(lng) > Pi/2?[-1,-1]:
-[(Math.cos(lat))*(Math.sin(lng)), Math.sin(lat)];}
+function lngLat2OrthoXY(lng, lat) {
+return Math.abs(lng) > Pi/2?[-1,-1]:
+[(Math.cos(lat))*(Math.sin(lng)), Math.sin(lat)];
+}
 
 // Directly from Mathematica via bc-rosetta.pl
 
@@ -217,11 +219,13 @@ function lngLat2Ortho(obj) {
 
   // these formulas came from Mathematica
 
-  return {x: Math.cos(obj.lat)*Math.sin(obj.lng - obj.clng), 
+  return {
+x: Math.cos(obj.lat)*Math.sin(obj.lng - obj.clng), 
           y: 
 
     Math.cos(obj.lat)*Math.cos(obj.lng-obj.clng)*Math.sin(obj.clat) + 
-      Math.cos(obj.clat)*Math.sin(obj.lat)};
+      Math.cos(obj.clat)*Math.sin(obj.lat)
+};
 
 }
 
@@ -346,7 +350,8 @@ function placeBufferOnMap(obj) {
       lat: obj.lat, lng: obj.lng,
       width: 256, height: 256, 
       slat: bounds[0][0], nlat: bounds[1][0],
-      wlng: bounds[0][1], elng: bounds[1][1]});
+      wlng: bounds[0][1], elng: bounds[1][1]
+});
   
      let cols = dists.map(arr => arr.map(dist => obj.colorFunction(dist)));
 
@@ -615,10 +620,75 @@ function vectorMultiply(obj) {
 /** Given an object with vectors v1 and v2, return as res the vector v3 that is the sum of v1 and v2 */
 
 function vectorsAdd(obj) {
-  console.log("vectorsAdd", obj);
   let res = [0, 0, 0];
   for (let i=0; i < obj.v1.length; i++) {
     res[i] = obj.v1[i] + obj.v2[i]
     }
   return {res: res};
 }
+
+/** Return a list of n waypoints
+ * 
+ * Input object:
+ * 
+ * lng1, lat1 - longitude/latitude of 1st pt in radians
+ * 
+ * lng2, lat2 - longitude/latitude of 2nd pt in radians
+ * 
+ * n - the number of waypoints desired (the 1st and 2nd points are also returned, so n-2 in between points)
+ * 
+ * unit - "degrees" or "radians"
+ * 
+ * Return object:
+ * 
+ * waypoints: an array of waypoints, each having a lng/lat and radius
+ * 
+ * arr: an array of way points as raw longitude and latitude and radius
+ * 
+*/
+
+function waypoints({lng1, lng2, lat1, lat2, n, unit}) {
+
+  if (unit === 'degrees') {
+    lng1 *= bclib.Degree;
+    lng2 *= bclib.Degree;
+    lat1 *= bclib.Degree;
+    lat2 *= bclib.Degree;
+  }
+
+  let ret = {};
+  ret.waypoints = [];
+  ret.arr = [];
+
+  let av = sph2xyz({ th: lng1, ph: lat1, r: 1 }).arr;
+  let bv = sph2xyz({ th: lng2, ph: lat2, r: 1 }).arr;
+  let ang = Math.acos(math.dot(av, bv));
+
+  let perp2Plane = math.cross(av, bv);
+  let perpInPlane = math.cross(perp2Plane, av);
+
+  let perpInPlaneUnit = vectorMultiply({ v: perpInPlane, c: 1/math.norm(perpInPlane) }).res
+
+  for (let i = 0; i < ang + 1/2/ n; i += ang/n) {
+
+    let pt = vectorsAdd({
+      v1: vectorMultiply({ v: av, c: Math.cos(i) }).res,
+      v2: vectorMultiply({ v: perpInPlaneUnit, c: Math.sin(i)}).res
+    }).res;
+
+    let spt = xyz2sph({ x: pt[0], y: pt[1], z: pt[2] }).arr;
+
+    if (unit === 'degrees') {
+      spt[0] /= bclib.Degree;
+      spt[1] /= bclib.Degree;
+    };
+
+console.log(`SPT: ${spt}`);
+    ret.arr.push(spt);
+
+    ret.waypoints.push({lng: spt[0], lat: spt[1], r: spt[2]})
+  }
+
+return ret;
+
+  }
