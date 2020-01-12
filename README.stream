@@ -1,7 +1,6 @@
 Current stream description: ???
 
-
-Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
+NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
 Stuff I plan to stream 11 Jan 2020, primarily for my reference
 
@@ -377,4 +376,9 @@ This is not not a list of possible future streams
   - vblog all the crap I wanted to write up and maybe write it up at
   the same time
 
+  - cool KML/non-KML maps stream?
 
+
+TO FIX xclock:
+
+xclock -digital -update 1 -strftime "%Y%m%d.%H%M%S UTC" &

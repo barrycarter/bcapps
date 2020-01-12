@@ -972,3 +972,18 @@ v3 = Simplify[Cross[v1, c]]
 
 v4 = Simplify[Cross[v3, v1]]
 
+(*
+
+notes for answer:
+
+proof of concept only
+
+faa is in usa only, need others?
+
+repeats facility names
+
+all code available, open source, you can port or use
+
+single page app, if you dl everything (meaning no int conn req)
+
+*)
