@@ -2,7 +2,11 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 12 Jan 2020, primarily for my reference
+Stuff I plan to stream 13 Jan 2020, primarily for my reference
+
+MAINTENANCE: BCGIT-PAGES mount should be via symlink NOT double mount
+
+can repl.it push/pull from my git
 
 finish up proof of concept waypoints and post to stack
 
@@ -61,15 +65,15 @@ TODO: post to github pages
 
 Waypoints or "changing problems so you can solve them" + doing it in a language I don't know (JavaScript) + random timewasting tasks
 
-MAINTENANCE: let user sudo w/o pw, create /etc/sudoers, add this line:
+DONE: let user sudo w/o pw, create /etc/sudoers, add this line:
 
-%wheel  ALL=(ALL)       ALL
+DONE: %wheel  ALL=(ALL)       ALL
 
-and add user to group wheels.
+DONE: and add user to group wheels.
 
-MAINTENANCE: create or edit /etc/hosts file to add this line
+DONE: create or edit /etc/hosts file to add this line
 
-192.168.0.4 saopaulo
+DONE: 192.168.0.4 saopaulo
 
 convert multi-step algs to other languages? (from Perl?)
 

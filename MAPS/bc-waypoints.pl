@@ -31,13 +31,25 @@ my(%faainfo);
 
 for $i (@{$arrref}) {
 
+    # debugging for better name
+
+    for $j (keys %{$i}) {
+	debug("$j -> $i->{$j}");
+    }
+
+    debug("\n");
+
     my($key) = $i->{'"SiteNumber"'};
 
-    for $j ("ARPLatitude", "ARPLongitude", "IcaoIdentifier", "NOTAMFacilityID", "FacilityName") {
+    for $j ("ARPLatitude", "ARPLongitude", "IcaoIdentifier", "NOTAMFacilityID", "FacilityName", "StateName", "City") {
 	$faainfo{$key}{$j} = $i->{"\"$j\""};
     }
 
 #    debug("HASH", %{$faainfo{$key}});
+
+    # better name
+
+    $faainfo{$key}{name} = "$faainfo{$key}{FacilityName} ($faainfo{$key}{City}, $faainfo{$key}{StateName})";
 
     # parse latitude
     $faainfo{$key}{ARPLatitude} =~m%^(\d+)\-(\d+)\-([\d\.]+)(S|N)$% || die("BAD LAT: $faainfo{$key}{ARPLatitude}");
@@ -62,9 +74,10 @@ for $j (keys %faainfo) {
 
     for $i (keys %{$faainfo{$j}}) {
 
+	if ($i=~/ARPL(ong|at)itude/ || $i=~/Facility|Name|City|Statename/) {next;}
+
 	$faainfo{$j}{$i} =~s/[\"\']//g;
 
-	if ($i=~/ARPL(ong|at)itude/) {next;}
 	push(@obj, "$i: \"$faainfo{$j}{$i}\"");
     }
 

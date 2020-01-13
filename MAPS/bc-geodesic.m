@@ -974,6 +974,20 @@ v4 = Simplify[Cross[v3, v1]]
 
 (*
 
+This is not an answer, but I've written a very basic proof-of-concept page at https://barrycarter.github.io/pages/REPL/WAYPOINTS/ which computes any number of FAA facility waypoints between a given pair of longitudes and latitudes. Notes:
+
+  - Source code: https://github.com/barrycarter/pages/tree/master/REPL/WAYPOINTS
+
+  - The source code is in JavaScript, and all files you need to run it are in the source code above. The code is entirely client-side and does not make any server connections. If you download it, you should be able to run it even without an Internet connection.
+
+  - The functions I use are in bclib-staging.js and bclib.js and should be fairly easy to port to other languages.
+
+  - The file stations.js is a JSON-ification of https://www.faa.gov/airports/airport_safety/airportdata_5010/menu/nfdcfacilitiesexport.cfm?Region=&District=&State=&County=&City=&Use=&Certification=
+
+  - 
+
+post link to youbue and say hestitant to post got cuaght up closed formula
+
 notes for answer:
 
 proof of concept only
@@ -984,6 +998,32 @@ repeats facility names
 
 all code available, open source, you can port or use
 
+poiint to git whjere it is
+
 single page app, if you dl everything (meaning no int conn req)
 
 *)
+
+(* work below 12 Jan 2020 *)
+
+a point on geodesic must have angle from A + angle from B = angle between A and B?
+
+
+s = {sx, sy, sz};
+t = {tx, ty, tz};
+
+q = {qx, qy, qz};
+
+s.q + t.q == s.t
+
+Solve[s.q + t.q == s.t, {qx, qy, qz}]
+
+Solve[s.q/Norm[s.q] + t.q/Norm[t.q] == s.t, {qx, qy, qz}]
+
+a = sph2xyz[tha, pha, 1];
+b = sph2xyz[thb, phb, 1];
+c = sph2xyz[thc, phc, 1];
+
+Solve[a.c + b.c == a.c, {thc, phc}, Reals]
+
+
