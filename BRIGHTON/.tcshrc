@@ -109,3 +109,9 @@ setenv GOPATH "/home/user/GO/"
 
 # notify me of background job completions immediately
 set notify
+
+# setting XWIDTH and XHEIGHT *might* make things easier if I change
+# resolution and use them consistently
+
+setenv XWIDTH 1600
+setenv XHEIGHT 900

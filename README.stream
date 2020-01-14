@@ -4,14 +4,25 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 13 Jan 2020, primarily for my reference
 
-MAINTENANCE: BCGIT-PAGES mount should be via symlink NOT double mount
+TODO: octeltx version for Metis maybe ok because Metis small (and general)
 
-can repl.it push/pull from my git
+TODO: answer Metis question
 
-finish up proof of concept waypoints and post to stack
+TODO: tweak eclipse prog to find partials first, and fulls inside partials
+
+TODO: horizons for magnitude changes indicating eclipse?
+
+TODO: (maybe) request globs of data using email interface? (minutes *
+years = ???)
+
+ask stellarium for text API
+
+NO: can repl.it push/pull from my git
+
+DONE: finish up proof of concept waypoints and post to stack
 
 post closed form formula: make it simpler to Mathematica, both "en
-route" version and "point C" version
+route" version and "point C" version (posted en route version)
 
 maybe find that .js library that lets you draw buffers, voronoi, etc,
 on leaflet (is that turf.js?) even though it's "cheating"
@@ -352,7 +363,8 @@ I planned to do?
 This is not not a list of possible future streams
 =================================================
 
-  - how does Stellarium compute magnitude (Lambertian reflectors?) + port to CSPICE
+  - how does Stellarium compute magnitude (Lambertian reflectors?) +
+  port to CSPICE
 
   - multi calendar project
 
@@ -360,7 +372,8 @@ This is not not a list of possible future streams
 
   - bc-rename-bad-files.pl (since convmv failing)
 
-  - convert skyfield constellation determination to CSPICE
+  - convert skyfield constellation determination to CSPICE (or just
+  use my own?)
 
   - elliptical orbits using (not) Mathics
 
@@ -382,6 +395,9 @@ This is not not a list of possible future streams
 
   - cool KML/non-KML maps stream?
 
+  - "moon enters sextans" has only 4 google results
+
+  - youtube/twitch/dl confirmation matches
 
 TO FIX xclock:
 

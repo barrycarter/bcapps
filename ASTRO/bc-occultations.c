@@ -11,8 +11,6 @@
 
 // Usage: $0 moon=observer sun=lightsource planet=shadower syear eyear
 
-// moon = observer, sun = shinything, planet = blockything
-
 int main(int argc, char **argv) {
 
   // variables we will use
@@ -48,16 +46,6 @@ int main(int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
-  /*
-  //  for (int i = 1577836800; i < 1577836800+86400*366; i+=60) {
-  for (int i = 1592697600; i < 1592697600+86400; i+=60) {
-    penUmbralData(unix2et(i), sunID, planetID, moonID, 0);
-  }
-
-  printf("TESTING!!!!\n");
-  exit(0);
-  */
-
   wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
   // defining geometry finder function via given arguments
@@ -76,6 +64,6 @@ int main(int argc, char **argv) {
   for (int i=0; i<nres; i++) {
 
     wnfetd_c(&result,i,&beg,&end);
-    printf("OUTPUT: %f %f %d %d %d %f\n", et2unix(beg), et2unix(end), moonID, sunID, planetID, end-beg);
+    printf("%d %d %d %f %f %f %f\n", moonID, sunID, planetID, et2unix(beg), et2unix(end), beg, end);
   }
 }

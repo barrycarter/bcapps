@@ -856,14 +856,14 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
 
   //  printf("POSSIBLE UMBRAL\n");
 
-  printf("\n");
-  printf("UNIX: %f\n", et2unix(et));
-  printf("STEMP: (%f, %f, %f)\n", stemp[0], stemp[1], stemp[2]);
-  printf("TTEMP: (%f, %f, %f)\n", ttemp[0], ttemp[1], ttemp[2]);
-  printf("UMBPT (%f, %f, %f)\n", umbpttemp[0], umbpttemp[1], umbpttemp[2]);
-  printf("ANGQ: %f\n", angleQ*dpr_c());
-  printf("ANGDELTA: %f\n", angQDelta*dpr_c());
-  printf("UMBANG: %f\n", umbAng*dpr_c());
+  //  printf("\n");
+  //  printf("UNIX: %f\n", et2unix(et));
+  //  printf("STEMP: (%f, %f, %f)\n", stemp[0], stemp[1], stemp[2]);
+  //  printf("TTEMP: (%f, %f, %f)\n", ttemp[0], ttemp[1], ttemp[2]);
+  //  printf("UMBPT (%f, %f, %f)\n", umbpttemp[0], umbpttemp[1], umbpttemp[2]);
+  //  printf("ANGQ: %f\n", angleQ*dpr_c());
+  //  printf("ANGDELTA: %f\n", angQDelta*dpr_c());
+  //  printf("UMBANG: %f\n", umbAng*dpr_c());
   //  printf("PUVECTEMP: (%f, %f, %f)\n", penumbvectemp[0], penumbvectemp[1], penumbvectemp[2]);
   //  printf("PUPTTEMP: (%f, %f, %f)\n", penumbpttemp[0], penumbpttemp[1], penumbpttemp[2]);
 
@@ -879,7 +879,7 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
 
   SpiceDouble ret = 0.5 + (umbAng - fabs(angleQ))/(2*angQDelta);
 
-  printf("RETURNING: %f\n", ret);
+  //  printf("RETURNING: %f\n", ret);
   
   return ret;
 }

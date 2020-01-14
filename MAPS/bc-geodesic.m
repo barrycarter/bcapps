@@ -984,25 +984,17 @@ This is not an answer, but I've written a very basic proof-of-concept page at ht
 
   - The file stations.js is a JSON-ification of https://www.faa.gov/airports/airport_safety/airportdata_5010/menu/nfdcfacilitiesexport.cfm?Region=&District=&State=&County=&City=&Use=&Certification=
 
-  - 
+  - The file above only includes FAA facilities, which are pretty much limited to the United States (though this does include the American Samoa, Guam, etc), so, once you get away from the United States, the nearest stations can be quite far away.
 
-post link to youbue and say hestitant to post got cuaght up closed formula
+  - If you or anyone has a better list I can use, I would be happy to update my code.
 
-notes for answer:
+  - Because my code finds the closest FAA facility to a given waypoint, it sometimes yields the same FAA facility for 2 or more waypoints. This is especially true for flights outside of the United States.
 
-proof of concept only
+  - I discovered turf.js (http://turfjs.org/) fairly early in the process, but didn't realize how powerful it was until later. My code could doubtless be rewritten much better with turf.js
 
-faa is in usa only, need others?
+  - I livestreamed my attempt to solve this problem and the recordings are available at: https://www.youtube.com/playlist?list=PLQiTKaefaTLpfUVJETwWX31IxLypqA7xy (videos 62-72, ie, those that mention waypoints, geography, or great circle).
 
-repeats facility names
-
-all code available, open source, you can port or use
-
-poiint to git whjere it is
-
-single page app, if you dl everything (meaning no int conn req)
-
-*)
+I'm hesitant to post this link, because, in addition to the usual worthlessness of my videos, I spent a lot of time trying to find a closed-form formula for points along a great circle. Though I eventually succeeded, the resulting 250+ line formula is far too ugly for use.
 
 (* work below 12 Jan 2020 *)
 
@@ -1026,4 +1018,180 @@ c = sph2xyz[thc, phc, 1];
 
 Solve[a.c + b.c == a.c, {thc, phc}, Reals]
 
+(*
 
+Subject: Simpler closed form for spherical coordinates of points on great circle?
+
+Short version: how to simplify this expression given these conditions? Note that `expr[[3]]` is equal to 1, although Mathematica won't simplify it as such.
+
+<pre><code>
+
+conds = {-Pi < tha, tha < Pi, -Pi < thb, thb < Pi, -Pi/2 < pha, pha <
+Pi/2, -Pi/2 < phb, phb < Pi/2};
+
+expr = {ArcTan[Cos[pha]*Cos[tha]*Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+         Sin[pha]*Sin[phb]]] + (((-Cos[pha])*Cos[tha]*Sin[pha]*Sin[phb] + 
+       Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*Sin[tha - thb]))*
+      Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + Sin[pha]*Sin[phb]]])/
+     Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+           Cos[pha]*Sin[phb])]^2 + (Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] - 
+         Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*Sin[tha - thb]))^
+        2 + (Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + Cos[pha]^2*Cos[phb]*
+          Cos[tha]*Sin[tha - thb] - Cos[phb]*Sin[pha]^2*Sin[thb])^2], 
+   Cos[pha]*Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+         Sin[pha]*Sin[phb]]]*Sin[tha] - 
+    ((Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + Cos[pha]^2*Cos[phb]*Cos[tha]*
+        Sin[tha - thb] - Cos[phb]*Sin[pha]^2*Sin[thb])*
+      Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + Sin[pha]*Sin[phb]]])/
+     Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+           Cos[pha]*Sin[phb])]^2 + (Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] - 
+         Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*Sin[tha - thb]))^
+        2 + (Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + Cos[pha]^2*Cos[phb]*
+          Cos[tha]*Sin[tha - thb] - Cos[phb]*Sin[pha]^2*Sin[thb])^2]], 
+  ArcTan[
+   Sqrt[(Cos[pha]*Cos[tha]*Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+            Sin[pha]*Sin[phb]]] + (((-Cos[pha])*Cos[tha]*Sin[pha]*Sin[phb] + 
+          Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*
+             Sin[tha - thb]))*Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+             Sin[pha]*Sin[phb]]])/
+        Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+              Cos[pha]*Sin[phb])]^2 + (Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] - 
+            Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*Sin[
+                tha - thb]))^2 + (Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + 
+            Cos[pha]^2*Cos[phb]*Cos[tha]*Sin[tha - thb] - Cos[phb]*Sin[pha]^2*
+             Sin[thb])^2])^2 + 
+     (Cos[pha]*Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+            Sin[pha]*Sin[phb]]]*Sin[tha] - 
+       ((Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + Cos[pha]^2*Cos[phb]*Cos[tha]*
+           Sin[tha - thb] - Cos[phb]*Sin[pha]^2*Sin[thb])*
+         Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + Sin[pha]*Sin[phb]]])/
+        Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+              Cos[pha]*Sin[phb])]^2 + (Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] - 
+            Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*Sin[
+                tha - thb]))^2 + (Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + 
+            Cos[pha]^2*Cos[phb]*Cos[tha]*Sin[tha - thb] - Cos[phb]*Sin[pha]^2*
+             Sin[thb])^2])^2], 
+   Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + Sin[pha]*Sin[phb]]]*
+     Sin[pha] + (Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+       Cos[pha]*Sin[phb])*Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+          Sin[pha]*Sin[phb]]])/
+     Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+           Cos[pha]*Sin[phb])]^2 + (Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] - 
+         Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*Sin[tha - thb]))^
+        2 + (Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + Cos[pha]^2*Cos[phb]*
+          Cos[tha]*Sin[tha - thb] - Cos[phb]*Sin[pha]^2*Sin[thb])^2]], 
+  Sqrt[
+   Abs[Cos[pha]*Cos[tha]*Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+            Sin[pha]*Sin[phb]]] + ((Cos[phb]*Cos[thb]*Sin[pha]^2 - 
+          Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] + Cos[pha]^2*Cos[phb]*Sin[tha]*
+           Sin[tha - thb])*Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+             Sin[pha]*Sin[phb]]])/
+        Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+              Cos[pha]*Sin[phb])]^2 + (Cos[phb]*Cos[thb]*Sin[pha]^2 - 
+            Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] + Cos[pha]^2*Cos[phb]*
+             Sin[tha]*Sin[tha - thb])^2 + (Cos[pha]*Sin[pha]*Sin[phb]*
+             Sin[tha] + Cos[pha]^2*Cos[phb]*Cos[tha]*Sin[tha - thb] - 
+            Cos[phb]*Sin[pha]^2*Sin[thb])^2]]^2 + 
+    Abs[Cos[pha]*Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+            Sin[pha]*Sin[phb]]]*Sin[tha] - 
+       ((Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + Cos[pha]^2*Cos[phb]*Cos[tha]*
+           Sin[tha - thb] - Cos[phb]*Sin[pha]^2*Sin[thb])*
+         Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + Sin[pha]*Sin[phb]]])/
+        Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+              Cos[pha]*Sin[phb])]^2 + (Cos[phb]*Cos[thb]*Sin[pha]^2 - 
+            Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] + Cos[pha]^2*Cos[phb]*
+             Sin[tha]*Sin[tha - thb])^2 + (Cos[pha]*Sin[pha]*Sin[phb]*
+             Sin[tha] + Cos[pha]^2*Cos[phb]*Cos[tha]*Sin[tha - thb] - 
+            Cos[phb]*Sin[pha]^2*Sin[thb])^2]]^2 + 
+    Abs[Cos[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + Sin[pha]*Sin[phb]]]*
+        Sin[pha] + (Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+          Cos[pha]*Sin[phb])*Sin[r*ArcCos[Cos[pha]*Cos[phb]*Cos[tha - thb] + 
+             Sin[pha]*Sin[phb]]])/
+        Sqrt[Abs[Cos[pha]*((-Cos[phb])*Cos[tha - thb]*Sin[pha] + 
+              Cos[pha]*Sin[phb])]^2 + (Cos[pha]*Cos[tha]*Sin[pha]*Sin[phb] - 
+            Cos[phb]*(Cos[thb]*Sin[pha]^2 + Cos[pha]^2*Sin[tha]*Sin[
+                tha - thb]))^2 + (Cos[pha]*Sin[pha]*Sin[phb]*Sin[tha] + 
+            Cos[pha]^2*Cos[phb]*Cos[tha]*Sin[tha - thb] - Cos[phb]*Sin[pha]^2*
+             Sin[thb])^2]]^2]}
+
+
+</code></pre>
+
+Longer version:
+
+Given two points A and B on the unit sphere identified by longitude and latitude `{tha, pha}` and `{thb, phb}` (where `th` is the longitude), we can do the following:
+
+<pre><code>
+
+(* using Wolfram Cloud *)
+
+$Version
+
+12.0.0 for Linux x86 (64-bit) (April 7, 2019)
+
+(* using my own version of xyz2sph and sph2xyz (instead of CoordinateTransform) so spherical coordinates are in longitude, latitude, radius order *)
+
+xyz2sph[x_,y_,z_] = {ArcTan[x,y], ArcTan[Sqrt[x^2+y^2],z], Norm[{x,y,z}]};
+sph2xyz[th_,ph_,r_] = r*{Cos[th]*Cos[ph], Sin[th]*Cos[ph], Sin[ph]};
+
+xyz2sph[l_] := Apply[xyz2sph,l];
+sph2xyz[l_] := Apply[sph2xyz,l];
+
+(* all variables are angles, longitudes limited to +-Pi and latitudues
+limited to +-Pi/2 *)
+
+conds = {-Pi < tha, tha < Pi, -Pi < thb, thb < Pi, -Pi/2 < pha, pha < Pi/2, -Pi/2 < phb, phb < Pi/2};
+
+(* convert longitude, latitude to Cartesian *)
+
+ptA = sph2xyz[tha, pha, 1];
+ptB = sph2xyz[thb, phb, 1];
+
+(* find the cross product, a (not necessarily unit) vector perpendicular to both *)
+
+(* Simplify at each step to make things easier, although some of these
+Simplify's will have no effect *)
+
+perp = Simplify[Cross[ptA, ptB], conds];
+
+(* find the vector perpendicular to perp and ptA, which lies in the
+same plane as A and B; the order of the cross product is chosen so
+that the parametrization I will do later goes from A to B *)
+
+planar = Simplify[Cross[perp, ptA], conds];
+
+(* normalize the planar vector *)
+
+planarNorm= Simplify[planar/Norm[planar], conds];
+
+(* distance-preserving parameterization of the great circle from A to B *)
+
+point[t_] = Simplify[ptA*Cos[t] + planarNorm*Sin[t], conds];
+
+(* the angular distance between A and B *)
+
+angDist = Simplify[VectorAngle[ptA, ptB], conds];
+
+(* the Cartesian vector "r" of the way between A and B on the great circle *)
+
+rWayCartesian[r_] = Simplify[point[r*angDist], conds];
+
+(* and the spherical equivalent *)
+
+rWaySpherical[r_] = Simplify[xyz2sph[rWayCartesian[r]], conds];
+
+(* which yields the nasty formula above *)
+
+*)
+
+</code></pre>
+
+Notes:
+
+  - The above is also at https://www.wolframcloud.com/obj/a1b56ad7-4deb-4afd-aa53-436ec91b4c48
+
+  - I suppressed most of the output above (except for `$Version`), because I wasn't sure if it would be useful.
+
+  - I realize most of my terms above are functions of `tha`, `pha`, `thb`, `phb`, but I've written them as non-functions for simplicity.
+
+  - I know that https://mathematica.stackexchange.com/questions/142033/equally-spaced-points-on-a-great-circle-arc-between-2-points asks a similar question, but I don't think a closed form is given explicitly.
