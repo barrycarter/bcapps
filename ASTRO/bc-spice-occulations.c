@@ -9,16 +9,15 @@
 #define MAXWIN 10000
 #define STRLENGTH 32
 
-// Usage: $0 observer obscured_object obscuring_object syear eyear
+// Usage: $0 moon=observer sun=lightsource planet=shadower syear eyear
 
 int main(int argc, char **argv) {
 
   // variables we will use
 
-  SpiceChar obscuredFrame[STRLENGTH], obscuringFrame[STRLENGTH];
-  SpiceInt obscuredCode, obscuringCode, ocltid1, ocltid2, ocltid3, dim, obscuredID, obscuringID, observerID;
-  SpiceDouble observerRad, obscuredRad, obscuringRad, tempRad[3], obscuredPos[3], obscuringPos[3], lt, ang1, ang2, ang3, r1, r2, colat1, colat2, lon1, lon2;
-  SpiceBoolean obscuredFound, obscuringFound, observerFound;
+  SpiceChar moonFrame[STRLENGTH], planetFrame[STRLENGTH], sunFrame[STRLENGTH], moonName[STRLENGTH], planetName[STRLENGTH], sunName[STRLENGTH];
+  SpiceInt moonFrameID, planetFrameID, sunFrameID; 
+  SpiceBoolean found;
   SPICEDOUBLE_CELL(cnfine,2);
   SPICEDOUBLE_CELL(result,2*MAXWIN);
 
@@ -26,24 +25,70 @@ int main(int argc, char **argv) {
   // check for correct number or arguments and assign to strings
 
   if (argc != 6) {
-    printf("Usage: %s observer obscured_object obscuring_object syear eyear\n", argv[0]);
+     printf("Usage: %s moon=observer sun=lightsource planet=shadower syear eyear\n", argv[0]);
     exit(-1);
   }
 
-  SpiceChar *observer = argv[1];
-  SpiceChar *obscured = argv[2];
-  SpiceChar *obscuring = argv[3];
-  SpiceDouble syear = atof(argv[4]);
-  SpiceDouble eyear = atof(argv[5]);
+  SpiceInt moonID = atoi(argv[1]);
+  SpiceInt sunID = atoi(argv[2]);
+  SpiceInt planetID = atoi(argv[3]);
+  SpiceDouble syear = year2et(atof(argv[4]));
+  SpiceDouble eyear = year2et(atof(argv[5]));
 
-  printf("PARAMS: %s %s %s %f %f\n", observer, obscured, obscuring, syear, eyear);
+  wninsd_c(syear, eyear, &cnfine);
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
+  /// convert parameters to strings, complain if not found
+
+  bodc2n_c(moonID, STRLENGTH, moonName, &found);
+  if (!found) {printf("Name for NAIF ID %d not found\n", moonID); exit(-1);}
+
+  bodc2n_c(planetID, STRLENGTH, planetName, &found);
+  if (!found) {printf("Name for NAIF ID %d not found\n", planetID); exit(-1);}
+
+  bodc2n_c(sunID, STRLENGTH, sunName, &found);
+  if (!found) {printf("Name for NAIF ID %d not found\n", sunID); exit(-1);}
+
+  printf("PARAMS: %d (%s) %d (%s) %d (%s) %f %f\n", moonID, moonName, sunID, sunName, planetID, planetName, syear, eyear);
+
   // determine frames for obscured and obscuring
 
-  cnmfrm_c(obscured, STRLENGTH, &obscuredCode, obscuredFrame, &obscuredFound);
-  cnmfrm_c(obscuring, STRLENGTH, &obscuringCode, obscuringFrame, &obscuringFound);
+  cnmfrm_c(moonName, STRLENGTH, &moonFrameID, moonFrame, &found);
+  if (!found) {printf("FRAME NOT FOUND: %d (%s)\n", moonID, moonName); exit(-1);}
+
+  cnmfrm_c(planetName, STRLENGTH, &planetFrameID, planetFrame, &found);
+  if (!found) {printf("FRAME NOT FOUND: %d (%s)\n", planetID, planetName); exit(-1);}
+
+  cnmfrm_c(sunName, STRLENGTH, &sunFrameID, sunFrame, &found);
+  if (!found) {printf("FRAME NOT FOUND: %d (%s)\n", sunID, sunName); exit(-1);}
+
+  printf("FRAMES: %d (%s) %d (%s) %d (%s)\n", moonFrameID, moonFrame, planetFrameID, planetFrame, sunFrameID, sunFrame);
+
+  // TODO: 3600?
+
+  gfoclt_c("ANY", planetName, "ELLIPSOID", planetFrame, sunName, "ELLIPSOID", sunFrame, "LT", moonName, 3600, &cnfine, &result);
+
+    SpiceInt nres = wncard_c(&result);
+    SpiceDouble beg, end;
+    SpiceDouble planetPos[3], sunPos[3], lt;
+
+    for (int i=0; i<nres; i++) {
+
+      wnfetd_c(&result, i, &beg, &end);
+
+      // get positions
+      spkezp_c(planetID, beg, "J2000", "CN+S", moonID, planetPos, &lt);
+      spkezp_c(sunID, beg, "J2000", "CN+S", moonID, sunPos, &lt);
+
+      printf("ANGLE: %f\n", vsep_c(planetPos, sunPos)/pi_c()*180);
+      printf("%d %d %d %f %f %f %f\n", moonID, sunID, planetID, et2unix(beg), et2unix(end), beg, end);
+    }
+}
+
+  /*
+
+  //  cnmfrm_c(planet, STRLENGTH, &obscuringCode, planetFrame, &obscuringFound);
 
   // find start and et
 
@@ -136,6 +181,8 @@ int main(int argc, char **argv) {
   }
 	    	    
 }
+
+  */
 
 /*
 

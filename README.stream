@@ -2,7 +2,11 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 13 Jan 2020, primarily for my reference
+Stuff I plan to stream 14 Jan 2020, primarily for my reference
+
+my code vs writeup bias
+
+TODO: as noted in my (other answer), blah blah center
 
 TODO: octeltx version for Metis maybe ok because Metis small (and general)
 
@@ -16,6 +20,10 @@ TODO: (maybe) request globs of data using email interface? (minutes *
 years = ???)
 
 ask stellarium for text API
+
+zoom in causes jupiter ecclipsing sun to disappear
+
+moons don't darken during eclipse
 
 NO: can repl.it push/pull from my git
 
