@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
 
     wnfetd_c(&result,i,&beg,&end);
 
-    printf("%d %d %d PS %f %f\n", moonID, sunID, planetID, et2unix(beg), beg);
+    printf("%d %d %d P+ %f %s\n", moonID, sunID, planetID, beg, stardate(beg));
 
     // create a window for the partial eclipse to find total eclipse (if any)
     wninsd_c(beg, end, &cnfiner);
@@ -81,11 +81,11 @@ int main(int argc, char **argv) {
 
     if (wncard_c(&resulter) > 0) {
       wnfetd_c(&resulter, 0, &beger, &ender);
-      printf("%d %d %d TS %f %f\n", moonID, sunID, planetID, et2unix(beger), beger);
-      printf("%d %d %d TE %f %f\n", moonID, sunID, planetID, et2unix(ender), ender);
+      printf("%d %d %d T+ %f %s\n", moonID, sunID, planetID, beger, stardate(beger));
+      printf("%d %d %d T- %f %s\n", moonID, sunID, planetID, ender, stardate(ender));
     }
 
-    printf("%d %d %d PE %f %f\n", moonID, sunID, planetID, et2unix(end), end);
+    printf("%d %d %d P- %f %s\n", moonID, sunID, planetID, end, stardate(end));
 
     // empty out cell we inserted into earlier
     removd_c(beg,&cnfiner);

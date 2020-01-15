@@ -884,3 +884,11 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
   return ret;
 }
 
+// TODO: allow dates beyond 0-9999
+
+char *stardate(SpiceDouble et) {
+  static char result[1024];
+  char *format = "YYYYMMDD.HRMNSC";
+  timout_c(et, format, 1024, result);
+  return result;
+}

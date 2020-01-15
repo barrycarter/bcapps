@@ -6,3 +6,10 @@ TODO: report above to stellarium and to answer
 
 TODO: report bad positions to stellarium
 
+wrong: Timespan from JED  2378482.500(18-DEC-1799) to JED  2524606.500(14-JAN-2200)
+
+complaint to stellarium
+
+sensitive to version of stellarium, i finally used 0.19.3 and it works
+
+
