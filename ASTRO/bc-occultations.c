@@ -6,7 +6,7 @@
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
-#define MAXWIN 10000
+#define MAXWIN 100000
 #define STRLENGTH 32
 
 // Usage: $0 moon=observer sun=lightsource planet=shadower syear eyear
@@ -48,6 +48,10 @@ int main(int argc, char **argv) {
   bods2c_c(planet, &planetID, &found);
   if (!found) {printf("PLANET %s NOT FOUND\n", planet); exit(-1);}
 
+  spkcov_c("/home/user/SPICE/KERNELS/jup310.bsp", moonID, &result);
+  wnfetd_c(&result, 0, &beg, &end);
+  printf("COVERAGE: %f %f %f %f\n", beg, end, et2unix(beg), et2unix(end));
+
   wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
   // defining geometry finder function via given arguments
@@ -63,22 +67,25 @@ int main(int argc, char **argv) {
 
   SpiceInt nres = wncard_c(&result);
 
+  printf("# PARTIAL: %d\n", nres);
+
   for (int i=0; i<nres; i++) {
 
     wnfetd_c(&result,i,&beg,&end);
 
-    printf("%d %d %d %f %f %f %f\n", moonID, sunID, planetID, et2unix(beg), et2unix(end), beg, end);
+    printf("%d %d %d PS %f %f\n", moonID, sunID, planetID, et2unix(beg), beg);
 
-    // create a window for the partial eclipse
+    // create a window for the partial eclipse to find total eclipse (if any)
     wninsd_c(beg, end, &cnfiner);
-
     gfuds_c(gfq, isDecreasing, ">", 1, 0, 1, MAXWIN, &cnfiner, &resulter);
 
-    for (int j=0; j < wncard_c(&resulter); j++) {
-
-      wnfetd_c(&resulter, j, &beger, &ender);
-      printf("TOTAL: %f %f %f %f\n", et2unix(beger), et2unix(ender), beger, ender);
+    if (wncard_c(&resulter) > 0) {
+      wnfetd_c(&resulter, 0, &beger, &ender);
+      printf("%d %d %d TS %f %f\n", moonID, sunID, planetID, et2unix(beger), beger);
+      printf("%d %d %d TE %f %f\n", moonID, sunID, planetID, et2unix(ender), ender);
     }
+
+    printf("%d %d %d PE %f %f\n", moonID, sunID, planetID, et2unix(end), end);
 
     // empty out cell we inserted into earlier
     removd_c(beg,&cnfiner);

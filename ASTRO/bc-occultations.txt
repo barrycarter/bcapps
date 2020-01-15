@@ -4,3 +4,5 @@ stel5: zoom out sun hidden
 
 TODO: report above to stellarium and to answer
 
+TODO: report bad positions to stellarium
+
