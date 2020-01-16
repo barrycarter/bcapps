@@ -19,7 +19,28 @@ while (<A>) {
     push(@{$data{$moon}{$type}}, $et);
 }
 
-debug(unfold(%data));
+my(@beg) = @{$data{501}{"T+"}};
+my(@end) = @{$data{501}{"T-"}};
 
+my($max) = 0;
+my($min) = +Infinity;
+my($tot) = 0;
+my($count) = 0;
+
+for $i (0..$#beg) {
+
+    my($time) = $end[$i] - $beg[$i];
+
+    if ($time < 0) {die "NEGTIME";}
+
+    $tot += $time;
+    $count++;
+
+    $min = min($min, $time);
+    $max = max($max, $time);
+
+}
+
+debug("$min, $max, $tot, $count");
 
 
