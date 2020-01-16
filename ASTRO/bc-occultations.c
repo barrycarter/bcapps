@@ -6,7 +6,7 @@
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
-#define MAXWIN 100000
+#define MAXWIN 1000000
 #define STRLENGTH 32
 
 // Usage: $0 moon=observer sun=lightsource planet=shadower syear eyear
