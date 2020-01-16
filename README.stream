@@ -2,7 +2,15 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 15 Jan 2020, primarily for my reference
+Stuff I plan to stream 16 Jan 2020, primarily for my reference
+
+https://eclipse.gsfc.nasa.gov/OH/OHres/LEshadow.html
+
+1/85th larger
+
+create-your-own-SPK point
+
+TODO: include Earth time to match to ST
 
 TODO: tweak occult (both) to spit out yyyymmdd.hhmmss ("stardate")
 format too and then run multi in parallel (and then sort-glue/etc)--

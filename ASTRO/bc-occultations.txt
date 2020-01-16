@@ -12,4 +12,100 @@ complaint to stellarium
 
 sensitive to version of stellarium, i finally used 0.19.3 and it works
 
+%%%%%%%%%%%%
+
+Subject: Can gfoclt() find eclipses on the surfaces of bodies?
+
+*****NAME OF GUY********,
+
+Thanks again for all of your previous help with CSPICE.
+
+While reading the documentation examples for gfoclt_c() at
+https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/gfoclt_c.html#Examples
+I noticed that it says:
+
+"Find occultations of the Sun by the Moon (that is, solar eclipses) as
+seen from the *center* of the Earth over the month December, 2001"
+[emphasis added]
+
+However, just to clarify, this function won't necessarily find
+eclipses on the *surface* of the Earth, is that correct?
+
+I noticed that both the back body and the front body can be modelled
+as triaxial ellipsoids, but the target must be a single point.
+
+Is there a better way to find eclipses on the surface of bodies,
+instead of at a central point?
+
+I tried writing a penUmbralData() function that does this:
+
+https://github.com/barrycarter/bcapps/blob/master/ASTRO/bclib.h#L728
+
+but it only works if all three bodies are spherical (I also realize
+this should be bclib.c not bclib.h), and it's not super accurate.
+
+%%%%%%%%%%%%
+
+Subject: Is lunar eclipse of 26 May 2021 really total?
+
+[[[ATTACH!!!!]]]
+
+********NAME*******,
+
+While trying to write a function that computes eclipses on surfaces of
+bodies, I ran into an unusual situation: it appears that the lunar
+eclipse of 26 May 2021 is not quite total, unless I'm misunderstanding
+the definition of total eclipse.
+
+More specifically, if you're at the lunar north pole at the time of
+greatest eclipse (2021-05-26 11:18:04.3 UTC), a small portion of the
+Sun is still visible, at least according to Stellarium (see attached).
+
+This would mean at least a small portion of the moon is not completely
+darkened, which, to me, means this is not a total lunar eclipse. Am I
+incorrect in this understanding?
+
+I realize Stellarium does not use CSPICE for computations, but I ran
+the computations with CSPICE and got a similar result. My computations
+assume the Earth is spherical, but I use the equatorial radius, which
+should overestimate a total eclipse, not underestimate it.
+
+Even the diagram at
+https://eclipse.gsfc.nasa.gov/5MCLEmap/2001-2100/LE2021-05-26T.gif
+(and in
+https://eclipse.gsfc.nasa.gov/LEplot/LEplot2001/LE2021May26T.pdf) show
+that it's a very close call at best.
+
+Appreciate your help as always!
+
+%%%%%%%%%%%%
+
+Subject: Jupiter lunar phenomena for 2019 appear inconsistent
+
+I downloaded
+https://s22380.pcdn.co/wp-content/uploads/WebJphenTab2019.pdf from
+https://www.skyandtelescope.com/observing/a-jupiter-almanac/ and
+noticed something unusual:
+
+
+MORE THAN ONCE
+
+Ec for an eclipse by Jupiter’s shadow,
+An occultation or eclipse
+begins when the satellite disappears (D) and ends when it reappears (R).
+
+Jan 1 4:08 I.Ec.D
+
+
+greatest eclipse at 11:18:04.3
+
+2021-05-26
+
+
+
+
+
+
+
+
 
