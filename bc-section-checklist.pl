@@ -8,6 +8,10 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my($dir) = "/usr/local/etc/section-checklist";
+
+unless (-d $dir) {die "$dir does not exist";}
+
 unless ($globopts{section}) {die "--section required";}
 
 my($data, $fname) = cmdfile();
@@ -18,7 +22,17 @@ my($section) = $globopts{section};
 
 $data=~m%<$section[^>]*>(.*?)<\/$globopts{section}>%s||die("No section $section");
 
-debug($1);
+my($list) = $1;
+
+my($stardate) = stardate(time());
+
+my($fname) = "$section-$stardate.txt";
+
+write_file($list, "$dir/$fname");
+
+system("emacs $dir/$fname &");
+
+# debug($fname);
 
 # TODO: add "list sections in file"
 
