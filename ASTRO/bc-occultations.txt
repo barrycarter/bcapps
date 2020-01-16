@@ -1,3 +1,23 @@
+Subject to important caveats below, between the years 1850 and 2100:
+
+  - There are 51592 total eclipses of Io and the same number of partial eclipses (thus, there are no purely partial eclipses):
+
+    - That's an average of 206.4 eclipses per year
+    
+
+504 10 599 P+ -4439662240.553770 18590425.122838
+504 10 599 P- -4438209967.287203 18590512.075311
+
+missing line:
+
+504 10 599 P- -4439658351.131454 18590425.133327
+
+bc-occultations 504 10 599 1859 1860 | grep 18590425.133327
+
+works
+
+not occultations under a minute
+
 TODO: limitations of my program, why CT
 
 TODO: lots of notes in README.stream

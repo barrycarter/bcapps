@@ -67,9 +67,7 @@ int main(int argc, char **argv) {
 
   printf("FRAMES: %d (%s) %d (%s) %d (%s)\n", moonFrameID, moonFrame, planetFrameID, planetFrame, sunFrameID, sunFrame);
 
-  // TODO: 3600?
-
-  gfoclt_c("ANY", planetName, "ELLIPSOID", planetFrame, sunName, "ELLIPSOID", sunFrame, "LT", moonName, 3600, &cnfine, &result);
+  gfoclt_c("ANY", planetName, "ELLIPSOID", planetFrame, sunName, "ELLIPSOID", sunFrame, "LT", moonName, 60, &cnfine, &result);
 
     SpiceInt nres = wncard_c(&result);
 

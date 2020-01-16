@@ -1,0 +1,12 @@
+<foo>
+
+this is some information about foo
+
+</foo>
+
+<bar>
+
+this is some information about alcohol serving establishments
+
+</bar>
+

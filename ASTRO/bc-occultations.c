@@ -61,9 +61,7 @@ int main(int argc, char **argv) {
     *value = penUmbralData(et, sunID, planetID, moonID, 1);
   }
 
-  // TODO: 3600 too big?
-
-  gfuds_c(gfq, isDecreasing, ">", 0, 0, 3600, MAXWIN, &cnfine, &result);
+  gfuds_c(gfq, isDecreasing, ">", 0, 0, 60, MAXWIN, &cnfine, &result);
 
   SpiceInt nres = wncard_c(&result);
 

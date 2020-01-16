@@ -19,28 +19,31 @@ while (<A>) {
     push(@{$data{$moon}{$type}}, $et);
 }
 
-my(@beg) = @{$data{501}{"T+"}};
-my(@end) = @{$data{501}{"T-"}};
+for $moon (501..504) {
+    for $type ("P", "T", "CP", "CT") {
 
-my($max) = 0;
-my($min) = +Infinity;
-my($tot) = 0;
-my($count) = 0;
+	my(@beg) = @{$data{$moon}{"$type+"}};
+	my(@end) = @{$data{$moon}{"$type-"}};
 
-for $i (0..$#beg) {
+	my(@lengths);
+	my($tot);
 
-    my($time) = $end[$i] - $beg[$i];
+	for $i (0..$#beg) {
 
-    if ($time < 0) {die "NEGTIME";}
+	    my($time) = $end[$i] - $beg[$i];
+	    if ($time < 0) {die "NEGTIME";}
 
-    $tot += $time;
-    $count++;
+	    if ($time > 1000000) {die "BADTIME: $i, $end[$i], $beg[$i]";}
 
-    $min = min($min, $time);
-    $max = max($max, $time);
+	    push(@lengths, $time);
+	    $tot += $time;
+	}
 
+	my($max) = max(@lengths);
+	my($min) = min(@lengths);
+	my($mean) = $tot/($#beg + 1);
+
+	print "$moon $type $min $mean $max $#beg+1 $#end+1\n";
+	print "$lengths[0], $lengths[-1]\n";
+    }
 }
-
-debug("$min, $max, $tot, $count");
-
-
