@@ -1,0 +1,32 @@
+The file jupiter-gallilean-eclipses.txt.bz2 contains a list of all lunar eclipses from 1850 to 2100 (as viewed from Jupiter) of Jupiter's four largest moons (also known as the "Galilean moons"): Io, Europa, Ganymede, Callisto.
+
+Explanation of columns:
+
+The first column is the NAIF id of the moon being eclipsed:
+
+  - 501 = Io
+  - 502 = Europa
+  - 503 = Ganymede
+  - 504 = Callisto
+
+The second column is the NAIF id of which source of light is being
+eclipsed. In our case, this is always 10 for the Sun.
+
+The third column is the NAIF id of the body causing the eclipse. In
+our case, this is always 599 = Jupiter.
+
+The fourth column indicates whether an eclipse is starting or ending:
+
+  - P+ = a partial lunar eclipse is starting
+  - P- = a partial lunar eclipse is ending
+  - T+ = a total lunar eclipse is starting
+  - T- = a total lunar eclipse is ending
+
+The values "CP+", "CP-", "CT+", "CT-" are used for sanity testing and
+can be safely ignored.
+
+The fifth column indicates the ephemeris time a given event
+occurs. You will generally want to use the time in the sixth column
+which is given as yyyymmdd.hhhmmss
+
+TODO: explain "C." values better w DISCLAIMER

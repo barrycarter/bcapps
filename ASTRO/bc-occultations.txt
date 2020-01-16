@@ -1,3 +1,15 @@
+TODO: limitations of my program, why CT
+
+TODO: lots of notes in README.stream
+
+
+
+
+
+
+
+
+
 stel4: jupiter not showing, sun appears to be shining
 
 stel5: zoom out sun hidden
@@ -101,11 +113,80 @@ greatest eclipse at 11:18:04.3
 
 2021-05-26
 
+%%%%%%%%%%%%
 
+Hi Barry,
 
+I don't have an explanation, but I think the answer has to do
+with how eclipses are defined.
 
+A clue might be found here:
 
+   https://eclipse.gsfc.nasa.gov/OH/OHres/LEshadow.html
 
+If you perform your computation with the "enlarged Earth," does
+the Moon then fall into the umbral shadow?
 
+The fact that "blood Moon eclipses" occur seems to show that sunlight
+reaching the Moon due to refraction apparently is not considered
+to violate the "total eclipse" condition.
 
+A separate note: it would be possible for the Moon to be partially
+illuminated, but for the illuminated part to be invisible to an
+observer at a specific point on the Earth's surface, since that
+observer can only see the cap of the Moon inside the limb. That observer
+would see a "total" eclipse, even though the Moon was not contained
+in the Earth's umbral shadow.
 
+Best regards,
+
+%%%%%%%%%%%%%%%
+
+Hi Barry,
+
+You can find times of eclipses as seen from a point on the Earth's
+surface if you treat that point as an ephemeris object. This is done
+by making an SPK file that provides the position (and optionally,
+constant Cartesian velocity) of the point. The tool for creating
+such an SPK file is called PINPOINT. You can obtain the executable
+for your platform and user's guide here:
+
+   https://naif.jpl.nasa.gov/naif/utilities.html
+
+You could lay out a grid of points on a region of interest and
+compute eclipse times for all of them. (Clunky, but effective.)
+You could use the SPICE utility SPKMERGE to create a single
+SPK file containing data for all of your surface points.
+
+Alternatively, you might find it more convenient to write your
+own, small version of PINPOINT by using the SPK type 8 writer
+function
+
+   spkw08_c
+
+I'm looking at the code example in the N0066 version of this function,
+and it's not very good. I've included below the example text of the N0067
+update.
+
+In your case, you'd call spkw08_c once per surface point. Each
+point would need just two identical states to define its ephemeris:
+one each at the ephemeris start and stop times.
+
+The "Making an SPK" tutorial might be helpful. It's here:
+
+   https://naif.jpl.nasa.gov/naif/tutorials.html
+
+You might also find the function
+
+   occult_c
+
+of interest. This function simply computes an occultation state at
+a given time.
+
+As you've probably noticed, SPICE computations involving light
+assume that light travels in straight lines. So, modeling refraction,
+gravitational light bending, and any other optical effects is up
+to the user.
+
+SPICE doesn't offer any more sophisticated APIs for eclipse
+computations.

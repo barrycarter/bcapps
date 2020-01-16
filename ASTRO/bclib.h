@@ -765,6 +765,10 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
   tr = trtemp[0];
   qr = qrtemp[0];
 
+  // correct for Earth's radius based on https://eclipse.gsfc.nasa.gov/OH/OHres/LEshadow.html (only when Earth is eclipsing body)
+
+  if (t == 399) {tr *= 86/85.;}
+
   // compute position of s and t with respect to Q
 
   SpiceDouble spos[3], tpos[3], lt;

@@ -48,9 +48,9 @@ int main(int argc, char **argv) {
   bods2c_c(planet, &planetID, &found);
   if (!found) {printf("PLANET %s NOT FOUND\n", planet); exit(-1);}
 
-  spkcov_c("/home/user/SPICE/KERNELS/jup310.bsp", moonID, &result);
-  wnfetd_c(&result, 0, &beg, &end);
-  printf("COVERAGE: %f %f %f %f\n", beg, end, et2unix(beg), et2unix(end));
+  //  spkcov_c("/home/user/SPICE/KERNELS/jup310.bsp", moonID, &result);
+  //  wnfetd_c(&result, 0, &beg, &end);
+  //  printf("COVERAGE: %f %f %f %f\n", beg, end, et2unix(beg), et2unix(end));
 
   wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
