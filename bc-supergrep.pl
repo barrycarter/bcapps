@@ -56,7 +56,7 @@ my($files) = join(" ",@files);
 
 # construct fgrep chain; first phrase is normal grep
 my($fphrase) = shift(@phrases);
-my($cmd) = "fgrep -i -R '$fphrase' $files";
+my($cmd) = "fgrep -r -i -R '$fphrase' $files";
 
 # other phrases as piped greps
 for $i (@phrases) {

@@ -733,7 +733,6 @@ Given the following:
   - A light-generating object s (eg, "Sun") as a NAIF id
   - An eclipsing object t (eg, "Jupiter") as a NAIF id
   - An eclipsed object q (eg, "Ganymede") as a NAIF id
-  - A currently unused integer parameter param (set to 0 for now)
 
 Returns:
 

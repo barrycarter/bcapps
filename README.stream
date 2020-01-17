@@ -2,31 +2,36 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 16 Jan 2020, primarily for my reference
+Stuff I plan to stream 17 Jan 2020, primarily for my reference
+
+TODO: add "not acct for jup atmo" just so I can mention earth atmo
 
 https://eclipse.gsfc.nasa.gov/OH/OHres/LEshadow.html
 
 1/85th larger
 
-create-your-own-SPK point
+create-your-own-SPK point (for metis?)
 
-sectional thingy?
+TODO: average radius of triaxial ellipsoid? (just avg of 3?)
 
-<foo> 
-
-</foo>
+TODO: test if using static array in function, returning it and then
+changing it also changes the first returned array
 
 find order number thingy?
 
 non-solar light sources? (eg, jupiter)
 
-mututal phenoms
+mututal phenoms of jup moons TODO: compute mutual phenom?
+
+TODO: get tons of mag data for major planets and curve-fit/phase angle fit?
+
+TODO: run progs jff for jupiters other moons see how far we get, incl frags
+
+TODO: magnitudes to candles?
+
+
 
 TODO: include Earth time to match to ST
-
-TODO: tweak occult (both) to spit out yyyymmdd.hhmmss ("stardate")
-format too and then run multi in parallel (and then sort-glue/etc)--
-add "CS" and "CE" for "central" eclipses
 
 TODO: tweak programs to give actual cosmetic times in addition to Unix seconds?
 
@@ -369,8 +374,6 @@ Jupiter moon reference
 
 https://earthscience.stackexchange.com/questions/18721/are-60c-heat-waves-predicted-by-5c-of-global-heating-the-worst-consequence-of
 
-setup "mini git" on vm w/o pushing remotely
-
 new approach re angular distance + size from center + surface
 
 two cases for umbral cone: inside planet and outside, not unifiable
@@ -424,7 +427,7 @@ This is not not a list of possible future streams
   - steal guys idea (and SimEarth idea) of using Stefan-Boltzmann law
   to determine temperature?
 
-  - helical rising (https://astronomy.stackexchange.com/questions/25677/when-does-a-star-rise-with-the-sun)
+  - helical rising (https://astronomy.stackexchange.com/questions/25677/when-does-a-star-rise-with-the-sun) [too bright to see stars 18, 12, 6]
 
   - create stream buffer on stream (or do I want to use streamelements
   cause I want it going before VM is live?) (but could create on
@@ -438,6 +441,10 @@ This is not not a list of possible future streams
   - "moon enters sextans" has only 4 google results
 
   - youtube/twitch/dl confirmation matches
+
+  - autocomplete stuff?
+
+  - what Earth data do I have (landuse/cover/pop density/animals/etc)
 
 TO FIX xclock:
 

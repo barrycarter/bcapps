@@ -1,308 +1,38 @@
-Title: Find or create calendar that gives dates in various formats
+Title: Redraw "states" to be Voronoi areas of largest metro areas
 
-Description: I vaguely remember a calendar program that would give
-dates in various formats, such as Chinese calendar, Muslim calendar,
-Discordian calendar, and many others; either find this program or
-create one that replicates it.
+Description: Attempts to answer
+https://www.reddit.com/r/geography/comments/8qzl3p/if_we_redrew_us_state_lines_by_voronoi_of_the_top/
+"If we re-drew US state lines by Voronoi of the top 50 most populous
+metro areas, do the new "states" keep the same population rank as the
+city they were based on?"
 
-See also:
+Code:
 
-  - https://en.wikipedia.org/wiki/Solar_term
+https://github.com/barrycarter/bcapps/tree/master/REDDIT/bc-metro.m
 
-  - http://www.public.asu.edu/~checkma/today.html
+URL:
 
-  - https://isotropic.org/date/
+http://test.barrycarter.info/bc-image-overlay.pl?url=metrovor.kml&center=37,-95.5&zoom=5&maptypeid=ROADMAP
 
-  - https://askubuntu.com/questions/909908/linux-program-with-hebrew-islamic-coptic-discordian-and-other-calendars (my question)
+====================================================================
 
-  - https://github.com/vinc/cadate (written by someone else as an answer to my question above, uses Javascript's Luxon library, but still not complete)
+Title: How much of Earth's land has antipodal land?
 
-  - https://en.wikipedia.org/wiki/Module:Year_in_various_calendars
+Description: Answer the StackExchange question
+https://earthscience.stackexchange.com/questions/14132/how-much-of-earths-land-area-has-antipodal-land-area
+(what percentage of land has antipodal land vs antipodal water?)
 
-  - https://en.wikipedia.org/wiki/Template:Calendars
+Code:
 
-Notes:
+https://github.com/barrycarter/bcapps/tree/master/STACK/bc-antipodes.m
+https://github.com/barrycarter/bcapps/tree/master/STACK/bc-antipodes.pl
 
-  - List of calendar systems I could find so far (striving to keep these in alpabetical order, some have been Romanicized):
+URLs:
 
-    - (French) Republican (TODO: same as "French" below?)
-    - Ab urbe condita
-    - Armenian
-    - Assyrian
-    - Aztec
-    - Bahai
-    - Balinese saka
-    - Bengali
-    - Berber
-    - British Regnal
-    - Buddhist
-    - Burmese
-    - Byzantine
-    - Chinese
-    - Church of the SubGenius
-    - Coptic
-    - Discordian
-    - Ethiopic (Coptic)
-    - French 
-    - Galactic Milieu
-    - Goddess Lunar Calendar
-    - Gregorian [this is the most commonly used system]
-    - Hebrew 
-    - Hindu (Civil)
-    - Hindu: Kali Yuga
-    - Hindu: Shaka Samvat
-    - Hindu: Vikram Samvat
-    - Holocene
-    - Human Calendar
-    - Igbo
-    - Illuminati
-    - International Fixed Calendar
-    - Iranian (TODO: same as Persian?)
-    - Islamic 
-    - Jalali/Persian
-    - Japanese
-    - Javanese
-    - Juche
-    - Jusanotoron
-    - Korean
-    - Mayan
-    - Millennium Mars Calendar
-    - Minguo
-    - Moonwise Calendar
-    - Nanakshahi
-    - New Science Calendar
-    - Pataphysique
-    - Positivist
-    - Quaker (Friend)
-    - Symmetry
-    - Thai solar
-    - Thelema
-    - Tibetan
-    - World Season Calendar
-    - Worldsday
-    - Zoroastrian (Fasli)
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=180&w=-180&n=90&s=-90&center=0,0&url=antipodes.gif&zoom=3&maptypeid=ROADMAP
 
-  - TODO: cleanup list below (from https://en.wikipedia.org/w/index.php?title=Template:Calendars&action=edit) and merge into list above
-
-| group3 = In wide use
-| list3 =
-* [[Astronomical year numbering|Astronomical]]
-* [[Bengali calendars|Bengali]]
-* [[Chinese calendar|Chinese]]
-* [[Ethiopian calendar|Ethiopian]]
-* [[Hebrew calendar|Hebrew]]
-* [[Hindu calendar|Hindu]]
-* [[Iranian calendars|Iranian]]
-* [[Islamic calendar|Islamic]]
-* [[ISO week date|ISO]] 
-* [[Unix time]]
-* [[Akan calendar|Akan]]
-* [[Armenian calendar|Armenian]] 
-* [[Assyrian calendar|Assyrian]]
-* [[Bahá'í calendar|Bahá'í]]
-** Badí
-* [[Pawukon calendar|Balinese pawukon]]
-* [[Balinese saka calendar|Balinese saka]]
-* [[Berber calendar|Berber]]
-* [[Buddhist calendar|Buddhist]]
-* [[Burmese calendar|Burmese]]
-* [[Chinese calendar|Chinese]]
-** [[Earthly Branches]]
-** [[Heavenly Stems]]
-* [[Gaelic calendar|Gaelic]]
-* [[Heathen holidays|Germanic heathen]]
-* [[Georgian calendar|Georgian]]
-* [[Hindu calendar|Hindu or Indian]]
-** [[Vikram Samvat]]
-** [[Indian national calendar|Saka]]
-* [[Igbo calendar|Igbo]]
-* [[Iranian calendars|Iranian]]
-** [[Jalali calendar|Jalali]]
-*** medieval
-** [[Solar Hijri calendar|Hijri]]
-*** modern
-** [[Zoroastrian calendar|Zoroastrian]]
-* [[Islamic calendar|Islamic]]
-** [[Fasli calendar|Fasli]]
-** [[Tabular Islamic calendar|Tabular]]
-* [[Vira Nirvana Samvat|Jain]]
-* [[Japanese calendar|Japanese]]
-* [[Javanese calendar|Javanese]]
-* [[Korean calendar|Korean]]
-** [[North Korean calendar|''Juche'']]
-* [[Kurdish calendar|Kurdish]]
-* [[Lithuanian calendar|Lithuanian]]
-* [[Malayalam calendar|Malayalam]]
-* [[Mongolian calendar|Mongolian]]
-* [[Melanau calendar|Melanau]]
-* [[Nanakshahi calendar|Nanakshahi]]
-* [[Nepal Sambat]]
-* [[Nisga'a#Nisgaa calendar/life|Nisga'a]]
-* [[Borana calendar|Oromo]]
-* [[Romanian months|Romanian]]
-* [[Somali calendar|Somali]]
-* [[Sotho calendar|Sesotho]]
-* [[Slavic calendar|Slavic]]
-** [[Slavic Native Faith's calendars and holidays|Slavic Native Faith]]
-* [[Tamil calendar|Tamil]]
-* [[Thai calendar|Thai]]
-** [[Thai lunar calendar|lunar]]
-** [[Thai solar calendar|solar]]
-* [[Tibetan calendar|Tibetan]]
-* [[Vietnamese calendar|Vietnamese]]
-* [[Xhosa calendar|Xhosa]]
-* [[Yoruba calendar|Yoruba]]
-
-  | group2 = Types
-  | list2 =
-* [[Runic calendar|Runic]]
-* [[Mesoamerican calendars|Mesoamerican]]
-** [[Mesoamerican Long Count calendar|Long Count]]
-** [[Calendar round]]
-
-  | group3 = Christian variants
-  | list3 =
-* [[Coptic calendar|Coptic]]
-* [[Julian calendar|Julian]]
-** [[Revised Julian calendar|Revised]]
-* [[Liturgical year]]
-** [[Eastern Orthodox liturgical calendar|Eastern Orthodox]]
-* [[Calendar of saints|Saints]]
- }}
-
-<!--------------------------------------------------------->
-| group5 = Historical
-| list5 =
-* [[Attic calendar|Attic]]
-* [[Aztec calendar|Aztec]]
-** [[Tnalphualli]]
-** [[Xiuhphualli]]
-* [[Babylonian calendar|Babylonian]]
-* [[Bulgar calendar|Bulgar]] 
-* [[Byzantine calendar|Byzantine]]
-* [[Cappadocian calendar|Cappadocian]]
-* [[Celtic calendar|Celtic]]
-* [[Cham calendar|Cham]]
-* [[Chula Sakarat|Culsakaraj]]
-* [[Egyptian calendar|Egyptian]]
-* [[Florentine calendar|Florentine]]
-* [[French Republican Calendar|French Republican]]
-* [[Germanic calendar|Germanic]]
-* [[Ancient Greek calendars|Greek]]
-* [[Hindu calendar|Hindu]]
-* [[Inca calendar|Inca]]
-* [[Ancient Macedonian calendar|Macedonian]]
-* [[Maya calendar|Maya]]
-** [[Haab']]
-** [[Tzolk'in]]
-* [[Muisca calendar|Muisca]]
-* [[Pentecontad calendar|Pentecontad]]
-* [[Pisan calendar|Pisan]]
-* [[Rapa Nui calendar|Rapa Nui]]
-* [[Roman calendar]]
-* [[Rumi calendar|Rumi]]
-* [[Soviet calendar|Soviet]]
-* [[Swedish calendar|Swedish]]
-* [[Renaming of Turkmen months and days of week, 2002|Turkmen]]
-
-<!--------------------------------------------------------->
-| group6 = By specialty
-| list6 = <!--Alphabetically by specialty:-->
-* [[Holocene calendar|Holocene]]
-** anthropological
-* [[Proleptic Gregorian calendar|Proleptic Gregorian]]{{\}}[[Proleptic Julian calendar|Proleptic Julian]]
-** historiographical
-* [[Darian calendar|Darian]]
-** Martian
-* [[Dreamspell]]
-** New Age
-* [[Discordian calendar|Discordian]]
-* [['Pataphysics#Pataphysical calendar|'Pataphysical]]
-
-<!--------------------------------------------------------->
-| group7 = [[:Category:Proposed calendars|Proposals]]
-| list7 =
-* [[Calendar reform]]
-* [[HankeHenry Permanent Calendar|HankeHenry Permanent]]
-* [[International Fixed Calendar|International Fixed]]
-* [[Pax Calendar|Pax]]
-* [[Positivist calendar|Positivist]]
-* [[Symmetry454]]
-* [[World Calendar|World]]
-** [[New Earth Time]]
-
-
-<!--------------------------------------------------------->
-| group8 = Fictional
-| list8 =
-* [[Discworld (world)#Calendar|Discworld]] (''[[Discworld]]'')
-* [[Flanaess#Calendar|Greyhawk]] (''[[Dungeons & Dragons]]'')
-* [[Middle-earth calendar|Middle-earth]] (''[[The Lord of the Rings]]'')
-* [[Stardate]] (''[[Star Trek]]'')
-* [[Yavin|Galactic Standard Calendar]] (''[[Star Wars]]'')
-
-<!--------------------------------------------------------->
-| group9 = {{longitem|Displays and<br/>applications}}
-| list9 =
-* [[Calendaring software|Electronic]]
-* [[Perpetual calendar|Perpetual]]
-* [[Calendar (stationery)|Wall]]
-
-<!--------------------------------------------------------->
-| group10 = {{longitem|Year naming<br/>and<br/>numbering}}
-| list10 =
- {{Navbox|subgroup |groupstyle=font-weight:normal;
-
-  | group1 = Terminology
-  | list1 =
-* [[Calendar era|Era]]
-* [[Epoch (reference date)|Epoch]]
-* [[Regnal name|Regnal name]]
-* [[Regnal year]]
-* [[Year zero]]
-
-  | group2 = Systems
-  | list2 =
-* [[Ab urbe condita]]
-* [[Anno Domini]]/[[Common Era]]
-* [[Anno Mundi]]
-* [[Eponym dating system|Assyrian]]
-* [[Before Present]]
-* [[Chinese era name|Chinese Imperial]]
-* [[Minguo calendar|Chinese Minguo]]
-* [[Holocene calendar|Human Era]]
-* [[Japanese era name|Japanese]]
-* [[Korean era name|Korean]]
-* [[Seleucid era|Seleucid]]
-* [[Spanish era|Spanish]]
-* [[Yuga|Yugas]]
-** [[Satya Yuga|Satya]]
-** [[Treta Yuga|Treta]]
-** [[Dvapara Yuga|Dvapara]]
-** [[Kali Yuga|Kali]]
-* [[Vietnamese era name|Vietnamese]]
- }}
-
-  - TODO: maybe trim the list of calendars above to ones that realistically exist and not completely invented and were never used
-
-  - TODO: some of the calendar systems above are reformatting of the Gregorian calendar; identify these are they don't actually use separate "dates"
-
-  - TODO: The weekdays and months in the Gregorian calendar are different in different languages, but I do not consider these to be separate calendars
-
-  - Emacs `calendar` mode does this to some extent, and has extensions for more calendar systems
-
-  - Per emacs "bindings for calendar-mode", some calendar systems are: 
-  - Other calendars include Discordian, but there are others
-
-  - gcal can show Chinese calendar months and holidays, but I haven't found out how to make it show the actual Chinese calendar itself
-
-  - It's possible the program I remember was just a shell script
-  around programs like `ddate` and `hebcal` (which does this for the Discordian and Hebrew calendars)
-
-  - This program is not related to https://github.com/barrycarter/bcapps/tree/master/CALENDAR/ which is a standard Gregorian calendar that strives to list "important" dates
-
-
-
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=180&w=-180&n=90&s=-90&center=0,0&url=superantipodes.gif&zoom=3&maptypeid=ROADMAP
+[large image, may load slowly]
 
 ====================================================================
 
@@ -675,7 +405,7 @@ accurate. I've done some work using GRASS and want to expand on that.
 
 Languages: GRASS GIS
 
-URL:
+Code:
 
 https://github.com/barrycarter/bcapps/tree/master/STACK/bc-buffer-land-2.m
 https://github.com/barrycarter/bcapps/tree/master/STACK/bc-buffer-land-3.m
@@ -684,6 +414,16 @@ https://github.com/barrycarter/bcapps/tree/master/STACK/bc-buffer-land.grass
 https://github.com/barrycarter/bcapps/tree/master/STACK/bc-buffer-land.m
 https://github.com/barrycarter/bcapps/tree/master/STACK/bc-buffer-land.pl
 https://github.com/barrycarter/bcapps/tree/master/STACK/bc-buffer-land.sql
+
+URLs:
+
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=180&w=-180&n=90&s=-90&center=0,0&url=map3.png&zoom=3
+
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=180&w=-180&n=90&s=-90&center=0,0&url=coasthundredth.png&zoom=2
+[large image, may load slowly]
+
+http://test.bcinfo3.barrycarter.info/bc-image-overlay-nokml.pl?e=180&w=-180&n=90&s=-90&center=0,0&url=supercoast.png&zoom=2
+[rivers]
 
 ====================================================================
 
@@ -911,6 +651,312 @@ https://github.com/barrycarter/bcapps/tree/master/REDDIT/README.status
 
 =====================================================================
 
+Title: Find or create calendar that gives dates in various formats
+
+Description: I vaguely remember a calendar program that would give
+dates in various formats, such as Chinese calendar, Muslim calendar,
+Discordian calendar, and many others; either find this program or
+create one that replicates it.
+
+See also:
+
+  - https://en.wikipedia.org/wiki/Solar_term
+
+  - http://www.public.asu.edu/~checkma/today.html
+
+  - https://isotropic.org/date/
+
+  - https://askubuntu.com/questions/909908/linux-program-with-hebrew-islamic-coptic-discordian-and-other-calendars (my question)
+
+  - https://github.com/vinc/cadate (written by someone else as an answer to my question above, uses Javascript's Luxon library, but still not complete)
+
+  - https://en.wikipedia.org/wiki/Module:Year_in_various_calendars
+
+  - https://en.wikipedia.org/wiki/Template:Calendars
+
+Notes:
+
+  - List of calendar systems I could find so far (striving to keep these in alpabetical order, some have been Romanicized):
+
+    - (French) Republican (TODO: same as "French" below?)
+    - Ab urbe condita
+    - Armenian
+    - Assyrian
+    - Aztec
+    - Bahai
+    - Balinese saka
+    - Bengali
+    - Berber
+    - British Regnal
+    - Buddhist
+    - Burmese
+    - Byzantine
+    - Chinese
+    - Church of the SubGenius
+    - Coptic
+    - Discordian
+    - Ethiopic (Coptic)
+    - French 
+    - Galactic Milieu
+    - Goddess Lunar Calendar
+    - Gregorian [this is the most commonly used system]
+    - Hebrew 
+    - Hindu (Civil)
+    - Hindu: Kali Yuga
+    - Hindu: Shaka Samvat
+    - Hindu: Vikram Samvat
+    - Holocene
+    - Human Calendar
+    - Igbo
+    - Illuminati
+    - International Fixed Calendar
+    - Iranian (TODO: same as Persian?)
+    - Islamic 
+    - Jalali/Persian
+    - Japanese
+    - Javanese
+    - Juche
+    - Jusanotoron
+    - Korean
+    - Mayan
+    - Millennium Mars Calendar
+    - Minguo
+    - Moonwise Calendar
+    - Nanakshahi
+    - New Science Calendar
+    - Pataphysique
+    - Positivist
+    - Quaker (Friend)
+    - Symmetry
+    - Thai solar
+    - Thelema
+    - Tibetan
+    - World Season Calendar
+    - Worldsday
+    - Zoroastrian (Fasli)
+
+  - TODO: cleanup list below (from https://en.wikipedia.org/w/index.php?title=Template:Calendars&action=edit) and merge into list above
+
+| group3 = In wide use
+| list3 =
+* [[Astronomical year numbering|Astronomical]]
+* [[Bengali calendars|Bengali]]
+* [[Chinese calendar|Chinese]]
+* [[Ethiopian calendar|Ethiopian]]
+* [[Hebrew calendar|Hebrew]]
+* [[Hindu calendar|Hindu]]
+* [[Iranian calendars|Iranian]]
+* [[Islamic calendar|Islamic]]
+* [[ISO week date|ISO]] 
+* [[Unix time]]
+* [[Akan calendar|Akan]]
+* [[Armenian calendar|Armenian]] 
+* [[Assyrian calendar|Assyrian]]
+* [[Bahá'í calendar|Bahá'í]]
+** Badí
+* [[Pawukon calendar|Balinese pawukon]]
+* [[Balinese saka calendar|Balinese saka]]
+* [[Berber calendar|Berber]]
+* [[Buddhist calendar|Buddhist]]
+* [[Burmese calendar|Burmese]]
+* [[Chinese calendar|Chinese]]
+** [[Earthly Branches]]
+** [[Heavenly Stems]]
+* [[Gaelic calendar|Gaelic]]
+* [[Heathen holidays|Germanic heathen]]
+* [[Georgian calendar|Georgian]]
+* [[Hindu calendar|Hindu or Indian]]
+** [[Vikram Samvat]]
+** [[Indian national calendar|Saka]]
+* [[Igbo calendar|Igbo]]
+* [[Iranian calendars|Iranian]]
+** [[Jalali calendar|Jalali]]
+*** medieval
+** [[Solar Hijri calendar|Hijri]]
+*** modern
+** [[Zoroastrian calendar|Zoroastrian]]
+* [[Islamic calendar|Islamic]]
+** [[Fasli calendar|Fasli]]
+** [[Tabular Islamic calendar|Tabular]]
+* [[Vira Nirvana Samvat|Jain]]
+* [[Japanese calendar|Japanese]]
+* [[Javanese calendar|Javanese]]
+* [[Korean calendar|Korean]]
+** [[North Korean calendar|''Juche'']]
+* [[Kurdish calendar|Kurdish]]
+* [[Lithuanian calendar|Lithuanian]]
+* [[Malayalam calendar|Malayalam]]
+* [[Mongolian calendar|Mongolian]]
+* [[Melanau calendar|Melanau]]
+* [[Nanakshahi calendar|Nanakshahi]]
+* [[Nepal Sambat]]
+* [[Nisga'a#Nisgaa calendar/life|Nisga'a]]
+* [[Borana calendar|Oromo]]
+* [[Romanian months|Romanian]]
+* [[Somali calendar|Somali]]
+* [[Sotho calendar|Sesotho]]
+* [[Slavic calendar|Slavic]]
+** [[Slavic Native Faith's calendars and holidays|Slavic Native Faith]]
+* [[Tamil calendar|Tamil]]
+* [[Thai calendar|Thai]]
+** [[Thai lunar calendar|lunar]]
+** [[Thai solar calendar|solar]]
+* [[Tibetan calendar|Tibetan]]
+* [[Vietnamese calendar|Vietnamese]]
+* [[Xhosa calendar|Xhosa]]
+* [[Yoruba calendar|Yoruba]]
+
+  | group2 = Types
+  | list2 =
+* [[Runic calendar|Runic]]
+* [[Mesoamerican calendars|Mesoamerican]]
+** [[Mesoamerican Long Count calendar|Long Count]]
+** [[Calendar round]]
+
+  | group3 = Christian variants
+  | list3 =
+* [[Coptic calendar|Coptic]]
+* [[Julian calendar|Julian]]
+** [[Revised Julian calendar|Revised]]
+* [[Liturgical year]]
+** [[Eastern Orthodox liturgical calendar|Eastern Orthodox]]
+* [[Calendar of saints|Saints]]
+ }}
+
+<!--------------------------------------------------------->
+| group5 = Historical
+| list5 =
+* [[Attic calendar|Attic]]
+* [[Aztec calendar|Aztec]]
+** [[Tnalphualli]]
+** [[Xiuhphualli]]
+* [[Babylonian calendar|Babylonian]]
+* [[Bulgar calendar|Bulgar]] 
+* [[Byzantine calendar|Byzantine]]
+* [[Cappadocian calendar|Cappadocian]]
+* [[Celtic calendar|Celtic]]
+* [[Cham calendar|Cham]]
+* [[Chula Sakarat|Culsakaraj]]
+* [[Egyptian calendar|Egyptian]]
+* [[Florentine calendar|Florentine]]
+* [[French Republican Calendar|French Republican]]
+* [[Germanic calendar|Germanic]]
+* [[Ancient Greek calendars|Greek]]
+* [[Hindu calendar|Hindu]]
+* [[Inca calendar|Inca]]
+* [[Ancient Macedonian calendar|Macedonian]]
+* [[Maya calendar|Maya]]
+** [[Haab']]
+** [[Tzolk'in]]
+* [[Muisca calendar|Muisca]]
+* [[Pentecontad calendar|Pentecontad]]
+* [[Pisan calendar|Pisan]]
+* [[Rapa Nui calendar|Rapa Nui]]
+* [[Roman calendar]]
+* [[Rumi calendar|Rumi]]
+* [[Soviet calendar|Soviet]]
+* [[Swedish calendar|Swedish]]
+* [[Renaming of Turkmen months and days of week, 2002|Turkmen]]
+
+<!--------------------------------------------------------->
+| group6 = By specialty
+| list6 = <!--Alphabetically by specialty:-->
+* [[Holocene calendar|Holocene]]
+** anthropological
+* [[Proleptic Gregorian calendar|Proleptic Gregorian]]{{\}}[[Proleptic Julian calendar|Proleptic Julian]]
+** historiographical
+* [[Darian calendar|Darian]]
+** Martian
+* [[Dreamspell]]
+** New Age
+* [[Discordian calendar|Discordian]]
+* [['Pataphysics#Pataphysical calendar|'Pataphysical]]
+
+<!--------------------------------------------------------->
+| group7 = [[:Category:Proposed calendars|Proposals]]
+| list7 =
+* [[Calendar reform]]
+* [[HankeHenry Permanent Calendar|HankeHenry Permanent]]
+* [[International Fixed Calendar|International Fixed]]
+* [[Pax Calendar|Pax]]
+* [[Positivist calendar|Positivist]]
+* [[Symmetry454]]
+* [[World Calendar|World]]
+** [[New Earth Time]]
+
+
+<!--------------------------------------------------------->
+| group8 = Fictional
+| list8 =
+* [[Discworld (world)#Calendar|Discworld]] (''[[Discworld]]'')
+* [[Flanaess#Calendar|Greyhawk]] (''[[Dungeons & Dragons]]'')
+* [[Middle-earth calendar|Middle-earth]] (''[[The Lord of the Rings]]'')
+* [[Stardate]] (''[[Star Trek]]'')
+* [[Yavin|Galactic Standard Calendar]] (''[[Star Wars]]'')
+
+<!--------------------------------------------------------->
+| group9 = {{longitem|Displays and<br/>applications}}
+| list9 =
+* [[Calendaring software|Electronic]]
+* [[Perpetual calendar|Perpetual]]
+* [[Calendar (stationery)|Wall]]
+
+<!--------------------------------------------------------->
+| group10 = {{longitem|Year naming<br/>and<br/>numbering}}
+| list10 =
+ {{Navbox|subgroup |groupstyle=font-weight:normal;
+
+  | group1 = Terminology
+  | list1 =
+* [[Calendar era|Era]]
+* [[Epoch (reference date)|Epoch]]
+* [[Regnal name|Regnal name]]
+* [[Regnal year]]
+* [[Year zero]]
+
+  | group2 = Systems
+  | list2 =
+* [[Ab urbe condita]]
+* [[Anno Domini]]/[[Common Era]]
+* [[Anno Mundi]]
+* [[Eponym dating system|Assyrian]]
+* [[Before Present]]
+* [[Chinese era name|Chinese Imperial]]
+* [[Minguo calendar|Chinese Minguo]]
+* [[Holocene calendar|Human Era]]
+* [[Japanese era name|Japanese]]
+* [[Korean era name|Korean]]
+* [[Seleucid era|Seleucid]]
+* [[Spanish era|Spanish]]
+* [[Yuga|Yugas]]
+** [[Satya Yuga|Satya]]
+** [[Treta Yuga|Treta]]
+** [[Dvapara Yuga|Dvapara]]
+** [[Kali Yuga|Kali]]
+* [[Vietnamese era name|Vietnamese]]
+ }}
+
+  - TODO: maybe trim the list of calendars above to ones that realistically exist and not completely invented and were never used
+
+  - TODO: some of the calendar systems above are reformatting of the Gregorian calendar; identify these are they don't actually use separate "dates"
+
+  - TODO: The weekdays and months in the Gregorian calendar are different in different languages, but I do not consider these to be separate calendars
+
+  - Emacs `calendar` mode does this to some extent, and has extensions for more calendar systems
+
+  - Per emacs "bindings for calendar-mode", some calendar systems are: 
+  - Other calendars include Discordian, but there are others
+
+  - gcal can show Chinese calendar months and holidays, but I haven't found out how to make it show the actual Chinese calendar itself
+
+  - It's possible the program I remember was just a shell script
+  around programs like `ddate` and `hebcal` (which does this for the Discordian and Hebrew calendars)
+
+  - This program is not related to https://github.com/barrycarter/bcapps/tree/master/CALENDAR/ which is a standard Gregorian calendar that strives to list "important" dates
+
+====================================================================
+
+
 Subject: M.U.L.E. (game)
 URL: https://github.com/barrycarter/bcapps/blob/master/YAMC
 Showcase: none
@@ -989,6 +1035,13 @@ TODO: add line splitting question and prime number question
 
 TODO: order these
 
-TODO: antipode project (from stack question)
-
 TODO: look thru starred SE questions
+
+TODO:
+https://astronomy.stackexchange.com/questions/27468/table-of-dates-for-planet-retrograde-motion/27479#27479
+? perhaps combine with
+https://astronomy.stackexchange.com/questions/27914/tables-of-aphelion-perihelion-dates-for-other-planets/27955#27955
+(and similar, but these should already exist somewhere?)
+
+TODO: magnitude computations (Lambertian and almost +1 if normalized)
+
