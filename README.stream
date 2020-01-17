@@ -4,7 +4,16 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 17 Jan 2020, primarily for my reference
 
+TODO: install wolframscript! https://www.wolfram.com/wolframscript/
+(this may do nothing unless I have Mathematica installed)
+
 TODO: add "not acct for jup atmo" just so I can mention earth atmo
+
+TODO: even 1m too long because I check for partials first then totals
+only inside partials and partials can last only a few seconds
+
+TODO: after sorting all data confirm per-moon events are in right
+order (eg, "P+" can be followed by "T+", but probably not by "T-")
 
 https://eclipse.gsfc.nasa.gov/OH/OHres/LEshadow.html
 
@@ -15,7 +24,7 @@ create-your-own-SPK point (for metis?)
 TODO: average radius of triaxial ellipsoid? (just avg of 3?)
 
 TODO: test if using static array in function, returning it and then
-changing it also changes the first returned array
+changing it also changes the first returned array (malloc new array instead?)
 
 find order number thingy?
 
@@ -27,9 +36,16 @@ TODO: get tons of mag data for major planets and curve-fit/phase angle fit?
 
 TODO: run progs jff for jupiters other moons see how far we get, incl frags
 
-TODO: magnitudes to candles?
+TODO: magnitudes to candles + vice versa
 
+https://physics.stackexchange.com/questions/340230/whats-the-conversion-between-apparent-magnitude-and-lux
 
+http://stjarnhimlen.se/comp/radfaq.html#7
+
+TODO: nightbot for fun and programming? (url to weather.94y.info?) 
+(and cityfind?)
+
+TODO: I declare non moons (and check mag using stellarium)
 
 TODO: include Earth time to match to ST
 
