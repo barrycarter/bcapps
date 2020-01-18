@@ -4,13 +4,10 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 17 Jan 2020, primarily for my reference
 
-TODO: install wolframscript! https://www.wolfram.com/wolframscript/
-(this may do nothing unless I have Mathematica installed)
+TODO: create own aPI for Twitch using urlfetch (and ?JSON?) (what
+terrible things does JSON do)
 
 TODO: add "not acct for jup atmo" just so I can mention earth atmo
-
-TODO: even 1m too long because I check for partials first then totals
-only inside partials and partials can last only a few seconds
 
 TODO: after sorting all data confirm per-moon events are in right
 order (eg, "P+" can be followed by "T+", but probably not by "T-")
@@ -31,6 +28,8 @@ find order number thingy?
 non-solar light sources? (eg, jupiter)
 
 mututal phenoms of jup moons TODO: compute mutual phenom?
+
+Lambertian reflector: cos phase angle
 
 TODO: get tons of mag data for major planets and curve-fit/phase angle fit?
 
