@@ -2,7 +2,11 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 17 Jan 2020, primarily for my reference
+Stuff I plan to stream 18 Jan 2020, primarily for my reference
+
+TODO: pomodoro (before it was)
+
+TODO: helical rising/setting JS app goal to github pages
 
 TODO: create own aPI for Twitch using urlfetch (and ?JSON?) (what
 terrible things does JSON do)
