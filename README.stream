@@ -2,7 +2,19 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 19 Jan 2020, primarily for my reference
+Stuff I plan to stream 20 Jan 2020, primarily for my reference
+
+TODO: change windows in fvwm2 easier
+
+TODO: product of tangents identity to simplify (but doesn't help?)
+
+TODO: closed form if ra and dec of original known?
+
+TODO: fix refraction stuff
+
+TODO: circumpolar case of heliacal rise/set + anticircumpolar
+
+TODO: answer question with explanation of formula
 
 TODO: helical rising/setting JS app goal to github pages
 
