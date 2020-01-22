@@ -43,6 +43,9 @@ for $i (@ARGV) {
 unless (@files) {die "No files specified on command line";}
 
 for $i (@files) {
+
+  if ($i=~/\~$/) {warn "SKIPPING EMACS DROPPING: $i"; next;}
+
   my(@incs) = `egrep '^## include \' $i`;
   for $j (@incs) {
     $j=~s/\"(.*?)\"//;

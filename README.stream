@@ -2,13 +2,26 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 21 Jan 2020, primarily for my reference
+Stuff I plan to stream 22 Jan 2020, primarily for my reference
 
-hard 90m limit (1130 MST = 1830 UTC)
+fix d error, spring equinox vs first day of year
 
-learn us some react (again)
+test for a few values
 
-use us some react (in heliacal rising)
+push to github pages
+
+publish answer w/ "I may do more" disclaimer (follow template of other
+answer re "standalone" and "src code is here") ("ugly", "proof of
+concept), why no closed formula even in simpler form and tan(sin(x))
+is just weird w link to inverse trig identity page
+
+maybe link to online Stellarium showing helical rising (at prime meridian?)
+
+note 4m earlier each day, so 1) not 100% accurate, 2) sunrise before
+dawn (can regard as range-- def vis at twilight to not vis because w
+sun)
+
+look for latitude specific graphs to see if they help find closed formula
 
 improve app: pull down of cities/stars, allow hms, autocomplete
 
