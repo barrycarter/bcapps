@@ -4,28 +4,21 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 22 Jan 2020, primarily for my reference
 
-fix d error, spring equinox vs first day of year
+https://stellarium-web.org/?date=2020-01-01
 
-test for a few values
+https://barrycarter.github.io/pages/HELIACAL/
 
-push to github pages
+publish answer w/ "I may do more" disclaimer
+why no closed formula even in simpler form and tan(sin(x))
+is just weird w link to inverse trig identity page, 
 
-publish answer w/ "I may do more" disclaimer (follow template of other
-answer re "standalone" and "src code is here") ("ugly", "proof of
-concept), why no closed formula even in simpler form and tan(sin(x))
-is just weird w link to inverse trig identity page
+prod tan, see TODO Below
 
-maybe link to online Stellarium showing helical rising (at prime meridian?)
-
-note 4m earlier each day, so 1) not 100% accurate, 2) sunrise before
-dawn (can regard as range-- def vis at twilight to not vis because w
-sun)
+maybe link to online Stellarium showing heliacal rising (at prime meridian?)
 
 look for latitude specific graphs to see if they help find closed formula
 
-improve app: pull down of cities/stars, allow hms, autocomplete
-
-improve app: interpolation
+improve app: allow hms
 
 TODO: change windows in fvwm2 easier
 
@@ -33,15 +26,7 @@ TODO: product of tangents identity to simplify (but doesn't help?)
 
 TODO: closed form if ra and dec of original known?
 
-TODO: fix refraction stuff
-
-TODO: circumpolar case of heliacal rise/set + anticircumpolar
-
 TODO: answer question with explanation of formula
-
-TODO: helical rising/setting JS app goal to github pages
-
-interface to above w/ star list, text complete, etc?
 
 TODO: create own aPI for Twitch using urlfetch (and ?JSON?) (what
 terrible things does JSON do)
@@ -481,8 +466,6 @@ This is not not a list of possible future streams
   - steal guys idea (and SimEarth idea) of using Stefan-Boltzmann law
   to determine temperature?
 
-  - helical rising (https://astronomy.stackexchange.com/questions/25677/when-does-a-star-rise-with-the-sun) [too bright to see stars 18, 12, 6]
-
   - create stream buffer on stream (or do I want to use streamelements
   cause I want it going before VM is live?) (but could create on
   stream and use off stream?)
@@ -495,8 +478,6 @@ This is not not a list of possible future streams
   - "moon enters sextans" has only 4 google results
 
   - youtube/twitch/dl confirmation matches
-
-  - autocomplete stuff?
 
   - what Earth data do I have (landuse/cover/pop density/animals/etc)
 
