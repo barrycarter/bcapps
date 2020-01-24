@@ -6,10 +6,20 @@
 
 void j2000tob1875(double ra, double dec, double *raout, double *decout) {
 
-  double matrix[3][3];
+  double matrix[3][3], pos[3], newpos[3], newr;
 
   pxform_c("J2000", "EQEQDATE", -3944592000, matrix);
 
+  sphrec_c(1, halfpi_c()-dec, ra, pos);
+
+  printf("X: %f, Y: %f, Z: %f\n", pos[0], pos[1], pos[2]);
+
+  mxv_c(matrix, pos, newpos);
+
+  recsph_c(newpos, &newr, decout, raout);
+
+  *decout = halfpi_c()-*decout;
+ 
   for (int i=0; i<3; i++) {
     for (int j=0; j<3; j++) {
       printf("I: %d, J: %d, V: %f\n", i, j, matrix[i][j]);
