@@ -1,8 +1,21 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "/home/user/BCGIT/ASTRO/bclib.h"
 
+// convert from J2000 to B1875 for constellations
 
+// TODO: improve for any date
+
+void j2000tob1875(double ra, double dec, double *raout, double *decout) {
+
+  double matrix[3][3];
+
+  pxform_c("J2000", "EQEQDATE", -3944592000, matrix);
+
+  for (int i=0; i<3; i++) {
+    for (int j=0; j<3; j++) {
+      printf("I: %d, J: %d, V: %f\n", i, j, matrix[i][j]);
+    }
+  }
+}
 
 int constellationNumber(double ra, double dec) {
 
@@ -19,30 +32,57 @@ static int consts[] = {84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 8
 
  // TODO: make this more efficient via binary search
 
- int i, j, raSize = sizeof(ras)/sizeof(ras[0]), decSize = sizeof(decs)/sizeof(decs[0]), constSize = sizeof(consts)/sizeof(consts[0]);
+
+ int i, j, raSize = sizeof(ras)/sizeof(ras[0]), decSize = sizeof(decs)/sizeof(decs[0]), constsSize = sizeof(consts)/sizeof(consts[0]);
 
  // printf("SIZES: %d %d %d %d %d %d %d\n", sizeof(ras)/sizeof(ras[0]), sizeof(decs)/sizeof(decs[0]), sizeof(consts)/sizeof(consts[0]), sizeof(names)/sizeof(names[0]), sizeof(ras[0]), sizeof(consts[0]), sizeof(names[0]));
 
  for (i=0; i < raSize; i++) {if (ra < ras[i]) {break;}}
- for (j=0; j < decSize; j++) {if (dec < decs[j]) {break;}}
+ for (j=0; j < decSize; j++) {if (dec > decs[j]) {break;}}
 
- int constVal = j*raSize + decSize;
+ int constVal = (j-1)*(raSize-1) + i-1;
 
- printf("I: %d, J: %d, CONSTVAL: %d (%d = %s)\n", i, j, constVal, consts[constVal], names[consts[constVal]]);
+ //  printf("SIZE OF CONSTS, DECS, RAS: %d %d %d\n", constsSize, decSize, raSize);
 
- //  for (j=0; j < ; j++) {
+ //  printf("RA: %f, DEC: %f, I: %d, J: %d, POS: %d\n", ra/3600, dec/3600, i, j, constVal);
+
+ //  printf("ELT: %d\n", consts[constVal]);
+ //  printf("CONST: %s\n", names[consts[constVal]]);
+
+ printf("RA: %f, DEC: %f, NAME: %s\n", ra/3600, dec/3600, names[consts[constVal]]);
+
+ // if (consts[constVal] < constsSize) {
+ //   printf("NAME: %s\n", names[consts[constVal]]);
+ // } else {
+ //   printf("NAME: NOT IN ARRAY!\n");
+ // }
 
  return -1;
 
 }
 
 
-// NOTE: order is ra, dec, ra is in hours, dec is in degrees
+// NOTE: order is ra, dec; ra is in hours, dec is in degrees
 
 // TODO: radians
 
+// TODO: special case for -90 (maybe if dec <= -90 return OCTANS?)
+
 int main(int argc, char **argv) {
 
-  constellationNumber(0, 89);
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+ 
+  double raout, decout;
+
+  //  for (int dec=-90; dec <= 90; dec+=30) {
+  //    if (dec == -90) {continue;}
+  //    for (int ra=0; ra <= 24; ra+=3) {
+  //      constellationNumber(ra, dec);
+  //}
+  //  }
+
+  j2000tob1875(0, 0, &raout, &decout);
+
   return 0;
 }
+
