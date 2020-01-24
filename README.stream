@@ -4,6 +4,10 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 23 Jan 2020, primarily for my reference
 
+check return value is actually near 0
+
+if error returned, do something with it
+
 FIX ERROR OF DOUBLE HELIACAL RISING FOR NEAR POLES because sun's
 sidereal rising can decrease (mention error first)
 
