@@ -2,7 +2,11 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 23 Jan 2020, primarily for my reference
+Stuff I plan to stream 24 Jan 2020, primarily for my reference
+
+constellation boundaries testing
+
+jovian eclipse calculations (w/ 60s tolerance) are done in 20200115
 
 check return value is actually near 0
 
@@ -10,8 +14,6 @@ if error returned, do something with it
 
 FIX ERROR OF DOUBLE HELIACAL RISING FOR NEAR POLES because sun's
 sidereal rising can decrease (mention error first)
-
-constellation boundaries
 
 https://stellarium-web.org/?date=2020-01-01
 
