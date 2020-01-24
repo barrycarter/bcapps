@@ -17,15 +17,32 @@ static int consts[] = {84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 8
  ra *= 3600;
  dec *= 3600;
 
- // TODO: make this more efficient
+ // TODO: make this more efficient via binary search
+
+ int i, j, raSize = sizeof(ras)/sizeof(ras[0]), decSize = sizeof(decs)/sizeof(decs[0]), constSize = sizeof(consts)/sizeof(consts[0]);
+
+ // printf("SIZES: %d %d %d %d %d %d %d\n", sizeof(ras)/sizeof(ras[0]), sizeof(decs)/sizeof(decs[0]), sizeof(consts)/sizeof(consts[0]), sizeof(names)/sizeof(names[0]), sizeof(ras[0]), sizeof(consts[0]), sizeof(names[0]));
+
+ for (i=0; i < raSize; i++) {if (ra < ras[i]) {break;}}
+ for (j=0; j < decSize; j++) {if (dec < decs[j]) {break;}}
+
+ int constVal = j*raSize + decSize;
+
+ printf("I: %d, J: %d, CONSTVAL: %d (%d = %s)\n", i, j, constVal, consts[constVal], names[consts[constVal]]);
+
+ //  for (j=0; j < ; j++) {
 
  return -1;
 
 }
 
 
+// NOTE: order is ra, dec, ra is in hours, dec is in degrees
+
+// TODO: radians
+
 int main(int argc, char **argv) {
 
-  constellationNumber(1, 1);
+  constellationNumber(0, 89);
   return 0;
 }
