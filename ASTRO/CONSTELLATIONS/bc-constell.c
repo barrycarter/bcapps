@@ -91,7 +91,15 @@ int main(int argc, char **argv) {
   //}
   //  }
 
-  j2000tob1875(0, 0, &raout, &decout);
+  // TODO: worry about corner cases, +-90 dec, 0 and 24h ra
+  // (precession might send beond bounds, need to fmod)
+
+  double ra = 1;
+  double dec = 15;
+
+  j2000tob1875(ra/12*pi_c(), dec/180*pi_c(), &raout, &decout);
+
+  printf("RA: %f, DEC: %f\n", raout/pi_c()*12, decout/pi_c()*180);
 
   return 0;
 }
