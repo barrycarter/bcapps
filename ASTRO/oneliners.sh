@@ -1,5 +1,18 @@
 #!/bin/sh
 
+zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[29] eq "") {next;} $F[29] = uc($F[29]); print "printf(\"$F[0] $F[29] %s\\n\", constellation($F[7]*15/180*pi_c(), $F[8]/180*pi_c()));"' | tail -n +2 | sort -R | head -5000 > /tmp/includeme.c; touch bc-constell.c; make; echo START; bc-constell | perl -anle 'if ($F[1] ne $F[2]) {print $_}'; echo END
+
+# print "$F[0] $F[7], $F[8], $F[29]"'
+
+exit;
+
+# perl -F, -anle '$F[0]=~s/\{\"(.*)\"$/$1/; $x=$F[0]; $x=~s/^.*(...)$/$1/; print "printf(\"$F[0] $x %s\\n\", constellation($F[1]*15/180*pi_c(), $F[2]/180*pi_c()));"' namradecmag4math.m
+
+bc-constell | sort -u | perl -anle 'if ($F[1]=~/\d/) {next;} if ($F[1] ne $F[2]) {print $_}'
+
+
+exit;
+
 # convert HYG db to JS useful form
 
 # zcat hygdata_v3.csv.gz | perl -F, -anle 'print "stars[$F[0]]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"'

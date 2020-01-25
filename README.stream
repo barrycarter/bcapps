@@ -2,9 +2,35 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 24 Jan 2020, primarily for my reference
+Stuff I plan to stream 25 Jan 2020, primarily for my reference
 
-TODO: commenify my code?
+72017 VIR LIB
+
+72017,72243,,,,,,14.774182,-1.446921,100000.0000,-14.27,-15.60,0.0,8.960,-11.040,K5III,1.595,-74741.219970,-66388.056028,-2525.084959,-0.00445122,0.00529882,-0.00756003,3.8678717576495183,-0.0252535337706725,-0.00000006918291221527778,-0.000000075630934,,,Vir,1,72017,,2269864.851883821,,,
+
+HIP 72243
+
+92907 SCT SGR
+
+92907,93200,176078,,,,,18.983698,-12.587785,153.8462,5.72,0.48,0.0,7.020,1.085,B9.5V,0.091,38.241877,-145.196597,-33.528498,0.00000415,0.00000101,0.00000035,4.969920384649248,-0.21969828763783125,0.000000027731342527777774,0.000000002327105,,,Sct,1,92907,,32.06269324505466,,,
+
+27992 ORI MON
+
+27992,28063,40043,,,,,5.933336,-8.622181,172.7116,5.01,-0.93,0.0,9.500,3.313,F5,0.427,2.980033,170.733681,-25.892596,-0.00000420,-0.00000004,-0.00000077,1.5533438195301972,-0.15048544045171125,0.000000024289165395833332,-0.000000004508767,,,Ori,1,27992,,4.119077848677374,,,
+
+
+
+
+
+bad cases for precession (later ok because ranam* whatever only gives
+minute precision)
+
+16LYN LYN AUR
+1LYN LYN CAM
+
+
+
+TODO: commentify my code?
 
 TODO: "boil down" stream when I answer questions, not multiple hours
 
@@ -495,6 +521,10 @@ This is not not a list of possible future streams
   - youtube/twitch/dl confirmation matches
 
   - what Earth data do I have (landuse/cover/pop density/animals/etc)
+
+  - how fast does the Sun's shadow move (w/ disclaimers vastly larger
+  than answer)
+
 
 TO FIX xclock:
 
