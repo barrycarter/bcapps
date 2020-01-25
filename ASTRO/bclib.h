@@ -895,3 +895,114 @@ char *stardate(SpiceDouble et) {
   timout_c(et, format, 1024, result);
   return result;
 }
+
+
+/**
+
+Given the ra and dec in J2000 radians, return the ra and dec in B1875 radians
+
+TODO: improve for any date
+
+*/
+
+void j2000tob1875(double ra, double dec, double *raout, double *decout) {
+
+  double matrix[3][3], pos[3], newpos[3], newr;
+
+  // TODO: confirm -3944592000 is B1875 (may be off by some seconds:
+  // leap seconds, noon vs midnight)
+
+  // matrix to convert from J2000 to equator of date where -3944592000 is B1875
+  pxform_c("J2000", "EQEQDATE", -3944592000, matrix);
+
+  // convert input ra/dec to xyz (halfpi_c()-dec because function
+  // wants "colatitude", not "latitude")
+
+  sphrec_c(1, halfpi_c()-dec, ra, pos);
+
+  // multiply converted input by matrix
+  mxv_c(matrix, pos, newpos);
+
+  // convert output xyz to ra/dec
+  recsph_c(newpos, &newr, decout, raout);
+
+  // fix decout to be declination, not "codeclination"
+  *decout = halfpi_c()-*decout;
+
+}
+
+/**
+
+Given the J2000 ra and dec in radians, return the constellation number of that ra and dec, where number is defined by the names[] array in constellationName
+
+*/
+
+int constellationNumber(double ra, double dec) {
+
+#include "/home/user/BCGIT/ASTRO/CONSTELLATIONS/bc-large-arrays.h"
+
+  // convert J2000 dec to B1875 ra/dec (in radians)
+  double ra1875, dec1875;
+  j2000tob1875(ra, dec, &ra1875, &dec1875);
+
+  // correct ra1875 to lie between 0 and 2*pi
+
+  if (ra1875 < 0) {ra1875 += twopi_c();}
+  if (ra1875 > twopi_c()) {ra1875 -= twopi_c();}
+
+  // convert ra in radians to ra in hours*3600
+  ra1875 *= 180/pi_c()/15*3600;
+
+  // convert dec in radians to dec in degrees*3600 (seconds)
+  dec1875 *= 180/pi_c()*3600;
+
+  int i, j, raSize = sizeof(ras)/sizeof(ras[0]), decSize = sizeof(decs)/sizeof(decs[0]);
+
+ // find position of coordinate in ras and decs arrays
+ // TODO: make this more efficient via binary search
+
+ for (i=0; i < raSize; i++) {if (ra1875 < ras[i]) {break;}}
+ for (j=0; j < decSize; j++) {if (dec1875 > decs[j]) {break;}}
+
+ // position in consts containing constellation number
+ int constVal = (j-1)*(raSize-1) + i-1;
+
+ // return the constellation number from array
+ return consts[constVal];
+}
+
+/**
+
+Given an object (by NAIF id) and an ephemeris time et, return the
+geocentric constellation number for that object in the EQEQDATE frame
+
+*/
+
+int obj2ConstellationNumber(int obj, double et) {
+
+  double result[6], lt, r, ra, dec;
+
+  spkezp_c(obj, et, "EQEQDATE", "CN+S", 399, result, &lt);
+
+  recsph_c(result, &r, &dec, &ra);
+
+  dec = halfpi_c()-dec;
+
+  return constellationNumber(ra, dec);
+
+}
+
+/**
+
+Given a constellation number as defined in constellationNumber (the
+names array here), return the associated three letter IAU abbreviation
+
+*/
+
+char *constellationName(int constNumber) {
+
+  char *names[] = {"AND", "ANT", "APS", "AQL", "AQR", "ARI", "ARA", "AUR", "BOO", "CAE", "CAM", "CAN", "CAP", "CAR", "CAS", "CEN", "CEP", "CET", "CHA", "CIR", "CMA", "CMI", "CNC", "COL", "COM", "CRA", "CRB", "CRT", "CRU", "CRV", "CVN", "CYG", "DEL", "DOR", "DRA", "EQU", "ERI", "FOR", "GEM", "GRU", "HER", "HOR", "HYA", "HYI", "IND", "LAC", "LEO", "LEP", "LIB", "LMI", "LUP", "LYN", "LYR", "MEN", "MIC", "MON", "MUS", "NOR", "OCT", "OPH", "ORI", "PAV", "PEG", "PER", "PHE", "PIC", "PSA", "PSC", "PUP", "PYX", "RET", "SCL", "SCO", "SCT", "SER", "SEX", "SGE", "SGR", "TAU", "TEL", "TRA", "TRI", "TUC", "UMA", "UMI", "VEL", "VIR", "VOL", "VUL"};
+
+  return names[constNumber];
+
+}
