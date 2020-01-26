@@ -14,7 +14,7 @@ TODO: "boil down" stream when I answer questions, not multiple hours
 
 jovian eclipse calculations (w/ 60s tolerance) are done in 20200115
 
-check return value is actually near 0
+heliacal: check return value is actually near 0
 
 if error returned, do something with it
 

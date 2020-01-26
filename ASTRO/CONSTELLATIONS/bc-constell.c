@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
 
   // char name[100], oldname[100];
 
-  int naif = 301;
+  int naif = 299;
 
   double interval = 3600;
 
