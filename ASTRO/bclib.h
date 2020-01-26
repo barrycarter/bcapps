@@ -888,9 +888,12 @@ SpiceDouble penUmbralData(SpiceDouble et, SpiceInt s, SpiceInt t, SpiceInt q, Sp
 }
 
 // TODO: allow dates beyond 0-9999
+// TODO: note we are changing a static variable each time = bad?
 
 char *stardate(SpiceDouble et) {
-  static char result[1024];
+
+  char *result = malloc(sizeof(char)*1024);
+    //  static char result[1024];
   char *format = "YYYYMMDD.HRMNSC";
   timout_c(et, format, 1024, result);
   return result;
@@ -956,6 +959,8 @@ int constellationNumber(double ra, double dec) {
   // convert dec in radians to dec in degrees*3600 (seconds)
   dec1875 *= 180/pi_c()*3600;
 
+  printf("RA1875: %f DEC1875: %f\n", ra1875, dec1875);
+
   int i, j, raSize = sizeof(ras)/sizeof(ras[0]), decSize = sizeof(decs)/sizeof(decs[0]);
 
  // find position of coordinate in ras and decs arrays
@@ -982,11 +987,13 @@ int obj2ConstellationNumber(int obj, double et) {
 
   double result[6], lt, r, ra, dec;
 
-  spkezp_c(obj, et, "EQEQDATE", "CN+S", 399, result, &lt);
+  spkezp_c(obj, et, "J2000", "CN+S", 399, result, &lt);
 
   recsph_c(result, &r, &dec, &ra);
 
   dec = halfpi_c()-dec;
+
+  printf("ET: %f, RA: %f, DEC: %f\n", et, ra, dec);
 
   return constellationNumber(ra, dec);
 
