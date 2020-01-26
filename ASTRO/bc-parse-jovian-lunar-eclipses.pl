@@ -1,5 +1,15 @@
 #!/bin/perl
 
+# Parses jupiter-gallilean-eclipses.txt.bz2 and returns for each moon
+# and each type of eclipse the following:
+
+# field 1: moon
+# field 2: type of eclipse
+# field 3: shortest eclipse of type
+# field 4: mean eclipse of type
+# field 5: max eclipse of type
+# field 6 and 7: number of eclipses
+
 require "/usr/local/lib/bclib.pl";
 
 chdir("$bclib{githome}/ASTRO")||die("Can't chdir");
