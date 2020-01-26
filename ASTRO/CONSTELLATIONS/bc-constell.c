@@ -38,11 +38,10 @@ for (int i=0; i<nres; i++) {
 
     wnfetd_c(&result,i,&beg,&end);
 
-    printf("%d %f %f %s %s %s %s %s\n", naif, beg, end, 
-	   stardate(beg), stardate(end), 
-	   constellationName(obj2ConstellationNumber(naif, beg)), 
-	   constellationName(obj2ConstellationNumber(naif, (beg+end)/2)), 
-	   constellationName(obj2ConstellationNumber(naif, end+1)));
+        printf("%d %f %f %s %s %s %s \n", naif, beg, end, 
+	       stardate(beg), stardate(end), 
+	       constellationName(obj2ConstellationNumber(naif, beg)), 
+	       constellationName(obj2ConstellationNumber(naif, end+interval)));
  }
 
   /*

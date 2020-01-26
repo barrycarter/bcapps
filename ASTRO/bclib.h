@@ -959,8 +959,6 @@ int constellationNumber(double ra, double dec) {
   // convert dec in radians to dec in degrees*3600 (seconds)
   dec1875 *= 180/pi_c()*3600;
 
-  printf("RA1875: %f DEC1875: %f\n", ra1875, dec1875);
-
   int i, j, raSize = sizeof(ras)/sizeof(ras[0]), decSize = sizeof(decs)/sizeof(decs[0]);
 
  // find position of coordinate in ras and decs arrays
@@ -992,8 +990,6 @@ int obj2ConstellationNumber(int obj, double et) {
   recsph_c(result, &r, &dec, &ra);
 
   dec = halfpi_c()-dec;
-
-  printf("ET: %f, RA: %f, DEC: %f\n", et, ra, dec);
 
   return constellationNumber(ra, dec);
 
