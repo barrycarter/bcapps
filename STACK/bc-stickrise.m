@@ -1,3 +1,8 @@
+
+
+
+<formulas>
+
 (* formulas start here *)
 
 (* kludge for 'display' fuckery *)
@@ -7,30 +12,49 @@ showit := Module[{file}, file = StringJoin["/tmp/math",
      Export[file, %]; 
      Run[StringJoin["display -update 1 ", file, "&"]]; Return[file]; ]
 
-conds = {-Pi/2<dec<Pi/2, -Pi/2<lat<Pi/2, -Pi<ha<Pi};
+conds = {-Pi/2 < d, d < Pi/2, -Pi/2 < lat, lat < Pi/2, -Pi < ha, ha < Pi};
 
-az[ha_, dec_, lat_] = ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat], 
-    -(Cos[dec]*Sin[ha])]
+az[ha_, d_, lat_] = ArcTan[Cos[lat]*Sin[d] - Cos[d]*Cos[ha]*Sin[lat], 
+    -(Cos[d]*Sin[ha])];
 
-el[ha_, dec_, lat_] = ArcTan[Sqrt[Cos[dec]^2*Sin[ha]^2 + 
-      (Cos[lat]*Sin[dec] - Cos[dec]*Cos[ha]*Sin[lat])^2], 
-    Cos[dec]*Cos[ha]*Cos[lat] + Sin[dec]*Sin[lat]]
+el[ha_, d_, lat_] = ArcTan[Sqrt[Cos[d]^2*Sin[ha]^2 + 
+      (Cos[lat]*Sin[d] - Cos[d]*Cos[ha]*Sin[lat])^2], 
+    Cos[d]*Cos[ha]*Cos[lat] + Sin[d]*Sin[lat]];
 
-r[ha_, dec_, lat_]= FullSimplify[Cot[el[ha,dec,lat]],conds]
+r[ha_, d_, lat_]= Sqrt[Cos[d]^2*Sin[ha]^2 + (Cos[lat]*Sin[d] -
+ Cos[d]*Cos[ha]*Sin[lat])^2]/ (Cos[d]*Cos[ha]*Cos[lat] +
+ Sin[d]*Sin[lat]);
 
-theta[ha_, dec_, lat_] = az[ha,dec,lat]+Pi
+theta[ha_, d_, lat_] = Pi + ArcTan[Cos[lat]*Sin[d] -
+Cos[d]*Cos[ha]*Sin[lat], -(Cos[d]*Sin[ha])];
 
-x[ha_, dec_, lat_] = FullSimplify[r[ha,dec,lat]*Cos[theta[ha,dec,lat]],conds]
+x[ha_, d_, lat_] = (-Cos[lat] +
+Cos[ha]*Cot[d]*Sin[lat])/(Cos[ha]*Cos[lat]*Cot[d] + Sin[lat]);
 
-y[ha_, dec_, lat_] = FullSimplify[r[ha,dec,lat]*Sin[theta[ha,dec,lat]],conds]
+y[ha_, d_, lat_] = (Cos[lat]*Cot[ha] + Csc[ha]*Sin[lat]*Tan[d])^(-1);
 
-dx[ha_, dec_, lat_] = FullSimplify[D[x[ha,dec,lat],ha],conds]
+dx[ha_, d_, lat_] = -((Cot[d]*Sin[ha])/(Cos[ha]*Cos[lat]*Cot[d]
++ Sin[lat])^2);
 
-dy[ha_, dec_, lat_] = FullSimplify[D[y[ha,dec,lat],ha],conds]
+dy[ha_, d_, lat_] = (Csc[ha]*(Cos[lat]*Csc[ha] +
+ Cot[ha]*Sin[lat]*Tan[d]))/ (Cos[lat]*Cot[ha] +
+ Csc[ha]*Sin[lat]*Tan[d])^2;
 
-ds2[ha_, dec_, lat_] = FullSimplify[dx[ha,dec,lat]^2 + dy[ha,dec,lat]^2,conds]
+ds2[ha_, d_, lat_] = (Cot[d]^2*(Cos[lat]^2*Cot[d]^2 + Sin[ha]^2 + 
+   Cos[ha]*(Cos[ha]*Sin[lat]^2 + Cot[d]*Sin[2*lat])))/
+ (Cos[ha]*Cos[lat]*Cot[d] + Sin[lat])^4
 
-ds[ha_,dec_,lat_] = FullSimplify[Sqrt[ds2[ha,dec,lat]], conds]
+ds[ha_,d_,lat_] = Sqrt[(Cot[d]^2*(Cos[lat]^2*Cot[d]^2 +
+    Sin[ha]^2 + Cos[ha]*(Cos[ha]*Sin[lat]^2 + Cot[d]*Sin[2*lat])))/
+    (Cos[ha]*Cos[lat]*Cot[d] + Sin[lat])^4]
+
+
+</formulas>
+
+(* work below 27 Jan 2020 using something *)
+
+
+
 
 (* NOTE: stop cut/paste here for now *)
 
@@ -153,6 +177,8 @@ https://www.e-education.psu.edu/eme810/node/575
 
 (*
 
+<answer>
+
 http://astronomy.stackexchange.com/questions/19619/how-to-make-motion-of-the-sun-more-apparent-at-seconds-scale
 
 TODO: SUMMARY ANSWER HERE
@@ -161,24 +187,26 @@ TODO: 15 deg cutoff 3.73205
 
 (* ANSWER STARTS HERE *)
 
-[This is not an answer; it just represents the work I've done so far on this problem at https://github.com/barrycarter/bcapps/blob/master/STACK/bc-stickrise.m -- I am marking it as a community wiki answer so others can add to it (I may add to it myself)]
+This is not an answer, but may be helpful.
 
 We know from https://astronomy.stackexchange.com/a/14508/21 that the Sun's azimuth and elevation at any given time is:
 
 $
-   \text{azimuth}=\tan ^{-1}(\sin (\delta ) \cos (\phi )-\cos (\delta ) \cos 
-    (\omega ) \sin (\phi ),-\cos (\delta ) \sin (\omega ))
+   \text{azimuth}=\tan ^{-1}(\sin (d ) \cos (\phi )-\cos (d ) \cos 
+    (\omega ) \sin (\phi ),-\cos (d ) \sin (\omega ))
 $
 $
-\text{elevation}=\tan ^{-1}\left(\sqrt{(\sin (\delta ) \cos (\phi )-\cos 
-    (\delta ) \cos (\omega ) \sin (\phi ))^2+\cos ^2(\delta ) \sin ^2(\omega 
-    )},\cos (\delta ) \cos (\omega ) \cos (\phi )+\sin (\delta ) \sin (\phi 
+\text{elevation}=\tan ^{-1}\left(\sqrt{(\sin (d ) \cos (\phi )-\cos 
+    (d ) \cos (\omega ) \sin (\phi ))^2+\cos ^2(d ) \sin ^2(\omega 
+    )},\cos (d ) \cos (\omega ) \cos (\phi )+\sin (d ) \sin (\phi 
     )\right) 
 $
 
 where:
 
-  - $\delta$ is the Sun's declination
+NOTE TO SELF: delta = declination = d
+
+  - $d$ is the Sun's declination
   - $\phi$ is the observer's latitude
   - $\omega$ is the Sun's "hour angle":
     - $\omega$ is zero at local solar noon
@@ -186,25 +214,25 @@ where:
     - $\omega$ is $-15 {}^{\circ}$ or $-\frac{\pi }{12}$ 1 hour before local solar noon (ie, 11am on a sundial)
     - $\omega$ is $\pm180 {}^{\circ}$ or $\pm\pi$ at local solar midnight
     - $\omega$ is $-90 {}^{\circ}$ or $-\frac{\pi }{2}$ 6 hours before local solar noon (ie, 6am on a sundial), and so on.
-    - Conversely, $\omega$ is $1$ 3h49m11s after noon (that's $\frac{24}{2 \pi }$ converted to hms). This quantity is important and I'll refer to it as the "radian hour" below (this is nonstandard terminology).
+    - Conversely, $\omega$ is equal to $1$ when it is 3h49m11s after noon (that's $\frac{24}{2 \pi }$ converted to hms). This quantity is important and I'll refer to it as the "radian hour" below (this is nonstandard terminology).
 
 Of course, this applies only to the center of the Sun, ignores the fact the Sun is a disk, and also ignores refraction.
 
 Now, consider a stick placed vertically into the ground with a height of 1m (any unit would do, just using 'm' for convenience). We will assume the stick is transparent with an infinitesimally small opaque point at the top.
 
-The direction in which the stick's shadow points ($\theta$) is opposite the Sun's azimuth. For example, if the Sun is due south, the shadow will point due north:
+The direction in which the stick's shadow points ($\theta$) is opposite the Sun's azimuth. For example, if the Sun is due south, the shadow will point due north. The opposite of the azimuth angle is simply the angle plus 180 degrees or, in radians, $\pi$:
 
 $
-   \theta (\omega ,\delta ,\phi )=\tan ^{-1}(\sin (\delta ) \cos (\phi )-\cos
-    (\delta ) \cos (\omega ) \sin (\phi ),-\cos (\delta ) \sin (\omega ))+\pi
+   \theta (\omega ,d ,\phi )=\tan ^{-1}(\sin (d ) \cos (\phi )-\cos
+    (d ) \cos (\omega ) \sin (\phi ),-\cos (d ) \sin (\omega ))+\pi
 $
 
 The length of a the stick's shadow ($r$) is the cotangent of the Sun's elevation, which "simplifies" to:
 
 $
-   r(\omega ,\delta ,\phi )=\frac{\sqrt{(\sin (\delta ) \cos (\phi )-\cos
-    (\delta ) \cos (\omega ) \sin (\phi ))^2+\cos ^2(\delta ) \sin ^2(\omega
-    )}}{\cos (\delta ) \cos (\omega ) \cos (\phi )+\sin (\delta ) \sin (\phi )}
+   r(\omega ,d ,\phi )=\frac{\sqrt{(\sin (d ) \cos (\phi )-\cos
+    (d ) \cos (\omega ) \sin (\phi ))^2+\cos ^2(d ) \sin ^2(\omega
+    )}}{\cos (d ) \cos (\omega ) \cos (\phi )+\sin (d ) \sin (\phi )}
 $
 
 Note that this formula only makes sense when $r$ is nonnegative.
@@ -212,43 +240,43 @@ Note that this formula only makes sense when $r$ is nonnegative.
 Although we could continue working in polar coordinates, it might be easier to convert to Cartesian coordinates. Using the standard transformation formulas, the x and y positions of the tip of the stick's shadow (where north is the positive x axis and west is the positive y axis) is:
 
 $
-   x(\omega ,\delta ,\phi )=\frac{\cot (\delta ) \cos (\omega ) \sin (\phi
-    )-\cos (\phi )}{\cot (\delta ) \cos (\omega ) \cos (\phi )+\sin (\phi )}
+   x(\omega ,d ,\phi )=\frac{\cot (d ) \cos (\omega ) \sin (\phi
+    )-\cos (\phi )}{\cot (d ) \cos (\omega ) \cos (\phi )+\sin (\phi )}
 $
 $
-   y(\omega ,\delta ,\phi )=\frac{1}{\tan (\delta ) \csc (\omega ) \sin (\phi
+   y(\omega ,d ,\phi )=\frac{1}{\tan (d ) \csc (\omega ) \sin (\phi
     )+\cot (\omega ) \cos (\phi )}
 $
 
-
-
-Of course, we're interested in the speed of the shadow, not just the position, so we differentiate with respect to $\omega$, the Sun's hour angle, which we're using to measure time:
+Of course, we're interested in the **speed** of the shadow, not just the **position** of the shadow, so we differentiate with respect to $\omega$, the Sun's hour angle, which we're using to measure time:
 
 $
-   \frac{\partial x(\omega ,\delta ,\phi )}{\partial \omega }=-\frac{\cot
-    (\delta ) \sin (\omega )}{(\cot (\delta ) \cos (\omega ) \cos (\phi )+\sin
+   \frac{\partial x(\omega ,d ,\phi )}{\partial \omega }=-\frac{\cot
+    (d ) \sin (\omega )}{(\cot (d ) \cos (\omega ) \cos (\phi )+\sin
     (\phi ))^2}
 $
 
 $
-  \frac{\partial y(\omega ,\delta ,\phi )}{\partial \omega }=\frac{\csc (\omega
-    ) (\tan (\delta ) \cot (\omega ) \sin (\phi )+\csc (\omega ) \cos (\phi
-    ))}{(\tan (\delta ) \csc (\omega ) \sin (\phi )+\cot (\omega ) \cos (\phi
+  \frac{\partial y(\omega ,d ,\phi )}{\partial \omega }=\frac{\csc (\omega
+    ) (\tan (d ) \cot (\omega ) \sin (\phi )+\csc (\omega ) \cos (\phi
+    ))}{(\tan (d ) \csc (\omega ) \sin (\phi )+\cot (\omega ) \cos (\phi
     ))^2}
 $
 
 Finally, using the Pythagorean Theorem for differentials, we can find the total speed, which we'll refer to as $\text{ds}$:
 
 $
-   \text{ds}(\omega ,\delta ,\phi )=\sqrt{\left(\frac{\partial x(\omega ,\delta
-   ,\phi )}{\partial \omega }\right)^2+\left(\frac{\partial y(\omega ,\delta
-   ,\phi )}{\partial \omega }\right)^2}=\sqrt{\frac{\cot ^2(\delta ) \left(\cos
-    (\omega ) \left(\cot (\delta ) \sin (2 \phi )+\cos (\omega ) \sin ^2(\phi
-    )\right)+\cot ^2(\delta ) \cos ^2(\phi )+\sin ^2(\omega )\right)}{(\cot
-    (\delta ) \cos (\omega ) \cos (\phi )+\sin (\phi ))^4}}
+   \text{ds}(\omega ,d ,\phi )=\sqrt{\left(\frac{\partial x(\omega ,d
+   ,\phi )}{\partial \omega }\right)^2+\left(\frac{\partial y(\omega ,d
+   ,\phi )}{\partial \omega }\right)^2}=\sqrt{\frac{\cot ^2(d ) \left(\cos
+    (\omega ) \left(\cot (d ) \sin (2 \phi )+\cos (\omega ) \sin ^2(\phi
+    )\right)+\cot ^2(d ) \cos ^2(\phi )+\sin ^2(\omega )\right)}{(\cot
+    (d ) \cos (\omega ) \cos (\phi )+\sin (\phi ))^4}}
 $
 
 Note the unit here is meters per radian hour (with radian hour defined as above).
+
+
 
 (* TODO: I may have dec backwards somewhere, winter should have later riset *)
 (* no, its just that 0h = culmination = noon, fixed by change of range *)
@@ -259,6 +287,9 @@ Since we won't be dealing the Sun near the horizon, we can ignore refraction, wh
 
 
 To compensate for the Sun being a disk, we will note those numbers are ***PUT SYMBOL HERE*** +- 16 minutes of arc (about 0.004654 radians).  ***** MY PLAN HERE *****
+
+</answer>
+
 
 dsMod1[ha_,dec_,lat_] = If[
  el[ha,dec,lat] < 0 || Abs[dratio[ha,dec,lat]] > .1, 0,
@@ -378,8 +409,8 @@ where the angles are now measured in radians and:
 The direction $\theta$ in which a vertical stick's shadow points is opposite the Sun's azimuth. For example, if the Sun is due south, the shadow will point due north. For plotting purposes, we'd like north to be the positive y axis (as on standard maps), which we can achieve by adding $\frac{3 \pi }{2}$. This gives us:
 
 $
-  \theta =\frac{3 \pi }{2}-\tan ^{-1}\left(\cos (\delta ) \cos \left(\frac{\pi 
-    h}{12}\right) \sin (\phi )+\sin (\delta ) \cos (\phi ),\cos (\delta ) \sin
+  \theta =\frac{3 \pi }{2}-\tan ^{-1}\left(\cos (d ) \cos \left(\frac{\pi 
+    h}{12}\right) \sin (\phi )+\sin (d ) \cos (\phi ),\cos (d ) \sin
     \left(\frac{\pi  h}{12}\right)\right)
 $
 
@@ -389,19 +420,19 @@ $
 The length of a vertical stick's shadow ($r$) is the cotangent of the Sun's elevation, or:
 
 $
-   r=\frac{\sqrt{\left(\cos (\delta ) \cos \left(\frac{\pi  h}{12}\right) \sin
-    (\phi )+\sin (\delta ) \cos (\phi )\right)^2+\cos ^2(\delta ) \sin
-    ^2\left(\frac{\pi  h}{12}\right)}}{\sin (\delta ) \sin (\phi )-\cos (\delta
+   r=\frac{\sqrt{\left(\cos (d ) \cos \left(\frac{\pi  h}{12}\right) \sin
+    (\phi )+\sin (d ) \cos (\phi )\right)^2+\cos ^2(d ) \sin
+    ^2\left(\frac{\pi  h}{12}\right)}}{\sin (d ) \sin (\phi )-\cos (d
     ) \cos \left(\frac{\pi  h}{12}\right) \cos (\phi )}
 $
 
 $
-   x=\frac{1}{\cot \left(\frac{\pi  h}{12}\right) \cos (\phi )-\tan (\delta )
+   x=\frac{1}{\cot \left(\frac{\pi  h}{12}\right) \cos (\phi )-\tan (d )
     \csc \left(\frac{\pi  h}{12}\right) \sin (\phi )}
 $
 $
-   y=\frac{\cot (\delta ) \cos \left(\frac{\pi  h}{12}\right) \sin (\phi )+\cos
-    (\phi )}{\cot (\delta ) \cos \left(\frac{\pi  h}{12}\right) \cos (\phi
+   y=\frac{\cot (d ) \cos \left(\frac{\pi  h}{12}\right) \sin (\phi )+\cos
+    (\phi )}{\cot (d ) \cos \left(\frac{\pi  h}{12}\right) \cos (\phi
     )-\sin (\phi )}
 $
 
@@ -791,3 +822,6 @@ TODO: ignoring decl changs, so insane precision = bad?
 3 deg for Stellarium to show problems
 
  ignoring earth curvature, relativity, sun motion during seconds from closest to half way points
+
+TODO: mention code: ; it just represents the work I've done so far on this problem at https://github.com/barrycarter/bcapps/blob/master/STACK/bc-stickrise.m -- I am marking it as a community wiki answer so others can add to it (I may add to it myself)]
+
