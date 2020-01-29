@@ -1,4 +1,4 @@
-
+(** SEE bc-stickrise2.m for latest version **)
 
 
 <formulas>
