@@ -6,6 +6,9 @@
 # weeks - number of weeks to show (default 5)
 # font1 - size for all "fixed" text on calendar excl date
 # eventsize - size for events
+# nosid - don't print sidereal time
+# nojd - don't print julian date
+# nounix - don't print Unix date
 
 require "/usr/local/lib/bclib.pl";
 
@@ -128,11 +131,20 @@ for $week (-1..$globopts{weeks}-1) {
     $dx = $x1+$xwid-2.5*$fwd{$globopts{datesize}};
 
     # sidereal time
-    print A join(",", "string",64,64,64,$x1+4,$y1+$ywid-9,$globopts{font1},$sd),"\n";
+    unless ($globopts{nosid}) {
+      print A join(",", "string",64,64,64,$x1+4,$y1+$ywid-9,$globopts{font1},$sd),"\n";
+    }
+
     # JD bottom right (do I really want this?)
-    print A join(",", "string",64,64,64,$x1+$xwid-35,$y1+$ywid-9,$globopts{font1},$jd), "\n";
+    unless ($globopts{nojd}) {
+      print A join(",", "string",64,64,64,$x1+$xwid-35,$y1+$ywid-9,$globopts{font1},$jd), "\n";
+    }
+
     # Unix date (seconds/86400 for most of day)
-    print A join(",", "string",64,64,64,$x1+$xwid-70,$y1+$ywid-9,$globopts{font1}, sprintf("%d", $date/86400)), "\n";
+    unless ($globopts{nounix}) {
+      print A join(",", "string",64,64,64,$x1+$xwid-70,$y1+$ywid-9,$globopts{font1}, sprintf("%d", $date/86400)), "\n";
+    }
+
 #    debug("DATE",sprintf("%d", $date/86400));
 
     # must come before red box to avoid overlap
