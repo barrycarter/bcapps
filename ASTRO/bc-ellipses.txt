@@ -1,3 +1,48 @@
+(*
+
+Notes:
+
+F and G are foci
+
+2a is sum of dists for any point
+
+*)
+
+(* formula for integral *)
+
+area[x_, a_, b_] = (b*(x*Sqrt[a^2 - x^2] + a^2*ArcTan[x/Sqrt[a^2 -
+x^2]]))/(2*a);
+
+(* short names for lengths *)
+
+trans = {lenOF -> f, lenOB -> b, lenOA -> a, lenOG -> f};
+
+(* conditions *)
+
+conds = {b > 0, a > b, f > 0, Element[{x,y}, Reals]};
+
+rels = Flatten[{
+
+(* sum of dists for any point is 2a *)
+
+Norm[{x,y}-{f,0}] + Norm[{x,y}-{-f,0}] == 2*a,
+
+(* same thing for point b,0 as special case *)
+
+Norm[{0,b}-{f,0}] + Norm[{0,b}-{-f,0}] == 2*a,
+
+(* the angle FOP also angle FOA *)
+
+Tan[angFOP] == y/x, Tan[angFOA] == y/x,
+
+Tan[angAFP] == y/(x-f), areaOPF == f*y/2,
+
+areaOPA == a*y/2, 
+
+
+{True}}];
+
+
 
 
 
