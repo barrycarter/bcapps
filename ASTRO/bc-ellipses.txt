@@ -1,0 +1,67 @@
+
+
+
+
+
+(* below is older work *)
+
+for notes on 30 Jan 2020 stream
+
+(a, 0) distance (a-f) + (a+f) = 2a
+
+(0, b) distance must be 2a
+
+2*Sqrt(f^2 + b^2) == 2*a
+
+Solve[2*Sqrt[f^2 + b^2] == 2*a, f]
+
+Out[1]= {{f -> -Sqrt[(a + b) (a - b)]}, {f -> Sqrt[(a + b) (a - b)]}}
+
+f = Sqrt[a^2-b^2]
+
+y/x == Tan[t]
+
+y == x*Tan[t]
+
+conds = {a > 0, b > 0, f > 0, t > -Pi, t < Pi}
+
+Solve[Sqrt[(x-f)^2 + (x*Tan[t])^2] + Sqrt[(x+f)^2 + (x*Tan[t])^2] == 2*a, x]
+
+f[a_, b_] = Sqrt[a^2+b^2];
+
+Solve[Sqrt[(x-f)^2 + (x*Tan[t])^2] + Sqrt[(x+f)^2 + (x*Tan[t])^2] == 2*a, x]
+
+d1 = Sqrt[(a*Cos[t] - f)^2 + (b*Sin[t])^2]
+
+d2 = Sqrt[(a*Cos[t] + f)^2 + (b*Sin[t])^2]
+
+Simplify[d1 + d2, conds]
+
+x^2/a^2 + y^2/b^2 = 1 .. derive this
+
+Solve[x^2/a^2 + y^2/b^2 == 1, y]
+
+Out[6]= {{y -> -b Sqrt[(a + x) (a - x)] / a}, {y -> b Sqrt[(a + x) (a - x)] / a}}
+
+
+
+<formulas>
+
+conds = {a > 0, b > 0, f > 0, t > -Pi, t < Pi, b < a}
+
+f[a_, b_] = Sqrt[a^2 - b^2];
+
+fociDist[x_, y_] = Sqrt[(x-f[a,b])^2 + y^2] + Sqrt[(x+f[a,b])^2 + y^2];
+
+y[x_] = -((b*Sqrt[a^2 - x^2])/a);
+
+q[a_, b_, x_] = 1/2*f[a,b]*y[x]
+
+</formulas>
+
+Solve[fociDist[x,y] == 2a, y]
+
+Integrate[y[x], x]
+
+
+
