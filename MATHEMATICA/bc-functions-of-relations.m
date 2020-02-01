@@ -1,3 +1,27 @@
+<formulas>
+
+extractVariables[exp_] := DeleteDuplicates@Cases[exp, _Symbol, Infinity];
+
+variableSolutions[exp_] := Table[Solve[exp, i], {i, extractVariables[exp]}];
+
+symbol2Variable[sym_] := ToExpression[ToString[sym]<>"_"];
+
+symbolList2Variable[symlist_] := Map[symbol2Variable[#] &, symlist];
+
+(* TODO: can we make convert non-global? *)
+
+defineConvert[exp_] := Module[{}, Return[{}]];
+
+solution2Function[sol_] := Module[{},
+
+
+
+
+
+
+</formulas>
+
+
 TODO: preserve lexicographic order of variables
 
 TODO: if requested output is already input
@@ -72,4 +96,25 @@ h[t1235] = a + f + x;
 h[{1, 2, 3}]
 
 convert[{a,f,x}, y][1, 2, 3];
+
+
+Clear[convert]; Clear[f];
+extractVariables[exp_] := DeleteDuplicates@Cases[exp, _Symbol, Infinity];
+variableSolutions[exp_] := Table[Solve[exp, i], {i, extractVariables[exp]}];
+symbol2Variable[sym_] := ToExpression[ToString[sym]<>"_"];
+symbolList2Variable[symlist_] := Map[symbol2Variable[#] &, symlist];
+
+eq1 = (Norm[{x,y}-{f,0}] + Norm[{x,y}-{-f,0}] == 2*a);
+v1212 = variableSolutions[eq1];
+s1243 = v1212[[1]]
+outvar = s1243[[1, 1, 1]]
+invar1 = extractVariables[s1243[[1,1,2]]];
+invar2 = symbolList2Variable[invar1];
+invar2
+f[invar2] = outvar /. s1243
+convert[invar1, outvar][invar2] = outvar /. s1243
+convert[{a,x,y},f][{1,2,3}]
+?f
+?convert
+
 
