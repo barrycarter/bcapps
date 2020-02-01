@@ -1,60 +1,118 @@
+TODO: two errors-- put = where I meant == and must write equalitys with a single var on one side, can't just define in terms of other vars
+
+
 (*
 
-Notes:
+Subject: Finding ellipse formulas from set of ellipse relations
 
-F and G are foci
+Question: Given the ellipse relations below, what additional ellipse formulas/relations/equations can I derive?
 
-2a is sum of dists for any point
+I asked a question similar to this in https://mathematica.stackexchange.com/questions/172514/finding-formulas-from-other-formulas-and-relations but this is a bit bigger and has multiple relations, not just a single formula.
 
-*)
+I am not necessarily asking for a complete solution, but rather a general method of attack for problems of this nature.
 
-(* formula for integral *)
+[[image]]
 
-area[x_, a_, b_] = (b*(x*Sqrt[a^2 - x^2] + a^2*ArcTan[x/Sqrt[a^2 -
-x^2]]))/(2*a);
+[[image]]
 
-(* short names for lengths *)
+Above are two images of the same ellipse where:
 
-trans = {lenOF -> f, lenOB -> b, lenOA -> a, lenOG -> f};
+  - `a` is the length of the semimajor axis
+  - `b` is the length of the semiminor axis
+  - `f` is the distance from the origin to either focus
+  - `x,y` is an arbitrary point on the ellipse in quadrant I
 
-(* conditions *)
+Note that the sum of the distances from `(a,0)` (a point on the ellipse) to the foci (ie, `AF + AG`) is `2a`, and thus the sum of the distances to the foci from any point on the ellipse is also `2a`.
 
-conds = {b > 0, a > b, f > 0, Element[{x,y}, Reals]};
+We have the following relations:
 
-rels = Flatten[{
+<pre><code>
 
-(* sum of dists for any point is 2a *)
+rels = {
+
+(* sum of distances to P is 2a *)
 
 Norm[{x,y}-{f,0}] + Norm[{x,y}-{-f,0}] == 2*a,
 
-(* same thing for point b,0 as special case *)
+(* since (0,b) is on ellipse, sum of distances to foci is also 2a *)
 
 Norm[{0,b}-{f,0}] + Norm[{0,b}-{-f,0}] == 2*a,
 
-(* the angle FOP also angle FOA *)
+(* the tangent of angle POC is y/x *)
 
-Tan[angFOP] == y/x, Tan[angFOA] == y/x,
+Tan[angPOC] == y/x,
 
-Tan[angAFP] == y/(x-f), areaOPF == f*y/2,
+(* the area of the green triangle POC *)
 
-areaOPA == a*y/2, 
+areaPOC == x*y/2,
+
+(* the pink area is 
+
+Integrate[b*Sqrt[(1-(t^2/a^2))], {t, x, a}]
+
+which is equal to ... 
+
+*)
+
+areaPink == (a*b*Pi)/4 - (b*(x*Sqrt[1 - x^2/a^2] + a*ArcSin[x/a]))/2,
+
+(* the area swept out from the center is the sum of these *)
+
+areaFromCenter == areaPOC + areaPink,
+
+(* the eccentricity is not on the diagram, but is equal to ... *)
+
+ecc == Sqrt[1-b^2/a^2],
+
+(* if the ellipse is parametrized as (a*Cos[t], b*Sin[t]), then t is ... *)
+
+t == ArcCos[x/a],
+
+(* area of the blue triangle FOP *)
+
+areaFOP == y*f/2,
+
+(* purple area + blue triangle = pink area *)
+
+areaPurple == areaFOP + areaPink,
+
+(* angle OFP's tangent *)
+
+Tan[angOFP] == y/(f-x),
+
+(* angle AFP is supplementary *)
+
+angAFP == Pi - angOFP
+
+};
+
+(* the following conditions apply *)
+
+conds = {b > 0, a > b, f > 0, areaPOC > 0, areaPink > 0, areaFromCenter > 0, ecc > 0, areaFOP > 0, areaPurple > 0, Element[{x,y, angPOC, angOFP, angAFP, t}, Reals]};
+
+</code></pre>
+
+Note that we have the following variables: `angPOC, a, b, f, x, y, areaPOC, areaPink, areaFromCenter, ecc, t, areaFOP, areaPurple, angOFP, angAFP`.
+
+What formulas (functions) can we derive from the relations above?
+
+For example, I know it's possible to get `b` if `a` and `ecc` are known, but that's just one of many possible examples.
+
+Appreciate any thoughts, thanks!
 
 
-{True}}];
+TODO: see all math statements below
 
 
 
 
 
+(* conditions *)
 
 
 (* below is older work *)
 
 for notes on 30 Jan 2020 stream
-
-(a, 0) distance (a-f) + (a+f) = 2a
-
-(0, b) distance must be 2a
 
 2*Sqrt(f^2 + b^2) == 2*a
 
