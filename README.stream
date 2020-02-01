@@ -2,7 +2,11 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 31 Jan 2020, primarily for my reference
+Stuff I plan to stream 1 Feb 2020, primarily for my reference
+
+circular orbits: flat, tilted (using fixed params), best fit to CSPICE
+position data, best fit to CSPICE elliptical data per hour
+(generalize?), remember ecliptic vs equatorial
 
 dependcies and set stuff (using graphs)
 
@@ -533,6 +537,8 @@ This is not not a list of possible future streams
   - xkcd: comment on dumb/bad strips?
 
   - go thru my email (carefully)
+
+  - write prog to see how effective insulin is (assuming same activity)?
 
 TO FIX xclock:
 
