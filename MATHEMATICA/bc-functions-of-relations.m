@@ -1,6 +1,8 @@
 <formulas>
 
-extractVariables[exp_] := DeleteDuplicates@Cases[exp, _Symbol, Infinity];
+extractVariables[exp_] := 
+Select[DeleteDuplicates@Cases[exp, _Symbol, Infinity],
+Attributes[#] == {} &];
 
 variableSolutions[exp_] := Table[Solve[exp, i], {i, extractVariables[exp]}];
 
@@ -20,6 +22,7 @@ solution2Function[sol_] := Module[{outvar, invar1, invar2},
 ]
 
 </formulas>
+
 
 
 TODO: preserve lexicographic order of variables
