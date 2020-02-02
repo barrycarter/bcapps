@@ -1050,11 +1050,1245 @@ haven't specified a target *)
 
 Solve[Take[eqns,2]] /. Solve[Take[eqns,-2], ha]
 
+(* work below this line on 2 Feb 2020 *)
+
+<testing>
+
+extractVariables[exp_] := 
+Select[DeleteDuplicates@Cases[exp, _Symbol, Infinity],
+Attributes[#] == {} &];
+
+variableSolutions[exp_] := Table[Solve[exp, i], {i, extractVariables[exp]}];
+
+symbol2Variable[sym_] := ToExpression[ToString[sym]<>"_"];
+
+symbolList2Variable[symlist_] := Map[symbol2Variable[#] &, symlist];
+
+defineConvert[exp_] := Map[solution2Function[#] &, variableSolutions[exp]];
+
+solution2Function[sol_] := Module[{outvar, invar1, invar2},
+ outvar = sol[[1, 1, 1]];
+ invar1 = extractVariables[sol[[1,1,2]]];
+ invar2 = symbolList2Variable[invar1];
+ Return[{invar1, outvar, invar2, outvar /. sol}];
+]
+
+</testing>
+
+ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
+ -(Cos[dec]*Sin[gmst + lon - ra])] == az
+
+eqn = (ArcTan[Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+   ra]*Sin[lat])^2 + Cos[dec]^2*Sin[gmst + lon - ra]^2],
+   Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat]] == alt)
+
+defineConvert[(ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
+ra]*Sin[lat], -(Cos[dec]*Sin[gmst + lon - ra])] == az)]
 
 
-
-
-
-
-
-
+{
+ {dec -> -ArcCos[-Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+          2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+           Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+        (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+          2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+           Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+          2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+           Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+        (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+        Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+           32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+           16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+           16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+            Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+            Tan[alt]^4 + 64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+            Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*
+            Tan[alt]^4 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+            Sin[lat]^4*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*
+            Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*
+            Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^6 + 16*Cos[lat]^2*
+            Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 32*Cos[lat]^4*
+            Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^6 + 
+           16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+            Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+         (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+            Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+            Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+           8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+           2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+           2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+            Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+           2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+           2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+           Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+            Tan[alt]^4))]]}, 
+ {dec -> ArcCos[-Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*
+          Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+           Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^4 + 
+          64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 + 
+          32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^4 - 
+          16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*Cos[gmst + lon - ra]^4*
+           Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+        (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+           Tan[alt]^4))]]}, 
+ {dec -> -ArcCos[Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*
+          Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+           Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^4 + 
+          64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 + 
+          32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^4 - 
+          16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*Cos[gmst + lon - ra]^4*
+           Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+        (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+           Tan[alt]^4))]]}, 
+ {dec -> ArcCos[Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+        2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+         Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+        2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) - (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+        2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+         Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+        2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) - (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) - Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+         16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+         16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+          Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^4 + 
+         64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 + 
+         32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^4 - 
+         16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+          Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*Cos[gmst + lon - ra]^4*
+          Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+          Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 
+         32*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+          Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+          Sin[gmst + lon - ra]^2*Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+       (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+          Tan[alt]^4))]]}, 
+ {dec -> -ArcCos[-Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+          2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+           Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+        (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+          2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+           Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+          2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+           Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+        (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+         (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+        Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+           32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+           16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+           16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+            Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+            Tan[alt]^4 + 64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+            Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*
+            Tan[alt]^4 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+            Sin[lat]^4*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*
+            Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*
+            Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^6 + 16*Cos[lat]^2*
+            Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 32*Cos[lat]^4*
+            Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^6 + 
+           16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+            Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+         (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+            Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+            Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+           8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+           2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+           2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+            Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+           2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+           2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+           Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+            Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+            Tan[alt]^4))]]}, 
+ {dec -> ArcCos[-Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*
+          Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+           Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^4 + 
+          64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 + 
+          32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^4 - 
+          16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*Cos[gmst + lon - ra]^4*
+           Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+        (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+           Tan[alt]^4))]]}, 
+ {dec -> -ArcCos[Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*
+          Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+         2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+          Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+         2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) - 
+       (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+        (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4) + 
+       Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+          16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+           Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^4 + 
+          64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 + 
+          32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^4 - 
+          16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*Cos[gmst + lon - ra]^4*
+           Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 
+          32*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+           Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+           Sin[gmst + lon - ra]^2*Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+        (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+           Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+           Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 
+          8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+          2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 2*Cos[lat]^2*
+           Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+          2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+          2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+          Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+           Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+           Tan[alt]^4))]]}, 
+ {dec -> ArcCos[Sqrt[(Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + Sin[lat]^4/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+        2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+         Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+        2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) - (2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (4*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[lat]^4*Tan[alt]^4)/(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2 + Sin[lat]^4 + 
+        2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 2*Cos[lat]^2*Sin[lat]^2*
+         Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^2 + 
+        2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + (Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) - (Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4)/
+       (Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+        2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+         Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+        2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+        2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+        Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 
+        2*Cos[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*
+         Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*
+         Tan[alt]^4) + Sqrt[16*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^2 + 
+         16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^2 + 
+         16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Sin[gmst + lon - ra]^2*
+          Tan[alt]^2 + 32*Cos[lat]^6*Cos[gmst + lon - ra]^4*Sin[lat]^2*Tan[alt]^4 + 
+         64*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 + 
+         32*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^4 - 
+         16*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+          Tan[alt]^4 + 32*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 16*Cos[lat]^6*Cos[gmst + lon - ra]^4*
+          Sin[lat]^2*Tan[alt]^6 + 32*Cos[lat]^4*Cos[gmst + lon - ra]^4*Sin[lat]^4*
+          Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^6*Tan[alt]^6 - 
+         32*Cos[lat]^4*Cos[gmst + lon - ra]^2*Sin[lat]^2*Sin[gmst + lon - ra]^2*
+          Tan[alt]^6 + 16*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^4*
+          Sin[gmst + lon - ra]^2*Tan[alt]^6 - 16*Cos[lat]^4*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^8]/
+       (2*(Cos[lat]^4*Cos[gmst + lon - ra]^4 + 2*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2 + Sin[lat]^4 + 2*Cos[lat]^4*Cos[gmst + lon - ra]^2*Tan[alt]^2 - 
+         2*Cos[lat]^2*Sin[lat]^2*Tan[alt]^2 + 8*Cos[lat]^2*Cos[gmst + lon - ra]^2*
+          Sin[lat]^2*Tan[alt]^2 - 2*Cos[lat]^2*Cos[gmst + lon - ra]^4*Sin[lat]^2*
+          Tan[alt]^2 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^4*Tan[alt]^2 - 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + 
+         2*Sin[lat]^2*Sin[gmst + lon - ra]^2*Tan[alt]^2 + Cos[lat]^4*Tan[alt]^4 + 
+         2*Cos[lat]^2*Cos[gmst + lon - ra]^2*Sin[lat]^2*Tan[alt]^4 + 
+         Cos[gmst + lon - ra]^4*Sin[lat]^4*Tan[alt]^4 - 2*Cos[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + 2*Cos[gmst + lon - ra]^2*Sin[lat]^2*
+          Sin[gmst + lon - ra]^2*Tan[alt]^4 + Sin[gmst + lon - ra]^4*Tan[alt]^4))]]}}

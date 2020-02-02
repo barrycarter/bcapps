@@ -23,9 +23,9 @@ solution2Function[sol_] := Module[{outvar, invar1, invar2},
 
 </formulas>
 
-
-
 TODO: preserve lexicographic order of variables
+
+TODO: if Solve times out, do what?
 
 TODO: if requested output is already input
 
@@ -35,9 +35,14 @@ TODO: can compute from subset special case
 
 TODO: single answer inside set or no?
 
-TODO: solve can't solve it?
+DONE: solve can't solve it?
 
-TODO: pi is not a symbol
+DONE: pi is not a symbol
+
+
+defineConvert[(areaPink == (a*b*Pi)/4 - (b*(x*Sqrt[1 - x^2/a^2] +
+a*ArcSin[x/a]))/2)];
+
 
 
 convert[{f,x,y}, a][f_, x_, y_] = (Sqrt[Abs[-f + x]^2 + Abs[y]^2] +
