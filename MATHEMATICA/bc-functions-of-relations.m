@@ -34,6 +34,8 @@ TODO: single answer inside set or no?
 
 TODO: solve can't solve it?
 
+TODO: pi is not a symbol
+
 
 convert[{f,x,y}, a][f_, x_, y_] = (Sqrt[Abs[-f + x]^2 + Abs[y]^2] +
 Sqrt[Abs[f + x]^2 + Abs[y]^2])/2;
