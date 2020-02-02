@@ -127,4 +127,24 @@ convert[{a,x,y},f][{1,2,3}]
 ?f
 ?convert
 
+extractVariables[exp_] := 
+Select[DeleteDuplicates@Cases[exp, _Symbol, Infinity],
+Attributes[#] == {} &];
+variableSolutions[exp_] := Table[Solve[exp, i], {i, extractVariables[exp]}];
+symbol2Variable[sym_] := ToExpression[ToString[sym]<>"_"];
+symbolList2Variable[symlist_] := Map[symbol2Variable[#] &, symlist];
+defineConvert[exp_] := Map[solution2Function[#] &, variableSolutions[exp]];
+solution2Function[sol_] := Module[{outvar, invar1, invar2},
+ outvar = sol[[1, 1, 1]];
+ invar1 = extractVariables[sol[[1,1,2]]];
+ invar2 = symbolList2Variable[invar1];
+ Return[{invar1, outvar, invar2, outvar /. sol}];
+]
+eqn = {unix == et+946728000,unix == (mjd-946728000)/86400, mjd == jd-2451545};
+
+test1146 = Flatten[{defineConvert[eqn[[1]]],defineConvert[eqn[[2]]],defineConvert[eqn[[3]]]}, 1];
+Length[test1146];
+test1146[[1]];
+temp1152 = Gather[test1146, #1[[1]] == #2[[1]] &];
+temp1152[[2]]
 
