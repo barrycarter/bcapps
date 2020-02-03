@@ -15,6 +15,7 @@ symbolList2Variable[symlist_] := Map[symbol2Variable[#] &, symlist];
 defineConvert[exp_] := Map[solution2Function[#] &, variableSolutions[exp]];
 
 solution2Function[sol_] := Module[{outvar, invar1, invar2},
+ If[Head[sol] == Solve, Return[]];
  outvar = sol[[1, 1, 1]];
  invar1 = extractVariables[sol[[1,1,2]]];
  invar2 = symbolList2Variable[invar1];

@@ -1086,9 +1086,7 @@ defineConvert[(ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
 ra]*Sin[lat], -(Cos[dec]*Sin[gmst + lon - ra])] == az)]
 
 
-unix == et+946728000;
+    {(unix == et+946728000), (unix == (mjd-946728000)/86400), (mjd == jd-2451545)}
 
-unix == (mjd-946728000)/86400;
 
-mjd == jd-2451545;
 
