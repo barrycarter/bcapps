@@ -141,6 +141,13 @@ jd2unix[jd_] = mjd2unix[jd2mjd[jd]];
 
 mjd2GMST[d_] = Rationalize[(18.697374558 + 24.06570982441908*d)/12*Pi];
 
+(* this matrix converts xyz of ra/dec to xyz of az alt *)
+
+matRaDecLatLonGMST2azAlt = {{-(Cos[gmst + lon]*Sin[lat]),
+-(Sin[lat]*Sin[gmst + lon]), Cos[lat]}, {-Sin[gmst + lon], Cos[gmst +
+lon], 0}, {Cos[lat]*Cos[gmst + lon], Cos[lat]*Sin[gmst + lon],
+Sin[lat]}}
+
 raDecLatLonGMST2azAlt[ra_, dec_, lat_, lon_, gmst_] = 
  {ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
   -(Cos[dec]*Sin[gmst + lon - ra])], 
@@ -1052,28 +1059,7 @@ Solve[Take[eqns,2]] /. Solve[Take[eqns,-2], ha]
 
 (* work below this line on 2 Feb 2020 *)
 
-<testing>
 
-extractVariables[exp_] := 
-Select[DeleteDuplicates@Cases[exp, _Symbol, Infinity],
-Attributes[#] == {} &];
-
-variableSolutions[exp_] := Table[Solve[exp, i], {i, extractVariables[exp]}];
-
-symbol2Variable[sym_] := ToExpression[ToString[sym]<>"_"];
-
-symbolList2Variable[symlist_] := Map[symbol2Variable[#] &, symlist];
-
-defineConvert[exp_] := Map[solution2Function[#] &, variableSolutions[exp]];
-
-solution2Function[sol_] := Module[{outvar, invar1, invar2},
- outvar = sol[[1, 1, 1]];
- invar1 = extractVariables[sol[[1,1,2]]];
- invar2 = symbolList2Variable[invar1];
- Return[{invar1, outvar, invar2, outvar /. sol}];
-]
-
-</testing>
 
 ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat], 
  -(Cos[dec]*Sin[gmst + lon - ra])] == az
@@ -1086,7 +1072,91 @@ defineConvert[(ArcTan[Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon -
 ra]*Sin[lat], -(Cos[dec]*Sin[gmst + lon - ra])] == az)]
 
 
-    {(unix == et+946728000), (unix == (mjd-946728000)/86400), (mjd == jd-2451545)}
+{(unix == et+946728000), (mjd == (unix-946728000)/86400), (mjd ==
+jd-2451545), (gmst == (18.697374558 + 24.06570982441908*mjd)/12*Pi)}
+
+temp1817[{jd}, unix][{jd_}] = temp1817[{mjd}, unix][temp1817[{jd}, mjd][{jd}]]
+
+(* below are fake, assuming simptan *)
+
+eqns = {
+(az == -ArcTan[(Cos[dec]*Sin[gmst + lon - ra])/(Cos[lat]*Sin[dec] -
+    Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])]),
+
+(alt == ArcTan[(Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat])/
+  Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
+    Cos[dec]^2*Sin[gmst + lon - ra]^2]])
+};
+
+
+
+
+
+
+
+
+<<"bclib.m";
+<<"bclib-staging.m";
+eqns = {
+(az == -ArcTan[(Cos[dec]*Sin[gmst + lon - ra])/(Cos[lat]*Sin[dec] -
+    Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])]),
+
+(alt == ArcTan[(Cos[dec]*Cos[lat]*Cos[gmst + lon - ra] + Sin[dec]*Sin[lat])/
+  Sqrt[(Cos[lat]*Sin[dec] - Cos[dec]*Cos[gmst + lon - ra]*Sin[lat])^2 + 
+    Cos[dec]^2*Sin[gmst + lon - ra]^2]])
+};
+expressions2MetaFunction[eqns, f];
+Graph[expressions2Edges[eqns], VertexLabels -> Automatic]
+Simplify[DeleteDuplicates[f[{lon, ra, lat, alt, dec}, gmst][{lon, ra, lat, 0, dec}]]]
+
+(* early attempts w xyz coords *)
+
+xyz2sph[{rdX, rdY, rdZ}] // InputForm
+xyz2sph[{llX, llY, llZ}] // InputForm
+
+(* ignoring last elt *)
+
+{ArcTan[rdX, rdY], ArcTan[Sqrt[rdX^2 + rdY^2], rdZ]}
+
+{ArcTan[llX, llY], ArcTan[Sqrt[llX^2 + llY^2], llZ]}
+
+out1 = sph2xyz[raDecLatLonGMST2azAlt[
+ ArcTan[rdX, rdY],
+ ArcTan[Sqrt[rdX^2 + rdY^2], rdZ],
+ ArcTan[Sqrt[llX^2 + llY^2] llZ], 
+ ArcTan[llX, llY], 
+ gmst]]
+
+sph2xyz[{out1[[1]], out1[[2]], 1}]
+
+Simplify[sph2xyz[{out1[[1]], out1[[2]], 1}] /. {
+ rdX^2 + rdY^2 + rdZ^2 -> 1
+}]
+
+assum = {Abs[rdX] < 1, Abs[rdY] < 1, Abs[rdX^2 + rdY^2] < 1, 
+ Element[{rdX, rdY}, Reals]}
+
+
+xyz2sph[{rdX, rdY, Sqrt[1-rdX^2-rdY^2]}]
+
+Simplify[xyz2sph[{rdX, rdY, Sqrt[1-rdX^2-rdY^2]}], assum] // InputForm
+
+{ArcTan[rdX, rdY], ArcTan[Sqrt[rdX^2 + rdY^2], Sqrt[1 - rdX^2 - rdY^2]], 1}
+
+Simplify[matRaDecLatLonGMST2azAlt /. {lat -> ArcTan[Sqrt[llX^2 +
+llY^2] , llZ], lon -> ArcTan[llX, llY]}]
+
+Simplify[matRaDecLatLonGMST2azAlt /. {lat -> ArcTan[Sqrt[llX^2 +
+llY^2] , Sqrt[1-llX^2-llY^2]], lon -> ArcTan[llX, llY]}]
+
+
+
+
+
+
+
+
+
 
 
 

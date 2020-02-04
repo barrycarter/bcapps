@@ -2,7 +2,10 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 2 Feb 2020, primarily for my reference
+Stuff I plan to stream 4 Feb 2020, primarily for my reference
+
+use rectangular coordinates in ra/dec az/alt and see if formulas are
+nicer (ridid rotations?) (spherical geometry to linear algebra!)
 
 circular orbits: flat, tilted (using fixed params), best fit to CSPICE
 position data, best fit to CSPICE elliptical data per hour
