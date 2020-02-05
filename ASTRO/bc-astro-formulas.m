@@ -1149,14 +1149,46 @@ llY^2] , llZ], lon -> ArcTan[llX, llY]}]
 Simplify[matRaDecLatLonGMST2azAlt /. {lat -> ArcTan[Sqrt[llX^2 +
 llY^2] , Sqrt[1-llX^2-llY^2]], lon -> ArcTan[llX, llY]}]
 
+(* work below 4 Feb 2020 *)
 
+mat = {{-(llZ*Sin[gmst + ArcTan[llX, llY]]), llZ*Cos[gmst +
+ArcTan[llX, llY]], -Sqrt[1 - llZ^2]}, {-Cos[gmst + ArcTan[llX, llY]],
+-Sin[gmst + ArcTan[llX, llY]], 0}, {-(Sqrt[1 - llZ^2]*Sin[gmst +
+ArcTan[llX, llY]]), Sqrt[1 - llZ^2]*Cos[gmst + ArcTan[llX, llY]],
+llZ}};
 
+temp1247 = xyz2sph[{llX, llY, llZ}];
 
+temp1250 = {lon -> temp1247[[1]], lat -> ArcTan[Sqrt[1-llZ^2], llZ]};
 
+zrot = RotationMatrix[-(Pi/2+gmst+lon), {0, 0, 1}] /. temp1250;
 
+temp1251 = FullSimplify[zrot];
 
+temp1252 = FullSimplify[RotationMatrix[lat - Pi/2, {0, 1, 0}] /. temp1250]
 
+<<"bclib.m";
+<<"bclib-staging.m";
+<<"bc-astro-formulas.m";
 
+temp1247 = xyz2sph[{llX, llY, llZ}];
 
+temp1250 = {lon -> temp1247[[1]], lat -> ArcTan[Sqrt[1-llZ^2], llZ]};
 
+zrot = RotationMatrix[(Pi/2 + gmst+ lon), {0, 0, 1}] /. temp1250;
+
+yrot = FullSimplify[RotationMatrix[Pi/2-lat, {0, -1, 0}] /. temp1250];
+
+mat = yrot.zrot
+
+temp1259 = sph2xyz[{lon, lat, 1}];
+temp1300 = {llX -> temp1259[[1]], llY -> temp1259[[2]], llZ -> temp1259[[3]]};
+temp1302 = Simplify[xyz2sph[mat.sph2xyz[ra, dec, 1]] /. temp1300];
+temp1303 = Simplify[temp1302, conds];
+
+temp1309 = raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst];
+
+Simplify[temp1303[[1]] - temp1309[[1]], conds];
+
+Simplify[temp1303[[1]] - temp1309[[1]], conds] /. {lat -> Pi/2, lon -> 0, gmst -> ra, dec -> 1}
 
