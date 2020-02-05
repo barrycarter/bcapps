@@ -1192,3 +1192,97 @@ Simplify[temp1303[[1]] - temp1309[[1]], conds];
 
 Simplify[temp1303[[1]] - temp1309[[1]], conds] /. {lat -> Pi/2, lon -> 0, gmst -> ra, dec -> 1}
 
+(* 0h -> +180, 6h -> +90, 12h ->0, 18h ->270 *) 
+xyz2sph[1, 0,0];
+xyz2sph[0,1,0];
+
+(* below confirms counterclockwise rotation *)
+RotationMatrix[Pi/2, {0, 0,1}].{1,0,0};
+
+temp1247 = xyz2sph[{llX, llY, llZ}];
+temp1259 = sph2xyz[{lon, lat, 1}];
+temp1250 = {lon -> temp1247[[1]], lat -> ArcTan[Sqrt[1-llZ^2], llZ]};
+
+temp1839  = raDecLatLonGMST2azAlt[0, 0, lat, lon, gmst];
+temp1840  = raDecLatLonGMST2azAlt[Pi/2, 0, lat, lon, gmst];
+temp1841  = raDecLatLonGMST2azAlt[0, Pi/2, lat, lon, gmst];
+
+row1= Simplify[sph2xyz[temp1839[[1]], temp1839[[2]], 1], conds]
+row2 = Simplify[sph2xyz[temp1840[[1]], temp1840[[2]], 1], conds]
+row3 = Simplify[sph2xyz[temp1841[[1]], temp1841[[2]], 1], conds]
+
+(* mat0 is correct and working, but doesn't convert spherical to xyz *)
+
+mat0 = {{-(Cos[gmst + lon]*Sin[lat]), -(Sin[lat]*Sin[gmst + lon]),
+ Cos[lat]}, {-Sin[gmst + lon], Cos[gmst + lon], 0}, {Cos[lat]*Cos[gmst
+ + lon], Cos[lat]*Sin[gmst + lon], Sin[lat]}}
+
+(* mat1 uses rectangular lat/lon *)
+
+mat1 = {{(-llZ)*Cos[gmst + ArcTan[llX, llY]], (-llZ)*Sin[gmst +
+   ArcTan[llX, llY]], Sqrt[1 - llZ^2]}, {-Sin[gmst + ArcTan[llX,
+   llY]], Cos[gmst + ArcTan[llX, llY]], 0}, {Sqrt[1 - llZ^2]*Cos[gmst
+   + ArcTan[llX, llY]], Sqrt[1 - llZ^2]*Sin[gmst + ArcTan[llX, llY]],
+   llZ}}
+
+xyz2sph[{llX, llY, llZ}];
+
+fixes = {lon -> ArcTan[llX, llY], lat  ->  ArcTan[Sqrt[1-llZ^2], llZ]};
+Simplify[mat0 /. fixes, conds]
+
+
+Exit[];
+
+zrot = RotationMatrix[Pi-(gmst + lon), {0, 0, 1}]. {{1, 0,0}, {0,1,0}, {0,0,-1}}
+trad = raDecLatLonGMST2azAlt[ra, dec, lat, lon, gmst];
+
+N[Simplify[trad /. repl, conds]/Degree]
+N[Simplify[xyz2sph[zrot.sph2xyz[{ra, dec, 1}] /. repl], conds]/Degree]
+
+Simplify[xyz2sph[zrot.{1, 0,0}], conds]
+Exit[];
+yrot = FullSimplify[RotationMatrix[Pi/2-lat, {0, 1, 0}] /. temp1250];
+mat = yrot.zrot;
+temp1300 = {llX -> temp1259[[1]], llY -> temp1259[[2]], llZ -> temp1259[[3]]};
+temp1302 = Simplify[xyz2sph[mat.sph2xyz[ra, dec, 1]] /. temp1300];
+
+TODO: really cleanup this file
+
+mat1 = {{(-llZ)*Cos[gmst + ArcTan[llX, llY]], (-llZ)*Sin[gmst +
+   ArcTan[llX, llY]], Sqrt[1 - llZ^2]}, {-Sin[gmst + ArcTan[llX,
+   llY]], Cos[gmst + ArcTan[llX, llY]], 0}, {Sqrt[1 - llZ^2]*Cos[gmst
+   + ArcTan[llX, llY]], Sqrt[1 - llZ^2]*Sin[gmst + ArcTan[llX, llY]],
+   llZ}};
+   
+out = mat1.{raX, raY, raZ};
+
+rel1 = (out[[1]] == aaX)
+rel2  = (out[[2]] == aaY)
+rel3 = (out[[3]] == aaZ)
+
+Solve[rel1, llZ, Reals]
+
+(* below does give back x,y,z *)
+
+mat = Table[a[i][j], {i, 1, 3}, {j, 1, 3}];
+Simplify[mat.{x,y,z}.Transpose[Inverse[mat]]]
+
+(* below is equivalent to mat0 *)
+
+mat0 = {{-(Cos[gmst + lon]*Sin[lat]), -(Sin[lat]*Sin[gmst + lon]),
+ Cos[lat]}, {-Sin[gmst + lon], Cos[gmst + lon], 0}, {Cos[lat]*Cos[gmst
+ + lon], Cos[lat]*Sin[gmst + lon], Sin[lat]}};
+ 
+ flip = {{1,0,0},{0,1,0},{0,0,-1}};
+
+rt = RotationMatrix[-lat - Pi/2, {0, 1,0}].flip.RotationMatrix[-(gmst+lon), {0, 0, 1}];
+
+rt - mat0
+
+mat0.{rdX, rdY, rdZ} = {aaX, aaY, aaZ}
+
+rlat = RotationMatrix[-lat - Pi/2, {0, 1,0}];
+rlon = RotationMatrix[-(gmst+lon), {0, 0, 1}];
+
+rlat.flip.rlon.{rdX,rdY,rdZ} = {aaX,aaY,aaZ}
+
