@@ -4,6 +4,13 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 5 Feb 2020, primarily for my reference
 
+insulin effffectivness?
+
+fix bc-constell to take usual output and spit out correct values not
+fake start and end times-- then mass run it, sort it, and put
+"almanacs" up somewhere Google will see them (perhaps create ical
+files and upload to icalshare.com or something, but also more)
+
 use rectangular coordinates in ra/dec az/alt and see if formulas are
 nicer (ridid rotations?) (spherical geometry to linear algebra!)
 
