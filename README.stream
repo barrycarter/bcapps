@@ -4,6 +4,12 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 6 Feb 2020, primarily for my reference
 
+embed WL Cloud notebooks in JS? using https://github.com/WolframResearch/wolfram-notebook-embedder
+
+note ecliptic longitude pattern for planets affects when in same
+constellation-- is there a formula?-- ecliptic is invariant of
+precession but nutation and thus CET/ORI
+
 lunar occultations (remember Earth parallax and use focused two step
 method and hygdata) + major moons + other planets + ?asteroids?
 https://astronomy.stackexchange.com/questions/23987/occultations-of-triton
