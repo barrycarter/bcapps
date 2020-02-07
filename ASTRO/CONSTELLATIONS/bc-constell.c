@@ -2,6 +2,10 @@
 
 // TODO: special case for -pi/2? (maybe if dec <= -90 return OCTANS?)
 
+// TODO: currently, viewer must be on Earth, allow non-geocentric
+
+// Usage: $0 planet syear eyear
+
 int main(int argc, char **argv) {
 
   SPICEDOUBLE_CELL (cnfine, 10000);
@@ -9,22 +13,26 @@ int main(int argc, char **argv) {
 
   SpiceDouble beg, end;
 
-  wninsd_c (year2et(2020), year2et(2021), &cnfine);
+  // check for correct number or arguments and assign to strings
+  if (argc != 4) {
+    printf("Usage: %s planet syear eyear\n", argv[0]);
+    exit(-1);
+  }
 
-  // char name[100], oldname[100];
+  // read arguments into variables
+  SpiceInt naif = atoi(argv[1]);
+  SpiceDouble syear = atof(argv[2]);
+  SpiceDouble eyear = atof(argv[3]);
 
-  int naif = 299;
+  wninsd_c (year2et(syear), year2et(eyear), &cnfine);
 
   double interval = 3600;
 
+  // millisecond tolerance is excessive (and causes problems)
+  gfstol_c(1.);
+
   void changed (void (*udfunc) (SpiceDouble et, SpiceDouble *value), 
 		SpiceDouble et, SpiceBoolean *xbool) {
-
-    //    printf("ET: %f, SD: %s %s, OLD: %s, NEW: %s\n", et, stardate(et), 
-    //	   stardate(et+interval),
-    //	   constellationName(obj2ConstellationNumber(naif, et)),
-    //	   constellationName(obj2ConstellationNumber(naif, et+interval)));
-
     *xbool = (obj2ConstellationNumber(naif, et) != obj2ConstellationNumber(naif, et+interval));
   }
 
@@ -43,18 +51,6 @@ for (int i=0; i<nres; i++) {
 	       constellationName(obj2ConstellationNumber(naif, beg)), 
 	       constellationName(obj2ConstellationNumber(naif, end+interval)));
  }
-
-  /*
-  for (double et = year2et(2020); et < year2et(2021); et += 60) {
-
-    strcpy(name, constellationName(obj2ConstellationNumber(naif, et)));
-
-    if (strcmp(name, oldname)) {
-      printf("%s %d %s\n", stardate(et), naif, name);
-      strcpy(oldname, name);
-    }
-  }
-  */
 
   return 0;
 }

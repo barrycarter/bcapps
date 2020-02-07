@@ -9,10 +9,22 @@
 #include "SpiceZfc.h"
 #include "bclib.h"
 
+// declare a global array for hygdata
+
+double arr[2][3] = {{1, 2, 3}, {4,5,6}};
+
+#include "bc-hygdata.h"
+
 // Return the true (not mean) matrix of transformation from EQEQDATE
 // to ECLIPDATE at time et along with its Jacobian
 
 int main (int argc, char **argv) {
+
+  for (int i=0; i<2865; i++) {
+    printf("%f\n", hygdata[i][1]);
+  }
+
+  exit(-1);
 
   SpiceDouble et, mat[3][3], mat2[3][3], jac[3][3], nut, obq, dboq, umbPt[3], umbVec[3], umbAng, dist[3];
   SpiceDouble pos[3], newpos[3], sun[3], moon[3], earth[3], mr[3], sr[3], er[3], em[3];

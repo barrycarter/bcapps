@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# C form (0: id, 13: mag, 14: absmag, 17-22
+
+zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[13] <= 5.5) {print "{",join(", ", $F[0], $F[13], $F[14], @F[17..22]),"},";}'
+
+# $n++; print "stars[$n]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"}'
+
+exit;
+
 zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[29] eq "") {next;} $F[29] = uc($F[29]); print "printf(\"$F[0] $F[29] %s\\n\", constellation($F[7]*15/180*pi_c(), $F[8]/180*pi_c()));"' | tail -n +2 | sort -R | head -5000 > /tmp/includeme.c; touch bc-constell.c; make; echo START; bc-constell | perl -anle 'if ($F[1] ne $F[2]) {print $_}'; echo END
 
 # print "$F[0] $F[7], $F[8], $F[29]"'

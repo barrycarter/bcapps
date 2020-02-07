@@ -35,5 +35,7 @@ KERNELS_TO_LOAD = (
 '/home/user/SPICE/KERNELS/earth_720101_070426.bpc',
 '/home/user/SPICE/KERNELS/jup310.bsp',
 '/home/user/SPICE/KERNELS/jup343.bsp',
-'/home/user/SPICE/KERNELS/sat425.bsp'
+'/home/user/SPICE/KERNELS/sat425.bsp',
+'/home/user/SPICE/KERNELS/codes_300ast_20100725.bsp',
+'/home/user/SPICE/KERNELS/codes_300ast_20100725.tf'
 )

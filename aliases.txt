@@ -187,7 +187,10 @@ alias usbreset "echo 0000:00:1d.0 >! /sys/bus/pci/drivers/ehci_hcd/unbind; echo 
 
 # but cd breaks other stuff, so no
 
-alias feh "\feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
+# alias feh "\feh -. -x --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
+
+# trying with auto zoom
+alias feh "\feh -. -x --auto-zoom --scale-down --draw-tinted -K . --action1 ';[copy]//home/user/BCGIT/bc-copy-tmp.pl fehpic.jpg %f' \!*"
 
 # feh not full screen
 
