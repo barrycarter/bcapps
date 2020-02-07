@@ -1005,7 +1005,7 @@ Description: Closed form formulas for astronomy (useful when doing "meta astrono
 
 Subject: Various
 URL: NA
-Description: Finish answering questions in STACK/README.status
+Description: Finish answering questions in STACK/README.status and STACK/unsolved.txt
 
 Subject: Blogging
 URL: WORDPRESS/README
@@ -1044,4 +1044,3 @@ https://astronomy.stackexchange.com/questions/27914/tables-of-aphelion-perihelio
 (and similar, but these should already exist somewhere?)
 
 TODO: magnitude computations (Lambertian and almost +1 if normalized)
-
