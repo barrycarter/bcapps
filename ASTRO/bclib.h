@@ -942,6 +942,8 @@ Given the J2000 ra and dec in radians, return the constellation number of that r
 
 int constellationNumber(double ra, double dec) {
 
+  // TODO: is this inefficient (redeclares array each time?)
+
 #include "/home/user/BCGIT/ASTRO/CONSTELLATIONS/bc-large-arrays.h"
 
   // convert J2000 dec to B1875 ra/dec (in radians)

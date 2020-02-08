@@ -1,4 +1,22 @@
+// TODO: remove absmag, its redundant
+
 /* id, mag, absmag, x, y, z, dx, dy, dz */
+
+// x,y,z: The Cartesian coordinates of the star, in a system based on
+// the equatorial coordinates as seen from Earth. +X is in the
+// direction of the vernal equinox (at epoch 2000), +Z towards the
+// north celestial pole, and +Y in the direction of R.A. 6 hours,
+// declination 0 degrees.
+
+// vx,vy,vz: The Cartesian velocity components of the star, in the
+// same coordinate system described immediately above. They are
+// determined from the proper motion and the radial velocity (when
+// known). The velocity unit is parsecs per year; these are small
+// values (around 1 millionth of a parsec per year), but they
+// enormously simplify calculations using parsecs as base units for
+// celestial mapping.
+
+// units are parsecs
 
 double hygdata[2865][9] = {
 {122, 4.780, 0.663, 14.902031, 0.103716, -64.888859, -0.00005004, -0.00001859, -0.00003671},

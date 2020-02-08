@@ -2,9 +2,31 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 6 Feb 2020, primarily for my reference
+@wolfram
 
-embed WL Cloud notebooks in JS? using https://github.com/WolframResearch/wolfram-notebook-embedder
+Stuff I plan to stream 7 Feb 2020, primarily for my reference
+
+FUCK THIS: embed WL Cloud notebooks in JS? using https://github.com/WolframResearch/wolfram-notebook-embedder
+
+how fast does moon move? 360/28 days (0.5 degree per hour) 1 degree per hour
+
+16 minutes arc = angular radius
+
+350K or further = moon (test cut)
+
+350K/(40000/2/pi)
+
+76 minutes = occultation candidate
+
+76 + 60 = 136
+
+Sqrt[er^2 + ef^2] + Sqrt[mr^2 + fg^2] == em
+
+Solve[{ArcSin[mr/fc] == ArcSin[er/af], af + fc == em}, af]
+
+Solve[{ArcSin[mr/fc] == ArcSin[er/(em-fc)], af + fc == em}, fc]
+
+
 
 note ecliptic longitude pattern for planets affects when in same
 constellation-- is there a formula?-- ecliptic is invariant of
