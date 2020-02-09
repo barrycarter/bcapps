@@ -1,13 +1,20 @@
 #include "bclib.h"
 #include "bc-hygdata.h"
-#include EARTH_RADIUS 6371009/1000.
-#include MOON_RADIUS 1738.1
+#define EARTH_RADIUS 6371009/1000.
+#define MOON_RADIUS 1738.1
+#define MAXWIN 20000
+
 
 int main(int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
-  double et = unix2et(1581115950);
+  SPICEDOUBLE_CELL(cnfine, MAXWIN);
+  SPICEDOUBLE_CELL(result, MAXWIN);
+
+  wninsd_c(year2et(2020), year2et(2021), &cnfine);
+
+  int chosen;
 
   double moonpos[3], starpos[3], lt;
 
@@ -15,15 +22,7 @@ int main(int argc, char **argv) {
 
     spkezp_c(301, et, "J2000", "CN+S", 399, moonpos, &lt);
     double angsep = asin((EARTH_RADIUS + MOON_RADIUS)/vnorm_c(moonpos));
-
-    
-
-  }
-
-
-  //  printf("MOONPOS: %f %f %f\n", moonpos[0], moonpos[1], moonpos[2]);
-
-  for (double j = et; j < et+86400*366; j+= 3600) {
+    double minsep = 2;
 
     for (int i=0; i<2865; i++) {
 
@@ -32,14 +31,24 @@ int main(int argc, char **argv) {
       starpos[1] = hygdata[i][4];
       starpos[2] = hygdata[i][5];
 
-      double sep = vsep_c(moonpos, starpos);
-
-    if (sep < 1./150) {
-      printf("%f %f %f %f\n", et2unix(j), hygdata[i][0], vsep_c(moonpos, starpos), hygdata[i][1]);
+      double sep = vsep_c(moonpos, starpos)/angsep;
+      if (sep < minsep) {
+	minsep = sep;
+	chosen = i;
+      }
     }
-    }
+    *value = minsep;
   }
-  return -1;
-}
 
-// angle is Sin[(er + mr)/em]
+  gfuds_c(gfq, isDecreasing, "<", 1., 0, 3600, MAXWIN, &cnfine, &result);
+  int count = wncard_c(&result);
+  double beg, end;
+    
+  for (int i=0; i<count; i++) {
+
+    // find the time of event (beg == end in this case)
+    wnfetd_c (&result, i, &beg, &end);
+    printf("%f %f %d\n", et2unix(beg), et2unix(end), chosen);
+  }
+  return 0;
+}
