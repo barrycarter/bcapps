@@ -18,7 +18,7 @@ for $i (@results) {
 
   debug("COMMENTS: $i->{comments}");
 
-  unless ($i->{comments}=~s%http://www.doordash.com/orders/(\d+)/%%s ||
+  unless ($i->{comments}=~s%https?://www.doordash.com/orders/(\d+)/%%s ||
 	 $i->{comments}=~s%https://postmates.com/order/(\S+)\s+%%s) {
     debug("NO ORDER NUMBER FOUND: $i->{oid}");
     next;
