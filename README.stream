@@ -4,7 +4,11 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 8 Feb 2020, primarily for my reference
+Stuff I plan to stream 10 Feb 2020, primarily for my reference
+
+(cough cough cough cough)
+
+TODO: fix bc-spice to not use name where not available?
 
 flip the loops, ecliptic longitude patterns via averaging and how
 often "same constellation" issue
@@ -590,6 +594,13 @@ This is not not a list of possible future streams
   - go thru my email (carefully)
 
   - write prog to see how effective insulin is (assuming same activity)?
+
+  - port note to bcgit?
+
+  - put large pages on github pages so google will index them? (broken
+  up nicely)
+
+  - WTF is Cameron San Francisco?
 
 TO FIX xclock:
 
