@@ -6,7 +6,7 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my(@results) = mysqlhashlist("SELECT * FROM credcardstatements2 WHERE merchant RLIKE 'doordash'", "test", "user");
+my(@results) = mysqlhashlist("SELECT * FROM credcardstatements2 WHERE merchant RLIKE 'doordash' OR merchant RLIKE 'postmates'", "test", "user");
 
 for $i (@results) {
 
@@ -18,13 +18,14 @@ for $i (@results) {
 
   debug("COMMENTS: $i->{comments}");
 
-  unless ($i->{comments}=~s%http://www.doordash.com/orders/(\d+)/%%s) {
+  unless ($i->{comments}=~s%http://www.doordash.com/orders/(\d+)/%%s ||
+	 $i->{comments}=~s%https://postmates.com/order/(\S+)\s+%%s) {
     debug("NO ORDER NUMBER FOUND: $i->{oid}");
     next;
   }
 
   # print UPDATE statement
-  print "UPDATE credcardstatements2 SET refnum=$1 WHERE oid=$i->{oid};\n";
+  print "UPDATE credcardstatements2 SET refnum=\47$1\47 WHERE oid=$i->{oid};\n";
 
   debug($i->{refnum});
 }
