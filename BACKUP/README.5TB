@@ -1,0 +1,77 @@
+# this process backups files to the 5TB drive idrive sends me
+
+# make sure the exclude files are up to date (from oneliners.sh)
+
+cd /root/massbacks-2020
+
+# this generates the list of backed up files from tar toc
+# pipe below to shell
+\ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {
+ print "bc-tar2exclude.pl $_ > $_.exclude"}'
+
+# do this once to timestamp the backup, create a directory for this
+# backup, and copy the Makefile to this directory
+
+setenv DATE `date +%Y%m%d.%H%M%S`
+mkdir /root/massbacks-2020/$DATE
+cd /root/massbacks-2020/$DATE
+cp /home/user/BCGIT/BACKUP/Makefile.5TB Makefile
+
+# cp exclusions-commented.txt from a previous backup or make wont work
+
+# run make (-j by alias), no need to waitpid since bc-chunk-backup2 xmessages
+nice +19 make -j &
+
+echo look over big-by-*
+
+# once the filelist looks ok, tar it and encrypt it
+
+# NOTE: $passphrase must be set to passphrase
+
+ (nice +19 tar -T filelist.txt -cvf - | 
+ nice +19 gpg --batch --passphrase $passphrase -c -o  idrive-$DATE.gpg) >& 
+ idrive-$DATE.out &
+
+bc-waitpid.pl `pgrep -f $passphrase` &
+
+# ACTUALLY PUT PASS PHRASE BELOW as a check to make sure i didnt set
+# the env var wrong
+
+# new cmd for local backups
+nice +19 gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
+  nice +19 tar --full-time --utc -tvf - >! idrive-$DATE.toc &
+
+bc-waitpid.pl `pgrep -f $passphrase` &
+
+# copy plaintext TOC to /root/massbacks-2020
+
+cp idrive-$DATE.toc /root/massbacks-2020
+
+# keep encrypted copy local to upload to idrive
+
+gpg --batch --passphrase $passphrase -c -o 
+ idrive-$DATE.toc.gpg idrive-$DATE.toc
+
+# upload the files to idrive
+# which files to upload
+
+echo CHECK SPACE ON IDRIVE
+
+ls $cwd/*.gpg >! /home/user/bin/IDrive_for_Linux/idrive/user_profile/*/Backup/Manual/BackupsetFile.txt
+
+perl ~user/bin/IDrive_for_Linux/scripts/Backup_Script.pl
+
+# do this in other window if needed
+
+bc-waitpid.pl idevs &
+
+# remove files we longer need
+
+rm -f backup0.txt afad.txt previouslydone.txt.srt &
+rm -f idrive-$DATE.gpg idrive-$DATE.toc* &
+
+# do weekly backup if necessary
+
+grep -h 'weekly backup' ~user/annoytab.d/*.txt
+
+# repeat

@@ -14,6 +14,8 @@ Notes for map server:
 
   - TODO: add continental plate boundaries
 
+  - TODO: https://github.com/Overv/WebCraft is a minecraft in JS of sorts
+
   - TODO: maybe add HBASE and GIMS data
   https://sedac.ciesin.columbia.edu/mapping/gmis-hbase/explore-view/
 

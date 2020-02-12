@@ -6,6 +6,8 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 11 Feb 2020, primarily for my reference
 
+credit SPICE
+
 TODO: planets or their moons occult stars? asteroids, even invisible
 ones (because star still occlueded)
 
@@ -14,6 +16,8 @@ TODO: find alternative to stellarium to check stuff
 TODO: fix bc-spice to not use name where not available?
 
 TODO: post data to github pages correctly
+
+TODO: rewrite/improve fly?
 
 flip the loops, ecliptic longitude patterns via averaging and how
 often "same constellation" issue
@@ -606,6 +610,10 @@ This is not not a list of possible future streams
   up nicely)
 
   - WTF is Cameron San Francisco?
+
+  - https://github.com/Overv/WebCraft and other minecraft?
+
+TODO: Sun was in CET and ORI year +-10000, do something with this
 
 TO FIX xclock:
 

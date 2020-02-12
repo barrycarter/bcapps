@@ -277,6 +277,8 @@ lines themselves.
 Note: https://github.com/skyfielders/python-skyfield/commit/348f03caa3e0398dbce02d8be15117d851782f26
 may be useful here
 
+TODO: Sun was in CET and ORI year +-10000, do something with this
+
 ====================================================================
 
 Title: Implicit semantic information for OpenStreetMaps + more

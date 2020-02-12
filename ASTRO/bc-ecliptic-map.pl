@@ -3,7 +3,7 @@
 # creates an ecliptic map (perhaps eventually for leaflet)
 
 # Format for stdin to this program:
-# naif-id JD ecliptic-longitude ecliptic-latitude distance(unused) solar_angle
+# naif-id JD ecliptic-longitude ecliptic-latitude solar_angle
 
 # TODO: add equinox points, especially, since I'm shifting by a few degrees
 

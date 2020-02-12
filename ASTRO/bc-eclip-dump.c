@@ -49,6 +49,7 @@ int main (int argc, char **argv) {
     spkezp_c(planet,i,"ECLIPJ2000","NONE",obs,v,&lt);
     recrad_c(v,&range,&ra,&dec);
 
+    // TODO: are these really eclip lng and lat?
     printf("%d %f %f %f %f\n", planet, et2jd(i), ra, dec,
 	   earthangle(i,planet,10));
 
