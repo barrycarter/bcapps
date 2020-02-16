@@ -19,6 +19,8 @@ cp /home/user/BCGIT/BACKUP/Makefile.5TB Makefile
 
 # cp exclusions-commented.txt from a previous backup or make wont work
 
+# remember to include fgrep version
+
 # run make (-j by alias), no need to waitpid since bc-chunk-backup2 xmessages
 nice +19 make -j &
 
@@ -51,6 +53,11 @@ cp idrive-$DATE.toc /root/massbacks-2020
 
 gpg --batch --passphrase $passphrase -c -o 
  idrive-$DATE.toc.gpg idrive-$DATE.toc
+
+
+# TEMPORARILY JUST MOVE FILES TO /MOVE-TO-IDRIVE/ (*.gpg files) and
+# then jump to "remove files we longer need" and go immediately to
+# next
 
 # upload the files to idrive
 # which files to upload

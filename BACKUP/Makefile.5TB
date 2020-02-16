@@ -35,4 +35,4 @@ exclusions-fgrep.txt: exclusions-fgrep-commented.txt
 # limit 100G for mass 5TB backup (100T for testing)
 
 filelist.txt: exclusions.txt backup0.txt exclusions-fgrep.txt
-	fgrep -avf exclusions-fgrep.txt backup0.txt | egrep -avf exclusions.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=100,000,000,000,000 --debug
+	fgrep -avf exclusions-fgrep.txt backup0.txt | egrep -avf exclusions.txt | bc-join-backup.pl | bc-chunk-backup2.pl --checkfile --limit=100,000,000,000 --debug

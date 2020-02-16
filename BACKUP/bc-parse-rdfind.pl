@@ -7,6 +7,9 @@
 # to free up disk space, but ran into issues. This program addresses
 # those issues, which are given in comments
 
+# by "output of above" I mean the "fix-xxx-advistory.txt" or whatever
+# the STDOUT is of above, not the results.txt file it creates
+
 # to run: `$0 < output_of_above > commands_to_run.sh` BUT!!!
 # `tac output_of_above | $0 > commands_to_run.sh may work` better
 # because bigger files may show up first
@@ -49,8 +52,8 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 1;
-warn "Temporarily looking at ALL files for XWD";
+my($lower) = 10000;
+# warn "Temporarily looking at ALL files for XWD";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
@@ -301,8 +304,10 @@ sub choose_file {
 
   debug("FILES", @files);
 
+  if (erotica(@files)) {return;}
+
   # a little ugly, but if one test succeeds, no others can run
-  if (weathercanon(@files)) {return;}
+#  if (weathercanon(@files)) {return;}
 
 #  if (dvd_trumps_all(@files)) {return;}
 #  if (tumblr_fix(@files)) {return;}
@@ -887,6 +892,24 @@ sub weathercanon {
     if ($files[$i]=~m%/mnt/extdrive5/$private{edrive}/WEATHER/% &&
       !($files[$1-i]=~m%/mnt/extdrive5/$private{edrive}/WEATHER/%) &&
 	$files[1-$i]=~m%/WEATHER/%) {
+      print qq%sudo rm "$files[1-$i]"\n%;
+      print qq%echo keeping "$files[$i]"\n%;
+      return 1;
+    }
+  }
+}
+
+# canonize erotica files
+
+sub erotica {
+
+  my(@files) = @_;
+
+  # the one on kemptown higher level wins
+  for $i (0,1) {
+    if ($files[$i]=~m%/mnt/kemptown/EROTICA/% &&
+      !($files[$1-i]=~m%/mnt/kemptown/$private{sdrive}/EROTICA/%) &&
+	$files[1-$i]=~m%/EROTICA/%) {
       print qq%sudo rm "$files[1-$i]"\n%;
       print qq%echo keeping "$files[$i]"\n%;
       return 1;

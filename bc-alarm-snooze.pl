@@ -2,6 +2,8 @@
 
 # An alarm with a snooze button(s) using yad
 
+# TODO: add logging?
+
 # Usage: $0 message
 
 # Options:
