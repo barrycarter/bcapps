@@ -1,5 +1,8 @@
 #!/bin/perl
 
+# TODO: maybe allow results to be quoted, but nontrivial since this
+# calls bc-sgrep.pl
+
 # I frequently search for files (eg, mlocate/slocate) where I know the
 # ending part of a file; this program efficiently searches for them
 # using bc-sgrep.pl and a list of files sorted in reverse

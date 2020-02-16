@@ -52,8 +52,8 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 10000;
-# warn "Temporarily looking at ALL files for XWD";
+my($lower) = 1;
+warn "Temporarily looking at ALL files for XWD";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
