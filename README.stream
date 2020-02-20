@@ -4,7 +4,9 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 18 Feb 2020, primarily for my reference
+Stuff I plan to stream 20 Feb 2020, primarily for my reference
+
+google acct stuff (all about the github pages)
 
 vomitous amount of subtitles-- let's get google to index them
 
@@ -631,3 +633,10 @@ some constellation garbage:
 22 zodiac signs http://lulu.com/astrology 16 ascendants 67 horoscope signs 1008 planets 16 Sun signs Cartesian house system RTRRT future-changing 22 There are 22 zodiacal stations, also known as the Academic Zodiac; which is the sum of all main planetary zodiacs plus lunar. 16 At the current epoch, we observe 16 ascendants rising at east. CAVEAT These are NOT ascendants: Aries, Gemini, Cancer, Libra, Scorpius, Sagittarius and Capricornus.
 
 https://www.scribd.com/document/420059275/Self-Development
+
+%%%%%%%%
+
+Margaret J. Fontaine
+
+perl -le 'srand;print int(rand()*shift(@ARGV)+1)'
+
