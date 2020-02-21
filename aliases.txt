@@ -417,3 +417,4 @@ alias calc "\calc '\!*'"
 
 alias rand "perl -le 'srand;print int(rand()*shift(@ARGV)+1)'"
 
+alias xearth xplanet
