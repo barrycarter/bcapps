@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+
+(all inputs should be in decimal degrees)<p />
+
+Number of waypoints: <input type='text' size='3' id='n' value='10'></input><br />
+
+Departure Longitude: <input type='text' id='lng1' value='-74.1723748548254'></input><br />
+
+Departure Latitude: <input type='text' id='lat1' value='40.7356548747811'></input><br />
+
+Destination Longitude:<input type='text' id='lng2' value='-106.651138463684'></input><br />
+
+Destination Latitude: <input type='text' id='lat2' value='35.0844869067959'></input><br />
+
+<input type='button' id='run' value='COMPUTE!'></input>
+
+<div id='results'> </div>
+
+<script src="lib/math.min.js"></script>
+<script src="lib/turf.min.js"></script>
+<script src="lib/bclib.js"></script>
+<script src="lib/bclib-staging.js"></script>
+<script src="stations.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

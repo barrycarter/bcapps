@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>repl.it</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<link href="jquery-ui.css" rel="stylesheet">
+	<script src="jquery.min.js">
+	</script>
+	<script src="jquery-ui.js">
+	</script>
+	<script src="bclib-staging.js">
+	</script>
+	<script src="bclib.js">
+	</script>
+	<script src="bc-solar-interp.js">
+	</script>
+	<script src="bc-lunar-interp.js">
+	</script>
+	<script src="bigcities.js">
+	</script>
+	<script src="brightstars.js">
+	</script>
+Enter values below (initial values are random) or choose city/star from lists at bottom of page:<p />
+
+Right Ascension: <input type="text" id="ra" value=""/><br>
+Declination: <input type="text" id="dec" value="" /><br>
+Latitude: <input type="text" id="lat" value="" /><br>
+Longitude: <input type="text" id="lng" value="" /> (not used in calculation)<p />
+
+OR<p />
+
+Star name: <input type="text" id="star" /><br>
+City name: <input type="text" id="city" /><br>
+<input type="button" id="button" value="go" />
+
+<div id='output'></div>
+<script src="script.js"></script>
+<script>
+
+document.getElementById('ra').value = 24*Math.random();
+
+document.getElementById('dec').value = 180*Math.random()-90;
+
+document.getElementById('lat').value = 180*Math.random()-90;
+
+document.getElementById('lng').value = 360*Math.random()-180;
+
+</script>
+
+
+    <script src="listen.js"></script>
+
+  </body>
+</html>

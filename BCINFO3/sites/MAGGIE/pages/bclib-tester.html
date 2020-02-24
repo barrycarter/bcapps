@@ -1,0 +1,171 @@
+<link rel="stylesheet" href="MAPS/leaflet.css" />
+<script src="MAPS/leaflet.js"></script>
+<script src="bclib.js"></script>
+<script src="bclib-staging.js"></script>
+
+<style>html,body, #map {height:100%;}</style>
+
+OSM: <input type="checkbox" id="osmMap" value="false">
+<input type="range" id="osmMap.o" min="0" max="1" step="0.01"><br>
+
+Time zones: <input type="checkbox" id="tzMap" value="false">
+<input type="range" id="tzMap.o" min="0" max="1" step="0.01"><br>
+
+Grid: <input type="checkbox" id="infoMap" value="false">
+<input type="range" id="infoMap.o" min="0" max="1" step="0.01"><br>
+
+Climate: <input type="checkbox" id="climateMap" value="false">
+<input type="range" id="climateMap.o" min="0" max="1" step="0.01"><br>
+
+Land Use: <input type="checkbox" id="landUseMap" value="false">
+<input type="range" id="landUseMap.o" min="0" max="1" step="0.01"><br>
+<br>
+
+<div id="map"></div>
+
+<script>
+
+let map = L.map('map', {crs: L.CRS.Simple});
+map.fitBounds([[-90, -180], [90, 180]]);
+map.on('zoomend', redraw_map);
+map.on('moveend', redraw_map);
+
+let maps = [];
+
+maps['osmMap'] = {map: map, fake: 1, projection: 1, opacity: 0.5, minZoom: 4, bounded: 1, tileURL: "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"};
+
+maps['tzMap'] = {map: map, opacity: 0.5, width:65536, height:32768, origTileZoom: 8, maxZoom: 8, fake: 1, tileURL: "http://ws.terramapadventure.com/TIMEZONES/${z}/${x}/${y}.png"};
+
+maps['infoMap'] = {map: map, projection: 1, opacity: 0.5, fake: 1, tileURL: "http://test.barrycarter.info/bc-mytile3.pl?/${z}/${x}/${y}.png"};
+
+maps['climateMap'] = {map: map, opacity: 1, width: 43200, height: 21600, origTileZoom: 8, opacity: 0.5, maxZoom: 8, fake: 1, tileURL: 'http://ws.terramapadventure.com/CLIMATE/${z}/${x}/${y}.png'};
+
+maps['landUseMap'] = {map: map, opacity: 0.5, width: 129600, fake: 1, height: 64800, origTileZoom: 9, maxZoom: 9, tileURL: 'http://ws.terramapadventure.com/LANDUSE/${z}/${x}/${y}.png'};
+
+
+for (var key in maps) {
+  document.getElementById(key).addEventListener('change', update);
+  document.getElementById(`${key}.o`).addEventListener('change', update);
+}
+
+function update(e) {
+  console.log(var_dump(e.target));
+  console.log(e.target.id);
+  let str = e.target.id.replace(".o", "");
+
+  if (str === e.target.id) {
+    maps[str].fake = !e.target.checked;
+  } else {
+    maps[str].opacity = e.target.value;
+  }
+  
+  redraw_map();
+}
+
+/*  
+
+Place equirectangular tilesfrom an image on a Leaflet "map" (canvas?) 
+given the following in a hash:
+
+map: put the tiles here
+
+tileURL: template for tile URLs
+
+minZoom: never get tiles lower than this zoom level
+
+maxZoom: never get tiles higher than this zoom level
+
+opacity; tile opacity
+
+fake: if set to 1, don't do anything, just print out debugging info
+
+TODO: document function here more
+
+*/
+
+function placeImageTilesOnMap(obj) {
+
+  // defaults
+
+  obj = mergeHashes(obj, str2hash("minZoom=0&maxZoom=999&opacity=1"));
+
+  // do nothing if requested
+
+  if (obj.fake) {return;}
+
+  let z = boundNumber(obj.map.getZoom(), obj.minZoom, obj.maxZoom);
+
+  let [w, s, e, n] = 
+    obj.map.getBounds().toBBoxString().split(",").map(parseFloat);
+
+  // the "exact" number of x and y tiles at this z level
+
+  let numXTiles = obj.width/256*2**(z-obj.origTileZoom);
+  let numYTiles = obj.height/256*2**(z-obj.origTileZoom);
+
+  // the width and height of a tile in degrees
+
+  let tileWidth = 360/numXTiles;
+  let tileHeight = 180/numYTiles;
+
+  // determine min and max tile number ranges for current view
+
+  let iMin = Math.floor((w+180)/360*numXTiles);
+  let iMax = Math.floor((e+180)/360*numXTiles);
+  let jMin = Math.floor((s+90)/180*numYTiles);
+  let jMax = Math.floor((n+90)/180*numYTiles);
+
+  //  td([iMin, iMax, jMin, jMax, tileWidth, tileHeight], "bounds");
+
+  for (let i = iMin; i <= iMax; i++) {
+    for (let j = jMin; j <= jMax; j++) {
+
+      // if j value out of bounds, do nothing (TODO: dragon tiles?)
+
+      if (j < 0 || j > numYTiles) {continue;}
+
+      // same for i value FOR NOW
+
+      if (i < 0 || i > numXTiles) {continue;}
+
+      // determine URL and place tile
+
+      let url = convertStringTemplate(obj.tileURL, {x: i, y: j, z: z});
+
+      td(url, "URL");
+
+      let bounds = [ [-90+tileHeight*j, -180+tileWidth*i],
+		     [-90+tileHeight*(j+1), -180+tileWidth*(i+1)] ];
+
+      td(bounds, "bounds");
+
+      L.imageOverlay(url, bounds, 
+      			   {opacity: obj.opacity}).addTo(obj.map);
+
+    }
+  }
+}
+
+
+redraw_map();
+
+// TODO: pass image base too
+
+function redraw_map() {
+
+  // TODO: not this
+  map.eachLayer(function(layer) {layer.remove()});
+
+  // the OSM map (comes first so others can overlay)
+  placeTilesOnMap(maps['osmMap']);
+  placeImageTilesOnMap(maps['tzMap']);
+  placeTilesOnMap(maps['infoMap']);
+  placeImageTilesOnMap(maps['climateMap']);
+  placeImageTilesOnMap(maps['landUseMap']);
+  
+// L.rectangle([[35, -106.5], [36, -105.5]], {color: "#ff7800", weight: 1}).addTo(map);
+// L.circle([35, -106.5], 10, {color: "#ff7800", weight: 1}).addTo(map);
+
+}
+
+</script>

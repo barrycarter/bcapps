@@ -5,79 +5,106 @@ require "/usr/local/lib/bclib.pl";
 $header = <<"BARRY";
 # Author: Barry Carter (astronomer\@barrycarter.info)
 #
-# This file is one of many that together list all
-# astrological (not astronomical) constellation changes for
-# Mercury, Venus, Mars, Jupiter, Saturn, and the Sun and Moon.
+# This file is one of many that together list all equinoxes and solstices
+# approximately +-15000 years from now. Seasons refer to northern
+# hemisphere and are reversed in the southern hemisphere.
+#
+# All times UTC
 #
 # More information at:
 #
-# https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-zodiac.c
+# (note that code below only computes equinoxes, but similar code was used 
+# to compute solstices)
+#
+# https://github.com/barrycarter/bcapps/tree/master/STACK/bc-solve-astro-13008.c
 #
 # https://github.com/barrycarter/bcapps/tree/master/ASTRO/
 #
-# http://astronomy.stackexchange.com/questions/19301/period-of-unique-horosco
+# https://astronomy.stackexchange.com/questions/13008/are-there-accurate-
 #
 BARRY
     ;
 
 
-# debug($header);
+# goal/format is roughly something like:
 
-open(A, "bzcat $bclib{githome}/ASTRO/houses.txt.bz2|");
+# CE 1100-MAR-25 17:30 VENUS ENTERS ARIES PROGRADE
 
 my($curfile);
 
+open(A, "bzcat $bclib{githome}/ASTRO/solstices-and-equinoxes.txt.bz2|");
+
+####### THIS IS CUT POINT (below this line, copy of bc-parse-houses) ######
+
+# the first solstice and equinox in the file are winter and spring
+
+my(@sol) = ("WINTER", "SUMMER");
+my(@equ) = ("SPRING", "AUTUMN");
+
+my($solindex) = 1;
+my($equindex) = 1;
+
+my(%eraconvert) = ("B.C." => "BCE", "A.D." => "CE");
+
 while (<A>) {
 
-    s%\s+\S+\s+\S+\s*$%%;
+  debug("THUNK: $_");
+
+  my($type, $et, $era0, $date, $time) = split(/\s+/, $_);
+
+  # get rid of seconds
+  $time=~s/:\d\d//;
+
+  # the string to print
+  my($str);
+
+  if ($type eq "SOL") {
+    $str = "$eraconvert{$era0} $date $time $sol[$solindex] SOLSTICE\n";
+    $solindex = 1-$solindex;
+  } elsif ($type eq "EQU") {
+    $str= "$eraconvert{$era0} $date $time $equ[$equindex] EQUINOX\n";
+    $equindex = 1-$equindex;
+  } else {
+    die "IMPOSSIBLE CASE";
+  }
+
+
+  # find the year
+
+  $year = $date;
+  $year=~s/\-.*//g;
+
+  if ($era0 eq "B.C.") {$year *= -1;}
+
+  my($syear) = 100*floor($year/100);
+  my($eyear) = $syear + 99;
+  my($fname);
     
-    unless (/(pro|retro)grade$/i) {warn "BAD LINE: $_";}
+  my($era);
 
-    unless (m%^(\S+)\s+(\d+)%) {warn "BAD LINE: $_"; next;}
+  if ($syear < 0) {
+    $syear = abs($syear);
+    $eyear = abs($eyear);
+    $fname = "bce-$syear-to-bce-$eyear.txt";
+    $era = "BC";
+  } else {
+    $fname = "ce-$syear-to-ce-$eyear.txt";
+    $era = "AD";
+  }
 
-    $_ .= "\n";
-
-    my($era, $year) = ($1, $2);
-
-    if ($era eq "BCE") {$year *= -1;}
-
-    my($syear) = 100*floor($year/100);
-    my($eyear) = $syear + 99;
-    my($fname);
-    
-    # special case(s) to avoid small files
-
-#    if ($syear == -13300) {$syear += 100;}
-
-    my($era);
-
-    if ($syear < 0) {
-	$syear = abs($syear);
-	$eyear = abs($eyear);
-	$fname = "bce-$syear-to-bce-$eyear.txt";
-	$era = "BC";
-    } else {
-	$fname = "ce-$syear-to-ce-$eyear.txt";
-	$era = "AD";
-    }
-
-    if ($curfile eq $fname) {print B $_; next;}
+    if ($curfile eq $fname) {print B $str; next;}
 
     debug("NEW FILENAME: $fname");
 
-    my($listItem) = "$syear $era to $eyear $era";
-
-    print STDOUT qq%<li><a href="$fname" target="_blank">$listItem</a></li><p />\n%;
+    print STDOUT qq%<li><a href="$fname" target="_blank">$str</a></li><p />\n%;
 
     # current file is not equal to fname
     close(B);
     $curfile = $fname;
-    open(B, ">/home/user/BCGIT-PAGES/pages/DATA/HOUSES/$fname");
+    open(B, ">/home/user/BCGIT-PAGES/pages/DATA/EQUSOL/$fname");
     print B $header;
-    print B $_;
-#    debug("FNAME: $fname, $year");
-#    debug("GOT: $_");
-
+    print B $str;
 }
+
 
 

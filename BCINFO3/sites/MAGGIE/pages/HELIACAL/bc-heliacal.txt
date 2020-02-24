@@ -1,0 +1,85 @@
+This is not an answer, but I've written a very basic proof-of-concept page at https://barrycarter.github.io/pages/HELIACAL/ which computes the heliacal rising and setting(as well as dawn/dusk rising/setting) for stars at any right ascension and declination, and for cities at any latitude and longitude. You can also select from a list of big cities and bright stars. Note that the longitude field is not actually used and does not affect the computation. Notes:
+
+  - The dates given should be very accurate for the year 2020, but less accurate further from 2020.
+
+  - I used precession-corrected positions for the Sun, but J2000 positions for the stars, but the inaccuracy thus generated should be very small.
+
+  - The code does account for refraction, the sun's angular radius, and the Equation of Time (more details below).
+
+  - Source code: https://github.com/barrycarter/pages/tree/master/HELIACAL
+
+  - The source code is in JavaScript, and all files you need to run it are in the source code above. The code is entirely client-side and does not make any server connections. If you download it, you should be able to run it even without an Internet connection.
+
+  - I livestreamed my attempts to solve this problem. The recordings are available at https://www.youtube.com/playlist?list=PLQiTKaefaTLpfUVJETwWX31IxLypqA7xy (videos 81-87 with 'heliacal' in the title). However, there are several highly off-topic digressions, and, even when I stay on-topic, the process of watching me work out this answer may not be helpful.
+
+  - I included dawn/dusk rising/setting because even bright stars may not be visible when the sun is rising or setting, but should be visible when the sun is 6 degrees below the horizon (start/end of civil twilight).
+
+  - Stars rise about 4 minutes earlier every day. This means that:
+
+    - The heliacal dates are only approximations, and a star might rise/set/etc +-2 minutes (in some cases more) from when the Sun does.
+
+    - Stars rise with the sun before they rise at dawn; realistically, this means a given star will be first visible in the morning sometime between it's heliacal rise and it's dawn rise.
+
+    - Conversely, a star may be visible at dusk ("first star I see tonight") one day, and not be visible at all the next day.
+
+  - I originally tried to use a simple closed-form formula for solar right ascension and declination:
+
+`ra = 2*Pi*d/365.242`
+
+`dec = 23.4*Pi/180 * sin(ra)`
+
+where `ra` is the right ascension, `dec` is the declination, `365.242` is the length of the tropical year, `23.4` is the inclination of the ecliptic in degrees (converted to radians via multiplying by `Pi/180`), and `d` is the number of days since the vernal equinox.
+
+Unfortunately, because this formula completely ignores the Equation of Time (https://en.wikipedia.org/wiki/Equation_of_time), it was excessively inaccurate when I used Stellarium to check my results.
+
+I ended up using CSPICE to generate solar positions and Mathematica to create an interpolation good to within 5 seconds of arc: https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-approx-sun-ra-dec.m
+
+  - I was hoping to find a closed-form formula for heliacal rising date, but, even ignoring refraction, the sun's angular radius, and the Equation of Time, I couldn't find such a formula, even with the free Wolfram Cloud's (https://www.wolframcloud.com/) help.
+
+  - I still believe there may be a closed-form approximation that does not require iterative searching like my current solution does. I believe that graphing the "heliacal rising date" function (which has three inputs: right ascension, declination, and latitude) might help find that closed-form approximation.
+
+
+
+
+
+
+
+
+below this line: not using this time
+
+  - I was hoping to find a closed-form solution, but the geometric rise time of a celestial object above a given altitude is:
+
+$
+\text{ra}-\text{ArcCos}\left[-\text{Tan}\left[\text{dec}\right] \text{Tan}\left[\text{lat}\right]+\frac{\text{Sin}\left[\text{alt}\right]}{\text{Cos}\left[\text{dec}\right] \text{Cos}\left[\text{lat}\right]}\right]
+$
+
+where `lat` is the observer's latitude, `dec` is the celestial object's declination, `alt` is the given altitude above the horizon, and `ra` is the celestial object's right ascension.
+
+When `alt` is 0 (the geometric rise over the horizon), the formula simplifies to (per https://astronomy.stackexchange.com/questions/14492/need-simple-equation-for-rise-transit-and-set-time):
+
+$
+\text{ra}-\text{ArcCos}\left[-\text{Tan}\left[\text{dec}\right] \text{Tan}\left[\text{lat}\right]\right]
+$
+
+The simplified formula is inaccurate, however, because it doesn't account for refraction (standard value of 34 minutes at the horizon) and the sun's angular radius (16 minutes of arc).
+
+
+stars ra rising and setting time are fixed
+
+
+
+(quote my own URL
+
+REFRACTION
+
+
+
+
+
+
+
+
+
+
+
+, assuming the sun's right ascension increased linearly over the year, and the declination was the tilt of the ecliptic times the sin of the number of days since 

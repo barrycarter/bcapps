@@ -1,0 +1,123 @@
+<script src="../bclib.js"></script>
+<script src="../bclib-staging.js"></script>
+<script src="bc-osmtilecache.js"></script>
+<script src="../THREE.JS/three.min.js"></script>
+
+This demonstration uses only level 4 slippy tiles and is just for testing.<p>
+
+Latitude: <input type="range" id="lat" min="-90" max="90" step="0.01"><br>
+Longitude: <input type="range" id="lng" min="-180" max="180" step="0.01"><br>
+Distance: <input type="range" id="dist" min="1" max="10" step="0.01"><br>
+
+<div id="container"></div>
+
+<script>
+
+document.getElementById('lat').addEventListener('change', update);
+document.getElementById('lng').addEventListener('change', update);
+document.getElementById('dist').addEventListener('change', update);
+
+// a zero pointing vector
+let zero = new THREE.Vector3(0, 0, 0);
+
+// time
+
+let t = 0;
+
+// Create renderer, camera, scene
+let renderer = new THREE.WebGLRenderer();
+let camera = new THREE.PerspectiveCamera(36);
+let scene = new THREE.Scene();
+
+// Put renderer in container above
+document.querySelector('#container').appendChild(renderer.domElement);
+
+// Set rendeer scene, add camera
+
+camera.position.z = 3.5;
+
+// The camera defaults to looking down the -Z axis with +Y up
+
+scene.add(camera);
+renderer.setSize(700, 700);
+
+// Attach the renderer-supplied DOM element.
+container.appendChild(renderer.domElement);
+
+// create sphere shards for zoom level z
+
+let shard = [];
+
+let z = 4;
+
+for (let i=0; i<2**z; i++) {
+  shard[i] = [];
+  for (let j=0; j<2**z; j++) {
+
+    let nwtile = tile2LngLat({z: z, x: i, y: j, projection: 1});
+    let setile = tile2LngLat({z: z, x: i+1, y: j+1, projection: 1});
+
+    // real latitude -> Three.js theta param: 90 -> 0, 0 -> 90, -90 -> 180
+    nwtile.theta = 90-nwtile.lat;
+    setile.theta = 90-setile.lat;
+
+//    console.log("TILES", i, j, nwtile, setile);
+//  console.log("PARAMS", nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree, nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree);
+
+    shard[i][j] = new THREE.Mesh(new THREE.SphereGeometry(1, 0, 0, 
+                    nwtile.lng*Degree, (setile.lng-nwtile.lng)*Degree,
+                    nwtile.theta*Degree, (setile.theta-nwtile.theta)*Degree),
+		    new THREE.MeshBasicMaterial( {color: 0xffffff} ));
+
+   // put the correct slippy tile on it
+   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.cache[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
+//   shard[i][j].material.map = THREE.ImageUtils.loadTexture(URLCache.get[`https://tile.openstreetmap.org/${z}/${i}/${j}.png`]);
+
+    scene.add(shard[i][j]);
+  }
+ }
+
+function update (e) {
+
+ // increment time and set position
+ t++;
+
+ // ph = 90 deg = latitude 0 centered, 180 deg = S Pole centered, 0 = npole
+
+ // th = 90 
+
+// let pos = sph2xyz({r: 3.5-t/10000, ph: 90*Degree+t/2000, th: 0*Degree+t/1000});
+
+ let dist = document.getElementById('dist').value;
+ let lat = document.getElementById('lat').value;
+ let lng = document.getElementById('lng').value;
+
+ let pos = sph2xyzHACK({r: dist, ph: lat*Degree, th: lng*Degree});
+
+// console.log(pos);
+
+ camera.position.x = pos.x;
+ camera.position.y = pos.y;
+ camera.position.z = pos.z;
+
+ camera.lookAt(zero);
+
+ renderer.render(scene, camera);
+ requestAnimationFrame(update);
+}
+
+// Schedule the first frame.
+requestAnimationFrame(update);
+
+// hacked version of sph2xyz for z not being up
+
+function sph2xyzHACK(obj) {
+  return {x: -obj.r*Math.cos(obj.ph)*Math.cos(obj.th), 
+      z: obj.r*Math.cos(obj.ph)*Math.sin(obj.th), 
+      y: obj.r*Math.sin(obj.ph)};
+  };
+
+
+
+
+</script>

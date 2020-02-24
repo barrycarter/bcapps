@@ -4,15 +4,28 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 21 Feb 2020, primarily for my reference
+Stuff I plan to stream 24 Feb 2020, primarily for my reference
+
+escape velocities?
+
+check my data vs HORIZONS and whine as needed
 
 instant page testing using bcinfo3 + new subd for fake char
+
+problems/notes w solstices: can determine solstices/equinoxes from sun
+enters house data in houses-- aries, cancer, libra, capricorn enter
+dates; however, my numbers don't match
+https://data.giss.nasa.gov/modelE/ar5plots/srvernal.html and other
+sources, which is bad; when I run bc-solve-astro-(whatever) now, I get
+different results, which STILL don't match the "correct" ones, and may
+not even match the houses one-- ugh! -- also against 
 
 NOT: more neural network crap
 
 google acct stuff (all about the github pages)
 
-vomitous amount of subtitles-- let's get google to index them
+vomitous amount of subtitles-- let's get google to index them (when
+available, check if I need to tweak language or something)
 
 credit SPICE
 
@@ -629,6 +642,8 @@ This is not not a list of possible future streams
   - neural network in action watch
 
   - pbs3.referata.com
+
+  - post subtitles of my streams in a zillion languages and get google to index them (do I need special encoding to say "this page is in stupid language X?"
 
 TODO: Sun was in CET and ORI year +-10000, do something with this
 
