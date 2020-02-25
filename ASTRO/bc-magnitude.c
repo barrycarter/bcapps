@@ -49,11 +49,18 @@ SpiceDouble lambertianMagnitude(SpiceDouble et, SpiceInt light, SpiceInt observe
   sprintf(observerString, "%d", observer);
   sprintf(lightString, "%d", light);
 
+  // adjusted due to light distance, angular radius and albedo
+
+  double adj = (angRad*angRad*albedo/lightdist/lightdist)*10e26;
+  double magAdj = -5/2*log10(adj);
+
+  printf("%f, \n", magAdj);
+
   // phase angle (pi = new moon, 0 = full moon)
 
   SpiceDouble phaseAngle = phaseq_c(et, viewedString, lightString, observerString, "CN+S");
 
-  printf("AR: %f, LD: %f, OD: %f, AL: %f, PA: %f\n", angRad*dpr_c(), lightdist, observerdist, albedo, phaseAngle);
+  //  printf("AR: %f, LD: %f, OD: %f, AL: %f, PA: %f, ADJ: %f\n", angRad*dpr_c(), lightdist, observerdist, albedo, phaseAngle, adj);
 
 
   // TODO: angular diameter, not just distance
