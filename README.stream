@@ -10,6 +10,12 @@ albedo list:
 
 mercury 0.106 Jupiter 0.52 moon 0.12 io 0.63
 
+mag 0 = 10^0
+
+mag 5 = 10^-2 and mag-5 = 10^2
+
+10^(-2m/5)
+
 
 
 diameter > 40.057 (km) 

@@ -31,27 +31,34 @@ SpiceDouble lambertianMagnitude(SpiceDouble et, SpiceInt light, SpiceInt observe
   spkezp_c(viewed, et, "J2000", "CN+S", light, lightpos, &lt);
   spkezp_c(viewed, et, "J2000", "CN+S", observer, observerpos, &lt);
 
+  // TODO: get brightness, these will squared
+  SpiceDouble lightdist = vnorm_c(lightpos);
+  SpiceDouble observerdist = vnorm_c(observerpos);
+
   // find viewed albedo and radii (need for angular radius)
 
   bodvcd_c(viewed, "GEOMETRIC_ALBEDO", 1, &dim, &albedo);
   bodvcd_c(viewed, "RADII", 3, &dim, viewedRads);
+
+  // angular radius from observer (of viewed)
+
+  double angRad = asin(viewedRads[0]/observerdist);
 
   // convert bodies to strings for phase angle function
   sprintf(viewedString, "%d", viewed);
   sprintf(observerString, "%d", observer);
   sprintf(lightString, "%d", light);
 
-  // phase angle
+  // phase angle (pi = new moon, 0 = full moon)
+
   SpiceDouble phaseAngle = phaseq_c(et, viewedString, lightString, observerString, "CN+S");
 
-  // TODO: get brightness, these will squared
+  printf("AR: %f, LD: %f, OD: %f, AL: %f, PA: %f\n", angRad*dpr_c(), lightdist, observerdist, albedo, phaseAngle);
 
-  SpiceDouble lightdist = vnorm_c(lightpos);
-  SpiceDouble observerdist = vnorm_c(observerpos);
 
   // TODO: angular diameter, not just distance
 
-  printf("LIGHT: %f, OBS: %f, ALB: %f, R: %f, VS: %s PA: %f\n", lightdist, observerdist, albedo, viewedRads[0], viewedString, phaseAngle);
+  //  printf("U: %f, LIGHT: %f, OBS: %f, ALB: %f, R: %f, VS: %s PA: %f\n", et2unix(et), lightdist, observerdist, albedo, viewedRads[0], viewedString, phaseAngle);
 
   return 9999999999999;
 
@@ -65,7 +72,9 @@ int main( int argc, char **argv ) {
   // albedos
   furnsh_c("/home/user/BCGIT/ASTRO/bc-albedos.tpc");
 
-  lambertianMagnitude(0, 10, 399, 301);
+  for (int i=0; i<366; i++) {
+    lambertianMagnitude(unix2et(946684800+i*86400), 10, 399, 301);
+  }
 
   printf("TESTING\n");
   exit(-1);
