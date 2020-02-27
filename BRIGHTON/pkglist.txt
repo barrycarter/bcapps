@@ -474,6 +474,7 @@ getmail
 sendmail
 
 # browsers
+ddgr
 opera
 firefox
 elinks

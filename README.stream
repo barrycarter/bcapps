@@ -4,6 +4,18 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
+Stuff I plan to stream 27 Feb 2020, primarily for my reference
+
+scriptified version of WA API (secret appid)
+
+last wed of month and create page for it and have google index and add
+titles to existing pages (yikes!)
+
+command line "search engine" based on data heavy sites I visit
+frequently (look at bookmarks) [or just WA wrapper using wolframscript?]
+
+install ddgr? (kinda sucks)
+
 TODO: can wolfram cloud read data from remote source-- if so, put crap
 on bcinfo3 (maggie?) [can also cut/paste into files?]
 
@@ -19,11 +31,9 @@ mag 5 = 10^-2 and mag-5 = 10^2
 
 10^(-2m/5)
 
-
+getting albedos and other values into CSPICE? (ping NASA)
 
 diameter > 40.057 (km) 
-
-Stuff I plan to stream 24 Feb 2020, primarily for my reference
 
 escape velocities?
 
@@ -636,7 +646,7 @@ This is not not a list of possible future streams
   - how fast does the Sun's shadow move (w/ disclaimers vastly larger
   than answer)
 
-  - petition IAU: no more constellations?
+  - petition IAU: no more constellations? (change.org?)
 
   - xkcd: comment on dumb/bad strips?
 

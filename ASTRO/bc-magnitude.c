@@ -58,7 +58,10 @@ SpiceDouble lambertianMagnitude(SpiceDouble et, SpiceInt light, SpiceInt observe
 
   SpiceDouble phaseAngle = phaseq_c(et, viewedString, lightString, observerString, "CN+S");
 
-  printf("{%f, %f}, \n", phaseAngle, magAdj);
+  //  printf("{%f, %f}, \n", phaseAngle, magAdj);
+
+  printf("phases = Append[phases, %f];\n", phaseAngle);
+  printf("adjs = Append[adjs, %f];\n", magAdj);
 
   //  printf("AR: %f, LD: %f, OD: %f, AL: %f, PA: %f, ADJ: %f\n", angRad*dpr_c(), lightdist, observerdist, albedo, phaseAngle, adj);
 
@@ -79,7 +82,10 @@ int main( int argc, char **argv ) {
   // albedos
   furnsh_c("/home/user/BCGIT/ASTRO/bc-albedos.tpc");
 
-  for (int i=0; i<366; i++) {
+  printf("adjs = {};\n");
+  printf("phases = {};\n");
+
+  for (int i=0; i<366*10; i++) {
     //    lambertianMagnitude(unix2et(946684800+i*86400), 10, 399, 301);
     lambertianMagnitude(unix2et(946684800+i*86400), 10, 399, 599);
   }
