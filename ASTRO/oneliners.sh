@@ -1,5 +1,19 @@
 #!/bin/sh
 
+# convert HYG db to JS useful form (for distances only)
+
+zcat hygdata_v3.csv.gz | perl -F, -anle 'print "stars[$F[0]]={id:$F[0],x:$F[17],y:$F[18],z:$F[19]};"'
+
+exit;
+
+# convert HYG db to JS useful form
+
+# zcat hygdata_v3.csv.gz | perl -F, -anle 'print "stars[$F[0]]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"'
+
+zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[13] <= 5) {$n++; print "stars[$n]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"}'
+
+exit;
+
 # C form (0: id, 13: mag, 14: absmag, 17-22
 
 zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[13] <= 5.5) {print "{",join(", ", $F[0], $F[13], $F[14], @F[17..22]),"},";}'
@@ -18,14 +32,6 @@ exit;
 
 bc-constell | sort -u | perl -anle 'if ($F[1]=~/\d/) {next;} if ($F[1] ne $F[2]) {print $_}'
 
-
-exit;
-
-# convert HYG db to JS useful form
-
-# zcat hygdata_v3.csv.gz | perl -F, -anle 'print "stars[$F[0]]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"'
-
-zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[13] <= 5) {$n++; print "stars[$n]={id:$F[0],x:$F[17],y:$F[18],z:$F[19],mag:$F[14],spect:\"$F[15]\"};"}'
 
 exit;
 
