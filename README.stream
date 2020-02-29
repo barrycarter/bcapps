@@ -4,7 +4,13 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 27 Feb 2020, primarily for my reference
+Stuff I plan to stream 29 Feb 2020, primarily for my reference
+
+for betel answer: ignoring my own advice, not a complete answer, will
+look at GAIA (or hiparcos-- both cases bad dists), 500 year gap (use
+vx/vy/vz, change anything?)
+
+mathjax install + use for latex (csv2latex) thing
 
 scriptified version of WA API (secret appid)
 

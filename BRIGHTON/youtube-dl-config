@@ -1,0 +1,38 @@
+# this youtube-dl config file is normally placed in
+# ~/.config/youtube-dl/config and I will symlink it from there to here
+
+# I want as much info as possible
+
+--write-description
+--write-info-json
+--write-annotations
+
+# don't overwrite (if I really want to overwrite, I'll delete first)
+
+--no-overwrites
+
+# I want all subtitles in all possible languages
+
+--write-sub
+--write-auto-sub
+--all-subs
+
+# I want subtitles in srt format, even if conversion if required
+
+--sub-format srt
+--convert-subs srt
+
+# I want output in mp4 format, especially merged output, because
+# youtube-dl files are sometimes in mkv with "OPUS" audio which my vlc
+# doesn't understand
+
+-f mp4
+--merge-output-format mp4
+
+# all thumbnails
+
+--write-all-thumbnails 
+
+# note to self: --skip-download will skip the video and just download
+# subtites/etc which is sometimes really useful
+
