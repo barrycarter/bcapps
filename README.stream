@@ -6,11 +6,26 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 01 Mar 2020, primarily for my reference
 
-now at 60 fps-- more frames of crap per second also 1600x900
+github pages
 
-TODO: test animations/particle streams
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+mathjax install + use for latex (csv2latex) thing
+
+now at 60 fps-- more frames of crap per second
+
+resolution of VM: 1024 x 768
+
+TODO: test animations/particle streams (doesn't work)
 
 create math expression generator? to test 2/29/20 stream stuff
+
+maggiefount@gmail.com
 
 for betel answer: ignoring my own advice, not a complete answer, will
 look at GAIA (or hiparcos-- both cases bad dists), 500 year gap (use
@@ -19,8 +34,6 @@ vx/vy/vz, change anything?)
 URL for question
 
 andro parad
-
-mathjax install + use for latex (csv2latex) thing
 
 scriptified version of WA API (secret appid)
 
