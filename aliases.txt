@@ -418,3 +418,8 @@ alias calc "\calc '\!*'"
 alias rand "perl -le 'srand;print int(rand()*shift(@ARGV)+1)'"
 
 alias xearth xplanet
+
+# temporary hack for LAPAZ DOING (TODO: generalize bc-doing.pl instead)
+
+alias lapazdoing "tac /home/user/LAPAZ/home/user/DOING | egrep -v 'REF:|DONE:|NOT:|OK:|FIXED:|NOTED:|ASKED:|DEFER:' | less"
+

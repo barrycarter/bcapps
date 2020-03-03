@@ -4,16 +4,17 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 01 Mar 2020, primarily for my reference
+Stuff I plan to stream 02 Mar 2020, primarily for my reference
+
+finish csv2latex and publish
 
 github pages
-
-
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-
+TODO: parallel structure to stack to see if questions are "really
+answered"? (add to whystacksucks.txt?)
 
 mathjax install + use for latex (csv2latex) thing
 
@@ -41,7 +42,7 @@ last wed of month and create page for it and have google index and add
 titles to existing pages (yikes!)
 
 command line "search engine" based on data heavy sites I visit
-frequently (look at bookmarks) [or just WA wrapper using wolframscript?]
+frequently (look at bookmarks) [or just WA wrapper using wolframscript?] (use bc-wa.pl carefully on VM)
 
 install ddgr? (kinda sucks)
 
