@@ -1,2 +1,208 @@
+$$
+\begin{array}{|c|c|c|}
+\hline
+\textbf{Star} & \textbf{Magnitude} & \textbf{Distance (ly)} \\
+\hline
+\text{Betelgeuse} & \text{0.45} & \text{0.00} \\
+\hline
+\text{HIP27648} & \text{8.24} & \text{17.82} \\
+\hline
+\text{HIP28478} & \text{8.42} & \text{19.03} \\
+\hline
+\text{HIP27573} & \text{7.41} & \text{24.27} \\
+\hline
+\text{HIP28175} & \text{9.1} & \text{39.34} \\
+\hline
+\text{HIP26887} & \text{7.28} & \text{39.34} \\
+\hline
+\text{HIP29261} & \text{7.66} & \text{41.42} \\
+\hline
+\text{HIP26914} & \text{9.6} & \text{41.87} \\
+\hline
+\text{HIP27513} & \text{8.28} & \text{42.65} \\
+\hline
+\text{HIP27386} & \text{5.26} & \text{44.20} \\
+\hline
+\text{HIP28261} & \text{8.45} & \text{46.08} \\
+\hline
+\text{HIP28686} & \text{6.09} & \text{46.73} \\
+\hline
+\text{HIP27004} & \text{7.89} & \text{47.16} \\
+\hline
+\text{HIP29537} & \text{7.82} & \text{49.28} \\
+\hline
+\text{HIP27324} & \text{9.22} & \text{49.88} \\
+\hline
+\text{HIP27932} & \text{8.26} & \text{50.41} \\
+\hline
+\text{HIP29868} & \text{8.92} & \text{50.69} \\
+\hline
+\text{HIP28397} & \text{8.24} & \text{50.95} \\
+\hline
+\text{HIP29236} & \text{6.57} & \text{52.93} \\
+\hline
+\text{HIP27902} & \text{6.3} & \text{52.98} \\
+\hline
+\text{HIP28232} & \text{6.22} & \text{54.81} \\
+\hline
+\text{HIP27315} & \text{7.14} & \text{55.28} \\
+\hline
+\text{HIP27751} & \text{6.9} & \text{55.37} \\
+\hline
+\text{HIP30124} & \text{9.75} & \text{56.46} \\
+\hline
+\text{HIP29685} & \text{7.69} & \text{56.79} \\
+\hline
+\text{HIP27412} & \text{9.31} & \text{58.80} \\
+\hline
+\text{HIP27153} & \text{7.46} & \text{60.13} \\
+\hline
+\text{HIP28202} & \text{7.97} & \text{60.42} \\
+\hline
+\text{HIP27919} & \text{7.15} & \text{60.85} \\
+\hline
+\text{HIP28056} & \text{7.17} & \text{60.89} \\
+\hline
+\text{HIP29381} & \text{8.88} & \text{61.26} \\
+\hline
+\text{HIP26986} & \text{9.17} & \text{61.26} \\
+\hline
+\text{HIP29630} & \text{8.15} & \text{62.56} \\
+\hline
+\text{HIP29590} & \text{7.82} & \text{64.37} \\
+\hline
+\text{HIP30120} & \text{6.76} & \text{64.57} \\
+\hline
+\text{HIP26795} & \text{6.82} & \text{66.03} \\
+\hline
+\text{HIP26655} & \text{7.09} & \text{66.99} \\
+\hline
+\text{HIP26615} & \text{9.13} & \text{67.50} \\
+\hline
+\text{HIP27895} & \text{7.04} & \text{68.80} \\
+\hline
+\text{HIP27309} & \text{9.7} & \text{69.04} \\
+\hline
+\text{HIP28323} & \text{8.16} & \text{69.12} \\
+\hline
+\text{HIP28171} & \text{8.68} & \text{69.91} \\
+\hline
+\text{HIP25767} & \text{8.93} & \text{70.26} \\
+\hline
+\text{HIP25698} & \text{8.74} & \text{70.31} \\
+\hline
+\text{HIP26107} & \text{7.83} & \text{71.05} \\
+\hline
+\text{NuOri} & \text{4.42} & \text{72.70} \\
+\hline
+\text{HIP27284} & \text{8.72} & \text{73.29} \\
+\hline
+\text{HIP27968} & \text{8.42} & \text{73.36} \\
+\hline
+\text{HIP29599} & \text{7.96} & \text{73.41} \\
+\hline
+\text{HIP25424} & \text{8.63} & \text{73.44} \\
+\hline
+\end{array}
+$$
+
+Subject to important caveats below, the table above lists the 50 stars closest to Betelguese including Betelguese itself:
+
+  - I ignore my own advice and used HYG data to create this list.
+
+  - The repl.it code: https://repl.it/@barrycarter/Twitch-BeetleJuice
+
+  - I hope to turn this into a webapp later; for now, by changing the `var fixedStar = stars[27919];` line in script.js, you can run this for any star in the HYG catalog (be sure to use the HYG id). You can convert to LaTeX using https://barrycarter.github.io/pages/CSV2LATEX/
+
+  - As others have noted, the distance to Betelguese is not accurately know: "https://en.wikipedia.org/wiki/Betelgeuse#Distance_measurements". Of course, the same may apply to other stars in the HYG catalog, including those I have listed above. Therefore, the computed distance between Betelguese and another star may be way off.
+
+I'm hoping to get a "better" list by using GAIA DR2 data, and will amend this answer when I do. Of course, while GAIA DR2 lists more stars, the distance measurements can be even further off.
+
+
+
+inaccuracy
+
+
+
+
+
 Solve https://astronomy.stackexchange.com/questions/35318/what-star-is-the-closest-to-betelgeuse?noredirect=1#comment68327_35318 to find star closest
+
+TODO: make this a "webapp"
+
+
+
+TODO: proper motion
+
+TODO: for betel answer: ignoring my own advice, not a complete answer, will
+look at GAIA (or hiparcos-- both cases bad dists), 500 year gap (use
+vx/vy/vz, change anything?)
+
+======= BELOW THIS LINE GAIA DR2 release ==========
+
+SELECT COUNT(*) FROM gaiadr2.gaia_source
+
+1,692,919,135
+
+152.6718 from HYG data (using high precision unnecessarily)
+
+betel 6.55 mas of parallax
+
+SELECT COUNT(*) FROM gaiadr2.gaia_source WHERE parallax > 6 AND parallax < 7;
+
+1302890 match that criteria
+
+ra : Right ascension (double, Angle[deg])
+Barycentric right ascension α
+of the source in ICRS at the reference epoch ref_epoch 
+
+dec : Declination (double, Angle[deg])
+Barycentric declination δ
+of the source in ICRS at the reference epoch ref_epoch 
+
+5.919529,7.407063 from HYG convert to:
+
+88.792935 deg, 7.407063 deg
+
+SELECT COUNT(*) FROM gaiadr2.gaia_source WHERE 
+ parallax > 6 AND parallax < 7 AND
+ ra > 88.69 AND ra < 88.89 AND
+ dec > 7.3 AND dec < 7.5
+
+SELECT * FROM gaiadr2.gaia_source WHERE 
+ parallax > 6 AND parallax < 7 AND
+ ra > 88.69 AND ra < 88.89 AND
+ dec > 7.3 AND dec < 7.5
+
+SELECT * FROM gaiadr2.gaia_source WHERE 
+ parallax > 6 AND parallax < 7 AND
+ ra > 87.8 AND ra < 89.8 AND
+ dec > 6.4 AND dec < 8.4
+
+94 results
+
+NOTE param limitation (outside of cone that are closer, so be careful)
+
+note that ra and dec are translated to ICRS even though given at time
+something else
+
+
+
+
+
+
+
+
+https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_gaia_source.html#gaia_source-parallax
+
+parallax : Parallax (double, Angle[mas] )
+
+Absolute stellar parallax ϖ
+of the source at the reference epoch ref_epoch 
+
+
+
+https://gea.esac.esa.int/archive/ (use search tab, Advanced (ADQL))
+
+https://github.com/barrycarter/bcapps/tree/master/STACK/bc-gaia.txt
 
