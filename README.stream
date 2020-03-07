@@ -4,7 +4,40 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 05 Mar 2020, primarily for my reference
+Stuff I plan to stream 07 Mar 2020, primarily for my reference
+
+screw betelguese-- go captions and better labelling my own videos
+(meta-streamification!)
+
+maybe occultations again (genericize for any occluding object, check against calsky.com)
+
+list of NAIF ids for which eph is loaded? (function should exist)
+
+roughly -160/-9 (lng first)
+
+HIP27648 611.93 +- 5.89
+
+betel per stell: 497.95 +- 56
+
+note HIP27648 way off and others may be way off too (stellarium vs hyg)
+
+GAIA DR2 does correct to ICRS (irrev?)
+
+betelg galactic coor not in HYG, could translate, but better direct source
+
+http://simbad.u-strasbg.fr/simbad/sim-id?Ident=HD+39801
+
+disclaim: the previous answer usd HYG and numbers may nto agree
+
+betel: 199.78723027 -08.95860566 [9.04 5.72 90]
+
+betel paral: 6.55 (use 2 sources) mas
+
+152.67175572519083969466 parsecs = 497.9486682698371850593
+
+precision vs accuracy
+
+mention proper motion (distance)
 
 show 17 ly star on stellarium to see how close to betelguese
 
@@ -35,7 +68,8 @@ maggiefount@gmail.com
 
 URL for question
 
-TODO: more for main Betel answer
+TODO: more for main Betel answer, edit program to allow number of
+years of proper motion (or default/allow to target star)
 
 andro parad
 

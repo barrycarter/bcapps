@@ -144,6 +144,10 @@ SELECT COUNT(*) FROM gaiadr2.gaia_source
 
 1,692,919,135
 
+https://www.cosmos.esa.int/web/gaia/dr2 says 1.3B only parallax
+
+no 0 parallax
+
 152.6718 from HYG data (using high precision unnecessarily)
 
 betel 6.55 mas of parallax
@@ -186,12 +190,12 @@ NOTE param limitation (outside of cone that are closer, so be careful)
 note that ra and dec are translated to ICRS even though given at time
 something else
 
+SELECT * FROM gaiadr2.gaia_source WHERE 
+ l > 199.78723027-1 AND l < 199.78723027+1 AND
+ b > -08.95860566-1 AND b < -08.95860566+1
 
 
-
-
-
-
+TODO: other guy corrected stats
 
 https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_gaia_source.html#gaia_source-parallax
 
@@ -206,3 +210,40 @@ https://gea.esac.esa.int/archive/ (use search tab, Advanced (ADQL))
 
 https://github.com/barrycarter/bcapps/tree/master/STACK/bc-gaia.txt
 
+1 degree of variance at 1/0.00655 parsecs on either side
+
+tan 1 = opp / (1/0.00655) 
+
+tan 1 = 0.00655 * opp
+
+opp = (tan 1) / 0.00655
+
+opp = (tan 1)/ parallax
+
+WRONG: result is 0.000114331 parsecs
+
+expected answer is 1/57 * dist betel
+
+2.61826 parsecs
+
+150 parsecs range is 2.61826
+
+claim: we get all stars within 2.5 parsecs of betelgeuse
+
+2.40523560006948 3322617039834614528 13.298384 278.24365
+2.48609300108173 3322712976522193408 13.537826 189.57973
+
+convert to ly
+
+2.25607183175203 3322878659180522624 17.41917 51.80343
+
+The Gaia satellite allows determining high-accuracy positions for ~1.7 billion sources and parallaxes and proper motions for ~1.3 billion sources
+
+https://www.aanda.org/articles/aa/full_html/2019/01/aa34142-18/aa34142-18.html
+
+GAIA DR2 3322778878498977792
+
+TODO: add angular distances? include other stars angularlay close but
+really far away
+
+lovely screenshots

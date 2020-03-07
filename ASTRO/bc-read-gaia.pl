@@ -5,11 +5,13 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my($bx, $by, $bz) = sph2xyz(199.78723027, -8.95860566, 1/0.00655, "degrees=1");
+
+debug(@betel);
+
 my(@headers) = split(/\,/, <>);
 
 for $i (0..$#headers) {debug("$i -> $headers[$i]");}
-
-die "TESTING";
 
 while (<>) {
 
@@ -19,30 +21,36 @@ while (<>) {
 
   my(@fields) = split(/\,/, $_);
 
-  debug("START");
   my(%hash);
   for ($i=0; $i<=$#headers; $i++) {
     $hash{$headers[$i]} = $fields[$i];
     debug("$headers[$i] -> $fields[$i]");
   }
-  debug("END");
 
-  debug($hash{parallax});
-  
+  unless ($hash{parallax}) {next;}
+
+  my($r) = 1000/$hash{parallax};
+  my($x, $y, $z)=sph2xyz($hash{l}, $hash{b}, $r, "degrees=1");
+
+  my($dist) = sqrt(($x-$bx)**2 + ($y-$by)**2 + ($z-$bz)**2);
+
+  if ($dist > 2.5) {next;}
+
+  print "$dist $hash{source_id} $hash{phot_g_mean_mag} $hash{parallax_over_error} $hash{l} $hash{b}\n";
+
   # this field is redundant (but useful)!
-  if ($hash{parallax_over_error} > 1) {
+
+#  if ($hash{parallax_over_error} > 1) {
     
-    my($r) = 1000/$hash{parallax};
-    my($x, $y, $z)=sph2xyz($hash{l}, $hash{b}, $r, "degrees=1");
+#    my($r) = 1000/$hash{parallax};
+#    my($x, $y, $z)=sph2xyz($hash{l}, $hash{b}, $r, "degrees=1");
 
-    my($abs) = 5 + $hash{phot_g_mean_mag} - 5*log($r)/log(10);
-
-    print "$hash{source_id} $x $y $z $abs\n";
-
+#    my($abs) = 5 + $hash{phot_g_mean_mag} - 5*log($r)/log(10);
+# }
 
 #    print "$hash{parallax} $hash{l} $hash{b} $hash{phot_g_mean_mag} $hash{ra} $hash{dec}\n";
 #    debug(var_dump("hash", \%hash));
-  }
+  
 }
 
 =item comment
@@ -169,3 +177,5 @@ l = longitude, b = latitude
 93 -> lum_percentile_upper
 
 =cut
+
+# per GAIA DR2 199.7875857 -8.9571978
