@@ -12,11 +12,17 @@ for $i (split(/\n/, $data)) {
 
     if ($i=~/^\s*$/) {next;}
 
-    if ($i=~/^[\d\:\.]+\s*\-\->\s*[\d\:\.]+/) {
+    if ($i=~/^(\d+):(\d{2}):(\d{2}\.?\d*)\s*\-\->\s*[\d\:\.]+/) {
+
 	# TODO: more
-	debug("TIMESTAMP: $i");
+
+ 	my($ts) = $1*3600+$2*60+$3;
+
+	debug("TIMESTAMP: $ts");
 	next;
     }
+
+# 00:00:37.069
 
     if ($i eq $prev) {next;}
 
