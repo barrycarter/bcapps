@@ -6,6 +6,8 @@ require "/usr/local/lib/bclib.pl";
 
 my($data, $fname) = cmdfile();
 
+my($ts, %tran);
+
 $data=~s/<.*?>//sg;
 
 for $i (split(/\n/, $data)) {
@@ -14,22 +16,22 @@ for $i (split(/\n/, $data)) {
 
     if ($i=~/^(\d+):(\d{2}):(\d{2}\.?\d*)\s*\-\->\s*[\d\:\.]+/) {
 
-	# TODO: more
-
- 	my($ts) = $1*3600+$2*60+$3;
-
-	debug("TIMESTAMP: $ts");
+ 	$ts = $1*3600+$2*60+$3;
 	next;
     }
 
-# 00:00:37.069
-
     if ($i eq $prev) {next;}
 
-    debug("I: $i");
+    $tran{$ts} .= $i;
 
     $prev = $i;
 }
+
+for $i (sort {$a <=> $b} keys %tran) {
+    debug("I: $i, $tran{$i}");
+}
+
+# debug(keys(%tran));
 
 
 # debug($data);
