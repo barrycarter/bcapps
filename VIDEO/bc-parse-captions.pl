@@ -1,10 +1,32 @@
 #!/bin/perl
 
 # fix English captions dl from youtube + maybe do other stuff
+# --every=n: create text for screenshots every n seconds (default 10)
+# --overwrite: remove and recreate existing directory
 
 require "/usr/local/lib/bclib.pl";
 
+defaults("every=10");
+
 my($data, $fname) = cmdfile();
+
+# find last part of path and associated video prefix
+
+$fname=~m%([^\/]+)\.(.*?)\.(vtt|srt)%;
+
+my($prefix, $lang, $type) = ($1, $2, $3);
+
+if (-d $prefix) {
+    if ($globopts{overwrite}) {
+	system("rm -rf $prefix");
+    } else {
+	die("DIRECTORY $prefix already exist");
+    }
+}
+
+mkdir($prefix);
+
+dodie("chdir('$prefix')");
 
 my($ts, %tran);
 
@@ -22,8 +44,8 @@ for $i (split(/\n/, $data)) {
 
     if ($i eq $prev) {next;}
 
-    # mod to 10th second
-    my($modts) = floor($ts/10);
+    # mod to nth second
+    my($modts) = floor($ts/$globopts{every});
 
     push(@{$tran{$modts}}, $i);
 
