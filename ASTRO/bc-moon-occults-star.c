@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
       starpos[2] = hygdata[i][5];
 
       // TODO: reset result after each result
-      gfuds_c(gfq, isDecreasing, "<", 10., 0, 86400*10, MAXWIN, &cnfine, &result);
+      gfuds_c(gfq, isDecreasing, "<", 2., 0, 86400*5, MAXWIN, &cnfine, &result);
       int count = wncard_c(&result);
       double beg, end;
 
