@@ -22,6 +22,26 @@ int main (int argc, char **argv) {
 
   printf("%d SPK files loaded\n", count);
 
+  // create strings to hold results
+  SpiceChar fname[100], type[100], source[100];
+  SpiceBoolean found2;
+  SpiceInt handle;
+
+  // hold ids for given kernel
+  SPICEINT_CELL(ids, 10000);
+    
+  for (int i=0; i < count; i++) { 
+    kdata_c(i, "spk", 100, 100, 100, fname, type, source, &handle, &found2);
+    printf("FNAME: %s\n", fname);
+    spkobj_c(fname, &ids);
+
+    for (int j=0; j < card_c(&ids); j++) {
+
+      SpiceInt obj = SPICE_CELL_ELEM_I(&ids, j);
+      printf("%d\n", obj);
+    }
+  }
+
   exit(-1);
 
   SpiceInt n1, lenout=100, room=10000;
