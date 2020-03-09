@@ -54,12 +54,20 @@ for $i (split(/\n/, $data)) {
 
 for $i (sort {$a <=> $b} keys %tran) {
 
-    my($fname) = sprintf("test%08d.jpg.txt", $i);
+    my($fname) = sprintf("tranimg%08d.jpg.txt", $i);
 
     my($text) = join(" ", @{$tran{$i}});
 
     write_file($text, $fname);
 }
+
+# TODO: make this more accurate
+
+my($frameMod) = $globopts{every}*30;
+
+# TODO: this is really really ugly hardcoding dir
+
+print qq#ffmpeg -i /home/user/YOUTUBE/$prefix.m?? -vf "select=not(mod(n\\,$frameMod))" -vsync vfr $prefix/tranimg%08d.jpg\n#;
 
 # debug(keys(%tran));
 
