@@ -20,6 +20,21 @@ double arr[2][3] = {{1, 2, 3}, {4,5,6}};
 
 int main (int argc, char **argv) {
 
+
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+
+  SpiceInt n1;
+  SpiceBoolean found;
+  SpiceChar kvars[100][100];
+
+  gnpool_c("*", 0, 100, 100, &n1, kvars, &found);
+
+  for (int i=0; i<100; i++) {
+    printf("%s\n", kvars[i]);
+  }
+
+  exit(-1);
+
   for (int i=0; i<2865; i++) {
     printf("%f\n", hygdata[i][1]);
   }
