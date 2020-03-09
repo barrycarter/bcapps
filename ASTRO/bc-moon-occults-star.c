@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
   SpiceInt dim;
   SpiceDouble occulterRs[3], viewerRs[3];
 
-  printf("ALPHA: %s %s\n", viewer, occulter);
+  //  printf("ALPHA: %s %s\n", viewer, occulter);
 
   bodvrd_c(viewer, "RADII", 3, &dim, viewerRs);
   bodvrd_c(occulter, "RADII", 3, &dim, occulterRs);
@@ -79,14 +79,14 @@ int main(int argc, char **argv) {
       starpos[2] = hygdata[i][5];
 
       // TODO: reset result after each result
-      gfuds_c(gfq, isDecreasing, "LOCMIN", 1., 0, 86400*10, MAXWIN, &cnfine, &result);
+      gfuds_c(gfq, isDecreasing, "<", 10., 0, 86400*10, MAXWIN, &cnfine, &result);
       int count = wncard_c(&result);
       double beg, end;
 
   for (int j=0; j<count; j++) {
     wnfetd_c (&result, j, &beg, &end);
-    gfq(beg, &sep);
-    printf("%f %f %f %f\n", et2unix(beg), sep, hygdata[i][1], hygdata[i][0]);
+    gfq((beg+end)/2, &sep);
+    printf("%f %f %f %f %f\n", et2unix(beg), et2unix(end), sep, hygdata[i][1], hygdata[i][0]);
   }
     }
   return 0;
