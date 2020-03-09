@@ -4,19 +4,33 @@
 #define MOON_RADIUS 1738.1
 #define MAXWIN 20000
 
+// $0 viewer occulter syear eyear
 
 int main(int argc, char **argv) {
 
-  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+  // handle the arguments
+
+  if (argc != 5) {
+    printf("Usage: %s viewer occulter syear eyear\n", argv[0]);
+    exit(-1);
+  }
+
+  int viewer = atoi(argv[1]);
+  int occulter = atoi(argv[2]);
+  double syear = atof(argv[3]);
+  double eyear = atof(argv[4]);
 
   SPICEDOUBLE_CELL(cnfine, MAXWIN);
   SPICEDOUBLE_CELL(result, MAXWIN);
 
-  wninsd_c(year2et(2020), year2et(2021), &cnfine);
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+
+  wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
   double moonpos[3], starpos[3], r, colat, lon, lt, sep;
 
-  // NOTE: we use global starpos here for star position
+  // NOTE: we use global starpos array here for star position, don't
+  // declare new one each time
 
   void gfq (SpiceDouble et, SpiceDouble *value) {
     spkezp_c(301, et, "J2000", "CN+S", 399, moonpos, &lt);

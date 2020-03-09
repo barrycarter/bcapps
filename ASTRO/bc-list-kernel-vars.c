@@ -20,7 +20,7 @@ int main (int argc, char **argv) {
   SpiceInt count;
   ktotal_c ("spk", &count);
 
-  printf("%d SPK files loaded\n", count);
+  //  printf("%d SPK files loaded\n", count);
 
   // create strings to hold results
   SpiceChar fname[100], type[100], source[100];
@@ -32,7 +32,7 @@ int main (int argc, char **argv) {
     
   for (int i=0; i < count; i++) { 
     kdata_c(i, "spk", 100, 100, 100, fname, type, source, &handle, &found2);
-    printf("FNAME: %s\n", fname);
+    //    printf("FNAME: %s\n", fname);
     spkobj_c(fname, &ids);
 
     for (int j=0; j < card_c(&ids); j++) {
