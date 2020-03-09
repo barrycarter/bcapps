@@ -20,10 +20,21 @@ https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 TODO: better thumbnails for youtube, go through video rapidly by
 looking at screenshots (but how many? 1/sec probably too slow-- how
 fast can I scan through content for screenies-- definitely use feh for
-annotation), twitch stream #, also hanging projects
+annotation), twitch stream #, also hanging projects, youtube descrip
 
 custom github pages domain? (and use that in google page thingy
 instead of path?)
+
+feh -C /usr/share/fonts/dejavu/ -e DejaVuSans/8 test00000001.jpg
+
+STREAM NOTES FOR
+Dependent_systems_of_equations_+_wolfram_cloud_2_Feb_2020_part_2-ayNAq5_0a9M.*
+
+1- loading and saving files in Wolfram Cloud
+
+
+
+
 
 fix barrycarter.github.io to be one level higher?
 

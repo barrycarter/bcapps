@@ -22,13 +22,21 @@ for $i (split(/\n/, $data)) {
 
     if ($i eq $prev) {next;}
 
-    $tran{$ts} .= $i;
+    # mod to 10th second
+    my($modts) = floor($ts/10);
+
+    push(@{$tran{$modts}}, $i);
 
     $prev = $i;
 }
 
 for $i (sort {$a <=> $b} keys %tran) {
-    debug("I: $i, $tran{$i}");
+
+    my($fname) = sprintf("test%08d.jpg.txt", $i);
+
+    my($text) = join(" ", @{$tran{$i}});
+
+    write_file($text, $fname);
 }
 
 # debug(keys(%tran));

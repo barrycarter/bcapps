@@ -1,3 +1,5 @@
+# put this in .config/feh/keys
+
 # for some reason, I feel compelled to share my feh keymappings
 # TODO: make + - do same thing (can't same function to two keys?)
 zoom_in z
