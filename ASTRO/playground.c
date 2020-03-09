@@ -23,13 +23,13 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
 
-  SpiceInt n1;
+  SpiceInt n1, lenout=100, room=10000;
   SpiceBoolean found;
-  SpiceChar kvars[100][100];
+  SpiceChar kvars[room][lenout];
 
-  gnpool_c("*", 0, 100, 100, &n1, kvars, &found);
+  gnpool_c("*", 0, room, lenout, &n1, kvars, &found);
 
-  for (int i=0; i<100; i++) {
+  for (int i=0; i < room; i++) {
     printf("%s\n", kvars[i]);
   }
 
