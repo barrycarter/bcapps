@@ -15,23 +15,30 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/bc-maxkernel.tm");
 
-  // Jupiter mass parameter
+  char *planet = "399";
+  char *moon = "301";
+
+  // NOTE: this frame MUST be inertial (not body fixed)
+  char *frame = "ECLIPJ2000";
+
+  // planet mass parameter
 
   SpiceInt dim;
-  SpiceDouble mu;
-  bodvrd_c("599", "GM", 1, &dim, &mu);
+  SpiceDouble mu[1];
+  bodvrd_c(planet, "GM", 1, &dim, mu);
 
+  printf("PLANET(%d) MP: %f\n", dim, mu[0]);
 
-  // state of Io at time = 0
+  // state of moon at time = 0
 
   SpiceDouble state[6], lt, elts[8];
-  spkezr_c("501", 0, "IAU_JUPITER", "CN+S", "599", state, &lt);
+  spkezr_c(moon, 0, frame, "CN+S", planet, state, &lt);
 
-  // osculating elements wrt Jupiter
+  // osculating elements wrt planet
 
-  oscelt_c(state, 0, mu, elts);
+  oscelt_c(state, 0, mu[0], elts);
 
-  //  printf("STATE: %f %f %f %f %f %f\n", state[0], state[1], state[2], state[3], state[4], state[5]);
+  printf("MOONSTATE: %f %f %f %f %f %f\n", state[0], state[1], state[2], state[3], state[4], state[5]);
 
   for (int i=0; i < 8; i++) {
     printf("%s: %f\n", strs[i], elts[i]);
