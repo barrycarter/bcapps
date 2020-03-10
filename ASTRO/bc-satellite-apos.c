@@ -13,10 +13,12 @@
 
 Max distances:
 
-
-
-
-
+Mars: 23480km (2 moons)
+Jupiter: 40492246km (72 moons)
+Saturn: 36068000km (53 moons)
+Uranus: 29552162km (27 moons)
+Neptune: 93661806km (14 moons)
+Pluto: 340945km (5 moons)
 
 */
 
@@ -28,7 +30,7 @@ int main (int argc, char **argv) {
 
   // NOTE: the reference frame MUST be inertial (not body fixed)
 
-  SpiceInt planet = 599;
+  SpiceInt planet = 999;
 
   // planet mass parameter
 
@@ -39,7 +41,7 @@ int main (int argc, char **argv) {
   printf("PLANET(%d) MP: %f\n", dim, mu[0]);
 
 
-  for (int i=501; i < 573; i++) {
+  for (int i=901; i <= 905; i++) {
 
     // TODO: figure this out
     if (i == 558) {
@@ -47,22 +49,21 @@ int main (int argc, char **argv) {
       continue;
     }
 
-    // TODO: maybe loop
-    SpiceDouble et = unix2et(0);
+    for (SpiceDouble et = year2et(1980); et < year2et(2038); et += 86400) {
 
-  // state of moon at time et
+      // state of moon at time et
 
-  SpiceDouble state[6], lt, elts[8];
-  spkez_c(i, et, "ECLIPJ2000", "CN+S", planet, state, &lt);
+      SpiceDouble state[6], lt, elts[8];
+      spkez_c(i, et, "ECLIPJ2000", "CN+S", planet, state, &lt);
 
-  // osculating elements wrt planet
+      // osculating elements wrt planet
+      oscelt_c(state, et, mu[0], elts);
 
-  oscelt_c(state, et, mu[0], elts);
+      //    printf("MOONSTATE: %d %f %f %f %f %f %f\n", i, state[0], state[1], state[2], state[3], state[4], state[5]);
 
-  printf("MOONSTATE: %d %f %f %f %f %f %f\n", i, state[0], state[1], state[2], state[3], state[4], state[5]);
-
-  for (int j=0; j < 8; j++) {
-    printf("%s: %f\n", strs[j], elts[j]);
-  }
+      SpiceDouble apDist = elts[0]/(1-elts[1])*(1+elts[1]);
+      
+      printf("APDIST: %d %f %f %f\n", i, et2unix(et), apDist, elts[1]);
+    }
   }
 }
