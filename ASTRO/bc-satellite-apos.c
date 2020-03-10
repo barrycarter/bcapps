@@ -30,7 +30,7 @@ int main (int argc, char **argv) {
 
   // NOTE: the reference frame MUST be inertial (not body fixed)
 
-  SpiceInt planet = 999;
+  SpiceInt planet = 399;
 
   // planet mass parameter
 
@@ -41,7 +41,7 @@ int main (int argc, char **argv) {
   printf("PLANET(%d) MP: %f\n", dim, mu[0]);
 
 
-  for (int i=901; i <= 905; i++) {
+  for (int i=301; i <= 301; i++) {
 
     // TODO: figure this out
     if (i == 558) {
