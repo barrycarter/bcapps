@@ -15,8 +15,8 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/bc-maxkernel.tm");
 
-  char *planet = "399";
-  char *moon = "301";
+  char *planet = "599";
+  char *moon = "518";
 
   // NOTE: this frame MUST be inertial (not body fixed)
   char *frame = "ECLIPJ2000";
