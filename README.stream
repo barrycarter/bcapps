@@ -6,6 +6,10 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 10 Mar 2020, primarily for my reference
 
+TODO: current method of < 1 can't work because 5 days could easily skip-- need to find local min and max and work from there? also, add earth parallax
+
+TODO: use subtraction not division
+
 moonies
 
 things I am avoiding: laundry, groc shop, enter monstrous beard in contest

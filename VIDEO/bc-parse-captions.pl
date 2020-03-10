@@ -1,12 +1,18 @@
 #!/bin/perl
 
 # fix English captions dl from youtube + maybe do other stuff
-# --every=n: create text for screenshots every n seconds (default 10)
+# --every=n: create text for screenshots every n seconds (default 30)
 # --overwrite: remove and recreate existing directory
 
 require "/usr/local/lib/bclib.pl";
 
-defaults("every=10");
+# TODO: decide on path for where my Twitch Youtube vids are
+
+my($ytpath) = "/home/user/MP4/TWITCH-MINE/YOUTUBE/";
+
+# need to fix on lapaz-shared where ytpath is /home/user/YOUTUBE/
+
+defaults("every=30");
 
 my($data, $fname) = cmdfile();
 
@@ -67,7 +73,7 @@ my($frameMod) = $globopts{every}*30;
 
 # TODO: this is really really ugly hardcoding dir
 
-print qq#ffmpeg -i /home/user/YOUTUBE/$prefix.m?? -vf "select=not(mod(n\\,$frameMod))" -vsync vfr $prefix/tranimg%08d.jpg\n#;
+print qq#ffmpeg -i $ytpath/$prefix.m?? -vf "select=not(mod(n\\,$frameMod))" -vsync vfr $prefix/tranimg%08d.jpg\n#;
 
 # debug(keys(%tran));
 
