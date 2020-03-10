@@ -9,12 +9,23 @@
 double maxsat[11] = {0, 2440, 6050, 427320, 23480, 40492246, 36068000, 29552162, 93661806, 340945, 695700};
 
 // angular distance between planet (given as a single digit
-// barycenter) and star #n (in hygdata.h) divided by angular radius of
-// planet's moon system as viewed from observer at time et
+// barycenter) and star #n (in hygdata.h) subtracted by angular radius of
+// planet's moon system and viewer parallax as viewed from observer at time et
 
 // TODO: add parallax for viewer
 
 SpiceDouble angDistStar(int observer, double et, int planet, int star) {
+
+  // "cache" the value of observerRadius
+  static double observerRadius;
+
+  if (observerRadius < 1e-9) {
+    SpiceDouble radii[3];
+    SpiceInt dim;
+    bodvrd_c(viewer, "RADII", 3, &dim, radii);
+    observerRadius = radii[0];
+  }
+
 
   // compute position of observer wrt planet
 
@@ -26,6 +37,10 @@ SpiceDouble angDistStar(int observer, double et, int planet, int star) {
 
   // position of star
   SpiceDouble starpos[3] = {hygdata[star][3], hygdata[star][4], hygdata[star][5]};
+
+  // parallax from viewer
+  asin (viewer radius/distance)
+
 
   // angular distance
   return vsep_c(starpos, pos)/planSatAngRad;
