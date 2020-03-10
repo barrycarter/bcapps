@@ -26,10 +26,9 @@ int main (int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/bc-maxkernel.tm");
 
-  SpiceInt planet = 599;
-  SpiceInt moon = 518;
+  // NOTE: the reference frame MUST be inertial (not body fixed)
 
-  // NOTE: the frame MUST be inertial (not body fixed)
+  SpiceInt planet = 599;
 
   // planet mass parameter
 
@@ -39,19 +38,31 @@ int main (int argc, char **argv) {
 
   printf("PLANET(%d) MP: %f\n", dim, mu[0]);
 
-  // state of moon at time = 0
+
+  for (int i=501; i < 573; i++) {
+
+    // TODO: figure this out
+    if (i == 558) {
+      printf("558 sucks\n");
+      continue;
+    }
+
+    // TODO: maybe loop
+    SpiceDouble et = unix2et(0);
+
+  // state of moon at time et
 
   SpiceDouble state[6], lt, elts[8];
-  spkez_c(moon, 0, "ECLIPJ2000", "CN+S", planet, state, &lt);
+  spkez_c(i, et, "ECLIPJ2000", "CN+S", planet, state, &lt);
 
   // osculating elements wrt planet
 
-  oscelt_c(state, 0, mu[0], elts);
+  oscelt_c(state, et, mu[0], elts);
 
-  printf("MOONSTATE: %f %f %f %f %f %f\n", state[0], state[1], state[2], state[3], state[4], state[5]);
+  printf("MOONSTATE: %d %f %f %f %f %f %f\n", i, state[0], state[1], state[2], state[3], state[4], state[5]);
 
-  for (int i=0; i < 8; i++) {
-    printf("%s: %f\n", strs[i], elts[i]);
+  for (int j=0; j < 8; j++) {
+    printf("%s: %f\n", strs[j], elts[j]);
   }
-
+  }
 }
