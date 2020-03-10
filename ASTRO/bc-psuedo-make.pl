@@ -3,9 +3,16 @@
 # I can't get make to do what I want (but could if I tried harder),
 # this hack works around it
 
+# TODO: allow passing arguments to only recompile those arguments
+
 # --force: force recompilation even if target appears up to date
+# --pg: compile with -pg
 
 require "/usr/local/lib/bclib.pl";
+
+# set pg flag is given as option
+
+$PGFLAG = $globopts{pg}?"-pg":"";
 
 # TODO: this should check standard.tm + bclib.h time too
 for $i (glob("*.c")) {
@@ -25,7 +32,7 @@ for $i (glob("*.c")) {
 
   # below for saopaulo, above for dullon
   # removed -pg 2 Aug 2017, gmon.out not helpful
-  my($cmd) = "gcc -std=gnu99 -Wall -O2 -I /home/user/SPICE/SPICE64/cspice/include $i -o $targ /home/user/SPICE/SPICE64/cspice/lib/cspice.a -lm";
+  my($cmd) = "gcc $PGFLAG -std=gnu99 -Wall -O2 -I /home/user/SPICE/SPICE64/cspice/include $i -o $targ /home/user/SPICE/SPICE64/cspice/lib/cspice.a -lm";
   debug($cmd);
 
   print "Making: $i -> $targ\n";

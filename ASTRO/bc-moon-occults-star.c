@@ -1,6 +1,6 @@
 #include "bclib.h"
 #include "bc-hygdata.h"
-#define MAXWIN 20000
+#define MAXWIN 200000
 
 // $0 viewer occulter syear eyear
 
@@ -8,6 +8,19 @@
 
 // TODO: choose good skip value based on input object (eg, Moon = 10
 // days, Mars = 100 days?)
+
+// this is a test only
+
+void isDecreasing2(void(* udfuns)(SpiceDouble et,SpiceDouble *value),
+		  SpiceDouble et, SpiceBoolean *isdecr) {
+  SpiceDouble res1, res2;
+  udfuns(et-600, &res1);
+  udfuns(et+600, &res2);
+//printf("DIFF: %.15f\n", res2-res1);
+  *isdecr = (res2 < res1);
+}
+
+
 
 int main(int argc, char **argv) {
 
@@ -53,7 +66,7 @@ int main(int argc, char **argv) {
 
   wninsd_c(year2et(syear), year2et(eyear), &cnfine);
 
-  double moonpos[3], starpos[3], r, colat, lon, lt, sep;
+  double moonpos[3], starpos[3], r, colat, lon, lt, sep, angsep;
 
   // NOTE: we use global starpos array here for star position, don't
   // declare new one each time
@@ -62,14 +75,22 @@ int main(int argc, char **argv) {
     spkezp_c(occulterID, et, "J2000", "CN+S", viewerID, moonpos, &lt);
     recsph_c(moonpos, &r, &colat, &lon);
 
-    double angsep = asin((occulterR + viewerR)/vnorm_c(moonpos));
-    *value = vsep_c(moonpos, starpos)/angsep;
+    // line below is experimental
+    // double angsep = (occulterR + viewerR)/vnorm_c(moonpos);
+
+    //    angsep = asin((occulterR + viewerR)/vnorm_c(moonpos));
+    *value = vsep_c(moonpos, starpos)/asin((occulterR + viewerR)/vnorm_c(moonpos));
 
     //    printf("MOON: %d %f %f %f %f %f %f %f %f\n", count, et2unix(et), lon/pi_c()*12, (halfpi_c()-colat)/pi_c()*180, r, starpos[0], starpos[1], starpos[2], vsep_c(moonpos, starpos)/pi_c()*180);
 
   }
 
+  int count, j;
+  double beg, end;
+
     for (int i=0; i<2865; i++) {
+
+      printf("STAR: %d\n", i);
 
       // TODO: TESTING!!!
 
@@ -79,15 +100,15 @@ int main(int argc, char **argv) {
       starpos[2] = hygdata[i][5];
 
       // TODO: reset result after each result
-      gfuds_c(gfq, isDecreasing, "<", 2., 0, 86400*5, MAXWIN, &cnfine, &result);
-      int count = wncard_c(&result);
-      double beg, end;
+      gfuds_c(gfq, isDecreasing2, "<", 2., 0, 86400*5, MAXWIN, &cnfine, &result);
+      count = wncard_c(&result);
 
-  for (int j=0; j<count; j++) {
+  for (j=0; j<count; j++) {
     wnfetd_c (&result, j, &beg, &end);
     gfq((beg+end)/2, &sep);
     printf("%f %f %f %f %f\n", et2unix(beg), et2unix(end), sep, hygdata[i][1], hygdata[i][0]);
   }
+
     }
   return 0;
 }
