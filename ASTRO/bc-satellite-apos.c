@@ -9,30 +9,40 @@
 #include "SpiceZfc.h"
 #include "bclib.h"
 
+/*
+
+Max distances:
+
+
+
+
+
+
+*/
+
 char *strs[8] = {"rp", "ecc", "inc", "lnode", "argp", "m0", "t0", "mu"};
 
 int main (int argc, char **argv) {
 
   furnsh_c("/home/user/BCGIT/ASTRO/bc-maxkernel.tm");
 
-  char *planet = "599";
-  char *moon = "518";
+  SpiceInt planet = 599;
+  SpiceInt moon = 518;
 
-  // NOTE: this frame MUST be inertial (not body fixed)
-  char *frame = "ECLIPJ2000";
+  // NOTE: the frame MUST be inertial (not body fixed)
 
   // planet mass parameter
 
   SpiceInt dim;
   SpiceDouble mu[1];
-  bodvrd_c(planet, "GM", 1, &dim, mu);
+  bodvcd_c(planet, "GM", 1, &dim, mu);
 
   printf("PLANET(%d) MP: %f\n", dim, mu[0]);
 
   // state of moon at time = 0
 
   SpiceDouble state[6], lt, elts[8];
-  spkezr_c(moon, 0, frame, "CN+S", planet, state, &lt);
+  spkez_c(moon, 0, "ECLIPJ2000", "CN+S", planet, state, &lt);
 
   // osculating elements wrt planet
 
