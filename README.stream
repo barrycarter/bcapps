@@ -4,11 +4,13 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 10 Mar 2020, primarily for my reference
+Stuff I plan to stream 11 Mar 2020, primarily for my reference
 
-TODO: current method of < 1 can't work because 5 days could easily skip-- need to find local min and max and work from there? also, add earth parallax
 
-TODO: use subtraction not division
+
+TODO: current method of < 1 can't work because 5 days could easily skip-- need to find local min and max and work from there? also, add earth parallax (done for main prog, not for moon prog)
+
+TODO: use subtraction not division (also done for main not moon)
 
 moonies
 
