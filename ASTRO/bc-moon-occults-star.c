@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
 
     wnfetd_c (&result, j, &beg, &end);
     gfq(beg, &sep);
-    printf("%d %d %f %f %f %f\n", i, count, et2unix(beg), sep, hygdata[i][1], hygdata[i][0]);
+    printf("%d %d %f %f %f %f\n", i, count, et2unix(beg), sep*dpr_c(), hygdata[i][1], hygdata[i][0]);
   }
 
     }
