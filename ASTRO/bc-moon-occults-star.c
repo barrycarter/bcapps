@@ -66,6 +66,9 @@ int main(int argc, char **argv) {
     *value = vsep_c(occulterPos, starPos)-angRadOcculter-angRadViewer;
   }
 
+  // header line
+  printf("Viewer Occulter Arr# Time(Unix) Sep(Deg) Mag HYG#\n");
+
     for (i=0; i<2865; i++) {
 
       // TODO: reset result after each result
@@ -82,7 +85,7 @@ int main(int argc, char **argv) {
     // TODO: add actual angular radius
     // TODO: don't need count
 
-    printf("%d %d %f %f %f %f\n", i, count, et2unix(beg), sep*dpr_c(), hygdata[i][1], hygdata[i][0]);
+    printf("%d %d %d %f %f %f %f\n", viewer, occulter, i, et2unix(beg), sep*dpr_c(), hygdata[i][1], hygdata[i][0]);
   }
 
     }

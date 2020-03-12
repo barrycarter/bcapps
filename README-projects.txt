@@ -622,7 +622,10 @@ URL: https://github.com/barrycarter/bcapps/blob/master/METAWIKI/
 
 Showcase: http://pbs3.referata.com/wiki/Main_Page
 
-Description: create a semantic wiki from a single (or few) pages of data
+Description: create a semantic wiki from a single (or few) pages of
+data and/or locally create a regular wiki like thing from a single
+page with all the meta work being done client-side (so result is
+simple HTML on other side?)
 
 =====================================================================
 

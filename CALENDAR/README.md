@@ -6,6 +6,8 @@ bc-calendar.pl screenshot (I put this on my X root window):
 
 TODO:
 
+moon names like "Worm Moon"
+
 https://nationaldaycalendar.com/calendar-at-a-glance/ (but possibly
 companies can "buy into" this, not a "real" calendar)
 

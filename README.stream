@@ -4,9 +4,18 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 11 Mar 2020, primarily for my reference
+Stuff I plan to stream 12 Mar 2020, primarily for my reference
 
+coronoavirus conspiracy (the envs did it or promote the scare)
 
+create .tpc files for the "other" moons per fact sheets
+
+create a semantic wiki like thing but from one file? and HTML or
+whatever only? (could even do "what links here" and more)
+
+https://www.quora.com/Is-it-possible-to-make-a-Read-Only-Wiki-and-how
+(so a blog not a wiki?) [use pbs3.referata.com as template and trim
+away?] [add "this is not a wiki" disclaimer] [to edit, give instructions]
 
 TODO: current method of < 1 can't work because 5 days could easily skip-- need to find local min and max and work from there? also, add earth parallax (done for main prog, not for moon prog)
 
@@ -710,6 +719,8 @@ I planned to do?
 
 This is not not a list of possible future streams
 =================================================
+
+  - WTF is quantum computing?
 
   - how does Stellarium compute magnitude (Lambertian reflectors?) +
   port to CSPICE
