@@ -34,24 +34,27 @@ my(%id2name, %name2id, %name2rad, %hasradii);
 &extract_lunar_radii();
 &extract_brief_ids();
 &extract_commnt_ids();
+&extract_html_ids();
 
-my($naifids) = read_file("naif_ids.html");
+sub extract_html_ids {
 
-while ($naifids=~s%<pre>\s*NAIF ID\s*NAME\s*(.*?)</pre>%%s) {
+    my($naifids) = read_file("naif_ids.html");
 
-    my($chunk) = $1;
+    while ($naifids=~s%<pre>\s*NAIF ID\s*NAME\s*(.*?)</pre>%%s) {
 
-    for $i (split(/\n/, $chunk)) {
+	my($chunk) = $1;
 
-	# ignore blank lines silently
-	if ($i=~/^[_\s]*$/) {next;}
+	for $i (split(/\n/, $chunk)) {
 
-	# lines that have NAIF ID
-	if ($i=~/^\s*(\-?\d+)\s*\'(.*?)\'/) {
-#	    print A uc("$1,$2\n");
-	    next;
+	    # ignore blank lines silently
+	    if ($i=~/^[_\s]*$/) {next;}
+
+	    # lines that have NAIF ID
+	    unless ($i=~/^\s*(\-?\d+)\s*\'(.*?)\'/) {next;}
+
+	    $name2id{$2}{$1} .= "html";
+	    $id2name{$1}{$2} .= "html";
 	}
-	debug("IGNORING: $i");
     }
 }
 
@@ -82,7 +85,6 @@ sub extract_lunar_radii {
 	    my($row) = $1;
 
 	    unless ($row=~s%\s*<th>(.*?)</th>\s*<td>.*?</td>\s*<td>(.*?)</td>%%) {
-		warn "IGNORING ROW: $row";
 		next;
 	    }
 
@@ -207,7 +209,7 @@ sub extract_commnt_ids {
 
 	    # does this line have a NAIF ID?
 	    unless ($j=~/^\s*(.*?)\s+(\d+)\s/) {
-		warn("BAD CMT LINE: $j");
+		unless ($j=~/^\s*System\s*/) {warn("BAD CMT LINE: $j");}
 		next;
 	    }
 		
