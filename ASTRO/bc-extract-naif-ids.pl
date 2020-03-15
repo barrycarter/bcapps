@@ -16,9 +16,9 @@ my($spath) = "/home/user/SPICE/SPICE64/cspice/exe/";
 
 &extract_lunar_radii();
 
-die "TESTING";
+print "Output files: /tmp/all-naif-ids.txt and /tmp/obj-rads.txt\n";
 
-open(A, "| sort -u");
+open(A, "| sort -u > /tmp/all-naif-ids.txt");
 
 my($naifids) = read_file("naif_ids.html");
 
@@ -113,6 +113,8 @@ for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
 
 sub extract_lunar_radii {
 
+    open(B, "| sort -u > /tmp/obj-rads.txt");
+
     for $i (glob "SPICEMETA/*moons.html") {
 
 	# read data for each planets moons
@@ -156,7 +158,7 @@ sub extract_lunar_radii {
 
 	    $name = uc($name);
 
-	    print "$name,$rad\n";
+	    print B "$name,$rad\n";
 
 #	    debug("GOT ALPHA: $1, $2");
 	}
