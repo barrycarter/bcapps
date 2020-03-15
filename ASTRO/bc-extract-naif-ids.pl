@@ -11,20 +11,34 @@
 
 require "/usr/local/lib/bclib.pl";
 
+chdir("$bclib{githome}/ASTRO/");
 my($spath) = "/home/user/SPICE/SPICE64/cspice/exe/";
 
-chdir("$bclib{githome}/ASTRO/");
+&extract_lunar_radii();
+
+die "TESTING";
+
+open(A, "| sort -u");
 
 my($naifids) = read_file("naif_ids.html");
 
 while ($naifids=~s%<pre>\s*NAIF ID\s*NAME\s*(.*?)</pre>%%s) {
 
+    my($chunk) = $1;
 
+    for $i (split(/\n/, $chunk)) {
 
+	# ignore blank lines silently
+	if ($i=~/^[_\s]*$/) {next;}
+
+	# lines that have NAIF ID
+	if ($i=~/^\s*(\-?\d+)\s*\'(.*?)\'/) {
+	    print A uc("$1,$2\n");
+	    next;
+	}
+	debug("IGNORING: $i");
+    }
 }
-
-
-die "TESTING";
 
 for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
 
@@ -63,7 +77,7 @@ for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
 
 	# does this line have a NAIF ID?
 	if ($j=~/^\s*(.*?)\s+(\d+)\s/) {
-	    print uc("$2,$1\n");
+	    print A uc("$2,$1\n");
 	} elsif ($j=~/^\s*$/) {
 	    # do nothing, ignore blank line
 	} else {
@@ -86,7 +100,7 @@ for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
     for $j (split(/\n/, $brf)) {
 	
 	if ($j=~/^(\d+)\*?\s+(.*?)\*?\s{2,}/) {
-	    print uc("$1,$2\n");
+	    print A uc("$1,$2\n");
 	} elsif ($j=~/^[\s\-]*$/) {
 	    # ignore blank line silently
 	} else {
@@ -95,3 +109,43 @@ for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
     }
 }
 
+# NOTE: only a function for convenience, not a real function
+
+sub extract_lunar_radii {
+
+    for $i (glob "SPICEMETA/*moons.html") {
+
+	# read data for each planets moons
+	my($mdata) = read_file($i);
+
+	# look for first table
+	
+	unless ($mdata=~s%<table.*?>(.*?)</table>%%s) {
+	    warn "NO TABLE IN: $i";
+	    next;
+	}
+
+	my($tabdata) = $1;
+
+	# go through table one row at a time (useful rows only)
+
+	while ($tabdata=~s%<tr>\s*<th>(.*?)</th>\s*<td>.*?</td>\s*<td>(.*?)</td>.*?</tr>%%is) {
+	    my($name, $rad) = ($1, $2);
+
+	    # get rid of HTML spaces, parentheses, regular spaces
+	    $name=~s/\&nbsp\;//g;
+	    $name=~s/\(.*?\)//g;
+	    $name=~s/^\s*//g;
+	    $name=~s/\s*$//g;
+	    $name = uc($name);
+
+	    print "$name, $rad\n";
+
+#	    debug("GOT ALPHA: $1, $2");
+	}
+
+#	debug("TABDATA: $tabdata");
+    }
+}
+
+    
