@@ -12,7 +12,16 @@ and put .tpc files where google can get them
 
 TODO: complain to NASA (different names) Aegaeon vs Aegaeo
 
-brief -a ~/SPICE/KERNELS/*.bsp 
+brief -a -t ~/SPICE/KERNELS/*.bsp 
+
+sat428 does not have names per 'brief' but commnt -r does shows names
+
+sat428.xsp does not have names either
+
+moon 555 has no name in BSP files via "breif"
+
+Eirene = moon 557 = has name in commnt but not in brief
+
 
 
 create list of google nil results that I hope to fix

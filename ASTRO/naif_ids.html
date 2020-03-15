@@ -7,12 +7,12 @@
 
 <a name="top"></a>
 
-<table style="text-align: left; margin-left: auto; margin-right: auto; width: 800px;" border="0" cellpadding="5" cellspacing="2">
+<table style="text-align: left; margin-left: auto; margin-right: auto; width: 800px;" cellspacing="2" cellpadding="5" border="0">
 <tbody>
 <tr>
   <td style="background-color: rgb(153, 153, 153); vertical-align: middle; text-align: center;">
   <div align="right">
-    <small><small><a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/index.html">Index Page</a></small></small>
+    <small><small><a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/index.html">Index Page</a></small></small>
   </div>
   <b>NAIF Integer ID codes</b> </td>
 </tr>
@@ -22,41 +22,41 @@
 <h2> Table of Contents
 </h2>
 
-<pre>   <a href="#NAIF%20Integer%20ID%20codes">NAIF Integer ID codes</a>
+<pre>   <a href="#NAIF Integer ID codes">NAIF Integer ID codes</a>
       <a href="#Revisions">Revisions</a>
       <a href="#Abstract">Abstract</a>
       <a href="#Introduction">Introduction</a>
-      <a href="#Use%20of%20Code-to-Name/Name-to-Code%20Mappings%20from%20SPICE">Use of Code-to-Name/Name-to-Code Mappings from SPICE</a>
-         <a href="#Use%20of%20an%20External%20Mapping%20Definition%20Kernel">Use of an External Mapping Definition Kernel</a>
+      <a href="#Use of Code-to-Name/Name-to-Code Mappings from SPICE">Use of Code-to-Name/Name-to-Code Mappings from SPICE</a>
+         <a href="#Use of an External Mapping Definition Kernel">Use of an External Mapping Definition Kernel</a>
          <a href="#Masking">Masking</a>
-      <a href="#NAIF%20Object%20ID%20numbers">NAIF Object ID numbers</a>
+      <a href="#NAIF Object ID numbers">NAIF Object ID numbers</a>
          <a href="#Barycenters">Barycenters</a>
-         <a href="#Planets%20and%20Satellites">Planets and Satellites</a>
+         <a href="#Planets and Satellites">Planets and Satellites</a>
          <a href="#Spacecraft">Spacecraft</a>
-         <a href="#Earth%20Orbiting%20Spacecraft.">Earth Orbiting Spacecraft.</a>
-         <a href="#Comet%20Shoemaker%20Levy%209">Comet Shoemaker Levy 9</a>
+         <a href="#Earth Orbiting Spacecraft.">Earth Orbiting Spacecraft.</a>
+         <a href="#Comet Shoemaker Levy 9">Comet Shoemaker Levy 9</a>
          <a href="#Comets">Comets</a>
          <a href="#Asteroids">Asteroids</a>
-         <a href="#Ground%20Stations.">Ground Stations.</a>
-         <a href="#Inertial%20and%20Non-inertial%20Reference%20Frames">Inertial and Non-inertial Reference Frames</a>
-      <a href="#Spacecraft%20Clocks.">Spacecraft Clocks.</a>
+         <a href="#Ground Stations.">Ground Stations.</a>
+         <a href="#Inertial and Non-inertial Reference Frames">Inertial and Non-inertial Reference Frames</a>
+      <a href="#Spacecraft Clocks.">Spacecraft Clocks.</a>
       <a href="#Instruments">Instruments</a>
 
 </pre>
 
-<hr noshade="noshade" size="3">
+<hr size="3" noshade="noshade">
 
 <br><br>
 <a name="NAIF Integer ID codes"></a>
 <p align="right"><a href="#top"><small>Top</small></a></p>
 <h1> NAIF Integer ID codes
-</h1><hr noshade="noshade" size="3"><p><br><br><br>
+</h1><hr size="3" noshade="noshade"><p><br><br><br>
 <br><br>
 <a name="Revisions"></a>
 </p><p align="right"><a href="#top"><small>Top</small></a></p>
 <h2> Revisions
-</h2><hr align="LEFT" width="50%"><p><br><br>
-   Last revised on 2014 MAY 07 by E. D. Wright.
+</h2><hr width="50%" align="LEFT"><p><br><br>
+   Last revised on 2017 APR 04 by E. D. Wright.
 </p><p>
  
    This version of the document supersedes all previous versions.
@@ -66,19 +66,29 @@
 <a name="Abstract"></a>
 </p><p align="right"><a href="#top"><small>Top</small></a></p>
 <h2> Abstract
-</h2><hr align="LEFT" width="50%"><p><br><br>
-   The NAIF IDS required reading lists all default ID-name mappings for the
-   SPICE toolkits and a description of functionality of the corresponding
-   software.
+</h2><hr width="50%" align="LEFT"><p><br><br>
+   The NAIF IDS Required Reading lists all default body ID-name mappings
+   for the SPICE toolkits and a description of functionality of the
+   corresponding software.
 </p><p>
  
 <br><br>
 <a name="Introduction"></a>
 </p><p align="right"><a href="#top"><small>Top</small></a></p>
 <h2> Introduction
-</h2><hr align="LEFT" width="50%"><p><br><br>
-   SPICE system kernel files and subroutines refer to ephemeris objects,
-   reference frames, and instruments by integer codes.
+</h2><hr width="50%" align="LEFT"><p><br><br>
+   SPICE system kernels and routines refer to ephemeris objects, reference
+   frames, and instruments by integer codes, usually referred as the ID.
+</p><p>
+ 
+   The reference frame ID-name mappings routines constitute a subsystem
+   separate from the body ID-name mapping routines. Please refer to the
+   Frames Required Reading document (<a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html">frames.req</a>) for specific information.
+</p><p>
+ 
+   Likewise, the surface ID-name mappings routines constitute a subsystem
+   separate from the body ID-name mapping routines. Please refer to the DSK
+   Required Reading document (<a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/dsk.html">dsk.req</a>) for specific information.
 </p><p>
  
    An ephemeris object is any object that may have ephemeris or trajectory
@@ -142,34 +152,34 @@ within SPICE.
 <a name="Use of Code-to-Name/Name-to-Code Mappings from SPICE"></a>
 </p><p align="right"><a href="#top"><small>Top</small></a></p>
 <h2> Use of Code-to-Name/Name-to-Code Mappings from SPICE
-</h2><hr align="LEFT" width="50%"><p><br><br>
+</h2><hr width="50%" align="LEFT"><p><br><br>
    Software exists within the SPICE system that allows a user to easily map
    between an integer code and the object name that code represents or
    vice-versa.
 </p><p>
  
-   <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> performs the integer code to name mapping; input a code, the
+   <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> performs the integer code to name mapping; input a code, the
    routine returns the corresponding name:
 </p><p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( code, lenout, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( code, lenout, &amp;name, &amp;found );
  
       Where ``lenout'' defines the maximum string length for name.
 </pre>
-   <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a> performs the name to integer code mapping; input a name, the
+   <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a> performs the name to integer code mapping; input a name, the
    routine returns the corresponding ID code:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( name, &amp;code, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( name, &amp;code, &amp;found );
 </pre>
-   <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> performs a run-time assignment of a name/code mapping for later
-   translation by <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> and <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>:
+   <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> performs a run-time assignment of a name/code mapping for later
+   translation by <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> and <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( name, code );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( name, code );
 </pre>
    with `name' defining the character string associated with integer
-   `code'. When using <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>, the `name' look-up is case insensitive,
+   `code'. When using <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>, the `name' look-up is case insensitive,
    left justified, and space compressed (multiple spaces between words
    reduced to one) format. Spaces between words are significant.
 <p>
@@ -209,7 +219,7 @@ within SPICE.
  
       NAIF_BODY_NAME  += ( 'LARRY', 'MOE', 'CURLEY', 'SHEMP' )
 </pre>
-   Load the kernel as usual with a <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/furnsh_c.html">furnsh_c</a> call. The names defined in
+   Load the kernel as usual with a <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/furnsh_c.html">furnsh_c</a> call. The names defined in
    NAIF_BODY_NAME map to the corresponding index of NAIF_BODY_CODE, i.e.
    LARRY-&gt;22, MOE-&gt;23, etc, and the IDs in NAIF_BODY_CODE map to the
    corresponding index of NAIF_BODY_NAME.
@@ -228,7 +238,7 @@ kernel. CSPICE signals an error when the number of assignments exceeds
 2000.
 <br><br></ul>
 <ul>
-<tt>3.</tt> You may assign an ID code to multiple names. A <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call returns the
+<tt>3.</tt> You may assign an ID code to multiple names. A <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call returns the
 last name assigned; a last in, first out situation.
 <br><br></ul>
    Since NAIF_BODY_CODE and NAIF_BODY_NAME are kernel variables, use of the
@@ -256,7 +266,7 @@ last name assigned; a last in, first out situation.
 <h3> Masking
 </h3><p><br><br>
    As of release N53, the SPICE Toolkit provides the user the functionality
-   to override or mask any name/ID mapping. Use a <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> call or define
+   to override or mask any name/ID mapping. Use a <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> call or define
    NAIF_BODY_NAME, NAIF_BODY_CODE assignments from a text kernel to perform
    a masking operations. Simplistically, the mask functionality provides
    the user the option of mapping multiple names to the same code.
@@ -265,7 +275,7 @@ last name assigned; a last in, first out situation.
    Name/ID assignments function within a precedence hierarchy, so a lower
    precedence operation cannot affect previous assignments created by an
    operation of higher precedence. Kernel pool definitions have the highest
-   precedence, <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> definitions next, and finally the default
+   precedence, <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> definitions next, and finally the default
    definitions. The order of assignments is significant.
 </p><p>
  
@@ -288,21 +298,21 @@ last name assigned; a last in, first out situation.
    Example 1:
 <p>
  
-   Assign the name 'x' (lower case) to ID 1000 with <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>:
+   Assign the name 'x' (lower case) to ID 1000 with <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>:
 </p><p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "x", 1000 );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "x", 1000 );
 </pre>
-   A call to <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> with 1000 as the input ID:
+   A call to <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> with 1000 as the input ID:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 1000, lenout, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 1000, lenout, &amp;name, &amp;found );
 </pre>
-   returns the name 'x'. The <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a> calls:
+   returns the name 'x'. The <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a> calls:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "x", &amp;code, &amp;found );
-      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "X", &amp;code, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "x", &amp;code, &amp;found );
+      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "X", &amp;code, &amp;found );
 </pre>
    both return the ID as 1000. Note the case insensitivity of the name
    input.
@@ -312,88 +322,88 @@ last name assigned; a last in, first out situation.
    1000:
 </p><p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "Y", 1000 );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "Y", 1000 );
 </pre>
-   so the <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a> call
+   so the <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a> call
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "Y", &amp;code, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "Y", &amp;code, &amp;found );
 </pre>
-   returns an ID of 1000. In a similar manner, the <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call:
+   returns an ID of 1000. In a similar manner, the <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 1000, lenout, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 1000, lenout, &amp;name, &amp;found );
 </pre>
    returns the name 'Y'. Still, the code assigned to 'x' persists within
    CSPICE as the call:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "x", &amp;code, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "x", &amp;code, &amp;found );
 </pre>
    also returns ID 1000. If we reassign 'Y' to a different ID:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "Y", 1001 );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "Y", 1001 );
 </pre>
-   then make a <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call with 1000 as the input ID:
+   then make a <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call with 1000 as the input ID:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 1000, lenout, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 1000, lenout, &amp;name, &amp;found );
 </pre>
    the routine returns the name 'x'. We assigned an ID to 'x', masked it
    with another name, then demasked it by reassigning the masking name,
    'Y'.
 <p>
  
-   If a <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> assigns an existing name to an existing code, that
+   If a <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> assigns an existing name to an existing code, that
    assignment takes precedence.
 </p><p>
  
    Example 2:
 </p><p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "THEBE", &amp;code, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodn2c_c.html">bodn2c_c</a>( "THEBE", &amp;code, &amp;found );
 </pre>
    returns a code value 514. Likewise
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 514, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 514, &amp;name, &amp;found );
 </pre>
    returns a name of 'THEBE'. Yet the name '1979J2' also maps to code 514,
    but with lower precedence.
 <p>
  
-   The <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> call:
+   The <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> call:
 </p><p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "1979J2", 514 );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "1979J2", 514 );
 </pre>
    places the '1979J2' &lt;-&gt; 514 mapping at the top of the precedence
    list, so:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 514, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( 514, &amp;name, &amp;found );
 </pre>
    returns the name '1979J2'. Note, 'THEBE' still resolves to 514.
 <p>
  
-   In those cases where a kernel pool assignment overrides a <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>, the
-   <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> mapping 'reappears' when an unload_c, kclear_c or <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/clpool_c.html">clpool_c</a> call
+   In those cases where a kernel pool assignment overrides a <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>, the
+   <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> mapping 'reappears' when an unload_c, kclear_c or <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/clpool_c.html">clpool_c</a> call
    clears the kernel pool mappings.
 </p><p>
  
    Example 3:
 </p><p>
  
-   Execute a <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> call:
+   Execute a <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> call:
 </p><p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "vehicle2", -1010 );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>( "vehicle2", -1010 );
 </pre>
-   A <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call:
+   A <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( -1010, lenout, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( -1010, lenout, &amp;name, &amp;found );
 </pre>
    returns the name 'vehicle2' as expected. If you then load the name/ID
    kernel body.ker:
@@ -406,18 +416,18 @@ last name assigned; a last in, first out situation.
  
       \begintext
 </pre>
-   with <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/furnsh_c.html">furnsh_c</a>:
+   with <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/furnsh_c.html">furnsh_c</a>:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/furnsh_c.html">furnsh_c</a>( "body.ker" );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/furnsh_c.html">furnsh_c</a>( "body.ker" );
 </pre>
-   the <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call:
+   the <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a> call:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( -1010, lenout, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( -1010, lenout, &amp;name, &amp;found );
 </pre>
    returns 'vehicle1' since the kernel assignment take precedence over the
-   <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> assignment.
+   <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> assignment.
 <p>
  
    The name/ID map state:
@@ -430,19 +440,19 @@ last name assigned; a last in, first out situation.
    Now, unload the body kernel:
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/unload_c.html">unload_c</a>( "body.ker" );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/unload_c.html">unload_c</a>( "body.ker" );
 </pre>
-   The <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> assignment resumes highest precedence.
+   The <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a> assignment resumes highest precedence.
 <p>
  
-</p><pre>      <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( -1010, lenout, &amp;name, &amp;found );
+</p><pre>      <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/bodc2n_c.html">bodc2n_c</a>( -1010, lenout, &amp;name, &amp;found );
 </pre>
    The call returns 'vehicle2' for the name.
 <p>
  
-   CAUTION: Please understand a <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/clpool_c.html">clpool_c</a> or <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/kclear_c.html">kclear_c</a> call deletes all
+   CAUTION: Please understand a <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/clpool_c.html">clpool_c</a> or <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/kclear_c.html">kclear_c</a> call deletes all
    mapping assignments defined through the kernel pool. No similar clear
-   functionality exists to clear <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>. boddef_c assignments persist
+   functionality exists to clear <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/boddef_c.html">boddef_c</a>. boddef_c assignments persist
    unless explicitly overridden.
 </p><p>
  
@@ -450,7 +460,7 @@ last name assigned; a last in, first out situation.
 <a name="NAIF Object ID numbers"></a>
 </p><p align="right"><a href="#top"><small>Top</small></a></p>
 <h2> NAIF Object ID numbers
-</h2><hr align="LEFT" width="50%"><p><br><br>
+</h2><hr width="50%" align="LEFT"><p><br><br>
    In theory, a unique integer can be assigned to each body in the solar
    system, including interplanetary spacecraft. SPICE uses integer codes
    instead of names to refer to ephemeris bodies for three reasons.
@@ -616,6 +626,7 @@ the integer code assigned to a body. This is not generally true for names.
       548         'CYLLENE'
       549         'KORE'
       550         'HERSE'
+      553         'DIA'
       699         'SATURN'
       601         'MIMAS'                 SI
       602         'ENCELADUS'             SII
@@ -769,6 +780,8 @@ the integer code assigned to a body. This is not generally true for names.
       -25         'LUNAR PROSPECTOR'
       -27         'VK1'
       -27         'VIKING 1 ORBITER'
+      -28         'JUPITER ICY MOONS EXPLORER'
+      -28         'JUICE'
       -29         'STARDUST'
       -29         'SDU'
       -29         'NEXT'
@@ -792,6 +805,7 @@ the integer code assigned to a body. This is not generally true for names.
       -47         'GENESIS'
       -48         'HUBBLE SPACE TELESCOPE'
       -48         'HST'
+      -49         'LUCY'
       -53         'MARS PATHFINDER'
       -53         'MPF'
       -53         'MARS ODYSSEY'
@@ -803,17 +817,24 @@ the integer code assigned to a body. This is not generally true for names.
       -58         'HALCA'
       -59         'RADIOASTRON'
       -61         'JUNO'
+      -62         'EMM'
+      -62         'EMIRATES MARS MISSION'
       -64         'ORX'
       -64         'OSIRIS-REX'
+      -65         'MCOA'
+      -65         'MARCO-A'
       -66         'VEGA 1'
+      -66         'MCOB'
+      -66         'MARCO-B'
       -67         'VEGA 2'
-      -68         'MMO'
       -68         'MERCURY MAGNETOSPHERIC ORBITER'
-      -69         'MPO'
-      -69         'MERCURY PLANETARY ORBITER'
+      -68         'MMO'
+      -68         'BEPICOLOMBO MMO'
+      -69         'PSYC'
       -70         'DEEP IMPACT IMPACTOR SPACECRAFT'
       -74         'MRO'
       -74         'MARS RECON ORBITER'
+      -76         'CURIOSITY'
       -76         'MSL'
       -76         'MARS SCIENCE LABORATORY'
       -77         'GLL'
@@ -848,7 +869,12 @@ the integer code assigned to a body. This is not generally true for names.
       -112        'ICE'
       -116        'MARS POLAR LANDER'
       -116        'MPL'
-      -121        'BEPICOLOMBO'
+      -117        'EDL DEMONSTRATOR MODULE'
+      -117        'EDM'
+      -117        'EXOMARS 2016 EDM'
+      -121        'MERCURY PLANETARY ORBITER'
+      -121        'MPO'
+      -121        'BEPICOLOMBO MPO'
       -127        'MARS CLIMATE ORBITER'
       -127        'MCO'
       -130        'MUSES-C'
@@ -862,6 +888,9 @@ the integer code assigned to a body. This is not generally true for names.
       -140        'DEEP IMPACT FLYBY SPACECRAFT'
       -142        'TERRA'
       -142        'EOS-AM1'
+      -143        'TRACE GAS ORBITER'
+      -143        'TGO'
+      -143        'EXOMARS 2016 TGO'
       -144        'SOLO'
       -144        'SOLAR ORBITER'
       -146        'LUNAR-A'
@@ -870,8 +899,11 @@ the integer code assigned to a body. This is not generally true for names.
       -150        'CASP'
       -151        'AXAF'
       -151        'CHANDRA'
+      -152        'CH2'
+      -152        'CHANDRAYAAN-2'
       -154        'AQUA'
-      -159        'EUROPA ORBITER'
+      -159        'EURC'
+      -159        'EUROPA CLIPPER'
       -164        'YOHKOH'
       -164        'SOLAR-A'
       -165        'MAP'
@@ -891,6 +923,8 @@ the integer code assigned to a body. This is not generally true for names.
       -194        'CLUSTER 3'
       -196        'CLUSTER 4'
       -198        'INTEGRAL'
+      -198        'NASA-ISRO SAR MISSION'
+      -198        'NISAR'
       -200        'CONTOUR'
       -202        'MAVEN'
       -203        'DAWN'
@@ -916,6 +950,8 @@ the integer code assigned to a body. This is not generally true for names.
       -253        'MER-1'
       -254        'SPIRIT'
       -254        'MER-2'
+      -301        'HELIOS 1'
+      -302        'HELIOS 2'
       -362        'RADIATION BELT STORM PROBE A'
       -362        'RBSP_A'
       -363        'RADIATION BELT STORM PROBE B'
@@ -1199,6 +1235,7 @@ the integer code assigned to a body. This is not generally true for names.
       2000001     'CERES'
       2000002     'PALLAS'
       2000004     'VESTA'
+      2000016     'PSYCHE'
       2000021     'LUTETIA'
       2000216     'KLEOPATRA'
       2000433     'EROS'
@@ -1210,6 +1247,7 @@ the integer code assigned to a body. This is not generally true for names.
       2004015     'WILSON-HARRINGTON'
       2004179     'TOUTATIS'
       2025143     'ITOKAWA'
+      2101955     'BENNU'
 </pre>
    There are three exceptions to the rule---asteroids Gaspra, Ida and Ida's
    satellite Dactyl, visited by the Galileo spacecraft. The ID codes for
@@ -1282,7 +1320,7 @@ the integer code assigned to a body. This is not generally true for names.
 <p align="right"><a href="#top"><small>Top</small></a></p>
 <h3> Inertial and Non-inertial Reference Frames
 </h3><p><br><br>
-   Please refer to the Frames Required Reading document, <a href="http://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html">frames.req</a>, for
+   Please refer to the Frames Required Reading document, <a href="https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html">frames.req</a>, for
    detailed information on the implementation of reference frames in the
    SPICE system.
 </p><p>
@@ -1291,7 +1329,7 @@ the integer code assigned to a body. This is not generally true for names.
 <a name="Spacecraft Clocks."></a>
 </p><p align="right"><a href="#top"><small>Top</small></a></p>
 <h2> Spacecraft Clocks.
-</h2><hr align="LEFT" width="50%"><p><br><br>
+</h2><hr width="50%" align="LEFT"><p><br><br>
    The ID code used to identify the on-board clock of a spacecraft
    (spacecraft clock or SCLK) in SPICE software is the same as the ID code
    of the spacecraft. This convention assumes that only one clock is used
@@ -1309,7 +1347,7 @@ the integer code assigned to a body. This is not generally true for names.
 <a name="Instruments"></a>
 </p><p align="right"><a href="#top"><small>Top</small></a></p>
 <h2> Instruments
-</h2><hr align="LEFT" width="50%"><p><br><br>
+</h2><hr width="50%" align="LEFT"><p><br><br>
    With regards to a spacecraft, the term ``instrument'' means a science
    instrument or vehicle structure to which the concept of orientation is
    applicable.
