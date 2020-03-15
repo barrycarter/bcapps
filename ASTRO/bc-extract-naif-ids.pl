@@ -9,6 +9,10 @@
 # commnt -r *.bsp (individually)
 # naif_ids.html
 
+# After running this program, do the following for join:
+
+# join -t, -1 2 -2 1 /tmp/all-naif-ids.txt /tmp/obj-rads.txt 
+
 require "/usr/local/lib/bclib.pl";
 
 chdir("$bclib{githome}/ASTRO/");
@@ -18,7 +22,8 @@ my($spath) = "/home/user/SPICE/SPICE64/cspice/exe/";
 
 print "Output files: /tmp/all-naif-ids.txt and /tmp/obj-rads.txt\n";
 
-open(A, "| sort -u > /tmp/all-naif-ids.txt");
+# must sort this by second field (name) for join
+open(A, "| sort -t, -k2 -u > /tmp/all-naif-ids.txt");
 
 my($naifids) = read_file("naif_ids.html");
 
