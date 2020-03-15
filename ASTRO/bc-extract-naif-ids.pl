@@ -36,6 +36,12 @@ my(%id2name, %name2id, %name2rad, %hasradii);
 &extract_commnt_ids();
 &extract_html_ids();
 
+for $i (sort {$a <=> $b} keys %id2name) {
+    for $j (keys %{$id2name{$i}}) {
+	debug("$i $j $id2name{$i}{$j}");
+    }
+}
+
 sub extract_html_ids {
 
     my($naifids) = read_file("naif_ids.html");
@@ -52,8 +58,8 @@ sub extract_html_ids {
 	    # lines that have NAIF ID
 	    unless ($i=~/^\s*(\-?\d+)\s*\'(.*?)\'/) {next;}
 
-	    $name2id{$2}{$1} .= "html";
-	    $id2name{$1}{$2} .= "html";
+	    $name2id{uc($2)}{$1} .= "html";
+	    $id2name{$1}{uc($2)} .= "html";
 	}
     }
 }
@@ -172,8 +178,8 @@ sub extract_brief_ids {
 		next;
 	    }
 
-	    $name2id{$2}{$1} .= "brief";
-	    $id2name{$1}{$2} .= "brief";
+	    $name2id{uc($2)}{$1} .= "brief";
+	    $id2name{$1}{uc($2)} .= "brief";
 	}
     }
 }
@@ -214,9 +220,10 @@ sub extract_commnt_ids {
 	    }
 		
 	    my($name, $id) = ($1, $2);
+	    $name = uc($name);
 	    
 	    $name2id{$name}{$id} .= "comment";
-	    $id2name{$id}{$name} .= "brief";
+	    $id2name{$id}{$name} .= "comment";
 	}
     }
 }
