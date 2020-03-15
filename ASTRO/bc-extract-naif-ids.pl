@@ -36,13 +36,28 @@ for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
 	($out, $err, $res) = cache_command("$spath/brief -t $i > SPICEMETA/$fname.brf");
     }
 
+    # read comment file
     my($cmt) = read_file("SPICEMETA/$fname.cmt");
 
-    unless ($cmt=~/bodies on the file:(.*?)additional constants on the file/is) {
+    # find section of interest
+    if ($cmt=~/Name\s+Number\s+GM\s+NDIV\s+NDEG\s+Model\s*(.*?)additional constants on the file/is) {
+	$cmt = $1;
+    } else {
 	warn("BAD CMT FILE: $fname");
-	next;
+	$cmt = "";
     }
 
-    debug("GOT: $1");
+    # loop through lines
+    for $j (split(/\n/, $cmt)) {
 
+	# does this line have a NAIF ID?
+	if ($j=~/^\s*(.*?)\s+(\d+)\s/) {
+	    print "$2,$1\n";
+	} elsif ($j=~/^\s*$/) {
+	    # do nothing, ignore blank line
+	} else {
+	    debug("IGNORING: $j");
+	}
+    }
 }
+
