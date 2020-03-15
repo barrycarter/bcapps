@@ -1,0 +1,22 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/de435.bsp
+ 
+Bodies                Start of Interval (ET)          End of Interval (ET)
+-------               -----------------------------   -----------------------------
+1 MERCURY BARYCENTER  1549 DEC 31 00:00:00.000        2650 JAN 25 00:00:00.000
+2 VENUS BARYCENTER                Same coverage as previous object
+3 EARTH BARYCENTER                Same coverage as previous object
+4 MARS BARYCENTER                 Same coverage as previous object
+5 JUPITER BARYCENTER              Same coverage as previous object
+6 SATURN BARYCENTER               Same coverage as previous object
+7 URANUS BARYCENTER               Same coverage as previous object
+8 NEPTUNE BARYCENTER              Same coverage as previous object
+9 PLUTO BARYCENTER                Same coverage as previous object
+10 SUN                            Same coverage as previous object
+199 MERCURY                       Same coverage as previous object
+299 VENUS                         Same coverage as previous object
+301 MOON                          Same coverage as previous object
+399 EARTH                         Same coverage as previous object

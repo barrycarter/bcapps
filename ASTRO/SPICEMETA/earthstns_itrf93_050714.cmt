@@ -1,0 +1,794 @@
+ 
+ 
+   SPK for DSN Station Locations
+   =====================================================================
+ 
+   Original file name:                   earthstns_itrf93_050714.bsp
+   Creation date:                        2005 July 14 04:45
+   Created by:                           Nat Bachman  (NAIF/JPL)
+ 
+ 
+   Introduction
+   =====================================================================
+ 
+   This file provides geocentric states---locations and velocities---
+   for the set of DSN stations cited in the list below under "Position
+   Data."  Station position vectors point from the earth's barycenter
+   to the stations.  Station velocities are estimates of the
+   derivatives with respect to time of these vectors; in this file,
+   velocities are constant.  Station velocities have magnitudes on the
+   order of few cm/year.
+ 
+   The states in this file are given relative to the terrestrial
+   reference frame ITRF93.
+ 
+   This SPK file has a companion file
+ 
+      earthstns_fx_050714.bsp
+ 
+   which differs from this one only in that it uses the reference
+   frame alias 'EARTH_FIXED'.  See the comment area of that file
+   and the Frames Required Reading for details.
+ 
+ 
+   Using this kernel
+   =====================================================================
+ 
+   Revision description
+   --------------------
+ 
+   This kernel supersedes
+ 
+      earthstns_itrf93_040916.bsp
+ 
+   This revision provides the new position of the relocated
+   DSS-65 antenna; the antenna has been moved by about 61m.
+ 
+   Some users of station location data are adopting the name
+ 
+      DSS-64
+ 
+   to represent the new location; others are continuing to use
+   the old name
+ 
+      DSS-65
+ 
+   This kernel enables SPICE users to refer to the new location
+   by either name.  In this file, the position associated with the
+   name
+ 
+      DSS-65
+ 
+   is the old location for times prior to the date
+ 
+      2005 July 3 TDB
+ 
+   For later times, the position of this station is the new location.
+ 
+   (The date above is one for which the station is out of service; it
+   was the nominal re-activation date given by an IND readiness review
+   presentation given December 14, 2004.)  As of the creation date of
+   this file, the predicted date at which DSS-65 will go back into
+   service is in September, 2005.
+ 
+   For users' convenience, coverage for DSS-64 extends back to 1950
+   January 1, as does the coverage for other stations.
+ 
+ 
+   Planned updates
+   ---------------
+ 
+   NAIF plans to replace this kernel with one containing additional
+   data for tracking stations at Noto and New Norcia.  Data for the
+   sites covered by this file will be unchanged in that update.
+ 
+ 
+   Kernel loading
+   --------------
+ 
+   In order for a SPICE-based program to make use of this kernel, the
+   kernel must be loaded via the SPICE routine FURNSH.  If you are
+   running application software created by a third party, see the
+   documentation for that software for instructions on kernel
+   management.
+ 
+   See also "Associated frame kernels" and "Associated PCK files"
+   below.
+ 
+ 
+   Associated PCK files
+   --------------------
+ 
+   For high-accuracy work, this kernel should be used together with a
+   high-precision, binary earth PCK file.
+ 
+      NAIF produces these kernels on a regular basis; they can be
+      obtained via anonymous ftp from the NAIF server
+ 
+         naif.jpl.nasa.gov
+ 
+      The PCK is located in the path
+ 
+         pub/naif/generic_kernels/pck
+ 
+      The file name is of the form
+ 
+         earth_000101_yymmdd_yymmdd.bpc
+ 
+      The first two dates are the file's start and stop times; the third
+      is the epoch of the last datum in the EOP file:  data from
+      this epoch forward are predicted.
+ 
+      The file's coverage starts at a fixed date (currently chosen to
+      be 2000 Jan. 1) and extends to the end of the predict region,
+      which has a duration of roughly 3 months.
+ 
+ 
+   Associated frame kernels
+   ------------------------
+ 
+   The frame kernel having (original) file name
+ 
+      earth_topo_050714.tf
+ 
+   defines topocentric reference frames associated with each of
+   the stations covered by this file.  That kernel supports
+   computations such as finding the azimuth and elevation of a target
+   as seen from a specified station.
+ 
+   The topocentric frame
+ 
+       DSS-65_TOPO
+ 
+   defined by this kernel and associated with DSS-65 is based on
+   the position of DSS-65 post-relocation:  the frame orientation
+   is identical to that of the frame
+ 
+       DSS-64_TOPO
+ 
+   In order to reference the topocentric frame associated with
+   the location of DSS-65 before July 3, 2005, it is necessary
+   to load a previous earth topocentric frame kernel such as
+ 
+      earth_topo_040916.tf
+ 
+ 
+   DSS-64 and DSS-65
+   -----------------
+ 
+   See "Revision description" above for a description of the data
+   coverage provided by this file for DSS-64 and DSS-65.
+ 
+   To enable use of the name DSS-64, user applications may load
+   a text kernel containing the assignments
+ 
+      \begindata
+ 
+          NAIF_BODY_NAME  +=  'DSS-64'
+          NAIF_BODY_CODE  +=   399064
+ 
+      \begintext
+ 
+   The earth topocentric frame kernel
+ 
+      earth_topo_050714.tf
+ 
+   includes the necessary definitions, so loading it may be
+   a convenient way to establish them.
+ 
+   See the NAIF_IDs Required Reading for details.
+ 
+ 
+   PARKES
+   ------
+ 
+   The station location data source produced by JPL's section 335
+   now refers to the Parkes station as "DSS-49."  The SPICE Toolkit
+   currently supports the NAIF ID code/name mappings
+ 
+      399005  <-->  DSS-05  (secondary)
+              <-->  PARKES  (primary)
+ 
+   Identical ephemeris data are provided in this file for both ID codes
+   399005 and 399049.
+ 
+   See the NAIF_IDs Required Reading for details.
+ 
+ 
+ 
+   Data sources
+   =====================================================================
+ 
+   The data described here are taken from the JPL web site at URL
+ 
+      http://epic/nav/eop/stations.html
+ 
+   The site is maintained by Tod Ratcliff, JPL section 335.
+ 
+   Additional source:
+ 
+      Location data for DSS-64 are from an e-mail communication
+      from W. M. Folkner to N. J. Bachman, dated June 23, 2005.
+ 
+ 
+   Reference Spheroid
+   ------------------
+ 
+   The reference bi-axial spheroid is defined by an equatorial and a
+   polar radius.  Calling these Re and Rp respectively, the flattening
+   factor f is defined as
+ 
+      f = ( Re - Rp ) / Re
+ 
+   For the reference spheroid used by this file, the equatorial radius
+   Re and inverse flattening factor 1/f are
+ 
+      Re  = 6378136.3 m
+      1/f = 298.257
+ 
+   The reference spheroid was used to transform velocity data
+   from the original topocentric representation to the geocentric
+   representation used in this kernel.
+ 
+ 
+   Epoch
+   -----
+ 
+   The epoch associated with these data is given by the source as
+   "2003.0."  The time variation of the data is slow enough so that
+   specification of the time system is unimportant. However, in the
+   creation of this file, the epoch is assumed to be
+ 
+      2003 Jan 1 00:00:00 TDB
+ 
+   At this epoch, the station positions are as given below.
+ 
+ 
+   Position data
+   -------------
+ 
+   Station locations in the ITRF93 frame at the specified epoch are:
+ 
+       Antenna  Diameter   x (m)            y (m)           z (m)
+       DSS 12   34m   -2350444.0057   -4651980.7620    3665630.9322
+       DSS 13   34m   -2351112.6586   -4655530.6359    3660912.7276
+       DSS 14   70m   -2353621.4197   -4641341.4717    3677052.3178
+       DSS 15   34m   -2353538.9575   -4641649.4287    3676669.9837
+       DSS 16   26m   -2354763.3257   -4646787.3837    3669387.0099
+       DSS 17    9m   -2354730.5247   -4646751.6975    3669440.5998
+       DSS 23   11m   -2354757.7341   -4646934.5965    3669207.7651
+       DSS 24   34m   -2354906.7087   -4646840.0834    3669242.3207
+       DSS 25   34m   -2355022.0140   -4646953.2040    3669040.5666
+       DSS 26   34m   -2354890.7996   -4647166.3182    3668871.7546
+       DSS 27   34m   -2349915.4275   -4656756.4059    3660096.4693
+       DSS 28   34m   -2350102.0169   -4656673.3686    3660103.5180
+       DSS 33   11m   -4461083.8425    2682281.6961   -3674569.9725
+       DSS 34   34m   -4461147.0925    2682439.2385   -3674393.1332
+       DSS 42   34m   -4460981.3463    2682413.4680   -3674581.6534
+       DSS 43   70m   -4460894.9170    2682361.5070   -3674748.1517
+       DSS 45   34m   -4460935.5783    2682765.6611   -3674380.9824
+       DSS 46   26m   -4460828.9473    2682129.5071   -3674975.0884
+       DSS 49   64m   -4554232.1933    2816758.9161   -3454035.6434
+       DSS 53   11m    4849330.0161    -360337.8678    4114758.9123
+       DSS 54   34m    4849434.4877    -360723.8999    4114618.8354
+       DSS 55   34m    4849525.2561    -360606.0932    4114495.0843
+       DSS 61   34m    4849245.0787    -360277.9478    4114884.5772
+       DSS 63   70m    4849092.5175    -360180.3480    4115109.2506
+       DSS 64   34m    4849339.6448    -360427.6560    4114750.7428
+ 
+       DSS 65   34m    Prior to July 3, 2005:
+                       4849336.6176    -360488.6349    4114748.9218
+ 
+                       After July 3, 2005:
+                       4849339.6448    -360427.6560    4114750.7428
+                       (Same as DSS 64)
+ 
+       DSS 66   26m    4849148.4311    -360474.6175    4114995.1679
+ 
+ 
+   Velocity data
+   -------------
+ 
+   The relevant portion of the ODP input file providing
+   station velocities is copied (and reformatted) below.
+ 
+ 
+       Reference epoch for plate motion: 01-JAN-2003 00:00
+ 
+       Plate motion model, cm/year
+ 
+                                     North   East    Vertical
+       Goldstone:
+ 
+          Stations numbered 1X       -0.45   -1.90    -0.03
+          Stations numbered 2X       -0.45   -1.90    -0.03
+ 
+       Canberra:
+ 
+          Stations numbered 3X        4.74    2.08    -0.12
+          Stations numbered 4X        4.74    2.08    -0.12
+ 
+       Madrid:
+ 
+          Stations numbered 5X        1.95    2.34     0.12
+          Stations numbered 6X        1.95    2.34     0.12
+ 
+ 
+   Accuracy
+   --------
+ 
+   The following discussion concerning station location accuracy is
+   from the referenced web site.  The citations in the text refer to
+   the documents listed below.
+ 
+      The uncertainty in the station locations is described by a
+      covariance matrix [2]. The coordinate uncertainties, given by the
+      square-root of the diagonal elements of the covariance matrix,
+      are about 4 cm for DSN stations which have participated in
+      regular VLBI experiments, and about 10 cm for other stations.
+      These coordinate uncertaintes [sic] do not account for
+      uncertainties in Earth orientation calibrations. Uncertainties in
+      Earth orientation as applied to spacecraft navigation are
+      discussed in [5].
+ 
+ 
+   References
+   ----------
+ 
+   The site lists the following references:
+ 
+       1. C. Boucher, Z. Altamimi, L. Duhem,
+          "Results and analysis of the ITRF93",
+          IERS Technical Note 18, Observatoire de Paris, 1994.
+ 
+       2. W. M. Folkner, DSN station locations and uncertainties,
+          JPL TDA Progress Report, 42-128,pp. 1-34,1996.
+ 
+       3. T. Moyer, "Mathematical formulation of the double-precision
+          Orbit Determination Program", JPL Technical Report 32-1527, 1971
+ 
+       4. C. S. Jacobs and A. Rius, Internal consistency of VLBI surveying
+          between DSS 63 and DSS 65", JPL IOM 335.3-90-034, 11 May 1992.
+ 
+       5. J. A. Estefan and W. M. Folkner, Sensitivity of planetary cruise
+          navigation to Earth orientation calibration errors, JPL TDA
+          Progress Report 42-123, pp. 1-29, 1995.
+ 
+       6. T. D. Moyer, "Frame tie rotations and nutation corrections for
+          the ODP", JPL EM 314-558, 26 February 1993.
+ 
+       7. E. M. Standish, X X Newhall, J. G. Williams, W. M. Folkner,
+          "JPL planetary and lunar ephemerides DE403/LE403", JPL IOM
+          314.10-127, 22 May 1995.
+ 
+ 
+ 
+   Input Data
+   ----------
+ 
+   DSS-49 and Parkes refer to the identical location.
+ 
+   DSS-64 and DSS-65 refer to the identical location from July 3, 2005
+   onward.
+ 
+\begindata
+ 
+ 
+   SITES           +=      'PARKES'
+   PARKES_FRAME    =       'ITRF93'
+   PARKES_CENTER   =       399
+   PARKES_IDCODE   =       399005
+   PARKES_EPOCH    =       @2003-JAN-01/00:00
+   PARKES_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   PARKES_XYZ      =    (  -4554.232193300
+                            2816.758916100
+                           -3454.035643400  )
+   PARKES_DXYZ     =    (     -0.032039997
+                              -0.004640382
+                               0.040407245  )
+ 
+ 
+   SITES           +=      'DSS-12'
+   DSS-12_FRAME    =       'ITRF93'
+   DSS-12_CENTER   =       399
+   DSS-12_IDCODE   =       399012
+   DSS-12_EPOCH    =       @2003-JAN-01/00:00
+   DSS-12_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-12_XYZ      =    (  -2350.444005700
+                           -4651.980762000
+                            3665.630932200  )
+   DSS-12_DXYZ     =    (     -0.018020559
+                               0.006465902
+                              -0.003845979  )
+ 
+ 
+   SITES           +=      'DSS-13'
+   DSS-13_FRAME    =       'ITRF93'
+   DSS-13_CENTER   =       399
+   DSS-13_IDCODE   =       399013
+   DSS-13_EPOCH    =       @2003-JAN-01/00:00
+   DSS-13_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-13_XYZ      =    (  -2351.112658600
+                           -4655.530635900
+                            3660.912727600  )
+   DSS-13_DXYZ     =    (     -0.018020207
+                               0.006465595
+                              -0.003848147  )
+ 
+ 
+   SITES           +=      'DSS-14'
+   DSS-14_FRAME    =       'ITRF93'
+   DSS-14_CENTER   =       399
+   DSS-14_IDCODE   =       399014
+   DSS-14_EPOCH    =       @2003-JAN-01/00:00
+   DSS-14_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-14_XYZ      =    (  -2353.621419700
+                           -4641.341471700
+                            3677.052317800  )
+   DSS-14_DXYZ     =    (     -0.018014877
+                               0.006484793
+                              -0.003840791  )
+ 
+ 
+   SITES           +=      'DSS-15'
+   DSS-15_FRAME    =       'ITRF93'
+   DSS-15_CENTER   =       399
+   DSS-15_IDCODE   =       399015
+   DSS-15_EPOCH    =       @2003-JAN-01/00:00
+   DSS-15_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-15_XYZ      =    (  -2353.538957500
+                           -4641.649428700
+                            3676.669983700  )
+   DSS-15_DXYZ     =    (     -0.018015019
+                               0.006484299
+                              -0.003840958  )
+ 
+ 
+   SITES           +=      'DSS-16'
+   DSS-16_FRAME    =       'ITRF93'
+   DSS-16_CENTER   =       399
+   DSS-16_IDCODE   =       399016
+   DSS-16_EPOCH    =       @2003-JAN-01/00:00
+   DSS-16_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-16_XYZ      =    (  -2354.763325700
+                           -4646.787383700
+                            3669.387009900  )
+   DSS-16_DXYZ     =    (     -0.018014117
+                               0.006484844
+                              -0.003844268  )
+ 
+ 
+   SITES           +=      'DSS-17'
+   DSS-17_FRAME    =       'ITRF93'
+   DSS-17_CENTER   =       399
+   DSS-17_IDCODE   =       399017
+   DSS-17_EPOCH    =       @2003-JAN-01/00:00
+   DSS-17_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-17_XYZ      =    (  -2354.730524700
+                           -4646.751697500
+                            3669.440599800  )
+   DSS-17_DXYZ     =    (     -0.018014152
+                               0.006484761
+                              -0.003844241  )
+ 
+ 
+   SITES           +=      'DSS-23'
+   DSS-23_FRAME    =       'ITRF93'
+   DSS-23_CENTER   =       399
+   DSS-23_IDCODE   =       399023
+   DSS-23_EPOCH    =       @2003-JAN-01/00:00
+   DSS-23_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-23_XYZ      =    (  -2354.757734100
+                           -4646.934596500
+                            3669.207765100  )
+   DSS-23_DXYZ     =    (     -0.018014145
+                               0.006484716
+                              -0.003844350  )
+ 
+ 
+   SITES           +=      'DSS-24'
+   DSS-24_FRAME    =       'ITRF93'
+   DSS-24_CENTER   =       399
+   DSS-24_IDCODE   =       399024
+   DSS-24_EPOCH    =       @2003-JAN-01/00:00
+   DSS-24_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-24_XYZ      =    (  -2354.906708700
+                           -4646.840083400
+                            3669.242320700  )
+   DSS-24_DXYZ     =    (     -0.018013937
+                               0.006485303
+                              -0.003844335  )
+ 
+ 
+   SITES           +=      'DSS-25'
+   DSS-25_FRAME    =       'ITRF93'
+   DSS-25_CENTER   =       399
+   DSS-25_IDCODE   =       399025
+   DSS-25_EPOCH    =       @2003-JAN-01/00:00
+   DSS-25_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-25_XYZ      =    (  -2355.022014000
+                           -4646.953204000
+                            3669.040566600  )
+   DSS-25_DXYZ     =    (     -0.018013804
+                               0.006485618
+                              -0.003844429  )
+ 
+ 
+   SITES           +=      'DSS-26'
+   DSS-26_FRAME    =       'ITRF93'
+   DSS-26_CENTER   =       399
+   DSS-26_IDCODE   =       399026
+   DSS-26_EPOCH    =       @2003-JAN-01/00:00
+   DSS-26_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-26_XYZ      =    (  -2354.890799600
+                           -4647.166318200
+                            3668.871754600  )
+   DSS-26_DXYZ     =    (     -0.018014011
+                               0.006484995
+                              -0.003844508  )
+ 
+ 
+   SITES           +=      'DSS-27'
+   DSS-27_FRAME    =       'ITRF93'
+   DSS-27_CENTER   =       399
+   DSS-27_IDCODE   =       399027
+   DSS-27_EPOCH    =       @2003-JAN-01/00:00
+   DSS-27_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-27_XYZ      =    (  -2349.915427500
+                           -4656.756405900
+                            3660.096469300  )
+   DSS-27_DXYZ     =    (     -0.018021946
+                               0.006460527
+                              -0.003848512  )
+ 
+ 
+   SITES           +=      'DSS-28'
+   DSS-28_FRAME    =       'ITRF93'
+   DSS-28_CENTER   =       399
+   DSS-28_IDCODE   =       399028
+   DSS-28_EPOCH    =       @2003-JAN-01/00:00
+   DSS-28_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-28_XYZ      =    (  -2350.102016900
+                           -4656.673368600
+                            3660.103518000  )
+   DSS-28_DXYZ     =    (     -0.018021694
+                               0.006461232
+                              -0.003848512  )
+ 
+ 
+   SITES           +=      'DSS-33'
+   DSS-33_FRAME    =       'ITRF93'
+   DSS-33_CENTER   =       399
+   DSS-33_IDCODE   =       399033
+   DSS-33_EPOCH    =       @2003-JAN-01/00:00
+   DSS-33_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-33_XYZ      =    (  -4461.083842500
+                            2682.281696100
+                           -3674.569972500  )
+   DSS-33_DXYZ     =    (     -0.033411909
+                              -0.004180957
+                               0.039331971  )
+ 
+ 
+   SITES           +=      'DSS-34'
+   DSS-34_FRAME    =       'ITRF93'
+   DSS-34_CENTER   =       399
+   DSS-34_IDCODE   =       399034
+   DSS-34_EPOCH    =       @2003-JAN-01/00:00
+   DSS-34_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-34_XYZ      =    (  -4461.147092500
+                            2682.439238500
+                           -3674.393133200  )
+   DSS-34_DXYZ     =    (     -0.033410811
+                              -0.004181009
+                               0.039332898  )
+ 
+ 
+   SITES           +=      'DSS-42'
+   DSS-42_FRAME    =       'ITRF93'
+   DSS-42_CENTER   =       399
+   DSS-42_IDCODE   =       399042
+   DSS-42_EPOCH    =       @2003-JAN-01/00:00
+   DSS-42_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-42_XYZ      =    (  -4460.981346300
+                            2682.413468000
+                           -3674.581653400  )
+   DSS-42_DXYZ     =    (     -0.033412154
+                              -0.004179826
+                               0.039331883  )
+ 
+ 
+   SITES           +=      'DSS-43'
+   DSS-43_FRAME    =       'ITRF93'
+   DSS-43_CENTER   =       399
+   DSS-43_IDCODE   =       399043
+   DSS-43_EPOCH    =       @2003-JAN-01/00:00
+   DSS-43_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-43_XYZ      =    (  -4460.894917000
+                            2682.361507000
+                           -3674.748151700  )
+   DSS-43_DXYZ     =    (     -0.033413183
+                              -0.004179207
+                               0.039331074  )
+ 
+ 
+   SITES           +=      'DSS-45'
+   DSS-45_FRAME    =       'ITRF93'
+   DSS-45_CENTER   =       399
+   DSS-45_IDCODE   =       399045
+   DSS-45_EPOCH    =       @2003-JAN-01/00:00
+   DSS-45_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-45_XYZ      =    (  -4460.935578300
+                            2682.765661100
+                           -3674.380982400  )
+   DSS-45_DXYZ     =    (     -0.033411111
+                              -0.004178521
+                               0.039332908  )
+ 
+ 
+   SITES           +=      'DSS-46'
+   DSS-46_FRAME    =       'ITRF93'
+   DSS-46_CENTER   =       399
+   DSS-46_IDCODE   =       399046
+   DSS-46_EPOCH    =       @2003-JAN-01/00:00
+   DSS-46_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-46_XYZ      =    (  -4460.828947300
+                            2682.129507100
+                           -3674.975088400  )
+   DSS-46_DXYZ     =    (     -0.033414572
+                              -0.004179350
+                               0.039329879  )
+ 
+ 
+   SITES           +=      'DSS-49'
+   DSS-49_FRAME    =       'ITRF93'
+   DSS-49_CENTER   =       399
+   DSS-49_IDCODE   =       399049
+   DSS-49_EPOCH    =       @2003-JAN-01/00:00
+   DSS-49_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-49_XYZ      =    (  -4554.232193300
+                            2816.758916100
+                           -3454.035643400  )
+   DSS-49_DXYZ     =    (     -0.032039997
+                              -0.004640382
+                               0.040407245  )
+ 
+ 
+   SITES           +=      'DSS-53'
+   DSS-53_FRAME    =       'ITRF93'
+   DSS-53_CENTER   =       399
+   DSS-53_IDCODE   =       399053
+   DSS-53_EPOCH    =       @2003-JAN-01/00:00
+   DSS-53_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-53_XYZ      =    (   4849.330016100
+                            -360.337867800
+                            4114.758912300  )
+   DSS-53_DXYZ     =    (     -0.009965700
+                               0.024205031
+                               0.015622141  )
+ 
+ 
+   SITES           +=      'DSS-54'
+   DSS-54_FRAME    =       'ITRF93'
+   DSS-54_CENTER   =       399
+   DSS-54_IDCODE   =       399054
+   DSS-54_EPOCH    =       @2003-JAN-01/00:00
+   DSS-54_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-54_XYZ      =    (   4849.434487700
+                            -360.723899900
+                            4114.618835400  )
+   DSS-54_DXYZ     =    (     -0.009963351
+                               0.024205769
+                               0.015622496  )
+ 
+ 
+   SITES           +=      'DSS-55'
+   DSS-55_FRAME    =       'ITRF93'
+   DSS-55_CENTER   =       399
+   DSS-55_IDCODE   =       399055
+   DSS-55_EPOCH    =       @2003-JAN-01/00:00
+   DSS-55_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-55_XYZ      =    (   4849.525256100
+                            -360.606093200
+                            4114.495084300  )
+   DSS-55_DXYZ     =    (     -0.009963608
+                               0.024205488
+                               0.015622768  )
+ 
+ 
+   SITES           +=      'DSS-61'
+   DSS-61_FRAME    =       'ITRF93'
+   DSS-61_CENTER   =       399
+   DSS-61_IDCODE   =       399061
+   DSS-61_EPOCH    =       @2003-JAN-01/00:00
+   DSS-61_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-61_XYZ      =    (   4849.245078700
+                            -360.277947800
+                            4114.884577200  )
+   DSS-61_DXYZ     =    (     -0.009966342
+                               0.024204949
+                               0.015621858  )
+ 
+ 
+   SITES           +=      'DSS-63'
+   DSS-63_FRAME    =       'ITRF93'
+   DSS-63_CENTER   =       399
+   DSS-63_IDCODE   =       399063
+   DSS-63_EPOCH    =       @2003-JAN-01/00:00
+   DSS-63_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-63_XYZ      =    (   4849.092517500
+                            -360.180348000
+                            4115.109250600  )
+   DSS-63_DXYZ     =    (     -0.009967442
+                               0.024204823
+                               0.015621352  )
+ 
+ 
+   SITES           +=      'DSS-64'
+   DSS-64_FRAME    =       'ITRF93'
+   DSS-64_CENTER   =       399
+   DSS-64_IDCODE   =       399064
+   DSS-64_EPOCH    =       @2003-JAN-01/00:00
+   DSS-64_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-64_XYZ      =    (   4849.339644800
+                            -360.427656000
+                            4114.750742800  )
+   DSS-64_DXYZ     =    (     -0.009965217
+                               0.024205210
+                               0.015622172  )
+ 
+   \begintext
+ 
+   The definitions below give the DSS-65 state prior to July 3, 2005.
+ 
+   \begindata
+ 
+ 
+   SITES           +=      'DSS-65'
+   DSS-65_FRAME    =       'ITRF93'
+   DSS-65_CENTER   =       399
+   DSS-65_IDCODE   =       399065
+   DSS-65_EPOCH    =       @2003-JAN-01/00:00
+   DSS-65_BOUNDS   =    (  @1950-JAN-01/00:00,  @2005-JUL-03/00:00  )
+   DSS-65_XYZ      =    (   4849.336617600
+                            -360.488634900
+                            4114.748921800  )
+   DSS-65_DXYZ     =    (     -0.009964907
+                               0.024205335
+                               0.015622176  )
+ 
+ 
+   \begintext
+ 
+   The definitions below set the DSS-65 state identical to that
+   for DSS-64 after July 3, 2005.
+ 
+   \begindata
+ 
+   SITES           +=      'DSS-65'
+   DSS-65_FRAME    =       'ITRF93'
+   DSS-65_CENTER   =       399
+   DSS-65_IDCODE   =       399065
+   DSS-65_EPOCH    =       @2003-JAN-01/00:00
+   DSS-65_BOUNDS   =    (  @2005-JUL-03/00:00,  @2050-JAN-01/00:00  )
+   DSS-65_XYZ      =    (   4849.339644800
+                            -360.427656000
+                            4114.750742800  )
+   DSS-65_DXYZ     =    (     -0.009965217
+                               0.024205210
+                               0.015622172  )
+ 
+ 
+   SITES           +=      'DSS-66'
+   DSS-66_FRAME    =       'ITRF93'
+   DSS-66_CENTER   =       399
+   DSS-66_IDCODE   =       399066
+   DSS-66_EPOCH    =       @2003-JAN-01/00:00
+   DSS-66_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-66_XYZ      =    (   4849.148431100
+                            -360.474617500
+                            4114.995167900  )
+   DSS-66_DXYZ     =    (     -0.009965666
+                               0.024205391
+                               0.015621605  )
+ 

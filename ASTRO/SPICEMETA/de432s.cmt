@@ -1,0 +1,18 @@
+ 
+; de432s.bsp LOG FILE
+;
+; Created 2014-04-30/16:33:38.35.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = naif0010.tls
+SPK_FILE            = de432s.bsp
+  SPK_LOG_FILE      = de432s_spk_conversion.log
+  NOTE              = NIOSPK 6.1.0 Conversion
+  SOURCE_NIO_FILE   = /data1/nioeph/de432s.nio
+    BODIES          = 10, 1, 199, 2, 299, 3, 399, 301, 4, 5, 6, 7, 8, 9
+    BEGIN_TIME      = CAL-ET 1949 DEC 14 00:00:00.000
+    END_TIME        = CAL-ET 2050 JAN 02 00:00:00.000
+ 
+; END NIOSPK COMMANDS
+ 

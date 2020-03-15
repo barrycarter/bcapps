@@ -1,0 +1,68 @@
+ 
+ 
+IMPORTANT NOTICE:
+ 
+ This informal file release should not be used for purposes affecting the
+ safety and success of spacecraft hardware or missions without first contacting
+ the JPL Solar System Dynamics Group. Contact information is below.
+ 
+ This is because an object's orbit solution may be insufficiently determined
+ over the chosen time-span to be suitable for some high-precision purposes,
+ due to the quantity of measurements available for an object, the time-span
+ they cover, and the object's dynamical path.
+ 
+ Although not stored in this file, statistical uncertainty of the trajectory
+ as a function of time may be available from the JPL Horizons system. This can
+ help interpret the accuracy of the trajectory.
+ 
+ Orbit solutions are updated in Horizons as new measurements are made, so this
+ trajectory may be superceded by more recent solutions. Check the orbit solution
+ number for an object (given below as "source") against the latest Horizons
+ entry to determine if an updated orbit solution is available.
+ 
+ This parameterized post-Netwonian numerically integrated perturbed trajectory
+ was produced by:
+ 
+    Horizons On-Line Ephemeris System
+    Solar System Dynamics Group
+    Jet Propulsion Laboratory
+    4800 Oak Grove Drive
+    Pasadena, CA  91109  USA
+ 
+ Horizons information & documentation:
+ 
+   http://ssd.jpl.nasa.gov/?horizons
+ 
+ Connection for small-body SPK generation (automation scripts available):
+ 
+   telnet ssd.jpl.nasa.gov 6775        (interactive UNIX/Linux command-line)
+   telnet://ssd.jpl.nasa.gov:6775      (interactive browser URL window)
+   http://ssd.jpl.nasa.gov/x/spk.html  (passive browser form)
+ 
+ Inquiries:
+ 
+   E-mail: Jon.D.Giorgini@jpl.nasa.gov (SSDG Senior Analyst and program author)
+   phone : 818-393-3107
+ 
+SPK file contents:
+ 
+OBJECT #01
+==========
+Requested by    : charles.acton@jpl.nasa.gov
+Execution date  : Tue Aug 19 15:19:19 2014 (Pasadena time)
+Target body     : Siding Spring (C/2013 A1)       {source: Horizons_SPK:JPL#57}
+Target SPK ID   :  1003228
+Coord center    : Sun                      ( 10)  {source: DE-0431LE-04}
+GM of center    : 2.9591220828559109E-04  au^3/d^2
+Small-body perts: Yes                             {source: SB431-BIG16}
+Start time      : 2014-Aug-19 00:00:00.0000  CT
+Stop  time      : 2014-Dec-30 00:00:00.0000  CT
+*******************************************************************************
+Initial FK5/J2000.0 heliocentric ecliptic osculating elements (au, days, deg.):
+  EPOCH=  2456572.5 != 2013-Oct-07.0000000 (CT)   RMSW= n.a.
+   EC= 1.000635033485572   QR= 1.398787500152262   TP= 2456955.8604014092
+   OM= 300.9764674269408   W= 2.441407867228122    IN= 129.0273857157992
+Comet physical (GM= km^3/s^2; RAD= km):
+   GM= n.a.                RAD= n.a.
+   M1=  8.5      M2=  n.a.     k1=  7.     k2= n.a.     PHCOF= n.a.
+ 

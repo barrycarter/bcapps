@@ -1,0 +1,132 @@
+ 
+ 
+   SPK/FK for Preliminary DSS-35, DSS-36 Station Locations
+   =====================================================================
+ 
+   Original SPK file name:               dss_35_36_prelim_itrf93_140620.bsp
+   Original FK file name:                dss_35_36_prelim_itrf93_140620.tf
+   Creation date:                        2014 June 20 18:59
+   Created by:                           Nat Bachman  (NAIF/JPL)
+ 
+ 
+ 
+   Data for DSS-35 are based on an email from Dr. William Folkner,
+   dated June 13, 2014. The position data from that email are shown
+   below:
+ 
+     >> Cartesian coordinates x, y, z (m)
+     >>
+     >> -4461273.0838  2682568.9220 -3674152.0885
+ 
+   The email states that the position is accurate to about 1 cm.
+   It also states that the site velocity for other stations in
+   the Canberra complex applies to DSS-35. This velocity is now
+   included in the SPK file for this station. The epoch of the data
+   is 2003.0. The velocity has been transformed to the ITRF93
+   reference frame from the DSS-35_TOPO frame, and it has been
+   scaled to units of m/year. The original velocity data are
+   included at the end of this file.
+ 
+   Topocentric frame orientations were derived using earth radii
+   included below.
+ 
+ 
+   Data for DSS-36 are based on an email from Dr. William Folkner,
+   dated May 28, 2014. The position data from that email are shown
+   below:
+ 
+      >   Cartesian coordinates (m)
+      >36 DSS-36         -4461170.2358   2682816.0240  -3674085.9737
+ 
+   Note that site velocity data are not included.
+ 
+   Topocentric frame orientations were derived using earth radii
+   included below.
+ 
+ 
+\begindata
+ 
+ 
+   SITES              +=      'DSS-35'
+   DSS-35_FRAME       =       'ITRF93'
+   DSS-35_CENTER      =       399
+   DSS-35_IDCODE      =       399035
+   DSS-35_BOUNDS      =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-35_XYZ         =    (  -4461.2730838
+                               2682.5689220
+                              -3674.1520885 )
+ 
+   DSS-35_DXYZ        =    (   -3.340926970650297e-02
+                               -4.181661498524273e-03
+                                3.933413790576708e-02 )
+ 
+   DSS-35_EPOCH       =     @2003-JAN-01/00:00:00
+   DSS-35_TOPO_EPOCH  =     @2003-JAN-01/00:00:00
+ 
+   DSS-35_UP          =     'Z'
+   DSS-35_NORTH       =     'X'
+ 
+ 
+ 
+   SITES           +=      'DSS-36'
+   DSS-36_FRAME    =       'ITRF93'
+   DSS-36_CENTER   =       399
+   DSS-36_IDCODE   =       399036
+   DSS-36_BOUNDS   =    (  @1950-JAN-01/00:00,  @2050-JAN-01/00:00  )
+   DSS-36_XYZ      =    (    -4461.1702358
+                              2682.8160240
+                             -3674.0859737  )
+   DSS-36_UP       =  'Z'
+   DSS-36_NORTH    =  'X'
+ 
+\begintext
+ 
+   Earth radii for DSN kernel generation
+   =====================================
+ 
+   Author:                                        Nat Bachman
+   File creation date:                            03-JUN-2014
+ 
+ 
+   Reference Spheroid
+   ------------------
+ 
+   The reference bi-axial spheroid is defined by an equatorial and a
+   polar radius.  Calling these Re and Rp respectively, the flattening
+   factor f is defined as
+ 
+      f = ( Re - Rp ) / Re
+ 
+   For the reference spheroid used by this file, the equatorial radius
+   Re and inverse flattening factor 1/f are
+ 
+      Re         = 6378136.3 m
+      1/f        = 298.257
+ 
+      Derived Rp = 6356.7516005629377
+ 
+\begindata
+ 
+   BODY399_RADII = ( 6378.1363, 6378.1363, 6356.7516005629377 )
+ 
+\begintext
+ 
+ 
+   Velocity data
+   -------------
+ 
+   The relevant portion of the ODP input file providing
+   station velocities is copied (and reformatted) below.
+ 
+ 
+       Reference epoch for plate motion: 01-JAN-2003 00:00
+ 
+       Plate motion model, cm/year
+ 
+                                     North   East    Vertical
+ 
+       Canberra:
+ 
+          Stations numbered 3X        4.74    2.08    -0.12
+ 
+ 

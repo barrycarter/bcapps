@@ -1,0 +1,15 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/mar097.bsp
+ 
+Bodies              Start of Interval (ET)          End of Interval (ET)
+-------             -----------------------------   -----------------------------
+3 EARTH BARYCENTER  1900 JAN 04 00:00:41.184        2100 JAN 01 00:01:07.183
+4 MARS BARYCENTER               Same coverage as previous object
+10 SUN                          Same coverage as previous object
+399 EARTH                       Same coverage as previous object
+401 PHOBOS                      Same coverage as previous object
+402 DEIMOS                      Same coverage as previous object
+499 MARS                        Same coverage as previous object

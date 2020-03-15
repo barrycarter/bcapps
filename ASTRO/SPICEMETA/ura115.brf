@@ -1,0 +1,26 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/ura115.bsp
+ 
+Bodies               Start of Interval (ET)          End of Interval (ET)
+-------              -----------------------------   -----------------------------
+3 EARTH BARYCENTER   1980 JAN 01 00:00:00.000        2060 JAN 01 00:00:00.000
+7 URANUS BARYCENTER              Same coverage as previous object
+10 SUN                           Same coverage as previous object
+399 EARTH                        Same coverage as previous object
+706 CORDELIA                     Same coverage as previous object
+707 OPHELIA                      Same coverage as previous object
+708 BIANCA                       Same coverage as previous object
+709 CRESSIDA                     Same coverage as previous object
+710 DESDEMONA                    Same coverage as previous object
+711 JULIET                       Same coverage as previous object
+712 PORTIA                       Same coverage as previous object
+713 ROSALIND                     Same coverage as previous object
+714 BELINDA                      Same coverage as previous object
+715 PUCK                         Same coverage as previous object
+725 PERDITA                      Same coverage as previous object
+726 MAB                          Same coverage as previous object
+727 CUPID                        Same coverage as previous object
+799 URANUS                       Same coverage as previous object

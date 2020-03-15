@@ -1,0 +1,3725 @@
+ 
+ 
+NDOSL Station Locations SPK File
+=========================================================================
+ 
+   Fri Nov  7 08:54:11 PST 2014 -- BVS/NAIF
+ 
+ 
+Abstract
+=======================================================
+ 
+   This pair of SPK and FK files contains locations and topocentric
+   frame definitions for a subset of stations from ``WGS84 NASA
+   DIRECTORY OF STATION LOCATIONS'' (NDOSL) [1]. This subset does not
+   includes locations of launch pads, lasers, aircraft, runways,
+   cameras, and command centers.
+ 
+   The WGS-84 reference parameters, station coordinates, and location
+   and equipment descriptions are summarized in Tables 1, 2, and 3
+   below.
+ 
+   These SPK and FK were made using PINPOINT. The keywords defining
+   PINPOINT inputs are provided in the section "PINPOINT Inputs" below.
+ 
+   Since both the station locations and frame orientations are defined
+   relative to ITRF93, a high precision Earth orientation PCK file
+   providing the orientation of ITRF93 must be loaded together with
+   these SPK and FK.
+ 
+ 
+Station and Frame Names and IDs
+=======================================================
+ 
+   NAIF object and frame names and IDs for stations, for which data is
+   provided in these files were based on the from alpha-numeric station
+   codes (STDN_CODE) and four-digit station NASA numbers (NASA_NMBR) as
+   follows:
+ 
+      <NAIF_NAME>  = 'NDOSL_<STDN_CODE>'
+ 
+      <NAIF_ID>    = 399100000 + <NASA_NMBR>
+ 
+      <FRAME_NAME> = 'NDOSL_<STDN_CODE>_TOPO'
+ 
+      <FRAME_ID>   = 399100000 + <NASA_NMBR>
+ 
+ 
+References
+=======================================================
+ 
+   [1] NASA DIRECTORY OF STATION LOCATIONS (NDOSL), May 30, 2014
+ 
+ 
+ 
+Table 1: WGS-84 Ellipsoid
+=======================================================
+ 
+   From "SECT. D1: SPHEROID CONSTANTS" in [1]:
+ 
+      --  --------  ------------  -------------
+      NO  SPHEROID  R (M)         1/F
+      --  --------  ------------  -------------
+      25  WGS84     6378137.0000  298.257223563
+      --  --------  ------------  -------------
+ 
+   Spheroid RADII corresponding to the values above are:
+ 
+      BODY399_RADII     = ( 6378.137  6378.137  6356.75231424518 )
+ 
+ 
+Table 2: GEODETIC POSITIONS ON WORLD GEODETIC SYSTEM 1984
+=======================================================
+ 
+   ----  ----  --------------  --------------  --------  ------------------------
+   STDN  NASA     LATITUDE       E. LONGITUDE   HEIGHT   NOTE
+   CODE  NMBR   DEG AMIN ASEC   DEG AMIN ASEC   METERS
+   ----  ----  --------------  --------------  --------  ------------------------
+   AC2J  0208   -7 55 04.4961  345 36 33.2355    71.470
+   ACN3  1306   -7 57 17.5769  345 40 22.4282   561.403  (deactivated)
+   ACNJ  0207   -7 55 04.4961  345 36 33.2355    71.470
+   ADRQ  4284    5 12 32.8581  307 15 05.7560   -13.808
+   AG1S  1701   65 07 00.1210  212 32 19.6650   436.700
+   AG23  1377  -33 09 06.4589  289 19 57.6779   730.000
+   AG33  1404  -33 09 05.3227  289 19 54.0928   730.853
+   AGO3  1319  -33 09 03.9869  289 20 00.9492   733.301
+   AGOS  1318  -33 08 53.9622  289 19 56.5260   730.240
+   AGU3  1319  -33 09 03.9869  289 20 00.9492   733.301
+   AGUS  1321  -33 08 53.9622  289 19 56.5260   730.240
+   AL2J  0209  -23 45 31.7176  133 52 57.3546   576.542
+   ALAY  1707   32 52 21.1192  254 11 15.4339  2796.240
+   ALSJ  0204  -23 45 31.7176  133 52 57.3546   576.542
+   AMSJ  0205  -14 19 53.2000  189 16 50.1000    55.400  (deactivated)
+   AN3S  1704   17 08 13.0230  298 13 32.3400   -16.590
+   AN8S  1705   17 08 11.8496  298 13 32.5566    -4.560
+   ANRQ  4082   17 08 14.2438  298 13 29.1959   -17.318
+   ANTQ  4087   17 08 37.1440  298 12 26.9550     3.630
+   APLS  1725   39 10 02.6400  283 54 00.0000   146.510
+   AS2Q  4765   -7 58 22.1025  345 35 56.5769   143.500
+   AS2S  1743   64 51 34.0594  212 09 00.9276   467.804
+   AS3S  1744   64 51 31.9514  212 08 45.1856   430.536
+   ASCQ  4045   -7 54 23.8867  345 35 51.0000    56.000
+   ASFS  1720   64 51 31.3637  212 08 32.6574   425.094
+   ASNS  1726   -7 55 00.0018  345 40 00.0000    23.004
+   ATDQ  4862   33 55 51.1830  275 53 28.9322   282.637
+   ATDS  4862   33 55 51.1830  275 53 28.9322   282.637
+   ATFS  1972  -29 02 41.7841  115 21 04.5572   247.360
+   ATLS  1736   33 55 51.1200  275 53 29.8800   260.000
+   ATMY  1708   33 44 22.6673  253 38 07.5954  2395.244
+   AUSS  4259   43 25 43.3056    1 29 57.8832   260.479
+   AUWS  1902  -29 02 44.7651  115 20 55.2050   250.600
+   BANF  4020   13 01 48.0000   77 30 36.0000   838.000
+   BDA3  1303   32 21 04.5631  295 20 31.6020   -11.380  (deactivated)
+   BDAA  1360   32 21 04.1494  295 20 28.3574    -7.323  (deactivated)
+   BDAQ  4760   32 20 52.5955  295 20 47.5819    -9.880  (deactivated)
+   BDDQ  4760   32 20 52.5955  295 20 47.5819    -9.880  (deactivated)
+   BLKQ  4263  -78 07 46.4840  166 09 01.5580   162.512
+   BLT3  1915   38 59 54.4110  283 09 26.0397    18.333  (deactivated)
+   BLTA  1316   38 59 53.6910  283 09 29.0198    24.834
+   BLTD  1315   38 59 54.4110  283 09 26.0397    18.333  (deactivated)
+   BLTJ  0290   39 00 09.7327  283 09 43.4598    60.060
+   BREQ  4283    4 56 55.9641  307 41 25.6406    51.960
+   BRKS  1732   37 52 45.7557  237 45 25.9783   357.034
+   CA2F  4241   34 34 58.9020  239 26 19.9864   627.550
+   CALF  4018   34 34 57.8588  239 26 18.3396   627.540
+   CALT  4280   34 39 57.0402  239 25 06.7919    88.520
+   CALY  1835   34 33 56.2455  239 29 56.3529   623.910
+   CANS  4723  -35 24 16.8000  148 58 59.0088   680.000
+   CB1D  1567   40 27 09.6870  355 37 56.8298   794.073
+   CHAS  1340   38 53 25.2000  282 33 28.2000   135.000  (deactivated)
+   CN2F  4088   28 31 43.9399  279 24 33.9781   -20.471  (deactivated)
+   CN4F  4223   28 27 47.4045  279 25 00.7987   -14.810
+   CN5F  4344   28 31 01.2878  279 26 11.6884    13.690
+   CNVF  4041   28 28 53.7812  279 25 24.5670   -14.220
+   COCS  4085  -12 12 00.0000   96 51 00.0000     0.000
+   CT2J  0294   32 30 01.7716  253 23 29.1941  1450.172
+   CTSS  1756   38 48 21.5583  255 28 17.5111  1907.519
+   CTVJ  0293   32 30 01.7716  253 23 29.1941  1450.172
+   D26D  1526   35 20 08.4812  243 07 37.1406   968.686
+   D27D  1516   35 14 17.7784  243 13 24.0584  1052.468
+   DAKS  4072   14 43 29.1440  342 52 16.4392    91.278
+   DFRS  4067   34 56 59.2467  242 06 45.3814   679.907
+   DGIS  4073   -7 16 12.1100   72 22 11.9950   -68.375
+   DS12  1612   35 17 59.7819  243 11 40.4038   969.669
+   DS14  1514   35 25 33.2431  243 06 37.6624  1001.390
+   DS15  1515   35 25 18.6718  243 06 46.0976   973.211
+   DS16  1312   35 20 29.5418  243 07 34.8609   943.977
+   DS17  1327   35 20 32.0278  243 07 35.5610   942.701
+   DS24  4252   35 20 23.6142  243 07 30.7401   951.499
+   DS25  1525   35 20 15.4031  243 07 28.6925   959.634
+   DS34  1534  -35 23 54.5238  148 58 55.0719   692.020
+   DS42  1547  -35 24 02.4619  148 58 52.4791   684.755
+   DS43  1548  -35 24 08.7272  148 58 52.5623   688.867
+   DS45  1549  -35 23 54.4477  148 58 39.6683   674.347
+   DS46  1546  -35 24 18.0383  148 58 59.0941   676.812
+   DS54  1554   40 25 32.2380  355 44 45.2514   837.051
+   DS55  1555   40 25 27.4653  355 44 50.5201   819.061
+   DS61  1662   40 25 43.4800  355 45 03.8591   848.658
+   DS63  1564   40 25 52.3551  355 45 07.1692   864.816
+   DS65  1565   40 25 37.9429  355 44 57.4840   833.854
+   DS66  1566   40 25 47.9095  355 44 54.8965   849.874
+   DS87  1587   37 55 35.7235  284 31 25.3037   -12.762
+   DX2S  1715   65 07 04.2020  212 34 07.8150   514.650
+   DXAS  1711   65 07 04.5470  212 33 59.3860   518.900
+   EA2F  4065   34 58 13.6340  242 04 09.9780   799.726
+   EA3F  4221   34 56 17.2116  241 54 31.2131   743.537
+   EAFF  4064   34 57 38.3754  242 05 18.4166   780.567
+   EG2F  4345   30 34 21.1006  273 47 07.0173    37.711
+   EG3F  4346   30 25 17.9961  273 12 07.1568     1.143  (deactivated)
+   ET1S  1973   32 30 16.4696  253 23 19.1857  1443.190
+   ET2S  1974   32 30 15.7842  253 23 19.8316  1463.649
+   EULY  4205   28 27 48.8307  279 20 49.1561   -10.510
+   EVCS  1363   28 29 09.6000  279 25 26.4000    14.996
+   FR2F  4249   34 57 01.6062  242 06 17.1228   723.967
+   FRCF  4069   34 57 38.8969  242 05 18.6141   751.842
+   FT2F  4138   31 33 24.3607  249 33 42.5760  1794.960
+   FTHF  4115   31 34 15.6873  249 37 45.1273  1486.316
+   GB2Y  1814   26 37 31.6966  281 42 05.3088   -10.997
+   GBIQ  4013   26 36 56.3112  281 39 07.7758   -13.684  (deactivated)
+   GBIY  1813   26 37 31.6076  281 42 03.2717     0.878
+   GD28  1517   35 20 29.5535  243 07 35.0232   940.941
+   GDSA  1317   35 20 29.5535  243 07 37.1952   935.541  (deactivated)
+   GILD  7225   64 58 42.6333  212 30 07.1993   320.131  (proposed)
+   GILE  4047   64 58 42.6256  212 30 07.1983   322.434
+   GLAS  1712   64 58 25.2191  212 29 13.7808   387.482
+   GLBS  1713   64 58 24.5353  212 29 28.6853   405.478
+   GLCS  1714   64 58 23.3116  212 29 42.7979   424.474
+   GT2S  1375   13 36 57.1703  144 51 19.5759   209.160
+   GTKQ  4086   21 27 45.4738  288 52 04.4824    -5.582
+   GTSS  1368   13 36 54.6808  144 51 21.7881   219.060
+   GW1J  1971   13 35 19.0410  144 50 27.5423   199.022
+   GW2J  0210   13 35 19.0409  144 50 27.5579   199.068
+   GW2K  1968   13 35 15.3178  144 50 27.1481   197.665
+   GW2S  1969   13 35 15.3178  144 50 27.1481   197.665
+   GW3S  1970   13 35 14.3146  144 50 27.1498   197.738
+   GWM3  1309   13 18 38.4820  144 44 12.5351   148.640
+   GWMK  1965   13 35 16.8643  144 50 27.3462   192.610
+   GWMS  1966   13 35 16.8643  144 50 27.3462   192.610
+   HAW3  1311   22 07 34.5812  200 20 05.4419  1157.200
+   HAWQ  4285   21 18 57.9600  202 06 48.9600     0.000
+   HAWS  1706   19 00 48.9014  204 20 13.2000   274.314
+   HB33  1325  -25 53 11.1400   27 42 26.8100  1563.720
+   HB4S  1378  -25 53 12.2116   27 42 45.3719  1550.021
+   HB5S  1403  -25 53 12.9606   27 42 24.0186  1568.221
+   HBK3  1324  -25 53 12.2200   27 42 45.3600  1549.040
+   HBKS  1402  -25 53 13.2000   27 42 43.2000  1544.830
+   HOLF  4144   32 54 05.2699  253 54 02.9896  1241.500
+   HR1S  1718   37 56 43.7970  284 32 19.9120   -18.510
+   HR2S  1719   37 56 43.5330  284 32 16.4760   -17.430
+   HT2S  1373   21 34 08.2985  201 44 15.7962   319.658
+   HTSS  1367   21 33 44.1799  201 45 28.4776   430.423
+   HWIS  1903   19 00 50.0562  204 20 12.1155   367.200
+   JD2Y  1818   26 58 56.0275  279 53 32.7811    -1.960
+   JDIQ  4248   26 58 58.7989  279 53 30.4654    -6.403
+   JDIY  1817   26 59 01.6942  279 53 28.5099   -10.530
+   JSCJ  0291   29 33 42.0826  264 54 36.0000    49.531
+   KA2S  1735   35 42 31.5427  139 29 30.4000  -641.245
+   KENS  4722   -2 59 44.0070   40 11 40.2180    12.314
+   KERS  4253  -49 21 10.4616   70 15 26.2152    82.471
+   KGLQ  4261  -49 21 06.8956   70 15 21.5420     6.100
+   KI2S  1727   67 51 25.6506   20 57 51.6301   402.275
+   KICS  4255   67 53 03.2352   21 03 38.7684   440.604
+   KILS  4256   67 52 35.5152   21 03 44.4132   514.892
+   KIXS  4257   67 52 41.3652   21 03 48.2328   508.573
+   KLMS  1710   78 13 48.7980   15 23 53.2973   498.520
+   KM2F  4971    9 23 43.5437  167 28 45.4380    62.860
+   KMPF  4110    8 43 18.0369  167 43 35.3642    39.263
+   KMQF  4111    8 43 17.8874  167 43 35.8392    39.264
+   KMRF  4968    9 23 55.4896  167 28 55.7335    57.370
+   KMRQ  4969    9 23 54.9585  167 28 58.2577    42.480
+   KMRT  4970    8 43 10.3635  167 43 06.6874    59.040  (deactivated)
+   KPTQ  4282   21 34 19.6310  201 44 00.2928   301.320
+   KRCS  1797  -12 41 38.4000  141 55 50.4000    21.000
+   KRUF  8501    5 06 50.4231  307 21 18.0363   148.008
+   KRUS  4258    5 05 55.8528  307 21 36.4608   110.039
+   KSWC  1855   33 25 41.0000  126 17 44.3000    84.000
+   KU1S  1905   67 53 22.4100   21 03 56.3570   400.400
+   KU2S  1906   67 52 59.4570   21 03 37.6140   428.200
+   KU3S  1909   67 52 44.6550   21 02 16.8000   527.000
+   LANS  1728   48 45 05.0953  356 31 48.0000   110.676
+   LBVS  4250    0 21 16.6672    9 40 31.0810   111.269
+   LE1S  1721   65 07 00.6660  212 32 15.8820   414.000
+   LE2S  1722   37 55 24.7060  284 31 25.8990   -33.501
+   MAD8  1307   40 27 19.6178  355 49 53.8141   837.886  (deactivated)
+   MC1S  4848  -77 50 20.8662  166 40 01.4964   153.000
+   MCMS  4847  -77 48 00.0000  166 24 00.0000    20.000
+   MDLS  1904   39 10 02.5000  283 06 04.4000   146.400
+   MG1D  1574  -35 46 33.4928  290 36 06.5464  1571.768
+   MIL3  1301   28 30 29.2460  279 18 23.7602   -25.950
+   MILA  1901   28 30 29.3769  279 18 26.0902   -27.340  (deactivated)
+   MILJ  0292   28 30 21.5621  279 18 25.1536   -21.310
+   MIMF  4220   28 37 33.3955  279 19 01.9423   -18.120
+   MLAQ  4084   28 25 28.9603  279 20 08.2044   -17.350
+   MMTF  4347   28 28 42.8765  279 19 30.7609   -12.298
+   MPLS  1967   27 45 46.4112  344 21 58.3200   204.900
+   MTLF  4155   32 26 29.9876  249 12 40.3090  2772.820
+   MTLS  4156   32 26 31.6916  249 12 37.9777  2769.192
+   NH2S  1374   42 56 41.0700  288 22 10.8418   193.259
+   NHSS  1366   42 56 52.1568  288 22 24.3749   203.280
+   NN1D  1573  -31 02 53.5855  116 11 29.4213   252.257
+   NSGS  1724   53 19 47.0000   13 04 12.0000   115.000
+   ORR3  1320  -35 37 40.4144  148 57 25.2836   951.982  (deactivated)
+   OTSS  1364   51 06 50.8224  359 06 18.3706   -18.852
+   PA2Q  4089   28 13 38.3814  279 23 38.0465   -14.380
+   PATQ  4060   28 13 35.0487  279 24 02.6051   -13.760
+   PDLS  4054   29 03 59.9342  279 05 13.1231   -22.690
+   PFTQ  4864   65 07 00.4551  212 32 12.1530   413.284
+   PFTS  4864   65 07 00.4551  212 32 12.1530   413.284
+   PIOD  1511   35 23 22.2658  243 09 02.2426  1004.213  (deactivated)
+   PM2F  4445   34 07 21.0105  240 50 46.3252   -22.200
+   PM3F  4446   34 07 22.3958  240 50 42.8373   -21.670
+   PM4F  4441   34 07 19.6257  240 50 49.8115   -22.190
+   PMKS  1729   38 33 27.7579  282 56 32.1316    41.940  (deactivated)
+   PP2F  7399   37 29 48.6757  237 30 11.9380     3.780
+   PPTF  4240   37 29 51.7080  237 30 04.6837    15.049
+   PPTQ  4260   37 29 52.1409  237 30 01.0270    20.150
+   PPTY  4216   37 29 51.9868  237 30 02.9494    27.690
+   PRTS  1342  -31 48 07.2000  115 53 06.0000    22.160
+   RALS  1700   51 34 19.2936  358 41 18.7300   163.120
+   RGTS  1963  -35 24 16.3308  148 58 56.7059   663.255
+   RTKS  1964  -35 24 17.0818  148 58 57.3775   661.430
+   S22S  1734   78 13 58.4674   15 22 54.3828   481.103
+   SARS  1739   17 40 01.2000   53 52 58.8000    30.480
+   SEYS  4071   -4 40 18.2932   55 28 40.1539   560.495
+   SF1S  1703   43 44 09.8615  263 22 38.9474   468.752
+   SF2S  1716   43 44 03.4320  263 22 50.0240   459.336
+   SG1S  1702   78 13 50.7601   15 23 22.3213   500.280
+   SG3S  1733   78 13 47.0460   15 24 29.1450   501.378
+   SG4S  1723   78 13 40.8828   15 24 34.8020   508.591
+   SI1S  1742    1 23 30.9048  103 50 06.0000    30.000
+   SIPQ  4003   15 14 56.9250  145 47 46.3800   348.200
+   SN2F  4443   33 14 51.6660  240 28 45.3259   246.680
+   SN3F  4444   33 14 54.2139  240 28 42.9918   246.120
+   SNIF  4442   33 14 49.1193  240 28 47.6604   246.160
+   SOCA  4139   38 51 00.0940  283 04 04.0000   118.566
+   ST1F  4224   18 21 26.1120  295 01 36.4207   130.454
+   ST2K  4751   32 32 34.7185  253 23 16.4798  1452.310
+   ST3K  4752   32 32 33.6300  253 23 16.4800  1452.300
+   STGK  4750   32 32 35.8065  253 23 16.4798  1452.280
+   STGS  4753   32 32 32.8260  253 23 16.4798  1449.460
+   STSS  1741   32 32 30.1803  253 23 16.4434  1456.090
+   STWS  1740   32 29 58.2244  253 23 29.1702  1460.383
+   SWNS  1796  -20 22 48.0000  118 38 06.0000   242.000
+   SYOQ  4262  -69 00 21.9472   39 35 24.5540     5.372
+   TH2S  1731   76 30 55.3100  291 24 04.2670   147.370
+   THUS  1730   76 30 58.6550  291 24 03.5360   141.160
+   TR2S  1738  -72 00 07.9994    2 31 26.8456  1416.582
+   TSMF  4080  -42 48 18.0000  147 26 20.4000    43.000
+   TT2S  1376   76 30 55.3119  291 24 04.1101   146.985
+   TTSS  1369   76 30 57.3644  291 24 00.0998   135.906
+   TULF  4151   33 05 46.1815  253 50 27.0450  1241.254
+   TULS  4078   33 01 37.0016  253 51 39.2724  1328.633  (deactivated)
+   U2HS  1779   19 00 49.6564  204 20 13.4013   382.300
+   UL1S  1854   64 58 21.9000  212 29 56.0400   447.300
+   UL23  1371   64 58 20.6656  212 28 54.9636   331.108
+   UL33  1332   64 58 36.5300  212 28 54.9618   308.056
+   ULA3  1328   64 58 19.7049  212 29 11.8002   344.054  (deactivated)
+   ULA4  1401   64 58 35.7447  212 28 43.3816   299.159
+   ULAE  1853   64 58 36.1760  212 28 56.8030   308.000
+   USAS  1709   64 48 15.2680  212 29 59.2290   160.580
+   USDS  1717  -29 02 44.7792  115 20 55.2408   251.840
+   USHS  1778   19 00 50.2290  204 20 12.0054   385.194
+   USPS  1770  -29 02 44.7798  115 20 55.2395   250.470
+   VD2F  4247   34 45 29.6346  239 22 22.3630    26.040
+   VD3F  4251   34 34 58.9546  239 26 19.9862   627.252
+   VD4F  4254   34 34 58.9546  239 26 19.9862   627.248
+   VDB3  1333   34 33 56.2533  239 29 54.1777   609.440
+   VDBF  4246   34 46 29.5597  239 27 50.0050   122.607
+   VEND  1513   35 14 49.7913  243 12 19.9476  1070.444
+   VT2S  1372   34 49 32.3068  239 29 40.5684   268.610
+   VTSS  1365   34 49 21.4196  239 29 53.3456   272.510
+   WAPS  1341   37 55 29.7320  284 31 24.5190   -20.100
+   WD3F  4846   37 51 22.9149  284 29 18.8327   -18.126
+   WD4F  4843   37 51 22.9190  284 29 18.8196    18.660
+   WH2J  0202   32 30 22.6133  253 23 16.9233  1442.610
+   WH2K  1921   32 30 02.6539  253 23 29.2138  1459.740
+   WH2S  1962   32 30 04.6676  253 23 29.2060  1457.665
+   WH3K  1922   32 30 01.6642  253 23 29.2143  1459.740
+   WH4K  1925   32 30 05.0026  253 23 29.2060  1458.675
+   WH5K  1940   32 30 04.4706  253 23 29.2070  1456.635
+   WH6F  4145   33 48 49.9102  253 20 27.5558  1508.970
+   WH6K  1941   32 30 05.2631  253 23 26.7549  1448.046  (proposed)
+   WH7F  4147   33 48 47.0818  253 20 27.5479  1497.454
+   WH9F  4146   33 26 42.7872  253 52 04.4098  1592.508
+   WHSF  4143   32 21 28.9516  253 37 48.6933  1209.860
+   WHSJ  0201   32 30 22.6133  253 23 16.9233  1442.610
+   WHSK  1920   32 30 03.6434  253 23 29.2138  1459.730
+   WHSS  1961   32 30 00.9712  253 23 29.2132  1452.260
+   WHSX  1842   32 30 03.3890  253 23 31.1385  1477.061
+   WL2F  4841   37 56 38.7569  284 32 08.7959   -14.040
+   WL2S  4206   37 56 47.1469  284 32 16.5917    -6.765
+   WL3F  4845   37 51 22.9149  284 29 18.8327   -18.126
+   WL3S  4207   37 56 44.8619  284 32 22.4279    -5.689
+   WL4F  4842   37 51 22.9190  284 29 18.8196    18.660
+   WL4S  4208   37 56 46.7279  284 32 21.8419   -28.793
+   WL53  4209   37 56 48.4800  284 32 23.6400   -25.806
+   WL6S  4210   37 56 44.1600  284 32 20.0400    13.216
+   WLPF  4840   37 50 28.8230  284 30 53.6793   -24.000
+   WLPQ  4860   37 51 36.9413  284 29 26.5360   -21.700
+   WP2S  1337   37 55 41.0411  284 31 32.1015   -20.961
+   WP2Y  1838   37 55 32.1066  284 31 23.3133   -15.234
+   WP2Z  1840   37 55 44.0844  284 31 34.4959   -17.846
+   WP3S  1338   37 55 42.1002  284 31 32.9233   -19.631
+   WP3Z  1841   37 55 25.0724  284 31 20.8976    -2.928
+   WPDA  1339   37 55 38.5427  284 31 30.1701   -10.538
+   WPS8  1336   37 55 38.4925  284 31 27.0005   -20.647
+   WPSA  1334   37 55 38.1996  284 31 30.0511   -19.736
+   WPSS  1335   37 55 35.7235  284 31 25.3037   -12.762
+   WS1S  1931   32 32 26.7178  253 23 16.4417  1456.545
+   WSCZ  1871   32 30 17.0000  253 23 21.0000  1470.660
+   WSSH  1870   32 52 49.0000  253 32 07.0000  1198.474
+   WT1S  4865   65 07 02.0529  212 32 27.3830   431.444
+   WT2S  4866   65 07 00.2397  212 32 18.4247   430.342
+   WT3S  4867   37 55 23.0373  284 31 21.1120   -10.644
+   WTDQ  4861   37 55 23.0373  284 31 21.1120   -10.644
+   WTDS  4861   37 55 23.0373  284 31 21.1120   -10.644
+   WU1S  1907   47 52 48.2500   11 05 07.0890   663.392
+   WU2S  1908   47 52 52.3160   11 05 01.0280   663.374
+   WULY  4215   34 39 19.4881  239 26 38.4550    75.230
+   YARZ  8566  -29 02 47.9239  115 20 48.0000   192.350  (no datum shifts)
+   ----  ----  --------------  --------------  --------  ------------------------
+ 
+ 
+Table 3: STATION LOCATION AND EQUIPMENT
+=======================================================
+ 
+   ----  ----  ----------------------------------------------------------------
+   STDN  NASA  LOCATION;
+   CODE  NMBR  EQUIPMENT
+   ----  ----  ----------------------------------------------------------------
+   AC2J  0208  Ascension Island; BRT 2-ft manual az-el
+   ACN3  1306  (deactivated) Ascension Island; USB 9m X-Y n-s
+   ACNJ  0207  Ascension Island; BRT 2-ft manual az-el
+   ADRQ  4284  Kourou, Fr.Guiana; C-bd
+   AG1S  1701  Poker Flat, AK; S-bd X-bd, 11 meter, az-el
+   AG23  1377  Santiago, Chile; S-bd 7-meter X-Y N-S
+   AG33  1404  Santiago, Chile; USB S-bd 12-meter X-Y N-S
+   AGO3  1319  Santiago, Chile; USB S-band 9-meter X/Y N-S
+   AGOS  1318  Santiago, Chile; Az-El, 13m, S-band
+   AGU3  1319  Santiago, Chile; USB S band, 9m
+   AGUS  1321  Santiago, Chile; Az-El, 13m, S-band
+   AL2J  0209  Alice Springs, N.T., Australia; BRT 2-ft manual az-el
+   ALAY  1707  Alamo Peak, NM; Tlm S-bd 7.3m TAS az-el
+   ALSJ  0204  Alice Springs, N.T., Aust; BRT 2-ft manual az-el
+   AMSJ  0205  (deactivated) Am Samoa, Tutuila; BRT 2-ft manual az-el
+   AN3S  1704  Antigua; S-bd 10m az-el
+   AN8S  1705  Antigua; S-bd 24m az-el
+   ANRQ  4082  Antigua Island; C-band Az-El
+   ANTQ  4087  Antigua; C-bd FPQ-14 8.8m az-el on-axis
+   APLS  1725  APL, Clarksville, MD; S/X-band, X-Y, 18m
+   AS2Q  4765  Ascension Island; C-bd TPQ-11 8.8m, az-el
+   AS2S  1743  Alaska Satellite Facility Univ. of Alas Fairbank; S-band az-el 10 meter
+   AS3S  1744  Alaska Satellite Facility Univ. of Alas Fairbank; S-band az-el 11 meter
+   ASCQ  4045  Ascension Island; C-bd FPQ-15 8.5m az-el on-axis
+   ASFS  1720  Alaska Satellite Facility Univ. of Alas Fairbank; S-band az-el 11 meter
+   ASNS  1726  AscensioN Island; S-bd 4m az-el
+   ATDQ  4862  Atlanta, Ga.; S-bd
+   ATDS  4862  Atlanta, Ga.; S-bd
+   ATFS  1972  Yatharagga, Western Australia.; 11-m az-el, S-Band TT&C w/ TDRS
+   ATLS  1736  Atlanta, Georgia; S-bd 11m az-el
+   ATMY  1708  Atom Peak, NM; Tlm S-bd 7.3m TAS az-el
+   AUSS  4259  Aussaguel, France; S-bd az-el 11m
+   AUWS  1902  Dongara,WA Australia; S-band, 13m az-el
+   BANF  4020  Bangalore; C-bd az-el
+   BDA3  1303  (deactivated) Bermuda; USB 9m X-Y n-s
+   BDAA  1360  (deactivated) Bermuda; USB 9m X-Y e-w
+   BDAQ  4760  (deactivated) Bermuda; C-bd FPQ-6 8.8m az-el
+   BDDQ  4760  (deactivated) Bermuda; C-bd FPQ-6 8.8m az-el
+   BLKQ  4263  Black Is. Antarctica; K-band az-el
+   BLT3  1915  (deactivated) Greenbelt, MD; USB 9m X-Y n-s
+   BLTA  1316  Greenbelt, MD; USB 9m X-Y e-w
+   BLTD  1315  (deactivated) Greenbelt, MD; USB 9m X-Y n-s K-bd rcvr
+   BLTJ  0290  Greenbelt, MD; BRT 3-ft manual az-el
+   BREQ  4283  Kourou, Fr Guiana; C-bd
+   BRKS  1732  Berkeley, CA; S-bd 11m az-el
+   CA2F  4241  Tranquillon Peak, CA; C-bd FPS-16 3.7m az-el SN 18
+   CALF  4018  Vandenberg AFB, CA; C-bd FPS-16 3.7m az-el SN 21
+   CALT  4280  Vandenberg AFB, CA; C-bd TPQ-18 8.8m az-el
+   CALY  1835  S.Vandenberg AFB, CA; Tlm S-bd VTRS 10m az-el
+   CANS  4723  Canberra, Australia; S-bd 9m az-el YAGI VHF array
+   CB1D  1567  Cebreros, Spain; Az-El, S-bd
+   CHAS  1340  (deactivated) Chantilly, VA; S-bd az-el 4m (12ft)
+   CN2F  4088  (deactivated) Cape Canaveral, FL; C-bd MPS-36 mod 4.3m az-el TPQ-1
+   CN4F  4223  Cape Canaveral, FL; C-bd MCB-17 4.2m az-el
+   CN5F  4344  Cape Canaveral, Fl.; C-bd MPS-39 az-el
+   CNVF  4041  Cape Canaveral, FL; C-bd FPS-16 3.7m az-el
+   COCS  4085  Cocos Island, Australia; C-bd az-el
+   CT2J  0294  White Sands, NM; BRT CTV2
+   CTSS  1756  Colorado Spgs. CO.; S-bd 10m az-el
+   CTVJ  0293  White Sands, NM; BRT CTV
+   D26D  1526  Goldstone, CA; DSN, 34m BWG
+   D27D  1516  Goldstone, CA; DSN, 34m HSB
+   DAKS  4072  Dakar, Senegal; Tlm S-bd 4.3m az-el
+   DFRS  4067  Dryden FRC, CA; S-bd and L-bd 4.3m az-el
+   DGIS  4073  Diego Garcia Island; S-bd 10m az-el
+   DS12  1612  Goldstone, CA; USB-DSN 34m HA-DEC
+   DS14  1514  Goldstone, CA; DSN az-el, 70m
+   DS15  1515  Goldstone, CA; DSN 34m HEF
+   DS16  1312  Goldstone, CA; DSN 26m X-Y
+   DS17  1327  Goldstone, CA; USB-DSN 9m x-y n-s
+   DS24  4252  Goldstone, CA; DSN 34m BWG
+   DS25  1525  Goldstone, CA; DSN 34m BWG
+   DS34  1534  Canberra, Australia; DSN 34m BWG
+   DS42  1547  Canberra, Aust; USB-DSN 34m HA-DEC
+   DS43  1548  Canberra, Australia; DSN 70m
+   DS45  1549  Canberra, Australia; DSN 34m HEF
+   DS46  1546  Canberra, Australia; DSN 26m X-Y
+   DS54  1554  Madrid Spain; DSN 34m BWG
+   DS55  1555  Madrid Spain; X/Ka band 34m BWG
+   DS61  1662  Madrid, SPAIN; USB-DSN 34m HA-DEC
+   DS63  1564  Madrid Spain; 70m
+   DS65  1565  Madrid Spain; USB-DSN 34m HEF
+   DS66  1566  Madrid Spain; USB-DSN 26m X-Y
+   DS87  1587  Wallops Island, VA; S-bd 18m az-el ADAS receive only
+   DX2S  1715  Poker Flat, Alaska; S-bd, 7.3 meter, az-el
+   DXAS  1711  Poker Flat, Alaska; S-bd, 11 meter, az-el
+   EA2F  4065  Edwards AFB, CA; C-bd FPS-16 3.7m az-el R-41
+   EA3F  4221  Edwards AFB, CA; TACAN C-bd mobile
+   EAFF  4064  Edward AFB, CA; C-bd FPS-16, 3.7 meter, az-el
+   EG2F  4345  Eglin AFB, FL; C-bd FPS-85 az-el
+   EG3F  4346  (deactivated) Eglin AFB, FL; C-bd TPQ-13
+   ET1S  1973  White Sands, NM; Az-El, S-bd 6.1m
+   ET2S  1974  White Sands, NM; Az-El, S-bd, 9m
+   EULY  4205  Merritt Island, FL; Tlm S-bd 10.1m az-el
+   EVCS  1363  Cape Canaveral,Fl.; Tlm S-bd 9m, az-el
+   FR2F  4249  Armstrong Flight Research Center; C-bd FPS-16 3.7m az-el
+   FRCF  4069  Edwards AFB, CA; C-bd FPS-16V 4.9m az-el R-34
+   FT2F  4138  Fort.Huachuca, AZ; C-bd FPS-16 3.7m az-el
+   FTHF  4115  Fort.Huachuca, AZ; C-bd FPS-16 3.7m az-el
+   GB2Y  1814  Grand.Bahama Island; Tlm S-bd 10.1m az-el
+   GBIQ  4013  (deactivated) Grand.Bahama Island; C-bd FPQ-13 6.1m az-el on-axis
+   GBIY  1813  Grand.Bahama Island; Tlm S-bd 26m az-el
+   GD28  1517  Goldstone, CA; USB-DSN 26m X-Y e-w
+   GDSA  1317  (deactivated) Goldstone, CA; USB 9m X-Y n-s
+   GILD  7225  (proposed) Gilmore Creek, AK; Tlm 26m X-Y
+   GILE  4047  Gilmore Creek, AK; Tlm 26m X-Y n-s
+   GLAS  1712  Gilmore Creek, AK; s/x/l band, 13 meter
+   GLBS  1713  Gilmore Creek, AK; s/x/l band, 13 meter
+   GLCS  1714  Gilmore Creek, AK; s/x/l band, 13 meter
+   GT2S  1375  Guam; Tlm-SGLS S-bd 46-ft az-el
+   GTKQ  4086  Grand.Turk Island; C-bd FPQ-14 8.8m az-el on-axis
+   GTSS  1368  Guam; Tlm-SGLS S-bd 60-ft az-el
+   GW1J  1971  Guam; TDRS grnd xpnder
+   GW2J  0210  Guam; BRT 2-ft manual az-el
+   GW2K  1968  Guam; S-bd, 16 meters az-el
+   GW2S  1969  Guam; S-bd, 16 meters az-el
+   GW3S  1970  Guam; Ku-bd, S-bd, 16 meters az-el
+   GWM3  1309  Guam; USB 9m X-Y n-s
+   GWMK  1965  Guam; S-bd 11-meter K-bd az-el
+   GWMS  1966  Guam; S-bd 11-meter az-el TT&C
+   HAW3  1311  Kauai, HI; USB 9m X-Y n-s
+   HAWQ  4285  Hawaii, Univ.; C-bd az-el TLM
+   HAWS  1706  South Point, Hawaii; S-bd telemetry, command
+   HB33  1325  Hartbeehoek., S. Africa; S-bd 12m x-y (n/s)
+   HB4S  1378  Hartbeehoek, S. Africa; S-band 6 m
+   HB5S  1403  Hartbeehoek, S. Africa; S-band 10 m
+   HBK3  1324  Hartbeehoek., S. Africa; S-bd 9m x-y (n/s)
+   HBKS  1402  Hartebeeshoek, S. Africa; S-bd x-y 12m
+   HOLF  4144  Holloman AFB, NM; C-bd FPS-16 3.7m az-el
+   HR1S  1718  Wallops, VA; S-bd, 16.4 meter, az-el
+   HR2S  1719  Wallops, VA; S-bd, 16.4 meter, az-el
+   HT2S  1373  Kaena Point, HI; Tlm-SGLS S-bd 46-ft az-el
+   HTSS  1367  Kaena Point, HI; Tlm-SGLS S-bd 60-ft az-el
+   HWIS  1903  South Point, HI; S-band az-el, 13m
+   JD2Y  1818  Jonathan Dickenson, FL; Tlm S-Bd 24.4m az-el
+   JDIQ  4248  Jonathan Dickinson, Fla.; C-bd FPQ-14
+   JDIY  1817  Jonathan Dickinson, FL; Tlm S-Bd 15m az-el
+   JSCJ  0291  JSC, TX; BRT STS gnd xpnder
+   KA2S  1735  Tokyo, Japan; S-bd 11-meter Az-El
+   KENS  4722  Malindi, Kenya; S-bd 10m az-el
+   KERS  4253  Kergueles Is.; S-bd az-el 10m
+   KGLQ  4261  S.Pac.Fr.Kerguelen; C-bd az-el 9m
+   KI2S  1727  Kiruna, Sweden; S-bd 15m az-el
+   KICS  4255  Kiruna, Sweden; S-bd az-el 6m
+   KILS  4256  Kiruna, Sweden; S-bd az-el 9m
+   KIXS  4257  Kiruna, Sweden; S-bd az-el 9m
+   KLMS  1710  Svalbard, Norway; S-bd X-bd, 13 meter, az-el
+   KM2F  4971  Kwajalein Atoll; C-bd ALTAIR 46m az-el
+   KMPF  4110  Kwajalein Atoll; C-bd Radar
+   KMQF  4111  Kwajalein Atoll; C-bd Radar
+   KMRF  4968  Kwajalein Atoll; C-bd TRADEX 26m
+   KMRQ  4969  Kwajalein Atoll; C-bd ALCOR 12.2m az-el
+   KMRT  4970  (deactivated) Kwajalein Atoll; C-bd FPQ-19 az-el
+   KPTQ  4282  Oahu, HI; C-bd FPQ-14 8.8m az-el on-axis
+   KRCS  1797  Weipa, Australia; Tlm S-bd, az-el
+   KRUF  8501  Kourou, Fr Guiana; C-bd Bretagne
+   KRUS  4258  Kourou, Fr. Guiana; S-bd az-el 11m
+   KSWC  1855  Jeju, South Korea; az-el
+   KU1S  1905  Kiruna, Sweden; S & X band
+   KU2S  1906  Kiruna, Sweden; S & X band
+   KU3S  1909  Kiruna, Sweden; az-el, 13 meter, S-bd
+   LANS  1728  Lannion, France; S-bd az-el
+   LBVS  4250  Liberville, Africa; S-bd 10m az-el
+   LE1S  1721  Poker Flat, AK; S-bd, 5 meter, az-el
+   LE2S  1722  Wallops Island. VA; S-bd, 5 meter, az-el
+   MAD8  1307  (deactivated) Madrid, Spain; USB 26m X-Y e-w
+   MC1S  4848  McMurdo,Antarctica; S-bd 10m az-el
+   MCMS  4847  McMurdo,Antarctica; S-bd 6m az-el
+   MDLS  1904  Laurel, Maryland; S-band 18m az-el
+   MG1D  1574  Malargue, Argentina; X-bd, Ka-band,az-el,35m
+   MIL3  1301  Merritt Island, FL; USB 9m X-Y n-s
+   MILA  1901  (deactivated) Merritt Island, FL; USB 9m&K-bd(rx+1.3m tx) X-Y e-w
+   MILJ  0292  Merritt Island, FL; BRT
+   MIMF  4220  Merritt Island, FL; C-bd MCB-17 4.2m az-el
+   MLAQ  4084  Merritt Island, FL; C-bd FPQ-14 8.8m az-el on-axis
+   MMTF  4347  Merritt Island, FL; C-bd, MPS-39, az-el
+   MPLS  1967  Maspalomas, Spain; S-bd, 11 meter, az-el
+   MTLF  4155  Mt.Lemmon, AZ; C-bd Capri 4.9m az-el
+   MTLS  4156  Mt.Lemmon, AZ; Tlm S-bd 4.3m az-el
+   NH2S  1374  New.Boston, NH; Tlm-SGLS S-bd 46-ft az-el
+   NHSS  1366  New.Boston, NH; Tlm-SGLS S-bd 60-ft az-el
+   NN1D  1573  New Norcia, Australia; Az-El, S-bd
+   NSGS  1724  Neustrelitz, Germany; az-el, S-Band
+   ORR3  1320  (deactivated) Orroral, Aust; USB 9m X-Y n-s
+   OTSS  1364  Oakhanger, UK; Tlm-SGLS S-bd 60-ft az-el
+   PA2Q  4089  Patrick AFB, FL; C-bd FPQ-13 6.1m az-el on-axis
+   PATQ  4060  Patrick AFB, FL; C-bd FPQ-14 8.8m az-el on-axis
+   PDLS  4054  Ponce de Leon Inlet, FL; Tlm S-bd 4.0m az-el c&v
+   PFTQ  4864  Poker Flat, Ak.; S-bd
+   PFTS  4864  Poker Flat, Ak.; S-bd
+   PIOD  1511  (deactivated) Goldstone, CA; DSS 11 26m HA-Dec Pioneer
+   PM2F  4445  Point.Mugu, CA; C-bd FPS-16 3.7m az-el SN 10
+   PM3F  4446  Point.Mugu, CA; C-bd FPS-16V 4.9m az-el SN 24
+   PM4F  4441  Point.Mugu, CA; C-bd FPS-16 3.7m az-el SN 3
+   PMKS  1729  (deactivated) Pomonkey, Md.; S-bd 30m az-el
+   PP2F  7399  Pt. Pillar, Ca.; C-bd MPS-36 4.3m az-el
+   PPTF  4240  Pillar Point, CA; C-bd FPS-16V 4.9m az-el
+   PPTQ  4260  Pillar Point, CA; C-bd FPQ-6 8.8m az-el
+   PPTY  4216  Pillar Point, CA; Tlm 12m S-bd az-el
+   PRTS  1342  Perth, Australia; S-bd az-el 15m
+   RALS  1700  Rutherford Appelton Laboratory, UK; S-bd 12-meter az-el
+   RGTS  1963  Tidbinbilla, Aust; S-bd 9m az-el
+   RTKS  1964  Tidbinbilla, Aust; S-bd 4.5m az-el
+   S22S  1734  Svalbard, Norway; S-band AzEl 7.3m
+   SARS  1739  Saudi Arabia; S-bd, az-el
+   SEYS  4071  Seychelles, Mahe; Tlm S-bd 18m az-el
+   SF1S  1703  Sioux Falls, S. Dakota; S-bd az-el
+   SF2S  1716  Sioux Falls, S. Dakota; S-bd, 5m, x-y
+   SG1S  1702  Svalbard, Norway; S-band, Az-El, 11m
+   SG3S  1733  Svalbard, Norway; S-band az-el 13.6 meters
+   SG4S  1723  Svalbard, Norway; S-band
+   SI1S  1742  Kongsberg Satellite Services, Singapore; S-bd, Az-El,9m
+   SIPQ  4003  Saipan; C-bd az-el
+   SN2F  4443  San.Nicolas Island, CA; C-bd FPS-16V 4.9m az-el SN 13
+   SN3F  4444  San.Nicolas Island, CA; C-bd FPS-16 3.7m az-el SN 15
+   SNIF  4442  San.Nicolas Island, CA; C-bd FPS-16 3.7m az-el SN 7
+   SOCA  4139  Suitland, Md.; S-bd 30ft x-y
+   ST1F  4224  St. Thomas, Virgin Island; Capri
+   ST2K  4751  White Sands, NM; TDRSS-STGT 18m K-bd az-el
+   ST3K  4752  White Sands, NM; TDRSS-STGT 18m K-bd az-el
+   STGK  4750  White Sands, NM; TDRSS-STGT 18m K-bd az-el
+   STGS  4753  White Sands, NM; TDRSS-STGT TT&C S1
+   STSS  1741  White Sands, NM; S-bd, az-el
+   STWS  1740  White Sands, NM; S-bd, az-el
+   SWNS  1796  Port Hedland, Australia; Tlm S-bd,az-el
+   SYOQ  4262  Syowa, Antarctica; C-bd az-el 9m
+   TH2S  1731  Thule, Greenland; S-bd az-el
+   THUS  1730  Thule, Greenland; S-bd az-el
+   TR2S  1738  Antarctica; 7.3m S-band AzEl
+   TSMF  4080  University of Tasmania, Australia; C-bd az-el
+   TT2S  1376  Thule, Greenland; Tlm-SGLS S-bd 46-ft az-el
+   TTSS  1369  Thule, Greenland; Tlm-SGLS S-bd 14-ft az-el
+   TULF  4151  Tularosa, NM; C-bd FPS-16 3.7m az-el
+   TULS  4078  (deactivated) Tula Peak, NM; Tlm S-bd 4.3m az-el c&v
+   U2HS  1779  USN, Hawaii; S-bd X-bd, 13.4 meter, az-el
+   UL1S  1854  Fairbanks, AK; Az-El 21m S-band
+   UL23  1371  Fairbanks, AK; USB 6m X-Y n-s
+   UL33  1332  Fairbanks, AK; USB 26m X-Y n-s
+   ULA3  1328  (deactivated) Fairbanks, AK; USB 9m X-Y n-s
+   ULA4  1401  Gilmore Creek, AK; X-Y tracker 12m n-s
+   ULAE  1853  Fairbanks, AK; X-Y tracker 26m n-s
+   USAS  1709  Bradway Rd, AK; S-bd X-bd, 13 meter, az-el
+   USDS  1717  Dongara, Australia; S-bd, az-el
+   USHS  1778  USN, Hawaii; S-bd X-bd, 13.4 meter, az-el
+   USPS  1770  Perth, Australia; S-bd X-bd, 13.4 meter, az-el
+   VD2F  4247  Vandenberg AFB, CA; C-bd FPQ-14 8.8m az-el HAIR
+   VD3F  4251  Vandenberg AFB, Ca.; C-bd TLM 9m az-el
+   VD4F  4254  Vandenberg AFB, CA.; C-bd MPS-39 MOTR 9m az-el
+   VDB3  1333  Vandenberg AFB, CA; USB 9m X-Y n-s
+   VDBF  4246  Vandenberg AFB, CA; C-bd MPS-36 #2 4.3m az-el
+   VEND  1513  Goldstone, CA; JPL DSS13 34m R & D
+   VT2S  1372  Vandenberg AFB, CA; Tlm-SGLS S-bd 46-ft az-el
+   VTSS  1365  Vandenberg AFB, CA; Tlm-SGLS S-bd 60-ft az-el
+   WAPS  1341  Wallops Island, VA; S-bd az-el 11m
+   WD3F  4846  Wallops Island, VA; C-bd FPS-16V 4.9m az-el
+   WD4F  4843  Wallops Island, VA; C-band RIR-778C 12-ft
+   WH2J  0202  White Sands, NM; BRT 2-ft manual az-el
+   WH2K  1921  White Sands, NM; TDRSS 18m K-bd az-el
+   WH2S  1962  White Sands, NM; TDRSS S-bd 3m az-el sim
+   WH3K  1922  White Sands, NM; TDRSS 18m K-bd az-el
+   WH4K  1925  White Sands, NM; TDRSS 4.5m K-bd az-el sim
+   WH5K  1940  White Sands, NM; TDRSS K/S-bd 2m az-el axial rati
+   WH6F  4145  White Sands, NM; C-bd FPS-16V 4.9m az-el SN 12
+   WH6K  1941  (proposed) White Sands, NM; TDRSS K-bd 4.6m TT&C
+   WH7F  4147  White Sands, NM; C-bd FPS-16V 4.9m az-el SN 22
+   WH9F  4146  Phillips Hill, NM; C-bd FPS-16 3.7m az-el
+   WHSF  4143  White Sands, NM; C-bd FPS-16 3.7m az-el SN 6
+   WHSJ  0201  White Sands, NM; BRT 2-ft manual az-el
+   WHSK  1920  White Sands, NM; TDRSS 18m K-bd az-el
+   WHSS  1961  White Sands, NM; TDRSS S-bd 10m az-el TT&C
+   WHSX  1842  White Sands; S-bd X-Y VHF
+   WL2F  4841  Wallops Island, VA; C-bd FPS-16V 4.9m az-el
+   WL2S  4206  Wallops Island, VA; Tlm S-bd 18m az-el
+   WL3F  4845  Wallops Island, VA; C-bd FPS-16V 4.9m az-el
+   WL3S  4207  Wallops Island, VA; S-bd 18m az-el
+   WL4F  4842  Wallops Island, VA; C-band RIR-778C 12-ft
+   WL4S  4208  Wallops Island, VA; S-bd 13m az-el
+   WL53  4209  Wallops; S-bd 14.2 meter X-Y N-S CDA
+   WL6S  4210  Wallops; S-bd 7-meter Az-El CDA
+   WLPF  4840  Wallops Island, VA; C-bd FPS-16 3.7m az-el
+   WLPQ  4860  Wallops Island, VA; C-bd FPQ-6 8.8m az-el
+   WP2S  1337  Wallops Island, VA; S-bd 7.3m az-el receive only
+   WP2Y  1838  Wallops Island, VA; Tlm Satan RCVR (SRE-VHF)
+   WP2Z  1840  Wallops Island, Va.; UHF & VHF 24-ft X-Y
+   WP3S  1338  Wallops Island, VA; S-bd North 7.3m az-el recr
+   WP3Z  1841  Wallops, Va; VHF2 Quad Yagi
+   WPDA  1339  Wallops Island, VA; USB 9m X-Y e-w
+   WPS8  1336  Wallops Island, VA; S-bd 6m X-Y e-w xmit
+   WPSA  1334  Wallops Island, VA; USB 9m X-Y e-w
+   WPSS  1335  Wallops Island, VA; S-bd 18m az-el receive only
+   WS1S  1931  White Sands, NM; S-bd, ku-bd
+   WSCZ  1871  White Sands, NM; az-el, VHF-1
+   WSSH  1870  White Sands Space Harbor; UHF
+   WT1S  4865  Poker Flat, AK; S-bd TOTS
+   WT2S  4866  Poker Flat, Ak.; S-bd TOTS
+   WT3S  4867  Wallops Island, Va.; S-bd 26ft az-el TOTS
+   WTDQ  4861  Wallops Island, Va.; S-bd
+   WTDS  4861  Wallops Island, Va.; S-bd
+   WU1S  1907  Weilheim, Germany; S band
+   WU2S  1908  Weilheim, Germany; S band
+   WULY  4215  Vandenberg AFB, CA; Tlm S-bd 8.5m az-el
+   YARZ  8566  (no datum shifts) Yarragedee, Aust Irwin; UHF A-G
+   ----  ----  ----------------------------------------------------------------
+ 
+ 
+PINPOINT Inputs
+=======================================================
+ 
+\begindata
+ 
+   SITES                   += 'NDOSL_AC2J'
+   NDOSL_AC2J_CENTER     = 399
+   NDOSL_AC2J_FRAME      = 'ITRF93'
+   NDOSL_AC2J_IDCODE     = 399100208
+   NDOSL_AC2J_LATLON     = (  -7.9179155833, 345.6092320833,  0.071470 )
+   NDOSL_AC2J_TOPO_FRAME = 'NDOSL_AC2J_TOPO'
+   NDOSL_AC2J_TOPO_ID    = 399100208
+   NDOSL_AC2J_UP         = 'Z'
+   NDOSL_AC2J_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ACN3'
+   NDOSL_ACN3_CENTER     = 399
+   NDOSL_ACN3_FRAME      = 'ITRF93'
+   NDOSL_ACN3_IDCODE     = 399101306
+   NDOSL_ACN3_LATLON     = (  -7.9548824722, 345.6728967222,  0.561403 )
+   NDOSL_ACN3_TOPO_FRAME = 'NDOSL_ACN3_TOPO'
+   NDOSL_ACN3_TOPO_ID    = 399101306
+   NDOSL_ACN3_UP         = 'Z'
+   NDOSL_ACN3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ACNJ'
+   NDOSL_ACNJ_CENTER     = 399
+   NDOSL_ACNJ_FRAME      = 'ITRF93'
+   NDOSL_ACNJ_IDCODE     = 399100207
+   NDOSL_ACNJ_LATLON     = (  -7.9179155833, 345.6092320833,  0.071470 )
+   NDOSL_ACNJ_TOPO_FRAME = 'NDOSL_ACNJ_TOPO'
+   NDOSL_ACNJ_TOPO_ID    = 399100207
+   NDOSL_ACNJ_UP         = 'Z'
+   NDOSL_ACNJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ADRQ'
+   NDOSL_ADRQ_CENTER     = 399
+   NDOSL_ADRQ_FRAME      = 'ITRF93'
+   NDOSL_ADRQ_IDCODE     = 399104284
+   NDOSL_ADRQ_LATLON     = (   5.2091272500, 307.2515988889, -0.013808 )
+   NDOSL_ADRQ_TOPO_FRAME = 'NDOSL_ADRQ_TOPO'
+   NDOSL_ADRQ_TOPO_ID    = 399104284
+   NDOSL_ADRQ_UP         = 'Z'
+   NDOSL_ADRQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AG1S'
+   NDOSL_AG1S_CENTER     = 399
+   NDOSL_AG1S_FRAME      = 'ITRF93'
+   NDOSL_AG1S_IDCODE     = 399101701
+   NDOSL_AG1S_LATLON     = (  65.1167002778, 212.5387958333,  0.436700 )
+   NDOSL_AG1S_TOPO_FRAME = 'NDOSL_AG1S_TOPO'
+   NDOSL_AG1S_TOPO_ID    = 399101701
+   NDOSL_AG1S_UP         = 'Z'
+   NDOSL_AG1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AG23'
+   NDOSL_AG23_CENTER     = 399
+   NDOSL_AG23_FRAME      = 'ITRF93'
+   NDOSL_AG23_IDCODE     = 399101377
+   NDOSL_AG23_LATLON     = ( -33.1517941389, 289.3326883056,  0.730000 )
+   NDOSL_AG23_TOPO_FRAME = 'NDOSL_AG23_TOPO'
+   NDOSL_AG23_TOPO_ID    = 399101377
+   NDOSL_AG23_UP         = 'Z'
+   NDOSL_AG23_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AG33'
+   NDOSL_AG33_CENTER     = 399
+   NDOSL_AG33_FRAME      = 'ITRF93'
+   NDOSL_AG33_IDCODE     = 399101404
+   NDOSL_AG33_LATLON     = ( -33.1514785278, 289.3316924444,  0.730853 )
+   NDOSL_AG33_TOPO_FRAME = 'NDOSL_AG33_TOPO'
+   NDOSL_AG33_TOPO_ID    = 399101404
+   NDOSL_AG33_UP         = 'Z'
+   NDOSL_AG33_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AGO3'
+   NDOSL_AGO3_CENTER     = 399
+   NDOSL_AGO3_FRAME      = 'ITRF93'
+   NDOSL_AGO3_IDCODE     = 399101319
+   NDOSL_AGO3_LATLON     = ( -33.1511074722, 289.3335970000,  0.733301 )
+   NDOSL_AGO3_TOPO_FRAME = 'NDOSL_AGO3_TOPO'
+   NDOSL_AGO3_TOPO_ID    = 399101319
+   NDOSL_AGO3_UP         = 'Z'
+   NDOSL_AGO3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AGOS'
+   NDOSL_AGOS_CENTER     = 399
+   NDOSL_AGOS_FRAME      = 'ITRF93'
+   NDOSL_AGOS_IDCODE     = 399101318
+   NDOSL_AGOS_LATLON     = ( -33.1483228333, 289.3323683333,  0.730240 )
+   NDOSL_AGOS_TOPO_FRAME = 'NDOSL_AGOS_TOPO'
+   NDOSL_AGOS_TOPO_ID    = 399101318
+   NDOSL_AGOS_UP         = 'Z'
+   NDOSL_AGOS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AGU3'
+   NDOSL_AGU3_CENTER     = 399
+   NDOSL_AGU3_FRAME      = 'ITRF93'
+   NDOSL_AGU3_IDCODE     = 399101319
+   NDOSL_AGU3_LATLON     = ( -33.1511074722, 289.3335970000,  0.733301 )
+   NDOSL_AGU3_TOPO_FRAME = 'NDOSL_AGU3_TOPO'
+   NDOSL_AGU3_TOPO_ID    = 399101319
+   NDOSL_AGU3_UP         = 'Z'
+   NDOSL_AGU3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AGUS'
+   NDOSL_AGUS_CENTER     = 399
+   NDOSL_AGUS_FRAME      = 'ITRF93'
+   NDOSL_AGUS_IDCODE     = 399101321
+   NDOSL_AGUS_LATLON     = ( -33.1483228333, 289.3323683333,  0.730240 )
+   NDOSL_AGUS_TOPO_FRAME = 'NDOSL_AGUS_TOPO'
+   NDOSL_AGUS_TOPO_ID    = 399101321
+   NDOSL_AGUS_UP         = 'Z'
+   NDOSL_AGUS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AL2J'
+   NDOSL_AL2J_CENTER     = 399
+   NDOSL_AL2J_FRAME      = 'ITRF93'
+   NDOSL_AL2J_IDCODE     = 399100209
+   NDOSL_AL2J_LATLON     = ( -23.7588104444, 133.8825985000,  0.576542 )
+   NDOSL_AL2J_TOPO_FRAME = 'NDOSL_AL2J_TOPO'
+   NDOSL_AL2J_TOPO_ID    = 399100209
+   NDOSL_AL2J_UP         = 'Z'
+   NDOSL_AL2J_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ALAY'
+   NDOSL_ALAY_CENTER     = 399
+   NDOSL_ALAY_FRAME      = 'ITRF93'
+   NDOSL_ALAY_IDCODE     = 399101707
+   NDOSL_ALAY_LATLON     = (  32.8725331111, 254.1876205278,  2.796240 )
+   NDOSL_ALAY_TOPO_FRAME = 'NDOSL_ALAY_TOPO'
+   NDOSL_ALAY_TOPO_ID    = 399101707
+   NDOSL_ALAY_UP         = 'Z'
+   NDOSL_ALAY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ALSJ'
+   NDOSL_ALSJ_CENTER     = 399
+   NDOSL_ALSJ_FRAME      = 'ITRF93'
+   NDOSL_ALSJ_IDCODE     = 399100204
+   NDOSL_ALSJ_LATLON     = ( -23.7588104444, 133.8825985000,  0.576542 )
+   NDOSL_ALSJ_TOPO_FRAME = 'NDOSL_ALSJ_TOPO'
+   NDOSL_ALSJ_TOPO_ID    = 399100204
+   NDOSL_ALSJ_UP         = 'Z'
+   NDOSL_ALSJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AMSJ'
+   NDOSL_AMSJ_CENTER     = 399
+   NDOSL_AMSJ_FRAME      = 'ITRF93'
+   NDOSL_AMSJ_IDCODE     = 399100205
+   NDOSL_AMSJ_LATLON     = ( -14.3314444444, 189.2805833333,  0.055400 )
+   NDOSL_AMSJ_TOPO_FRAME = 'NDOSL_AMSJ_TOPO'
+   NDOSL_AMSJ_TOPO_ID    = 399100205
+   NDOSL_AMSJ_UP         = 'Z'
+   NDOSL_AMSJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AN3S'
+   NDOSL_AN3S_CENTER     = 399
+   NDOSL_AN3S_FRAME      = 'ITRF93'
+   NDOSL_AN3S_IDCODE     = 399101704
+   NDOSL_AN3S_LATLON     = (  17.1369508333, 298.2256500000, -0.016590 )
+   NDOSL_AN3S_TOPO_FRAME = 'NDOSL_AN3S_TOPO'
+   NDOSL_AN3S_TOPO_ID    = 399101704
+   NDOSL_AN3S_UP         = 'Z'
+   NDOSL_AN3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AN8S'
+   NDOSL_AN8S_CENTER     = 399
+   NDOSL_AN8S_FRAME      = 'ITRF93'
+   NDOSL_AN8S_IDCODE     = 399101705
+   NDOSL_AN8S_LATLON     = (  17.1366248889, 298.2257101667, -0.004560 )
+   NDOSL_AN8S_TOPO_FRAME = 'NDOSL_AN8S_TOPO'
+   NDOSL_AN8S_TOPO_ID    = 399101705
+   NDOSL_AN8S_UP         = 'Z'
+   NDOSL_AN8S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ANRQ'
+   NDOSL_ANRQ_CENTER     = 399
+   NDOSL_ANRQ_FRAME      = 'ITRF93'
+   NDOSL_ANRQ_IDCODE     = 399104082
+   NDOSL_ANRQ_LATLON     = (  17.1372899444, 298.2247766389, -0.017318 )
+   NDOSL_ANRQ_TOPO_FRAME = 'NDOSL_ANRQ_TOPO'
+   NDOSL_ANRQ_TOPO_ID    = 399104082
+   NDOSL_ANRQ_UP         = 'Z'
+   NDOSL_ANRQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ANTQ'
+   NDOSL_ANTQ_CENTER     = 399
+   NDOSL_ANTQ_FRAME      = 'ITRF93'
+   NDOSL_ANTQ_IDCODE     = 399104087
+   NDOSL_ANTQ_LATLON     = (  17.1436511111, 298.2074875000,  0.003630 )
+   NDOSL_ANTQ_TOPO_FRAME = 'NDOSL_ANTQ_TOPO'
+   NDOSL_ANTQ_TOPO_ID    = 399104087
+   NDOSL_ANTQ_UP         = 'Z'
+   NDOSL_ANTQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_APLS'
+   NDOSL_APLS_CENTER     = 399
+   NDOSL_APLS_FRAME      = 'ITRF93'
+   NDOSL_APLS_IDCODE     = 399101725
+   NDOSL_APLS_LATLON     = (  39.1674000000, 283.9000000000,  0.146510 )
+   NDOSL_APLS_TOPO_FRAME = 'NDOSL_APLS_TOPO'
+   NDOSL_APLS_TOPO_ID    = 399101725
+   NDOSL_APLS_UP         = 'Z'
+   NDOSL_APLS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AS2Q'
+   NDOSL_AS2Q_CENTER     = 399
+   NDOSL_AS2Q_FRAME      = 'ITRF93'
+   NDOSL_AS2Q_IDCODE     = 399104765
+   NDOSL_AS2Q_LATLON     = (  -7.9728062500, 345.5990491389,  0.143500 )
+   NDOSL_AS2Q_TOPO_FRAME = 'NDOSL_AS2Q_TOPO'
+   NDOSL_AS2Q_TOPO_ID    = 399104765
+   NDOSL_AS2Q_UP         = 'Z'
+   NDOSL_AS2Q_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AS2S'
+   NDOSL_AS2S_CENTER     = 399
+   NDOSL_AS2S_FRAME      = 'ITRF93'
+   NDOSL_AS2S_IDCODE     = 399101743
+   NDOSL_AS2S_LATLON     = (  64.8594609444, 212.1502576667,  0.467804 )
+   NDOSL_AS2S_TOPO_FRAME = 'NDOSL_AS2S_TOPO'
+   NDOSL_AS2S_TOPO_ID    = 399101743
+   NDOSL_AS2S_UP         = 'Z'
+   NDOSL_AS2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AS3S'
+   NDOSL_AS3S_CENTER     = 399
+   NDOSL_AS3S_FRAME      = 'ITRF93'
+   NDOSL_AS3S_IDCODE     = 399101744
+   NDOSL_AS3S_LATLON     = (  64.8588753889, 212.1458848889,  0.430536 )
+   NDOSL_AS3S_TOPO_FRAME = 'NDOSL_AS3S_TOPO'
+   NDOSL_AS3S_TOPO_ID    = 399101744
+   NDOSL_AS3S_UP         = 'Z'
+   NDOSL_AS3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ASCQ'
+   NDOSL_ASCQ_CENTER     = 399
+   NDOSL_ASCQ_FRAME      = 'ITRF93'
+   NDOSL_ASCQ_IDCODE     = 399104045
+   NDOSL_ASCQ_LATLON     = (  -7.9066351944, 345.5975000000,  0.056000 )
+   NDOSL_ASCQ_TOPO_FRAME = 'NDOSL_ASCQ_TOPO'
+   NDOSL_ASCQ_TOPO_ID    = 399104045
+   NDOSL_ASCQ_UP         = 'Z'
+   NDOSL_ASCQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ASFS'
+   NDOSL_ASFS_CENTER     = 399
+   NDOSL_ASFS_FRAME      = 'ITRF93'
+   NDOSL_ASFS_IDCODE     = 399101720
+   NDOSL_ASFS_LATLON     = (  64.8587121389, 212.1424048333,  0.425094 )
+   NDOSL_ASFS_TOPO_FRAME = 'NDOSL_ASFS_TOPO'
+   NDOSL_ASFS_TOPO_ID    = 399101720
+   NDOSL_ASFS_UP         = 'Z'
+   NDOSL_ASFS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ASNS'
+   NDOSL_ASNS_CENTER     = 399
+   NDOSL_ASNS_FRAME      = 'ITRF93'
+   NDOSL_ASNS_IDCODE     = 399101726
+   NDOSL_ASNS_LATLON     = (  -7.9166671667, 345.6666666667,  0.023004 )
+   NDOSL_ASNS_TOPO_FRAME = 'NDOSL_ASNS_TOPO'
+   NDOSL_ASNS_TOPO_ID    = 399101726
+   NDOSL_ASNS_UP         = 'Z'
+   NDOSL_ASNS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ATDQ'
+   NDOSL_ATDQ_CENTER     = 399
+   NDOSL_ATDQ_FRAME      = 'ITRF93'
+   NDOSL_ATDQ_IDCODE     = 399104862
+   NDOSL_ATDQ_LATLON     = (  33.9308841667, 275.8913700556,  0.282637 )
+   NDOSL_ATDQ_TOPO_FRAME = 'NDOSL_ATDQ_TOPO'
+   NDOSL_ATDQ_TOPO_ID    = 399104862
+   NDOSL_ATDQ_UP         = 'Z'
+   NDOSL_ATDQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ATDS'
+   NDOSL_ATDS_CENTER     = 399
+   NDOSL_ATDS_FRAME      = 'ITRF93'
+   NDOSL_ATDS_IDCODE     = 399104862
+   NDOSL_ATDS_LATLON     = (  33.9308841667, 275.8913700556,  0.282637 )
+   NDOSL_ATDS_TOPO_FRAME = 'NDOSL_ATDS_TOPO'
+   NDOSL_ATDS_TOPO_ID    = 399104862
+   NDOSL_ATDS_UP         = 'Z'
+   NDOSL_ATDS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ATFS'
+   NDOSL_ATFS_CENTER     = 399
+   NDOSL_ATFS_FRAME      = 'ITRF93'
+   NDOSL_ATFS_IDCODE     = 399101972
+   NDOSL_ATFS_LATLON     = ( -29.0449400278, 115.3512658889,  0.247360 )
+   NDOSL_ATFS_TOPO_FRAME = 'NDOSL_ATFS_TOPO'
+   NDOSL_ATFS_TOPO_ID    = 399101972
+   NDOSL_ATFS_UP         = 'Z'
+   NDOSL_ATFS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ATLS'
+   NDOSL_ATLS_CENTER     = 399
+   NDOSL_ATLS_FRAME      = 'ITRF93'
+   NDOSL_ATLS_IDCODE     = 399101736
+   NDOSL_ATLS_LATLON     = (  33.9308666667, 275.8916333333,  0.260000 )
+   NDOSL_ATLS_TOPO_FRAME = 'NDOSL_ATLS_TOPO'
+   NDOSL_ATLS_TOPO_ID    = 399101736
+   NDOSL_ATLS_UP         = 'Z'
+   NDOSL_ATLS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ATMY'
+   NDOSL_ATMY_CENTER     = 399
+   NDOSL_ATMY_FRAME      = 'ITRF93'
+   NDOSL_ATMY_IDCODE     = 399101708
+   NDOSL_ATMY_LATLON     = (  33.7396298056, 253.6354431667,  2.395244 )
+   NDOSL_ATMY_TOPO_FRAME = 'NDOSL_ATMY_TOPO'
+   NDOSL_ATMY_TOPO_ID    = 399101708
+   NDOSL_ATMY_UP         = 'Z'
+   NDOSL_ATMY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AUSS'
+   NDOSL_AUSS_CENTER     = 399
+   NDOSL_AUSS_FRAME      = 'ITRF93'
+   NDOSL_AUSS_IDCODE     = 399104259
+   NDOSL_AUSS_LATLON     = (  43.4286960000,   1.4994120000,  0.260479 )
+   NDOSL_AUSS_TOPO_FRAME = 'NDOSL_AUSS_TOPO'
+   NDOSL_AUSS_TOPO_ID    = 399104259
+   NDOSL_AUSS_UP         = 'Z'
+   NDOSL_AUSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_AUWS'
+   NDOSL_AUWS_CENTER     = 399
+   NDOSL_AUWS_FRAME      = 'ITRF93'
+   NDOSL_AUWS_IDCODE     = 399101902
+   NDOSL_AUWS_LATLON     = ( -29.0457680833, 115.3486680556,  0.250600 )
+   NDOSL_AUWS_TOPO_FRAME = 'NDOSL_AUWS_TOPO'
+   NDOSL_AUWS_TOPO_ID    = 399101902
+   NDOSL_AUWS_UP         = 'Z'
+   NDOSL_AUWS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BANF'
+   NDOSL_BANF_CENTER     = 399
+   NDOSL_BANF_FRAME      = 'ITRF93'
+   NDOSL_BANF_IDCODE     = 399104020
+   NDOSL_BANF_LATLON     = (  13.0300000000,  77.5100000000,  0.838000 )
+   NDOSL_BANF_TOPO_FRAME = 'NDOSL_BANF_TOPO'
+   NDOSL_BANF_TOPO_ID    = 399104020
+   NDOSL_BANF_UP         = 'Z'
+   NDOSL_BANF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BDA3'
+   NDOSL_BDA3_CENTER     = 399
+   NDOSL_BDA3_FRAME      = 'ITRF93'
+   NDOSL_BDA3_IDCODE     = 399101303
+   NDOSL_BDA3_LATLON     = (  32.3512675278, 295.3421116667, -0.011380 )
+   NDOSL_BDA3_TOPO_FRAME = 'NDOSL_BDA3_TOPO'
+   NDOSL_BDA3_TOPO_ID    = 399101303
+   NDOSL_BDA3_UP         = 'Z'
+   NDOSL_BDA3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BDAA'
+   NDOSL_BDAA_CENTER     = 399
+   NDOSL_BDAA_FRAME      = 'ITRF93'
+   NDOSL_BDAA_IDCODE     = 399101360
+   NDOSL_BDAA_LATLON     = (  32.3511526111, 295.3412103889, -0.007323 )
+   NDOSL_BDAA_TOPO_FRAME = 'NDOSL_BDAA_TOPO'
+   NDOSL_BDAA_TOPO_ID    = 399101360
+   NDOSL_BDAA_UP         = 'Z'
+   NDOSL_BDAA_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BDAQ'
+   NDOSL_BDAQ_CENTER     = 399
+   NDOSL_BDAQ_FRAME      = 'ITRF93'
+   NDOSL_BDAQ_IDCODE     = 399104760
+   NDOSL_BDAQ_LATLON     = (  32.3479431944, 295.3465505278, -0.009880 )
+   NDOSL_BDAQ_TOPO_FRAME = 'NDOSL_BDAQ_TOPO'
+   NDOSL_BDAQ_TOPO_ID    = 399104760
+   NDOSL_BDAQ_UP         = 'Z'
+   NDOSL_BDAQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BDDQ'
+   NDOSL_BDDQ_CENTER     = 399
+   NDOSL_BDDQ_FRAME      = 'ITRF93'
+   NDOSL_BDDQ_IDCODE     = 399104760
+   NDOSL_BDDQ_LATLON     = (  32.3479431944, 295.3465505278, -0.009880 )
+   NDOSL_BDDQ_TOPO_FRAME = 'NDOSL_BDDQ_TOPO'
+   NDOSL_BDDQ_TOPO_ID    = 399104760
+   NDOSL_BDDQ_UP         = 'Z'
+   NDOSL_BDDQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BLKQ'
+   NDOSL_BLKQ_CENTER     = 399
+   NDOSL_BLKQ_FRAME      = 'ITRF93'
+   NDOSL_BLKQ_IDCODE     = 399104263
+   NDOSL_BLKQ_LATLON     = ( -78.1295788889, 166.1504327778,  0.162512 )
+   NDOSL_BLKQ_TOPO_FRAME = 'NDOSL_BLKQ_TOPO'
+   NDOSL_BLKQ_TOPO_ID    = 399104263
+   NDOSL_BLKQ_UP         = 'Z'
+   NDOSL_BLKQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BLT3'
+   NDOSL_BLT3_CENTER     = 399
+   NDOSL_BLT3_FRAME      = 'ITRF93'
+   NDOSL_BLT3_IDCODE     = 399101915
+   NDOSL_BLT3_LATLON     = (  38.9984475000, 283.1572332500,  0.018333 )
+   NDOSL_BLT3_TOPO_FRAME = 'NDOSL_BLT3_TOPO'
+   NDOSL_BLT3_TOPO_ID    = 399101915
+   NDOSL_BLT3_UP         = 'Z'
+   NDOSL_BLT3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BLTA'
+   NDOSL_BLTA_CENTER     = 399
+   NDOSL_BLTA_FRAME      = 'ITRF93'
+   NDOSL_BLTA_IDCODE     = 399101316
+   NDOSL_BLTA_LATLON     = (  38.9982475000, 283.1580610556,  0.024834 )
+   NDOSL_BLTA_TOPO_FRAME = 'NDOSL_BLTA_TOPO'
+   NDOSL_BLTA_TOPO_ID    = 399101316
+   NDOSL_BLTA_UP         = 'Z'
+   NDOSL_BLTA_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BLTD'
+   NDOSL_BLTD_CENTER     = 399
+   NDOSL_BLTD_FRAME      = 'ITRF93'
+   NDOSL_BLTD_IDCODE     = 399101315
+   NDOSL_BLTD_LATLON     = (  38.9984475000, 283.1572332500,  0.018333 )
+   NDOSL_BLTD_TOPO_FRAME = 'NDOSL_BLTD_TOPO'
+   NDOSL_BLTD_TOPO_ID    = 399101315
+   NDOSL_BLTD_UP         = 'Z'
+   NDOSL_BLTD_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BLTJ'
+   NDOSL_BLTJ_CENTER     = 399
+   NDOSL_BLTJ_FRAME      = 'ITRF93'
+   NDOSL_BLTJ_IDCODE     = 399100290
+   NDOSL_BLTJ_LATLON     = (  39.0027035278, 283.1620721667,  0.060060 )
+   NDOSL_BLTJ_TOPO_FRAME = 'NDOSL_BLTJ_TOPO'
+   NDOSL_BLTJ_TOPO_ID    = 399100290
+   NDOSL_BLTJ_UP         = 'Z'
+   NDOSL_BLTJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BREQ'
+   NDOSL_BREQ_CENTER     = 399
+   NDOSL_BREQ_FRAME      = 'ITRF93'
+   NDOSL_BREQ_IDCODE     = 399104283
+   NDOSL_BREQ_LATLON     = (   4.9488789167, 307.6904557222,  0.051960 )
+   NDOSL_BREQ_TOPO_FRAME = 'NDOSL_BREQ_TOPO'
+   NDOSL_BREQ_TOPO_ID    = 399104283
+   NDOSL_BREQ_UP         = 'Z'
+   NDOSL_BREQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_BRKS'
+   NDOSL_BRKS_CENTER     = 399
+   NDOSL_BRKS_FRAME      = 'ITRF93'
+   NDOSL_BRKS_IDCODE     = 399101732
+   NDOSL_BRKS_LATLON     = (  37.8793765833, 237.7572161944,  0.357034 )
+   NDOSL_BRKS_TOPO_FRAME = 'NDOSL_BRKS_TOPO'
+   NDOSL_BRKS_TOPO_ID    = 399101732
+   NDOSL_BRKS_UP         = 'Z'
+   NDOSL_BRKS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CA2F'
+   NDOSL_CA2F_CENTER     = 399
+   NDOSL_CA2F_FRAME      = 'ITRF93'
+   NDOSL_CA2F_IDCODE     = 399104241
+   NDOSL_CA2F_LATLON     = (  34.5830283333, 239.4388851111,  0.627550 )
+   NDOSL_CA2F_TOPO_FRAME = 'NDOSL_CA2F_TOPO'
+   NDOSL_CA2F_TOPO_ID    = 399104241
+   NDOSL_CA2F_UP         = 'Z'
+   NDOSL_CA2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CALF'
+   NDOSL_CALF_CENTER     = 399
+   NDOSL_CALF_FRAME      = 'ITRF93'
+   NDOSL_CALF_IDCODE     = 399104018
+   NDOSL_CALF_LATLON     = (  34.5827385556, 239.4384276667,  0.627540 )
+   NDOSL_CALF_TOPO_FRAME = 'NDOSL_CALF_TOPO'
+   NDOSL_CALF_TOPO_ID    = 399104018
+   NDOSL_CALF_UP         = 'Z'
+   NDOSL_CALF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CALT'
+   NDOSL_CALT_CENTER     = 399
+   NDOSL_CALT_FRAME      = 'ITRF93'
+   NDOSL_CALT_IDCODE     = 399104280
+   NDOSL_CALT_LATLON     = (  34.6658445000, 239.4185533056,  0.088520 )
+   NDOSL_CALT_TOPO_FRAME = 'NDOSL_CALT_TOPO'
+   NDOSL_CALT_TOPO_ID    = 399104280
+   NDOSL_CALT_UP         = 'Z'
+   NDOSL_CALT_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CALY'
+   NDOSL_CALY_CENTER     = 399
+   NDOSL_CALY_FRAME      = 'ITRF93'
+   NDOSL_CALY_IDCODE     = 399101835
+   NDOSL_CALY_LATLON     = (  34.5656237500, 239.4989869167,  0.623910 )
+   NDOSL_CALY_TOPO_FRAME = 'NDOSL_CALY_TOPO'
+   NDOSL_CALY_TOPO_ID    = 399101835
+   NDOSL_CALY_UP         = 'Z'
+   NDOSL_CALY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CANS'
+   NDOSL_CANS_CENTER     = 399
+   NDOSL_CANS_FRAME      = 'ITRF93'
+   NDOSL_CANS_IDCODE     = 399104723
+   NDOSL_CANS_LATLON     = ( -35.4046666667, 148.9830580000,  0.680000 )
+   NDOSL_CANS_TOPO_FRAME = 'NDOSL_CANS_TOPO'
+   NDOSL_CANS_TOPO_ID    = 399104723
+   NDOSL_CANS_UP         = 'Z'
+   NDOSL_CANS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CB1D'
+   NDOSL_CB1D_CENTER     = 399
+   NDOSL_CB1D_FRAME      = 'ITRF93'
+   NDOSL_CB1D_IDCODE     = 399101567
+   NDOSL_CB1D_LATLON     = (  40.4526908333, 355.6324527222,  0.794073 )
+   NDOSL_CB1D_TOPO_FRAME = 'NDOSL_CB1D_TOPO'
+   NDOSL_CB1D_TOPO_ID    = 399101567
+   NDOSL_CB1D_UP         = 'Z'
+   NDOSL_CB1D_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CHAS'
+   NDOSL_CHAS_CENTER     = 399
+   NDOSL_CHAS_FRAME      = 'ITRF93'
+   NDOSL_CHAS_IDCODE     = 399101340
+   NDOSL_CHAS_LATLON     = (  38.8903333333, 282.5578333333,  0.135000 )
+   NDOSL_CHAS_TOPO_FRAME = 'NDOSL_CHAS_TOPO'
+   NDOSL_CHAS_TOPO_ID    = 399101340
+   NDOSL_CHAS_UP         = 'Z'
+   NDOSL_CHAS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CN2F'
+   NDOSL_CN2F_CENTER     = 399
+   NDOSL_CN2F_FRAME      = 'ITRF93'
+   NDOSL_CN2F_IDCODE     = 399104088
+   NDOSL_CN2F_LATLON     = (  28.5288721944, 279.4094383611, -0.020471 )
+   NDOSL_CN2F_TOPO_FRAME = 'NDOSL_CN2F_TOPO'
+   NDOSL_CN2F_TOPO_ID    = 399104088
+   NDOSL_CN2F_UP         = 'Z'
+   NDOSL_CN2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CN4F'
+   NDOSL_CN4F_CENTER     = 399
+   NDOSL_CN4F_FRAME      = 'ITRF93'
+   NDOSL_CN4F_IDCODE     = 399104223
+   NDOSL_CN4F_LATLON     = (  28.4631679167, 279.4168885278, -0.014810 )
+   NDOSL_CN4F_TOPO_FRAME = 'NDOSL_CN4F_TOPO'
+   NDOSL_CN4F_TOPO_ID    = 399104223
+   NDOSL_CN4F_UP         = 'Z'
+   NDOSL_CN4F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CN5F'
+   NDOSL_CN5F_CENTER     = 399
+   NDOSL_CN5F_FRAME      = 'ITRF93'
+   NDOSL_CN5F_IDCODE     = 399104344
+   NDOSL_CN5F_LATLON     = (  28.5170243889, 279.4365801111,  0.013690 )
+   NDOSL_CN5F_TOPO_FRAME = 'NDOSL_CN5F_TOPO'
+   NDOSL_CN5F_TOPO_ID    = 399104344
+   NDOSL_CN5F_UP         = 'Z'
+   NDOSL_CN5F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CNVF'
+   NDOSL_CNVF_CENTER     = 399
+   NDOSL_CNVF_FRAME      = 'ITRF93'
+   NDOSL_CNVF_IDCODE     = 399104041
+   NDOSL_CNVF_LATLON     = (  28.4816058889, 279.4234908333, -0.014220 )
+   NDOSL_CNVF_TOPO_FRAME = 'NDOSL_CNVF_TOPO'
+   NDOSL_CNVF_TOPO_ID    = 399104041
+   NDOSL_CNVF_UP         = 'Z'
+   NDOSL_CNVF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_COCS'
+   NDOSL_COCS_CENTER     = 399
+   NDOSL_COCS_FRAME      = 'ITRF93'
+   NDOSL_COCS_IDCODE     = 399104085
+   NDOSL_COCS_LATLON     = ( -12.2000000000,  96.8500000000,  0.000000 )
+   NDOSL_COCS_TOPO_FRAME = 'NDOSL_COCS_TOPO'
+   NDOSL_COCS_TOPO_ID    = 399104085
+   NDOSL_COCS_UP         = 'Z'
+   NDOSL_COCS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CT2J'
+   NDOSL_CT2J_CENTER     = 399
+   NDOSL_CT2J_FRAME      = 'ITRF93'
+   NDOSL_CT2J_IDCODE     = 399100294
+   NDOSL_CT2J_LATLON     = (  32.5004921111, 253.3914428056,  1.450172 )
+   NDOSL_CT2J_TOPO_FRAME = 'NDOSL_CT2J_TOPO'
+   NDOSL_CT2J_TOPO_ID    = 399100294
+   NDOSL_CT2J_UP         = 'Z'
+   NDOSL_CT2J_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CTSS'
+   NDOSL_CTSS_CENTER     = 399
+   NDOSL_CTSS_FRAME      = 'ITRF93'
+   NDOSL_CTSS_IDCODE     = 399101756
+   NDOSL_CTSS_LATLON     = (  38.8059884167, 255.4715308611,  1.907519 )
+   NDOSL_CTSS_TOPO_FRAME = 'NDOSL_CTSS_TOPO'
+   NDOSL_CTSS_TOPO_ID    = 399101756
+   NDOSL_CTSS_UP         = 'Z'
+   NDOSL_CTSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_CTVJ'
+   NDOSL_CTVJ_CENTER     = 399
+   NDOSL_CTVJ_FRAME      = 'ITRF93'
+   NDOSL_CTVJ_IDCODE     = 399100293
+   NDOSL_CTVJ_LATLON     = (  32.5004921111, 253.3914428056,  1.450172 )
+   NDOSL_CTVJ_TOPO_FRAME = 'NDOSL_CTVJ_TOPO'
+   NDOSL_CTVJ_TOPO_ID    = 399100293
+   NDOSL_CTVJ_UP         = 'Z'
+   NDOSL_CTVJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_D26D'
+   NDOSL_D26D_CENTER     = 399
+   NDOSL_D26D_FRAME      = 'ITRF93'
+   NDOSL_D26D_IDCODE     = 399101526
+   NDOSL_D26D_LATLON     = (  35.3356892222, 243.1269835000,  0.968686 )
+   NDOSL_D26D_TOPO_FRAME = 'NDOSL_D26D_TOPO'
+   NDOSL_D26D_TOPO_ID    = 399101526
+   NDOSL_D26D_UP         = 'Z'
+   NDOSL_D26D_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_D27D'
+   NDOSL_D27D_CENTER     = 399
+   NDOSL_D27D_FRAME      = 'ITRF93'
+   NDOSL_D27D_IDCODE     = 399101516
+   NDOSL_D27D_LATLON     = (  35.2382717778, 243.2233495556,  1.052468 )
+   NDOSL_D27D_TOPO_FRAME = 'NDOSL_D27D_TOPO'
+   NDOSL_D27D_TOPO_ID    = 399101516
+   NDOSL_D27D_UP         = 'Z'
+   NDOSL_D27D_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DAKS'
+   NDOSL_DAKS_CENTER     = 399
+   NDOSL_DAKS_FRAME      = 'ITRF93'
+   NDOSL_DAKS_IDCODE     = 399104072
+   NDOSL_DAKS_LATLON     = (  14.7247622222, 342.8712331111,  0.091278 )
+   NDOSL_DAKS_TOPO_FRAME = 'NDOSL_DAKS_TOPO'
+   NDOSL_DAKS_TOPO_ID    = 399104072
+   NDOSL_DAKS_UP         = 'Z'
+   NDOSL_DAKS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DFRS'
+   NDOSL_DFRS_CENTER     = 399
+   NDOSL_DFRS_FRAME      = 'ITRF93'
+   NDOSL_DFRS_IDCODE     = 399104067
+   NDOSL_DFRS_LATLON     = (  34.9497907500, 242.1126059444,  0.679907 )
+   NDOSL_DFRS_TOPO_FRAME = 'NDOSL_DFRS_TOPO'
+   NDOSL_DFRS_TOPO_ID    = 399104067
+   NDOSL_DFRS_UP         = 'Z'
+   NDOSL_DFRS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DGIS'
+   NDOSL_DGIS_CENTER     = 399
+   NDOSL_DGIS_FRAME      = 'ITRF93'
+   NDOSL_DGIS_IDCODE     = 399104073
+   NDOSL_DGIS_LATLON     = (  -7.2700305556,  72.3699986111, -0.068375 )
+   NDOSL_DGIS_TOPO_FRAME = 'NDOSL_DGIS_TOPO'
+   NDOSL_DGIS_TOPO_ID    = 399104073
+   NDOSL_DGIS_UP         = 'Z'
+   NDOSL_DGIS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS12'
+   NDOSL_DS12_CENTER     = 399
+   NDOSL_DS12_FRAME      = 'ITRF93'
+   NDOSL_DS12_IDCODE     = 399101612
+   NDOSL_DS12_LATLON     = (  35.2999394167, 243.1945566111,  0.969669 )
+   NDOSL_DS12_TOPO_FRAME = 'NDOSL_DS12_TOPO'
+   NDOSL_DS12_TOPO_ID    = 399101612
+   NDOSL_DS12_UP         = 'Z'
+   NDOSL_DS12_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS14'
+   NDOSL_DS14_CENTER     = 399
+   NDOSL_DS14_FRAME      = 'ITRF93'
+   NDOSL_DS14_IDCODE     = 399101514
+   NDOSL_DS14_LATLON     = (  35.4259008611, 243.1104617778,  1.001390 )
+   NDOSL_DS14_TOPO_FRAME = 'NDOSL_DS14_TOPO'
+   NDOSL_DS14_TOPO_ID    = 399101514
+   NDOSL_DS14_UP         = 'Z'
+   NDOSL_DS14_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS15'
+   NDOSL_DS15_CENTER     = 399
+   NDOSL_DS15_FRAME      = 'ITRF93'
+   NDOSL_DS15_IDCODE     = 399101515
+   NDOSL_DS15_LATLON     = (  35.4218532778, 243.1128048889,  0.973211 )
+   NDOSL_DS15_TOPO_FRAME = 'NDOSL_DS15_TOPO'
+   NDOSL_DS15_TOPO_ID    = 399101515
+   NDOSL_DS15_UP         = 'Z'
+   NDOSL_DS15_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS16'
+   NDOSL_DS16_CENTER     = 399
+   NDOSL_DS16_FRAME      = 'ITRF93'
+   NDOSL_DS16_IDCODE     = 399101312
+   NDOSL_DS16_LATLON     = (  35.3415393889, 243.1263502500,  0.943977 )
+   NDOSL_DS16_TOPO_FRAME = 'NDOSL_DS16_TOPO'
+   NDOSL_DS16_TOPO_ID    = 399101312
+   NDOSL_DS16_UP         = 'Z'
+   NDOSL_DS16_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS17'
+   NDOSL_DS17_CENTER     = 399
+   NDOSL_DS17_FRAME      = 'ITRF93'
+   NDOSL_DS17_IDCODE     = 399101327
+   NDOSL_DS17_LATLON     = (  35.3422299444, 243.1265447222,  0.942701 )
+   NDOSL_DS17_TOPO_FRAME = 'NDOSL_DS17_TOPO'
+   NDOSL_DS17_TOPO_ID    = 399101327
+   NDOSL_DS17_UP         = 'Z'
+   NDOSL_DS17_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS24'
+   NDOSL_DS24_CENTER     = 399
+   NDOSL_DS24_FRAME      = 'ITRF93'
+   NDOSL_DS24_IDCODE     = 399104252
+   NDOSL_DS24_LATLON     = (  35.3398928333, 243.1252055833,  0.951499 )
+   NDOSL_DS24_TOPO_FRAME = 'NDOSL_DS24_TOPO'
+   NDOSL_DS24_TOPO_ID    = 399104252
+   NDOSL_DS24_UP         = 'Z'
+   NDOSL_DS24_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS25'
+   NDOSL_DS25_CENTER     = 399
+   NDOSL_DS25_FRAME      = 'ITRF93'
+   NDOSL_DS25_IDCODE     = 399101525
+   NDOSL_DS25_LATLON     = (  35.3376119722, 243.1246368056,  0.959634 )
+   NDOSL_DS25_TOPO_FRAME = 'NDOSL_DS25_TOPO'
+   NDOSL_DS25_TOPO_ID    = 399101525
+   NDOSL_DS25_UP         = 'Z'
+   NDOSL_DS25_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS34'
+   NDOSL_DS34_CENTER     = 399
+   NDOSL_DS34_FRAME      = 'ITRF93'
+   NDOSL_DS34_IDCODE     = 399101534
+   NDOSL_DS34_LATLON     = ( -35.3984788333, 148.9819644167,  0.692020 )
+   NDOSL_DS34_TOPO_FRAME = 'NDOSL_DS34_TOPO'
+   NDOSL_DS34_TOPO_ID    = 399101534
+   NDOSL_DS34_UP         = 'Z'
+   NDOSL_DS34_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS42'
+   NDOSL_DS42_CENTER     = 399
+   NDOSL_DS42_FRAME      = 'ITRF93'
+   NDOSL_DS42_IDCODE     = 399101547
+   NDOSL_DS42_LATLON     = ( -35.4006838611, 148.9812441944,  0.684755 )
+   NDOSL_DS42_TOPO_FRAME = 'NDOSL_DS42_TOPO'
+   NDOSL_DS42_TOPO_ID    = 399101547
+   NDOSL_DS42_UP         = 'Z'
+   NDOSL_DS42_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS43'
+   NDOSL_DS43_CENTER     = 399
+   NDOSL_DS43_FRAME      = 'ITRF93'
+   NDOSL_DS43_IDCODE     = 399101548
+   NDOSL_DS43_LATLON     = ( -35.4024242222, 148.9812673056,  0.688867 )
+   NDOSL_DS43_TOPO_FRAME = 'NDOSL_DS43_TOPO'
+   NDOSL_DS43_TOPO_ID    = 399101548
+   NDOSL_DS43_UP         = 'Z'
+   NDOSL_DS43_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS45'
+   NDOSL_DS45_CENTER     = 399
+   NDOSL_DS45_FRAME      = 'ITRF93'
+   NDOSL_DS45_IDCODE     = 399101549
+   NDOSL_DS45_LATLON     = ( -35.3984576944, 148.9776856389,  0.674347 )
+   NDOSL_DS45_TOPO_FRAME = 'NDOSL_DS45_TOPO'
+   NDOSL_DS45_TOPO_ID    = 399101549
+   NDOSL_DS45_UP         = 'Z'
+   NDOSL_DS45_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS46'
+   NDOSL_DS46_CENTER     = 399
+   NDOSL_DS46_FRAME      = 'ITRF93'
+   NDOSL_DS46_IDCODE     = 399101546
+   NDOSL_DS46_LATLON     = ( -35.4050106389, 148.9830816944,  0.676812 )
+   NDOSL_DS46_TOPO_FRAME = 'NDOSL_DS46_TOPO'
+   NDOSL_DS46_TOPO_ID    = 399101546
+   NDOSL_DS46_UP         = 'Z'
+   NDOSL_DS46_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS54'
+   NDOSL_DS54_CENTER     = 399
+   NDOSL_DS54_FRAME      = 'ITRF93'
+   NDOSL_DS54_IDCODE     = 399101554
+   NDOSL_DS54_LATLON     = (  40.4256216667, 355.7459031667,  0.837051 )
+   NDOSL_DS54_TOPO_FRAME = 'NDOSL_DS54_TOPO'
+   NDOSL_DS54_TOPO_ID    = 399101554
+   NDOSL_DS54_UP         = 'Z'
+   NDOSL_DS54_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS55'
+   NDOSL_DS55_CENTER     = 399
+   NDOSL_DS55_FRAME      = 'ITRF93'
+   NDOSL_DS55_IDCODE     = 399101555
+   NDOSL_DS55_LATLON     = (  40.4242959167, 355.7473666944,  0.819061 )
+   NDOSL_DS55_TOPO_FRAME = 'NDOSL_DS55_TOPO'
+   NDOSL_DS55_TOPO_ID    = 399101555
+   NDOSL_DS55_UP         = 'Z'
+   NDOSL_DS55_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS61'
+   NDOSL_DS61_CENTER     = 399
+   NDOSL_DS61_FRAME      = 'ITRF93'
+   NDOSL_DS61_IDCODE     = 399101662
+   NDOSL_DS61_LATLON     = (  40.4287444444, 355.7510719722,  0.848658 )
+   NDOSL_DS61_TOPO_FRAME = 'NDOSL_DS61_TOPO'
+   NDOSL_DS61_TOPO_ID    = 399101662
+   NDOSL_DS61_UP         = 'Z'
+   NDOSL_DS61_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS63'
+   NDOSL_DS63_CENTER     = 399
+   NDOSL_DS63_FRAME      = 'ITRF93'
+   NDOSL_DS63_IDCODE     = 399101564
+   NDOSL_DS63_LATLON     = (  40.4312097500, 355.7519914444,  0.864816 )
+   NDOSL_DS63_TOPO_FRAME = 'NDOSL_DS63_TOPO'
+   NDOSL_DS63_TOPO_ID    = 399101564
+   NDOSL_DS63_UP         = 'Z'
+   NDOSL_DS63_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS65'
+   NDOSL_DS65_CENTER     = 399
+   NDOSL_DS65_FRAME      = 'ITRF93'
+   NDOSL_DS65_IDCODE     = 399101565
+   NDOSL_DS65_LATLON     = (  40.4272063611, 355.7493011111,  0.833854 )
+   NDOSL_DS65_TOPO_FRAME = 'NDOSL_DS65_TOPO'
+   NDOSL_DS65_TOPO_ID    = 399101565
+   NDOSL_DS65_UP         = 'Z'
+   NDOSL_DS65_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS66'
+   NDOSL_DS66_CENTER     = 399
+   NDOSL_DS66_FRAME      = 'ITRF93'
+   NDOSL_DS66_IDCODE     = 399101566
+   NDOSL_DS66_LATLON     = (  40.4299748611, 355.7485823611,  0.849874 )
+   NDOSL_DS66_TOPO_FRAME = 'NDOSL_DS66_TOPO'
+   NDOSL_DS66_TOPO_ID    = 399101566
+   NDOSL_DS66_UP         = 'Z'
+   NDOSL_DS66_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DS87'
+   NDOSL_DS87_CENTER     = 399
+   NDOSL_DS87_FRAME      = 'ITRF93'
+   NDOSL_DS87_IDCODE     = 399101587
+   NDOSL_DS87_LATLON     = (  37.9265898611, 284.5236954722, -0.012762 )
+   NDOSL_DS87_TOPO_FRAME = 'NDOSL_DS87_TOPO'
+   NDOSL_DS87_TOPO_ID    = 399101587
+   NDOSL_DS87_UP         = 'Z'
+   NDOSL_DS87_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DX2S'
+   NDOSL_DX2S_CENTER     = 399
+   NDOSL_DX2S_FRAME      = 'ITRF93'
+   NDOSL_DX2S_IDCODE     = 399101715
+   NDOSL_DX2S_LATLON     = (  65.1178338889, 212.5688375000,  0.514650 )
+   NDOSL_DX2S_TOPO_FRAME = 'NDOSL_DX2S_TOPO'
+   NDOSL_DX2S_TOPO_ID    = 399101715
+   NDOSL_DX2S_UP         = 'Z'
+   NDOSL_DX2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_DXAS'
+   NDOSL_DXAS_CENTER     = 399
+   NDOSL_DXAS_FRAME      = 'ITRF93'
+   NDOSL_DXAS_IDCODE     = 399101711
+   NDOSL_DXAS_LATLON     = (  65.1179297222, 212.5664961111,  0.518900 )
+   NDOSL_DXAS_TOPO_FRAME = 'NDOSL_DXAS_TOPO'
+   NDOSL_DXAS_TOPO_ID    = 399101711
+   NDOSL_DXAS_UP         = 'Z'
+   NDOSL_DXAS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_EA2F'
+   NDOSL_EA2F_CENTER     = 399
+   NDOSL_EA2F_FRAME      = 'ITRF93'
+   NDOSL_EA2F_IDCODE     = 399104065
+   NDOSL_EA2F_LATLON     = (  34.9704538889, 242.0694383333,  0.799726 )
+   NDOSL_EA2F_TOPO_FRAME = 'NDOSL_EA2F_TOPO'
+   NDOSL_EA2F_TOPO_ID    = 399104065
+   NDOSL_EA2F_UP         = 'Z'
+   NDOSL_EA2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_EA3F'
+   NDOSL_EA3F_CENTER     = 399
+   NDOSL_EA3F_FRAME      = 'ITRF93'
+   NDOSL_EA3F_IDCODE     = 399104221
+   NDOSL_EA3F_LATLON     = (  34.9381143333, 241.9086703056,  0.743537 )
+   NDOSL_EA3F_TOPO_FRAME = 'NDOSL_EA3F_TOPO'
+   NDOSL_EA3F_TOPO_ID    = 399104221
+   NDOSL_EA3F_UP         = 'Z'
+   NDOSL_EA3F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_EAFF'
+   NDOSL_EAFF_CENTER     = 399
+   NDOSL_EAFF_FRAME      = 'ITRF93'
+   NDOSL_EAFF_IDCODE     = 399104064
+   NDOSL_EAFF_LATLON     = (  34.9606598333, 242.0884490556,  0.780567 )
+   NDOSL_EAFF_TOPO_FRAME = 'NDOSL_EAFF_TOPO'
+   NDOSL_EAFF_TOPO_ID    = 399104064
+   NDOSL_EAFF_UP         = 'Z'
+   NDOSL_EAFF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_EG2F'
+   NDOSL_EG2F_CENTER     = 399
+   NDOSL_EG2F_FRAME      = 'ITRF93'
+   NDOSL_EG2F_IDCODE     = 399104345
+   NDOSL_EG2F_LATLON     = (  30.5725279444, 273.7852825833,  0.037711 )
+   NDOSL_EG2F_TOPO_FRAME = 'NDOSL_EG2F_TOPO'
+   NDOSL_EG2F_TOPO_ID    = 399104345
+   NDOSL_EG2F_UP         = 'Z'
+   NDOSL_EG2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_EG3F'
+   NDOSL_EG3F_CENTER     = 399
+   NDOSL_EG3F_FRAME      = 'ITRF93'
+   NDOSL_EG3F_IDCODE     = 399104346
+   NDOSL_EG3F_LATLON     = (  30.4216655833, 273.2019880000,  0.001143 )
+   NDOSL_EG3F_TOPO_FRAME = 'NDOSL_EG3F_TOPO'
+   NDOSL_EG3F_TOPO_ID    = 399104346
+   NDOSL_EG3F_UP         = 'Z'
+   NDOSL_EG3F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ET1S'
+   NDOSL_ET1S_CENTER     = 399
+   NDOSL_ET1S_FRAME      = 'ITRF93'
+   NDOSL_ET1S_IDCODE     = 399101973
+   NDOSL_ET1S_LATLON     = (  32.5045748889, 253.3886626944,  1.443190 )
+   NDOSL_ET1S_TOPO_FRAME = 'NDOSL_ET1S_TOPO'
+   NDOSL_ET1S_TOPO_ID    = 399101973
+   NDOSL_ET1S_UP         = 'Z'
+   NDOSL_ET1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ET2S'
+   NDOSL_ET2S_CENTER     = 399
+   NDOSL_ET2S_FRAME      = 'ITRF93'
+   NDOSL_ET2S_IDCODE     = 399101974
+   NDOSL_ET2S_LATLON     = (  32.5043845000, 253.3888421111,  1.463649 )
+   NDOSL_ET2S_TOPO_FRAME = 'NDOSL_ET2S_TOPO'
+   NDOSL_ET2S_TOPO_ID    = 399101974
+   NDOSL_ET2S_UP         = 'Z'
+   NDOSL_ET2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_EULY'
+   NDOSL_EULY_CENTER     = 399
+   NDOSL_EULY_FRAME      = 'ITRF93'
+   NDOSL_EULY_IDCODE     = 399104205
+   NDOSL_EULY_LATLON     = (  28.4635640833, 279.3469878056, -0.010510 )
+   NDOSL_EULY_TOPO_FRAME = 'NDOSL_EULY_TOPO'
+   NDOSL_EULY_TOPO_ID    = 399104205
+   NDOSL_EULY_UP         = 'Z'
+   NDOSL_EULY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_EVCS'
+   NDOSL_EVCS_CENTER     = 399
+   NDOSL_EVCS_FRAME      = 'ITRF93'
+   NDOSL_EVCS_IDCODE     = 399101363
+   NDOSL_EVCS_LATLON     = (  28.4860000000, 279.4240000000,  0.014996 )
+   NDOSL_EVCS_TOPO_FRAME = 'NDOSL_EVCS_TOPO'
+   NDOSL_EVCS_TOPO_ID    = 399101363
+   NDOSL_EVCS_UP         = 'Z'
+   NDOSL_EVCS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_FR2F'
+   NDOSL_FR2F_CENTER     = 399
+   NDOSL_FR2F_FRAME      = 'ITRF93'
+   NDOSL_FR2F_IDCODE     = 399104249
+   NDOSL_FR2F_LATLON     = (  34.9504461667, 242.1047563333,  0.723967 )
+   NDOSL_FR2F_TOPO_FRAME = 'NDOSL_FR2F_TOPO'
+   NDOSL_FR2F_TOPO_ID    = 399104249
+   NDOSL_FR2F_UP         = 'Z'
+   NDOSL_FR2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_FRCF'
+   NDOSL_FRCF_CENTER     = 399
+   NDOSL_FRCF_FRAME      = 'ITRF93'
+   NDOSL_FRCF_IDCODE     = 399104069
+   NDOSL_FRCF_LATLON     = (  34.9608046944, 242.0885039167,  0.751842 )
+   NDOSL_FRCF_TOPO_FRAME = 'NDOSL_FRCF_TOPO'
+   NDOSL_FRCF_TOPO_ID    = 399104069
+   NDOSL_FRCF_UP         = 'Z'
+   NDOSL_FRCF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_FT2F'
+   NDOSL_FT2F_CENTER     = 399
+   NDOSL_FT2F_FRAME      = 'ITRF93'
+   NDOSL_FT2F_IDCODE     = 399104138
+   NDOSL_FT2F_LATLON     = (  31.5567668611, 249.5618266667,  1.794960 )
+   NDOSL_FT2F_TOPO_FRAME = 'NDOSL_FT2F_TOPO'
+   NDOSL_FT2F_TOPO_ID    = 399104138
+   NDOSL_FT2F_UP         = 'Z'
+   NDOSL_FT2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_FTHF'
+   NDOSL_FTHF_CENTER     = 399
+   NDOSL_FTHF_FRAME      = 'ITRF93'
+   NDOSL_FTHF_IDCODE     = 399104115
+   NDOSL_FTHF_LATLON     = (  31.5710242500, 249.6292020278,  1.486316 )
+   NDOSL_FTHF_TOPO_FRAME = 'NDOSL_FTHF_TOPO'
+   NDOSL_FTHF_TOPO_ID    = 399104115
+   NDOSL_FTHF_UP         = 'Z'
+   NDOSL_FTHF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GB2Y'
+   NDOSL_GB2Y_CENTER     = 399
+   NDOSL_GB2Y_FRAME      = 'ITRF93'
+   NDOSL_GB2Y_IDCODE     = 399101814
+   NDOSL_GB2Y_LATLON     = (  26.6254712778, 281.7014746667, -0.010997 )
+   NDOSL_GB2Y_TOPO_FRAME = 'NDOSL_GB2Y_TOPO'
+   NDOSL_GB2Y_TOPO_ID    = 399101814
+   NDOSL_GB2Y_UP         = 'Z'
+   NDOSL_GB2Y_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GBIQ'
+   NDOSL_GBIQ_CENTER     = 399
+   NDOSL_GBIQ_FRAME      = 'ITRF93'
+   NDOSL_GBIQ_IDCODE     = 399104013
+   NDOSL_GBIQ_LATLON     = (  26.6156420000, 281.6521599444, -0.013684 )
+   NDOSL_GBIQ_TOPO_FRAME = 'NDOSL_GBIQ_TOPO'
+   NDOSL_GBIQ_TOPO_ID    = 399104013
+   NDOSL_GBIQ_UP         = 'Z'
+   NDOSL_GBIQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GBIY'
+   NDOSL_GBIY_CENTER     = 399
+   NDOSL_GBIY_FRAME      = 'ITRF93'
+   NDOSL_GBIY_IDCODE     = 399101813
+   NDOSL_GBIY_LATLON     = (  26.6254465556, 281.7009088056,  0.000878 )
+   NDOSL_GBIY_TOPO_FRAME = 'NDOSL_GBIY_TOPO'
+   NDOSL_GBIY_TOPO_ID    = 399101813
+   NDOSL_GBIY_UP         = 'Z'
+   NDOSL_GBIY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GD28'
+   NDOSL_GD28_CENTER     = 399
+   NDOSL_GD28_FRAME      = 'ITRF93'
+   NDOSL_GD28_IDCODE     = 399101517
+   NDOSL_GD28_LATLON     = (  35.3415426389, 243.1263953333,  0.940941 )
+   NDOSL_GD28_TOPO_FRAME = 'NDOSL_GD28_TOPO'
+   NDOSL_GD28_TOPO_ID    = 399101517
+   NDOSL_GD28_UP         = 'Z'
+   NDOSL_GD28_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GDSA'
+   NDOSL_GDSA_CENTER     = 399
+   NDOSL_GDSA_FRAME      = 'ITRF93'
+   NDOSL_GDSA_IDCODE     = 399101317
+   NDOSL_GDSA_LATLON     = (  35.3415426389, 243.1269986667,  0.935541 )
+   NDOSL_GDSA_TOPO_FRAME = 'NDOSL_GDSA_TOPO'
+   NDOSL_GDSA_TOPO_ID    = 399101317
+   NDOSL_GDSA_UP         = 'Z'
+   NDOSL_GDSA_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GILD'
+   NDOSL_GILD_CENTER     = 399
+   NDOSL_GILD_FRAME      = 'ITRF93'
+   NDOSL_GILD_IDCODE     = 399107225
+   NDOSL_GILD_LATLON     = (  64.9785092500, 212.5019998056,  0.320131 )
+   NDOSL_GILD_TOPO_FRAME = 'NDOSL_GILD_TOPO'
+   NDOSL_GILD_TOPO_ID    = 399107225
+   NDOSL_GILD_UP         = 'Z'
+   NDOSL_GILD_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GILE'
+   NDOSL_GILE_CENTER     = 399
+   NDOSL_GILE_FRAME      = 'ITRF93'
+   NDOSL_GILE_IDCODE     = 399104047
+   NDOSL_GILE_LATLON     = (  64.9785071111, 212.5019995278,  0.322434 )
+   NDOSL_GILE_TOPO_FRAME = 'NDOSL_GILE_TOPO'
+   NDOSL_GILE_TOPO_ID    = 399104047
+   NDOSL_GILE_UP         = 'Z'
+   NDOSL_GILE_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GLAS'
+   NDOSL_GLAS_CENTER     = 399
+   NDOSL_GLAS_FRAME      = 'ITRF93'
+   NDOSL_GLAS_IDCODE     = 399101712
+   NDOSL_GLAS_LATLON     = (  64.9736719722, 212.4871613333,  0.387482 )
+   NDOSL_GLAS_TOPO_FRAME = 'NDOSL_GLAS_TOPO'
+   NDOSL_GLAS_TOPO_ID    = 399101712
+   NDOSL_GLAS_UP         = 'Z'
+   NDOSL_GLAS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GLBS'
+   NDOSL_GLBS_CENTER     = 399
+   NDOSL_GLBS_FRAME      = 'ITRF93'
+   NDOSL_GLBS_IDCODE     = 399101713
+   NDOSL_GLBS_LATLON     = (  64.9734820278, 212.4913014722,  0.405478 )
+   NDOSL_GLBS_TOPO_FRAME = 'NDOSL_GLBS_TOPO'
+   NDOSL_GLBS_TOPO_ID    = 399101713
+   NDOSL_GLBS_UP         = 'Z'
+   NDOSL_GLBS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GLCS'
+   NDOSL_GLCS_CENTER     = 399
+   NDOSL_GLCS_FRAME      = 'ITRF93'
+   NDOSL_GLCS_IDCODE     = 399101714
+   NDOSL_GLCS_LATLON     = (  64.9731421111, 212.4952216389,  0.424474 )
+   NDOSL_GLCS_TOPO_FRAME = 'NDOSL_GLCS_TOPO'
+   NDOSL_GLCS_TOPO_ID    = 399101714
+   NDOSL_GLCS_UP         = 'Z'
+   NDOSL_GLCS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GT2S'
+   NDOSL_GT2S_CENTER     = 399
+   NDOSL_GT2S_FRAME      = 'ITRF93'
+   NDOSL_GT2S_IDCODE     = 399101375
+   NDOSL_GT2S_LATLON     = (  13.6158806389, 144.8554377500,  0.209160 )
+   NDOSL_GT2S_TOPO_FRAME = 'NDOSL_GT2S_TOPO'
+   NDOSL_GT2S_TOPO_ID    = 399101375
+   NDOSL_GT2S_UP         = 'Z'
+   NDOSL_GT2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GTKQ'
+   NDOSL_GTKQ_CENTER     = 399
+   NDOSL_GTKQ_FRAME      = 'ITRF93'
+   NDOSL_GTKQ_IDCODE     = 399104086
+   NDOSL_GTKQ_LATLON     = (  21.4626316111, 288.8679117778, -0.005582 )
+   NDOSL_GTKQ_TOPO_FRAME = 'NDOSL_GTKQ_TOPO'
+   NDOSL_GTKQ_TOPO_ID    = 399104086
+   NDOSL_GTKQ_UP         = 'Z'
+   NDOSL_GTKQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GTSS'
+   NDOSL_GTSS_CENTER     = 399
+   NDOSL_GTSS_FRAME      = 'ITRF93'
+   NDOSL_GTSS_IDCODE     = 399101368
+   NDOSL_GTSS_LATLON     = (  13.6151891111, 144.8560522500,  0.219060 )
+   NDOSL_GTSS_TOPO_FRAME = 'NDOSL_GTSS_TOPO'
+   NDOSL_GTSS_TOPO_ID    = 399101368
+   NDOSL_GTSS_UP         = 'Z'
+   NDOSL_GTSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GW1J'
+   NDOSL_GW1J_CENTER     = 399
+   NDOSL_GW1J_FRAME      = 'ITRF93'
+   NDOSL_GW1J_IDCODE     = 399101971
+   NDOSL_GW1J_LATLON     = (  13.5886225000, 144.8409839722,  0.199022 )
+   NDOSL_GW1J_TOPO_FRAME = 'NDOSL_GW1J_TOPO'
+   NDOSL_GW1J_TOPO_ID    = 399101971
+   NDOSL_GW1J_UP         = 'Z'
+   NDOSL_GW1J_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GW2J'
+   NDOSL_GW2J_CENTER     = 399
+   NDOSL_GW2J_FRAME      = 'ITRF93'
+   NDOSL_GW2J_IDCODE     = 399100210
+   NDOSL_GW2J_LATLON     = (  13.5886224722, 144.8409883056,  0.199068 )
+   NDOSL_GW2J_TOPO_FRAME = 'NDOSL_GW2J_TOPO'
+   NDOSL_GW2J_TOPO_ID    = 399100210
+   NDOSL_GW2J_UP         = 'Z'
+   NDOSL_GW2J_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GW2K'
+   NDOSL_GW2K_CENTER     = 399
+   NDOSL_GW2K_FRAME      = 'ITRF93'
+   NDOSL_GW2K_IDCODE     = 399101968
+   NDOSL_GW2K_LATLON     = (  13.5875882778, 144.8408744722,  0.197665 )
+   NDOSL_GW2K_TOPO_FRAME = 'NDOSL_GW2K_TOPO'
+   NDOSL_GW2K_TOPO_ID    = 399101968
+   NDOSL_GW2K_UP         = 'Z'
+   NDOSL_GW2K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GW2S'
+   NDOSL_GW2S_CENTER     = 399
+   NDOSL_GW2S_FRAME      = 'ITRF93'
+   NDOSL_GW2S_IDCODE     = 399101969
+   NDOSL_GW2S_LATLON     = (  13.5875882778, 144.8408744722,  0.197665 )
+   NDOSL_GW2S_TOPO_FRAME = 'NDOSL_GW2S_TOPO'
+   NDOSL_GW2S_TOPO_ID    = 399101969
+   NDOSL_GW2S_UP         = 'Z'
+   NDOSL_GW2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GW3S'
+   NDOSL_GW3S_CENTER     = 399
+   NDOSL_GW3S_FRAME      = 'ITRF93'
+   NDOSL_GW3S_IDCODE     = 399101970
+   NDOSL_GW3S_LATLON     = (  13.5873096111, 144.8408749444,  0.197738 )
+   NDOSL_GW3S_TOPO_FRAME = 'NDOSL_GW3S_TOPO'
+   NDOSL_GW3S_TOPO_ID    = 399101970
+   NDOSL_GW3S_UP         = 'Z'
+   NDOSL_GW3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GWM3'
+   NDOSL_GWM3_CENTER     = 399
+   NDOSL_GWM3_FRAME      = 'ITRF93'
+   NDOSL_GWM3_IDCODE     = 399101309
+   NDOSL_GWM3_LATLON     = (  13.3106894444, 144.7368153056,  0.148640 )
+   NDOSL_GWM3_TOPO_FRAME = 'NDOSL_GWM3_TOPO'
+   NDOSL_GWM3_TOPO_ID    = 399101309
+   NDOSL_GWM3_UP         = 'Z'
+   NDOSL_GWM3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GWMK'
+   NDOSL_GWMK_CENTER     = 399
+   NDOSL_GWMK_FRAME      = 'ITRF93'
+   NDOSL_GWMK_IDCODE     = 399101965
+   NDOSL_GWMK_LATLON     = (  13.5880178611, 144.8409295000,  0.192610 )
+   NDOSL_GWMK_TOPO_FRAME = 'NDOSL_GWMK_TOPO'
+   NDOSL_GWMK_TOPO_ID    = 399101965
+   NDOSL_GWMK_UP         = 'Z'
+   NDOSL_GWMK_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_GWMS'
+   NDOSL_GWMS_CENTER     = 399
+   NDOSL_GWMS_FRAME      = 'ITRF93'
+   NDOSL_GWMS_IDCODE     = 399101966
+   NDOSL_GWMS_LATLON     = (  13.5880178611, 144.8409295000,  0.192610 )
+   NDOSL_GWMS_TOPO_FRAME = 'NDOSL_GWMS_TOPO'
+   NDOSL_GWMS_TOPO_ID    = 399101966
+   NDOSL_GWMS_UP         = 'Z'
+   NDOSL_GWMS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HAW3'
+   NDOSL_HAW3_CENTER     = 399
+   NDOSL_HAW3_FRAME      = 'ITRF93'
+   NDOSL_HAW3_IDCODE     = 399101311
+   NDOSL_HAW3_LATLON     = (  22.1262725556, 200.3348449722,  1.157200 )
+   NDOSL_HAW3_TOPO_FRAME = 'NDOSL_HAW3_TOPO'
+   NDOSL_HAW3_TOPO_ID    = 399101311
+   NDOSL_HAW3_UP         = 'Z'
+   NDOSL_HAW3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HAWQ'
+   NDOSL_HAWQ_CENTER     = 399
+   NDOSL_HAWQ_FRAME      = 'ITRF93'
+   NDOSL_HAWQ_IDCODE     = 399104285
+   NDOSL_HAWQ_LATLON     = (  21.3161000000, 202.1136000000,  0.000000 )
+   NDOSL_HAWQ_TOPO_FRAME = 'NDOSL_HAWQ_TOPO'
+   NDOSL_HAWQ_TOPO_ID    = 399104285
+   NDOSL_HAWQ_UP         = 'Z'
+   NDOSL_HAWQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HAWS'
+   NDOSL_HAWS_CENTER     = 399
+   NDOSL_HAWS_FRAME      = 'ITRF93'
+   NDOSL_HAWS_IDCODE     = 399101706
+   NDOSL_HAWS_LATLON     = (  19.0135837222, 204.3370000000,  0.274314 )
+   NDOSL_HAWS_TOPO_FRAME = 'NDOSL_HAWS_TOPO'
+   NDOSL_HAWS_TOPO_ID    = 399101706
+   NDOSL_HAWS_UP         = 'Z'
+   NDOSL_HAWS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HB33'
+   NDOSL_HB33_CENTER     = 399
+   NDOSL_HB33_FRAME      = 'ITRF93'
+   NDOSL_HB33_IDCODE     = 399101325
+   NDOSL_HB33_LATLON     = ( -25.8864277778,  27.7074472222,  1.563720 )
+   NDOSL_HB33_TOPO_FRAME = 'NDOSL_HB33_TOPO'
+   NDOSL_HB33_TOPO_ID    = 399101325
+   NDOSL_HB33_UP         = 'Z'
+   NDOSL_HB33_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HB4S'
+   NDOSL_HB4S_CENTER     = 399
+   NDOSL_HB4S_FRAME      = 'ITRF93'
+   NDOSL_HB4S_IDCODE     = 399101378
+   NDOSL_HB4S_LATLON     = ( -25.8867254444,  27.7126033056,  1.550021 )
+   NDOSL_HB4S_TOPO_FRAME = 'NDOSL_HB4S_TOPO'
+   NDOSL_HB4S_TOPO_ID    = 399101378
+   NDOSL_HB4S_UP         = 'Z'
+   NDOSL_HB4S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HB5S'
+   NDOSL_HB5S_CENTER     = 399
+   NDOSL_HB5S_FRAME      = 'ITRF93'
+   NDOSL_HB5S_IDCODE     = 399101403
+   NDOSL_HB5S_LATLON     = ( -25.8869335000,  27.7066718333,  1.568221 )
+   NDOSL_HB5S_TOPO_FRAME = 'NDOSL_HB5S_TOPO'
+   NDOSL_HB5S_TOPO_ID    = 399101403
+   NDOSL_HB5S_UP         = 'Z'
+   NDOSL_HB5S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HBK3'
+   NDOSL_HBK3_CENTER     = 399
+   NDOSL_HBK3_FRAME      = 'ITRF93'
+   NDOSL_HBK3_IDCODE     = 399101324
+   NDOSL_HBK3_LATLON     = ( -25.8867277778,  27.7126000000,  1.549040 )
+   NDOSL_HBK3_TOPO_FRAME = 'NDOSL_HBK3_TOPO'
+   NDOSL_HBK3_TOPO_ID    = 399101324
+   NDOSL_HBK3_UP         = 'Z'
+   NDOSL_HBK3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HBKS'
+   NDOSL_HBKS_CENTER     = 399
+   NDOSL_HBKS_FRAME      = 'ITRF93'
+   NDOSL_HBKS_IDCODE     = 399101402
+   NDOSL_HBKS_LATLON     = ( -25.8870000000,  27.7120000000,  1.544830 )
+   NDOSL_HBKS_TOPO_FRAME = 'NDOSL_HBKS_TOPO'
+   NDOSL_HBKS_TOPO_ID    = 399101402
+   NDOSL_HBKS_UP         = 'Z'
+   NDOSL_HBKS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HOLF'
+   NDOSL_HOLF_CENTER     = 399
+   NDOSL_HOLF_FRAME      = 'ITRF93'
+   NDOSL_HOLF_IDCODE     = 399104144
+   NDOSL_HOLF_LATLON     = (  32.9014638611, 253.9008304444,  1.241500 )
+   NDOSL_HOLF_TOPO_FRAME = 'NDOSL_HOLF_TOPO'
+   NDOSL_HOLF_TOPO_ID    = 399104144
+   NDOSL_HOLF_UP         = 'Z'
+   NDOSL_HOLF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HR1S'
+   NDOSL_HR1S_CENTER     = 399
+   NDOSL_HR1S_FRAME      = 'ITRF93'
+   NDOSL_HR1S_IDCODE     = 399101718
+   NDOSL_HR1S_LATLON     = (  37.9454991667, 284.5388644444, -0.018510 )
+   NDOSL_HR1S_TOPO_FRAME = 'NDOSL_HR1S_TOPO'
+   NDOSL_HR1S_TOPO_ID    = 399101718
+   NDOSL_HR1S_UP         = 'Z'
+   NDOSL_HR1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HR2S'
+   NDOSL_HR2S_CENTER     = 399
+   NDOSL_HR2S_FRAME      = 'ITRF93'
+   NDOSL_HR2S_IDCODE     = 399101719
+   NDOSL_HR2S_LATLON     = (  37.9454258333, 284.5379100000, -0.017430 )
+   NDOSL_HR2S_TOPO_FRAME = 'NDOSL_HR2S_TOPO'
+   NDOSL_HR2S_TOPO_ID    = 399101719
+   NDOSL_HR2S_UP         = 'Z'
+   NDOSL_HR2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HT2S'
+   NDOSL_HT2S_CENTER     = 399
+   NDOSL_HT2S_FRAME      = 'ITRF93'
+   NDOSL_HT2S_IDCODE     = 399101373
+   NDOSL_HT2S_LATLON     = (  21.5689718056, 201.7377211667,  0.319658 )
+   NDOSL_HT2S_TOPO_FRAME = 'NDOSL_HT2S_TOPO'
+   NDOSL_HT2S_TOPO_ID    = 399101373
+   NDOSL_HT2S_UP         = 'Z'
+   NDOSL_HT2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HTSS'
+   NDOSL_HTSS_CENTER     = 399
+   NDOSL_HTSS_FRAME      = 'ITRF93'
+   NDOSL_HTSS_IDCODE     = 399101367
+   NDOSL_HTSS_LATLON     = (  21.5622721944, 201.7579104444,  0.430423 )
+   NDOSL_HTSS_TOPO_FRAME = 'NDOSL_HTSS_TOPO'
+   NDOSL_HTSS_TOPO_ID    = 399101367
+   NDOSL_HTSS_UP         = 'Z'
+   NDOSL_HTSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_HWIS'
+   NDOSL_HWIS_CENTER     = 399
+   NDOSL_HWIS_FRAME      = 'ITRF93'
+   NDOSL_HWIS_IDCODE     = 399101903
+   NDOSL_HWIS_LATLON     = (  19.0139045000, 204.3366987500,  0.367200 )
+   NDOSL_HWIS_TOPO_FRAME = 'NDOSL_HWIS_TOPO'
+   NDOSL_HWIS_TOPO_ID    = 399101903
+   NDOSL_HWIS_UP         = 'Z'
+   NDOSL_HWIS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_JD2Y'
+   NDOSL_JD2Y_CENTER     = 399
+   NDOSL_JD2Y_FRAME      = 'ITRF93'
+   NDOSL_JD2Y_IDCODE     = 399101818
+   NDOSL_JD2Y_LATLON     = (  26.9822298611, 279.8924391944, -0.001960 )
+   NDOSL_JD2Y_TOPO_FRAME = 'NDOSL_JD2Y_TOPO'
+   NDOSL_JD2Y_TOPO_ID    = 399101818
+   NDOSL_JD2Y_UP         = 'Z'
+   NDOSL_JD2Y_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_JDIQ'
+   NDOSL_JDIQ_CENTER     = 399
+   NDOSL_JDIQ_FRAME      = 'ITRF93'
+   NDOSL_JDIQ_IDCODE     = 399104248
+   NDOSL_JDIQ_LATLON     = (  26.9829996944, 279.8917959444, -0.006403 )
+   NDOSL_JDIQ_TOPO_FRAME = 'NDOSL_JDIQ_TOPO'
+   NDOSL_JDIQ_TOPO_ID    = 399104248
+   NDOSL_JDIQ_UP         = 'Z'
+   NDOSL_JDIQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_JDIY'
+   NDOSL_JDIY_CENTER     = 399
+   NDOSL_JDIY_FRAME      = 'ITRF93'
+   NDOSL_JDIY_IDCODE     = 399101817
+   NDOSL_JDIY_LATLON     = (  26.9838039444, 279.8912527500, -0.010530 )
+   NDOSL_JDIY_TOPO_FRAME = 'NDOSL_JDIY_TOPO'
+   NDOSL_JDIY_TOPO_ID    = 399101817
+   NDOSL_JDIY_UP         = 'Z'
+   NDOSL_JDIY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_JSCJ'
+   NDOSL_JSCJ_CENTER     = 399
+   NDOSL_JSCJ_FRAME      = 'ITRF93'
+   NDOSL_JSCJ_IDCODE     = 399100291
+   NDOSL_JSCJ_LATLON     = (  29.5616896111, 264.9100000000,  0.049531 )
+   NDOSL_JSCJ_TOPO_FRAME = 'NDOSL_JSCJ_TOPO'
+   NDOSL_JSCJ_TOPO_ID    = 399100291
+   NDOSL_JSCJ_UP         = 'Z'
+   NDOSL_JSCJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KA2S'
+   NDOSL_KA2S_CENTER     = 399
+   NDOSL_KA2S_FRAME      = 'ITRF93'
+   NDOSL_KA2S_IDCODE     = 399101735
+   NDOSL_KA2S_LATLON     = (  35.7087618611, 139.4917777778, -0.641245 )
+   NDOSL_KA2S_TOPO_FRAME = 'NDOSL_KA2S_TOPO'
+   NDOSL_KA2S_TOPO_ID    = 399101735
+   NDOSL_KA2S_UP         = 'Z'
+   NDOSL_KA2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KENS'
+   NDOSL_KENS_CENTER     = 399
+   NDOSL_KENS_FRAME      = 'ITRF93'
+   NDOSL_KENS_IDCODE     = 399104722
+   NDOSL_KENS_LATLON     = (  -2.9955575000,  40.1945050000,  0.012314 )
+   NDOSL_KENS_TOPO_FRAME = 'NDOSL_KENS_TOPO'
+   NDOSL_KENS_TOPO_ID    = 399104722
+   NDOSL_KENS_UP         = 'Z'
+   NDOSL_KENS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KERS'
+   NDOSL_KERS_CENTER     = 399
+   NDOSL_KERS_FRAME      = 'ITRF93'
+   NDOSL_KERS_IDCODE     = 399104253
+   NDOSL_KERS_LATLON     = ( -49.3529060000,  70.2572820000,  0.082471 )
+   NDOSL_KERS_TOPO_FRAME = 'NDOSL_KERS_TOPO'
+   NDOSL_KERS_TOPO_ID    = 399104253
+   NDOSL_KERS_UP         = 'Z'
+   NDOSL_KERS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KGLQ'
+   NDOSL_KGLQ_CENTER     = 399
+   NDOSL_KGLQ_FRAME      = 'ITRF93'
+   NDOSL_KGLQ_IDCODE     = 399104261
+   NDOSL_KGLQ_LATLON     = ( -49.3519154444,  70.2559838889,  0.006100 )
+   NDOSL_KGLQ_TOPO_FRAME = 'NDOSL_KGLQ_TOPO'
+   NDOSL_KGLQ_TOPO_ID    = 399104261
+   NDOSL_KGLQ_UP         = 'Z'
+   NDOSL_KGLQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KI2S'
+   NDOSL_KI2S_CENTER     = 399
+   NDOSL_KI2S_FRAME      = 'ITRF93'
+   NDOSL_KI2S_IDCODE     = 399101727
+   NDOSL_KI2S_LATLON     = (  67.8571251667,  20.9643416944,  0.402275 )
+   NDOSL_KI2S_TOPO_FRAME = 'NDOSL_KI2S_TOPO'
+   NDOSL_KI2S_TOPO_ID    = 399101727
+   NDOSL_KI2S_UP         = 'Z'
+   NDOSL_KI2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KICS'
+   NDOSL_KICS_CENTER     = 399
+   NDOSL_KICS_FRAME      = 'ITRF93'
+   NDOSL_KICS_IDCODE     = 399104255
+   NDOSL_KICS_LATLON     = (  67.8842320000,  21.0607690000,  0.440604 )
+   NDOSL_KICS_TOPO_FRAME = 'NDOSL_KICS_TOPO'
+   NDOSL_KICS_TOPO_ID    = 399104255
+   NDOSL_KICS_UP         = 'Z'
+   NDOSL_KICS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KILS'
+   NDOSL_KILS_CENTER     = 399
+   NDOSL_KILS_FRAME      = 'ITRF93'
+   NDOSL_KILS_IDCODE     = 399104256
+   NDOSL_KILS_LATLON     = (  67.8765320000,  21.0623370000,  0.514892 )
+   NDOSL_KILS_TOPO_FRAME = 'NDOSL_KILS_TOPO'
+   NDOSL_KILS_TOPO_ID    = 399104256
+   NDOSL_KILS_UP         = 'Z'
+   NDOSL_KILS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KIXS'
+   NDOSL_KIXS_CENTER     = 399
+   NDOSL_KIXS_FRAME      = 'ITRF93'
+   NDOSL_KIXS_IDCODE     = 399104257
+   NDOSL_KIXS_LATLON     = (  67.8781570000,  21.0633980000,  0.508573 )
+   NDOSL_KIXS_TOPO_FRAME = 'NDOSL_KIXS_TOPO'
+   NDOSL_KIXS_TOPO_ID    = 399104257
+   NDOSL_KIXS_UP         = 'Z'
+   NDOSL_KIXS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KLMS'
+   NDOSL_KLMS_CENTER     = 399
+   NDOSL_KLMS_FRAME      = 'ITRF93'
+   NDOSL_KLMS_IDCODE     = 399101710
+   NDOSL_KLMS_LATLON     = (  78.2302216667,  15.3981381389,  0.498520 )
+   NDOSL_KLMS_TOPO_FRAME = 'NDOSL_KLMS_TOPO'
+   NDOSL_KLMS_TOPO_ID    = 399101710
+   NDOSL_KLMS_UP         = 'Z'
+   NDOSL_KLMS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KM2F'
+   NDOSL_KM2F_CENTER     = 399
+   NDOSL_KM2F_FRAME      = 'ITRF93'
+   NDOSL_KM2F_IDCODE     = 399104971
+   NDOSL_KM2F_LATLON     = (   9.3954288056, 167.4792883333,  0.062860 )
+   NDOSL_KM2F_TOPO_FRAME = 'NDOSL_KM2F_TOPO'
+   NDOSL_KM2F_TOPO_ID    = 399104971
+   NDOSL_KM2F_UP         = 'Z'
+   NDOSL_KM2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KMPF'
+   NDOSL_KMPF_CENTER     = 399
+   NDOSL_KMPF_FRAME      = 'ITRF93'
+   NDOSL_KMPF_IDCODE     = 399104110
+   NDOSL_KMPF_LATLON     = (   8.7216769167, 167.7264900556,  0.039263 )
+   NDOSL_KMPF_TOPO_FRAME = 'NDOSL_KMPF_TOPO'
+   NDOSL_KMPF_TOPO_ID    = 399104110
+   NDOSL_KMPF_UP         = 'Z'
+   NDOSL_KMPF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KMQF'
+   NDOSL_KMQF_CENTER     = 399
+   NDOSL_KMQF_FRAME      = 'ITRF93'
+   NDOSL_KMQF_IDCODE     = 399104111
+   NDOSL_KMQF_LATLON     = (   8.7216353889, 167.7266220000,  0.039264 )
+   NDOSL_KMQF_TOPO_FRAME = 'NDOSL_KMQF_TOPO'
+   NDOSL_KMQF_TOPO_ID    = 399104111
+   NDOSL_KMQF_UP         = 'Z'
+   NDOSL_KMQF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KMRF'
+   NDOSL_KMRF_CENTER     = 399
+   NDOSL_KMRF_FRAME      = 'ITRF93'
+   NDOSL_KMRF_IDCODE     = 399104968
+   NDOSL_KMRF_LATLON     = (   9.3987471111, 167.4821481944,  0.057370 )
+   NDOSL_KMRF_TOPO_FRAME = 'NDOSL_KMRF_TOPO'
+   NDOSL_KMRF_TOPO_ID    = 399104968
+   NDOSL_KMRF_UP         = 'Z'
+   NDOSL_KMRF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KMRQ'
+   NDOSL_KMRQ_CENTER     = 399
+   NDOSL_KMRQ_FRAME      = 'ITRF93'
+   NDOSL_KMRQ_IDCODE     = 399104969
+   NDOSL_KMRQ_LATLON     = (   9.3985995833, 167.4828493611,  0.042480 )
+   NDOSL_KMRQ_TOPO_FRAME = 'NDOSL_KMRQ_TOPO'
+   NDOSL_KMRQ_TOPO_ID    = 399104969
+   NDOSL_KMRQ_UP         = 'Z'
+   NDOSL_KMRQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KMRT'
+   NDOSL_KMRT_CENTER     = 399
+   NDOSL_KMRT_FRAME      = 'ITRF93'
+   NDOSL_KMRT_IDCODE     = 399104970
+   NDOSL_KMRT_LATLON     = (   8.7195454167, 167.7185242778,  0.059040 )
+   NDOSL_KMRT_TOPO_FRAME = 'NDOSL_KMRT_TOPO'
+   NDOSL_KMRT_TOPO_ID    = 399104970
+   NDOSL_KMRT_UP         = 'Z'
+   NDOSL_KMRT_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KPTQ'
+   NDOSL_KPTQ_CENTER     = 399
+   NDOSL_KPTQ_FRAME      = 'ITRF93'
+   NDOSL_KPTQ_IDCODE     = 399104282
+   NDOSL_KPTQ_LATLON     = (  21.5721197222, 201.7334146667,  0.301320 )
+   NDOSL_KPTQ_TOPO_FRAME = 'NDOSL_KPTQ_TOPO'
+   NDOSL_KPTQ_TOPO_ID    = 399104282
+   NDOSL_KPTQ_UP         = 'Z'
+   NDOSL_KPTQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KRCS'
+   NDOSL_KRCS_CENTER     = 399
+   NDOSL_KRCS_FRAME      = 'ITRF93'
+   NDOSL_KRCS_IDCODE     = 399101797
+   NDOSL_KRCS_LATLON     = ( -12.6940000000, 141.9306666667,  0.021000 )
+   NDOSL_KRCS_TOPO_FRAME = 'NDOSL_KRCS_TOPO'
+   NDOSL_KRCS_TOPO_ID    = 399101797
+   NDOSL_KRCS_UP         = 'Z'
+   NDOSL_KRCS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KRUF'
+   NDOSL_KRUF_CENTER     = 399
+   NDOSL_KRUF_FRAME      = 'ITRF93'
+   NDOSL_KRUF_IDCODE     = 399108501
+   NDOSL_KRUF_LATLON     = (   5.1140064167, 307.3550100833,  0.148008 )
+   NDOSL_KRUF_TOPO_FRAME = 'NDOSL_KRUF_TOPO'
+   NDOSL_KRUF_TOPO_ID    = 399108501
+   NDOSL_KRUF_UP         = 'Z'
+   NDOSL_KRUF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KRUS'
+   NDOSL_KRUS_CENTER     = 399
+   NDOSL_KRUS_FRAME      = 'ITRF93'
+   NDOSL_KRUS_IDCODE     = 399104258
+   NDOSL_KRUS_LATLON     = (   5.0988480000, 307.3601280000,  0.110039 )
+   NDOSL_KRUS_TOPO_FRAME = 'NDOSL_KRUS_TOPO'
+   NDOSL_KRUS_TOPO_ID    = 399104258
+   NDOSL_KRUS_UP         = 'Z'
+   NDOSL_KRUS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KSWC'
+   NDOSL_KSWC_CENTER     = 399
+   NDOSL_KSWC_FRAME      = 'ITRF93'
+   NDOSL_KSWC_IDCODE     = 399101855
+   NDOSL_KSWC_LATLON     = (  33.4280555556, 126.2956388889,  0.084000 )
+   NDOSL_KSWC_TOPO_FRAME = 'NDOSL_KSWC_TOPO'
+   NDOSL_KSWC_TOPO_ID    = 399101855
+   NDOSL_KSWC_UP         = 'Z'
+   NDOSL_KSWC_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KU1S'
+   NDOSL_KU1S_CENTER     = 399
+   NDOSL_KU1S_FRAME      = 'ITRF93'
+   NDOSL_KU1S_IDCODE     = 399101905
+   NDOSL_KU1S_LATLON     = (  67.8895583333,  21.0656547222,  0.400400 )
+   NDOSL_KU1S_TOPO_FRAME = 'NDOSL_KU1S_TOPO'
+   NDOSL_KU1S_TOPO_ID    = 399101905
+   NDOSL_KU1S_UP         = 'Z'
+   NDOSL_KU1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KU2S'
+   NDOSL_KU2S_CENTER     = 399
+   NDOSL_KU2S_FRAME      = 'ITRF93'
+   NDOSL_KU2S_IDCODE     = 399101906
+   NDOSL_KU2S_LATLON     = (  67.8831825000,  21.0604483333,  0.428200 )
+   NDOSL_KU2S_TOPO_FRAME = 'NDOSL_KU2S_TOPO'
+   NDOSL_KU2S_TOPO_ID    = 399101906
+   NDOSL_KU2S_UP         = 'Z'
+   NDOSL_KU2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_KU3S'
+   NDOSL_KU3S_CENTER     = 399
+   NDOSL_KU3S_FRAME      = 'ITRF93'
+   NDOSL_KU3S_IDCODE     = 399101909
+   NDOSL_KU3S_LATLON     = (  67.8790708333,  21.0380000000,  0.527000 )
+   NDOSL_KU3S_TOPO_FRAME = 'NDOSL_KU3S_TOPO'
+   NDOSL_KU3S_TOPO_ID    = 399101909
+   NDOSL_KU3S_UP         = 'Z'
+   NDOSL_KU3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_LANS'
+   NDOSL_LANS_CENTER     = 399
+   NDOSL_LANS_FRAME      = 'ITRF93'
+   NDOSL_LANS_IDCODE     = 399101728
+   NDOSL_LANS_LATLON     = (  48.7514153611, 356.5300000000,  0.110676 )
+   NDOSL_LANS_TOPO_FRAME = 'NDOSL_LANS_TOPO'
+   NDOSL_LANS_TOPO_ID    = 399101728
+   NDOSL_LANS_UP         = 'Z'
+   NDOSL_LANS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_LBVS'
+   NDOSL_LBVS_CENTER     = 399
+   NDOSL_LBVS_FRAME      = 'ITRF93'
+   NDOSL_LBVS_IDCODE     = 399104250
+   NDOSL_LBVS_LATLON     = (   0.3546297778,   9.6753002778,  0.111269 )
+   NDOSL_LBVS_TOPO_FRAME = 'NDOSL_LBVS_TOPO'
+   NDOSL_LBVS_TOPO_ID    = 399104250
+   NDOSL_LBVS_UP         = 'Z'
+   NDOSL_LBVS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_LE1S'
+   NDOSL_LE1S_CENTER     = 399
+   NDOSL_LE1S_FRAME      = 'ITRF93'
+   NDOSL_LE1S_IDCODE     = 399101721
+   NDOSL_LE1S_LATLON     = (  65.1168516667, 212.5377450000,  0.414000 )
+   NDOSL_LE1S_TOPO_FRAME = 'NDOSL_LE1S_TOPO'
+   NDOSL_LE1S_TOPO_ID    = 399101721
+   NDOSL_LE1S_UP         = 'Z'
+   NDOSL_LE1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_LE2S'
+   NDOSL_LE2S_CENTER     = 399
+   NDOSL_LE2S_FRAME      = 'ITRF93'
+   NDOSL_LE2S_IDCODE     = 399101722
+   NDOSL_LE2S_LATLON     = (  37.9235294444, 284.5238608333, -0.033501 )
+   NDOSL_LE2S_TOPO_FRAME = 'NDOSL_LE2S_TOPO'
+   NDOSL_LE2S_TOPO_ID    = 399101722
+   NDOSL_LE2S_UP         = 'Z'
+   NDOSL_LE2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MAD8'
+   NDOSL_MAD8_CENTER     = 399
+   NDOSL_MAD8_FRAME      = 'ITRF93'
+   NDOSL_MAD8_IDCODE     = 399101307
+   NDOSL_MAD8_LATLON     = (  40.4554493889, 355.8316150278,  0.837886 )
+   NDOSL_MAD8_TOPO_FRAME = 'NDOSL_MAD8_TOPO'
+   NDOSL_MAD8_TOPO_ID    = 399101307
+   NDOSL_MAD8_UP         = 'Z'
+   NDOSL_MAD8_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MC1S'
+   NDOSL_MC1S_CENTER     = 399
+   NDOSL_MC1S_FRAME      = 'ITRF93'
+   NDOSL_MC1S_IDCODE     = 399104848
+   NDOSL_MC1S_LATLON     = ( -77.8391295000, 166.6670823333,  0.153000 )
+   NDOSL_MC1S_TOPO_FRAME = 'NDOSL_MC1S_TOPO'
+   NDOSL_MC1S_TOPO_ID    = 399104848
+   NDOSL_MC1S_UP         = 'Z'
+   NDOSL_MC1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MCMS'
+   NDOSL_MCMS_CENTER     = 399
+   NDOSL_MCMS_FRAME      = 'ITRF93'
+   NDOSL_MCMS_IDCODE     = 399104847
+   NDOSL_MCMS_LATLON     = ( -77.8000000000, 166.4000000000,  0.020000 )
+   NDOSL_MCMS_TOPO_FRAME = 'NDOSL_MCMS_TOPO'
+   NDOSL_MCMS_TOPO_ID    = 399104847
+   NDOSL_MCMS_UP         = 'Z'
+   NDOSL_MCMS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MDLS'
+   NDOSL_MDLS_CENTER     = 399
+   NDOSL_MDLS_FRAME      = 'ITRF93'
+   NDOSL_MDLS_IDCODE     = 399101904
+   NDOSL_MDLS_LATLON     = (  39.1673611111, 283.1012222222,  0.146400 )
+   NDOSL_MDLS_TOPO_FRAME = 'NDOSL_MDLS_TOPO'
+   NDOSL_MDLS_TOPO_ID    = 399101904
+   NDOSL_MDLS_UP         = 'Z'
+   NDOSL_MDLS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MG1D'
+   NDOSL_MG1D_CENTER     = 399
+   NDOSL_MG1D_FRAME      = 'ITRF93'
+   NDOSL_MG1D_IDCODE     = 399101574
+   NDOSL_MG1D_LATLON     = ( -35.7759702222, 290.6018184444,  1.571768 )
+   NDOSL_MG1D_TOPO_FRAME = 'NDOSL_MG1D_TOPO'
+   NDOSL_MG1D_TOPO_ID    = 399101574
+   NDOSL_MG1D_UP         = 'Z'
+   NDOSL_MG1D_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MIL3'
+   NDOSL_MIL3_CENTER     = 399
+   NDOSL_MIL3_FRAME      = 'ITRF93'
+   NDOSL_MIL3_IDCODE     = 399101301
+   NDOSL_MIL3_LATLON     = (  28.5081238889, 279.3066000556, -0.025950 )
+   NDOSL_MIL3_TOPO_FRAME = 'NDOSL_MIL3_TOPO'
+   NDOSL_MIL3_TOPO_ID    = 399101301
+   NDOSL_MIL3_UP         = 'Z'
+   NDOSL_MIL3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MILA'
+   NDOSL_MILA_CENTER     = 399
+   NDOSL_MILA_FRAME      = 'ITRF93'
+   NDOSL_MILA_IDCODE     = 399101901
+   NDOSL_MILA_LATLON     = (  28.5081602500, 279.3072472778, -0.027340 )
+   NDOSL_MILA_TOPO_FRAME = 'NDOSL_MILA_TOPO'
+   NDOSL_MILA_TOPO_ID    = 399101901
+   NDOSL_MILA_UP         = 'Z'
+   NDOSL_MILA_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MILJ'
+   NDOSL_MILJ_CENTER     = 399
+   NDOSL_MILJ_FRAME      = 'ITRF93'
+   NDOSL_MILJ_IDCODE     = 399100292
+   NDOSL_MILJ_LATLON     = (  28.5059894722, 279.3069871111, -0.021310 )
+   NDOSL_MILJ_TOPO_FRAME = 'NDOSL_MILJ_TOPO'
+   NDOSL_MILJ_TOPO_ID    = 399100292
+   NDOSL_MILJ_UP         = 'Z'
+   NDOSL_MILJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MIMF'
+   NDOSL_MIMF_CENTER     = 399
+   NDOSL_MIMF_FRAME      = 'ITRF93'
+   NDOSL_MIMF_IDCODE     = 399104220
+   NDOSL_MIMF_LATLON     = (  28.6259431944, 279.3172061944, -0.018120 )
+   NDOSL_MIMF_TOPO_FRAME = 'NDOSL_MIMF_TOPO'
+   NDOSL_MIMF_TOPO_ID    = 399104220
+   NDOSL_MIMF_UP         = 'Z'
+   NDOSL_MIMF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MLAQ'
+   NDOSL_MLAQ_CENTER     = 399
+   NDOSL_MLAQ_FRAME      = 'ITRF93'
+   NDOSL_MLAQ_IDCODE     = 399104084
+   NDOSL_MLAQ_LATLON     = (  28.4247111944, 279.3356123333, -0.017350 )
+   NDOSL_MLAQ_TOPO_FRAME = 'NDOSL_MLAQ_TOPO'
+   NDOSL_MLAQ_TOPO_ID    = 399104084
+   NDOSL_MLAQ_UP         = 'Z'
+   NDOSL_MLAQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MMTF'
+   NDOSL_MMTF_CENTER     = 399
+   NDOSL_MMTF_FRAME      = 'ITRF93'
+   NDOSL_MMTF_IDCODE     = 399104347
+   NDOSL_MMTF_LATLON     = (  28.4785768056, 279.3252113611, -0.012298 )
+   NDOSL_MMTF_TOPO_FRAME = 'NDOSL_MMTF_TOPO'
+   NDOSL_MMTF_TOPO_ID    = 399104347
+   NDOSL_MMTF_UP         = 'Z'
+   NDOSL_MMTF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MPLS'
+   NDOSL_MPLS_CENTER     = 399
+   NDOSL_MPLS_FRAME      = 'ITRF93'
+   NDOSL_MPLS_IDCODE     = 399101967
+   NDOSL_MPLS_LATLON     = (  27.7628920000, 344.3662000000,  0.204900 )
+   NDOSL_MPLS_TOPO_FRAME = 'NDOSL_MPLS_TOPO'
+   NDOSL_MPLS_TOPO_ID    = 399101967
+   NDOSL_MPLS_UP         = 'Z'
+   NDOSL_MPLS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MTLF'
+   NDOSL_MTLF_CENTER     = 399
+   NDOSL_MTLF_FRAME      = 'ITRF93'
+   NDOSL_MTLF_IDCODE     = 399104155
+   NDOSL_MTLF_LATLON     = (  32.4416632222, 249.2111969444,  2.772820 )
+   NDOSL_MTLF_TOPO_FRAME = 'NDOSL_MTLF_TOPO'
+   NDOSL_MTLF_TOPO_ID    = 399104155
+   NDOSL_MTLF_UP         = 'Z'
+   NDOSL_MTLF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_MTLS'
+   NDOSL_MTLS_CENTER     = 399
+   NDOSL_MTLS_FRAME      = 'ITRF93'
+   NDOSL_MTLS_IDCODE     = 399104156
+   NDOSL_MTLS_LATLON     = (  32.4421365556, 249.2105493611,  2.769192 )
+   NDOSL_MTLS_TOPO_FRAME = 'NDOSL_MTLS_TOPO'
+   NDOSL_MTLS_TOPO_ID    = 399104156
+   NDOSL_MTLS_UP         = 'Z'
+   NDOSL_MTLS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_NH2S'
+   NDOSL_NH2S_CENTER     = 399
+   NDOSL_NH2S_FRAME      = 'ITRF93'
+   NDOSL_NH2S_IDCODE     = 399101374
+   NDOSL_NH2S_LATLON     = (  42.9447416667, 288.3696782778,  0.193259 )
+   NDOSL_NH2S_TOPO_FRAME = 'NDOSL_NH2S_TOPO'
+   NDOSL_NH2S_TOPO_ID    = 399101374
+   NDOSL_NH2S_UP         = 'Z'
+   NDOSL_NH2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_NHSS'
+   NDOSL_NHSS_CENTER     = 399
+   NDOSL_NHSS_FRAME      = 'ITRF93'
+   NDOSL_NHSS_IDCODE     = 399101366
+   NDOSL_NHSS_LATLON     = (  42.9478213333, 288.3734374722,  0.203280 )
+   NDOSL_NHSS_TOPO_FRAME = 'NDOSL_NHSS_TOPO'
+   NDOSL_NHSS_TOPO_ID    = 399101366
+   NDOSL_NHSS_UP         = 'Z'
+   NDOSL_NHSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_NN1D'
+   NDOSL_NN1D_CENTER     = 399
+   NDOSL_NN1D_FRAME      = 'ITRF93'
+   NDOSL_NN1D_IDCODE     = 399101573
+   NDOSL_NN1D_LATLON     = ( -31.0482181944, 116.1915059167,  0.252257 )
+   NDOSL_NN1D_TOPO_FRAME = 'NDOSL_NN1D_TOPO'
+   NDOSL_NN1D_TOPO_ID    = 399101573
+   NDOSL_NN1D_UP         = 'Z'
+   NDOSL_NN1D_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_NSGS'
+   NDOSL_NSGS_CENTER     = 399
+   NDOSL_NSGS_FRAME      = 'ITRF93'
+   NDOSL_NSGS_IDCODE     = 399101724
+   NDOSL_NSGS_LATLON     = (  53.3297222222,  13.0700000000,  0.115000 )
+   NDOSL_NSGS_TOPO_FRAME = 'NDOSL_NSGS_TOPO'
+   NDOSL_NSGS_TOPO_ID    = 399101724
+   NDOSL_NSGS_UP         = 'Z'
+   NDOSL_NSGS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ORR3'
+   NDOSL_ORR3_CENTER     = 399
+   NDOSL_ORR3_FRAME      = 'ITRF93'
+   NDOSL_ORR3_IDCODE     = 399101320
+   NDOSL_ORR3_LATLON     = ( -35.6278928889, 148.9570232222,  0.951982 )
+   NDOSL_ORR3_TOPO_FRAME = 'NDOSL_ORR3_TOPO'
+   NDOSL_ORR3_TOPO_ID    = 399101320
+   NDOSL_ORR3_UP         = 'Z'
+   NDOSL_ORR3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_OTSS'
+   NDOSL_OTSS_CENTER     = 399
+   NDOSL_OTSS_FRAME      = 'ITRF93'
+   NDOSL_OTSS_IDCODE     = 399101364
+   NDOSL_OTSS_LATLON     = (  51.1141173333, 359.1051029444, -0.018852 )
+   NDOSL_OTSS_TOPO_FRAME = 'NDOSL_OTSS_TOPO'
+   NDOSL_OTSS_TOPO_ID    = 399101364
+   NDOSL_OTSS_UP         = 'Z'
+   NDOSL_OTSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PA2Q'
+   NDOSL_PA2Q_CENTER     = 399
+   NDOSL_PA2Q_FRAME      = 'ITRF93'
+   NDOSL_PA2Q_IDCODE     = 399104089
+   NDOSL_PA2Q_LATLON     = (  28.2273281667, 279.3939018056, -0.014380 )
+   NDOSL_PA2Q_TOPO_FRAME = 'NDOSL_PA2Q_TOPO'
+   NDOSL_PA2Q_TOPO_ID    = 399104089
+   NDOSL_PA2Q_UP         = 'Z'
+   NDOSL_PA2Q_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PATQ'
+   NDOSL_PATQ_CENTER     = 399
+   NDOSL_PATQ_FRAME      = 'ITRF93'
+   NDOSL_PATQ_IDCODE     = 399104060
+   NDOSL_PATQ_LATLON     = (  28.2264024167, 279.4007236389, -0.013760 )
+   NDOSL_PATQ_TOPO_FRAME = 'NDOSL_PATQ_TOPO'
+   NDOSL_PATQ_TOPO_ID    = 399104060
+   NDOSL_PATQ_UP         = 'Z'
+   NDOSL_PATQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PDLS'
+   NDOSL_PDLS_CENTER     = 399
+   NDOSL_PDLS_FRAME      = 'ITRF93'
+   NDOSL_PDLS_IDCODE     = 399104054
+   NDOSL_PDLS_LATLON     = (  29.0666483889, 279.0869786389, -0.022690 )
+   NDOSL_PDLS_TOPO_FRAME = 'NDOSL_PDLS_TOPO'
+   NDOSL_PDLS_TOPO_ID    = 399104054
+   NDOSL_PDLS_UP         = 'Z'
+   NDOSL_PDLS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PFTQ'
+   NDOSL_PFTQ_CENTER     = 399
+   NDOSL_PFTQ_FRAME      = 'ITRF93'
+   NDOSL_PFTQ_IDCODE     = 399104864
+   NDOSL_PFTQ_LATLON     = (  65.1167930833, 212.5367091667,  0.413284 )
+   NDOSL_PFTQ_TOPO_FRAME = 'NDOSL_PFTQ_TOPO'
+   NDOSL_PFTQ_TOPO_ID    = 399104864
+   NDOSL_PFTQ_UP         = 'Z'
+   NDOSL_PFTQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PFTS'
+   NDOSL_PFTS_CENTER     = 399
+   NDOSL_PFTS_FRAME      = 'ITRF93'
+   NDOSL_PFTS_IDCODE     = 399104864
+   NDOSL_PFTS_LATLON     = (  65.1167930833, 212.5367091667,  0.413284 )
+   NDOSL_PFTS_TOPO_FRAME = 'NDOSL_PFTS_TOPO'
+   NDOSL_PFTS_TOPO_ID    = 399104864
+   NDOSL_PFTS_UP         = 'Z'
+   NDOSL_PFTS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PIOD'
+   NDOSL_PIOD_CENTER     = 399
+   NDOSL_PIOD_FRAME      = 'ITRF93'
+   NDOSL_PIOD_IDCODE     = 399101511
+   NDOSL_PIOD_LATLON     = (  35.3895182778, 243.1506229444,  1.004213 )
+   NDOSL_PIOD_TOPO_FRAME = 'NDOSL_PIOD_TOPO'
+   NDOSL_PIOD_TOPO_ID    = 399101511
+   NDOSL_PIOD_UP         = 'Z'
+   NDOSL_PIOD_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PM2F'
+   NDOSL_PM2F_CENTER     = 399
+   NDOSL_PM2F_FRAME      = 'ITRF93'
+   NDOSL_PM2F_IDCODE     = 399104445
+   NDOSL_PM2F_LATLON     = (  34.1225029167, 240.8462014444, -0.022200 )
+   NDOSL_PM2F_TOPO_FRAME = 'NDOSL_PM2F_TOPO'
+   NDOSL_PM2F_TOPO_ID    = 399104445
+   NDOSL_PM2F_UP         = 'Z'
+   NDOSL_PM2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PM3F'
+   NDOSL_PM3F_CENTER     = 399
+   NDOSL_PM3F_FRAME      = 'ITRF93'
+   NDOSL_PM3F_IDCODE     = 399104446
+   NDOSL_PM3F_LATLON     = (  34.1228877222, 240.8452325833, -0.021670 )
+   NDOSL_PM3F_TOPO_FRAME = 'NDOSL_PM3F_TOPO'
+   NDOSL_PM3F_TOPO_ID    = 399104446
+   NDOSL_PM3F_UP         = 'Z'
+   NDOSL_PM3F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PM4F'
+   NDOSL_PM4F_CENTER     = 399
+   NDOSL_PM4F_FRAME      = 'ITRF93'
+   NDOSL_PM4F_IDCODE     = 399104441
+   NDOSL_PM4F_LATLON     = (  34.1221182500, 240.8471698611, -0.022190 )
+   NDOSL_PM4F_TOPO_FRAME = 'NDOSL_PM4F_TOPO'
+   NDOSL_PM4F_TOPO_ID    = 399104441
+   NDOSL_PM4F_UP         = 'Z'
+   NDOSL_PM4F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PMKS'
+   NDOSL_PMKS_CENTER     = 399
+   NDOSL_PMKS_FRAME      = 'ITRF93'
+   NDOSL_PMKS_IDCODE     = 399101729
+   NDOSL_PMKS_LATLON     = (  38.5577105278, 282.9422587778,  0.041940 )
+   NDOSL_PMKS_TOPO_FRAME = 'NDOSL_PMKS_TOPO'
+   NDOSL_PMKS_TOPO_ID    = 399101729
+   NDOSL_PMKS_UP         = 'Z'
+   NDOSL_PMKS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PP2F'
+   NDOSL_PP2F_CENTER     = 399
+   NDOSL_PP2F_FRAME      = 'ITRF93'
+   NDOSL_PP2F_IDCODE     = 399107399
+   NDOSL_PP2F_LATLON     = (  37.4968543611, 237.5033161111,  0.003780 )
+   NDOSL_PP2F_TOPO_FRAME = 'NDOSL_PP2F_TOPO'
+   NDOSL_PP2F_TOPO_ID    = 399107399
+   NDOSL_PP2F_UP         = 'Z'
+   NDOSL_PP2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PPTF'
+   NDOSL_PPTF_CENTER     = 399
+   NDOSL_PPTF_FRAME      = 'ITRF93'
+   NDOSL_PPTF_IDCODE     = 399104240
+   NDOSL_PPTF_LATLON     = (  37.4976966667, 237.5013010278,  0.015049 )
+   NDOSL_PPTF_TOPO_FRAME = 'NDOSL_PPTF_TOPO'
+   NDOSL_PPTF_TOPO_ID    = 399104240
+   NDOSL_PPTF_UP         = 'Z'
+   NDOSL_PPTF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PPTQ'
+   NDOSL_PPTQ_CENTER     = 399
+   NDOSL_PPTQ_FRAME      = 'ITRF93'
+   NDOSL_PPTQ_IDCODE     = 399104260
+   NDOSL_PPTQ_LATLON     = (  37.4978169167, 237.5002852778,  0.020150 )
+   NDOSL_PPTQ_TOPO_FRAME = 'NDOSL_PPTQ_TOPO'
+   NDOSL_PPTQ_TOPO_ID    = 399104260
+   NDOSL_PPTQ_UP         = 'Z'
+   NDOSL_PPTQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PPTY'
+   NDOSL_PPTY_CENTER     = 399
+   NDOSL_PPTY_FRAME      = 'ITRF93'
+   NDOSL_PPTY_IDCODE     = 399104216
+   NDOSL_PPTY_LATLON     = (  37.4977741111, 237.5008192778,  0.027690 )
+   NDOSL_PPTY_TOPO_FRAME = 'NDOSL_PPTY_TOPO'
+   NDOSL_PPTY_TOPO_ID    = 399104216
+   NDOSL_PPTY_UP         = 'Z'
+   NDOSL_PPTY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_PRTS'
+   NDOSL_PRTS_CENTER     = 399
+   NDOSL_PRTS_FRAME      = 'ITRF93'
+   NDOSL_PRTS_IDCODE     = 399101342
+   NDOSL_PRTS_LATLON     = ( -31.8020000000, 115.8850000000,  0.022160 )
+   NDOSL_PRTS_TOPO_FRAME = 'NDOSL_PRTS_TOPO'
+   NDOSL_PRTS_TOPO_ID    = 399101342
+   NDOSL_PRTS_UP         = 'Z'
+   NDOSL_PRTS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_RALS'
+   NDOSL_RALS_CENTER     = 399
+   NDOSL_RALS_FRAME      = 'ITRF93'
+   NDOSL_RALS_IDCODE     = 399101700
+   NDOSL_RALS_LATLON     = (  51.5720260000, 358.6885361111,  0.163120 )
+   NDOSL_RALS_TOPO_FRAME = 'NDOSL_RALS_TOPO'
+   NDOSL_RALS_TOPO_ID    = 399101700
+   NDOSL_RALS_UP         = 'Z'
+   NDOSL_RALS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_RGTS'
+   NDOSL_RGTS_CENTER     = 399
+   NDOSL_RGTS_FRAME      = 'ITRF93'
+   NDOSL_RGTS_IDCODE     = 399101963
+   NDOSL_RGTS_LATLON     = ( -35.4045363333, 148.9824183056,  0.663255 )
+   NDOSL_RGTS_TOPO_FRAME = 'NDOSL_RGTS_TOPO'
+   NDOSL_RGTS_TOPO_ID    = 399101963
+   NDOSL_RGTS_UP         = 'Z'
+   NDOSL_RGTS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_RTKS'
+   NDOSL_RTKS_CENTER     = 399
+   NDOSL_RTKS_FRAME      = 'ITRF93'
+   NDOSL_RTKS_IDCODE     = 399101964
+   NDOSL_RTKS_LATLON     = ( -35.4047449444, 148.9826048611,  0.661430 )
+   NDOSL_RTKS_TOPO_FRAME = 'NDOSL_RTKS_TOPO'
+   NDOSL_RTKS_TOPO_ID    = 399101964
+   NDOSL_RTKS_UP         = 'Z'
+   NDOSL_RTKS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_S22S'
+   NDOSL_S22S_CENTER     = 399
+   NDOSL_S22S_FRAME      = 'ITRF93'
+   NDOSL_S22S_IDCODE     = 399101734
+   NDOSL_S22S_LATLON     = (  78.2329076111,  15.3817730000,  0.481103 )
+   NDOSL_S22S_TOPO_FRAME = 'NDOSL_S22S_TOPO'
+   NDOSL_S22S_TOPO_ID    = 399101734
+   NDOSL_S22S_UP         = 'Z'
+   NDOSL_S22S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SARS'
+   NDOSL_SARS_CENTER     = 399
+   NDOSL_SARS_FRAME      = 'ITRF93'
+   NDOSL_SARS_IDCODE     = 399101739
+   NDOSL_SARS_LATLON     = (  17.6670000000,  53.8830000000,  0.030480 )
+   NDOSL_SARS_TOPO_FRAME = 'NDOSL_SARS_TOPO'
+   NDOSL_SARS_TOPO_ID    = 399101739
+   NDOSL_SARS_UP         = 'Z'
+   NDOSL_SARS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SEYS'
+   NDOSL_SEYS_CENTER     = 399
+   NDOSL_SEYS_FRAME      = 'ITRF93'
+   NDOSL_SEYS_IDCODE     = 399104071
+   NDOSL_SEYS_LATLON     = (  -4.6717481111,  55.4778205278,  0.560495 )
+   NDOSL_SEYS_TOPO_FRAME = 'NDOSL_SEYS_TOPO'
+   NDOSL_SEYS_TOPO_ID    = 399104071
+   NDOSL_SEYS_UP         = 'Z'
+   NDOSL_SEYS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SF1S'
+   NDOSL_SF1S_CENTER     = 399
+   NDOSL_SF1S_FRAME      = 'ITRF93'
+   NDOSL_SF1S_IDCODE     = 399101703
+   NDOSL_SF1S_LATLON     = (  43.7360726389, 263.3774853889,  0.468752 )
+   NDOSL_SF1S_TOPO_FRAME = 'NDOSL_SF1S_TOPO'
+   NDOSL_SF1S_TOPO_ID    = 399101703
+   NDOSL_SF1S_UP         = 'Z'
+   NDOSL_SF1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SF2S'
+   NDOSL_SF2S_CENTER     = 399
+   NDOSL_SF2S_FRAME      = 'ITRF93'
+   NDOSL_SF2S_IDCODE     = 399101716
+   NDOSL_SF2S_LATLON     = (  43.7342866667, 263.3805622222,  0.459336 )
+   NDOSL_SF2S_TOPO_FRAME = 'NDOSL_SF2S_TOPO'
+   NDOSL_SF2S_TOPO_ID    = 399101716
+   NDOSL_SF2S_UP         = 'Z'
+   NDOSL_SF2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SG1S'
+   NDOSL_SG1S_CENTER     = 399
+   NDOSL_SG1S_FRAME      = 'ITRF93'
+   NDOSL_SG1S_IDCODE     = 399101702
+   NDOSL_SG1S_LATLON     = (  78.2307666944,  15.3895336944,  0.500280 )
+   NDOSL_SG1S_TOPO_FRAME = 'NDOSL_SG1S_TOPO'
+   NDOSL_SG1S_TOPO_ID    = 399101702
+   NDOSL_SG1S_UP         = 'Z'
+   NDOSL_SG1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SG3S'
+   NDOSL_SG3S_CENTER     = 399
+   NDOSL_SG3S_FRAME      = 'ITRF93'
+   NDOSL_SG3S_IDCODE     = 399101733
+   NDOSL_SG3S_LATLON     = (  78.2297350000,  15.4080958333,  0.501378 )
+   NDOSL_SG3S_TOPO_FRAME = 'NDOSL_SG3S_TOPO'
+   NDOSL_SG3S_TOPO_ID    = 399101733
+   NDOSL_SG3S_UP         = 'Z'
+   NDOSL_SG3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SG4S'
+   NDOSL_SG4S_CENTER     = 399
+   NDOSL_SG4S_FRAME      = 'ITRF93'
+   NDOSL_SG4S_IDCODE     = 399101723
+   NDOSL_SG4S_LATLON     = (  78.2280230000,  15.4096672222,  0.508591 )
+   NDOSL_SG4S_TOPO_FRAME = 'NDOSL_SG4S_TOPO'
+   NDOSL_SG4S_TOPO_ID    = 399101723
+   NDOSL_SG4S_UP         = 'Z'
+   NDOSL_SG4S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SI1S'
+   NDOSL_SI1S_CENTER     = 399
+   NDOSL_SI1S_FRAME      = 'ITRF93'
+   NDOSL_SI1S_IDCODE     = 399101742
+   NDOSL_SI1S_LATLON     = (   1.3919180000, 103.8350000000,  0.030000 )
+   NDOSL_SI1S_TOPO_FRAME = 'NDOSL_SI1S_TOPO'
+   NDOSL_SI1S_TOPO_ID    = 399101742
+   NDOSL_SI1S_UP         = 'Z'
+   NDOSL_SI1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SIPQ'
+   NDOSL_SIPQ_CENTER     = 399
+   NDOSL_SIPQ_FRAME      = 'ITRF93'
+   NDOSL_SIPQ_IDCODE     = 399104003
+   NDOSL_SIPQ_LATLON     = (  15.2491458333, 145.7962166667,  0.348200 )
+   NDOSL_SIPQ_TOPO_FRAME = 'NDOSL_SIPQ_TOPO'
+   NDOSL_SIPQ_TOPO_ID    = 399104003
+   NDOSL_SIPQ_UP         = 'Z'
+   NDOSL_SIPQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SN2F'
+   NDOSL_SN2F_CENTER     = 399
+   NDOSL_SN2F_FRAME      = 'ITRF93'
+   NDOSL_SN2F_IDCODE     = 399104443
+   NDOSL_SN2F_LATLON     = (  33.2476850000, 240.4792571944,  0.246680 )
+   NDOSL_SN2F_TOPO_FRAME = 'NDOSL_SN2F_TOPO'
+   NDOSL_SN2F_TOPO_ID    = 399104443
+   NDOSL_SN2F_UP         = 'Z'
+   NDOSL_SN2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SN3F'
+   NDOSL_SN3F_CENTER     = 399
+   NDOSL_SN3F_FRAME      = 'ITRF93'
+   NDOSL_SN3F_IDCODE     = 399104444
+   NDOSL_SN3F_LATLON     = (  33.2483927500, 240.4786088333,  0.246120 )
+   NDOSL_SN3F_TOPO_FRAME = 'NDOSL_SN3F_TOPO'
+   NDOSL_SN3F_TOPO_ID    = 399104444
+   NDOSL_SN3F_UP         = 'Z'
+   NDOSL_SN3F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SNIF'
+   NDOSL_SNIF_CENTER     = 399
+   NDOSL_SNIF_FRAME      = 'ITRF93'
+   NDOSL_SNIF_IDCODE     = 399104442
+   NDOSL_SNIF_LATLON     = (  33.2469775833, 240.4799056667,  0.246160 )
+   NDOSL_SNIF_TOPO_FRAME = 'NDOSL_SNIF_TOPO'
+   NDOSL_SNIF_TOPO_ID    = 399104442
+   NDOSL_SNIF_UP         = 'Z'
+   NDOSL_SNIF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SOCA'
+   NDOSL_SOCA_CENTER     = 399
+   NDOSL_SOCA_FRAME      = 'ITRF93'
+   NDOSL_SOCA_IDCODE     = 399104139
+   NDOSL_SOCA_LATLON     = (  38.8500261111, 283.0677777778,  0.118566 )
+   NDOSL_SOCA_TOPO_FRAME = 'NDOSL_SOCA_TOPO'
+   NDOSL_SOCA_TOPO_ID    = 399104139
+   NDOSL_SOCA_UP         = 'Z'
+   NDOSL_SOCA_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ST1F'
+   NDOSL_ST1F_CENTER     = 399
+   NDOSL_ST1F_FRAME      = 'ITRF93'
+   NDOSL_ST1F_IDCODE     = 399104224
+   NDOSL_ST1F_LATLON     = (  18.3572533333, 295.0267835278,  0.130454 )
+   NDOSL_ST1F_TOPO_FRAME = 'NDOSL_ST1F_TOPO'
+   NDOSL_ST1F_TOPO_ID    = 399104224
+   NDOSL_ST1F_UP         = 'Z'
+   NDOSL_ST1F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ST2K'
+   NDOSL_ST2K_CENTER     = 399
+   NDOSL_ST2K_FRAME      = 'ITRF93'
+   NDOSL_ST2K_IDCODE     = 399104751
+   NDOSL_ST2K_LATLON     = (  32.5429773611, 253.3879110556,  1.452310 )
+   NDOSL_ST2K_TOPO_FRAME = 'NDOSL_ST2K_TOPO'
+   NDOSL_ST2K_TOPO_ID    = 399104751
+   NDOSL_ST2K_UP         = 'Z'
+   NDOSL_ST2K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ST3K'
+   NDOSL_ST3K_CENTER     = 399
+   NDOSL_ST3K_FRAME      = 'ITRF93'
+   NDOSL_ST3K_IDCODE     = 399104752
+   NDOSL_ST3K_LATLON     = (  32.5426750000, 253.3879111111,  1.452300 )
+   NDOSL_ST3K_TOPO_FRAME = 'NDOSL_ST3K_TOPO'
+   NDOSL_ST3K_TOPO_ID    = 399104752
+   NDOSL_ST3K_UP         = 'Z'
+   NDOSL_ST3K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_STGK'
+   NDOSL_STGK_CENTER     = 399
+   NDOSL_STGK_FRAME      = 'ITRF93'
+   NDOSL_STGK_IDCODE     = 399104750
+   NDOSL_STGK_LATLON     = (  32.5432795833, 253.3879110556,  1.452280 )
+   NDOSL_STGK_TOPO_FRAME = 'NDOSL_STGK_TOPO'
+   NDOSL_STGK_TOPO_ID    = 399104750
+   NDOSL_STGK_UP         = 'Z'
+   NDOSL_STGK_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_STGS'
+   NDOSL_STGS_CENTER     = 399
+   NDOSL_STGS_FRAME      = 'ITRF93'
+   NDOSL_STGS_IDCODE     = 399104753
+   NDOSL_STGS_LATLON     = (  32.5424516667, 253.3879110556,  1.449460 )
+   NDOSL_STGS_TOPO_FRAME = 'NDOSL_STGS_TOPO'
+   NDOSL_STGS_TOPO_ID    = 399104753
+   NDOSL_STGS_UP         = 'Z'
+   NDOSL_STGS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_STSS'
+   NDOSL_STSS_CENTER     = 399
+   NDOSL_STSS_FRAME      = 'ITRF93'
+   NDOSL_STSS_IDCODE     = 399101741
+   NDOSL_STSS_LATLON     = (  32.5417167500, 253.3879009444,  1.456090 )
+   NDOSL_STSS_TOPO_FRAME = 'NDOSL_STSS_TOPO'
+   NDOSL_STSS_TOPO_ID    = 399101741
+   NDOSL_STSS_UP         = 'Z'
+   NDOSL_STSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_STWS'
+   NDOSL_STWS_CENTER     = 399
+   NDOSL_STWS_FRAME      = 'ITRF93'
+   NDOSL_STWS_IDCODE     = 399101740
+   NDOSL_STWS_LATLON     = (  32.4995067778, 253.3914361667,  1.460383 )
+   NDOSL_STWS_TOPO_FRAME = 'NDOSL_STWS_TOPO'
+   NDOSL_STWS_TOPO_ID    = 399101740
+   NDOSL_STWS_UP         = 'Z'
+   NDOSL_STWS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SWNS'
+   NDOSL_SWNS_CENTER     = 399
+   NDOSL_SWNS_FRAME      = 'ITRF93'
+   NDOSL_SWNS_IDCODE     = 399101796
+   NDOSL_SWNS_LATLON     = ( -20.3800000000, 118.6350000000,  0.242000 )
+   NDOSL_SWNS_TOPO_FRAME = 'NDOSL_SWNS_TOPO'
+   NDOSL_SWNS_TOPO_ID    = 399101796
+   NDOSL_SWNS_UP         = 'Z'
+   NDOSL_SWNS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_SYOQ'
+   NDOSL_SYOQ_CENTER     = 399
+   NDOSL_SYOQ_FRAME      = 'ITRF93'
+   NDOSL_SYOQ_IDCODE     = 399104262
+   NDOSL_SYOQ_LATLON     = ( -69.0060964444,  39.5901538889,  0.005372 )
+   NDOSL_SYOQ_TOPO_FRAME = 'NDOSL_SYOQ_TOPO'
+   NDOSL_SYOQ_TOPO_ID    = 399104262
+   NDOSL_SYOQ_UP         = 'Z'
+   NDOSL_SYOQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_TH2S'
+   NDOSL_TH2S_CENTER     = 399
+   NDOSL_TH2S_FRAME      = 'ITRF93'
+   NDOSL_TH2S_IDCODE     = 399101731
+   NDOSL_TH2S_LATLON     = (  76.5153638889, 291.4011852778,  0.147370 )
+   NDOSL_TH2S_TOPO_FRAME = 'NDOSL_TH2S_TOPO'
+   NDOSL_TH2S_TOPO_ID    = 399101731
+   NDOSL_TH2S_UP         = 'Z'
+   NDOSL_TH2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_THUS'
+   NDOSL_THUS_CENTER     = 399
+   NDOSL_THUS_FRAME      = 'ITRF93'
+   NDOSL_THUS_IDCODE     = 399101730
+   NDOSL_THUS_LATLON     = (  76.5162930556, 291.4009822222,  0.141160 )
+   NDOSL_THUS_TOPO_FRAME = 'NDOSL_THUS_TOPO'
+   NDOSL_THUS_TOPO_ID    = 399101730
+   NDOSL_THUS_UP         = 'Z'
+   NDOSL_THUS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_TR2S'
+   NDOSL_TR2S_CENTER     = 399
+   NDOSL_TR2S_FRAME      = 'ITRF93'
+   NDOSL_TR2S_IDCODE     = 399101738
+   NDOSL_TR2S_LATLON     = ( -72.0022220556,   2.5241237778,  1.416582 )
+   NDOSL_TR2S_TOPO_FRAME = 'NDOSL_TR2S_TOPO'
+   NDOSL_TR2S_TOPO_ID    = 399101738
+   NDOSL_TR2S_UP         = 'Z'
+   NDOSL_TR2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_TSMF'
+   NDOSL_TSMF_CENTER     = 399
+   NDOSL_TSMF_FRAME      = 'ITRF93'
+   NDOSL_TSMF_IDCODE     = 399104080
+   NDOSL_TSMF_LATLON     = ( -42.8050000000, 147.4390000000,  0.043000 )
+   NDOSL_TSMF_TOPO_FRAME = 'NDOSL_TSMF_TOPO'
+   NDOSL_TSMF_TOPO_ID    = 399104080
+   NDOSL_TSMF_UP         = 'Z'
+   NDOSL_TSMF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_TT2S'
+   NDOSL_TT2S_CENTER     = 399
+   NDOSL_TT2S_FRAME      = 'ITRF93'
+   NDOSL_TT2S_IDCODE     = 399101376
+   NDOSL_TT2S_LATLON     = (  76.5153644167, 291.4011416944,  0.146985 )
+   NDOSL_TT2S_TOPO_FRAME = 'NDOSL_TT2S_TOPO'
+   NDOSL_TT2S_TOPO_ID    = 399101376
+   NDOSL_TT2S_UP         = 'Z'
+   NDOSL_TT2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_TTSS'
+   NDOSL_TTSS_CENTER     = 399
+   NDOSL_TTSS_FRAME      = 'ITRF93'
+   NDOSL_TTSS_IDCODE     = 399101369
+   NDOSL_TTSS_LATLON     = (  76.5159345556, 291.4000277222,  0.135906 )
+   NDOSL_TTSS_TOPO_FRAME = 'NDOSL_TTSS_TOPO'
+   NDOSL_TTSS_TOPO_ID    = 399101369
+   NDOSL_TTSS_UP         = 'Z'
+   NDOSL_TTSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_TULF'
+   NDOSL_TULF_CENTER     = 399
+   NDOSL_TULF_FRAME      = 'ITRF93'
+   NDOSL_TULF_IDCODE     = 399104151
+   NDOSL_TULF_LATLON     = (  33.0961615278, 253.8408458333,  1.241254 )
+   NDOSL_TULF_TOPO_FRAME = 'NDOSL_TULF_TOPO'
+   NDOSL_TULF_TOPO_ID    = 399104151
+   NDOSL_TULF_UP         = 'Z'
+   NDOSL_TULF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_TULS'
+   NDOSL_TULS_CENTER     = 399
+   NDOSL_TULS_FRAME      = 'ITRF93'
+   NDOSL_TULS_IDCODE     = 399104078
+   NDOSL_TULS_LATLON     = (  33.0269448889, 253.8609090000,  1.328633 )
+   NDOSL_TULS_TOPO_FRAME = 'NDOSL_TULS_TOPO'
+   NDOSL_TULS_TOPO_ID    = 399104078
+   NDOSL_TULS_UP         = 'Z'
+   NDOSL_TULS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_U2HS'
+   NDOSL_U2HS_CENTER     = 399
+   NDOSL_U2HS_FRAME      = 'ITRF93'
+   NDOSL_U2HS_IDCODE     = 399101779
+   NDOSL_U2HS_LATLON     = (  19.0137934444, 204.3370559167,  0.382300 )
+   NDOSL_U2HS_TOPO_FRAME = 'NDOSL_U2HS_TOPO'
+   NDOSL_U2HS_TOPO_ID    = 399101779
+   NDOSL_U2HS_UP         = 'Z'
+   NDOSL_U2HS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_UL1S'
+   NDOSL_UL1S_CENTER     = 399
+   NDOSL_UL1S_FRAME      = 'ITRF93'
+   NDOSL_UL1S_IDCODE     = 399101854
+   NDOSL_UL1S_LATLON     = (  64.9727500000, 212.4989000000,  0.447300 )
+   NDOSL_UL1S_TOPO_FRAME = 'NDOSL_UL1S_TOPO'
+   NDOSL_UL1S_TOPO_ID    = 399101854
+   NDOSL_UL1S_UP         = 'Z'
+   NDOSL_UL1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_UL23'
+   NDOSL_UL23_CENTER     = 399
+   NDOSL_UL23_FRAME      = 'ITRF93'
+   NDOSL_UL23_IDCODE     = 399101371
+   NDOSL_UL23_LATLON     = (  64.9724071111, 212.4819343333,  0.331108 )
+   NDOSL_UL23_TOPO_FRAME = 'NDOSL_UL23_TOPO'
+   NDOSL_UL23_TOPO_ID    = 399101371
+   NDOSL_UL23_UP         = 'Z'
+   NDOSL_UL23_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_UL33'
+   NDOSL_UL33_CENTER     = 399
+   NDOSL_UL33_FRAME      = 'ITRF93'
+   NDOSL_UL33_IDCODE     = 399101332
+   NDOSL_UL33_LATLON     = (  64.9768138889, 212.4819338333,  0.308056 )
+   NDOSL_UL33_TOPO_FRAME = 'NDOSL_UL33_TOPO'
+   NDOSL_UL33_TOPO_ID    = 399101332
+   NDOSL_UL33_UP         = 'Z'
+   NDOSL_UL33_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ULA3'
+   NDOSL_ULA3_CENTER     = 399
+   NDOSL_ULA3_FRAME      = 'ITRF93'
+   NDOSL_ULA3_IDCODE     = 399101328
+   NDOSL_ULA3_LATLON     = (  64.9721402500, 212.4866111667,  0.344054 )
+   NDOSL_ULA3_TOPO_FRAME = 'NDOSL_ULA3_TOPO'
+   NDOSL_ULA3_TOPO_ID    = 399101328
+   NDOSL_ULA3_UP         = 'Z'
+   NDOSL_ULA3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ULA4'
+   NDOSL_ULA4_CENTER     = 399
+   NDOSL_ULA4_FRAME      = 'ITRF93'
+   NDOSL_ULA4_IDCODE     = 399101401
+   NDOSL_ULA4_LATLON     = (  64.9765957500, 212.4787171111,  0.299159 )
+   NDOSL_ULA4_TOPO_FRAME = 'NDOSL_ULA4_TOPO'
+   NDOSL_ULA4_TOPO_ID    = 399101401
+   NDOSL_ULA4_UP         = 'Z'
+   NDOSL_ULA4_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_ULAE'
+   NDOSL_ULAE_CENTER     = 399
+   NDOSL_ULAE_FRAME      = 'ITRF93'
+   NDOSL_ULAE_IDCODE     = 399101853
+   NDOSL_ULAE_LATLON     = (  64.9767155556, 212.4824452778,  0.308000 )
+   NDOSL_ULAE_TOPO_FRAME = 'NDOSL_ULAE_TOPO'
+   NDOSL_ULAE_TOPO_ID    = 399101853
+   NDOSL_ULAE_UP         = 'Z'
+   NDOSL_ULAE_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_USAS'
+   NDOSL_USAS_CENTER     = 399
+   NDOSL_USAS_FRAME      = 'ITRF93'
+   NDOSL_USAS_IDCODE     = 399101709
+   NDOSL_USAS_LATLON     = (  64.8042411111, 212.4997858333,  0.160580 )
+   NDOSL_USAS_TOPO_FRAME = 'NDOSL_USAS_TOPO'
+   NDOSL_USAS_TOPO_ID    = 399101709
+   NDOSL_USAS_UP         = 'Z'
+   NDOSL_USAS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_USDS'
+   NDOSL_USDS_CENTER     = 399
+   NDOSL_USDS_FRAME      = 'ITRF93'
+   NDOSL_USDS_IDCODE     = 399101717
+   NDOSL_USDS_LATLON     = ( -29.0457720000, 115.3486780000,  0.251840 )
+   NDOSL_USDS_TOPO_FRAME = 'NDOSL_USDS_TOPO'
+   NDOSL_USDS_TOPO_ID    = 399101717
+   NDOSL_USDS_UP         = 'Z'
+   NDOSL_USDS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_USHS'
+   NDOSL_USHS_CENTER     = 399
+   NDOSL_USHS_FRAME      = 'ITRF93'
+   NDOSL_USHS_IDCODE     = 399101778
+   NDOSL_USHS_LATLON     = (  19.0139525000, 204.3366681667,  0.385194 )
+   NDOSL_USHS_TOPO_FRAME = 'NDOSL_USHS_TOPO'
+   NDOSL_USHS_TOPO_ID    = 399101778
+   NDOSL_USHS_UP         = 'Z'
+   NDOSL_USHS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_USPS'
+   NDOSL_USPS_CENTER     = 399
+   NDOSL_USPS_FRAME      = 'ITRF93'
+   NDOSL_USPS_IDCODE     = 399101770
+   NDOSL_USPS_LATLON     = ( -29.0457721667, 115.3486776389,  0.250470 )
+   NDOSL_USPS_TOPO_FRAME = 'NDOSL_USPS_TOPO'
+   NDOSL_USPS_TOPO_ID    = 399101770
+   NDOSL_USPS_UP         = 'Z'
+   NDOSL_USPS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VD2F'
+   NDOSL_VD2F_CENTER     = 399
+   NDOSL_VD2F_FRAME      = 'ITRF93'
+   NDOSL_VD2F_IDCODE     = 399104247
+   NDOSL_VD2F_LATLON     = (  34.7582318333, 239.3728786111,  0.026040 )
+   NDOSL_VD2F_TOPO_FRAME = 'NDOSL_VD2F_TOPO'
+   NDOSL_VD2F_TOPO_ID    = 399104247
+   NDOSL_VD2F_UP         = 'Z'
+   NDOSL_VD2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VD3F'
+   NDOSL_VD3F_CENTER     = 399
+   NDOSL_VD3F_FRAME      = 'ITRF93'
+   NDOSL_VD3F_IDCODE     = 399104251
+   NDOSL_VD3F_LATLON     = (  34.5830429444, 239.4388850556,  0.627252 )
+   NDOSL_VD3F_TOPO_FRAME = 'NDOSL_VD3F_TOPO'
+   NDOSL_VD3F_TOPO_ID    = 399104251
+   NDOSL_VD3F_UP         = 'Z'
+   NDOSL_VD3F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VD4F'
+   NDOSL_VD4F_CENTER     = 399
+   NDOSL_VD4F_FRAME      = 'ITRF93'
+   NDOSL_VD4F_IDCODE     = 399104254
+   NDOSL_VD4F_LATLON     = (  34.5830429444, 239.4388850556,  0.627248 )
+   NDOSL_VD4F_TOPO_FRAME = 'NDOSL_VD4F_TOPO'
+   NDOSL_VD4F_TOPO_ID    = 399104254
+   NDOSL_VD4F_UP         = 'Z'
+   NDOSL_VD4F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VDB3'
+   NDOSL_VDB3_CENTER     = 399
+   NDOSL_VDB3_FRAME      = 'ITRF93'
+   NDOSL_VDB3_IDCODE     = 399101333
+   NDOSL_VDB3_LATLON     = (  34.5656259167, 239.4983826944,  0.609440 )
+   NDOSL_VDB3_TOPO_FRAME = 'NDOSL_VDB3_TOPO'
+   NDOSL_VDB3_TOPO_ID    = 399101333
+   NDOSL_VDB3_UP         = 'Z'
+   NDOSL_VDB3_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VDBF'
+   NDOSL_VDBF_CENTER     = 399
+   NDOSL_VDBF_FRAME      = 'ITRF93'
+   NDOSL_VDBF_IDCODE     = 399104246
+   NDOSL_VDBF_LATLON     = (  34.7748776944, 239.4638902778,  0.122607 )
+   NDOSL_VDBF_TOPO_FRAME = 'NDOSL_VDBF_TOPO'
+   NDOSL_VDBF_TOPO_ID    = 399104246
+   NDOSL_VDBF_UP         = 'Z'
+   NDOSL_VDBF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VEND'
+   NDOSL_VEND_CENTER     = 399
+   NDOSL_VEND_FRAME      = 'ITRF93'
+   NDOSL_VEND_IDCODE     = 399101513
+   NDOSL_VEND_LATLON     = (  35.2471642500, 243.2055410000,  1.070444 )
+   NDOSL_VEND_TOPO_FRAME = 'NDOSL_VEND_TOPO'
+   NDOSL_VEND_TOPO_ID    = 399101513
+   NDOSL_VEND_UP         = 'Z'
+   NDOSL_VEND_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VT2S'
+   NDOSL_VT2S_CENTER     = 399
+   NDOSL_VT2S_FRAME      = 'ITRF93'
+   NDOSL_VT2S_IDCODE     = 399101372
+   NDOSL_VT2S_LATLON     = (  34.8256407778, 239.4946023333,  0.268610 )
+   NDOSL_VT2S_TOPO_FRAME = 'NDOSL_VT2S_TOPO'
+   NDOSL_VT2S_TOPO_ID    = 399101372
+   NDOSL_VT2S_UP         = 'Z'
+   NDOSL_VT2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_VTSS'
+   NDOSL_VTSS_CENTER     = 399
+   NDOSL_VTSS_FRAME      = 'ITRF93'
+   NDOSL_VTSS_IDCODE     = 399101365
+   NDOSL_VTSS_LATLON     = (  34.8226165556, 239.4981515556,  0.272510 )
+   NDOSL_VTSS_TOPO_FRAME = 'NDOSL_VTSS_TOPO'
+   NDOSL_VTSS_TOPO_ID    = 399101365
+   NDOSL_VTSS_UP         = 'Z'
+   NDOSL_VTSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WAPS'
+   NDOSL_WAPS_CENTER     = 399
+   NDOSL_WAPS_FRAME      = 'ITRF93'
+   NDOSL_WAPS_IDCODE     = 399101341
+   NDOSL_WAPS_LATLON     = (  37.9249255556, 284.5234775000, -0.020100 )
+   NDOSL_WAPS_TOPO_FRAME = 'NDOSL_WAPS_TOPO'
+   NDOSL_WAPS_TOPO_ID    = 399101341
+   NDOSL_WAPS_UP         = 'Z'
+   NDOSL_WAPS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WD3F'
+   NDOSL_WD3F_CENTER     = 399
+   NDOSL_WD3F_FRAME      = 'ITRF93'
+   NDOSL_WD3F_IDCODE     = 399104846
+   NDOSL_WD3F_LATLON     = (  37.8563652500, 284.4885646389, -0.018126 )
+   NDOSL_WD3F_TOPO_FRAME = 'NDOSL_WD3F_TOPO'
+   NDOSL_WD3F_TOPO_ID    = 399104846
+   NDOSL_WD3F_UP         = 'Z'
+   NDOSL_WD3F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WD4F'
+   NDOSL_WD4F_CENTER     = 399
+   NDOSL_WD4F_FRAME      = 'ITRF93'
+   NDOSL_WD4F_IDCODE     = 399104843
+   NDOSL_WD4F_LATLON     = (  37.8563663889, 284.4885610000,  0.018660 )
+   NDOSL_WD4F_TOPO_FRAME = 'NDOSL_WD4F_TOPO'
+   NDOSL_WD4F_TOPO_ID    = 399104843
+   NDOSL_WD4F_UP         = 'Z'
+   NDOSL_WD4F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH2J'
+   NDOSL_WH2J_CENTER     = 399
+   NDOSL_WH2J_FRAME      = 'ITRF93'
+   NDOSL_WH2J_IDCODE     = 399100202
+   NDOSL_WH2J_LATLON     = (  32.5062814722, 253.3880342500,  1.442610 )
+   NDOSL_WH2J_TOPO_FRAME = 'NDOSL_WH2J_TOPO'
+   NDOSL_WH2J_TOPO_ID    = 399100202
+   NDOSL_WH2J_UP         = 'Z'
+   NDOSL_WH2J_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH2K'
+   NDOSL_WH2K_CENTER     = 399
+   NDOSL_WH2K_FRAME      = 'ITRF93'
+   NDOSL_WH2K_IDCODE     = 399101921
+   NDOSL_WH2K_LATLON     = (  32.5007371944, 253.3914482778,  1.459740 )
+   NDOSL_WH2K_TOPO_FRAME = 'NDOSL_WH2K_TOPO'
+   NDOSL_WH2K_TOPO_ID    = 399101921
+   NDOSL_WH2K_UP         = 'Z'
+   NDOSL_WH2K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH2S'
+   NDOSL_WH2S_CENTER     = 399
+   NDOSL_WH2S_FRAME      = 'ITRF93'
+   NDOSL_WH2S_IDCODE     = 399101962
+   NDOSL_WH2S_LATLON     = (  32.5012965556, 253.3914461111,  1.457665 )
+   NDOSL_WH2S_TOPO_FRAME = 'NDOSL_WH2S_TOPO'
+   NDOSL_WH2S_TOPO_ID    = 399101962
+   NDOSL_WH2S_UP         = 'Z'
+   NDOSL_WH2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH3K'
+   NDOSL_WH3K_CENTER     = 399
+   NDOSL_WH3K_FRAME      = 'ITRF93'
+   NDOSL_WH3K_IDCODE     = 399101922
+   NDOSL_WH3K_LATLON     = (  32.5004622778, 253.3914484167,  1.459740 )
+   NDOSL_WH3K_TOPO_FRAME = 'NDOSL_WH3K_TOPO'
+   NDOSL_WH3K_TOPO_ID    = 399101922
+   NDOSL_WH3K_UP         = 'Z'
+   NDOSL_WH3K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH4K'
+   NDOSL_WH4K_CENTER     = 399
+   NDOSL_WH4K_FRAME      = 'ITRF93'
+   NDOSL_WH4K_IDCODE     = 399101925
+   NDOSL_WH4K_LATLON     = (  32.5013896111, 253.3914461111,  1.458675 )
+   NDOSL_WH4K_TOPO_FRAME = 'NDOSL_WH4K_TOPO'
+   NDOSL_WH4K_TOPO_ID    = 399101925
+   NDOSL_WH4K_UP         = 'Z'
+   NDOSL_WH4K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH5K'
+   NDOSL_WH5K_CENTER     = 399
+   NDOSL_WH5K_FRAME      = 'ITRF93'
+   NDOSL_WH5K_IDCODE     = 399101940
+   NDOSL_WH5K_LATLON     = (  32.5012418333, 253.3914463889,  1.456635 )
+   NDOSL_WH5K_TOPO_FRAME = 'NDOSL_WH5K_TOPO'
+   NDOSL_WH5K_TOPO_ID    = 399101940
+   NDOSL_WH5K_UP         = 'Z'
+   NDOSL_WH5K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH6F'
+   NDOSL_WH6F_CENTER     = 399
+   NDOSL_WH6F_FRAME      = 'ITRF93'
+   NDOSL_WH6F_IDCODE     = 399104145
+   NDOSL_WH6F_LATLON     = (  33.8138639444, 253.3409877222,  1.508970 )
+   NDOSL_WH6F_TOPO_FRAME = 'NDOSL_WH6F_TOPO'
+   NDOSL_WH6F_TOPO_ID    = 399104145
+   NDOSL_WH6F_UP         = 'Z'
+   NDOSL_WH6F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH6K'
+   NDOSL_WH6K_CENTER     = 399
+   NDOSL_WH6K_FRAME      = 'ITRF93'
+   NDOSL_WH6K_IDCODE     = 399101941
+   NDOSL_WH6K_LATLON     = (  32.5014619722, 253.3907652500,  1.448046 )
+   NDOSL_WH6K_TOPO_FRAME = 'NDOSL_WH6K_TOPO'
+   NDOSL_WH6K_TOPO_ID    = 399101941
+   NDOSL_WH6K_UP         = 'Z'
+   NDOSL_WH6K_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH7F'
+   NDOSL_WH7F_CENTER     = 399
+   NDOSL_WH7F_FRAME      = 'ITRF93'
+   NDOSL_WH7F_IDCODE     = 399104147
+   NDOSL_WH7F_LATLON     = (  33.8130782778, 253.3409855278,  1.497454 )
+   NDOSL_WH7F_TOPO_FRAME = 'NDOSL_WH7F_TOPO'
+   NDOSL_WH7F_TOPO_ID    = 399104147
+   NDOSL_WH7F_UP         = 'Z'
+   NDOSL_WH7F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WH9F'
+   NDOSL_WH9F_CENTER     = 399
+   NDOSL_WH9F_FRAME      = 'ITRF93'
+   NDOSL_WH9F_IDCODE     = 399104146
+   NDOSL_WH9F_LATLON     = (  33.4452186667, 253.8678916111,  1.592508 )
+   NDOSL_WH9F_TOPO_FRAME = 'NDOSL_WH9F_TOPO'
+   NDOSL_WH9F_TOPO_ID    = 399104146
+   NDOSL_WH9F_UP         = 'Z'
+   NDOSL_WH9F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WHSF'
+   NDOSL_WHSF_CENTER     = 399
+   NDOSL_WHSF_FRAME      = 'ITRF93'
+   NDOSL_WHSF_IDCODE     = 399104143
+   NDOSL_WHSF_LATLON     = (  32.3580421111, 253.6301925833,  1.209860 )
+   NDOSL_WHSF_TOPO_FRAME = 'NDOSL_WHSF_TOPO'
+   NDOSL_WHSF_TOPO_ID    = 399104143
+   NDOSL_WHSF_UP         = 'Z'
+   NDOSL_WHSF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WHSJ'
+   NDOSL_WHSJ_CENTER     = 399
+   NDOSL_WHSJ_FRAME      = 'ITRF93'
+   NDOSL_WHSJ_IDCODE     = 399100201
+   NDOSL_WHSJ_LATLON     = (  32.5062814722, 253.3880342500,  1.442610 )
+   NDOSL_WHSJ_TOPO_FRAME = 'NDOSL_WHSJ_TOPO'
+   NDOSL_WHSJ_TOPO_ID    = 399100201
+   NDOSL_WHSJ_UP         = 'Z'
+   NDOSL_WHSJ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WHSK'
+   NDOSL_WHSK_CENTER     = 399
+   NDOSL_WHSK_FRAME      = 'ITRF93'
+   NDOSL_WHSK_IDCODE     = 399101920
+   NDOSL_WHSK_LATLON     = (  32.5010120556, 253.3914482778,  1.459730 )
+   NDOSL_WHSK_TOPO_FRAME = 'NDOSL_WHSK_TOPO'
+   NDOSL_WHSK_TOPO_ID    = 399101920
+   NDOSL_WHSK_UP         = 'Z'
+   NDOSL_WHSK_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WHSS'
+   NDOSL_WHSS_CENTER     = 399
+   NDOSL_WHSS_FRAME      = 'ITRF93'
+   NDOSL_WHSS_IDCODE     = 399101961
+   NDOSL_WHSS_LATLON     = (  32.5002697778, 253.3914481111,  1.452260 )
+   NDOSL_WHSS_TOPO_FRAME = 'NDOSL_WHSS_TOPO'
+   NDOSL_WHSS_TOPO_ID    = 399101961
+   NDOSL_WHSS_UP         = 'Z'
+   NDOSL_WHSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WHSX'
+   NDOSL_WHSX_CENTER     = 399
+   NDOSL_WHSX_FRAME      = 'ITRF93'
+   NDOSL_WHSX_IDCODE     = 399101842
+   NDOSL_WHSX_LATLON     = (  32.5009413889, 253.3919829167,  1.477061 )
+   NDOSL_WHSX_TOPO_FRAME = 'NDOSL_WHSX_TOPO'
+   NDOSL_WHSX_TOPO_ID    = 399101842
+   NDOSL_WHSX_UP         = 'Z'
+   NDOSL_WHSX_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL2F'
+   NDOSL_WL2F_CENTER     = 399
+   NDOSL_WL2F_FRAME      = 'ITRF93'
+   NDOSL_WL2F_IDCODE     = 399104841
+   NDOSL_WL2F_LATLON     = (  37.9440991389, 284.5357766389, -0.014040 )
+   NDOSL_WL2F_TOPO_FRAME = 'NDOSL_WL2F_TOPO'
+   NDOSL_WL2F_TOPO_ID    = 399104841
+   NDOSL_WL2F_UP         = 'Z'
+   NDOSL_WL2F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL2S'
+   NDOSL_WL2S_CENTER     = 399
+   NDOSL_WL2S_FRAME      = 'ITRF93'
+   NDOSL_WL2S_IDCODE     = 399104206
+   NDOSL_WL2S_LATLON     = (  37.9464296944, 284.5379421389, -0.006765 )
+   NDOSL_WL2S_TOPO_FRAME = 'NDOSL_WL2S_TOPO'
+   NDOSL_WL2S_TOPO_ID    = 399104206
+   NDOSL_WL2S_UP         = 'Z'
+   NDOSL_WL2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL3F'
+   NDOSL_WL3F_CENTER     = 399
+   NDOSL_WL3F_FRAME      = 'ITRF93'
+   NDOSL_WL3F_IDCODE     = 399104845
+   NDOSL_WL3F_LATLON     = (  37.8563652500, 284.4885646389, -0.018126 )
+   NDOSL_WL3F_TOPO_FRAME = 'NDOSL_WL3F_TOPO'
+   NDOSL_WL3F_TOPO_ID    = 399104845
+   NDOSL_WL3F_UP         = 'Z'
+   NDOSL_WL3F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL3S'
+   NDOSL_WL3S_CENTER     = 399
+   NDOSL_WL3S_FRAME      = 'ITRF93'
+   NDOSL_WL3S_IDCODE     = 399104207
+   NDOSL_WL3S_LATLON     = (  37.9457949722, 284.5395633056, -0.005689 )
+   NDOSL_WL3S_TOPO_FRAME = 'NDOSL_WL3S_TOPO'
+   NDOSL_WL3S_TOPO_ID    = 399104207
+   NDOSL_WL3S_UP         = 'Z'
+   NDOSL_WL3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL4F'
+   NDOSL_WL4F_CENTER     = 399
+   NDOSL_WL4F_FRAME      = 'ITRF93'
+   NDOSL_WL4F_IDCODE     = 399104842
+   NDOSL_WL4F_LATLON     = (  37.8563663889, 284.4885610000,  0.018660 )
+   NDOSL_WL4F_TOPO_FRAME = 'NDOSL_WL4F_TOPO'
+   NDOSL_WL4F_TOPO_ID    = 399104842
+   NDOSL_WL4F_UP         = 'Z'
+   NDOSL_WL4F_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL4S'
+   NDOSL_WL4S_CENTER     = 399
+   NDOSL_WL4S_FRAME      = 'ITRF93'
+   NDOSL_WL4S_IDCODE     = 399104208
+   NDOSL_WL4S_LATLON     = (  37.9463133056, 284.5394005278, -0.028793 )
+   NDOSL_WL4S_TOPO_FRAME = 'NDOSL_WL4S_TOPO'
+   NDOSL_WL4S_TOPO_ID    = 399104208
+   NDOSL_WL4S_UP         = 'Z'
+   NDOSL_WL4S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL53'
+   NDOSL_WL53_CENTER     = 399
+   NDOSL_WL53_FRAME      = 'ITRF93'
+   NDOSL_WL53_IDCODE     = 399104209
+   NDOSL_WL53_LATLON     = (  37.9468000000, 284.5399000000, -0.025806 )
+   NDOSL_WL53_TOPO_FRAME = 'NDOSL_WL53_TOPO'
+   NDOSL_WL53_TOPO_ID    = 399104209
+   NDOSL_WL53_UP         = 'Z'
+   NDOSL_WL53_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WL6S'
+   NDOSL_WL6S_CENTER     = 399
+   NDOSL_WL6S_FRAME      = 'ITRF93'
+   NDOSL_WL6S_IDCODE     = 399104210
+   NDOSL_WL6S_LATLON     = (  37.9456000000, 284.5389000000,  0.013216 )
+   NDOSL_WL6S_TOPO_FRAME = 'NDOSL_WL6S_TOPO'
+   NDOSL_WL6S_TOPO_ID    = 399104210
+   NDOSL_WL6S_UP         = 'Z'
+   NDOSL_WL6S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WLPF'
+   NDOSL_WLPF_CENTER     = 399
+   NDOSL_WLPF_FRAME      = 'ITRF93'
+   NDOSL_WLPF_IDCODE     = 399104840
+   NDOSL_WLPF_LATLON     = (  37.8413397222, 284.5149109167, -0.024000 )
+   NDOSL_WLPF_TOPO_FRAME = 'NDOSL_WLPF_TOPO'
+   NDOSL_WLPF_TOPO_ID    = 399104840
+   NDOSL_WLPF_UP         = 'Z'
+   NDOSL_WLPF_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WLPQ'
+   NDOSL_WLPQ_CENTER     = 399
+   NDOSL_WLPQ_FRAME      = 'ITRF93'
+   NDOSL_WLPQ_IDCODE     = 399104860
+   NDOSL_WLPQ_LATLON     = (  37.8602614722, 284.4907044444, -0.021700 )
+   NDOSL_WLPQ_TOPO_FRAME = 'NDOSL_WLPQ_TOPO'
+   NDOSL_WLPQ_TOPO_ID    = 399104860
+   NDOSL_WLPQ_UP         = 'Z'
+   NDOSL_WLPQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WP2S'
+   NDOSL_WP2S_CENTER     = 399
+   NDOSL_WP2S_FRAME      = 'ITRF93'
+   NDOSL_WP2S_IDCODE     = 399101337
+   NDOSL_WP2S_LATLON     = (  37.9280669722, 284.5255837500, -0.020961 )
+   NDOSL_WP2S_TOPO_FRAME = 'NDOSL_WP2S_TOPO'
+   NDOSL_WP2S_TOPO_ID    = 399101337
+   NDOSL_WP2S_UP         = 'Z'
+   NDOSL_WP2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WP2Y'
+   NDOSL_WP2Y_CENTER     = 399
+   NDOSL_WP2Y_FRAME      = 'ITRF93'
+   NDOSL_WP2Y_IDCODE     = 399101838
+   NDOSL_WP2Y_LATLON     = (  37.9255851667, 284.5231425833, -0.015234 )
+   NDOSL_WP2Y_TOPO_FRAME = 'NDOSL_WP2Y_TOPO'
+   NDOSL_WP2Y_TOPO_ID    = 399101838
+   NDOSL_WP2Y_UP         = 'Z'
+   NDOSL_WP2Y_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WP2Z'
+   NDOSL_WP2Z_CENTER     = 399
+   NDOSL_WP2Z_FRAME      = 'ITRF93'
+   NDOSL_WP2Z_IDCODE     = 399101840
+   NDOSL_WP2Z_LATLON     = (  37.9289123333, 284.5262488611, -0.017846 )
+   NDOSL_WP2Z_TOPO_FRAME = 'NDOSL_WP2Z_TOPO'
+   NDOSL_WP2Z_TOPO_ID    = 399101840
+   NDOSL_WP2Z_UP         = 'Z'
+   NDOSL_WP2Z_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WP3S'
+   NDOSL_WP3S_CENTER     = 399
+   NDOSL_WP3S_FRAME      = 'ITRF93'
+   NDOSL_WP3S_IDCODE     = 399101338
+   NDOSL_WP3S_LATLON     = (  37.9283611667, 284.5258120278, -0.019631 )
+   NDOSL_WP3S_TOPO_FRAME = 'NDOSL_WP3S_TOPO'
+   NDOSL_WP3S_TOPO_ID    = 399101338
+   NDOSL_WP3S_UP         = 'Z'
+   NDOSL_WP3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WP3Z'
+   NDOSL_WP3Z_CENTER     = 399
+   NDOSL_WP3Z_FRAME      = 'ITRF93'
+   NDOSL_WP3Z_IDCODE     = 399101841
+   NDOSL_WP3Z_LATLON     = (  37.9236312222, 284.5224715556, -0.002928 )
+   NDOSL_WP3Z_TOPO_FRAME = 'NDOSL_WP3Z_TOPO'
+   NDOSL_WP3Z_TOPO_ID    = 399101841
+   NDOSL_WP3Z_UP         = 'Z'
+   NDOSL_WP3Z_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WPDA'
+   NDOSL_WPDA_CENTER     = 399
+   NDOSL_WPDA_FRAME      = 'ITRF93'
+   NDOSL_WPDA_IDCODE     = 399101339
+   NDOSL_WPDA_LATLON     = (  37.9273729722, 284.5250472500, -0.010538 )
+   NDOSL_WPDA_TOPO_FRAME = 'NDOSL_WPDA_TOPO'
+   NDOSL_WPDA_TOPO_ID    = 399101339
+   NDOSL_WPDA_UP         = 'Z'
+   NDOSL_WPDA_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WPS8'
+   NDOSL_WPS8_CENTER     = 399
+   NDOSL_WPS8_FRAME      = 'ITRF93'
+   NDOSL_WPS8_IDCODE     = 399101336
+   NDOSL_WPS8_LATLON     = (  37.9273590278, 284.5241668056, -0.020647 )
+   NDOSL_WPS8_TOPO_FRAME = 'NDOSL_WPS8_TOPO'
+   NDOSL_WPS8_TOPO_ID    = 399101336
+   NDOSL_WPS8_UP         = 'Z'
+   NDOSL_WPS8_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WPSA'
+   NDOSL_WPSA_CENTER     = 399
+   NDOSL_WPSA_FRAME      = 'ITRF93'
+   NDOSL_WPSA_IDCODE     = 399101334
+   NDOSL_WPSA_LATLON     = (  37.9272776667, 284.5250141944, -0.019736 )
+   NDOSL_WPSA_TOPO_FRAME = 'NDOSL_WPSA_TOPO'
+   NDOSL_WPSA_TOPO_ID    = 399101334
+   NDOSL_WPSA_UP         = 'Z'
+   NDOSL_WPSA_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WPSS'
+   NDOSL_WPSS_CENTER     = 399
+   NDOSL_WPSS_FRAME      = 'ITRF93'
+   NDOSL_WPSS_IDCODE     = 399101335
+   NDOSL_WPSS_LATLON     = (  37.9265898611, 284.5236954722, -0.012762 )
+   NDOSL_WPSS_TOPO_FRAME = 'NDOSL_WPSS_TOPO'
+   NDOSL_WPSS_TOPO_ID    = 399101335
+   NDOSL_WPSS_UP         = 'Z'
+   NDOSL_WPSS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WS1S'
+   NDOSL_WS1S_CENTER     = 399
+   NDOSL_WS1S_FRAME      = 'ITRF93'
+   NDOSL_WS1S_IDCODE     = 399101931
+   NDOSL_WS1S_LATLON     = (  32.5407549444, 253.3879004722,  1.456545 )
+   NDOSL_WS1S_TOPO_FRAME = 'NDOSL_WS1S_TOPO'
+   NDOSL_WS1S_TOPO_ID    = 399101931
+   NDOSL_WS1S_UP         = 'Z'
+   NDOSL_WS1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WSCZ'
+   NDOSL_WSCZ_CENTER     = 399
+   NDOSL_WSCZ_FRAME      = 'ITRF93'
+   NDOSL_WSCZ_IDCODE     = 399101871
+   NDOSL_WSCZ_LATLON     = (  32.5047222222, 253.3891666667,  1.470660 )
+   NDOSL_WSCZ_TOPO_FRAME = 'NDOSL_WSCZ_TOPO'
+   NDOSL_WSCZ_TOPO_ID    = 399101871
+   NDOSL_WSCZ_UP         = 'Z'
+   NDOSL_WSCZ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WSSH'
+   NDOSL_WSSH_CENTER     = 399
+   NDOSL_WSSH_FRAME      = 'ITRF93'
+   NDOSL_WSSH_IDCODE     = 399101870
+   NDOSL_WSSH_LATLON     = (  32.8802777778, 253.5352777778,  1.198474 )
+   NDOSL_WSSH_TOPO_FRAME = 'NDOSL_WSSH_TOPO'
+   NDOSL_WSSH_TOPO_ID    = 399101870
+   NDOSL_WSSH_UP         = 'Z'
+   NDOSL_WSSH_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WT1S'
+   NDOSL_WT1S_CENTER     = 399
+   NDOSL_WT1S_FRAME      = 'ITRF93'
+   NDOSL_WT1S_IDCODE     = 399104865
+   NDOSL_WT1S_LATLON     = (  65.1172369167, 212.5409397222,  0.431444 )
+   NDOSL_WT1S_TOPO_FRAME = 'NDOSL_WT1S_TOPO'
+   NDOSL_WT1S_TOPO_ID    = 399104865
+   NDOSL_WT1S_UP         = 'Z'
+   NDOSL_WT1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WT2S'
+   NDOSL_WT2S_CENTER     = 399
+   NDOSL_WT2S_FRAME      = 'ITRF93'
+   NDOSL_WT2S_IDCODE     = 399104866
+   NDOSL_WT2S_LATLON     = (  65.1167332500, 212.5384513056,  0.430342 )
+   NDOSL_WT2S_TOPO_FRAME = 'NDOSL_WT2S_TOPO'
+   NDOSL_WT2S_TOPO_ID    = 399104866
+   NDOSL_WT2S_UP         = 'Z'
+   NDOSL_WT2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WT3S'
+   NDOSL_WT3S_CENTER     = 399
+   NDOSL_WT3S_FRAME      = 'ITRF93'
+   NDOSL_WT3S_IDCODE     = 399104867
+   NDOSL_WT3S_LATLON     = (  37.9230659167, 284.5225311111, -0.010644 )
+   NDOSL_WT3S_TOPO_FRAME = 'NDOSL_WT3S_TOPO'
+   NDOSL_WT3S_TOPO_ID    = 399104867
+   NDOSL_WT3S_UP         = 'Z'
+   NDOSL_WT3S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WTDQ'
+   NDOSL_WTDQ_CENTER     = 399
+   NDOSL_WTDQ_FRAME      = 'ITRF93'
+   NDOSL_WTDQ_IDCODE     = 399104861
+   NDOSL_WTDQ_LATLON     = (  37.9230659167, 284.5225311111, -0.010644 )
+   NDOSL_WTDQ_TOPO_FRAME = 'NDOSL_WTDQ_TOPO'
+   NDOSL_WTDQ_TOPO_ID    = 399104861
+   NDOSL_WTDQ_UP         = 'Z'
+   NDOSL_WTDQ_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WTDS'
+   NDOSL_WTDS_CENTER     = 399
+   NDOSL_WTDS_FRAME      = 'ITRF93'
+   NDOSL_WTDS_IDCODE     = 399104861
+   NDOSL_WTDS_LATLON     = (  37.9230659167, 284.5225311111, -0.010644 )
+   NDOSL_WTDS_TOPO_FRAME = 'NDOSL_WTDS_TOPO'
+   NDOSL_WTDS_TOPO_ID    = 399104861
+   NDOSL_WTDS_UP         = 'Z'
+   NDOSL_WTDS_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WU1S'
+   NDOSL_WU1S_CENTER     = 399
+   NDOSL_WU1S_FRAME      = 'ITRF93'
+   NDOSL_WU1S_IDCODE     = 399101907
+   NDOSL_WU1S_LATLON     = (  47.8800694444,  11.0853025000,  0.663392 )
+   NDOSL_WU1S_TOPO_FRAME = 'NDOSL_WU1S_TOPO'
+   NDOSL_WU1S_TOPO_ID    = 399101907
+   NDOSL_WU1S_UP         = 'Z'
+   NDOSL_WU1S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WU2S'
+   NDOSL_WU2S_CENTER     = 399
+   NDOSL_WU2S_FRAME      = 'ITRF93'
+   NDOSL_WU2S_IDCODE     = 399101908
+   NDOSL_WU2S_LATLON     = (  47.8811988889,  11.0836188889,  0.663374 )
+   NDOSL_WU2S_TOPO_FRAME = 'NDOSL_WU2S_TOPO'
+   NDOSL_WU2S_TOPO_ID    = 399101908
+   NDOSL_WU2S_UP         = 'Z'
+   NDOSL_WU2S_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_WULY'
+   NDOSL_WULY_CENTER     = 399
+   NDOSL_WULY_FRAME      = 'ITRF93'
+   NDOSL_WULY_IDCODE     = 399104215
+   NDOSL_WULY_LATLON     = (  34.6554133611, 239.4440152778,  0.075230 )
+   NDOSL_WULY_TOPO_FRAME = 'NDOSL_WULY_TOPO'
+   NDOSL_WULY_TOPO_ID    = 399104215
+   NDOSL_WULY_UP         = 'Z'
+   NDOSL_WULY_NORTH      = 'X'
+ 
+   SITES                   += 'NDOSL_YARZ'
+   NDOSL_YARZ_CENTER     = 399
+   NDOSL_YARZ_FRAME      = 'ITRF93'
+   NDOSL_YARZ_IDCODE     = 399108566
+   NDOSL_YARZ_LATLON     = ( -29.0466455278, 115.3466666667,  0.192350 )
+   NDOSL_YARZ_TOPO_FRAME = 'NDOSL_YARZ_TOPO'
+   NDOSL_YARZ_TOPO_ID    = 399108566
+   NDOSL_YARZ_UP         = 'Z'
+   NDOSL_YARZ_NORTH      = 'X'
+ 
+\begintext
+ 
+ 
+ 
+End of PINPOINT inputs.
+ 

@@ -1,20 +1,20 @@
  
 ; nep081.bsp LOG FILE
 ;
-; Created 2009-03-27/14:56:35.00.
+; Created 2015-04-29/12:18:34.32.
 ;
 ; BEGIN NIOSPK COMMANDS
  
-LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0009.tls
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
 SPK_FILE            = nep081.bsp
   INCLUDE_TEXT_FILE = nep081.cmt
   SOURCE_NIO_FILE   = nep081.nio
     BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
-    END_TIME        = CAL-ET 2050 JAN 01 00:01:06.183
-  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de421.nio
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de431.nio
     BODIES          = 3, 399, 10, 8
     BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
-    END_TIME        = CAL-ET 2050 JAN 01 00:01:06.183
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
  
 ; END NIOSPK COMMANDS
  

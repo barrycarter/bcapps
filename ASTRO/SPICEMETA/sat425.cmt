@@ -1,0 +1,124 @@
+ 
+sat425.bsp was created on 28 August 2019 by C. Acton.
+It was created from Bob Jacobson's sat425l.nio file.
+ 
+Take note that sat425.bsp includes data for five satellites that also exist on sat393:
+  612   Helene
+  613   Telesto
+  614   Calypso
+  632   Methone
+  634   Polydeucs
+ 
+According to Jacobson, the ephemerides for these five satellites as provided here on
+sat425 are better than what exist on sat393. He expects to make a replacement for
+sat393 later this year, presumably with these five satellites removed.
+ 
+ 
+ 
+; sat425.bsp LOG FILE
+;
+; Created 2019-08-28/12:02:47.85.
+;
+; BEGIN NIOSPK COMMANDS
+ 
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0012.tls
+SPK_FILE            = sat425.bsp
+  INCLUDE_TEXT_FILE = sat425.cmt
+  SOURCE_NIO_FILE   = sat425l.nio
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:09.183
+  SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de438.nio
+    BODIES          = 3, 399, 10, 6
+    BEGIN_TIME      = CAL-ET 1950 JAN 01 00:00:41.183
+    END_TIME        = CAL-ET 2050 JAN 01 00:01:09.183
+ 
+; END NIOSPK COMMANDS
+ 
+                      Satellite Ephemeris File Release
+ 
+ 
+Satellite Ephemeris: SAT425.06
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/nio/LINUX_PC/sat425l.nio
+ 
+Enter SATEPHMERGE/18 07-Aug-2019 10:14:53.024  linked 02-Oct-2017 12:47:09
+Astrometric, Pioneer, Voyager, and Cassini data: SAT425.06
+Ephemeris Version Number: 20
+Timespan from JED  2396754.500(28-DEC-1849) to JED  2506338.500(08-JAN-2150)
+File Epoch Julian Date: 2456928.50
+Master Interval: 18.0000 Days
+Equinox Reference Julian Date: 2451545.00
+Planetary Ephemeris Number: DE-0438/LE-0438
+ 
+Bodies on the File:
+ 
+   Name         Number            GM             NDIV   NDEG   Model
+   Mimas          601    2.503571968933995E+00     24     15   SATORBINT
+   Enceladus      602    7.210561107781245E+00     24     12   SATORBINT
+   Tethys         603    4.121342803076796E+01     12     14   SATORBINT
+   Dione          604    7.311606189909810E+01     12     11   SATORBINT
+   Rhea           605    1.539416369781934E+02      8     11   SATORBINT
+   Titan          606    8.978137026107361E+03      6     12   SATORBINT
+   Hyperion       607    3.708107681569874E-01      6     10   SATORBINT
+   Iapetus        608    1.205273089601815E+02      2     10   SATORBINT
+   Phoebe         609    5.486759466073686E-01      1      8   SATORBINT
+   Helene         612    4.469429158390761E-04     12     11   SATORBINT
+   Telesto        613    0.000000000000000E+00     12     15   SATORBINT
+   Calypso        614    0.000000000000000E+00     12     15   SATORBINT
+   Polydeuces     634    0.000000000000000E+00     12     11   SATORBINT
+   Methone        632    0.000000000000000E+00     24     15   SATORBINT
+   Saturn         699    3.793120627544314E+07     12     12   SATORBINT
+   System                3.794058496797185E+07
+ 
+Additional Constants on the File:
+ 
+  AU          1.495978707000000E+08   RADIUS      6.033000000000000E+04
+  J602        1.629056318614283E-02   J603        8.021547362926897E-08
+  J604       -9.352748124585591E-04   J605       -1.294023676822416E-07
+  J606        8.640173180043068E-05   J607        3.627869335910333E-07
+  J608       -1.449699463354960E-05   POLTIM      2.451545000000000E+06
+  ZACPL6      4.059381052563325E+01   ZDEPL6      8.353456912851105E+01
+  DACPL6     -5.022619663580526E-02   DDEPL6     -5.776335861947523E-03
+  WPL6        3.888828308840667E+01   WDP6        8.181387763690883E+02
+  RINGM1      3.900000000000000E-02   RINGM2      7.840000000000000E-01
+  RINGM4      3.000000000000000E-01   GM7         5.794556465751792E+06
+  GM8         6.836527100580024E+06   GM5         1.267127641334462E+08
+  GM10        1.327132332639221E+11   J609        7.606636155998139E-07
+  J610        4.844719018146492E-06   J611        1.005185036511298E-07
+  J612       -8.743133919756120E-07   J613        5.985491189711346E-08
+  J614        1.078739784268647E-07   J615        6.612221094747026E-08
+  J616        4.994184647081919E-07   J617       -5.443802533027470E-08
+  J618       -1.649628164575351E-07   J619       -5.713408409978999E-08
+  J620       -1.661002296645839E-07   RA_AMPL1    2.965677720600000E-02
+  RA_FAZE1    3.359799744772000E+02   RA_FREQ1    5.126441529552000E+01
+  RA_AMPL2   -2.346872000000000E-04   RA_FAZE2    2.799631808078000E+02
+  RA_FREQ2    7.226638399264000E+03   RA_AMPL3    3.462081320000000E-04
+  RA_FAZE3    8.121568893038001E+00   RA_FREQ3    1.008108819470000E+03
+  DE_AMPL1    3.334639687000000E-03   DE_FAZE1    3.359799744772000E+02
+  DE_FREQ1    5.126441529552000E+01   DE_AMPL2   -2.634286200000000E-05
+  DE_FAZE2    2.799631808078000E+02   DE_FREQ2    7.226638399264000E+03
+  DE_AMPL3    3.715245700000000E-05   DE_FAZE3    8.121568893038001E+00
+  DE_FREQ3    1.008108819470000E+03   W_AMPL1    -2.946815937500000E-02
+  W_FAZE1     3.359799744772000E+02   W_FREQ1     5.126441529552000E+01
+  W_AMPL2     2.331945830000000E-04   W_FAZE2     2.799631808078000E+02
+  W_FREQ2     7.226638399264000E+03   W_AMPL3    -3.440062390000000E-04
+  W_FAZE3     8.121568893038001E+00   W_FREQ3     1.008108819470000E+03
+  C_ring_RI   7.450000000000000E+04   C_ring_RO   9.200000000000000E+04
+  B_ring_RI   9.200000000000000E+04   B_ring_RO   1.175000000000000E+05
+  A_ring_RI   1.223570000000000E+05   A_ring_RO   1.367800000000000E+05
+  600K2       3.627227388060905E-01   601LAG      1.000000000000000E-10
+  602LAG      1.000000000000000E-10   603LAG      1.000000000000000E-10
+  604LAG      1.000000000000000E-10   605LAG      1.000000000000000E-10
+  606LAG      1.000000000000000E-10   RELSCL      1.000000000000000E+00
+ 
+ 
+Chebyshev interpolation error:  7.500 meters
+ 
+Release to: Horizons/NAIF                      Time: 07-Aug-2019 11:23:54
+ 
+Preparer: R. A. Jacobson
+ 
+Comments:
+Latest Saturnian satellite ephemeris from the Saturn Global Fit.
+This delivery satisfies the DSMS delivery milestone.
+ 

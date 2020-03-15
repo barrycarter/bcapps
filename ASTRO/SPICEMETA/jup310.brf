@@ -1,0 +1,21 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/jup310.bsp
+ 
+Bodies                Start of Interval (ET)          End of Interval (ET)
+-------               -----------------------------   -----------------------------
+3 EARTH BARYCENTER    1850 JAN 01 00:00:41.183        2100 JAN 01 00:01:09.183
+5 JUPITER BARYCENTER              Same coverage as previous object
+10 SUN                            Same coverage as previous object
+399 EARTH                         Same coverage as previous object
+501 IO                            Same coverage as previous object
+502 EUROPA                        Same coverage as previous object
+503 GANYMEDE                      Same coverage as previous object
+504 CALLISTO                      Same coverage as previous object
+505 AMALTHEA                      Same coverage as previous object
+514 THEBE                         Same coverage as previous object
+515 ADRASTEA                      Same coverage as previous object
+516 METIS                         Same coverage as previous object
+599 JUPITER                       Same coverage as previous object

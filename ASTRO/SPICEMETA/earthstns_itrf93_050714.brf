@@ -1,0 +1,36 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/earthstns_itrf93_050714.bsp
+ 
+Bodies          Start of Interval (ET)          End of Interval (ET)
+-------         -----------------------------   -----------------------------
+399005 PARKES*  1950 JAN 01 00:00:00.000        2050 JAN 01 00:00:00.000
+399012 DSS-12*              Same coverage as previous object
+399013 DSS-13*              Same coverage as previous object
+399014 DSS-14*              Same coverage as previous object
+399015 DSS-15*              Same coverage as previous object
+399016 DSS-16*              Same coverage as previous object
+399017 DSS-17*              Same coverage as previous object
+399023 DSS-23*              Same coverage as previous object
+399024 DSS-24*              Same coverage as previous object
+399025 DSS-25*              Same coverage as previous object
+399026 DSS-26*              Same coverage as previous object
+399027 DSS-27*              Same coverage as previous object
+399028 DSS-28*              Same coverage as previous object
+399033 DSS-33*              Same coverage as previous object
+399034 DSS-34*              Same coverage as previous object
+399042 DSS-42*              Same coverage as previous object
+399043 DSS-43*              Same coverage as previous object
+399045 DSS-45*              Same coverage as previous object
+399046 DSS-46*              Same coverage as previous object
+399049 DSS-49*              Same coverage as previous object
+399053 DSS-53*              Same coverage as previous object
+399054 DSS-54*              Same coverage as previous object
+399055 DSS-55*              Same coverage as previous object
+399061 DSS-61*              Same coverage as previous object
+399063 DSS-63*              Same coverage as previous object
+399064 DSS-64*              Same coverage as previous object
+399065 DSS-65*              Same coverage as previous object
+399066 DSS-66*              Same coverage as previous object

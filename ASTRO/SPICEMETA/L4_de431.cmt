@@ -1,0 +1,50 @@
+ 
+ 
+ 
+August 29, 2013
+C. Acton
+ 
+These four Lagrange Point SPK files were generated this date by Min-Kun Chung of the Navigation
+and Mission Design Section at JPL, using a program named LTOOL and based on the just
+released de431 planetary ephemeris. There is one file for each of the L1, L2, L4 and L5 Lagrange points;
+none for the L3 Lagrange point.
+ 
+Note that the NAIF IDs for these four Lagrange points are 391, 392, 394 and 395. Also note that the
+ephemerides for the L1 and L2 points are centered at the earth-moon barycenter (ID = 3) while the
+ephemerides for the L4 and L5 points are centered at the sun (ID = 10).
+ 
+Summaries of the contents and coverage for each of these files is as follows:
+ 
+Summary for: L1_de431.bsp
+ 
+Body: 391 w.r.t. EARTH BARYCENTER (3)
+      Start of Interval (ET)              End of Interval (ET)
+      -----------------------------       -----------------------------
+      1900 JAN 01 00:00:00.000            2151 JAN 01 00:00:00.000
+ 
+ 
+Summary for: L2_de431.bsp
+ 
+Body: 392 w.r.t. EARTH BARYCENTER (3)
+      Start of Interval (ET)              End of Interval (ET)
+      -----------------------------       -----------------------------
+      1900 JAN 01 00:00:00.000            2151 JAN 01 00:00:00.000
+ 
+ 
+Summary for: L4_de431.bsp
+ 
+Body: 394 w.r.t. SUN (10)
+      Start of Interval (ET)              End of Interval (ET)
+      -----------------------------       -----------------------------
+      1900 JAN 01 00:00:00.000            2151 JAN 01 00:00:00.000
+ 
+ 
+Summary for: L5_de431.bsp
+ 
+Body: 395 w.r.t. SUN (10)
+      Start of Interval (ET)              End of Interval (ET)
+      -----------------------------       -----------------------------
+      1900 JAN 01 00:00:00.000            2151 JAN 01 00:00:00.000
+ 
+ 
+ 

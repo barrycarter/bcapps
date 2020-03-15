@@ -1,0 +1,20 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/nep090.bsp
+ 
+Bodies                Start of Interval (ET)          End of Interval (ET)
+-------               -----------------------------   -----------------------------
+3 EARTH BARYCENTER    1950 JAN 01 00:00:02.000        2049 DEC 31 00:00:00.000
+8 NEPTUNE BARYCENTER              Same coverage as previous object
+10 SUN                            Same coverage as previous object
+399 EARTH                         Same coverage as previous object
+803 NAIAD                         Same coverage as previous object
+804 THALASSA                      Same coverage as previous object
+805 DESPINA                       Same coverage as previous object
+806 GALATEA                       Same coverage as previous object
+807 LARISSA                       Same coverage as previous object
+808 PROTEUS                       Same coverage as previous object
+814                               Same coverage as previous object
+899 NEPTUNE                       Same coverage as previous object

@@ -1,0 +1,46 @@
+ 
+ 
+This SPK file was produced using version 2.2 (Toolkit Version N0065)
+of the NAIF utility program "rockin."
+It was produced on 2016-OCT-11 14:43:58.
+ 
+The source of input data for this ephemeris was the
+Navigation Rock Elements Release File:
+ 
+   rckin.pan.sat393.log
+ 
+The text of this file is presented below.
+ 
+                        Rock Element File Release
+ 
+ 
+Rock Elements: SAT393
+ 
+Location: ssd.jpl.nasa.gov/pub/eph/satellites/rckin/rckin.pan.sat393.txt
+ 
+Equinox Reference Julian Date: 2451545.00
+ 
+Bodies on the File:
+ 
+    Name      Number          GM                  AX        BX        CX
+    Pan        618     3.300000000000000E-04     0.500     0.000     0.000
+ 
+    Elements for Pan    at Julian Date: 2451545.000000000
+       Semi-major axis             133584.8114663955       km
+       h = esin(omega+node)       -1.265055914863076E-06
+       k = ecos(omega+node)       -4.354544606435698E-06
+       mean longitude              146.5891465086655       deg
+       p = tan(i/2)sin(node)       1.278976857193148E-06
+       q = tan(i/2)cos(node)       1.529685280022950E-06
+       apsidal rate                3.711316580120191E-05   deg/sec
+       mean longitude rate         7.245737673808504E-03   deg/sec
+       nodal rate                 -3.692452663559051E-05   deg/sec
+       Reference plane pole RTA    40.58445039395577       deg
+       Reference plane pole DEC    83.53741023979391       deg
+ 
+Release to: NAIF/Horizons                      Time: 11-Oct-2016 10:59:48
+Preparer: R. A. Jacobson
+ 
+Comments:
+Update of Pan ephemeris with Cassini observations to 2016 July.
+ 

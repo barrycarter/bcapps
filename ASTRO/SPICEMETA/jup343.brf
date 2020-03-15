@@ -1,0 +1,84 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/jup343.bsp
+ 
+Bodies                Start of Interval (ET)          End of Interval (ET)
+-------               -----------------------------   -----------------------------
+3 EARTH BARYCENTER    1800 JAN 01 00:00:41.184        2200 JAN 01 00:01:09.183
+5 JUPITER BARYCENTER              Same coverage as previous object
+10 SUN                            Same coverage as previous object
+399 EARTH                         Same coverage as previous object
+506 HIMALIA                       Same coverage as previous object
+507 ELARA                         Same coverage as previous object
+508 PASIPHAE                      Same coverage as previous object
+509 SINOPE                        Same coverage as previous object
+510 LYSITHEA                      Same coverage as previous object
+511 CARME                         Same coverage as previous object
+512 ANANKE                        Same coverage as previous object
+513 LEDA                          Same coverage as previous object
+517 CALLIRRHOE                    Same coverage as previous object
+518 THEMISTO                      Same coverage as previous object
+519 MAGACLITE                     Same coverage as previous object
+520 TAYGETE                       Same coverage as previous object
+521 CHALDENE                      Same coverage as previous object
+522 HARPALYKE                     Same coverage as previous object
+523 KALYKE                        Same coverage as previous object
+524 IOCASTE                       Same coverage as previous object
+525 ERINOME                       Same coverage as previous object
+526 ISONOE                        Same coverage as previous object
+527 PRAXIDIKE                     Same coverage as previous object
+528 AUTONOE                       Same coverage as previous object
+529 THYONE                        Same coverage as previous object
+530 HERMIPPE                      Same coverage as previous object
+531 AITNE                         Same coverage as previous object
+532 EURYDOME                      Same coverage as previous object
+533 EUANTHE                       Same coverage as previous object
+534 EUPORIE                       Same coverage as previous object
+535 ORTHOSIE                      Same coverage as previous object
+536 SPONDE                        Same coverage as previous object
+537 KALE                          Same coverage as previous object
+538 PASITHEE                      Same coverage as previous object
+539 HEGEMONE                      Same coverage as previous object
+540 MNEME                         Same coverage as previous object
+541 AOEDE                         Same coverage as previous object
+542 THELXINOE                     Same coverage as previous object
+543 ARCHE                         Same coverage as previous object
+544 KALLICHORE                    Same coverage as previous object
+545 HELIKE                        Same coverage as previous object
+546 CARPO                         Same coverage as previous object
+547 EUKELADE                      Same coverage as previous object
+548 CYLLENE                       Same coverage as previous object
+549 KORE                          Same coverage as previous object
+550 HERSE                         Same coverage as previous object
+551                               Same coverage as previous object
+552                               Same coverage as previous object
+553                               Same coverage as previous object
+554                               Same coverage as previous object
+555                               Same coverage as previous object
+556                               Same coverage as previous object
+557                               Same coverage as previous object
+558                               Same coverage as previous object
+559                               Same coverage as previous object
+560                               Same coverage as previous object
+561                               Same coverage as previous object
+562                               Same coverage as previous object
+563                               Same coverage as previous object
+564                               Same coverage as previous object
+565                               Same coverage as previous object
+566                               Same coverage as previous object
+567                               Same coverage as previous object
+568                               Same coverage as previous object
+569                               Same coverage as previous object
+570                               Same coverage as previous object
+571                               Same coverage as previous object
+572                               Same coverage as previous object
+599 JUPITER                       Same coverage as previous object
+55501                             Same coverage as previous object
+55502                             Same coverage as previous object
+55503                             Same coverage as previous object
+55504                             Same coverage as previous object
+55505                             Same coverage as previous object
+55506                             Same coverage as previous object
+55507                             Same coverage as previous object

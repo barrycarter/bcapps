@@ -1,0 +1,18 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/plu055.bsp
+ 
+Bodies              Start of Interval (ET)          End of Interval (ET)
+-------             -----------------------------   -----------------------------
+3 EARTH BARYCENTER  1900 JAN 08 00:00:41.184        2100 JAN 01 00:01:08.183
+9 PLUTO BARYCENTER              Same coverage as previous object
+10 SUN                          Same coverage as previous object
+399 EARTH                       Same coverage as previous object
+901 CHARON                      Same coverage as previous object
+902 NIX                         Same coverage as previous object
+903 HYDRA                       Same coverage as previous object
+904 KERBEROS                    Same coverage as previous object
+905 STYX                        Same coverage as previous object
+999 PLUTO                       Same coverage as previous object

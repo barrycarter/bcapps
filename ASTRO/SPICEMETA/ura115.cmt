@@ -1,0 +1,24 @@
+ 
+; ura115.bsp LOG FILE
+ 
+; Created 2019-10-29/16:39:24.60.
+;
+; BEGIN SPKMERGE COMMANDS
+ 
+LEAPSECONDS_KERNEL   = /kernels/gen/lsk/naif0012.tls
+ 
+SPK_KERNEL           = ura115.bsp
+  SOURCE_SPK_KERNEL  = ura115-partial.bsp
+    INCLUDE_COMMENTS = NO
+    BODIES           = 799, 727, 726, 725, 715, 714, 713, 712, 711, 710, 709,
+                       708, 707, 706
+    BEGIN_TIME       = 1979 DEC 31 23:59:09.816
+    END_TIME         = 2059 DEC 31 23:58:50.816
+  SOURCE_SPK_KERNEL  = /ftp/pub/naif/generic_kernels/spk/planets/de438.bsp
+    INCLUDE_COMMENTS = NO
+    BODIES           = 3, 7, 10, 399
+    BEGIN_TIME       = 1979 DEC 31 23:59:09.816
+    END_TIME         = 2059 DEC 31 23:58:50.816
+ 
+; END SPKMERGE COMMANDS
+ 

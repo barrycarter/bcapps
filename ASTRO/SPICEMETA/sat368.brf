@@ -1,0 +1,50 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/sat368.bsp
+ 
+Bodies               Start of Interval (ET)          End of Interval (ET)
+-------              -----------------------------   -----------------------------
+3 EARTH BARYCENTER   1900 JAN 01 00:00:41.183        2100 JAN 01 00:01:07.183
+6 SATURN BARYCENTER              Same coverage as previous object
+10 SUN                           Same coverage as previous object
+399 EARTH                        Same coverage as previous object
+619 YMIR                         Same coverage as previous object
+620 PAALIAQ                      Same coverage as previous object
+621 TARVOS                       Same coverage as previous object
+622 IJIRAQ                       Same coverage as previous object
+623 SUTTUNGR                     Same coverage as previous object
+624 KIVIUQ                       Same coverage as previous object
+625 MUNDILFARI                   Same coverage as previous object
+626 ALBIORIX                     Same coverage as previous object
+627 SKATHI                       Same coverage as previous object
+628 ERRIAPUS                     Same coverage as previous object
+629 SIARNAQ                      Same coverage as previous object
+630 THRYMR                       Same coverage as previous object
+631 NARVI                        Same coverage as previous object
+636 AEGIR                        Same coverage as previous object
+637 BEBHIONN                     Same coverage as previous object
+638 BERGELMIR                    Same coverage as previous object
+639 BESTLA                       Same coverage as previous object
+640 FARBAUTI                     Same coverage as previous object
+641 FENRIR                       Same coverage as previous object
+642 FORNJOT                      Same coverage as previous object
+643 HATI                         Same coverage as previous object
+644 HYRROKKIN                    Same coverage as previous object
+645 KARI                         Same coverage as previous object
+646 LOGE                         Same coverage as previous object
+647 SKOLL                        Same coverage as previous object
+648 SURTUR                       Same coverage as previous object
+650 JARNSAXA                     Same coverage as previous object
+651 GREIP                        Same coverage as previous object
+652 TARQEQ                       Same coverage as previous object
+699 SATURN                       Same coverage as previous object
+65035                            Same coverage as previous object
+65040                            Same coverage as previous object
+65041                            Same coverage as previous object
+65045                            Same coverage as previous object
+65048                            Same coverage as previous object
+65050                            Same coverage as previous object
+65055                            Same coverage as previous object
+65056                            Same coverage as previous object

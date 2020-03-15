@@ -1,0 +1,26 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/sat393.bsp
+ 
+Bodies               Start of Interval (ET)          End of Interval (ET)
+-------              -----------------------------   -----------------------------
+3 EARTH BARYCENTER   1950 JAN 01 00:00:41.183        2050 JAN 01 00:01:08.183
+6 SATURN BARYCENTER              Same coverage as previous object
+10 SUN                           Same coverage as previous object
+399 EARTH                        Same coverage as previous object
+610 JANUS                        Same coverage as previous object
+611 EPIMETHEUS                   Same coverage as previous object
+612 HELENE                       Same coverage as previous object
+613 TELESTO                      Same coverage as previous object
+614 CALYPSO                      Same coverage as previous object
+615 ATLAS                        Same coverage as previous object
+616 PROMETHEUS                   Same coverage as previous object
+617 PANDORA                      Same coverage as previous object
+632 METHONE                      Same coverage as previous object
+633 PALLENE                      Same coverage as previous object
+634 POLYDEUCES                   Same coverage as previous object
+649 ANTHE                        Same coverage as previous object
+653 AEGAEON                      Same coverage as previous object
+699 SATURN                       Same coverage as previous object

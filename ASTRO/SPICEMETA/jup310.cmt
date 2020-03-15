@@ -1,20 +1,20 @@
  
 ; jup310.bsp LOG FILE
 ;
-; Created 2013-12-11/12:36:26.65.
+; Created 2018-09-11/15:26:26.80.
 ;
 ; BEGIN NIOSPK COMMANDS
  
-LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0010.tls
+LEAPSECONDS_FILE    = /kernels/gen/lsk/naif0012.tls
 SPK_FILE            = jup310.bsp
   INCLUDE_TEXT_FILE = jup310.cmt
   SOURCE_NIO_FILE   = jup310.nio
-    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
-    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+    BEGIN_TIME      = CAL-ET 1850 JAN 01 00:00:41.182
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:09.183
   SOURCE_NIO_FILE   = /group/naif/kernels/gen/spk/de431.nio
     BODIES          = 3, 399, 10, 5
-    BEGIN_TIME      = CAL-ET 1900 JAN 01 00:00:41.183
-    END_TIME        = CAL-ET 2100 JAN 01 00:01:07.183
+    BEGIN_TIME      = CAL-ET 1850 JAN 01 00:00:41.182
+    END_TIME        = CAL-ET 2100 JAN 01 00:01:09.183
  
 ; END NIOSPK COMMANDS
  

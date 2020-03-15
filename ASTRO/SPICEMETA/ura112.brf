@@ -1,0 +1,22 @@
+ 
+BRIEF -- Version 4.0.0, September 8, 2010 -- Toolkit Version N0065
+ 
+ 
+Summary for: /home/user/SPICE/KERNELS/ura112.bsp
+ 
+Bodies               Start of Interval (ET)          End of Interval (ET)
+-------              -----------------------------   -----------------------------
+3 EARTH BARYCENTER   1900 JAN 01 00:00:41.183        2099 DEC 24 00:01:07.183
+7 URANUS BARYCENTER              Same coverage as previous object
+10 SUN                           Same coverage as previous object
+399 EARTH                        Same coverage as previous object
+716 CALIBAN                      Same coverage as previous object
+717 SYCORAX                      Same coverage as previous object
+718 PROSPERO                     Same coverage as previous object
+719 SETEBOS                      Same coverage as previous object
+720 STEPHANO                     Same coverage as previous object
+721 TRINCULO                     Same coverage as previous object
+722 FRANCISCO                    Same coverage as previous object
+723 MARGARET                     Same coverage as previous object
+724 FERDINAND                    Same coverage as previous object
+799 URANUS                       Same coverage as previous object
