@@ -129,17 +129,34 @@ sub extract_lunar_radii {
 
 	# go through table one row at a time (useful rows only)
 
-	while ($tabdata=~s%<tr>\s*<th>(.*?)</th>\s*<td>.*?</td>\s*<td>(.*?)</td>.*?</tr>%%is) {
+	while ($tabdata=~s%<tr>(.*?)</tr>%%is) {
+
+	    my($row) = $1;
+
+	    unless ($row=~s%\s*<th>(.*?)</th>\s*<td>.*?</td>\s*<td>(.*?)</td>%%) {
+		warn "IGNORING ROW: $row";
+		next;
+	    }
+
+#	while ($tabdata=~s%<tr>\s*<th>\s*(.*?)\s*</th>\s*<td>.*?</td>\s*<td>\s*(.*?)\s*</td>.*?</tr>%%is) {
 	    my($name, $rad) = ($1, $2);
+
+# S2004_s31
+
+# S/2000 J11 -> S2000_J11
 
 	    # get rid of HTML spaces, parentheses, regular spaces
 	    $name=~s/\&nbsp\;//g;
 	    $name=~s/\(.*?\)//g;
 	    $name=~s/^\s*//g;
 	    $name=~s/\s*$//g;
+
+	    # fix S/2000 J11 -> S2000_J11 and similar
+	    $name=~s%S/(\d{4})\s+(.*)%S$1_$2%;
+
 	    $name = uc($name);
 
-	    print "$name, $rad\n";
+	    print "$name,$rad\n";
 
 #	    debug("GOT ALPHA: $1, $2");
 	}
