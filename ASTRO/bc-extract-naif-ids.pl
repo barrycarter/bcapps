@@ -32,6 +32,8 @@ my(%id2name, %name2id, %name2rad, %hasradii);
 
 &existing_spice_radii();
 &extract_lunar_radii();
+&extract_brief_ids();
+&extract_commnt_ids();
 
 my($naifids) = read_file("naif_ids.html");
 
@@ -50,75 +52,6 @@ while ($naifids=~s%<pre>\s*NAIF ID\s*NAME\s*(.*?)</pre>%%s) {
 	    next;
 	}
 	debug("IGNORING: $i");
-    }
-}
-
-for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
-
-    # filename without path and without bsp extension
-    my($fname) = $i;
-    $fname=~s/^.*\///;
-    $fname=~s/\.bsp$//;
-
-    debug("KERNEL: $fname");
-
-    # create the cmt and brf files if they don't exist
-
-    my($out, $err, $res);
-
-    unless (-s "SPICEMETA/$fname.cmt") {
-	($out, $err, $res) = cache_command("$spath/commnt -r $i > SPICEMETA/$fname.cmt");
-    }
-
-    unless (-s "SPICEMETA/$fname.brf") {
-	($out, $err, $res) = cache_command("$spath/brief -t $i > SPICEMETA/$fname.brf");
-    }
-
-    # read comment file
-    my($cmt) = read_file("SPICEMETA/$fname.cmt");
-
-    # find section of interest
-    if ($cmt=~/Name\s+Number\s+GM\s+NDIV\s+NDEG\s+Model\s*(.*?)additional constants on the file/is) {
-	$cmt = $1;
-    } else {
-	warn("BAD CMT FILE: $fname");
-	$cmt = "";
-    }
-
-    # loop through lines
-    for $j (split(/\n/, $cmt)) {
-
-	# does this line have a NAIF ID?
-	if ($j=~/^\s*(.*?)\s+(\d+)\s/) {
-#	    print A uc("$2,$1\n");
-	} elsif ($j=~/^\s*$/) {
-	    # do nothing, ignore blank line
-	} else {
-	    debug("IGNORING (CMT): $j");
-	}
-    }
-
-    # read brief file
-    my($brf) = read_file("SPICEMETA/$fname.brf");
-
-    # find section of interest
-    if ($brf=~/\s*Bodie.*?Start of Interval \(ET\)\s*End of Interval \(ET\)\s*(.*?)$/is) {
-	$brf = $1;
-    } else {
-	warn("BAD BRF FILE: $fname");
-	$brf = "";
-    }
-
-    # loop through lines
-    for $j (split(/\n/, $brf)) {
-	
-	if ($j=~/^(\d+)\*?\s+(.*?)\*?\s{2,}/) {
-#	    print A uc("$1,$2\n");
-	} elsif ($j=~/^[\s\-]*$/) {
-	    # ignore blank line silently
-	} else {
-	    debug("IGNORING (BRF): $j");
-	}
     }
 }
 
@@ -200,6 +133,88 @@ sub existing_spice_radii {
     }
 }
 
-    
+sub extract_brief_ids {
 
-    
+    # look at all binary kernels
+    for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
+
+	# filename without path and without bsp extension
+	my($fname) = $i;
+	$fname=~s/^.*\///;
+	$fname=~s/\.bsp$//;
+
+	# if the brf file doesn't exist, create it
+	unless (-s "SPICEMETA/$fname.brf") {
+	    my($out, $err, $res) = cache_command("$spath/brief -t $i > SPICEMETA/$fname.cmt");
+	}
+
+	# read brief file
+	my($brf) = read_file("SPICEMETA/$fname.brf");
+
+	# find section of interest
+	unless ($brf=~/\s*Bodie.*?Start of Interval \(ET\)\s*End of Interval \(ET\)\s*(.*?)$/is) {
+	    next;
+	}
+
+	$brf = $1;
+
+
+	# loop through lines
+	for $j (split(/\n/, $brf)) {
+
+	    # ignore blank line silently
+	    if ($j=~/^[\s\-]*$/) {next;}
+	
+	    unless ($j=~/^(\d+)\*?\s+(.*?)\*?\s{2,}/) {
+		warn("BAD BRF LINE: $j");
+		next;
+	    }
+
+	    $name2id{$2}{$1} .= "brief";
+	    $id2name{$1}{$2} .= "brief";
+	}
+    }
+}
+
+sub extract_commnt_ids {
+
+    # look at all binary kernels
+    for $i (glob "/home/user/SPICE/KERNELS/*.bsp") {
+
+	# filename without path and without bsp extension
+	my($fname) = $i;
+	$fname=~s/^.*\///;
+	$fname=~s/\.bsp$//;
+
+	# if the cmt file doesn't exist, create it
+	unless (-s "SPICEMETA/$fname.cmt") {
+	    my($out, $err, $res) = cache_command("$spath/commnt -r $i > SPICEMETA/$fname.cmt");
+	}
+
+	# read comment file
+	my($cmt) = read_file("SPICEMETA/$fname.cmt");
+
+	# find section of interest
+
+	unless ($cmt=~/Name\s+Number\s+GM\s+NDIV\s+NDEG\s+Model\s*(.*?)additional constants on the file/is) {next;}
+
+	$cmt = $1;
+
+	# loop through lines
+	for $j (split(/\n/, $cmt)) {
+
+	    if ($j=~/^\s*$/) {next;}
+
+	    # does this line have a NAIF ID?
+	    unless ($j=~/^\s*(.*?)\s+(\d+)\s/) {
+		warn("BAD CMT LINE: $j");
+		next;
+	    }
+		
+	    my($name, $id) = ($1, $2);
+	    
+	    $name2id{$name}{$id} .= "comment";
+	    $id2name{$id}{$name} .= "brief";
+	}
+    }
+}
