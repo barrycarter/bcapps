@@ -19,6 +19,17 @@ TODO: complain to NASA (different names) Aegaeon vs Aegaeo
 
 brief -a -t ~/SPICE/KERNELS/*.bsp 
 
+653 AEGAEO
+653 AEGAEON
+
+808 PROTEU
+808 PROTEUS
+
+899 NEPTUN
+899 NEPTUNE
+
+
+
 sat428 does not have names per 'brief' but commnt -r does shows names
 
 sat428.xsp does not have names either

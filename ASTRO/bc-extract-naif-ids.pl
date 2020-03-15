@@ -37,8 +37,22 @@ my(%id2name, %name2id, %name2rad, %hasradii);
 &extract_html_ids();
 
 for $i (sort {$a <=> $b} keys %id2name) {
-    for $j (keys %{$id2name{$i}}) {
-	debug("$i $j $id2name{$i}{$j}");
+
+    # the names associated with this NAIF id
+    my(@names) = sort keys %{$id2name{$i}};
+
+#    debug("NAMES($i) $#names", @names);
+
+    if ($#names >= 1 && $names[0] eq "") {shift(@names);}
+
+#    debug("NEW LIST", @names);
+
+#    if ($hasradii{$i}) {next;}
+
+    if ($#names > 0) {debug("MULTIPLE NAMES AHEAD");}
+
+    for $j (@names) {
+	debug("$i $j");
     }
 }
 
