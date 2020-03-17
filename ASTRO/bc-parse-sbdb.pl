@@ -1,6 +1,19 @@
 #!/bin/perl
 
+# gives radii for objects known to SPICE but that do not have radii in SPICE
+
+# (trying to give radii for all objects in small-body-db.csv.bz2
+# yields to kernel out of memory error)
+
 require "/usr/local/lib/bclib.pl";
+
+# load list of NAIF ids known to SPICE
+
+for $i (split(/\n/, read_file("/home/user/BCGIT/ASTRO/bc-naif-ids-known-to-spice.txt"))) {
+
+    if ($i=~m/^\s*$/ || $i=~m/^\#/) {next;}
+    $inspice{$i} = 1;
+}
 
 existing_spice_radii();
 
@@ -24,6 +37,8 @@ while (<A>) {
     for $i (0..$#headers) {$hash{$headers[$i]} = $data[$i];}
 
     if ($hasradii{$hash{spkid}}) {next;}
+
+    unless ($inspice{$hash{spkid}}) {next;}
 
     if ($hash{extent}) {
 
