@@ -10,9 +10,13 @@ https://minorplanetcenter.net/data
 
 "extent" is the magic word for https://ssd.jpl.nasa.gov/sbdb.cgi#top
 
+todo: pluto, some others
+
 done: dling smallbody db now
 
 https://ssd.jpl.nasa.gov/sbdb_query.cgi#x
+
+find func that converts naif ids to names and see what it uses
 
 create README.occult that mentions relevant issues including those in DOING
 
