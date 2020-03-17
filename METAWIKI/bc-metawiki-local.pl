@@ -15,12 +15,20 @@ my($data, $fname) = cmdfile();
 # to store all triples
 my(%triples);
 
+# special hack for {{wp|foo}} only
+
+$data=~s/\{\{(.*?)\|(.*?)\}\}/LINK($1,$2,SPEC)/sg;
+
 create_semantic_triples();
 
 sub create_semantic_triples {
 
     # read the data and limit to the <data></data> section
-    my($all) = read_file($fname);
+
+    # TODO: pass data to create_semantic_triples and parse out <data
+    # /> section separately
+
+    my($all) = $data;
     $all=~m%<data>(.*?)</data>%s;
     
     my($pages) = $1;
@@ -34,12 +42,21 @@ sub create_semantic_triples {
 
 	# TODO: don't ignore MULTIREF
 	if ($dates eq "MULTIREF") {
-	    warn("IGNORING MULTIREF");
+	    # TODO: don't ignore silently
+#	    warn("IGNORING MULTIREF");
 	    next;
 	}
 
 	# keep parsing until no double brackets are left (nothing in while loop)
 	while ($i=~s/\[\[([^\[\]]*?)\]\]/parse_triple($dates,$1)/e) {}
+    }
+}
+
+for $i (sort keys %triples) {
+    for $j (sort keys %{$triples{$i}}) {
+	for $k (sort keys %{$triples{$i}{$j}}) {
+	    debug("$i|$j|$k");
+	}
     }
 }
 
@@ -92,17 +109,20 @@ sub parse_triple {
 	if ($parts[1]=~s/\|(.*)//) {$linktext=$1;}
 
 	for $i (@sources) {
-	    $triples{$source}{$parts[0]}{$parts[1]} = 1;
-	    $triples{$parts[1]}{"-$parts[0]"}{$source} = 1;
+	    $triples{$i}{$parts[0]}{$parts[1]} = 1;
+	    $triples{$parts[1]}{"-$parts[0]"}{$i} = 1;
 	}
 
 	if ($linktext) {return "LINK($parts[1],$linktext";}
 	return "LINK($parts[1])";
     }
 
+    if ($#parts == 2) {
 
+	$triples{$parts[0]}{$parts[1]}{$parts[2]} = 1;
+	$triples{$parts[2]}{"-$parts[1]"}{$parts[0]} = 1;
+	return "LINK($parts[2])";
+    }
 
-
-    debug("TRIPLE: $string");
-
+    warn("MORE THAN TWO SETS OF COLONS: $source, $string");
 }
