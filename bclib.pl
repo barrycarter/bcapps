@@ -4978,6 +4978,35 @@ sub mysqlhashlist {
   return @res;
 }
 
+
+=item parse_date_list($string)
+
+Given a $string like "2013-04-17-2013-04-19, 2013-04-22, 2013-04-23,
+2013-04-30, 2013-05-01, 2013-05-06-2013-05-08, 2013-05-13-2013-05-15,
+2013-05-20-2013-05-22, 2013-05-24, 2013-05-29", return a list of dates where:
+
+"2013-05-06-2013-05-08" is treated as a range of dates and commas
+separate as they would in normal list
+
+=cut
+
+sub parse_date_list {
+  my($datelist) = @_;
+  my(@ret);
+
+  for $i (split(/\,/,$datelist)) {
+    # if datelist is date range (2002-06-03-2002-06-07), parse further
+    if ($i=~/^(\d{4}-\d{2}-\d{2})\-(\d{4}-\d{2}-\d{2})$/) {
+      for $j (str2time($1)/86400..str2time($2)/86400) {
+	push(@ret, strftime("%Y-%m-%d", gmtime($j*86400)));
+      }
+    } else {
+      push(@ret, $i);
+    }
+  }
+  return @ret;
+}
+
 # cleanup files created by my_tmpfile (unless --keeptemp set)
 sub END {
   debug("END: CLEANING UP TMP FILES");

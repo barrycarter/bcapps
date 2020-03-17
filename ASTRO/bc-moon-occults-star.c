@@ -85,10 +85,12 @@ int main(int argc, char **argv) {
     // TODO: add actual angular radius
     // TODO: don't need count
 
+    if (sep*dpr_c() < 6) {
+
     printf("%d %d %d %f %f %f %f\n", viewer, occulter, i, et2unix(beg), sep*dpr_c(), hygdata[i][1], hygdata[i][0]);
+    }
   }
 
     }
   return 0;
 }
-
