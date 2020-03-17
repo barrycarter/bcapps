@@ -109,6 +109,10 @@ sub parse_triple {
 	if ($parts[1]=~s/\|(.*)//) {$linktext=$1;}
 
 	for $i (@sources) {
+
+	    # list of parts[0] (can have multiples)
+	    
+
 	    $triples{$i}{$parts[0]}{$parts[1]} = 1;
 	    $triples{$parts[1]}{"-$parts[0]"}{$i} = 1;
 	}
