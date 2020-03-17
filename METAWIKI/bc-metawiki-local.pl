@@ -15,48 +15,73 @@ my($data, $fname) = cmdfile();
 # to store all triples
 my(%triples);
 
+# read the data and limit to the <data></data> section
+
+$data=~m%<data>(.*?)</data>%s;
+$data = $1;
+    
 # special hack for {{wp|foo}} only
 
 $data=~s/\{\{(.*?)\|(.*?)\}\}/LINK($1,$2,SPEC)/sg;
 
-create_semantic_triples();
+my(@data) = expand_dates($data);
 
-sub create_semantic_triples {
+# debug("DATA", @data);
 
-    # read the data and limit to the <data></data> section
-
-    # TODO: pass data to create_semantic_triples and parse out <data
-    # /> section separately
-
-    my($all) = $data;
-    $all=~m%<data>(.*?)</data>%s;
-    
-    my($pages) = $1;
-
-    # go through each line of data
-    for $i (split(/\n/, $pages)) {
-
-	# find leftmost word (which is date or dates)
-	$i=~s/^(\S+)\s+//;
-	my($dates) = $1;
-
-	# TODO: don't ignore MULTIREF
-	if ($dates eq "MULTIREF") {
-	    # TODO: don't ignore silently
-#	    warn("IGNORING MULTIREF");
-	    next;
-	}
-
-	# keep parsing until no double brackets are left (nothing in while loop)
-	while ($i=~s/\[\[([^\[\]]*?)\]\]/parse_triple($dates,$1)/e) {}
-    }
-}
+create_semantic_triples(@data);
 
 for $i (sort keys %triples) {
     for $j (sort keys %{$triples{$i}}) {
 	for $k (sort keys %{$triples{$i}{$j}}) {
 	    debug("$i|$j|$k");
 	}
+    }
+}
+
+
+# Given data where the first field of each line represents date(s),
+# return array of lines where each line has a single date
+
+sub expand_dates {
+
+    my($data) = @_;
+    my(@ret);
+
+    for $i (split(/\n/, $data)) {
+	
+	$i=~s/^(\S+)\s+//;
+	my(@dates) = parse_date_list($1);
+	for $j (@dates) {
+	    push(@ret, "$j $i");
+	}
+    }
+
+    return @ret;
+}
+
+# given a list of lines that represent source and data, create
+# semantic triples and return resolved value after line interpolation
+
+sub create_semantic_triples {
+
+    my(@data) = @_;
+
+    # go through each line of data
+    for $i (@data) {
+
+	# find leftmost word (which is always a single date)
+	$i=~s/^(\S+)\s+//;
+	my($date) = $1;
+
+	# TODO: don't ignore MULTIREF
+	if ($date eq "MULTIREF") {
+	    # TODO: don't ignore silently
+#	    warn("IGNORING MULTIREF");
+	    next;
+	}
+
+	# keep parsing until no double brackets are left (nothing in while loop)
+	while ($i=~s/\[\[([^\[\]]*?)\]\]/parse_triple($date,$1)/e) {}
     }
 }
 
@@ -91,16 +116,21 @@ sub parse_triple {
 
     my($source, $string) = @_;
 
-    my(@parts) = split(/::/, $string);
+    # x y and z as above
+    my($x, $y, $z) = split(/::/, $string);
 
-    # if just one part, return as above
+    # as lists if they have + signs in them
+    my(@x) = split(/\+/, $x);
+    my(@y) = split(/\+/, $y);
+    my(@z) = split(/\+/, $z);
+
+    # if just one part, return comma delimited values
     if ($#parts == 0) {
-	# TODO: what if x has plus signs in it
-	return "LINK($parts[0])";
-    }
 
-    # list of sources if $source is a range
-    my(@sources) = parse_date_list($source);
+	map($_="LINK($_)", @x);
+
+	return join(", ", @x);
+    }
 
     if ($#parts == 1) {
 
