@@ -6,7 +6,15 @@
 
 # TODO: create captions of actual images for feh
 
+# To test against the db bc-pbs3.pl creates, see ~/20200317 (LAPAZ)
+
+# sqlite3 -batch /var/tmp/pbs3.db "SELECT source,relation,target FROM
+# triples WHERE relation NOT IN ('hash', 'prev', next');" | sort >
+# old-db-sorted.txt
+
 # TODO: don't rely on ("date info") or ("MULTIREF info") in source file
+
+# TODO: add next, prev, class, and hash triples
 
 require "/usr/local/lib/bclib.pl";
 
@@ -23,6 +31,10 @@ $data = $1;
 # special hack for {{wp|foo}} only
 
 $data=~s/\{\{(.*?)\|(.*?)\}\}/LINK($1,$2,SPEC)/sg;
+
+# replace apostrophes with their HTML equivalent
+
+$data=~s/\'/&\#39\;/g;
 
 my(@data) = expand_dates($data);
 
@@ -115,6 +127,7 @@ TODO: this currently adds to GLOBAL hash
 sub parse_triple {
 
     my($source, $string) = @_;
+    my($linktext);
 
     # x y and z as above
     my($x, $y, $z) = split(/::/, $string);
@@ -125,38 +138,50 @@ sub parse_triple {
     my(@z) = split(/\+/, $z);
 
     # if just one part, return comma delimited values
-    if ($#parts == 0) {
-
+    if ($x && !$y && !$z) {
 	map($_="LINK($_)", @x);
-
 	return join(", ", @x);
     }
 
-    if ($#parts == 1) {
+    if ($x && $y && !$z) {
 
-	my($linktext);
+	my(@ret);
 
-	if ($parts[1]=~s/\|(.*)//) {$linktext=$1;}
+	for $i (@x) {
+	    for $j (@y) {
 
-	for $i (@sources) {
-
-	    # list of parts[0] (can have multiples)
-	    
-
-	    $triples{$i}{$parts[0]}{$parts[1]} = 1;
-	    $triples{$parts[1]}{"-$parts[0]"}{$i} = 1;
+		if ($j=~s/\|(.*)//) {
+		    push(@ret, "LINK($j,$1)");
+		} else {
+		    push(@ret, "LINK($j)");
+		}
+		
+		$triples{$source}{$i}{$j} = 1;
+		$triples{$j}{"-$i"}{$source} = 1;
+	    }
 	}
 
-	if ($linktext) {return "LINK($parts[1],$linktext";}
-	return "LINK($parts[1])";
+	return join(", ", @ret);
     }
 
-    if ($#parts == 2) {
+    if ($x && $y && $z) {
+	my(@ret);
 
-	$triples{$parts[0]}{$parts[1]}{$parts[2]} = 1;
-	$triples{$parts[2]}{"-$parts[1]"}{$parts[0]} = 1;
-	return "LINK($parts[2])";
+	for $i (@x) {
+	    for $j (@y) {
+		for $k (@z) {
+		    if ($k=~s/\|(.*)//) {
+			push(@ret, "LINK($k,$1)");
+		    } else {
+			push(@ret, "LINK($k)");
+		    }
+		    $triples{$i}{$j}{$k} = 1;
+		    $triples{$k}{"-$j"}{$i} = 1;
+		}
+	    }
+	}
+
+	return join(", ", @ret);
     }
-
     warn("MORE THAN TWO SETS OF COLONS: $source, $string");
 }
