@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
   SpiceDouble syear = atof(argv[4]);
   SpiceDouble eyear = atof(argv[5]);
 
-  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+  furnsh_c("/home/user/BCGIT/ASTRO/bc-maxkernel.tm");
 
   // convert sun/moon/planet names into NAIF ids w/ error checking
 

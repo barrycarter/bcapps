@@ -36,7 +36,12 @@ my(%id2name, %name2id, %name2rad, %hasradii);
 &extract_commnt_ids();
 &extract_html_ids();
 
+print "\\begindata\n";
+
 for $i (sort {$a <=> $b} keys %id2name) {
+
+    # skip radii already in SPICE
+    if ($hasradii{$i}) {next;}
 
     # the names associated with this NAIF id
     my(@names) = sort keys %{$id2name{$i}};
@@ -47,12 +52,23 @@ for $i (sort {$a <=> $b} keys %id2name) {
 
 #    debug("NEW LIST", @names);
 
-#    if ($hasradii{$i}) {next;}
-
-    if ($#names > 0) {debug("MULTIPLE NAMES AHEAD");}
+#    if ($#names > 0) {debug("MULTIPLE NAMES AHEAD");}
 
     for $j (@names) {
-	debug("$i $j");
+	my(@rads) = keys %{$name2rad{$j}};
+	my($rads) = join(",", @rads);
+
+	# TODO: don't do this
+	# skip lines without radii
+	unless ($rads) {next;}
+
+	# cleanup radii
+	$rads=~s/\~//g;
+
+	# create line
+	print "BODY${i}_RADII = ($rads $rads $rads)\n";
+
+	debug("$i $j $rads");
     }
 }
 
