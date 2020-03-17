@@ -2,13 +2,17 @@
 
 require "/usr/local/lib/bclib.pl";
 
+existing_spice_radii();
+
 open(A, "bzcat /home/user/SPICE/KERNELS/small-body-db.csv.bz2|");
 
 $headers = <A>;
 
 @headers = split(/\,/, $headers);
 
-# fields we want: spkid, full_name, diameter, extent, 
+# fields we want: spkid, full_name, diameter, extent, ?albedo?
+
+print "\\begindata\n";
 
 while (<A>) {
 
@@ -18,6 +22,8 @@ while (<A>) {
     my(%hash) = ();
 
     for $i (0..$#headers) {$hash{$headers[$i]} = $data[$i];}
+
+    if ($hasradii{$hash{spkid}}) {next;}
 
     if ($hash{extent}) {
 
@@ -52,8 +58,32 @@ while (<A>) {
 #	debug("$i: $hash{$i}");
 #    }
 
+# TODO: this function should NOT be in two places
+# copied from bc-extract-naif-ids.pl
 
+sub existing_spice_radii {
 
+    my($data) = read_file("/home/user/SPICE/KERNELS/pck00010.tpc");
+    my($indata) = 0;
 
+    for $i (split(/\n/, $data)) {
+
+	if ($i=~/^\s*\\begindata\s*$/) {
+	    $indata = 1;
+	    next;
+	}
+
+	if ($i=~/^\s*\\begintext\s*$/) {
+	    $indata = 0;
+	    next;
+	}
+
+	unless ($indata) {next;}
+
+	unless ($i=~/BODY(\d+)_RADII/i) {next;}
+
+	$hasradii{$1} = 1;
+    }
+}
 
 

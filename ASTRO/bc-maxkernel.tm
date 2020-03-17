@@ -54,4 +54,5 @@ KERNELS_TO_LOAD = (
 '/home/user/SPICE/KERNELS/earth_720101_070426.bpc',
 '/home/user/SPICE/KERNELS/codes_300ast_20100725.tf',
 '/home/user/BCGIT/ASTRO/bc-moons-hack.tpc'
+'/home/user/BCGIT/ASTRO/bc-asteroids-hack.tpc'
 )
