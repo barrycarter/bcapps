@@ -27,14 +27,21 @@ my(%triples);
 
 $data=~m%<data>(.*?)</data>%s;
 $data = $1;
+
+# debug("DATA IS: $data");
     
 # special hack for {{wp|foo}} only
 
-$data=~s/\{\{(.*?)\|(.*?)\}\}/LINK($1,$2,SPEC)/sg;
+# TODO: redo this if needed
+# $data=~s/\{\{(.*?)\|(.*?)\}\}/LINK($1,$2,SPEC)/sg;
+
+# TODO: this is just temporary to match old db
+
+# $data=~s/\{\{(.*?)\|(.*?)\}\}/$2/sg;
 
 # replace apostrophes with their HTML equivalent
 
-$data=~s/\'/&\#39\;/g;
+# $data=~s/\'/&\#39\;/g;
 
 my(@data) = expand_dates($data);
 
@@ -57,13 +64,18 @@ for $i (sort keys %triples) {
 sub expand_dates {
 
     my($data) = @_;
+
     my(@ret);
 
     for $i (split(/\n/, $data)) {
+
+	# skip blank lines
+	if ($i=~/^\s*$/) {next;}
 	
 	$i=~s/^(\S+)\s+//;
 	my(@dates) = parse_date_list($1);
 	for $j (@dates) {
+	    debug("PUSHING: $j $i");
 	    push(@ret, "$j $i");
 	}
     }
@@ -80,6 +92,11 @@ sub create_semantic_triples {
 
     # go through each line of data
     for $i (@data) {
+
+	debug("I: $i");
+
+	# replace commas w HTML equivalent
+#	$i=~s/,/&\#44\;/g;
 
 	# find leftmost word (which is always a single date)
 	$i=~s/^(\S+)\s+//;
@@ -150,18 +167,18 @@ sub parse_triple {
 	for $i (@x) {
 	    for $j (@y) {
 
-		if ($j=~s/\|(.*)//) {
-		    push(@ret, "LINK($j,$1)");
-		} else {
-		    push(@ret, "LINK($j)");
-		}
+#		if ($j=~s/\|(.*)//) {
+#		    push(@ret, "LINK($j,$1)");
+#		} else {
+#		    push(@ret, "LINK($j)");
+#		}
 		
 		$triples{$source}{$i}{$j} = 1;
 		$triples{$j}{"-$i"}{$source} = 1;
 	    }
 	}
 
-	return join(", ", @ret);
+	return $y;
     }
 
     if ($x && $y && $z) {
@@ -170,18 +187,19 @@ sub parse_triple {
 	for $i (@x) {
 	    for $j (@y) {
 		for $k (@z) {
-		    if ($k=~s/\|(.*)//) {
-			push(@ret, "LINK($k,$1)");
-		    } else {
-			push(@ret, "LINK($k)");
-		    }
+#		    if ($k=~s/\|(.*)//) {
+#			push(@ret, "LINK($k,$1)");
+#		    } else {
+#			push(@ret, "LINK($k)");
+#		    }
 		    $triples{$i}{$j}{$k} = 1;
 		    $triples{$k}{"-$j"}{$i} = 1;
 		}
 	    }
 	}
 
-	return join(", ", @ret);
+	return $z;
+#	return join(", ", @ret);
     }
     warn("MORE THAN TWO SETS OF COLONS: $source, $string");
 }

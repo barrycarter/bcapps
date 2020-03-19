@@ -20,9 +20,13 @@ $zip->read($file);
 # twitter is apparently flipping back and forth, so I am uncommenting
 # proper lines as needed
 
-# my($data) = $zip->memberNamed("data/js/user_details.js");
+# TODO: make below an option (or test multiple), three ways they are
+# doing it now
 
-my($data) = $zip->memberNamed("account.js");
+my($data) = $zip->memberNamed("data/account.js");
+# my($data) = $zip->memberNamed("data/js/user_details.js");
+# my($data) = $zip->memberNamed("account.js");
+
 my($mtime) = strftime("%Y%m%d.%H%M%S", gmtime($data->lastModTime()));
 my($contents) = $data->contents();
 

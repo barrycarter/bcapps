@@ -15,6 +15,8 @@ $file = "$bclib{home}/DOING";
 
 # thing given?
 
+# TODO: this is incorrect-- must check 2nd field only for words below
+
 # "DONE:" indicates item is done and not to be shown, NOT: = abandoned
 unless (@ARGV) {system("tac $file | egrep -v 'DONE:|NOT:|OK:|FIXED:|NOTED:|ASKED:|DEFER:' | less"); exit(0);}
 

@@ -79,7 +79,7 @@ TODO: saved-messages should never contain certain types of messages,
 such as uptimerobot notifications
 
 TODO: confirm that fixed monthly payments are actually constant and
-occur only once a month
+occur only once a month (including rent/mortgage/etc)
 
 TODO: git status
 
@@ -95,3 +95,4 @@ TODO: in the ~/TODAY directory, there should be no files from the future (or old
 TODO: all doordash/postmates/etc orders should have refnum field nonempty
 
 TODO: all emails in BC-WP-.... should follow pattern
+
