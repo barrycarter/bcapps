@@ -13,12 +13,41 @@ require "/usr/local/lib/bclib.pl";
 
 $file = "$bclib{home}/DOING";
 
-# thing given?
+my(%ignore) = list2hash("DONE", "NOT", "OK", "FIXED", "NOTED",
+"ASKED", "DEFER");
+
 
 # TODO: this is incorrect-- must check 2nd field only for words below
 
 # "DONE:" indicates item is done and not to be shown, NOT: = abandoned
-unless (@ARGV) {system("tac $file | egrep -v 'DONE:|NOT:|OK:|FIXED:|NOTED:|ASKED:|DEFER:' | less"); exit(0);}
+
+unless (@ARGV) {
+
+  # read the file backwards, ignore cases where second word is ignorable
+  open(A, "tac $file|");
+
+  while (<A>) {
+
+    my(@words) = split(/\s+/, $_);
+
+    # if second word has trailing colon, remove it and ...
+
+    if ($words[1]=~s/:$//) {
+
+      # ignore it or...
+      if ($ignore{$words[1]}) {next;}
+
+      warn("SECOND WORD CONTAINS BAD COLON: $_");
+      next;
+    }
+
+    print $_;
+  }
+
+  exit(0);
+}
+
+# system("tac $file | egrep -v 'DONE:|NOT:|OK:|FIXED:|NOTED:|ASKED:|DEFER:' | less"); exit(0);}
 
 # <h>time and item are anagrams</h>
 my($item) = join(" ",@ARGV);

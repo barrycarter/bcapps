@@ -33,6 +33,9 @@
 
 --write-all-thumbnails 
 
+# added 19 Mar 2020 to avoid stopping long dls
+--ignore-errors
+
 # note to self: --skip-download will skip the video and just download
 # subtites/etc which is sometimes really useful
 
