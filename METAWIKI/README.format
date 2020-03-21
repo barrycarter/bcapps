@@ -1,7 +1,20 @@
 The format of semantic mediawiki stuff for this project is as follows:
 
-[[x::y::z]] - x's y is z and both x and z are objects
-[[x::y:=z]] - x's y is z, x is an object, y is property, z is a literal
+[[x::y::z]] - x's y is z and both x and z are objects, returns z linked
+
+[[x::y:=z]] - x's y is z, x is an object, y is property, z is a
+literal, returns z unlinked (plain string)
 
 date [[y::z]] - date's y is z and date and z are objects
 date [[y:=z]] - date's y is z and z is a literal
+
+Examples
+========
+
+2003-02-03 [[storyline::[[character::Pig]] the janitor]]
+
+adds the following triples:
+
+[[character::Pig]] yields 2003-02-03,character,Pig 
+
+[[[a+b+c::d::e]] can't break it up [[a::d::e]], [[b::d::e]], [[c::d::e]]

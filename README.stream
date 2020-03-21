@@ -18,6 +18,18 @@ done: dling smallbody db now
 
 https://ssd.jpl.nasa.gov/sbdb_query.cgi#x
 
+notes:
+
+399 2000209 906 1597646435.409893 -0.000125 3.780000 35946.000000
+
+Mon Aug 17 06:40:35 GMT 2020
+
+209 Dido
+
+i gem: (7+27/60+1.56/300)/12*Pi = 1.9517667959202188793
+
+(27 + 45/60 + 171/36000)/180*Pi = 0.48441177056789618825
+
 find func that converts naif ids to names and see what it uses
 
 create README.occult that mentions relevant issues including those in DOING

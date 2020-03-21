@@ -23,6 +23,9 @@ my($data, $fname) = cmdfile();
 # to store all triples
 my(%triples);
 
+# to store whether properties are literal or object to object
+my(%props);
+
 # read the data and limit to the <data></data> section
 
 $data=~m%<data>(.*?)</data>%s;
@@ -43,7 +46,8 @@ $data = $1;
 
 # $data=~s/\'/&\#39\;/g;
 
-my(@data) = expand_dates($data);
+# my(@data) = expand_dates($data);
+my(@data) = split(/\n/, $data);
 
 # debug("DATA", @data);
 
@@ -75,7 +79,6 @@ sub expand_dates {
 	$i=~s/^(\S+)\s+//;
 	my(@dates) = parse_date_list($1);
 	for $j (@dates) {
-	    debug("PUSHING: $j $i");
 	    push(@ret, "$j $i");
 	}
     }
@@ -146,13 +149,37 @@ sub parse_triple {
     my($source, $string) = @_;
     my($linktext);
 
-    # x y and z as above
-    my($x, $y, $z) = split(/::/, $string);
+    my($x, $y, $z, $t);
+    my(@x, @y, @z);
+
+    # if double double colons
+
+    if ($string=~s/^(.*?)::(.*?):(:|\=)(.*?)$//) {
+	($x, $y, $t, $z) = ($1, $2, $3, $4);
+	@x = split(/\+/, $x);
+    } elsif ($string=~s/^(.*?):(:|\=)(.*?)$//) {
+	($x, $y, $t, $z) = ($source, $1, $2, $3);
+	@x = parse_dates($x);
+    } else {
+	return "LINK($string)";
+    }
 
     # as lists if they have + signs in them
     my(@x) = split(/\+/, $x);
     my(@y) = split(/\+/, $y);
     my(@z) = split(/\+/, $z);
+
+    if ($type eq "object") {
+
+
+
+    debug("XYZT (TESTING): $x, $y, $z, $type");
+
+    # TODO: return for testing only
+    return;
+
+    # x y and z as above
+    my($x, $y, $z) = split(/::/, $string);
 
     # if just one part, return comma delimited values
     if ($x && !$y && !$z) {
