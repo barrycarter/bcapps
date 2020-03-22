@@ -13,8 +13,16 @@ Examples
 
 2003-02-03 [[storyline::[[character::Pig]] the janitor]]
 
-adds the following triples:
+parses as follows:
 
-[[character::Pig]] yields 2003-02-03,character,Pig 
+[[character::Pig]] adds triple: 2003-02-03,character,Pig
+[[character::Pig]] returns LINK(Pig)
+
+thus: 2003-02-03 [[storyline::LINK(Pig) the janitor]]
+
+
+
+
+[[character::Pig]] yields 
 
 [[[a+b+c::d::e]] can't break it up [[a::d::e]], [[b::d::e]], [[c::d::e]]

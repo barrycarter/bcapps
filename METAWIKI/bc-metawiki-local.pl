@@ -96,7 +96,7 @@ sub create_semantic_triples {
     # go through each line of data
     for $i (@data) {
 
-	debug("I: $i");
+#	debug("I: $i");
 
 	# replace commas w HTML equivalent
 #	$i=~s/,/&\#44\;/g;
@@ -159,74 +159,37 @@ sub parse_triple {
 	@x = split(/\+/, $x);
     } elsif ($string=~s/^(.*?):(:|\=)(.*?)$//) {
 	($x, $y, $t, $z) = ($source, $1, $2, $3);
-	@x = parse_dates($x);
+	@x = parse_date_list($x);
     } else {
 	return "LINK($string)";
     }
 
     # as lists if they have + signs in them
-    my(@x) = split(/\+/, $x);
     my(@y) = split(/\+/, $y);
     my(@z) = split(/\+/, $z);
 
-    if ($type eq "object") {
-
-
-
-    debug("XYZT (TESTING): $x, $y, $z, $type");
-
-    # TODO: return for testing only
-    return;
-
-    # x y and z as above
-    my($x, $y, $z) = split(/::/, $string);
-
-    # if just one part, return comma delimited values
-    if ($x && !$y && !$z) {
-	map($_="LINK($_)", @x);
-	return join(", ", @x);
-    }
-
-    if ($x && $y && !$z) {
-
-	my(@ret);
-
-	for $i (@x) {
-	    for $j (@y) {
-
-#		if ($j=~s/\|(.*)//) {
-#		    push(@ret, "LINK($j,$1)");
-#		} else {
-#		    push(@ret, "LINK($j)");
-#		}
-		
-		$triples{$source}{$i}{$j} = 1;
-		$triples{$j}{"-$i"}{$source} = 1;
-	    }
-	}
-
-	return $y;
-    }
-
-    if ($x && $y && $z) {
-	my(@ret);
-
+    if ($t eq ":") {
 	for $i (@x) {
 	    for $j (@y) {
 		for $k (@z) {
-#		    if ($k=~s/\|(.*)//) {
-#			push(@ret, "LINK($k,$1)");
-#		    } else {
-#			push(@ret, "LINK($k)");
-#		    }
+		    $k=~s/LINK\((.*?)\)/$1/g;
 		    $triples{$i}{$j}{$k} = 1;
 		    $triples{$k}{"-$j"}{$i} = 1;
 		}
 	    }
 	}
-
-	return $z;
-#	return join(", ", @ret);
+	return "LINK($z)";
     }
-    warn("MORE THAN TWO SETS OF COLONS: $source, $string");
+
+
+    if ($t eq "=") {
+	for $i (@x) {
+	    for $j (@y) {
+		for $k (@z) {
+		    $triples{$i}{$j}{$k} = 1;
+		}
+	    }
+	}
+	return $z;
+    }
 }
