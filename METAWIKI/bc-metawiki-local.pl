@@ -36,7 +36,9 @@ $data = $1;
 # special hack for {{wp|foo}} only
 
 # TODO: redo this if needed
-# $data=~s/\{\{(.*?)\|(.*?)\}\}/LINK($1,$2,SPEC)/sg;
+$data=~s/\{\{(.*?)\|(.*?)\}\}/[[$1::-class::$2]]/sg;
+
+# debug("POST: $data");
 
 # TODO: this is just temporary to match old db
 
@@ -56,7 +58,7 @@ create_semantic_triples(@data);
 for $i (sort keys %triples) {
     for $j (sort keys %{$triples{$i}}) {
 	for $k (sort keys %{$triples{$i}{$j}}) {
-	    debug("$i|$j|$k");
+	    debug("$i/$j/$k");
 	}
     }
 }
@@ -147,6 +149,8 @@ TODO: this currently adds to GLOBAL hash
 sub parse_triple {
 
     my($source, $string) = @_;
+
+    debug("PARSE_TRIPLE($source, $string)");
     my($linktext);
 
     my($x, $y, $z, $t);

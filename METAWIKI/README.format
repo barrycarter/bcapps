@@ -26,3 +26,13 @@ thus: 2003-02-03 [[storyline::LINK(Pig) the janitor]]
 [[character::Pig]] yields 
 
 [[[a+b+c::d::e]] can't break it up [[a::d::e]], [[b::d::e]], [[c::d::e]]
+
+failing example below
+
+2005-06-14 [[notes:=We learn [[Larry]]'s wife's name is [[Larry::wife::[[character::Frieda (crocodile)]]]]]]
+ 
+should go:
+
+2005-06-14,character, Frieda (crocodile) and return
+
+[[notes:=We learn [[Larry]]'s wife's name is [[Larry::wife::Frieda (crocodile)]]]]
