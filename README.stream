@@ -6,6 +6,49 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 25 Mar 2020, primarily for my reference
 
+install gravit?
+
+astronomy question: where is terminator?
+
+bcinfo4
+
+sshfs barrycar@barrycarter.org:/home/barrycar/public_html/MAGGIE barrycarter.barrycarter.org                                                       
+
+
+#!examples.md
+
+absent minded
+
+navigation.md is hardcoded
+
+pagination: show only 20/50/100/200 (user-controlled) results at a
+time, http://pbs3.referata.com/wiki/Category:Strips
+
+sortable lists
+
+what links here
+
+semantics? (not even mediawiki has that)
+
+printable version
+
+pagevalues?
+
+properties like: http://pbs3.referata.com/wiki/Special:Browse/2002-2D01-2D11
+
+templating including hiding
+
+prev/next
+
+discussion: no, just email me (or edit github)
+
+random page???
+
+can tools like curl and wget get it (they don't use js)-- even if no,
+we have the pages on github
+
+don't care: recent changes
+
 pure js wikilike thing? http://dynalon.github.io/mdwiki/#!index.md
 eats own dogfood google "client-side wiki" = 343 hits only
 
