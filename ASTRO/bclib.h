@@ -94,7 +94,9 @@ int debug(void) {return strcmp(getenv("DEBUG"),"1")==0;}
 double unix2et(double d) {
   // compute delta
   SpiceDouble delta;
+  printf("ALPHA\n");
   deltet_c(d-946728000,"UTC",&delta);
+  printf("BETA\n");
   return d-946728000.+delta;
 }
 
