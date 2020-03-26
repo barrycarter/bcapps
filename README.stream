@@ -4,11 +4,25 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 25 Mar 2020, primarily for my reference
+Stuff I plan to stream 26 Mar 2020, primarily for my reference
 
 install gravit?
 
-astronomy question: where is terminator?
+astronomy question: where is terminator? + API + make ugly
+
+https://space.stackexchange.com/questions/42087/locations-of-the-terminator-on-mars-surface-on-1976-07-24t103526z
+
+- easy to do? yes!
+
+- can be extended? yes!
+
+- can we fuck it over? yes!
+
+- new and useless? yes!
+
+create API
+
+test w stellarium
 
 bcinfo4
 
