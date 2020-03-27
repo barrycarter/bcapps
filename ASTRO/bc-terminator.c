@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 
   // TODO: get these from args
   ConstSpiceChar *planet = "399";
-  SpiceDouble time = unix2et(1585250121);
+  SpiceDouble time = unix2et(1592405190);
   SpiceInt npts = 100;
 
   // TODO: maybe penumbral for where sunset is occurring
@@ -24,7 +24,9 @@ int main(int argc, char **argv) {
 
   SpiceDouble trgepc, obspos[3], trmpts[100][3], r, lng, lat;
 
-  edterm_c("UMBRAL", "10", planet, time, "IAU_EARTH", "CN+S", planet, npts,
+  // TODO: best frame for Earth is ITRF93 NOT IAU_EARTH
+
+  edterm_c("UMBRAL", "10", planet, time, "ITRF93", "CN+S", planet, npts,
   	   &trgepc, obspos, trmpts);
 
   for (int i=0; i<npts; i++) {
