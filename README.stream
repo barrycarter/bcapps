@@ -24,6 +24,12 @@ create API
 
 test w stellarium
 
+actual pos: +74ish, -71ish
+
+given by prog: 165.515965 and -10.037464
+
+
+
 bcinfo4
 
 sshfs barrycar@barrycarter.org:/home/barrycar/public_html/MAGGIE barrycarter.barrycarter.org                                                       
