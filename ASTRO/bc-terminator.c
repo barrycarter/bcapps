@@ -1,17 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <getopt.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
 
-// Usage: $0 -i naif_id -t time_in_unix_seconds -r 0|1
+// Usage: $0 --id=naif_id --time=time_in_unix_seconds --refract=0|1
 // (refraction is computed for earth only)
-
-// TODO: use longopts later?
 
 // TODO: error to set refraction for non-Earth
 
@@ -23,9 +21,8 @@ int main(int argc, char **argv) {
 
   //  int opt;
 
-  // look at the opts
-  while (getopt(argc, argv, "i:t:r:") != -1) {
-    printf("%s\n", optarg);
+  while (getopt_long (argc, argv, "abc:d:f:", long_options, &option_index) != -1) {
+    printf("%p\n", long_options);
   }
 
   furnsh_c("bc-maxkernel.tm");
