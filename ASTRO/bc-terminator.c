@@ -1,10 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
+
+
+// Usage: $0 -i naif_id -t time_in_unix_seconds -r 0|1
+// (refraction is computed for earth only)
+
+// TODO: use longopts later?
+
+// TODO: error to set refraction for non-Earth
 
 // TODO: refraction?
 
@@ -12,11 +21,18 @@
 
 int main(int argc, char **argv) {
 
+  //  int opt;
+
+  // look at the opts
+  while (getopt(argc, argv, "i:t:r:") != -1) {
+    printf("%s\n", optarg);
+  }
+
   furnsh_c("bc-maxkernel.tm");
 
   // TODO: get these from args
-  ConstSpiceChar *planet = "399";
-  SpiceDouble time = unix2et(1592405190);
+  ConstSpiceChar *planet = "499", *frame = "IAU_MARS";
+  SpiceDouble time = unix2et(1585353280);
   SpiceInt npts = 100;
 
   // TODO: maybe penumbral for where sunset is occurring
@@ -26,7 +42,7 @@ int main(int argc, char **argv) {
 
   // TODO: best frame for Earth is ITRF93 NOT IAU_EARTH
 
-  edterm_c("UMBRAL", "10", planet, time, "ITRF93", "CN+S", planet, npts,
+  edterm_c("UMBRAL", "10", planet, time, frame, "CN+S", planet, npts,
   	   &trgepc, obspos, trmpts);
 
   for (int i=0; i<npts; i++) {
