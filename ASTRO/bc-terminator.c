@@ -7,33 +7,43 @@
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
-
-// Usage: $0 -i naif_id -t time_in_unix_seconds -r 0|1
-// (refraction is computed for earth only)
+// Usage: $0 -i naif_id -t time_in_unix_seconds -n num_pts
 
 // TODO: use longopts later?
 
 // TODO: error to set refraction for non-Earth
 
-// TODO: refraction?
-
-// TODO: getopts for options in C
+// TODO: refraction? (can I do it?)
 
 int main(int argc, char **argv) {
 
-  //  int opt;
-
-  // look at the opts
-  while (getopt(argc, argv, "i:t:r:") != -1) {
-    printf("%s\n", optarg);
-  }
+  char optid;
+  SpiceInt npts=100, frameID, id=399;
+  SpiceDouble time=0;
+  SpiceChar planet[100], frame[100], name[100];
+  SpiceBoolean found;
 
   furnsh_c("bc-maxkernel.tm");
 
-  // TODO: get these from args
-  ConstSpiceChar *planet = "499", *frame = "IAU_MARS";
-  SpiceDouble time = unix2et(1585353280);
-  SpiceInt npts = 100;
+  // assign from opts
+  while ((optid = getopt(argc, argv, "i:t:n")) != -1) {
+    if (optid == 'i') {id = atoi(optarg);}
+    if (optid == 't') {time = unix2et(atoi(optarg));}
+    if (optid == 'n') {npts = atoi(optarg);}
+  }
+
+  // convert planet to string, complain if not found
+
+  bodc2n_c(id, 100, name, &found);
+  if (!found) {printf("Name for NAIF ID %d not found\n", id); exit(-1);}
+
+  // get frame from planet
+  cnmfrm_c(name, 100, &frameID, frame, &found);
+  if (!found) {printf("FRAME NOT FOUND: %d (%s)\n", id, name); exit(-1);}
+
+  printf("NAME: %s, FRAME: %s\n", name, frame);
+
+  exit(-1);
 
   // TODO: maybe penumbral for where sunset is occurring
   // TODO: need to fix frame from IAU_EARTH
