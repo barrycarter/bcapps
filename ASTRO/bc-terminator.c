@@ -20,17 +20,19 @@ int main(int argc, char **argv) {
   char optid;
   SpiceInt npts=100, frameID, id=399;
   SpiceDouble time=0;
-  SpiceChar planet[100], frame[100], name[100];
+  SpiceChar frame[100], name[100];
   SpiceBoolean found;
 
   furnsh_c("bc-maxkernel.tm");
 
   // assign from opts
-  while ((optid = getopt(argc, argv, "i:t:n")) != -1) {
+  while ((optid = getopt(argc, argv, "i:t:n:")) != -1) {
     if (optid == 'i') {id = atoi(optarg);}
-    if (optid == 't') {time = unix2et(atoi(optarg));}
+    if (optid == 't') {time = unix2et(atof(optarg));}
     if (optid == 'n') {npts = atoi(optarg);}
   }
+
+  printf("I: %d, T: %f, N: %d\n", id, time, npts);
 
   // convert planet to string, complain if not found
 
@@ -43,16 +45,11 @@ int main(int argc, char **argv) {
 
   printf("NAME: %s, FRAME: %s\n", name, frame);
 
-  exit(-1);
-
   // TODO: maybe penumbral for where sunset is occurring
-  // TODO: need to fix frame from IAU_EARTH
 
-  SpiceDouble trgepc, obspos[3], trmpts[100][3], r, lng, lat;
+  SpiceDouble trgepc, obspos[3], trmpts[npts][3], r, lng, lat;
 
-  // TODO: best frame for Earth is ITRF93 NOT IAU_EARTH
-
-  edterm_c("UMBRAL", "10", planet, time, frame, "CN+S", planet, npts,
+  edterm_c("UMBRAL", "10", name, time, frame, "CN+S", name, npts,
   	   &trgepc, obspos, trmpts);
 
   for (int i=0; i<npts; i++) {
