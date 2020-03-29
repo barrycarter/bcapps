@@ -36,7 +36,6 @@ KERNELS_TO_LOAD = (
 '/home/user/SPICE/KERNELS/sat393-rocks_pan.bsp',
 '/home/user/SPICE/KERNELS/sat393.bsp',
 '/home/user/SPICE/KERNELS/sat393_daphnis.bsp',
-'/home/user/SPICE/KERNELS/sat425.bsp',
 '/home/user/SPICE/KERNELS/sat428.bsp',
 '/home/user/SPICE/KERNELS/siding_spring_8-19-14.bsp',
 '/home/user/SPICE/KERNELS/siding_spring_s46.bsp',
