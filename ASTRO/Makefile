@@ -1,3 +1,3 @@
 # force run the Perl version
 all: 
-	bc-psuedo-make.pl
+	/home/user/BCGIT/ASTRO/bc-psuedo-make.pl
