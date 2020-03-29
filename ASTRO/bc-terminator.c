@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     if (optid == 'u') {if (atoi(optarg) == 0) {strcpy(type,"PENUMBRAL");}}
   }
 
-  printf("I: %d, T: %f, N: %d, U: %s\n", id, time, npts, type);
+  //  printf("I: %d, T: %f, N: %d, U: %s\n", id, time, npts, type);
 
   // convert planet to string, complain if not found
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
   cnmfrm_c(name, 100, &frameID, frame, &found);
   if (!found) {printf("FRAME NOT FOUND: %d (%s)\n", id, name); exit(-1);}
 
-  printf("NAME: %s, FRAME: %s\n", name, frame);
+  //  printf("NAME: %s, FRAME: %s\n", name, frame);
 
   SpiceDouble trgepc, obspos[3], trmpts[npts][3], r, lng, lat;
 
@@ -58,11 +58,13 @@ int main(int argc, char **argv) {
   edterm_c(type, "10", name, time, frame, "CN+S", name, npts,
   	   &trgepc, obspos, trmpts);
 
+  // print out all meta-data
+
+  printf("i=%d&t=%f&n=%d&type=%s&name=%s&frame=%s&\n", id, et2unix(time), npts, type, name, frame);
+
   for (int i=0; i<npts; i++) {
-
     reclat_c(trmpts[i], &r, &lng, &lat);
-
-    printf("POINT(%d): %f %f %f\n", i, r, lng*dpr_c(), lat*dpr_c());
+    printf("lng%d=%f&lat%d=%f&\n", i, lng*dpr_c(), i, lat*dpr_c());
   }
   return 0;
 }
