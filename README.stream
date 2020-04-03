@@ -4,9 +4,13 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 2 Apr 2020, primarily for my reference
+Stuff I plan to stream 3 Apr 2020, primarily for my reference
+
+\rsync /home/user/YAMC/SERVER/API/bc-api.pl root@terramapadventure.com:/mnt/volume_lon1_01/TILES/API/
 
 back to API?
+
+.hushlogin
 
 TODO: fix github pages to use secure version of TILES (bclib-tester.html)
 
