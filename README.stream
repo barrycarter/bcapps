@@ -4,7 +4,19 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 1 Apr 2020, primarily for my reference
+Stuff I plan to stream 2 Apr 2020, primarily for my reference
+
+back to API?
+
+TODO: fix github pages to use secure version of TILES (bclib-tester.html)
+
+TODO: whenever dig ocan reboots, "setenforce 0"
+
+https://www.terramapadventure.com/CLIMATE/0/0/0.png (is a non virt dir URL)
+
+fcgiwrap -s tcp:127.0.0.1:9000
+
+(also do above when rebooting terramapadventure.com)
 
 r = a or t
 s = c or g
