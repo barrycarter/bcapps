@@ -6,7 +6,10 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 3 Apr 2020, primarily for my reference
 
-\rsync /home/user/YAMC/SERVER/API/bc-api.pl root@terramapadventure.com:/mnt/volume_lon1_01/TILES/API/
+\rsync root@terramapadventure.com:/mnt/volume_lon1_01/TILES/API/bc-api.pl /home/user/YAMC/SERVER/API/bc-api.pl
+
+IGNORE: \rsync /home/user/YAMC/SERVER/API/bc-api.pl root@terramapadventure.com:/mnt/volume_lon1_01/TILES/API/
+
 
 back to API?
 
