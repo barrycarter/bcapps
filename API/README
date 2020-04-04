@@ -7,3 +7,6 @@ TODO: help function, help per callable function (eg, "help f1")
 
 TODO: add source code links, disclaimers?, email addr for questions, etc
 
+TODO: this file does NOT rsync automatically to terramapadventure.com,
+must be pushed manually for now
+
