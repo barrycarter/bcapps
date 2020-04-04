@@ -4,6 +4,9 @@ require "/usr/local/lib/bclib.pl";
 
 print "Access-Control-Allow-Origin: *\n";
 
+# NOTE: job of bcapi_* functions is to change the %output hash, not
+# return anything
+
 # TODO: restore to application/json
 # print "Content-type: application/json\n\n";
 
@@ -36,7 +39,11 @@ unless (defined(&{$f})) {
     die("$f not defined");
 }
 
-$result{output} = {&$f};
+# call the function, it will change %output
+
+&$f;
+
+$result{output} = \%output;
 
 print JSON::to_json(\%result),"\n";
 
@@ -71,16 +78,18 @@ sub bcapi_terminator {
 
 sub bcapi_time {
 
-    my(%ret);
-
     if ($query{tz}=~s/[^a-z0-9\/]//isg) {
-	$ret{error} .= "Invalid characters in your timezone were removed";
+	$output{error} .= "Invalid characters in your timezone were removed";
+    }
+
+    # check if file exists
+    unless (-f "/usr/share/zoneinfo/$query{tz}") {
+	$output{error} .= "Timezone $query{tz} does not exist";
+	return;
     }
 
     $ENV{TZ} = $query{tz};
 
-    $ret{date} = `date`;
-    chomp($ret{date});
-
-    return %ret;
+    $output{date} = `date`;
+    chomp($output{date});
 }
