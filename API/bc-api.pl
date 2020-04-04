@@ -11,9 +11,13 @@ print "Content-type: text/plain\n\n";
 
 # NOTE: for testing, setenv QUERY_STRING ...
 
-# get the query string
+# get the query string (can be used globally)
 
 my(%query) = str2hash($ENV{QUERY_STRING});
+
+# the output of the function (can be used globally)
+
+my(%output);
 
 # the result will always contain a copy of the input...
 
@@ -32,48 +36,9 @@ unless (defined(&{$f})) {
     die("$f not defined");
 }
 
-debug({&$f});
-
 $result{output} = {&$f};
 
-# $result{output} = \&$f();
-
 print JSON::to_json(\%result),"\n";
-
-die "TESTING";
-
-my($func) = "bcapi_$result{input}{f}";
-
-debug($func);
-
-die "TESTING";
-
-
-# TODO: the work
-
-$result{output} = bcapi_time(%query);
-
-# print w/ new line
-
-print JSON::to_json(\%result),"\n";
-
-# TODO: functions can use global variable for convenience
-
-
-
-if ($query{f} eq "time") {
-    $result{input} = \%query;
-    $result{output} = bcapi_time(%query);
-    print JSON::to_json(\%result),"\n";
-#    print JSON::to_json(bcapi_time(%query));
-}
-
-if ($query{f} eq "terminator") {
-    $result{input} = \%query;
-    $result{output} = bcapi_terminator(%query);
-    print JSON::to_json(\%result),"\n";
-}
-
 
 =item bcapi_terminator(%hash)
 
@@ -99,16 +64,6 @@ sub bcapi_terminator {
     print "RESULT: $out, ERR: $err, RES: $res";
 }
 
-# print "Hello Bob\n";
-
-# bcapi_time(%query);
-
-# print JSON::to_json(\%query);
-
-# for $i (sort keys %query) {
-#    print "$i: $query{$i}\n";
-# }
-
 # TODO: properly document this
 
 # gives time in a given timezone
@@ -116,26 +71,16 @@ sub bcapi_terminator {
 
 sub bcapi_time {
 
-    my(%hash) = @_;
     my(%ret);
 
-    if ($hash{tz}=~s/[^a-z0-9\/]//isg) {
+    if ($query{tz}=~s/[^a-z0-9\/]//isg) {
 	$ret{error} .= "Invalid characters in your timezone were removed";
     }
 
-    $ENV{TZ} = $hash{tz};
+    $ENV{TZ} = $query{tz};
 
     $ret{date} = `date`;
     chomp($ret{date});
 
     return %ret;
-}
-
-# this is a local version of cache_command that lets me run commands
-# on terramapdaventure.com via ssh while testing
-
-sub cache_command_local {
-
-    my($cmd, $options);
-
 }
