@@ -9,21 +9,69 @@ print "Access-Control-Allow-Origin: *\n";
 
 print "Content-type: text/plain\n\n";
 
+# NOTE: for testing, setenv QUERY_STRING ...
+
+# get the query string
+
 my(%query) = str2hash($ENV{QUERY_STRING});
 
+# the result will always contain a copy of the input...
+
 my(%result);
+
+$result{input} = \%query;
+
+# figure out what function to call and if it exists and then call it
+
+# debug("D", defined(&{"bcapi_time"}), defined(&{"nossdfada"}), "/D");
+
+my($f) = "bcapi_$result{input}{f}";
+
+unless (defined(&{$f})) {
+    # TODO: cleaner exit for functions that dont exist
+    die("$f not defined");
+}
+
+debug({&$f});
+
+$result{output} = {&$f};
+
+# $result{output} = \&$f();
+
+print JSON::to_json(\%result),"\n";
+
+die "TESTING";
+
+my($func) = "bcapi_$result{input}{f}";
+
+debug($func);
+
+die "TESTING";
+
+
+# TODO: the work
+
+$result{output} = bcapi_time(%query);
+
+# print w/ new line
+
+print JSON::to_json(\%result),"\n";
+
+# TODO: functions can use global variable for convenience
+
+
 
 if ($query{f} eq "time") {
     $result{input} = \%query;
     $result{output} = bcapi_time(%query);
-    print JSON::to_json(\%result);
+    print JSON::to_json(\%result),"\n";
 #    print JSON::to_json(bcapi_time(%query));
 }
 
 if ($query{f} eq "terminator") {
     $result{input} = \%query;
     $result{output} = bcapi_terminator(%query);
-    print JSON::to_json(\%result);
+    print JSON::to_json(\%result),"\n";
 }
 
 
@@ -80,6 +128,14 @@ sub bcapi_time {
     $ret{date} = `date`;
     chomp($ret{date});
 
-    return \%ret;
+    return %ret;
 }
 
+# this is a local version of cache_command that lets me run commands
+# on terramapdaventure.com via ssh while testing
+
+sub cache_command_local {
+
+    my($cmd, $options);
+
+}
