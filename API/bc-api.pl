@@ -14,9 +14,12 @@ print "Content-type: text/plain\n\n";
 
 # NOTE: for testing, setenv QUERY_STRING ...
 
-# get the query string (can be used globally)
+# TODO: restrict which characters allowed in QUERY_STRING, return
+# fixed error if bad
 
-my(%query) = str2hash($ENV{QUERY_STRING});
+# get the query string (can be used globally, so use globopts)
+
+my(%globopts) = str2hash($ENV{QUERY_STRING});
 
 # the output of the function (can be used globally)
 
@@ -26,13 +29,13 @@ my(%output);
 
 my(%result);
 
-$result{input} = \%query;
+$result{input} = \%globopts;
 
 # figure out what function to call and if it exists and then call it
 
 # debug("D", defined(&{"bcapi_time"}), defined(&{"nossdfada"}), "/D");
 
-my($f) = "bcapi_$result{input}{f}";
+my($f) = "bcapi_$globopts{f}";
 
 unless (defined(&{$f})) {
     # TODO: cleaner exit for functions that dont exist
@@ -61,10 +64,13 @@ u: if 0, penumbral terminator
 
 sub bcapi_terminator {
 
-    my(%hash) = @_;
-
     # remove bad characters
-    for $i (keys %hash) {$hash{$i}=~s/\D//g;}
+    for $i (keys %globopts) {
+	if ($globopts{$i}=~m/\D/) {
+	    $output{error} .= "All arguments to $globopts{f} must be numeric, but $i -> $globopts{$i} is not";
+	    return;
+	}
+    }
 
     my($out, $err, $res) = cache_command("/home/user/bin/bc-terminator -i $hash{i} -t $hash{t} -n $hash{n} -u $hash{u}");
 
@@ -78,17 +84,17 @@ sub bcapi_terminator {
 
 sub bcapi_time {
 
-    if ($query{tz}=~s/[^a-z0-9\/]//isg) {
+    if ($globopts{tz}=~s/[^a-z0-9\/]//isg) {
 	$output{error} .= "Invalid characters in your timezone were removed";
     }
 
     # check if file exists
-    unless (-f "/usr/share/zoneinfo/$query{tz}") {
-	$output{error} .= "Timezone $query{tz} does not exist";
+    unless (-f "/usr/share/zoneinfo/$globopts{tz}") {
+	$output{error} .= "Timezone $globopts{tz} does not exist";
 	return;
     }
 
-    $ENV{TZ} = $query{tz};
+    $ENV{TZ} = $globopts{tz};
 
     $output{date} = `date`;
     chomp($output{date});
