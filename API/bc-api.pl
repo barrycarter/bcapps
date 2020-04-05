@@ -96,11 +96,11 @@ sub bcapi_terminator {
     for $i (split(/\n/, $out)) {
 	if ($i=~/lng(\d+)=(.*?)\&lat(\d+)=(.*?)\&/) {
 	    @{$output{points}}[$1] = [$2, $4];
+	} else {
+	    my(%hash) = str2hash($i);
+	    $output{data} = \%hash;
 	}
     }
-
-
-#    print "RESULT: $out, ERR: $err, RES: $res";
 }
 
 # TODO: properly document this
