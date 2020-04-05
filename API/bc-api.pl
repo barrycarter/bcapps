@@ -91,7 +91,16 @@ sub bcapi_terminator {
 
     my($out, $err, $res) = cache_command("/home/user/bin/bc-terminator -i $globopts{i} -t $globopts{t} -n $globopts{n} -u $globopts{u}");
 
-    print "RESULT: $out, ERR: $err, RES: $res";
+    $output{order} = "lng,lat";
+
+    for $i (split(/\n/, $out)) {
+	if ($i=~/lng(\d+)=(.*?)\&lat(\d+)=(.*?)\&/) {
+	    @{$output{points}}[$1] = [$2, $4];
+	}
+    }
+
+
+#    print "RESULT: $out, ERR: $err, RES: $res";
 }
 
 # TODO: properly document this

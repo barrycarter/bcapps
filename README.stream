@@ -4,12 +4,16 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 4 Apr 2020, primarily for my reference
+Stuff I plan to stream 5 Apr 2020, primarily for my reference
 
 brief audio test (every time)
 
 play w covid data (sigh?) [wolfram cloud] and concept of testing
-models with less data?
+models with less data? [= backtesting]
+
+
+
+x^2
 
 do funny voices?
 
@@ -17,7 +21,23 @@ look at DOING?
 
 answer questions I started answering?
 
+xplanet says we are backwards
+
+my results do agree w/ stellarium
+
 recpgr_c instead of what I have
+
+xplanet -window -body mars -lat 0 -lon 0 &
+
+xplanet -window -body mars -lat 0 -lon 0 -label &
+
+xplanet -window -body mars -lat 0 -lon 0 -label -geometry 1600x900 &
+
+xplanet -window -body mars -lat 0 -lon 0 -label -geometry 600x400 &
+
+xplanet -window -body mars -lat 0 -lon 0 -label -geometry 1600x900 -glare 0 -wait 1 -timewarp 100 &
+
+xplanet -window -body mars -localtime 12 -label -geometry 1600x900 -glare 0
 
 trail edabit.com
 
