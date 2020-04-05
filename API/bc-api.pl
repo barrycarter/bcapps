@@ -19,7 +19,11 @@ print "Content-type: text/plain\n\n";
 
 # get the query string (can be used globally, so use globopts)
 
-my(%globopts) = str2hash($ENV{QUERY_STRING});
+# my(%globopts) = str2hash($ENV{QUERY_STRING});
+
+# QUERY_STRING can be overwritten by options in the command-line version
+
+defaults($ENV{QUERY_STRING});
 
 # the output of the function (can be used globally)
 
@@ -36,6 +40,11 @@ $result{input} = \%globopts;
 # debug("D", defined(&{"bcapi_time"}), defined(&{"nossdfada"}), "/D");
 
 my($f) = "bcapi_$globopts{f}";
+
+# now that we know the function, remove it from hash (TODO: bad idea?)
+# so it won't confuse called function
+
+delete($globopts{f});
 
 unless (defined(&{$f})) {
     # TODO: cleaner exit for functions that dont exist
@@ -72,7 +81,15 @@ sub bcapi_terminator {
 	}
     }
 
-    my($out, $err, $res) = cache_command("/home/user/bin/bc-terminator -i $hash{i} -t $hash{t} -n $hash{n} -u $hash{u}");
+    my($time) = time();
+
+    defaults("i=301&t=$time&n=100&u=1");
+
+    if ($i == 399) {
+	$output{warning} .= "Refraction not computed, results may be especially inaccurate for Earth";
+    }
+
+    my($out, $err, $res) = cache_command("/home/user/bin/bc-terminator -i $globopts{i} -t $globopts{t} -n $globopts{n} -u $globopts{u}");
 
     print "RESULT: $out, ERR: $err, RES: $res";
 }

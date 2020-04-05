@@ -8,6 +8,17 @@ Stuff I plan to stream 4 Apr 2020, primarily for my reference
 
 brief audio test (every time)
 
+play w covid data (sigh?) [wolfram cloud] and concept of testing
+models with less data?
+
+do funny voices?
+
+look at DOING?
+
+answer questions I started answering?
+
+recpgr_c instead of what I have
+
 trail edabit.com
 
 cheap wax calories? (miglebyte)
@@ -18,6 +29,9 @@ rsync stuff back
 
 IGNORE: \rsync /home/user/YAMC/SERVER/API/bc-api.pl root@terramapadventure.com:/mnt/volume_lon1_01/TILES/API/
 
+TODO: compute twilight, refraction etc
+
+TODO: fix symlink on digital ocean to point to correct bc-api.pl (mirror sync finally worked)
 
 back to API?
 
