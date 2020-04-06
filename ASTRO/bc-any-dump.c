@@ -23,6 +23,17 @@
 // this the wrong way to do things
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
+/*
+
+struct option {
+    const char *name;
+    int         has_arg;
+    int        *flag;
+    int         val;
+};
+
+*/
+
 int main (int argc, char **argv) {
 
 int verbose_flag;
@@ -40,7 +51,9 @@ struct option options[] = {
 
 int index;
 
-getopt_long(argc, argv, "", options, &index);
+int ret = getopt_long(argc, argv, "", options, &index);
+ 
+ printf("RET: %d, INDEX: %d, %s, %s\n", ret, index, options[index].name, optarg);
 
 
 }
