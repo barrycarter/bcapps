@@ -70,7 +70,7 @@ struct option options[] = {
 
  double start = time(NULL), end = time(NULL)+86400*10, delta = 3600, lng = 0, lat = 0;
  int id = 301;
- char frame[100] = "J2000";
+ char frame[100] = "J2000", raName[100], decName[100];
 
  while (-1 != getopt_long(argc, argv, "", options, &index)) {
 
@@ -99,19 +99,41 @@ struct option options[] = {
  printf("start=%f&end=%f&delta=%f&id=%d&lng=%f&lat=%f&frame=%s\n",
 	start, end, delta, id, lng, lat, frame);
 
+ // figure out the "RA" and "DEC" names based on frame
+
+ if (!strcmp("J2000", frame) || !strcmp("EQEQDATE", frame)) {
+   strcpy(raName, "RA");
+   strcpy(decName, "DEC");
+ } else if (!strcmp("ECLIPJ2000", frame) || !strcmp("ECLIPDATE", frame)) {
+   strcpy(raName, "EclLng");
+   strcpy(decName, "EclLat");
+ } else if (!strcmp("ALTAZ", frame)) {
+   strcpy(raName, "AZ");
+   strcpy(decName, "EL");
+ } else {
+   printf("Could not convert frame to raName/decName\n");
+   exit(-1);
+ }
+
  // TODO: last two fields depend on what is being requested
- printf("format=et,unix,stardate\n");
+ printf("format=et,unix,stardate,%s,%s\n", raName, decName);
 
  for (double i = start; i <= end; i += delta) {
 
    // the vector to hold results
-   double v[3], lt, range, ra, dec;
+   double v[3], lt, range, ra, dec, altaz[3];
 
    // the ephemeris
    double et = unix2et(i);
 
-   spkezp_c(id, et, frame, "CN+S", 399, v, &lt);
-   recrad_c(v, &range, &ra, &dec);
+   if (!strcmp("ALTAZ", frame)) {
+     azimuthAltitude(id, et, lat*rpd_c(), lng*rpd_c(), altaz);
+     ra = altaz[0];
+     dec = altaz[1];
+   } else {
+     spkezp_c(id, et, frame, "CN+S", 399, v, &lt);
+     recrad_c(v, &range, &ra, &dec);
+   }
 
    // print time
    printf("%f,%f,%s,%f,%f\n", et, i, stardate(et), ra*dpr_c(), dec*dpr_c());
