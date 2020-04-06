@@ -17,6 +17,7 @@
 #include <string.h>
 #include <math.h>
 #include <getopt.h>
+#include <time.h>
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
@@ -36,6 +37,8 @@ struct option {
 
 int main (int argc, char **argv) {
 
+/*
+
 int verbose_flag;
 
 struct option options[] = {
@@ -49,11 +52,43 @@ struct option options[] = {
  {0, 0, 0, 0}
    };
 
-int index;
+*/
 
-int ret = getopt_long(argc, argv, "", options, &index);
- 
- printf("RET: %d, INDEX: %d, %s, %s\n", ret, index, options[index].name, optarg);
+struct option options[] = {
+  {"start", required_argument, 0, 0},
+  {"end", required_argument, 0, 0},
+  {"delta", required_argument, 0, 0},
+  {"id", required_argument, 0, 0},
+  {"lng", required_argument, 0, 0},
+  {"lat", required_argument, 0, 0},
+  {"frame", required_argument, 0, 0}
+};
 
+ int index;
+
+ // TODO: default values
+
+ double start = time(NULL), end = time(NULL)+86400*10, delta = 3600, lng = 0, lat = 0;
+ int id = 301;
+ char frame[100] = "J2000";
+
+ while (-1 != getopt_long(argc, argv, "", options, &index)) {
+
+   //   printf("%s", options[index].name);
+
+   if (!strcmp("start", options[index].name)) {
+     start = atof(optarg);
+   } else if (!strcmp("end", options[index].name)) {
+     end = atof(optarg);
+   } else {
+     printf("Something is quite wrong\n");
+   }
+ }
+
+
+ printf("start=%f&end=%f&delta=%f&id=%d&lng=%f&lat=%f&frame=%s\n",
+	start, end, delta, id, lng, lat, frame);
+
+ // TODO: convert lng/lat to radians before use
 
 }
