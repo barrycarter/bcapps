@@ -1,9 +1,20 @@
-Answer: 
+Answer: the JSON file https://raw.githubusercontent.com/barrycarter/bcapps/master/ASTRO/bc-sample-terminator.json has your answer in the output.points field in longitude, latitude order. Notes:
+
+  - You can also get this by visiting an API I created: https://www.terramapadventure.com/API/bc-api.pl?f=terminator&i=499&t=207052526&n=1000&u=1 where:
+
+    - f is the function ("terminator" is the only meaningful at the moment)
+
+    - i is the NAIF id of the body in question (499 = Mars). You can get a list of many NAIF ids at https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/naif_ids.html
+
+    - t is the Unix second of the time you requested. I got this via:
+
+`date -d '1976-07-24T10:35:26Z' +%s
+
+    - n is the number of points to output
+
+    - u `
 
 
-
-
-https://www.terramapadventure.com/API/bc-api.pl?f=terminator&i=499&t=207052526&n=1000&u=0
 
 
 input also in output
@@ -12,5 +23,5 @@ input also in output
 
 
 TODO: confirm w/ stellarium (picture?), can't promise stuff will stay
-up, can't confirm w/ xplanet (picture)
+up, can't confirm w/ xplanet (picture), crappy API not good, errors, not everything will wrok, refraction issue, thin wrapper, spherical reclat is wrong
 
