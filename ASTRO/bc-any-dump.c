@@ -10,7 +10,7 @@
 // --id: the NAIF id of the object for which we want data
 // --lng: the longitude (for altaz)
 // --lat: the latitude (for altaz)
-// --frame: J2000, JDATE, ECLIP2000, ECLIPDATE, ALTAZ
+// --frame: J2000, ECLIPJ2000, EQEQDATE, ECLIPDATE, any other frame OR "ALTAZ"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -93,9 +93,29 @@ struct option options[] = {
    }
  }
 
+ // load the kernels
+ furnsh_c("/home/user/BCGIT/ASTRO/bc-maxkernel.tm");
 
  printf("start=%f&end=%f&delta=%f&id=%d&lng=%f&lat=%f&frame=%s\n",
 	start, end, delta, id, lng, lat, frame);
+
+ // TODO: last two fields depend on what is being requested
+ printf("format=et,unix,stardate\n");
+
+ for (double i = start; i <= end; i += delta) {
+
+   // the vector to hold results
+   double v[3], lt, range, ra, dec;
+
+   // the ephemeris
+   double et = unix2et(i);
+
+   spkezp_c(id, et, frame, "CN+S", 399, v, &lt);
+   recrad_c(v, &range, &ra, &dec);
+
+   // print time
+   printf("%f,%f,%s,%f,%f\n", et, i, stardate(et), ra*dpr_c(), dec*dpr_c());
+ }
 
  // TODO: convert lng/lat to radians before use
 
