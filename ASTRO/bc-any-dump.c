@@ -74,12 +74,20 @@ struct option options[] = {
 
  while (-1 != getopt_long(argc, argv, "", options, &index)) {
 
-   //   printf("%s", options[index].name);
-
    if (!strcmp("start", options[index].name)) {
      start = atof(optarg);
    } else if (!strcmp("end", options[index].name)) {
      end = atof(optarg);
+   } else if (!strcmp("delta", options[index].name)) {
+     delta = atof(optarg);
+   } else if (!strcmp("id", options[index].name)) {
+     id = atoi(optarg);
+   } else if (!strcmp("lng", options[index].name)) {
+     lng = atof(optarg);
+   } else if (!strcmp("lat", options[index].name)) {
+     lat = atof(optarg);
+   } else if (!strcmp("frame", options[index].name)) {
+     strcpy(frame, optarg);
    } else {
      printf("Something is quite wrong\n");
    }
