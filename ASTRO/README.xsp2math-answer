@@ -1,0 +1,74 @@
+This is not an answer, but may be helpful, and is too long for a comment.
+
+SHORT FORM: Assuming you don't want to use Mathematica's built-in AstronomicalData[], ***
+
+(just the program and a data dump, FILESANYWHERE)
+
+Details:
+
+  - Ages ago, I wrote https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-xsp2math-pw.pl to convert NASA ephemerides (not VSOP) to Mathematica form.
+
+    - https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-xsp2math.pl
+
+    - https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-xsp2math-pw.pl
+
+The version ending in "pw" uses piecewise functions, whereas the one not ending in "pw" uses Mathematica's implicit method of defining piecewise functions.
+
+The output is truly hideous, but ultimately yields the following functions and variables:
+
+    - pos[t, s][d] returns the position of `t` (target) from `s` (source) on Unix day `d` (the "Unix day" is the number of days since 1 Jan 1970 aka the Unix time divided by 86400) in the J2000 equatorial frame.
+
+    - sdate: the first date for which pos[] will work
+
+    - edate: the last date for which pos[] will work
+
+  - To use these programs:
+
+    - Download de430.bsp from https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/
+
+    - Go to https://naif.jpl.nasa.gov/naif/utilities.html, choose your operating system, and download toxfr.exe on the resulting page
+
+    - Run toxfr.exe on de430.bsp which should yield de430.xsp
+
+    - You can then run the program as, for example:
+
+
+
+
+and toxfr from 
+
+ you'll need to first 
+
+
+
+pos[1,0][18359]
+
+yields
+
+{1.97769*^7,-5.47578*^7,-3.14644*^7}
+
+date +%s -d ....
+
+
+
+warning/disclaim/check horizons (but see special)
+
+
+de430 not de431
+
+what you need to run it and how to specifyt arugments
+
+toxfr
+
+https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-xsp2math.pl
+
+
+AstronomicalData
+
+did it for you
+
+TODO: make this the documentation for bc-xsp2math-pw.pl etc
+
+mention cloud, mention my cloud?
+
+offer extra help

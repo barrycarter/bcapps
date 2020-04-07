@@ -88,6 +88,8 @@ Summary:
  box-option-value.m: Mathematica computations for value of box and
  binary options (nadex.com, oanda.com)
 
+ bc-line-count.pl: count the number of lines/length of/in a program/code excluding comments
+
 Disclaimer:
 
  A lot of this stuff is crappy but I'm putting it here with the hopes
