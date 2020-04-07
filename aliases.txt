@@ -384,7 +384,7 @@ alias evince "evince \!* &"
 alias dirt "ls -lat \!* | less"
 
 # cleanup junk emacs creates
-alias cleanup "/bin/rm *~ ,* #*# .*~"
+alias cleanup "/bin/rm *~ ,* #*# .*~ .#*"
 
 # make a directory including any parents if needed, and cd to it
 alias mdcd "mkdir -p \!*; cd \!*"
