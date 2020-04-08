@@ -8,13 +8,7 @@ Details:
 
   - Ages ago, I wrote https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-xsp2math-pw.pl to convert NASA ephemerides (not VSOP) to Mathematica form.
 
-    - https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-xsp2math.pl
-
-    - https://github.com/barrycarter/bcapps/tree/master/ASTRO/bc-xsp2math-pw.pl
-
-The version ending in "pw" uses piecewise functions, whereas the one not ending in "pw" uses Mathematica's implicit method of defining piecewise functions.
-
-The output is truly hideous, but ultimately yields the following functions and variables:
+  - The output is truly hideous, but ultimately yields the following functions and variables:
 
     - pos[t, s][d] returns the position of `t` (target) from `s` (source) on Unix day `d` (the "Unix day" is the number of days since 1 Jan 1970 aka the Unix time divided by 86400) in the J2000 equatorial frame.
 
@@ -32,6 +26,15 @@ The output is truly hideous, but ultimately yields the following functions and v
 
     - You can then run the program as, for example:
 
+`bc-xsp2math-pw.pl de430 1 2000 2100`
+
+to generate positions for Mercury (NAIF id 1) from the start of 2000 to the start of 2100. A list of many NAIF ids is available at: https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/naif_ids.html
+
+  - Of course, I can't guarantee the results will be accurate, but you can crosscheck them against HORIZONS (https://ssd.jpl.nasa.gov/horizons.cgi)
+
+  - If you do test against HORIZONS, be sure to set "Ephemeris Type" to "VECTORS", and, under "Table Settings", "output units" to "KM-S", and "reference plane" to "FRAME" (J2000 equatorial [not ecliptic])
+
+  - The program can 
 
 
 
@@ -39,6 +42,8 @@ and toxfr from
 
  you'll need to first 
 
+
+not mx
 
 
 pos[1,0][18359]
@@ -72,3 +77,6 @@ TODO: make this the documentation for bc-xsp2math-pw.pl etc
 mention cloud, mention my cloud?
 
 offer extra help
+
+TODO: mathematica group too
+
