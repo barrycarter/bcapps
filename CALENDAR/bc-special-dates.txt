@@ -35,3 +35,35 @@
 20170120 Inauguration
 
 20181205 Bush Sr Mourning
+
+# COVID-19 issues
+
+-20200409 Masters (golf)
+20201112 Masters (golf)
+
+-20200415 Tax Day
+20200715 Tax Day
+
+-20200502 Kentucky Derby
+20200905 Kentucky Derby
+
+# no known reschedule date
+-20200516 Preakness
+
+-20200524 Indianapolis 500
+20200823 Indianapolis 500
+
+# no known reschedule date
+-20200606 Belmont Stakes
+
+-20200621 US Open Golf Final
+20200920 US Open Golf Final
+
+# canceled
+
+-20200629 Wimbledon starts
+-20200712 Wimbledon ends
+
+# canceled
+
+-20200724 Gilroy GarlicFest
