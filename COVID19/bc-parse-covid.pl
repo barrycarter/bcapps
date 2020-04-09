@@ -4,9 +4,33 @@ require "/usr/local/lib/bclib.pl";
 
 my(@conf) = split(/\n/, read_file("/home/user/COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"));
 
-map($_=\@{csv($_)}, @conf);
+my($hashlist) = arraywheaders2hashlist([map($_=[csv($_)], @conf)]);
 
-debug(var_dump($conf[4]));
+for $i (@$hashlist) {
+    debug(%$i);
+}
+
+# my($hashlist) = arraywheaders2hashlist(\@conf);
+
+# debug(@hashlist);
+
+die "TESTING";
+
+
+my(@reclist);
+
+for $i (@conf) {
+    my(@cols) = csv($i);
+    push(@reclist, \@cols);
+}
+
+
+
+debug(@{$hashlist});
+
+die "TESTNG";
+
+
 
 # my($hashlist) = arraywheaders2hashlist(\@conf);
 
