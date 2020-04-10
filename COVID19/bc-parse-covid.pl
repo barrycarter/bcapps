@@ -18,12 +18,13 @@ for $i (@data) {
 
     for $j (0..$#headers) {
 
-	if ($headers[$j] eq "Combined_Key") {$name = $cols[$j]; next;}
-
 	if ($headers[$j] =~m%(\d+/\d+/\d+)%) {
-	    $data{$name}{$headers[$j]} = $cols[$j];
+#	    $data{$name}{$headers[$j]} = $cols[$j];
 	    next;
 	}
+
+	# header is not date
+	$colhash{$headers[$j]} = $cols[$j];
     }
 }
 
