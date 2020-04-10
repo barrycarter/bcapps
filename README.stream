@@ -6,6 +6,26 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 10 Apr 2020, primarily for my reference
 
+take a wolfram language tutorial
+
+total staffed beds: 924,107
+
+total admissions per year: 36,353,946
+
+serious cases: 10,571
+
+active cases: 434,081
+
+1.14% increase in need over number hospital beds (98.86% fill rate)
+
+deaths: 17,919 ... vs 2,813,503 registered deaths in the United States in 2017
+
+7703.11 deaths per day on average
+
+covid 19: 1,228
+
+15.94% increase in deaths per day
+
 beds vs COVID
 
 finally have COVID data
@@ -17,6 +37,8 @@ birth rate?
 covid its own vacc?
 
 https://data.humdata.org/dataset/coronavirus-covid-19-cases-data-for-china-and-the-rest-of-the-world
+
+grep 'world,' total-deaths-covid-19\(1\).csv | perl -F, -anle 'print "$F[-1],"' | tee /tmp/covid.txt
 
 play w covid data (sigh?) [wolfram cloud] and concept of testing
 models with less data? [= backtesting]
