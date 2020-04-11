@@ -2,15 +2,28 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
+rmaxima --init=/home/user/BCGIT/MAXIMA/bc-covid
+
 @wolfram
 
-Stuff I plan to stream 10 Apr 2020, primarily for my reference
+Stuff I plan to stream 11 Apr 2020, primarily for my reference
+
+grep 'world,' total-deaths-covid-19\(2\).csv | perl -F, -anle 'print "$F[-1],"' | tee /tmp/covid.txt
+
+
+blob:https://ourworldindata.org/96059cc6-6295-4475-99cc-e18d7ebdd587 is direct link location, maybe
+
+https://ourworldindata.org/coronavirus-data is where the csv file I want is
 
 ok, use wolfram script from command line (no, bad)
 
+total-deaths-covid-19(1).csv
+
+https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_deaths_global.csv&filename=time_series_covid19_deaths_global.csv
+
 rmaxima --init=/home/user/BCGIT/MAXIMA/bc-test1
 
-take a wolfram language tutorial
+take a wolfram language tutorial [probably not]
 
 total staffed beds: 924,107
 
