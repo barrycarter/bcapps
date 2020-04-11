@@ -1,3 +1,5 @@
+load("interpol");
+
 deaths : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3,
 3, 6, 17, 17, 26, 41, 56, 81, 106, 132, 170, 213, 259, 305, 362, 427,
 493, 565, 638, 724, 813, 910, 1018, 1115, 1370, 1383, 1527, 1669,
@@ -8,12 +10,25 @@ deaths : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3,
 37272, 41889, 46884, 51572, 58158, 64273, 68928, 74065, 81477, 87816,
 95039, 102088];
 
+differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
+
+ddeaths : differences(deaths);
+
 days: makelist(i, i, 1, length(deaths));
 
+
+
+/*
+
+draw2d(points(ddeaths));
+
 plot2d([discrete, days, deaths]);
+
 plot2d([discrete, days, deaths], logy);
 
-differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
+*/
+
+
 
 
 
