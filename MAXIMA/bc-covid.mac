@@ -8,5 +8,15 @@ deaths : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3,
 37272, 41889, 46884, 51572, 58158, 64273, 68928, 74065, 81477, 87816,
 95039, 102088];
 
+days: makelist(i, i, 1, length(deaths));
+
+plot2d([discrete, days, deaths]);
+plot2d([discrete, days, deaths], logy);
+
+differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
+
+
+
+
 
 
