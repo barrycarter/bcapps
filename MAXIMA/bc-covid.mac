@@ -27,7 +27,29 @@ poly(n) := sum(a[i]*x^i, i, 0, n);
 
 coefflist(n) := makelist(a[i], i, 0, n);
 
-t1047 :  transpose(matrix(days,deaths));
+t1047 : transpose(matrix(days,deaths));
+
+f1555(x) := x[2] > 0;
+
+t1609 : map(flatten, transpose(sublist(args(t1047), f1555)));
+
+t1615 : float(lsquares_estimates(t1609, [x, y], log(y) = a*x + b, [a,b]));
+
+f1618(x) := subst(t1615, exp(a*x+b));
+
+t1625 : float(lsquares_estimates(t1609, [x, y], y = exp(a*x + b), [a,b]));
+
+/* plot2d([f1618(x), fdeaths(x)], [x, 12, 104], logy); */
+
+t1615 : float(lsquares_estimates(lastn(t1609, 7), [x, y], log(y) = a*x + b, [a,b]));
+
+
+
+
+
+
+t1548 : lsquares_estimates(t1047, [x, y], log(y) = a*x + b, [a,b]);
+
 
 t1103 : lsquares_estimates(t1047, [x, y], y = poly(2), coefflist(2));
 
@@ -70,12 +92,7 @@ list2poly(list, n) := block([poly, coeffs, indexs],
 
 
 
-
-   
-
-
-
-
+plot2d([discrete, makelist(i, i, 1, length(ddeaths)), ddeaths]);
 
 transpose(matrix(days,deaths))
 
