@@ -85,7 +85,11 @@ list2poly(list, n) := block([poly, coeffs, indexs, f, x, y],
   poly : sum(a[i]*x^i, i, 0, n),
   coeffs: makelist(a[i], i, 0,n),
   indexs: makelist(i, i, 1, length(list)),
-  return(subst(lsquares_estimates(transpose(matrix(indexs, list)), [x, y], y = poly, coeffs), poly))
+  f(z) := subst(z, x,
+    subst(
+      lsquares_estimates(transpose(matrix(indexs, list)), [x, y], y = poly, coeffs),
+      poly)),
+return(f)
     )$
 
 
