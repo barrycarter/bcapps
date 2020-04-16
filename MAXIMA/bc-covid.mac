@@ -1,5 +1,50 @@
+/*
+
+Notes:
+
+  - args command converts matrices to lists
+
+  - listp tests if something a list
+
+  - listarray gives the values of a hash
+
+  - arrayinfo gives the keys of a hash (but in a funky way)
+
+Scratch:
+
+(%i61) sublist(args(matt), lambda([x], x[2] = Mexico));
+
+(%i63) makelist(i[5], i, sublist(args(matt), lambda([x], x[2] = Mexico)));
+
+
+*/
+
+
 load("interpol");
 load ("lsquares");
+stringdisp: true;
+
+bc_list2string(l) := if listp(l) then apply(sconcat, l) else
+ apply(sconcat, [l]);
+
+
+
+
+fname : openr("/home/user/covid-19/data/countries-aggregated.csv");
+matt : args(read_matrix(fname, 'comma));
+close(fname);
+
+/* make deaths(i) the empty array for each country i */
+
+makelist(deaths[bclist2string(i[2])] : [], i, matt)$
+
+makelist(push(i[5], deaths[bclist2string(i[2])]), i, matt)$
+
+makelist(i : reverse(i), i, arrayinfo(deaths));
+
+sublist(args(matt), lambda([x], x[2] = Mexico));
+
+
 
 deaths: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 6, 17,
 17, 26, 41, 56, 81, 106, 132, 170, 213, 259, 305, 362, 427, 493, 565,
@@ -43,13 +88,7 @@ t1625 : float(lsquares_estimates(t1609, [x, y], y = exp(a*x + b), [a,b]));
 
 t1615 : float(lsquares_estimates(lastn(t1609, 7), [x, y], log(y) = a*x + b, [a,b]));
 
-
-
-
-
-
 t1548 : lsquares_estimates(t1047, [x, y], log(y) = a*x + b, [a,b]);
-
 
 t1103 : lsquares_estimates(t1047, [x, y], y = poly(2), coefflist(2));
 
