@@ -4,7 +4,22 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 16 Apr 2020, primarily for my reference
+Stuff I plan to stream 17 Apr 2020, primarily for my reference
+
+https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm (COVID-19
+top 10?) (linear model) (but advance to 2020)
+
+https://www.webmd.com/lung/covid-and-pneumonia#1
+
+(below has been done, glue files together, try access, create silly map)
+
+-3.4106051316485e-012 = smallest
+
+627597.3 = biggest
+
+pack("d", number) and unpack("d", packed number);
+
+TODO: time-series-19-covid-combined.csv
 
 learn to import data in maxima directly from covid-19 (lower case) stats?
 
