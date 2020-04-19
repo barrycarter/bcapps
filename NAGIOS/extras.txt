@@ -29,5 +29,7 @@ check_disk -v -c 10 -u GB /
 
 check_mysql_query -q "SELECT SUM(amount) FROM bankstatements WHERE bank='ally'" -d test -w 18000: -c 15000:
 
+# user cron should be fairly large (ie, not empty)
 
+check_file_age /var/spool/cron/user -W 20000 -C 20000
 

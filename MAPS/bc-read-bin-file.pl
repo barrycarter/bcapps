@@ -22,7 +22,14 @@ sub lngLat2byte {
 
     # $hash{lng}/90 between -2, -1, 0, 1
 
-    my($chunk) = 3+floor($hash{lng}/90)+$hash{lat}>0?4:0;
+    my($chunk) = 3+floor($hash{lng}/90);
+    if ($hash{lat}<0) {$chunk += 4;}
+
+    # TODO: don't hardcode these values
+
+    # where in data
+
+    my($byte) = $hash{lat}
 
     debug($chunk);
 }
