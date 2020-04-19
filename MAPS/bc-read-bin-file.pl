@@ -6,6 +6,36 @@ require "/usr/local/lib/bclib.pl";
 
 my(%hash);
 
+# $hash{lng} = 0;
+# $hash{lat} = 0;
+
+# debug(lngLat2popcount(\%hash));
+
+# die "TESTING";
+
+print << "MARK";
+new
+size 1024,768
+setpixel 0,0,0,0,0
+
+MARK
+    ;
+
+
+
+for $x (1..1024) {
+    for $y (1..768) {
+	$hash{lng} = 360/1024*$x - 180;
+	$hash{lat} = 90 - 180/768*$y;
+	my($val) = lngLat2popcount(\%hash);
+	if ($val > 0) {
+	    print "setpixel $x,$y,255,255,255\n";
+	}
+    }
+}
+
+die "TESTING";
+
 for $i (1..200) {
     $hash{lng} = rand()*360 - 180;
     $hash{lat} = rand()*180 - 90;
@@ -13,12 +43,12 @@ for $i (1..200) {
     debug(lngLat2byte(\%hash));
 }
 
-sub lngLat2byte {
+sub lngLat2popcount {
 
     # if file not already open, open it
 
     unless (-r POPCOUNT) {
-	open(POPCOUNT, "/mnt/popcount/gpw_v4_population_count_rev11_2020_30_sec_1.all.bin")||die("ERROR: $!");
+	open(POPCOUNT, "/mnt/popcount/gpw_v4_population_count_rev11_2020_30_sec_1.all.bin");
     }
 
     my(%hash) = %{$_[0]};
@@ -34,18 +64,19 @@ sub lngLat2byte {
 
     # where in chunk is data?
 
-    my($row) = $ilat%10800;
+    my($row) = 10800-$ilat%10800;
     my($col) = $ilng%10800;
 
-    my($byte) = ($chunk*116640000 + $row*10800 + $col)*8;
+    my($byte) = ($chunk*10800**2 + $row*10800 + $col)*8;
+
+    debug("$hash{lng}, $hash{lat} -> $chunk, $row, $col -> $byte");
 
     seek(POPCOUNT, $byte, SEEK_SET);
-    debug("ERROR: $!");
 
     my($data);
     sysread(POPCOUNT, $data, 8);
 
-    debug("BYTE: $byte, DATA: $data");
+#    debug("BYTE: $byte, DATA: $data");
 
     return(unpack("d", $data));
 }
