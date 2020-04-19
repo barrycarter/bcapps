@@ -28,8 +28,18 @@ for $x (1..1024) {
 	$hash{lng} = 360/1024*$x - 180;
 	$hash{lat} = 90 - 180/768*$y;
 	my($val) = lngLat2popcount(\%hash);
-	if ($val > 0) {
-	    print "setpixel $x,$y,255,255,255\n";
+
+	my($shade) = round($val/32*255/16)*16;
+	if ($shade > 255) {$shade = 255;}
+
+	if ($val == -9999) {
+	    print "setpixel $x,$y,0,0,255\n";
+#	} elsif ($val > 10) {
+#	    print "setpixel $x,$y,255,0,0\n";
+#	} elsif ($val > 0) {
+#	    print "setpixel $x,$y,128,0,0\n";
+	} else {
+	    print "setpixel $x,$y,$shade,0,0\n";
 	}
     }
 }
