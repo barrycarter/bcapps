@@ -29,7 +29,7 @@ for $x (1..1024) {
 	$hash{lat} = 90 - 180/768*$y;
 	my($val) = lngLat2popcount(\%hash);
 
-	my($shade) = round($val/32*255/16)*16;
+	my($shade) = round($val/256*255/16)*16;
 	if ($shade > 255) {$shade = 255;}
 
 	if ($val == -9999) {
