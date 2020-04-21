@@ -3,6 +3,10 @@ allows people to request functions/data from my server.
 
 General usage: https?://api.barrycarter.info:port/?f=function&a=arg&b=arg&c=arg
 
+Command-line usage: bc-api.pl --f=function --a=arg --b=arg --c=arg
+
+
+
 TODO: help function, help per callable function (eg, "help f1")
 
 TODO: add source code links, disclaimers?, email addr for questions, etc

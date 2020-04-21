@@ -16,7 +16,9 @@ require "/usr/local/lib/bclib.pl";
 # TODO: pathify?
 require "$bclib{githome}/MAPS/bc-maps.pl";
 
-use IO::Socket::UNIX;
+use IO::Socket::INET;
+use IO::Socket::SSL;
+
 
 # ignore children completion
 $SIG{CHLD} = 'IGNORE';
@@ -132,24 +134,28 @@ sub mapData {
 }
 
 # specific to this prog
+
 sub getServer {
 
-  my($server);
+    # directory where encryption keys are stored
+    my($dir) = "/etc/letsencrypt/live/ws.terramapadventure.com";
+    my($server);
 
-  # TODO: this is ugly, kill pre-production
-  my($port) = 22779-1;
+    # secure if possible, insecure otherwise
 
-  do {
-    $port++;
-    $server = IO::Socket::INET->new(LocalAddr => "0.0.0.0", 
-    LocalPort => $port, Proto => "tcp", Listen => 20);
-  } until $server;
+    if (-d $dir) {
+	$server = IO::Socket::SSL->new(
+	    Listen => 5, LocalPort => 22779, Proto => 'tcp', 
+	    SSL_cert_file => "$dir/fullchain.pem", 
+	    SSL_key_file => "$dir/privkey.pem"
+	    );
+    } else {
+	$server = IO::Socket::INET->new(
+	    Listen => 5, LocalPort => 22779, Proto => 'tcp'
+	    );
+    }
 
-  debug("LISTENING ON PORT $port");
-
-  warn "TESTING, port number not constant varies";
-
-  return $server;
+    return $server;
 }
 
 

@@ -1,6 +1,7 @@
 #!/bin/perl
 
 require "/usr/local/lib/bclib.pl";
+require "$bclib{githome}/API/bc-api-functions.pl";
 
 print "Access-Control-Allow-Origin: *\n";
 

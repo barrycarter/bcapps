@@ -1,7 +1,7 @@
 #!/bin/perl
 
 require "/usr/local/lib/bclib.pl";
-require "bc-mapserver-lib.pl";
+require "$bclib{githome}/MAPS/bc-mapserver-lib.pl";
 
 # TODO: get some of this info from the .hdr and .prj files
 
