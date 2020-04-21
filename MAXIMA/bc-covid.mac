@@ -26,6 +26,7 @@ Scratch:
 
 load("interpol");
 load ("lsquares");
+load("descriptive");
 stringdisp: true;
 
 bc_list2string(l) := if listp(l) then apply(sconcat, l) else
@@ -42,6 +43,10 @@ bc_keys(l) := flatten(rest(arrayinfo2(l), 2));
 /* add an index to an existing list */
 
 bc_addIndex(l) := makelist([i, l[i]], i, 1, length(l));
+
+/* the differences of a list */
+
+differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
 
 /* above this line, library and other non-specific functions/loads */
 
@@ -73,8 +78,6 @@ deaths: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 6, 17,
 108192];
 
 fdeaths(x) := ''(cspline(deaths));
-
-differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
 
 ddeaths : differences(deaths);
 

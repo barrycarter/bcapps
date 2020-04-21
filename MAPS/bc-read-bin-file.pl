@@ -6,6 +6,19 @@ require "/usr/local/lib/bclib.pl";
 
 my(%hash);
 
+
+# open(DATA, "/mnt/popcount/gpw_v4_population_count_rev11_2020_30_sec_1.all.bin");
+
+# open(DATA, "/mnt/popdensity/popdensity.bin");
+
+open(DATA, "/mnt/data/solar.bin");
+
+$hash{fh} = DATA;
+
+lngLat2data(\%hash);
+
+# debug(DATA);
+
 # $hash{lng} = 0;
 # $hash{lat} = 0;
 
@@ -27,7 +40,7 @@ for $x (1..1024) {
     for $y (1..768) {
 	$hash{lng} = 360/1024*$x - 180;
 	$hash{lat} = 90 - 180/768*$y;
-	my($val) = lngLat2popcount(\%hash);
+	my($val) = lngLat2data(\%hash);
 
 	my($shade) = round($val/256*255/16)*16;
 	if ($shade > 255) {$shade = 255;}
@@ -53,15 +66,11 @@ for $i (1..200) {
     debug(lngLat2byte(\%hash));
 }
 
-sub lngLat2popcount {
-
-    # if file not already open, open it
-
-    unless (-r POPCOUNT) {
-	open(POPCOUNT, "/mnt/popcount/gpw_v4_population_count_rev11_2020_30_sec_1.all.bin");
-    }
+sub lngLat2data {
 
     my(%hash) = %{$_[0]};
+
+    my($data);
 
     # TODO: don't hardcode these values
 
@@ -81,10 +90,10 @@ sub lngLat2popcount {
 
     debug("$hash{lng}, $hash{lat} -> $chunk, $row, $col -> $byte");
 
-    seek(POPCOUNT, $byte, SEEK_SET);
+    seek(DATA, $byte, SEEK_SET);
 
     my($data);
-    sysread(POPCOUNT, $data, 8);
+    sysread(DATA, $data, 8);
 
 #    debug("BYTE: $byte, DATA: $data");
 
