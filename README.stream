@@ -4,15 +4,21 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 21 Apr 2020, primarily for my reference
+Stuff I plan to stream 22 Apr 2020, primarily for my reference
+
+real and fake exponential fitting covid incl "backtesting"
+
+yamcsync is digital ocean sync, need to make this clearer in aliases,
+and also need to seriously fix digitalocean server which I may have
+turned off and add nagios tests, move ~/yamc... server stuff to BCGIT? 
+(and other stuff eventually too)
+
+add API for getting planet ra/dec over time (already should exist
+someoen else doing it?)
 
 existing server (http is per call but existing is not secure?)
 
 covid data wanking?
-
-check popdensity and solar power bins, but not special cases
-
-glue squash files together, send to digital ocean server
 
 covid data wanking including milestones (if the US death count...)
 
@@ -24,12 +30,6 @@ https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm (COVID-19
 top 10?) (linear model) (but advance to 2020)
 
 https://www.webmd.com/lung/covid-and-pneumonia#1
-
-(below has been done, glue files together, try access, create silly map)
-
--3.4106051316485e-012 = smallest
-
-627597.3 = biggest
 
 pack("d", number) and unpack("d", packed number);
 
@@ -491,7 +491,7 @@ URL for question
 TODO: more for main Betel answer, edit program to allow number of
 years of proper motion (or default/allow to target star)
 
-andro parad
+andromeda paradox
 
 scriptified version of WA API (secret appid)
 

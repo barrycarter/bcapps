@@ -155,6 +155,7 @@ sub getServer {
 	    );
     }
 
+    debug("SERVER: $server, ERR: $! (if any)");
     return $server;
 }
 
