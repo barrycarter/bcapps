@@ -87,10 +87,54 @@ t1237(x) := subst(t1236, a*x + b);
 
 t1238 : makelist(t1237(i), i, 1, length(days));
 
-t1239: plot2d([discrete, days, deaths["World"]]);
-t1240: plot2d([discrete, days, t1238]);
-
 plot2d([[discrete, days, deaths["World"]], [discrete, days, t1238]]);
+
+lsquares_mse(t1219, [x, y], y = t1237(x));
+
+t1321: lsquares_residuals(t1219, [x, y], y = t1237(x), []);
+
+t1327: sum(t1321[i]^2, i, 1, length(t1321))/length(t1321);
+
+
+
+
+t1253: lsquares_estimates(lastn(t1219, 20), [x, y], y = a*x + b, [a,b]);
+
+t1254(x) := subst(t1253, a*x + b);
+
+t1255 : makelist(t1254(i), i, 1, length(days));
+
+plot2d([[discrete, days, deaths["World"]], [discrete, days, t1255]]);
+
+
+t1257: lsquares_estimates(t1219, [x, y], y = exp(a*x+b), [a,b], initial=[0,1]);
+
+t1334(x) := subst(t1257, exp(a*x+b));
+
+t1335: makelist(t1334(i), i, 1, length(days));
+
+plot2d([[discrete, days, deaths["World"]], [discrete, days, t1335]]);
+
+
+t1338: lsquares_estimates(t1219, [x, y], log(y) = a*x+b, [a,b]);
+
+t1340(x) := subst(t1338, exp(a*x+b));
+
+t1341: makelist(t1340(i), i, 1, length(days));
+
+plot2d([[discrete, days, deaths["World"]], [discrete, days, t1341]]);
+
+plot2d([
+   [discrete, days, deaths["World"]],
+   [discrete, days, t1341],
+   [discrete, days, t1238],
+   [discrete, days, t1335],
+   [discrete, days, t1255]
+   ]);
+   
+
+
+
 
 
 
