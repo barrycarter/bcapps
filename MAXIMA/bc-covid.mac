@@ -73,6 +73,10 @@ deaths["World"] : sublist(makelist(i[4], i, mat2), lambda([x], x>0));
 
 days : makelist(i, i, 1, length(deaths["US"]));
 
+/******* TODO: local and block for ret may not be working properly *****/
+
+/******* TODO: function linear_regression() already exists ******/
+
 /*
 
 linearRegression takes an associative array with the following keys:
@@ -122,7 +126,7 @@ logLinearRegression(obj) := block([ret, a, b, x, y, f],
   return(ret)
   );
 
-expRegression(obj) := block([ret, a, b, x, y, f],
+expRegression(obj) := block([ret, a, b, x, y, f], 
   ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
   ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = exp(a*x + b), [a,b],
     initial=[0,1]),
@@ -138,10 +142,43 @@ expRegression(obj) := block([ret, a, b, x, y, f],
   return(ret)
   );
 
-
 </formulas>
 
 (* work here starts 22 Apr 2020, evening *)
+
+t1803["x"] : days;
+t1803["y"] : deaths["US"];
+
+t1803["x"] : sublist(days, lambda([x], deaths["US"][x] > 0));
+t1803["y"] : sublist(deaths["US"], lambda([x], x > 0));
+
+plot2d([
+  [discrete, t1803["x"], t1803["y"]],
+  [discrete, t1803["x"], linearRegression(t1803)["yest"]],
+  [discrete, t1803["x"], logLinearRegression(t1803)["yest"]],
+  [discrete, t1803["x"], expRegression(t1803)["yest"]]
+  ]);
+
+
+plot2d([
+  [discrete, t1803["x"], t1803["y"]],
+  [discrete, t1803["x"], linearRegression(t1803)["yest"]],
+  [discrete, t1803["x"], logLinearRegression(t1803)["yest"]],
+  [discrete, t1803["x"], expRegression(t1803)["yest"]]
+  ], logy);
+
+plot2d([
+  [discrete, t1803["x"], t1803["y"]],
+  [discrete, t1803["x"], expRegression(t1803)["yest"]]
+  ], logy);
+
+
+plot2d([
+  [discrete, t1803["x"], t1803["y"]],
+  [discrete, t1803["x"], expRegression(t1803)["yest"]]
+  ]);
+
+
 
 t1803["x"] : [1,2,3];
 t1803["y"] : [3,2,1];
