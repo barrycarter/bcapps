@@ -96,10 +96,11 @@ mabs = sum of the absolute value of differences divided by size of x
 
 (* work here starts 22 Apr 2020, evening *)
 
-linearRegression(obj) := block([ret, a, b, x, y],
+linearRegression(obj) := block([ret, a, b, x, y, f],
   ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
   ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = a*x + b, [a,b]),
-  print(subst(ret["est"], a*x + b)),
+  f(x) := subst(ret["est"], a*x + b),
+  ret["f"] : f,
   return(ret)
   );
 
