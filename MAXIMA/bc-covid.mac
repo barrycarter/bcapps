@@ -73,8 +73,6 @@ deaths["World"] : sublist(makelist(i[4], i, mat2), lambda([x], x>0));
 
 days : makelist(i, i, 1, length(deaths["US"]));
 
-</formulas>
-
 /*
 
 linearRegression takes an associative array with the following keys:
@@ -94,8 +92,6 @@ mabs = sum of the absolute value of differences divided by size of x
 
 */
 
-(* work here starts 22 Apr 2020, evening *)
-
 linearRegression(obj) := block([ret, a, b, x, y, f],
   ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
   ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = a*x + b, [a,b]),
@@ -110,6 +106,26 @@ linearRegression(obj) := block([ret, a, b, x, y, f],
     ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
   return(ret)
   );
+
+logLinearRegression(obj) := block([ret, a, b, x, y, f],
+  ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
+  ret["est"] : lsquares_estimates(ret["mat"], [x, y], log(y) = a*x + b, [a,b]),
+  f : lambda([x], subst(ret["est"], exp(a*x + b))),
+  ret["f"] : f,
+  ret["yest"] : makelist(ret["f"](obj["x"][i]), i, 1, length(obj["x"])),
+  ret["residuals"] : lsquares_residuals(
+    ret["mat"], [x, y], y = ret["f"](x), []),
+  ret["mabs"] : sum(
+    abs(ret["residuals"][i]), i, 1, length(obj["x"]))/length(obj["x"]),
+  ret["msqe"] : sqrt(sum(
+    ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
+  return(ret)
+  );
+
+</formulas>
+
+
+(* work here starts 22 Apr 2020, evening *)
 
 t1803["x"] : [1,2,3];
 t1803["y"] : [3,2,1];
