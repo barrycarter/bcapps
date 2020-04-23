@@ -86,7 +86,7 @@ and returns an associative array whose keys are:
 
 f = the best fit function (a linear function)
 
-esty = a list of estimated y values based on f
+yest = a list of estimated y values based on f
 
 msqe = sum of squares of differences, square rooted, all divided by size of x
 
@@ -99,8 +99,15 @@ mabs = sum of the absolute value of differences divided by size of x
 linearRegression(obj) := block([ret, a, b, x, y, f],
   ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
   ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = a*x + b, [a,b]),
-  f(x) := subst(ret["est"], a*x + b),
+  f : lambda([x], subst(ret["est"], a*x + b)),
   ret["f"] : f,
+  ret["yest"] : makelist(ret["f"](i), i, 1, length(obj["x"])),
+  ret["residuals"] : lsquares_residuals(
+    ret["mat"], [x, y], y = ret["f"](x), []),
+  ret["mabs"] : sum(
+    abs(ret["residuals"][i]), i, 1, length(obj["x"]))/length(obj["x"]),
+  ret["msqe"] : sqrt(sum(
+    ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
   return(ret)
   );
 
