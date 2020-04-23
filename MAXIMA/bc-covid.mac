@@ -75,7 +75,40 @@ days : makelist(i, i, 1, length(deaths["US"]));
 
 </formulas>
 
+/*
 
+linearRegression takes an associative array with the following keys:
+
+x = list of x vals
+y = list of y vals
+
+and returns an associative array whose keys are:
+
+f = the best fit function (a linear function)
+
+esty = a list of estimated y values based on f
+
+msqe = sum of squares of differences, square rooted, all divided by size of x
+
+mabs = sum of the absolute value of differences divided by size of x
+
+*/
+
+(* work here starts 22 Apr 2020, evening *)
+
+linearRegression(obj) := block([ret, a, b, x, y],
+  ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
+  ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = a*x + b, [a,b]),
+  print(subst(ret["est"], a*x + b)),
+  return(ret)
+  );
+
+t1803["x"] : [1,2,3];
+t1803["y"] : [3,2,1];
+
+linearRegression(t1803);
+
+linearRegression(
 
 (* work here starts 22 Apr 2020 *)
 
