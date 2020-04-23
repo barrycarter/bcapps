@@ -122,8 +122,24 @@ logLinearRegression(obj) := block([ret, a, b, x, y, f],
   return(ret)
   );
 
-</formulas>
+expRegression(obj) := block([ret, a, b, x, y, f],
+  ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
+  ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = exp(a*x + b), [a,b],
+    initial=[0,1]),
+  f : lambda([x], subst(ret["est"], exp(a*x + b))),
+  ret["f"] : f,
+  ret["yest"] : makelist(ret["f"](obj["x"][i]), i, 1, length(obj["x"])),
+  ret["residuals"] : lsquares_residuals(
+    ret["mat"], [x, y], y = ret["f"](x), []),
+  ret["mabs"] : sum(
+    abs(ret["residuals"][i]), i, 1, length(obj["x"]))/length(obj["x"]),
+  ret["msqe"] : sqrt(sum(
+    ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
+  return(ret)
+  );
 
+
+</formulas>
 
 (* work here starts 22 Apr 2020, evening *)
 
