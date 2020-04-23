@@ -1,0 +1,61 @@
+This is the README/notes for how I set up 167.99.95.147 a VPS that
+*may* host terramapadventure.com
+
+# see yum.sh and cpan.sh for yum and cpan stuff
+
+# yum one off commands
+
+yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
+
+# go command to get ws useful tool to test websockets
+
+go get -u github.com/hashrocket/ws
+cp /root/go/bin/ws /usr/local/bin/
+
+# this pulls the repo terramapadventure repo locally
+
+mkdir /root/YAMC
+cd /root/YAMC
+git init
+git pull https://github.com/barrycarter/YAMC.git
+
+# this pulls bcapps locally though I only need part of it
+
+# as of 3/28/20, doing this separately from /root/BCGIT which I'm not
+# sure why I created (also changing pull to clone)
+
+# from /root (but bcapps is now a symlink to big mounted dir)
+
+# after the first time must cd to directory and "git pull"
+
+git clone https://github.com/barrycarter/bcapps.git
+
+# BCAPPS is symlink to big drive
+
+# mkdir /root/BCAPPS
+# cd /root/BCAPPS
+# git init
+# git pull https://github.com/barrycarter/bcapps.git
+
+# push this large file from my local machine (not in git, too big)
+
+rsync -Pavz westeast.bin.bz2 root@167.99.95.147:/root/YAMC/
+
+# and then, back on the remote machine
+
+bunzip2 -v /root/YAMC/westeast.bin.bz2
+
+# copy bclib.pl to /usr/local/lib
+
+cp /root/BCAPPS/bclib.pl /usr/local/lib/
+
+# creates a symlink so that /sites/YAMC is same as /root/YAMC
+
+ln -s /root /sites
+
+# 5 Apr 2019: attempt to install
+# https://github.com/codercom/code-server in /root/build
+# (actually no, requires vscode)
+
+# 28 Mar 2020: adding symlinks to make CSPICE compile and work
+
