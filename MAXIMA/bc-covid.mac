@@ -101,7 +101,7 @@ linearRegression(obj) := block([ret, a, b, x, y, f],
   ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = a*x + b, [a,b]),
   f : lambda([x], subst(ret["est"], a*x + b)),
   ret["f"] : f,
-  ret["yest"] : makelist(ret["f"](i), i, 1, length(obj["x"])),
+  ret["yest"] : makelist(ret["f"](obj["x"][i]), i, 1, length(obj["x"])),
   ret["residuals"] : lsquares_residuals(
     ret["mat"], [x, y], y = ret["f"](x), []),
   ret["mabs"] : sum(
