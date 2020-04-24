@@ -1,0 +1,57 @@
+/*
+
+COVID-19 virus? nah!
+
+r0 = average number of people a given person can expose to virus per diem
+
+s = susceptibility (chance someone will get virus if exposed)
+
+d = death rate (chance someone will die after getting virus)
+
+p0 = initial population
+
+pop[i] = total population on day i (TODO: ignore deaths and births?)
+
+dead[i] = total number of people who have died from virus (we have in real life)
+
+sick[i] = total number of people who are infected with virus
+
+recov[i] = total number of people who have recovered from virus
+
+*/
+
+<formulas>
+
+r0: 2^(1/7);
+s: 1;
+d: 0.04;
+p0: 10000;
+
+sick[0] : 1;
+pop[0]: p0;
+recov[0] : 0;
+dead[0] : 0;
+
+sick[i] := float(sick[i-1] - sick[i-1]*(1-d) - dead[i-1] +
+ sick[i-1]*r0*s*(1-recov[i-1]/pop[i-1]));
+
+dead[i] := float(dead[i-1] + sick[i-1]*d);
+
+recov[i] := float(recov[i-1] + sick[i-1]*(1-d));
+
+pop[i] := float(pop[i-1] - dead[i-1]);
+
+</formulas>
+
+/*
+
+sick/dead/recov/pop
+
+[1, 0, 0, 10000]
+[2.104089513673812, 0.04, 0.96, 10000.0] 
+[3.426969663647983, 0.1241635805469525, 2.979925933126859, 9999.96], 
+[4.105433905782416, 0.2612423670928718, 6.269816810228923, 9999.835836419452]
+[2.104299244685296, 0.4254597233241684, 10.21103335978004, 9999.57459405236] 
+[- 6.211231574499338, 0.5096316931115803, 12.23116063467793, 9999.149134329034]]
+
+*/
