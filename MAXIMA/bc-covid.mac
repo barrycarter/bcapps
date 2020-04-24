@@ -29,6 +29,7 @@ Scratch:
 load("interpol");
 load ("lsquares");
 load("descriptive");
+load("stats");
 stringdisp: true;
 
 bc_list2string(l) := if listp(l) then apply(sconcat, l) else
@@ -143,6 +144,49 @@ expRegression(obj) := block([ret, a, b, x, y, f],
   );
 
 </formulas>
+
+(* work here starts 23 Apr 2020 *)
+
+t1522 : transpose(matrix(days, deaths["World"]));
+
+t1526 : linear_regression(t1522);
+
+t1528(n) := take_inference('adc,
+linear_regression(lastn(transpose(matrix(days, deaths["World"])),
+n)));
+
+makelist(t1528(n), n, 3, length(t1522));
+
+(* 18 is the max *)
+
+t1534: lastn(t1522, 18);
+
+(*          | b_estimation = [- 445311.1585827284, 6840.956656346738]   *)
+
+t1537 : firstn(t1522, length(t1522)-7);
+
+t1538(n) := take_inference('adc, linear_regression(lastn(t1537, n)));
+
+makelist(t1538(n), n, 3, length(t1537));
+
+plot2d([discrete, makelist(n, n, 3, length(t1537)), makelist(t1538(n),
+n, 3, length(t1537))]);
+
+(* 11 is best *)
+
+t1545: lastn(t1537, 11);
+
+t1546(x) := -412823.6363636404 + 6426.845454545459*x;
+
+
+
+
+
+
+
+
+
+
 
 (* work here starts 22 Apr 2020, evening *)
 
