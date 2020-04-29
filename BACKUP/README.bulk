@@ -60,7 +60,13 @@ gpg --batch --passphrase $passphrase -c -o
 
 echo CHECK SPACE ON IDRIVE
 
-ls $cwd/*.gpg >! /home/user/bin/IDrive_for_Linux/idrive/user_profile/*/Backup/Manual/BackupsetFile.txt
+ls $cwd/*.gpg >! /home/user/bin/IDrive_for_Linux/idrive/user_profile/MAIN/Backup/Manual/BackupsetFile.txt
+
+echo LOGIN TO CORRECT ACCOUNT NOW THAT I HAVE MULTIPLES
+
+perl ~user/bin/IDrive_for_Linux/scripts/Logout.pl
+
+perl ~user/bin/IDrive_for_Linux/scripts/Login.pl
 
 perl ~user/bin/IDrive_for_Linux/scripts/Backup_Script.pl
 

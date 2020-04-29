@@ -22,6 +22,8 @@ $fname=~m%([^\/]+)\.(.*?)\.(vtt|srt)%;
 
 my($prefix, $lang, $type) = ($1, $2, $3);
 
+unless ($prefix) {die "NO PREFIX, run with caption file, not mp4";}
+
 if (-d $prefix) {
     if ($globopts{overwrite}) {
 	system("rm -rf $prefix");

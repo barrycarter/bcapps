@@ -33,8 +33,7 @@ check_mysql_query -q "SELECT SUM(amount) FROM bankstatements WHERE bank='ally'" 
 
 check_file_age /var/spool/cron/user -W 20000 -C 20000
 
-# TODO: there should be no important emails in these folders, but I
-# need to flip the test to be false on hit
+# TODO: add more mailboxes here?
 
 bc-negate.pl "fgrep X-Status: /home/barrycarter/mail/EDABIT  | fgrep F"
 bc-negate.pl "fgrep X-Status: /home/barrycarter/mail/SKYFIELD  | fgrep F"

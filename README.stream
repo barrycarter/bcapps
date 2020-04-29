@@ -4,7 +4,46 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 25 Apr 2020, primarily for my reference
+Stuff I plan to stream 29 Apr 2020, primarily for my reference
+
+superpermutation theory (matrices)
+
+origin, 2ndlife, paid, two pays to go thru combo in JS, sucky and good
+(flexible), do both
+
+evil profchibs on twitter
+
+stop xearth weirdness
+
+minetest? 
+
+Nodes are the building blocks in Minetest. They have 16×16 textures and are seen by the player as one cubic meter.
+
+each block is 16^3 nodes = 4096 nodes
+
+https://github.com/minetest/minetest/blob/master/doc/world_format.txt
+
+X'19000202789CEDD8010D00000803A037B07F5B5338A783182400000000000000C07505000000BCB7FD0F000000C0BC06099EF001789C63000000010001000000FFFFFFFF000001000000036169720A0000
+
+above is sample value (hex format)
+
+and is 162 bytes (but uses zlib compression, sizes may vary)
+
+this reduces to 81 bytes hex -> byte
+
+19: version number = 25
+
+00: flags
+
+02: width 2
+
+02: params_width
+
+perl -le '$x="789CEDD8010D00000803A037B07F5B5338A783182400000000000000C07505000000B"; while ($x=~s/^(..)//) {print chr(hex($1))}' | less
+
+
+
+file seeker
 
 covid modeling using recursion?
 
