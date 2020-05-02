@@ -4,7 +4,11 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 29 Apr 2020, primarily for my reference
+Stuff I plan to stream 02 May 2020, primarily for my reference
+
+minetest/craft HTML5 let's look at it
+
+list of orange kangaroo Denmark
 
 81 total combinations
 
@@ -26,6 +30,24 @@ S4 = permutation group on 4 elements
 
 12
 34
+
+(1 2 3 4) = right rotation
+
+rotating a matrix right:
+
+00 01 02 03
+10 11 12 13
+20 21 22 23
+30 31 32 33
+
+left most col (col 0), everything after/incl 2nd row becomes one row
+lower (except last)
+
+right most col everything increases a row (except 1st/last)
+
+
+
+
 
 
 
