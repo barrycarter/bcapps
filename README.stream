@@ -4,11 +4,63 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 02 May 2020, primarily for my reference
+Stuff I plan to stream 03 May 2020, primarily for my reference
+
+constellation discussion on github
+
+Let (S_n,T_n) denote the position after n steps of a random walk on
+the lattice points of a plane with integer coordinates, starting from
+(S_0,T_0) = (0,0). Suppose S_n+1 = S_n +- 1 and T_n+1 = T_n +- 1 where
+signs are picked by two independent tosses of a fair coin,
+independently at each step. I have to find:
+
+For c>0 (I don't understand what c is in this context), what is the
+limit as n-> infinity of the probability that (S_n, T_n) is inside the
+square with corners at (+-c(rootn), +-c(rootn). (I've drawn this on a
+xy plane, but I dont know how to go further)
+
+c = 2 (example)
+
+limit n -> infinity that you will be in the square +-sqrt(n)*2
+
+500 fair flips, 300+ heads
+
+normal approximation to the binomial distribution for large n*p
+
+100 flips... how could he end up on 16?
+
+t + h = 100
+
+h = t + 16
+
+58 heads out of 100 (for ending up on 16)
+
+t + h = 100
+
+h >= t + 16
+
+h - t >= 16
+
+2h >= 116 
+
+h >= 58 = 50 + 8
+
+
+
+
+
 
 minetest/craft HTML5 let's look at it
 
 list of orange kangaroo Denmark
+
+Denmark ... kangaroo... orange
+
+apple-colored impala Djibouti
+
+first row: 10 -> 00, 00 -> 01, 01 -> 02, 02 -> 03
+last row: L1 -> L0, all cols except last col, LL -> (penultimate)L
+
 
 81 total combinations
 
