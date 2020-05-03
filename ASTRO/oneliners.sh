@@ -1,5 +1,9 @@
 #!/bin/sh
 
+zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[29] eq "") {next;} $F[29] = uc($F[29]); print "printf(\"$F[0] $F[29] %s\\n\", constellationName(constellationNumber($F[7]*15/180*pi_c(), $F[8]/180*pi_c())));"' | tail -n +2 > /tmp/bc-stars.c
+
+exit;
+
 # convert HYG db to JS useful form (for distances only)
 
 zcat hygdata_v3.csv.gz | perl -F, -anle 'print "stars[$F[0]]={id:$F[0],x:$F[17],y:$F[18],z:$F[19]};"'

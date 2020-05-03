@@ -1,0 +1,37 @@
+SELECT ?langLabel ?sub1Label ?sub2Label WHERE {
+ ?sub1 wdt:P279 wd:Q729.
+ OPTIONAL {?sub2 wdt:P279 ?sub1}.
+ OPTIONAL {?lang schema:about ?sub1} .
+
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en"}.
+}
+LIMIT 500
+
+
+SELECT ?sub1Label ?sub2Label WHERE {
+ ?sub1 wdt:P279 wd:Q729.
+ OPTIONAL {?sub2 wdt:P279 ?sub1}.
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en"}.
+}
+LIMIT 500
+
+
+
+SELECT ?nameLabel ?subLabel ?animalLabel WHERE {
+ ?sub wdt:P279* wd:Q729 .
+ ?animal wdt:P31* ?sub  
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en"}.
+}
+
+
+SELECT ?nameLabel ?langLabel WHERE {
+ ?name wdt:P31* wd:Q729.
+ ?name wdt:P407 ?lang
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".} 
+}
+
+SELECT ?nameLabel ?langLabel WHERE {
+ ?name wdt:P279* wd:Q729.
+ ?name wdt:P407 ?lang
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".} 
+}
