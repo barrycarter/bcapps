@@ -4,18 +4,11 @@
 
 /*
 
-To use this program, uncompress bc-stars.c.bz2 and put it in /tmp/bc-stars.c
+Notes: 
 
-To create the bc-stars.c file in the first place I did:
-
-zcat hygdata_v3.csv.gz | perl -F, -anle 'if ($F[29] eq "") {next;} $F[29] = uc($F[29]); print "printf(\"$F[0] $F[29] %s\\n\", constellation($F[7]*15/180*pi_c(), $F[8]/180*pi_c()));"' | tail -n +2 > /tmp/bc-stars.c
-
-which basically prints the HYG id and constellation of each star
- followed by the computed constellation of each star
+  - not all stars have const values in hygdata
 
 */
-
-// TODO: undo comment above
 
 int main(int argc, char **argv) {
 
@@ -41,7 +34,6 @@ int main(int argc, char **argv) {
 	continue;
       }
 
-      //      printf("s[%d][%d] -> %c\n", fcount, ccount, line[i]);
       s[fcount][ccount] = line[i];
       ccount++;
     }
@@ -55,13 +47,12 @@ int main(int argc, char **argv) {
     double ra = atof(s[7]), dec = atof(s[8]);
     double x = atof(s[17]), y = atof(s[18]), z = atof(s[19]);
     double vx = atof(s[20]), vy = atof(s[21]), vz = atof(s[22]);
-    char aster[40];
-    strcpy(aster, s[29]);
+    char aster1[40], aster2[40];
+    strcpy(aster1, s[29]);
+    
+    strcpy(aster2, constellationName(constellationNumber(ra/12*pi_c(), dec/180*pi_c())));
 
     double dist = sqrt(x*x + y*y + z*z);
-
-    //    double zc = asin(z/dist);
-
     double rac = atan2(y,x)/pi_c()*12;
 
     double oldra, olddec;
@@ -72,34 +63,22 @@ int main(int argc, char **argv) {
 
     if (oldra < 0) {oldra += 24;}
 
-    printf("%d %s %s %f %f %f %f\n", id, constellationName(constellationNumber(ra/12*pi_c(), dec/180*pi_c())), aster, ra, dec, oldra, olddec);
+    // skip case where aster1 (from file) is empty
+    if (!strcmp(aster1, "")) {continue;}
 
-    //    printf("DRA: %f\n", abs(ra-rac));
+    // skip Sun
+    if (id == 0) {continue;}
 
-    //    printf("DIST: %f, RA: %f, DEC: %f, X: %f, Y: %f, Z: %f\n", dist, ra, dec, x, y, z);
-    // printf("RA: %f, RAC: %f, DEC: %f, X: %f, Y: %f, Z: %f\n", ra, rac/pi_c()*12, dec, x, y, z);
+    // lower case last 2 of aster2
+    aster2[1] += 32;
+    aster2[2] += 32;
 
-    for (i = 0; i <= fcount; i++) {
-      //      printf("s(%d): %s\n", i, s[i]);
+    if (strcasecmp(aster1, aster2)) {
+      //      printf("%d %s %s %f %f %f %f\n", id, aster1, aster2, ra, dec, oldra, olddec);
+      printf("Star %d: expected %s, found %s at B1875 RA= %f, DEC= %f\n",
+	     id, aster1, aster2, oldra, olddec);
+
     }
-
-    //    printf("S0: %s\nS1: %s\nS2: %s\n", s[0], s[1], s[2]);
   }
 }
 
-    /*
-    printf("LINE: %s\n", line);
-
-    int pos = 0, oldpos = 0;
-
-    for (int i = 0; i<10; i++) {
-
-      pos = strchr(&line[oldpos], ',') - line + 1;
-      strncpy(s, &line[oldpos], pos-oldpos);
-
-      s[pos-oldpos] = 0;
-
-      printf("S: %s O: %d N: %d\n", s, oldpos, pos);
-
-      oldpos = pos;
-    */
