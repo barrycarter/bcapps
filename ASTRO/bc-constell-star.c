@@ -21,6 +21,8 @@ int main(int argc, char **argv) {
 
   char line[10000], s[100][500];
   int i;
+  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+
 
   FILE *fh = popen("zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", "r");
 
@@ -39,13 +41,49 @@ int main(int argc, char **argv) {
 	continue;
       }
 
-//      printf("s[%d][%d] -> %c\n", fcount, ccount, line[i]);
+      //      printf("s[%d][%d] -> %c\n", fcount, ccount, line[i]);
       s[fcount][ccount] = line[i];
       ccount++;
     }
 
-    for (i = 0; i < fcount; i++) {
-      printf("s(%d): %s\n", i, s[i]);
+    s[fcount][ccount] = '\0';
+
+    // fields we want:
+    // 0=id, 13=mag 7=ra, 8=dec, 17-22 are xyz vxvyvz, 
+
+    int id = atoi(s[0]);
+    double ra = atof(s[7]), dec = atof(s[8]);
+    double x = atof(s[17]), y = atof(s[18]), z = atof(s[19]);
+    double vx = atof(s[20]), vy = atof(s[21]), vz = atof(s[22]);
+    char aster[40];
+    strcpy(aster, s[29]);
+
+
+    printf("29: %s\n", s[29]);
+
+    double dist = sqrt(x*x + y*y + z*z);
+
+    //    double zc = asin(z/dist);
+
+    double rac = atan2(y,x)/pi_c()*12;
+
+    double oldra, olddec;
+
+    j2000tob1875(ra/12*pi_c(), dec/180*pi_c(), &oldra, &olddec);
+    oldra *= 12/pi_c();
+    olddec *= 180/pi_c();
+
+    if (oldra < 0) {oldra += 24;}
+
+    printf("%d %s %f %f %f %f %s\n", id, constellationName(constellationNumber(ra, dec)), ra, dec, oldra, olddec, aster);
+
+    //    printf("DRA: %f\n", abs(ra-rac));
+
+    //    printf("DIST: %f, RA: %f, DEC: %f, X: %f, Y: %f, Z: %f\n", dist, ra, dec, x, y, z);
+    // printf("RA: %f, RAC: %f, DEC: %f, X: %f, Y: %f, Z: %f\n", ra, rac/pi_c()*12, dec, x, y, z);
+
+    for (i = 0; i <= fcount; i++) {
+      //      printf("s(%d): %s\n", i, s[i]);
     }
 
     //    printf("S0: %s\nS1: %s\nS2: %s\n", s[0], s[1], s[2]);
