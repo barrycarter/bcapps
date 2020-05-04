@@ -2,6 +2,9 @@
 
 # reads wikidata from wikidata dumps
 
+# JSON->{'claims'}->{'P31'}->[0]->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'}
+# = 'Q3336843';
+
 require "/usr/local/lib/bclib.pl";
 
 while (<>) {
@@ -14,12 +17,21 @@ while (<>) {
 
   my($json) = JSON::from_json($_);
 
-  # stuff I want
   debug("ID: $json->{id}");
 
+  my(@p31) = @{$json->{'claims'}->{'P31'}};
 
-  debug(var_dump("JSON",$json));
-  die "TESTING";
+  for $i (@p31) {
+      debug($i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'});
+  }
+
+#  debug(@p31);
+
+#  debug("ID: $json->{id}");
+#  debug(var_dump("JSON",$json));
+
+  if (++$count > 10) {die "TESTING";}
+
 }
 
 die "TESTING";
