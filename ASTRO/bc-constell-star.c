@@ -58,9 +58,6 @@ int main(int argc, char **argv) {
     char aster[40];
     strcpy(aster, s[29]);
 
-
-    printf("29: %s\n", s[29]);
-
     double dist = sqrt(x*x + y*y + z*z);
 
     //    double zc = asin(z/dist);
@@ -75,7 +72,7 @@ int main(int argc, char **argv) {
 
     if (oldra < 0) {oldra += 24;}
 
-    printf("%d %s %f %f %f %f %s\n", id, constellationName(constellationNumber(ra, dec)), ra, dec, oldra, olddec, aster);
+    printf("%d %s %s %f %f %f %f\n", id, constellationName(constellationNumber(ra/12*pi_c(), dec/180*pi_c())), aster, ra, dec, oldra, olddec);
 
     //    printf("DRA: %f\n", abs(ra-rac));
 
