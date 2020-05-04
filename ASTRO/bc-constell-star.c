@@ -27,23 +27,20 @@ int main(int argc, char **argv) {
   while (!feof(fh)) {
 
     fgets(line, 10000, fh);
-
     printf("LINE: %s\n", line);
+    printf("LINE: %s\n", &line[25]);
 
-    s = strtok(line, ",");
-
-    int count = 1;
-
-    while ( (s = strtok(NULL, ",")) != NULL) {
-      count++;
-      printf("TOKEN: %s\n", s);
-    }
-
-    printf("FOUND %d tokens\n", count);
+    int pos = 0;
+    /*
+    pos = strchr(line[pos], ',') - line;
+    printf("POS: %d\n", pos);
+    pos = strchr(line[pos], ',') - line;
+    printf("POS: %d\n", pos);
+    pos = strchr(line[pos], ',') - line;
+    printf("POS: %d\n", pos);
+    pos = strchr(line[pos], ',') - line;
+    printf("POS: %d\n", pos);
+    */
 
   }
-
-  printf("All finished sir\n");
-
 }
-
