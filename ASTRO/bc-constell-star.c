@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
 /*
@@ -13,10 +15,19 @@ which basically prints the HYG id and constellation of each star
 
 */
 
+// TODO: undo comment above
+
 int main(int argc, char **argv) {
 
-  furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+  char line[10000];
 
-#include "/tmp/xab"
+  FILE *fh = popen("zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", "r");
+
+  fgets(line, 10000, fh);
+  
+  fscanf(fh, "%s", str1, str2, str3);
+
+  printf("1: %s\n2: \n3: %s\n", str1, str2, str3);
+
 
 }
