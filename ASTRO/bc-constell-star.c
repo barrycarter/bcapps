@@ -20,6 +20,7 @@ which basically prints the HYG id and constellation of each star
 int main(int argc, char **argv) {
 
   char line[10000], s[100][500];
+  int i;
 
   FILE *fh = popen("zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", "r");
 
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
 
     int fcount = 0, ccount = 0;
 
-    for (int i=0; i < strlen(line); i++) {
+    for (i=0; i < strlen(line); i++) {
 
       if (line[i] == ',') {
 	s[fcount][ccount] = '\0';
@@ -38,12 +39,16 @@ int main(int argc, char **argv) {
 	continue;
       }
 
-      printf("s[%d][%d] -> %c\n", fcount, ccount, line[i]);
+//      printf("s[%d][%d] -> %c\n", fcount, ccount, line[i]);
       s[fcount][ccount] = line[i];
       ccount++;
     }
 
-    printf("S0: %s\nS1: %s\nS2: %s\n", s[0], s[1], s[2]);
+    for (i = 0; i < fcount; i++) {
+      printf("s(%d): %s\n", i, s[i]);
+    }
+
+    //    printf("S0: %s\nS1: %s\nS2: %s\n", s[0], s[1], s[2]);
   }
 }
 
