@@ -47,13 +47,26 @@ int main(int argc, char **argv) {
     double ra = atof(s[7]), dec = atof(s[8]);
     double x = atof(s[17]), y = atof(s[18]), z = atof(s[19]);
     double vx = atof(s[20]), vy = atof(s[21]), vz = atof(s[22]);
-    char aster1[40], aster2[40];
+    char aster1[40], aster2[40], aster3[40];
     strcpy(aster1, s[29]);
     
     strcpy(aster2, constellationName(constellationNumber(ra/12*pi_c(), dec/180*pi_c())));
 
     double dist = sqrt(x*x + y*y + z*z);
     double rac = atan2(y,x)/pi_c()*12;
+
+    // adjust for proper motion
+    //    printf("VX: %f, VY: %f, VZ: %f\n", vx, vy, vz);
+
+    double old[3] = {x - 125*vx, y - 125*vy, z - 125*vz};
+    double ora, odec, odist;
+
+    // ra and dec from proper motioned coords
+    recsph_c(old, &odist, &odec, &ora);
+    //    printf("ODEC: %f vs %f, ORA: %f vs %f\n", odec, dec, ora, ra);
+    odec = halfpi_c() - odec;
+
+    strcpy(aster3, constellationName(constellationNumber(ora, odec)));
 
     double oldra, olddec;
 
@@ -75,8 +88,8 @@ int main(int argc, char **argv) {
 
     if (strcasecmp(aster1, aster2)) {
       //      printf("%d %s %s %f %f %f %f\n", id, aster1, aster2, ra, dec, oldra, olddec);
-      printf("Star %d: expected %s, found %s at B1875 RA= %f, DEC= %f\n",
-	     id, aster1, aster2, oldra, olddec);
+      printf("Star %d: expected %s, found %s at B1875 RA= %f, DEC= %f, pm =%s\n",
+	     id, aster1, aster2, oldra, olddec, aster3);
 
     }
   }

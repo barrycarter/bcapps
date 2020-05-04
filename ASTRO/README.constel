@@ -1,0 +1,40 @@
+Star 3865: expected And, found Psc at B1875 RA= 0.716807, DEC= 29.753806
+Star 7751: expected Phe, found Eri at B1875 RA= 1.583491, DEC= -52.227261
+Star 10342: expected Per, found And at B1875 RA= 2.089281, DEC= 50.478473
+Star 19173: expected Hyi, found Ret at B1875 RA= 4.110953, DEC= -67.499001
+Star 22400: expected Aur, found Per at B1875 RA= 4.691339, DEC= 37.268388
+Star 27992: expected Ori, found Mon at B1875 RA= 5.833554, DEC= -8.641234
+Star 29366: expected Lyn, found Dor at B1875 RA= 6.198119, DEC= -65.492363
+Star 30112: expected Ori, found Mon at B1875 RA= 6.241872, DEC= 2.624989
+Star 52886: expected Hya, found Crt at B1875 RA= 10.750178, DEC= -16.823178
+Star 58221: expected Leo, found Com at B1875 RA= 11.866916, DEC= 27.534053
+Star 59234: expected UMa, found Cvn at B1875 RA= 12.083505, DEC= 49.190976
+Star 67599: expected Aps, found Cha at B1875 RA= 13.666459, DEC= -79.651210
+Star 72017: expected Vir, found Lib at B1875 RA= 14.666721, DEC= -0.920943
+Star 74021: expected Boo, found Ser at B1875 RA= 15.083335, DEC= 25.919101
+Star 80302: expected Sco, found Oph at B1875 RA= 16.323165, DEC= -18.848203
+Star 80540: expected Sco, found Oph at B1875 RA= 16.374202, DEC= -18.405205
+Star 84413: expected Her, found Oph at B1875 RA= 17.212253, DEC= 10.996234
+Star 85957: expected Ara, found Aps at B1875 RA= 17.401182, DEC= -67.500701
+Star 87694: expected Sco, found Sgr at B1875 RA= 17.833530, DEC= -31.524129
+Star 89105: expected Aps, found Pav at B1875 RA= 18.000152, DEC= -70.775327
+Star 91382: expected Ser, found Aql at B1875 RA= 18.583536, DEC= -3.236541
+Star 92907: expected Sct, found Sgr at B1875 RA= 18.866734, DEC= -12.757062
+Star 93308: expected Vul, found Sge at B1875 RA= 18.972316, DEC= 21.082870
+Star 95468: expected Dra, found Cyg at B1875 RA= 19.440100, DEC= 57.999251
+Star 100777: expected Tel, found Ind at B1875 RA= 20.333540, DEC= -55.531567
+Star 101541: expected Cyg, found Cep at B1875 RA= 20.600093, DEC= 60.562669
+Star 105623: expected Mic, found Psa at B1875 RA= 21.333428, DEC= -33.417257
+Star 117789: expected And, found Peg at B1875 RA= 23.861182, DEC= 31.333313
+
+I wrote and ran https://github.com/barrycarter/bcapps/blob/9c1d66bb0dd74e1ac5ffc5d3b26c5bb4ac257409/ASTRO/bc-constell-star.c to generate the above. Notes:
+
+  - I have three more stars than your version: 80302, 80540, and 117789
+
+  - For the most part my numbers agree with yours to several decimal points, but do differ in the last 2 or 3 decimal points.
+
+  - Not all stars in hygdata_v3.csv.gz have associated constellations
+
+  - The numbers above are WITHOUT proper motion. I am hoping to do a proper motion version later
+
+
