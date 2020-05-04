@@ -23,11 +23,13 @@ int main(int argc, char **argv) {
 
   FILE *fh = popen("zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", "r");
 
-  fgets(line, 10000, fh);
-  
-  fscanf(fh, "%s", str1, str2, str3);
+  while (!feof(fh)) {
 
-  printf("1: %s\n2: \n3: %s\n", str1, str2, str3);
+    fgets(line, 10000, fh);
 
+    printf("LINE: %s\n", line);
+  }
+
+  printf("All finished sir\n");
 
 }
