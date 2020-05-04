@@ -1,3 +1,22 @@
+SELECT ?langLabel ?sub1Label ?sub2Label ?sub3Label ?sub4Label
+?sub5Label ?sub6Label ?sub7Label ?sub8Label ?sub9Label
+WHERE {
+ ?sub1 wdt:P279 wd:Q729.
+ OPTIONAL {?lang schema:about ?sub1} .
+
+ OPTIONAL {?sub2 wdt:P279 ?sub1}.
+ OPTIONAL {?sub3 wdt:P279 ?sub2}.
+ OPTIONAL {?sub4 wdt:P279 ?sub3}.
+ OPTIONAL {?sub5 wdt:P279 ?sub4}.
+ OPTIONAL {?sub6 wdt:P279 ?sub5}.
+ OPTIONAL {?sub7 wdt:P279 ?sub6}.
+ OPTIONAL {?sub8 wdt:P279 ?sub7}.
+ OPTIONAL {?sub9 wdt:P279 ?sub8}.
+
+SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en"}.
+}
+LIMIT 500
+
 SELECT ?langLabel ?sub1Label ?sub2Label WHERE {
  ?sub1 wdt:P279 wd:Q729.
  OPTIONAL {?sub2 wdt:P279 ?sub1}.
