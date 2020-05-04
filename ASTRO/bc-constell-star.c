@@ -31,16 +31,12 @@ int main(int argc, char **argv) {
     printf("LINE: %s\n", &line[25]);
 
     int pos = 0;
-    /*
-    pos = strchr(line[pos], ',') - line;
-    printf("POS: %d\n", pos);
-    pos = strchr(line[pos], ',') - line;
-    printf("POS: %d\n", pos);
-    pos = strchr(line[pos], ',') - line;
-    printf("POS: %d\n", pos);
-    pos = strchr(line[pos], ',') - line;
-    printf("POS: %d\n", pos);
-    */
+
+    for (int i = 0; i<10; i++) {
+
+      pos = strchr(&line[pos], ',') - line + 1;
+      printf("POS(%d): %d %s\n", i, pos, &line[pos]);
+    }
 
   }
 }
