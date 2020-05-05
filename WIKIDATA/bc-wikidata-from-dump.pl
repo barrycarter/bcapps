@@ -17,21 +17,24 @@ while (<>) {
 
   my($json) = JSON::from_json($_);
 
+  my($id) = $json->{id};
+
   debug("ID: $json->{id}");
 
   my(@p31) = @{$json->{'claims'}->{'P31'}};
 
   for $i (@p31) {
-      debug($i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'});
+      my($target) = $i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'};
+      print "$id P31 $target\n";
   }
 
-#  debug(@p31);
 
-#  debug("ID: $json->{id}");
-#  debug(var_dump("JSON",$json));
+  my(@p279) = @{$json->{'claims'}->{'P279'}};
 
-  if (++$count > 10) {die "TESTING";}
-
+  for $i (@p279) {
+      my($target) = $i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'};
+      print "$id P279 $target\n";
+  }
 }
 
 die "TESTING";

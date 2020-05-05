@@ -21,6 +21,77 @@ bclib.Math = {
 
 Math.gudermannian = function (x) { return Math.atan(Math.sinh(x)) };
 
+/** 
+ * Given a positive integer n, and a base b, return the base b representation of n as an array, optionally padded to length l 
+ * 
+ */
+
+function int2baseArray(obj) {
+
+  let temp = obj.n;
+  let res = [];
+  let i = 0;
+
+  while (temp > 0) {
+    res[i++] = temp % obj.b;
+    temp = Math.floor(temp / obj.b);
+  }
+
+  // 0-fill if requested
+  for (j = i; j < obj.l; j++) { res[i++] = 0; }
+
+  return ({ arr: res.reverse() });
+
+  // TODO: reverse array + fill array for l
+}
+
+/**
+ * Given obj, return random matrix
+ * 
+ * obj.rows = number of rows in matrix
+ * obj.cols = number of cols in matrix
+ * 
+ * TODO: this currently only gives randints I want
+ * 
+ * 
+ */
+
+function createRandomMatrix(obj) {
+  var res = [];
+
+  for (i = 0; i < obj.rows; i++) {
+    res[i] = [];
+    for (j = 0; j < obj.cols; j++) {
+      res[i][j] = Math.floor(Math.random() * 10000);
+    }
+  }
+  return { mat: res };
+}
+
+/**
+ * 
+ * fill a matrix with all combinations of given array
+ * 
+ * obj.arr: the array with which to fill
+ * obj.rows: number of rows in matrix
+ * obj.cols: number of columns in matrix
+ * 
+ */
+
+function fillMatrixWithCombos(obj) {
+
+
+  for (i = 0; i < obj.arr.length ** (obj.rows * obj.cols); i++) {
+    var arr = [];
+    let temp = i;
+
+    for (j = 0; j < obj.rows * obj.cols; j++) {
+      //      arr[] = temp%obj.arr.length;
+      temp /= obj.arr.length;
+    }
+  }
+}
+
 /**
  * 
  * Given an interpolation object and a value of x, return the corresponding value of interpX2Y

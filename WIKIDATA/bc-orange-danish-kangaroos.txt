@@ -1,3 +1,24 @@
+SELECT ?sub ?subLabel ?sub1 ?sub1Label
+WHERE {
+  ?sub wdt:P279* wd:Q729.
+  OPTIONAL {?sub wdt:P279* ?sub1}.
+  SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en"}.
+}
+
+SELECT ?sub ?subLabel ?sub1 ?sub1Label ?sub2 ?sub2Label ?sub3 ?sub3Label
+WHERE {
+  ?sub wdt:P279* wd:Q729.
+  OPTIONAL {?sub wdt:P279 ?sub1}.
+  OPTIONAL {?sub1 wdt:P279 ?sub2}.
+  OPTIONAL {?sub2 wdt:P279 ?sub3}.
+ SERVICE wikibase:label{bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en"}.
+}
+
+# from dump from perl script
+
+egrep ' Q729$' allp31-279.txt
+
+
 SELECT ?langLabel ?sub1Label ?sub2Label ?sub3Label ?sub4Label
 ?sub5Label ?sub6Label ?sub7Label ?sub8Label ?sub9Label
 WHERE {
