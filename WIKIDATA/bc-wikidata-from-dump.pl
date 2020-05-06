@@ -7,6 +7,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
+sub handle_array {
+    my($str) = @_;
+
+    debug("STR DELTA: $str");
+}
+
 sub handle_string {
     my($str) = @_;
     my(%hash);
@@ -14,11 +20,14 @@ sub handle_string {
     debug("STR: $str");
 
     while ($str=~s/\"([^\"]*?)\":\[(.*?)\]//) {
-	debug("ALPHA: $1 $2");
+
+	my($key, $val) = ($1, $2);
+
+	$hash{$key} = csv($val);
     }
     
     while ($str=~s/\"(.*?)\":\"(.*?)\"//) {
-	debug("GAMMA: $1 $2");
+	$hash{$1} = $2;
     }
     
     unless ($str=~/^[\s\,]*$/) {
@@ -43,7 +52,11 @@ while (<>) {
     # TODO: more generalize ignore routine here
     if (/^\[|\]$/) {next;}
 
-    # find minmal braces
+    # find arrays
+#    s/(\[[^\]\[]*?\])/handle_array($1)/iseg;
+
+
+    # find minimal braces
     s/\{([^\{\}]*)\}/handle_string($1)/iseg;
 
     # warn testing
