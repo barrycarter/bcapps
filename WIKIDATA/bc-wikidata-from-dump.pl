@@ -7,6 +7,20 @@
 
 require "/usr/local/lib/bclib.pl";
 
+sub handle_string {
+    my($str) = @_;
+    my(%hash);
+
+    debug("STR: $str");
+
+    for $i (split(/\,/, $str)) {
+	debug("I: $i");
+	unless ($i=~s/^\"(.*?)\":\"(.*?)\"$//) {
+           warn "BAD STRING: $i";
+	}
+    }
+}
+
 while (<>) {
 
     chomp;
@@ -14,6 +28,12 @@ while (<>) {
     # ignore "[" line, if any (thats the start of a huge JSON array)
     # TODO: more generalize ignore routine here
     if (/^\[|\]$/) {next;}
+
+    # find minmal braces
+    s/\{([^\{\}]*)\}/handle_string($1)/iseg;
+
+    # warn testing
+    next;
 
     # ignore the command that ends the line (between array elements)
     s/\,$//;
