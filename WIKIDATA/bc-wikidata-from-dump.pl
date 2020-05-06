@@ -9,13 +9,41 @@ require "/usr/local/lib/bclib.pl";
 
 while (<>) {
 
-  # ignore "[" line, if any
-  # TODO: more generalize ignore routine here
-  if (/^\[|\]$/) {next;}
+    chomp;
 
-  s/\,$//;
+    # ignore "[" line, if any (thats the start of a huge JSON array)
+    # TODO: more generalize ignore routine here
+    if (/^\[|\]$/) {next;}
 
-  my($json) = JSON::from_json($_);
+    # ignore the command that ends the line (between array elements)
+    s/\,$//;
+
+    s/(\}\,)/$1\n/sg;
+
+    debug("LENG", length($_));
+
+    debug($_);
+
+    $_ = read_file("/tmp/fuckme.txt");
+
+    my($json) = new JSON;
+
+    $json = $json->max_size(1e+9);
+    $json = $json->max_depth(10000);
+    debug("MD", $json->get_max_depth);
+    debug("MS", $json->get_max_size);
+
+    $json = JSON::from_json($_);
+
+
+
+
+
+
+    debug(var_dump("hash",JSON::from_json($buf)));
+
+  # TESTING!
+    next;
 
   my($id) = $json->{id};
 
@@ -44,8 +72,6 @@ read(A,$buf,1000000);
 $buf=~s/\{\"id\":\"Q8\".*$//s;
 $buf=~s/^\[//;
 $buf=~s/,$//;
-
-debug(var_dump("hash",JSON::from_json($buf)));
 
 =item comment
 

@@ -80,9 +80,9 @@ int main(int argc, char **argv) {
     double oldra = ra - pmra*150/54000000;
     double olddec = dec - pmdec*150/3600000;
 
-    strcpy(aster3, constellationName(constellationNumber(oldra/12*pi_c(), olddec/180*pi_c())));
-
     if (oldra < 0) {oldra += 24;}
+
+    strcpy(aster3, constellationName(constellationNumber(oldra/12*pi_c(), olddec/180*pi_c())));
 
     // skip case where aster1 (from file) is empty
     if (!strcmp(aster1, "")) {continue;}
@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
     if (id == 0) {continue;}
 
     if (strcasecmp(aster2, aster3) || strcasecmp(aster1, aster2) || strcasecmp(aster1, aster3)) {
-      printf("%06d,%s,%s,%s\n", id, aster1, aster2, aster3);
+      printf("%06d,%s,%s,%s,%f,%f,%f,%f\n", id, aster1, aster2, aster3, ra, dec, oldra, olddec);
     }
   }
 }

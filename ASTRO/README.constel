@@ -39,3 +39,60 @@ I wrote and ran https://github.com/barrycarter/bcapps/blob/9c1d66bb0dd74e1ac5ffc
 
 =================== BREAKPOINT =================
 
+id,filecon,curcon,oldcon
+003865,AND,PSC,PSC
+007751,PHE,ERI,ERI
+009820,PSC,PSC,CET
+010342,PER,AND,AND
+015285,ARI,ARI,PER
+015563,CAM,CAM,CAS
+019173,HYI,RET,RET
+022400,AUR,PER,PER
+025364,TAU,TAU,AUR
+027992,ORI,MON,MON
+029366,LYN,DOR,DOR
+030112,ORI,MON,MON
+052886,HYA,CRT,CRT
+058221,LEO,COM,COM
+059234,UMA,CVN,CVN
+063028,CRU,CRU,CEN
+067599,APS,CHA,CHA
+072017,VIR,LIB,LIB
+074021,BOO,SER,SER
+077230,BOO,BOO,HER
+080302,SCO,OPH,OPH
+080540,SCO,OPH,OPH
+084413,HER,OPH,OPH
+085957,ARA,APS,APS
+087694,SCO,SGR,SGR
+089105,APS,PAV,PAV
+091382,SER,AQL,AQL
+092907,SCT,SGR,SGR
+093308,VUL,SGE,SGE
+095468,DRA,CYG,CYG
+100777,TEL,IND,IND
+101541,CYG,CEP,CEP
+105623,MIC,PSA,MIC
+117789,AND,PEG,AND
+
+I wrote and ran:
+
+https://github.com/barrycarter/bcapps/blob/691b607881df16840c8db14b34f26e03133e8192/ASTRO/bc-constell-star-2.c
+
+to find discrepancies between the following:
+
+  - filecon: the constellation name as given in the hygdata_v3.csv.gz file
+
+  - curcon: the constellation name as computed using current right ascension
+    and declination precessed to B1850
+
+  - oldcon: the constellation name as computed adjusting right ascension and declination using the pmra and pmdec fields. Note that this is different from re-computing the xyz positions. In particular, long term proper motion won't be linear in right ascension or declination, but, because these values are given at higher precision, this calculation may or may not be better than recomputing the xyz coordinates.
+
+The "029366,LYN,DOR,DOR" entry surprised me since Lynx and Dorado are nowhere near each other. However, the declination for this star, -65.531150, and the following URL:
+
+http://server7.wikisky.org/starview?object_type=1&object_id=2328064&object_name=HIP+29439&locale=EN
+
+have convinced me this is really in Dorado, not Lynx.
+
+I didn't scan the other entries for possible obvious errors, however.
+
