@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "/home/user/BCGIT/ASTRO/bclib.h"
 
 /*
@@ -18,6 +19,10 @@ int main(int argc, char **argv) {
 
 
   FILE *fh = popen("zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", "r");
+
+  // print header lines
+
+  printf("id,filecon,curcon,oldcon\n");
 
   while (!feof(fh)) {
 
@@ -58,6 +63,12 @@ int main(int argc, char **argv) {
     // from file
     strcpy(aster1, s[29]);
 
+
+
+    // upcase it
+    aster1[1] = toupper(aster1[1]);
+    aster1[2] = toupper(aster1[2]);
+
     // find constellation for current ra/dec
 
     strcpy(aster2, constellationName(constellationNumber(ra/12*pi_c(), dec/180*pi_c())));
@@ -79,8 +90,9 @@ int main(int argc, char **argv) {
     // skip Sun
     if (id == 0) {continue;}
 
-    if (strcasecmp(aster2, aster3)) {
-      printf("Star %d, file: %s, now: %s, old: %s\n", id, aster1, aster2, aster3);
+    if (strcasecmp(aster2, aster3) || strcasecmp(aster1, aster2) || strcasecmp(aster1, aster3)) {
+      printf("%06d,%s,%s,%s\n", id, aster1, aster2, aster3);
     }
   }
 }
+
