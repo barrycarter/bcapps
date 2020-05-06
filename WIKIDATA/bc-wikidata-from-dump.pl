@@ -54,14 +54,18 @@ sub handle_string {
 
 while (<>) {
 
-    chomp;
-
     # ignore "[" line, if any (thats the start of a huge JSON array)
-    # TODO: more generalize ignore routine here
     if (/^\[|\]$/) {next;}
 
-    # ignore the command that ends the line (between array elements)
-    s/\,$//;
+    # ignore the command th ends the line (between array elements)
+    s/\,\s*$//;
+
+    my($json) = JSON::from_json($_);
+
+    debug("JSONl $json");
+
+    next;
+
 
     # json_reformat
 
