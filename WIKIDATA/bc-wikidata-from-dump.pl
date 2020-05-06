@@ -17,9 +17,15 @@ sub handle_string {
     my($str) = @_;
     my(%hash);
 
-    unless ($str=~/language|P31|P279/) {return;}
+    unless ($str=~/"language":"en"|"id":"Q\d+"|P31\D|P279\D/) {return $str;}
+
+#    if($str=~s/"id":"(Q\d+)"//) {return $1;}
+
+#    if ($str=~/"entity-type":"item"/) {return;}
 
     debug("STR: $str");
+
+    return;
 
     while ($str=~s/\"([^\"]*?)\":\[(.*?)\]//) {
 
@@ -54,18 +60,35 @@ while (<>) {
     # TODO: more generalize ignore routine here
     if (/^\[|\]$/) {next;}
 
+    # ignore the command that ends the line (between array elements)
+    s/\,$//;
+
+    # json_reformat
+
+#    $_ = read_file("/tmp/bar.txt");
+
+    debug("THUNK IS NOW: $_");
+
+    debug(JSON::from_json($_));
+
+    die "TESTING";
+
     # find arrays
 #    s/(\[[^\]\[]*?\])/handle_array($1)/iseg;
 
+s/(\},)/$1\n/sg;
+
+
+
+    debug("NEW ENTITY");
 
     # find minimal braces
-    s/\{([^\{\}]*)\}/handle_string($1)/iseg;
+    while (s/\{([^\{\}]*)\}/handle_string($1)/iseg) {}
+
+    debug("LEFT: $_");
 
     # warn testing
     next;
-
-    # ignore the command that ends the line (between array elements)
-    s/\,$//;
 
     s/(\}\,)/$1\n/sg;
 
