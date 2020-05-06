@@ -17,6 +17,8 @@ sub handle_string {
     my($str) = @_;
     my(%hash);
 
+    unless ($str=~/language|P31|P279/) {return;}
+
     debug("STR: $str");
 
     while ($str=~s/\"([^\"]*?)\":\[(.*?)\]//) {
@@ -31,7 +33,7 @@ sub handle_string {
     }
     
     unless ($str=~/^[\s\,]*$/) {
-	warn("BAD STRING: $str");
+	debug("BAD STRING: $str");
     }
 
 #    debug("STRBETA: $str");
