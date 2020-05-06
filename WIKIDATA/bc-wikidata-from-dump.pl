@@ -57,12 +57,37 @@ while (<>) {
     # ignore "[" line, if any (thats the start of a huge JSON array)
     if (/^\[|\]$/) {next;}
 
+ #   debug("NEW LINE!");
+
     # ignore the command th ends the line (between array elements)
     s/\,\s*$//;
 
     my($json) = JSON::from_json($_);
 
-    debug("JSONl $json");
+    my($id) = $json->{id};
+
+    my($name) = $json->{'labels'}->{'en'}->{'value'};
+
+    print "$id name $name\n";
+
+    my(@p31) = @{$json->{'claims'}->{'P31'}};
+
+    for $i (@p31) {
+	my($target) = $i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'};
+	print "$id P31 $target\n";
+    }
+
+
+    my(@p279) = @{$json->{'claims'}->{'P279'}};
+
+    for $i (@p279) {
+	my($target) = $i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'};
+	print "$id P279 $target\n";
+    }
+
+    debug(var_dump("hash",$json));
+
+#    die "TESTING";
 
     next;
 
@@ -74,6 +99,8 @@ while (<>) {
     debug("THUNK IS NOW: $_");
 
     debug(JSON::from_json($_));
+
+
 
     die "TESTING";
 
@@ -121,24 +148,8 @@ s/(\},)/$1\n/sg;
   # TESTING!
     next;
 
-  my($id) = $json->{id};
-
   debug("ID: $json->{id}");
 
-  my(@p31) = @{$json->{'claims'}->{'P31'}};
-
-  for $i (@p31) {
-      my($target) = $i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'};
-      print "$id P31 $target\n";
-  }
-
-
-  my(@p279) = @{$json->{'claims'}->{'P279'}};
-
-  for $i (@p279) {
-      my($target) = $i->{'mainsnak'}->{'datavalue'}->{'value'}->{'id'};
-      print "$id P279 $target\n";
-  }
 }
 
 die "TESTING";
