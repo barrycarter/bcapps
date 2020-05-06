@@ -13,12 +13,26 @@ sub handle_string {
 
     debug("STR: $str");
 
-    for $i (split(/\,/, $str)) {
-	debug("I: $i");
-	unless ($i=~s/^\"(.*?)\":\"(.*?)\"$//) {
-           warn "BAD STRING: $i";
-	}
+    while ($str=~s/\"([^\"]*?)\":\[(.*?)\]//) {
+	debug("ALPHA: $1 $2");
     }
+    
+    while ($str=~s/\"(.*?)\":\"(.*?)\"//) {
+	debug("GAMMA: $1 $2");
+    }
+    
+    unless ($str=~/^[\s\,]*$/) {
+	warn("BAD STRING: $str");
+    }
+
+#    debug("STRBETA: $str");
+
+#    for $i (csv($str)) {
+#	debug("I: $i");
+#	unless ($i=~s/^\"(.*?)\":\"(.*?)\"$//) {
+#           warn "BAD STRING: $i";
+#	}
+#    }
 }
 
 while (<>) {
