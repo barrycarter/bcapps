@@ -59,3 +59,8 @@ ln -s /root /sites
 
 # 28 Mar 2020: adding symlinks to make CSPICE compile and work
 
+# WHEN STARTING SERVER TURN FUCKING FUCKING selinux "off"
+
+getenforce
+setenforce 0
+getenforce

@@ -1,0 +1,40 @@
+
+
+what data do we have on the world:
+
+osm streets, buildings, restaurants (example eat at restaurant)
+
+open source
+
+elevation + steepness
+
+use OSM in real life, not google maps
+
+JS on client side (accessible to all)
+
+Perl on server side, BUT very limited, just to fetch data (+ maybe to
+store user position data/etc)
+
+climate
+
+http://srtm.csi.cgiar.org/srtmdata/
+
+http://koeppen-geiger.vu-wien.ac.at/present.htm
+
+https://mrdata.usgs.gov
+
+http://sedac.ciesin.columbia.edu/
+
+https://www.esa-landcover-cci.org/
+
+mercator vs cylindercal (not line up)
+
+43200 x 21600 every 1km or better
+
+solar energy and solar map
+
+~/Downloads/legend.png
+
+
+
+
