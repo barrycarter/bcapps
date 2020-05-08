@@ -30,6 +30,10 @@ while (<>) {
 
   for $i (@keys) {$name=~s/$i/$convert{$i}/;}
 
+  # convert \xxx to octal character
+
+  $name=~s/\\(\d+)/chr(oct($1))/seg;
+
   $mtime = str2time("$date $time UTC");
   print "$name\0$mtime\n";
 }
