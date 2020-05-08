@@ -4,9 +4,17 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 06 May 2020, primarily for my reference
+Stuff I plan to stream 08 May 2020, primarily for my reference
+
+let's make an ad for my map game/project
 
 war zone + delivery
+
+auto-reminder for git/pomodoro (cron on machine that's not 24/7?)
+
+github.io explain what question i am answering
+
+autocaptions as stream thumbnails (w/ alt text = captions?)
 
 pmra and pmdec vs xyz/v(xyz)
 
@@ -19,6 +27,10 @@ gymbby is also a wonderful person
 yummi_k is a wonderful person go watch her
 
 constellation discussion on github
+
+add troll panel
+
+create README.stream.done?
 
 Let (S_n,T_n) denote the position after n steps of a random walk on
 the lattice points of a plane with integer coordinates, starting from
@@ -159,9 +171,7 @@ this reduces to 81 bytes hex -> byte
 
 perl -le '$x="789CEDD8010D00000803A037B07F5B5338A783182400000000000000C07505000000B"; while ($x=~s/^(..)//) {print chr(hex($1))}' | less
 
-
-
-file seeker
+file seeker?
 
 covid modeling using recursion?
 

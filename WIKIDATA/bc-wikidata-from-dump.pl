@@ -68,6 +68,8 @@ while (<>) {
 
     my($name) = $json->{'labels'}->{'en'}->{'value'};
 
+    unless ($name) {warn "NO NAME: $id";}
+
     print "$id name $name\n";
 
     my(@p31) = @{$json->{'claims'}->{'P31'}};

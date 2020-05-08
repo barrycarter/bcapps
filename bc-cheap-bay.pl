@@ -104,7 +104,7 @@ map {m%/(\d+)/i.html$%; $_=$1} @urls; # extract category numbers
 @cats = sort {$a <=> $b} @urls; # don't really need this, but I like it
 
 for $i (@cats) {
-  $cmd = "curl -s 'http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=$appid&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD=true&paginationInput.entriesPerPage=200&itemFilter(0).name=MaxPrice&itemFilter(0).value=$globopts{maxprice}&itemFilter(0).paramName=Currency&itemFilter(0).paramValue=USD&itemFilter(1).name=FreeShippingOnly&itemFilter(1).value=true&itemFilter(2).name=EndTimeTo&itemFilter(2).value=$endtime&itemFilter(3).name=ListingType&itemFilter(3).value=Auction&categoryId=$i&sortOrder=BidCountFewest' | tidy -q -xml";
+  $cmd = "curl -s 'https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=$appid&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD=true&paginationInput.entriesPerPage=200&itemFilter(0).name=MaxPrice&itemFilter(0).value=$globopts{maxprice}&itemFilter(0).paramName=Currency&itemFilter(0).paramValue=USD&itemFilter(1).name=FreeShippingOnly&itemFilter(1).value=true&itemFilter(2).name=EndTimeTo&itemFilter(2).value=$endtime&itemFilter(3).name=ListingType&itemFilter(3).value=Auction&categoryId=$i&sortOrder=BidCountFewest' | tidy -q -xml";
 #  debug("COMMAND: $cmd");
   # expensive to run above, so cache results for 30m
   # need fixed cachefile since endtime changes slightly each time
