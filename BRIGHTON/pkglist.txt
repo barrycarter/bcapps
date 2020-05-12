@@ -153,6 +153,7 @@ git-cola
 git-gui
 # below commented out, dependency issues
 # qgit
+mercurial
 git
 gitk
 binutils
@@ -671,6 +672,7 @@ libvirt
 texlive
 lyx
 emacs
+atom
 enscript
 xemacs
 xemacs-packages-extra

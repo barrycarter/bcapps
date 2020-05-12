@@ -1,0 +1,12 @@
+ESACCI-LC*: land cover data similar to lcc, TIF is 129600x64800 (10
+second of arc), appears to be world wide, 38 different land types
+https://www.esa-landcover-cci.org/ [not sure of recency]
+
+ESACCI-LC-Legend.csv explains value
+
+Site: https://www.esa-landcover-cci.org/
+
+http://maps.elie.ucl.ac.be/CCI/viewer/download.php
+
+https://storage.googleapis.com/cci-lc-v207/ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7.zip
+
