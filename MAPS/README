@@ -134,6 +134,8 @@ Data provided:
   - Sun/moon rise/set map (not just times per location) (TODO: write C
   program to determine subsolar point accurately)
 
+  - Landcover data from https://www.visibleearth.nasa.gov/images/61004/new-land-cover-classification-maps
+
   - TODO: population density?
 
   - TODO: timezone

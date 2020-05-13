@@ -10,6 +10,10 @@ https://scontent-den4-1.xx.fbcdn.net/v/t1.0-9/28872845_656140804733981_727216814
 
 README.stream.old/done?
 
+: to pull data and overwrite local changes
+git fetch --all
+git reset --hard origin/master
+
 gallery of video stills with captions and ALT tags (static HTML,
 create locally, for github.io-- at worst JS)
 

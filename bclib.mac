@@ -1,0 +1,30 @@
+load("interpol");
+load ("lsquares");
+load("descriptive");
+load("stats");
+stringdisp: true;
+
+bc_list2string(l) := if listp(l) then apply(sconcat, l) else
+ apply(sconcat, [l]);
+
+/* per https://def.fe.up.pt/pipermail/maxima-discuss/2013/046236.html a version of arrayinfo that does NOT quote its arguments */
+
+arrayinfo2(l) := apply(arrayinfo, [l]);
+
+/* the keys of an associative array */
+
+bc_keys(l) := flatten(rest(arrayinfo2(l), 2));
+
+/* add an index to an existing list */
+
+bc_addIndex(l) := makelist([i, l[i]], i, 1, length(l));
+
+/* the differences of a list */
+
+differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
+
+/* TODO:
+
+add Mathematica Prime[n] = nthprime function
+
+*/
