@@ -27,6 +27,8 @@ for $i (1..1) {
 
   debug("SEEK COMPLETED");
 
+  # TODO: speed this up a LOT!
+
   # read backwards to previous newline
 
   my($n) = 1;
@@ -35,11 +37,26 @@ for $i (1..1) {
     seek(A, $rand-$n++, SEEK_SET);
     read(A, $buf, 1);
     } until ($buf eq "\n");
-      
-  debug(tell(A));
-  read(A, $buf, 1024000);
 
-  debug("READ: $buf");
+  # and then forward again until next newlie
+
+  my($pos) = tell(A);
+  my($data);
+  my($len) = 0;
+
+  debug("FOUND START OF LINE: $pos");
+
+  do {
+    seek(A, $pos+$len++, SEEK_SET);
+    read(A, $buf, 1);
+    $data .= $buf;
+  } until ($buf eq "\n");
+
+  $data=~s/\,$//;
+
+  my($hashref) = JSON::from_json($data);
+
+  debug("READ:", $hashref->{id});
 
   # read rest of line
 
