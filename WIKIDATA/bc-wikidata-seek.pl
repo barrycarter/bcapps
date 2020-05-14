@@ -5,8 +5,6 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($buf);
-
 open(A,"/mnt/squash/wikidata/latest-all.json");
 
 debug("FILE OPENED");
@@ -29,7 +27,16 @@ for $i (1..1) {
 
   debug("SEEK COMPLETED");
 
-  # read some bytes
+  # read backwards to previous newline
+
+  my($n) = 1;
+
+  do {
+    seek(A, $rand-$n++, SEEK_SET);
+    read(A, $buf, 1);
+    } until ($buf eq "\n");
+      
+  debug(tell(A));
   read(A, $buf, 1024000);
 
   debug("READ: $buf");
