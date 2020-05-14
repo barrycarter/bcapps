@@ -5,6 +5,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my($buf);
+
 open(A,"/mnt/squash/wikidata/latest-all.json");
 
 debug("FILE OPENED");
@@ -27,16 +29,17 @@ for $i (1..1) {
 
   debug("SEEK COMPLETED");
 
+  # read some bytes
+  read(A, $buf, 1024000);
+
+  debug("READ: $buf");
+
   # read rest of line
 
-  my($eol) = <A>;
+#  my($eol) = <A>;
 
   # and print it (for now)
 
-  debug("EOL: $eol");
+#  debug("EOL: $eol");
 
 }
-
-
-
-  
