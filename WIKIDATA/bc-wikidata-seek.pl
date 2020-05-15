@@ -7,25 +7,25 @@ require "/usr/local/lib/bclib.pl";
 
 open(A,"/mnt/squash/wikidata/latest-all.json");
 
-debug("FILE OPENED");
+# debug("FILE OPENED");
 
 # TODO: dont hardcode size
 
 my($size) = 1121233370788;
 
-for $i (1..1) {
+for $i (1..100) {
 
   # pick a random number inside file
 
   my($rand) = round(rand()*$size);
 
-  debug("RAND: $rand");
+#  debug("RAND: $rand");
 
   # seek there and read rest of line
 
   seek(A, $rand, SEEK_SET);
 
-  debug("SEEK COMPLETED");
+#  debug("SEEK COMPLETED");
 
   # TODO: speed this up a LOT!
 
@@ -38,13 +38,13 @@ for $i (1..1) {
     read(A, $buf, 1);
     } until ($buf eq "\n");
 
-  # and then forward again until next newlie
+  # and then forward again until next newline
 
   my($pos) = tell(A);
   my($data);
   my($len) = 0;
 
-  debug("FOUND START OF LINE: $pos");
+#  debug("FOUND START OF LINE: $pos");
 
   do {
     seek(A, $pos+$len++, SEEK_SET);
@@ -56,7 +56,19 @@ for $i (1..1) {
 
   my($hashref) = JSON::from_json($data);
 
-  debug("READ:", $hashref->{id});
+#  debug("READ:", $hashref->{id});
+
+  my($id) = $hashref->{id};
+
+  $id=~s/^Q//;
+
+  my($val) = $pos/$id;
+
+  debug("DATA: ", substr($data, 0, 1000));
+
+  debug("$rand $hashref->{id} $val");
+
+  print "$pos $id $val $data\n";
 
   # read rest of line
 
