@@ -81,6 +81,8 @@ such as uptimerobot notifications
 TODO: confirm that fixed monthly payments are actually constant and
 occur only once a month (including rent/mortgage/etc)
 
+TODO: all refnum for instacard should be exactly five letters long in db
+
 TODO: git status
 
 TODO: twitch streams in email, on youtube and downloaded should

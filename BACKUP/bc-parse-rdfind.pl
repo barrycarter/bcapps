@@ -10,8 +10,12 @@
 # by "output of above" I mean the "fix-xxx-advistory.txt" or whatever
 # the STDOUT is of above, not the results.txt file it creates
 
+# to make things even more efficient, results.txt.srt is generated as:
+# sort -k4nr results.txt > results.txt.srt
+# the program can thus abort when the file size gets too small
+
 # to run: `$0 < output_of_above > commands_to_run.sh` BUT!!!
-# `tac output_of_above | $0 > commands_to_run.sh may work` better
+# `tac output_of_above | sudo $0 > commands_to_run.sh may work` better
 # because bigger files may show up first
 
 # the output is a shell script you should check and run (probably
@@ -303,6 +307,10 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  if (oldshit(@files)) {return;}
+
+return;
 
   if (erotica(@files)) {return;}
 
@@ -917,3 +925,18 @@ sub erotica {
   }
 }
 
+# canonize OLDSHIT files
+
+sub oldshit {
+  my(@files) = @_;
+
+  # the one on kemptown higher level wins
+  for $i (0,1) {
+    if ($files[$i]=~m%/home/user/LAPAZ/home/user/OLDSHIT/% &&
+	!($files[1-$i]=~m%/home/user/LAPAZ/home/user/OLDSHIT/%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+      return 1;
+    }
+  }
+}

@@ -428,3 +428,7 @@ alias xearth xplanet
 
 alias lapazdoing "tac /home/user/LAPAZ/home/user/DOING | egrep -v 'REF:|DONE:|NOT:|OK:|FIXED:|NOTED:|ASKED:|DEFER:' | less"
 
+# this overwrites a tcsh builtin command which is bad, but I've used
+# this alias for a long time and rely on it
+
+alias dirs "\ls -Fl | \egrep /$ | less"
