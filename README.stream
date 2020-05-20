@@ -8,6 +8,11 @@ Stuff I plan to stream 20 May 2020, primarily for my reference
 
 planet trails fast and easy
 
+[user@lapaz-shared ASTRO]$ bc-any-dump-2 --id=199 | perl -anle 'print "$F[0] $F[1] $F[6] $F[7]"'
+
+[user@lapaz-shared ASTRO]$ bc-any-dump-2 --id=499 --start=946684800 --end=4102444800 --delta=86400 | perl -anle 'print "$F[0] $F[1] $F[6] $F[7]"' | bc-ecliptic-map-2.pl | fly -q | display - &
+
+
 16384 x 16834
 
 planet trails using tile (how big can fly go? how big can imagemagick go?)

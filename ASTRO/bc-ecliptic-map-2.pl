@@ -2,7 +2,7 @@
 
 # creates an ecliptic map (perhaps eventually for leaflet)
 
-# this is a copy of bc-ecliptic-map.pl that works with output from bc-any-dump
+# this is a copy of bc-ecliptic-map.pl that works with output from bc-any-dump-2
 
 # TODO: add equinox points, especially, since I'm shifting by a few degrees
 
@@ -94,7 +94,7 @@ while (<>) {
   my($id,$jd,$eclong,$eclat,$sangle) = split(/\s+/,$_);
 
   # convert eclong/eclat to xy, after degree conversion
-  my($x,$y) = ell2xy($eclong*$RADDEG,$eclat*$RADDEG);
+  my($x,$y) = ell2xy($eclong,$eclat);
 
   # distance from sun in degrees; if closer than 18, fade color to white
   $sangle*=$RADDEG;
@@ -102,8 +102,8 @@ while (<>) {
   if ($sangle<18) {$oppcolor = round(255-$sangle/18*255);}
 
   # if first of month, note it
-  $jd=~s/\*\^/e/;
-  my(@time) = gmtime(jd2unix($jd,"jd2unix"));
+#  $jd=~s/\*\^/e/;
+  my(@time) = gmtime($jd);
   # this is actually month - 1
   my($hour,$mday,$mo) = @time[2..4];
 
