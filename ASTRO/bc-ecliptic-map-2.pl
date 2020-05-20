@@ -91,15 +91,12 @@ for $i (split(/\n/,read_file("$bclib{githome}/ASTRO/constellationship.fab"))) {
 while (<>) {
 
   # TODO: new format uses naif id too (so I can determine colors myself?)
-  my($id,$jd,$eclong,$eclat,$sangle) = split(/\s+/,$_);
+  my($id,$jd,$eclong,$eclat) = split(/\s+/,$_);
 
   # convert eclong/eclat to xy, after degree conversion
   my($x,$y) = ell2xy($eclong,$eclat);
 
-  # distance from sun in degrees; if closer than 18, fade color to white
-  $sangle*=$RADDEG;
   my($oppcolor) = 0;
-  if ($sangle<18) {$oppcolor = round(255-$sangle/18*255);}
 
   # if first of month, note it
 #  $jd=~s/\*\^/e/;

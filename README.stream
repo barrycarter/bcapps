@@ -12,6 +12,10 @@ planet trails fast and easy
 
 [user@lapaz-shared ASTRO]$ bc-any-dump-2 --id=499 --start=946684800 --end=4102444800 --delta=86400 | perl -anle 'print "$F[0] $F[1] $F[6] $F[7]"' | bc-ecliptic-map-2.pl | fly -q | display - &
 
+bc-any-dump-2 --id=499 --start=1577836800 --end=1893456000 --delta=3600 | perl -anle 'print "$F[0] $F[1] $F[6] $F[7]"' | bc-ecliptic-map-2.pl | fly -q | display - &
+
+(above does work)
+
 
 16384 x 16834
 
