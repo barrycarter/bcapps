@@ -4,9 +4,57 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 18 May 2020, primarily for my reference
+Stuff I plan to stream 20 May 2020, primarily for my reference
+
+planet trails fast and easy
+
+planet trails using tile (how big can fly go? how big can imagemagick go?)
+
+tiling will break words that leak over one tile, how to fix (with overlay transparency)
+
+not a new concept, OSM (and google maps) are already huge maps
+
+(and then maybe solar angle stuff)
+
+https://earthscience.stackexchange.com/questions/19751/does-the-hour-thingie-on-a-24-hour-clock-represent-the-apparent-motion-of-the
+
+(and solar clock and unix time zone kludge?)
+
+https://astronomy.stackexchange.com/questions/1120/is-sundial-time-entirely-dependent-on-solar-azimuth
+
+EL/EternalLands
+
+EL/eternal_lands.locale
+
+zic and zdump
+
+https://stackoverflow.com/questions/33501550/timezone-file-abbrev-long-name-better-than-cldr
+
+https://stackoverflow.com/questions/25085981/long-form-name-of-timezone-in-nodatime
+
+https://www.w3.org/TR/timezone/
+
+other calendars like Hebrew, jewish, etc, using locale?
+
+solar 5 degree, zodiac constellations/houses?
+
+limits here? can we have 6 day weeks and 30 day februaries?
+
+bc-any-dump --start=946684800 --end=4102444800 --delta=86400 --id=199 --frame=ECLIPJ2000 > /tmp/199.txt
+
+
+Ephemeris Type [change] :  	OBSERVER
+Target Body [change] :  	Mercury [199]
+Observer Location [change] :  	Geocentric [500]
+Time Span [change] :  	Start=2020-04-07, Stop=2020-04-17, Step=1 d
+Table Settings [change] :  	QUANTITIES=1,9,29,31; angle format=DEG
+Display/Output [change] :  	download/save (plain text file)
+
+
 
 https://earthscience.stackexchange.com/questions/19746/geographically-can-an-island-be-in-an-island-e-g-barrow-island-in-britain
+
+TODO: figure out how to get version specific URL of file in github (locally w/o visiting github)
 
 log temperature scale (add to projects? Rankin?)
 
@@ -1388,3 +1436,4 @@ Margaret J. Fontaine
 
 perl -le 'srand;print int(rand()*shift(@ARGV)+1)'
 
+https://github.com/barrycarter/bcapps/blob/c4624bb81e0f14331f84298aab19ae7bacfca53e/STACK/README.buffer-coast.txt

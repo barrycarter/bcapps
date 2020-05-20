@@ -1,0 +1,138 @@
+*******************************************************************************
+ Revised: July 31, 2013              Mercury                            199 / 1
+
+ PHYSICAL DATA (updated 2018-Aug-15):
+  Vol. Mean Radius (km) =  2440+-1        Density (g cm^-3)     = 5.427
+  Mass x10^23 (kg)      =     3.302       Volume (x10^10 km^3)  = 6.085  
+  Sidereal rot. period  =    58.6463 d    Sid. rot. rate (rad/s)= 0.00000124001
+  Mean solar day        =   175.9421 d    Core radius (km)      = ~1600 
+  Geometric Albedo      =     0.106       Surface emissivity    = 0.77+-0.06
+  GM (km^3/s^2)         = 22031.78        Equatorial radius, Re = 2440 km
+  GM 1-sigma (km^3/s^2) =   +-0.91        Mass ratio (Sun/plnt) = 6023682
+  Mom. of Inertia       =     0.33        Equ. gravity  m/s^2   = 3.701     
+  Atmos. pressure (bar) = < 5x10^-15      Max. angular diam.    = 11.0"   
+  Mean Temperature (K)  = 440             Visual mag. V(1,0)    = -0.42 
+  Obliquity to orbit[1] =  2.11' +/- 0.1' Hill's sphere rad. Rp = 94.4 
+  Sidereal orb. per.    =  0.2408467 y    Mean Orbit vel.  km/s = 47.362 
+  Sidereal orb. per.    = 87.969257  d    Escape vel. km/s      =  4.435
+                                 Perihelion  Aphelion    Mean
+  Solar Constant (W/m^2)         14462       6278        9126
+  Maximum Planetary IR (W/m^2)   12700       5500        8000
+  Minimum Planetary IR (W/m^2)   6           6           6
+*******************************************************************************
+ 
+ 
+*******************************************************************************
+Ephemeris / WWW_USER Mon May 18 11:47:20 2020 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: Mercury (199)                   {source: DE431mx}
+Center body name: Earth (399)                     {source: DE431mx}
+Center-site name: GEOCENTRIC
+*******************************************************************************
+Start time      : A.D. 2020-Apr-07 00:00:00.0000 UT      
+Stop  time      : A.D. 2020-Apr-17 00:00:00.0000 UT      
+Step-size       : 1440 minutes
+*******************************************************************************
+Target pole/equ : IAU_MERCURY                     {West-longitude positive}
+Target radii    : 2439.7 x 2439.7 x 2439.7 km     {Equator, meridian, pole}    
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center pole/equ : High-precision EOP model        {East-longitude positive}
+Center radii    : 6378.1 x 6378.1 x 6356.8 km     {Equator, meridian, pole}    
+Target primary  : Sun
+Vis. interferer : MOON (R_eq= 1737.400) km        {source: DE431mx}
+Rel. light bend : Sun, EARTH                      {source: DE431mx}
+Rel. lght bnd GM: 1.3271E+11, 3.9860E+05 km^3/s^2                              
+Atmos refraction: NO (AIRLESS)
+RA format       : DEG
+Time format     : CAL 
+EOP file        : eop.200515.p200806                                           
+EOP coverage    : DATA-BASED 1962-JAN-20 TO 2020-MAY-15. PREDICTS-> 2020-AUG-05
+Units conversion: 1 au= 149597870.700 km, c= 299792.458 km/s, 1 day= 86400.0 s 
+Table cut-offs 1: Elevation (-90.0deg=NO ),Airmass (>38.000=NO), Daylight (NO )
+Table cut-offs 2: Solar elongation (  0.0,180.0=NO ),Local Hour Angle( 0.0=NO )
+Table cut-offs 3: RA/DEC angular rate (     0.0=NO )                           
+*************************************************************************************
+ Date__(UT)__HR:MN     R.A.___(ICRF)___DEC  APmag  S-brt Cnst    ObsEcLon    ObsEcLat
+*************************************************************************************
+$$SOE
+ 2020-Apr-07 00:00     354.84302  -4.92167  -0.11   3.19  Aqr 353.5887048  -2.4697290
+ 2020-Apr-08 00:00     356.21763  -4.35624  -0.13   3.15  Aqr 355.0720596  -2.4945160
+ 2020-Apr-09 00:00     357.61236  -3.77143  -0.16   3.12  Aqr 356.5825297  -2.5109466
+ 2020-Apr-10 00:00     359.02716  -3.16765  -0.19   3.08  Psc 358.1198493  -2.5189994
+ 2020-Apr-11 00:00       0.46209  -2.54532  -0.22   3.04  Psc 359.6838170  -2.5186513
+ 2020-Apr-12 00:00       1.91733  -1.90485  -0.26   3.00  Psc   1.2742890  -2.5098791
+ 2020-Apr-13 00:00       3.39313  -1.24668  -0.30   2.96  Psc   2.8911761  -2.4926600
+ 2020-Apr-14 00:00       4.88986  -0.57125  -0.34   2.91  Psc   4.5344413  -2.4669731
+ 2020-Apr-15 00:00       6.40796   0.12095  -0.38   2.86  Psc   6.2040956  -2.4328006
+ 2020-Apr-16 00:00       7.94797   0.82944  -0.43   2.81  Cet   7.9001933  -2.3901298
+ 2020-Apr-17 00:00       9.51052   1.55368  -0.48   2.76  Cet   9.6228247  -2.3389546
+$$EOE
+*************************************************************************************
+Column meaning:
+ 
+TIME
+
+  Times PRIOR to 1962 are UT1, a mean-solar time closely related to the
+prior but now-deprecated GMT. Times AFTER 1962 are in UTC, the current
+civil or "wall-clock" time-scale. UTC is kept within 0.9 seconds of UT1
+using integer leap-seconds for 1972 and later years.
+
+  Conversion from the internal Barycentric Dynamical Time (TDB) of solar
+system dynamics to the non-uniform civil UT time-scale requested for output
+has not been determined for UTC times after the next July or January 1st.
+Therefore, the last known leap-second is used as a constant over future
+intervals.
+
+  Time tags refer to the UT time-scale conversion from TDB on Earth
+regardless of observer location within the solar system, although clock
+rates may differ due to the local gravity field and no analog to "UT"
+may be defined for that location.
+
+  Any 'b' symbol in the 1st-column denotes a B.C. date. First-column blank
+(" ") denotes an A.D. date. Calendar dates prior to 1582-Oct-15 are in the
+Julian calendar system. Later calendar dates are in the Gregorian system.
+
+  NOTE: "n.a." in output means quantity "not available" at the print-time.
+ 
+ R.A.___(ICRF)___DEC =
+  Astrometric right ascension and declination of the target center with
+respect to the observing site (coordinate origin) in the reference frame of
+the planetary ephemeris (ICRF). Compensated for down-leg light-time delay
+aberration.
+
+  Units: RA  in decimal degrees (ddd.fffff)
+         DEC in decimal degrees (sdd.fffff)
+ 
+ APmag S-brt =
+   Target's approximate apparent visual magnitude & surface brightness. For
+planets and satellites, values are available only for solar phase angles in the
+range generally visible from Earth. This is to avoid extrapolation of models
+beyond their valid (data-based) limits.
+   Units: MAGNITUDE & VISUAL MAGNITUDES PER SQUARE ARCSECOND
+ 
+ Cnst =
+   Constellation ID; the 3-letter abbreviation for the name of the
+constellation containing the target center's astrometric position,
+as defined by IAU (1930) boundary delineation.  See documentation
+for list of abbreviations.
+ 
+ ObsEcLon    ObsEcLat =
+   Observer-centered Earth ecliptic-of-date longitude and latitude of the
+target center's apparent position, adjusted for light-time, the gravitational
+deflection of light and stellar aberration. Although centered on the observer,
+the values are expressed relative to coordinate basis directions defined by
+the Earth's true equator-plane, equinox direction, and mean ecliptic plane at
+print time.  Units: DEGREES
+
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.D.Giorgini@jpl.nasa.gov
+
+*************************************************************************************
