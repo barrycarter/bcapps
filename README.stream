@@ -8,11 +8,20 @@ Stuff I plan to stream 20 May 2020, primarily for my reference
 
 planet trails fast and easy
 
+16384 x 16834
+
 planet trails using tile (how big can fly go? how big can imagemagick go?)
 
-tiling will break words that leak over one tile, how to fix (with overlay transparency)
+tiling will break words that leak over one tile, how to fix (with
+overlay transparency)
 
 not a new concept, OSM (and google maps) are already huge maps
+
+how big are they: 
+
+easy list of primes? easy list of pi digits (32768^2 ~ 10^9) [e digits?]
+
+(for primes, in groups of 30?)
 
 (and then maybe solar angle stuff)
 
@@ -34,11 +43,13 @@ https://stackoverflow.com/questions/25085981/long-form-name-of-timezone-in-nodat
 
 https://www.w3.org/TR/timezone/
 
-other calendars like Hebrew, jewish, etc, using locale?
+other calendars like Hebrew, jewish, muslim, etc, using locale?
 
 solar 5 degree, zodiac constellations/houses?
 
 limits here? can we have 6 day weeks and 30 day februaries?
+
+LD_PRELOAD
 
 bc-any-dump --start=946684800 --end=4102444800 --delta=86400 --id=199 --frame=ECLIPJ2000 > /tmp/199.txt
 
