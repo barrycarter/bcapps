@@ -14,7 +14,13 @@ $factor = 1;
 # 16384 = 1.32 minutes of arc per pixel
 # TODO: maybe bump this up (confuses Imagemagick, but since we're leafletting...)
 
-my($w,$h) = (16384,16384/12*$factor);
+# my($w,$h) = (16384,16384/12*$factor);
+# my($w,$h) = (65536,65536/12*$factor);
+
+# my($w,$h) = (65535,65535/12*$factor);
+
+my($w,$h) = (65536*4,65536*4/12*$factor);
+# my($w,$h) = (65536*2,65536*2/12*$factor);
 
 # testing
 # my($w,$h) = (2048,round(2048/12*$factor));
