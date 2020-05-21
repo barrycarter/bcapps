@@ -8,13 +8,24 @@ Stuff I plan to stream 21 May 2020, primarily for my reference
 
 sweden not deadly? bad politics, how to ie w stats
 
-add stuff to maxima like nth prime and show diff between refman and maxima man (why? one is sprouted from other?)
+add stuff to maxima like nth prime and show diff between refman and
+maxima man (why? one is sprouted from other?)
 
 version of fly confusion = problems
+
+cannot create GIFs larger 65536 in either direction
+
+HOWEVER, you CAN create PNG files that are larger
+
+i want to add more stars from HYG (right now 8912 stars) down to 6.5 mag
 
 did get massive tile struct going, now test on github pages
 
 also... overlays for planet years and just add them (transparent bgs)
+
+html mix and match what you want overlaid
+
+look at freedink example
 
 would gdal_retile or similar help with large GIFs
 

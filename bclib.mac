@@ -27,6 +27,8 @@ differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
 
 alias(n, float);
 
+alias(take, firstn);
+
 /* TODO:
 
 add Mathematica Prime[n] = nthprime function

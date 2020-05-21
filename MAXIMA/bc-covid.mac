@@ -53,8 +53,6 @@ makelist(deaths[i] : reverse(deaths[i]), i, bc_keys(deaths))$
 
 deaths["World"] : sublist(makelist(i[4], i, mat2), lambda([x], x>0));
 
-days : makelist(i, i, 1, length(deaths["US"]));
-
 /******* TODO: local and block for ret may not be working properly *****/
 
 /******* TODO: function linear_regression() already exists ******/
@@ -125,6 +123,29 @@ expRegression(obj) := block([ret, a, b, x, y, f],
   );
 
 </formulas>
+
+(* work here starts 21 May 2020 *)
+
+fname : openr("/home/user/covid-19/data/reference.csv");
+matpop : args(read_matrix(fname, 'comma))$
+close(fname);
+
+makelist(population[bc_list2string(i[11])] : i[12], i, take(matpop, 5));
+
+
+countries :
+
+population[""] : "";
+
+makelist(population[bc_list2string(i[2])] : [], i, matpop)$
+
+makelist(push(i[5], population[bc_list2string(i[2])]), i, matpop)$
+
+makelist(population[i] : reverse(population[i]), i, bc_keys(population))$
+
+
+
+
 
 (* work here starts 23 Apr 2020 *)
 
