@@ -26,8 +26,8 @@ differences(list) := makelist(list[i] - list[i-1], i, 2, length(list));
 /* numerical value */
 
 alias(n, float);
-
 alias(take, firstn);
+alias(array_keys, bc_keys);
 
 /* TODO:
 

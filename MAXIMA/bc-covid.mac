@@ -122,27 +122,26 @@ expRegression(obj) := block([ret, a, b, x, y, f],
   return(ret)
   );
 
+fname : openr("/home/user/covid-19/data/reference.csv");
+matpop : args(read_matrix(fname, 'comma))$
+close(fname);
+makelist(population[bc_list2string(i[11])] : i[12], i, matpop);
+
+countries: array_keys(deaths);
+
+
 </formulas>
 
 (* work here starts 21 May 2020 *)
 
-fname : openr("/home/user/covid-19/data/reference.csv");
-matpop : args(read_matrix(fname, 'comma))$
-close(fname);
+meanDeathsDays[country, n] := 
+ n(mean(lastn(differences(deaths[country]), n))/population[country]*1000000);
 
-makelist(population[bc_list2string(i[11])] : i[12], i, take(matpop, 5));
+makelist([i, meanDeathsDays[i, 7]], i, countries);
 
 
-countries :
 
-population[""] : "";
-
-makelist(population[bc_list2string(i[2])] : [], i, matpop)$
-
-makelist(push(i[5], population[bc_list2string(i[2])]), i, matpop)$
-
-makelist(population[i] : reverse(population[i]), i, bc_keys(population))$
-
+n(mean(lastn(differences(deaths["Sweden"]), 7))/population["Sweden"]*1000000)
 
 
 
