@@ -1,0 +1,15 @@
+(* find nth prime quickly? *)
+
+
+(x: 1, for i from 1 thru 10 do (x: x*i))
+
+(p: 2, for i from 1 thru 1000 do (p: next_prime(p)));
+p;
+
+(p: 2, for i from 1 thru 1000 do (p: next_prime(p)), p);
+p;
+
+
+i = 2;
+makelist(i = next_prime(i), j, 1, 100);
+

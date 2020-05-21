@@ -134,14 +134,11 @@ countries: array_keys(deaths);
 
 (* work here starts 21 May 2020 *)
 
-meanDeathsDays[country, n] := 
- n(mean(lastn(differences(deaths[country]), n))/population[country]*1000000);
+meanDeathsDays[country, n] := if numberp(population[country]) then 
+ n(mean(lastn(differences(deaths[country]), n))/population[country]*1000000) else 0;
 
-makelist([i, meanDeathsDays[i, 7]], i, countries);
+sort(makelist([meanDeathsDays[i, 8], i], i, countries));
 
-
-
-n(mean(lastn(differences(deaths["Sweden"]), 7))/population["Sweden"]*1000000)
 
 
 
