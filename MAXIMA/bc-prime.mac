@@ -7,7 +7,10 @@
 p;
 
 (p: 2, for i from 1 thru 1000 do (p: next_prime(p)), p);
-p;
+
+(n:0, for i from 1 thru 1000000 do (
+    if primep(i) then n: n+1), n);
+
 
 
 i = 2;
