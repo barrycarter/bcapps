@@ -134,6 +134,10 @@ countries: array_keys(deaths);
 
 (* work here starts 21 May 2020 *)
 
+flatten1[list] := xreduce('append, list);
+
+listcr([ ... ], x, 1, 10, y, 1, 20, z, 1, 20)
+
 meanDeathsDays[country, n] := if numberp(population[country]) then 
  n(mean(lastn(differences(deaths[country]), n))/population[country]*1000000) else 0;
 
@@ -161,10 +165,11 @@ t1335 : xreduce('append,
      makelist(makelist([country, i, j], j, i+1, 120), i, 1, 119),
      country, countries)))$
 
-t1335 : xreduce('append,
+t1336 : xreduce('append,
   xreduce('append, makelist(
-     makelist(makelist([country, i, j], j, i+1, 120), i, 1, 119),
+     makelist(makelist([avgDeathsDaysMN[country, j, i], country, i, j], j, i+1, 120), i, 1, 119),
      country, countries)))$
+
 
 
 
