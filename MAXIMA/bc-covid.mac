@@ -137,7 +137,42 @@ countries: array_keys(deaths);
 meanDeathsDays[country, n] := if numberp(population[country]) then 
  n(mean(lastn(differences(deaths[country]), n))/population[country]*1000000) else 0;
 
+avgDeathsDaysMN[country, m, n] := if numberp(population[country]) then 
+n(mean(makelist(differences(deaths[country])[i], i, m, n)))/population[country]*1000000 else 0;
+
 sort(makelist([meanDeathsDays[i, 8], i], i, countries));
+
+// length is 120
+
+// WRONG: makelist([i, j], i, 1, 10, j, i, 10);
+
+makelist(makelist([i, j], j, i+1, 10), i, 1, 9);
+
+xreduce('append, makelist(makelist([i, j], j, i+1, 10), i, 1, 9));
+
+xreduce('append, makelist(makelist([i, j], j, i+1, 120), i, 1, 119));
+
+xreduce('append, makelist(
+     makelist(makelist([country, i, j], j, i+1, 120), i, 1, 119),
+     country, countries));
+
+t1335 : xreduce('append,
+  xreduce('append, makelist(
+     makelist(makelist([country, i, j], j, i+1, 120), i, 1, 119),
+     country, countries)))$
+
+t1335 : xreduce('append,
+  xreduce('append, makelist(
+     makelist(makelist([country, i, j], j, i+1, 120), i, 1, 119),
+     country, countries)))$
+
+
+
+
+
+
+
+
 
 
 
