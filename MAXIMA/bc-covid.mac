@@ -136,13 +136,44 @@ countries: array_keys(deaths);
 
 flatten1[list] := xreduce('append, list);
 
-listcr([ ... ], x, 1, 10, y, 1, 20, z, 1, 20)
+// listcr([ ... ], x, 1, 10, y, 1, 20, z, 1, 20)
 
 meanDeathsDays[country, n] := if numberp(population[country]) then 
  n(mean(lastn(differences(deaths[country]), n))/population[country]*1000000) else 0;
 
 avgDeathsDaysMN[country, m, n] := if numberp(population[country]) then 
 n(mean(makelist(differences(deaths[country])[i], i, m, n)))/population[country]*1000000 else 0;
+
+flattenAndZero(list) := if length(list) = 0 then 0 else list[1];
+
+deathsOverDays[country, m, n] :=
+   flattenAndZero(errcatch(deaths[country][n] - deaths[country][m]));
+
+transDebug(any) := print(any), any;
+
+
+makelist(
+  makelist(
+    makelist(
+      deathsOverDays[transdebug(country), i, j], country, countries
+      ), j, i+1, 120
+    ), i, 1, 119
+  )$
+
+
+makelist(
+  makelist(
+    makelist(
+      [print([country, i, j]), country, countries
+      ), j, i+1, 120
+    ), i, 1, 119
+  )$
+
+
+
+
+
+
 
 sort(makelist([meanDeathsDays[i, 8], i], i, countries));
 
@@ -169,6 +200,25 @@ t1336 : xreduce('append,
   xreduce('append, makelist(
      makelist(makelist([avgDeathsDaysMN[country, j, i], country, i, j], j, i+1, 120), i, 1, 119),
      country, countries)))$
+
+samp : ["US"];
+
+t1337: makelist(
+  makelist(
+    makelist(
+      [avgDeathsDaysMN[country, i, j], country, i, j], country, samp
+      ), j, i+1, 120
+    ), i, 1, 119
+  );
+
+
+t1409: makelist(
+  makelist(
+    makelist(
+      [avgDeathsDaysMN[country, i, j], country, i, j], country, countries
+      ), j, i+1, 120
+    ), i, 1, 119
+  );
 
 
 
