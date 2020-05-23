@@ -14,12 +14,12 @@ $factor = 1;
 # 16384 = 1.32 minutes of arc per pixel
 # TODO: maybe bump this up (confuses Imagemagick, but since we're leafletting...)
 
-# my($w,$h) = (16384,16384/12*$factor);
+my($w,$h) = (16384,16384/12*$factor);
 # my($w,$h) = (65536,65536/12*$factor);
 
 # my($w,$h) = (65535,65535/12*$factor);
 
-my($w,$h) = (65536*4,65536*4/12*$factor);
+# my($w,$h) = (65536*4,65536*4/12*$factor);
 # my($w,$h) = (65536*2,65536*2/12*$factor);
 
 # testing
@@ -59,8 +59,8 @@ for $i (@all) {
   @{$hip{$hip}} = ($eclong,$eclat);
 
   my($x,$y) = ell2xy($eclong,$eclat);
-  my($r) = round(7-$mag);
-  if ($y<$r || $y>$h-$r) {next;}
+  my($r) = round(6.5-$mag);
+  if ($y<$r || $y>$h-$r || $r <= 0) {next;}
 
   push(@stars,"fcircle $x,$y,$r,255,255,255");
 
@@ -93,6 +93,14 @@ for $i (split(/\n/,read_file("$bclib{githome}/ASTRO/constellationship.fab"))) {
     push(@consts,"line ".join(",",@s1,@s2).",0,0,255");
   }
 }
+
+print join("\n",@consts),"\n";
+print join("\n",@names),"\n";
+print join("\n",@stars),"\n";
+
+warn "TESTING";
+
+exit(0);
 
 while (<>) {
 
@@ -128,9 +136,6 @@ while (<>) {
 }
 
 print join("\n",@planets),"\n";
-print join("\n",@consts),"\n";
-print join("\n",@names),"\n";
-print join("\n",@stars),"\n";
 
 # this subroutine uses globals, not suitable for general use
 
