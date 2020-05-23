@@ -6,17 +6,47 @@
 int main(int argc, char **argv) {
 
     furnsh_c("/home/user/BCGIT/ASTRO/standard.tm");
+    double rotate[3][3];
 
-    double rotate[3][3], et = 9999999999;
+    pxform_c("J2000", "ECLIPJ2000", 0, rotate);
 
-    pxform_c("J2000", "ECLIPJ2000", et, rotate);
+    FILE *fh = popen("zcat /home/user/BCGIT/ASTRO/hygdata_v3.csv.gz", "r");
 
-    printf("ET: %f\n", et);
+    char line[10000], s[100][500];
 
-    for (int i=0; i<=2; i++) {
-      for (int j=0; j<=2; j++) {
-	printf("%f ", rotate[i][j]);
+    while (!feof(fh)) {
+
+      fgets(line, 10000, fh);
+
+      int fcount = 0, ccount = 0;
+
+      for (int i=0; i < strlen(line); i++) {
+
+	if (line[i] == ',') {
+	  s[fcount][ccount] = '\0';
+	  fcount++;
+	  ccount = 0;
+	  continue;
+	}
+
+	s[fcount][ccount] = line[i];
+	ccount++;
       }
-      printf("\n");
+
+      s[fcount][ccount] = '\0';
+
+      // we now have one line
+
+      int id = atoi(s[0]);
+      double ra = atof(s[7])/12*pi_c(), dec = atof(s[8])/180*pi_c();
+
+      // convert ra/dec to rect
+      
+      double rectan[3];
+
+      sphrec_c(1, halfpi_c()-dec, ra, rectan);
+
+      printf("%d %f %f %f\n", id, rectan[0], rectan[1], rectan[2]);
     }
 }
+
