@@ -23,12 +23,12 @@ while (<A>) {
   for $i (0..$#head) {$hash{$head[$i]} = $vals[$i];};
 
   # 0 as placeholder for NA
-  unless ($hash{hip}) {$hash{hip}=0;}
+#  unless ($hash{hip}) {$hash{hip}=0;}
 
   # need hip, ra, dec, mag
 
   # ignore dim stars
-  if ($hash{mag}>6.5) {next;}
+#  if ($hash{mag}>6.5) {next;}
 
   debug("RA: $hash{ra}, DEC: $hash{dec}");
 
@@ -41,10 +41,10 @@ while (<A>) {
 #  if (abs($elat)>15) {next;}
 
   if ($globopts{equator}) {
-    printf("%f %f $hash{mag} $hash{hip} $hash{proper}\n", $hash{ra}*15, $hash{dec});
+    printf("%f %f $hash{mag} $hash{id} $hash{proper}\n", $hash{ra}*15, $hash{dec});
   } else {
     # output is: elon elat mag hip# name (optional)
-    print "$elon $elat $hash{mag} $hash{hip} $hash{proper}\n";
+    print "$elon $elat $hash{mag} $hash{id} $hash{proper}\n";
   }
 }
 
