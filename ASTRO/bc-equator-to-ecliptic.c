@@ -44,9 +44,25 @@ int main(int argc, char **argv) {
       
       double rectan[3];
 
-      sphrec_c(1, halfpi_c()-dec, ra, rectan);
+      sphrec_c(1e9, halfpi_c()-dec, ra, rectan);
 
-      printf("%d %f %f %f\n", id, rectan[0], rectan[1], rectan[2]);
+      //      printf("%d %f %f %f\n", id, rectan[0], rectan[1], rectan[2]);
+
+      // multiply by conversion matrix
+
+      double vout[3];
+
+      mxv_c(rotate, rectan, vout);
+
+      // converted matrix back to spherical
+
+      SpiceDouble r, colat, lon;
+
+      recsph_c(vout, &r, &colat, &lon);
+
+      printf("%d %f %f to %f %f\n", id, ra/pi_c()*12, dec/pi_c()*180,
+	     lon/pi_c()*180, (halfpi_c()-colat)/pi_c()*180);
     }
 }
+
 
