@@ -151,6 +151,14 @@ deathsOverDays[country, m, n] :=
 
 transDebug(any) := print(any), any;
 
+deathsOverDaysCountry[country] := makelist(
+  makelist(
+    deathsOverDays[country, i, j], j, i+1, 121
+    ), i, 1, 120
+  );
+
+
+
 
 makelist(
   makelist(
