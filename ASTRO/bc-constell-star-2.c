@@ -7,7 +7,7 @@
 
 Notes: 
 
-  - not all stars have const values in hygdata
+  - not all stars have constellation values in hygdata
 
 */
 
