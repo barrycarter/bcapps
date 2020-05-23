@@ -28,11 +28,6 @@ Scratch:
 
 load("/home/user/BCGIT/bclib.mac");
 
-/* TODO: split this into a 1d and 2d case AND allow for options after
-first one to be passed directly to plot2d */
-
-listplot(l) := plot2d([discrete, makelist(i, i, 1, length(l)), l]);
-
 /* above this line, library and other non-specific functions/loads */
 
 fname : openr("/home/user/covid-19/data/countries-aggregated.csv");
@@ -55,73 +50,6 @@ deaths["World"] : sublist(makelist(i[4], i, mat2), lambda([x], x>0));
 
 /******* TODO: local and block for ret may not be working properly *****/
 
-/******* TODO: function linear_regression() already exists ******/
-
-/*
-
-linearRegression takes an associative array with the following keys:
-
-x = list of x vals
-y = list of y vals
-
-and returns an associative array whose keys are:
-
-f = the best fit function (a linear function)
-
-yest = a list of estimated y values based on f
-
-msqe = sum of squares of differences, square rooted, all divided by size of x
-
-mabs = sum of the absolute value of differences divided by size of x
-
-*/
-
-linearRegression(obj) := block([ret, a, b, x, y, f],
-  ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
-  ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = a*x + b, [a,b]),
-  f : lambda([x], subst(ret["est"], a*x + b)),
-  ret["f"] : f,
-  ret["yest"] : makelist(ret["f"](obj["x"][i]), i, 1, length(obj["x"])),
-  ret["residuals"] : lsquares_residuals(
-    ret["mat"], [x, y], y = ret["f"](x), []),
-  ret["mabs"] : sum(
-    abs(ret["residuals"][i]), i, 1, length(obj["x"]))/length(obj["x"]),
-  ret["msqe"] : sqrt(sum(
-    ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
-  return(ret)
-  );
-
-logLinearRegression(obj) := block([ret, a, b, x, y, f],
-  ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
-  ret["est"] : lsquares_estimates(ret["mat"], [x, y], log(y) = a*x + b, [a,b]),
-  f : lambda([x], subst(ret["est"], exp(a*x + b))),
-  ret["f"] : f,
-  ret["yest"] : makelist(ret["f"](obj["x"][i]), i, 1, length(obj["x"])),
-  ret["residuals"] : lsquares_residuals(
-    ret["mat"], [x, y], y = ret["f"](x), []),
-  ret["mabs"] : sum(
-    abs(ret["residuals"][i]), i, 1, length(obj["x"]))/length(obj["x"]),
-  ret["msqe"] : sqrt(sum(
-    ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
-  return(ret)
-  );
-
-expRegression(obj) := block([ret, a, b, x, y, f], 
-  ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
-  ret["est"] : lsquares_estimates(ret["mat"], [x, y], y = exp(a*x + b), [a,b],
-    initial=[0,1]),
-  f : lambda([x], subst(ret["est"], exp(a*x + b))),
-  ret["f"] : f,
-  ret["yest"] : makelist(ret["f"](obj["x"][i]), i, 1, length(obj["x"])),
-  ret["residuals"] : lsquares_residuals(
-    ret["mat"], [x, y], y = ret["f"](x), []),
-  ret["mabs"] : sum(
-    abs(ret["residuals"][i]), i, 1, length(obj["x"]))/length(obj["x"]),
-  ret["msqe"] : sqrt(sum(
-    ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
-  return(ret)
-  );
-
 fname : openr("/home/user/covid-19/data/reference.csv");
 matpop : args(read_matrix(fname, 'comma))$
 close(fname);
@@ -129,14 +57,7 @@ makelist(population[bc_list2string(i[11])] : i[12], i, matpop);
 
 countries: array_keys(deaths);
 
-
-</formulas>
-
-(* work here starts 21 May 2020 *)
-
-flatten1[list] := xreduce('append, list);
-
-// listcr([ ... ], x, 1, 10, y, 1, 20, z, 1, 20)
+flatten1(list) := xreduce('append, list);
 
 meanDeathsDays[country, n] := if numberp(population[country]) then 
  n(mean(lastn(differences(deaths[country]), n))/population[country]*1000000) else 0;
@@ -151,11 +72,30 @@ deathsOverDays[country, m, n] :=
 
 transDebug(any) := print(any), any;
 
-deathsOverDaysCountry[country] := makelist(
-  makelist(
-    deathsOverDays[country, i, j], j, i+1, 121
-    ), i, 1, 120
-  );
+
+remarray(deathsOverDaysCountry);
+
+
+deathsOverDaysCountry[country] := flatten1(makelist(
+  makelist([n(deathsOverDays[country, i, j]/(j-i)), i, j],
+    j, i+1, 122),
+  i, 1, 121));
+
+remarray(deathsOverDaysCountry2);
+
+deathsOverDaysCountry2[country] := makelist(
+  flatten1(makelist([n(deathsOverDays[country, i, j]/(j-i)), i, j],
+    j, i+1, 122)),
+  i, 1, 121);
+
+</formulas>
+
+(* work here starts 21 May 2020 *)
+
+// listcr([ ... ], x, 1, 10, y, 1, 20, z, 1, 20)
+
+deathsOverDaysCountry2["US"];
+
 
 
 
