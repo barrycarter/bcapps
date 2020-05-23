@@ -44,7 +44,7 @@ while (<A>) {
     printf("%f %f $hash{mag} $hash{id} $hash{proper}\n", $hash{ra}*15, $hash{dec});
   } else {
     # output is: elon elat mag hip# name (optional)
-    print "$elon $elat $hash{mag} $hash{id} $hash{proper}\n";
+    print "$elon $elat $hash{mag} $hash{id} $hash{hip} $hash{proper}\n";
   }
 }
 

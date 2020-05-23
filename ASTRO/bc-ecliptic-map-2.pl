@@ -39,7 +39,7 @@ setpixel 0,0,0,0,0
 MARK
 ;
 
-my($all) = read_file("$bclib{githome}/ASTRO/eclipticlong3.txt");
+my(@all) = `bzcat $bclib{githome}/ASTRO/bc-ecl-coords.txt.bz2`;
 
 $eclipcolor = "255,0,255";
 
@@ -50,10 +50,10 @@ print "dline 0,$midy,$w,$midy,$eclipcolor\n";
 # this lets me control order of rendering
 my(@stars,@consts,@names,@planets);
 
-for $i (split(/\n/,$all)) {
+for $i (@all) {
 
   chomp($i);
-  my($eclong,$eclat,$mag,$hip,$name) = split(/\s+/,$i);
+  my($eclong,$eclat,$mag,$id,$hip,$name) = split(/\s+/,$i);
 
   # keep track of HIP#s for constellation lines
   @{$hip{$hip}} = ($eclong,$eclat);
