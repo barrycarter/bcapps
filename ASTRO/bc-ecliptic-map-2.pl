@@ -9,17 +9,20 @@
 require "/usr/local/lib/bclib.pl";
 
 my(%hip);
+
+# NOTE: changing $factor from 1 will break constellatioj lines
+
 $factor = 1;
 
 # 16384 = 1.32 minutes of arc per pixel
 # TODO: maybe bump this up (confuses Imagemagick, but since we're leafletting...)
 
-my($w,$h) = (16384,16384/12*$factor);
+# my($w,$h) = (16384,16384/12*$factor);
 # my($w,$h) = (65536,65536/12*$factor);
 
 # my($w,$h) = (65535,65535/12*$factor);
 
-# my($w,$h) = (65536*4,65536*4/12*$factor);
+my($w,$h) = (65536*4,65536*4/12*$factor);
 # my($w,$h) = (65536*2,65536*2/12*$factor);
 
 # testing
@@ -59,7 +62,7 @@ for $i (@all) {
   @{$hip{$hip}} = ($eclong,$eclat);
 
   my($x,$y) = ell2xy($eclong,$eclat);
-  my($r) = round(6.5-$mag);
+  my($r) = round(10.5-$mag);
   if ($y<$r || $y>$h-$r || $r <= 0) {next;}
 
   push(@stars,"fcircle $x,$y,$r,255,255,255");
