@@ -22,22 +22,12 @@ VSOP2013 to js (de430.bsp is a bit big), or reverse engineer? or API?
 
 days m to n? (moron Sweden)
 
-eclipticify all stars in HYG (using CSPICE?)
-
 Sweden recorded the most coronavirus deaths in Europe per capita over the past week, according to Oxford data
 
 sweden not deadly? bad politics, how to ie w stats
 
 add stuff to maxima like nth prime and show diff between refman and
 maxima man (why? one is sprouted from other?)
-
-version of fly confusion = problems
-
-cannot create GIFs larger 65536 in either direction
-
-HOWEVER, you CAN create PNG files that are larger
-
-i want to add more stars from HYG (right now 8912 stars) down to 6.5 mag
 
 did get massive tile struct going, now test on github pages
 

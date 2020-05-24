@@ -2,32 +2,25 @@
 
 # creates an ecliptic map (perhaps eventually for leaflet)
 
+# --w=width: set width of image
+
 # this is a copy of bc-ecliptic-map.pl that works with output from bc-any-dump-2
 
 # TODO: add equinox points, especially, since I'm shifting by a few degrees
 
 require "/usr/local/lib/bclib.pl";
 
-my(%hip);
+defaults("width=16384");
 
-# NOTE: changing $factor from 1 will break constellatioj lines
+# NOTE: changing $factor from 1 will break constellation lines
 
 $factor = 1;
 
+my($w,$h) = ($globopts{width},$globopts{width}/12*$factor);
+
+my(%hip);
+
 # 16384 = 1.32 minutes of arc per pixel
-# TODO: maybe bump this up (confuses Imagemagick, but since we're leafletting...)
-
-# my($w,$h) = (16384,16384/12*$factor);
-# my($w,$h) = (65536,65536/12*$factor);
-
-# my($w,$h) = (65535,65535/12*$factor);
-
-my($w,$h) = (65536*4,65536*4/12*$factor);
-# my($w,$h) = (65536*2,65536*2/12*$factor);
-
-# testing
-# my($w,$h) = (2048,round(2048/12*$factor));
-# my($w,$h) = (4096,round(4096/12*$factor));
 
 # setting a blue pixel here forces the color to be available later
 # (not sure why I have to surround it with black pixels on each side,
