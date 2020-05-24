@@ -4,7 +4,21 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 23 May 2020, primarily for my reference
+Stuff I plan to stream 24 May 2020, primarily for my reference
+
+leafletify tiles and worry about dragon tiles and partial tiles (can
+leaflet handle "rectangular" images?) [get tiles on github pages check
+size limits?]
+
+VSOP2013-secular.dat to the rescue?
+
+quantum computing?
+
+png seek if convert keeps failing? (but it worked)
+
+show with smaller example to make sure process is good (ie, pyramiding)
+
+VSOP2013 to js (de430.bsp is a bit big), or reverse engineer? or API?
 
 days m to n? (moron Sweden)
 
