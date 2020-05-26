@@ -4,7 +4,11 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 @wolfram
 
-Stuff I plan to stream 24 May 2020, primarily for my reference
+Stuff I plan to stream 26 May 2020, primarily for my reference
+
+convert bc-astro-lib to js? (or variation)
+
+program that waits until a given comment returns true or false, eg, $0 pgrep rsync
 
 leafletify tiles and worry about dragon tiles and partial tiles (can
 leaflet handle "rectangular" images?) [get tiles on github pages check
@@ -172,8 +176,6 @@ yummi_k is a wonderful person go watch her
 constellation discussion on github
 
 add troll panel
-
-create README.stream.done?
 
 Let (S_n,T_n) denote the position after n steps of a random walk on
 the lattice points of a plane with integer coordinates, starting from
