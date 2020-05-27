@@ -55,7 +55,7 @@ int main (int argc, char **argv) {
 
   SpiceDouble answer[8];
 
-  osculatingElements(10, 399, 0, "J2000", answer);
+  osculatingElements(10, 599, 365.2425*86400, "ECLIPJ2000", answer);
 
   double mult = 1;
 
@@ -63,7 +63,7 @@ int main (int argc, char **argv) {
 
     if (i >=2 && i <= 5) {mult = 180/pi_c();}
 
-    printf("%s: %f\n", strs[i], answer[i]*mult);
+    printf("%s: %f \n", strs[i], answer[i]*mult);
   }
 }
 
