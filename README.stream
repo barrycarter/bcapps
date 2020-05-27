@@ -2,13 +2,17 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-@wolfram
-
-Stuff I plan to stream 26 May 2020, primarily for my reference
+Stuff I plan to stream 27 May 2020, primarily for my reference
 
 convert bc-astro-lib to js? (or variation)
 
-program that waits until a given comment returns true or false, eg, $0 pgrep rsync
+ftp://cdsarc.u-strasbg.fr/pub/cats/VI/81
+
+did this on github pages
+
+\rsync -Pavz -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root@ws.terramapadventure.com:/mnt/volume_lon1_01/TILES/LANDUSE .
+
+program that waits until a given command returns true or false, eg, $0 pgrep rsync
 
 leafletify tiles and worry about dragon tiles and partial tiles (can
 leaflet handle "rectangular" images?) [get tiles on github pages check
