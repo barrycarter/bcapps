@@ -1,0 +1,27 @@
+<formulas>
+
+load("/home/user/BCGIT/bclib.mac");
+
+</formulas>
+
+fname : openr("/home/user/20200527/interpolate.txt");
+
+matt: read_matrix(fname)$
+
+close(fname);
+
+
+decs0 : transpose(matt)[3]$
+
+decs1 : bc_addIndex(decs0)$
+
+index : makelist(i, i, 1, length(decs1))$
+
+mat: transpose(matrix(index, decs0))$
+
+decs: transpose(matrix(bc_addIndex(transpose(matt)[3])))$
+
+lsquares_estimates(decs, [x, y], y = a*x + b, [a,b]);
+
+
+

@@ -13,18 +13,22 @@ require "/usr/local/lib/bclib.pl";
 
 my($all, $fname) = cmdfile();
 
-my(@coeffs);
+my(%coeffs);
 my($coeff, $varno);
 
 for $i (split(/\n/,$all)) {
 
-    debug("I: $i");
+#    debug("I: $i");
 
   # does this line have a coefficient (if so, record it and move on)
-  if ($i=~/VARIABLE\s+(\d+)\s+.*\*T\*\*(\d+)/) {
-    ($varno, $coeff) = ($1,$2);
-    next;
-  }
+
+#  if ($i=~/VARIABLE\s+(\S+)\s+.*\*T\*\*(\d+)/) {
+
+    if ($i=~/VARIABLE\s+(\S+)\s+.*\*T\*\*?(\d+)/) {
+	debug("FOUND VAR LINE: $i");
+	($varno, $coeff) = ($1,$2);
+	next;
+    }
 
   # only the last three fields matter
   # TODO: figure out what the other fields mean
@@ -34,10 +38,13 @@ for $i (split(/\n/,$all)) {
   my($a, $b, $c) = map($_=rationalize($_), @fields[-3..-1]);
 
   # push to appropriate array
-  push(@{$coeffs[$varno][$coeff]}, "$a*Cos[$b + $c*t]");
+#   push(@{$coeffs[$varno][$coeff]}, "$a*Cos[$b + $c*t]");
+  push(@{$coeffs{$varno}{$coeff}}, "$a*Cos[$b + $c*t]");
 }
 
-# debug("COEFFS",unfold(@{$coeffs[1]}));
+debug("COEFFS",unfold(\%coeffs));
+
+die "TESTING";
 
 # there is no var0
 for $varno (1..$#coeffs) {

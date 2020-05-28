@@ -55,15 +55,18 @@ int main (int argc, char **argv) {
 
   SpiceDouble answer[8];
 
-  osculatingElements(10, 599, 365.2425*86400, "ECLIPJ2000", answer);
+  for (double j=year2et(2010); j < year2et(2030); j+=86400) {
 
-  double mult = 1;
+    osculatingElements(10, 299, j, "ECLIPJ2000", answer);
 
-  for (int i=0; i < 8; i++) {
+    double mult = 1;
 
-    if (i >=2 && i <= 5) {mult = 180/pi_c();}
+    for (int i=0; i < 8; i++) {
 
-    printf("%s: %f \n", strs[i], answer[i]*mult);
+      if (i >=2 && i <= 5) {mult = 180/pi_c();}
+
+      printf("%s: %f \n", strs[i], answer[i]*mult);
+    }
   }
 }
 
