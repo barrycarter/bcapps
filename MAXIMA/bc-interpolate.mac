@@ -2,16 +2,63 @@
 
 load("/home/user/BCGIT/bclib.mac");
 
-</formulas>
-
 fname : openr("/home/user/20200527/interpolate.txt");
 
 matt: read_matrix(fname)$
 
 close(fname);
 
+decs : transpose(matt)[3]$
 
-decs0 : transpose(matt)[3]$
+takelist(arr, m, n) := makelist(arr[i], i, m, n);
+
+</formulas>
+
+array(t1208, length(decs));
+
+fillarray(t1208, decs);
+
+t1227: transpose(matrix(makelist(i, i, 1, length(decs)), decs));
+
+lsquares_estimates(t1227, [x, y], y = a*x^3 + b*x^2 + c*x + d, [a,b,c,d]);
+
+t1213: makelist([i, t1208[i]], i, 1, length(decs));
+
+
+
+
+index : makelist(i, i, 1, length(decs))$
+
+index2 : makelist(i, i, 2, length(decs)-1)$
+
+// TODO: this chooses first max if many in a rows
+
+findMaxima(arr) := block([indices],
+ indices: makelist(i, i, 2, length(arr)-1),
+ for i in indices do 
+ if( (arr[i] > arr[i-1]) and (arr[i] >= arr[i+1])) then print(i)
+);
+
+
+
+
+
+
+sublist(makelist(i, i, 2, length(arr)-1), lambda([i], 
+ (arr[i] > arr[i-1]) and (arr[i] <= arr[i+1])));
+
+
+
+
+
+sublist(index2, lambda([i], (decs[i] > decs[i-1]) and (decs[i] > decs[i+1])));
+
+test1108 : [1, 3, 4, 7, 2, 4, 1];
+
+testindex1108 : makelist(i, i, 2, length(test1108)-1);
+
+sublist(testindex1108, lambda([i], (test1108[i] > test1108[i-1]) and
+(test1108[i] > test1108[i+1])));
 
 decs1 : bc_addIndex(decs0)$
 

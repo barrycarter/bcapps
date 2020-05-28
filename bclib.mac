@@ -110,3 +110,30 @@ alias(arraylist, listarray);
 add Mathematica Prime[n] = nthprime function
 
 */
+
+/*
+
+Notes:
+
+  - args command converts matrices to lists
+
+  - listp tests if something a list
+
+  - listarray gives the values of a hash
+
+  - arrayinfo gives the keys of a hash (but in a funky way)
+
+  - draw2d(points(array))
+
+Scratch:
+
+(%i61) sublist(args(matt), lambda([x], x[2] = Mexico));
+
+(%i63) makelist(i[5], i, sublist(args(matt), lambda([x], x[2] = Mexico)));
+
+(%i23) plot2d([[discrete, days, deaths["Canada"]], [discrete, days, deaths["US"]]]);
+
+(%i70) plot2d([[discrete, days, deaths["World"]], [discrete, days, t1238]]);
+
+*/
+
