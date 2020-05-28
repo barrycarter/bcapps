@@ -19,9 +19,15 @@ index : makelist(i, i, 1, length(decs1))$
 
 mat: transpose(matrix(index, decs0))$
 
-decs: transpose(matrix(bc_addIndex(transpose(matt)[3])))$
+lsquares_estimates(mat, [x, y], y = a*x + b, [a,b]);
 
-lsquares_estimates(decs, [x, y], y = a*x + b, [a,b]);
+lsquares_estimates(take(mat,1000), [x, y], y = a*x + b, [a,b]);
+
+decs1000 : makelist(decs0[i*1000+1], i, 1, length(decs0)/1000);
+
+f(x) := cspline(decs1000)
+
+
 
 
 
