@@ -14,13 +14,59 @@ takelist(arr, m, n) := makelist(arr[i], i, m, n);
 
 </formulas>
 
-array(t1208, length(decs));
+cubicRegression(obj) := block([ret, a, b, x, y, f],
+  ret["mat"] : transpose(matrix(obj["x"], obj["y"])),
+  ret["est"] : 
+     lsquares_estimates(ret["mat"], [x, y], y = a*x^3 + b*x^2 + c*x + d, 
+      [a,b,c,d]),
+  f : lambda([x], subst(ret["est"], a*x^3 + b*x^2 + c*x + d)),
+  ret["f"] : f,
+  ret["yest"] : makelist(ret["f"](obj["x"][i]), i, 1, length(obj["x"])),
+  ret["residuals"] : lsquares_residuals(
+    ret["mat"], [x, y], y = ret["f"](x), []),
+  ret["mabs"] : sum(
+    abs(ret["residuals"][i]), i, 1, length(obj["x"]))/length(obj["x"]),
+  ret["msqe"] : sqrt(sum(
+    ret["residuals"][i]^2, i, 1, length(obj["x"]))/length(obj["x"])),
+  return(ret)
+  );
 
-fillarray(t1208, decs);
+t1300["x"] : makelist(i, i, 1, 5000);
+t1300["y"] : take(decs, 5000);
+
+t1301: cubicRegression(t1300);
+
+plot2d([discrete, t1300["x"], t1301["y"], take(decs,5000)]);
+
+
+
+
+t1234: makelist([i, decs[i]], i, 1, length(decs));
+
+t1235: matrix(t1234)$
+
+t1238: apply(matrix, t1234);
+
+t1243 : lsquares_estimates(t1238, [x, y], y = a*x^3 + b*x^2 + c*x + d,
+[a,b,c,d]);
+
+t1244: lsquares_estimates(take(t1238, 1000), [x, y], y = a*x^3 + b*x^2
++ c*x + d, [a,b,c,d]);
+
+subst(t1244, a*x^3 + b*x^2 + c*x + d);
+
+
+
+
+
+
+matrix([ [1,2], [3,4], [5,6] ]);
+
+
+
 
 t1227: transpose(matrix(makelist(i, i, 1, length(decs)), decs));
 
-lsquares_estimates(t1227, [x, y], y = a*x^3 + b*x^2 + c*x + d, [a,b,c,d]);
 
 t1213: makelist([i, t1208[i]], i, 1, length(decs));
 

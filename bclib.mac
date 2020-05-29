@@ -125,10 +125,11 @@ Notes:
 
   - draw2d(points(array))
 
+  - remvalue(x,y) removes the value of x and y
+
 Scratch:
 
 (%i61) sublist(args(matt), lambda([x], x[2] = Mexico));
-
 (%i63) makelist(i[5], i, sublist(args(matt), lambda([x], x[2] = Mexico)));
 
 (%i23) plot2d([[discrete, days, deaths["Canada"]], [discrete, days, deaths["US"]]]);
