@@ -38,6 +38,13 @@ countries = unique(data["Country"][,1]);
 
 days = unique(data["Date"][,1]);
 
+# create df for deaths
+
+deaths = data.frame(days);
+
+for (i in countries) {
+ deaths[i] = subset(data, Country == i, Deaths)[,1];
+}
 
 # example subset
 
@@ -46,11 +53,8 @@ days = unique(data["Date"][,1]);
 # deaths = c();
 # deaths[""] = days;
 
-deaths = array();
+# deaths = array();
 
-for (i in countries) {
- deaths[i] = subset(data, Country == i, Deaths)[,1];
-}
 
 # > sqldf("SELECT country, GROUP_CONCAT(deaths) FROM deaths GROUP BY country");
 
