@@ -6,12 +6,35 @@
 
 library(rlist);
 library(pipeR);
+library(sqldf);
+
+> sqldf("SELECT country, GROUP_CONCAT(deaths) FROM deaths GROUP BY country");
+
+> sqldf("SELECT Country, GROUP_CONCAT(deaths) FROM deaths GROUP BY country LIMIT 5");
+
+> sqldf("SELECT Country, SUM(deaths) FROM deaths GROUP BY country ORDER BY SUM(deaths) DESC");
+
 
 # https://cran.r-project.org/
 
 # this is a comment
 
-deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv");
+deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv",
+stringsAsFactors=FALSE);
+
+deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv", sep=",");
+
+deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv", sep=",");
+
+deaths2 = t(deaths);
+
+t2044 = list.group(deaths, "Country");
+
+t2053 = list.group(deaths, .["Country"]);
+
+deaths[, 1]
+
+
 
 countries = unique(deaths["Country"]);
 
@@ -19,7 +42,7 @@ countries = unique(deaths["Country"]);
 
 subset(deaths, Country == "Sweden", Deaths);
 
-list.group(deaths, Country);
+
 
 
 # browser();
