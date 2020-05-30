@@ -3,44 +3,78 @@
 # one off package loading:
 
 # install.packages("rlist");
+# install.packages("pipeR");
+# install.packages("sqldf");
 
 library(rlist);
 library(pipeR);
 library(sqldf);
 
-> sqldf("SELECT country, GROUP_CONCAT(deaths) FROM deaths GROUP BY country");
+# NOTES:
 
-> sqldf("SELECT Country, GROUP_CONCAT(deaths) FROM deaths GROUP BY country LIMIT 5");
+# View(df) to view dataframe
+# summary(df) and names(df) and str(df) also useful
 
-> sqldf("SELECT Country, SUM(deaths) FROM deaths GROUP BY country ORDER BY SUM(deaths) DESC");
+# class(object)
+# typeof(object)
+# dim(object)
+
+# read the data
+
+data = read.csv("/home/user/covid-19/data/countries-aggregated.csv",
+stringsAsFactors=FALSE);
+
+# get the list of countries
+
+countries = unique(data["Country"][,1]);
+
+# get the list of days
+
+days = unique(data["Date"][,1]);
+
+
+# example subset
+
+# subset(data, Country == "Sweden", Deaths);
+
+# deaths = c();
+# deaths[""] = days;
+
+deaths = array();
+
+for (i in countries) {
+ deaths[i] = subset(data, Country == i, Deaths)[,1];
+}
+
+# > sqldf("SELECT country, GROUP_CONCAT(deaths) FROM deaths GROUP BY country");
+
+# > sqldf("SELECT Country, GROUP_CONCAT(deaths) FROM deaths GROUP BY country LIMIT 5");
+
+# > sqldf("SELECT Country, SUM(deaths) FROM deaths GROUP BY country ORDER BY SUM(deaths) DESC");
 
 
 # https://cran.r-project.org/
 
 # this is a comment
 
-deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv",
-stringsAsFactors=FALSE);
+# deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv", sep=",");
 
-deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv", sep=",");
+# deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv", sep=",");
 
-deaths = read.csv("/home/user/covid-19/data/countries-aggregated.csv", sep=",");
+# deaths2 = t(deaths);
 
-deaths2 = t(deaths);
+# t2044 = list.group(deaths, "Country");
 
-t2044 = list.group(deaths, "Country");
+# t2053 = list.group(deaths, .["Country"]);
 
-t2053 = list.group(deaths, .["Country"]);
-
-deaths[, 1]
+# deaths[, 1]
 
 
 
-countries = unique(deaths["Country"]);
 
 # subset(deaths, 
 
-subset(deaths, Country == "Sweden", Deaths);
+# subset(deaths, Country == "Sweden", Deaths);
 
 
 
@@ -51,9 +85,9 @@ subset(deaths, Country == "Sweden", Deaths);
 
 # list of dates
 
-deaths$Date
-deaths["Date"]
-deaths[1]
+# deaths$Date
+# deaths["Date"]
+# deaths[1]
 
 # row.names(trees) = c("birch", "ash", "sycamore", 4:31);
 
