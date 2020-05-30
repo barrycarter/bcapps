@@ -19,6 +19,12 @@ library(sqldf);
 # typeof(object)
 # dim(object)
 
+# data[2] is the second COLUMN
+
+# data[3,2] is the third row second column
+
+# data[2][,1][14] same as data[14,2];
+
 # read the data
 
 data = read.csv("/home/user/covid-19/data/countries-aggregated.csv",
