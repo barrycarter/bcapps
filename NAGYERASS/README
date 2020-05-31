@@ -96,5 +96,9 @@ TODO: in the ~/TODAY directory, there should be no files from the future (or old
 
 TODO: all doordash/postmates/etc orders should have refnum field nonempty
 
+TODO: doordash order numbers (and others?) should be in numerical
+order by date (if not, I've probably confused two otherwise identical
+orders), should also be unique
+
 TODO: all emails in BC-WP-.... should follow pattern
 

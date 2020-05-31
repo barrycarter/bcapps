@@ -46,6 +46,13 @@ for (i in countries) {
  deaths[i] = subset(data, Country == i, Deaths)[,1];
 }
 
+deaths["index"] = c(1:length(days));
+
+# plot(deaths["Sweden"][,1]);
+
+# plot(deaths["index"], deaths["Sweden"]);
+
+
 # example subset
 
 # subset(data, Country == "Sweden", Deaths);
