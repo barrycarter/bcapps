@@ -30,6 +30,42 @@ library(sqldf);
 data = read.csv("/home/user/covid-19/data/countries-aggregated.csv",
 stringsAsFactors=FALSE);
 
+# and more data
+
+data2 = read.csv("/home/user/covid-19/data/worldwide-aggregated.csv");
+
+# more indexing
+
+data2["index"] = c(1:length(data2[,1]));
+
+# fit = lm(data2["Deaths"][,1] ~ data2["index"][,1]);
+
+# fit = lm(data2["Deaths"][,1] ~ data2["index"][,1]);
+
+# fit = lm(data2["Deaths"][,1] ~ poly(data2["index"][,1],2));
+
+# density(data2["Deaths"][,1]);
+
+# cor
+
+fit = lm(Deaths ~ index, data=data2);
+
+fit = lm(log(Deaths) ~ index, data=data2);
+
+fit = lm(sqrt(Deaths) ~ index, data=data2);
+
+fit = lm(Deaths ~ poly(index, 2), data=data2);
+
+
+# summary(fit)
+# coefficients(fit)
+# fitted(fit)
+
+# f <- function(x) {return(x^2);}
+
+
+
+
 # get the list of countries
 
 countries = unique(data["Country"][,1]);
@@ -48,9 +84,17 @@ for (i in countries) {
 
 deaths["index"] = c(1:length(days));
 
+# fit  <- lm(y~x)
+
 # plot(deaths["Sweden"][,1]);
 
-# plot(deaths["index"], deaths["Sweden"]);
+# plot(deaths["index"][,1], deaths["Sweden"][,1]);
+
+# plot(deaths["index"][,1], deaths["Sweden"][,1], xlab="Days", ylab="Deaths");
+
+# plot(deaths["index"][,1], deaths["Sweden"][,1], xlab="Days", ylab="Deaths", log="y");
+
+
 
 
 # example subset

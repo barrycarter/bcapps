@@ -432,3 +432,7 @@ alias lapazdoing "tac /home/user/LAPAZ/home/user/DOING | egrep -v 'REF:|DONE:|NO
 # this alias for a long time and rely on it
 
 alias dirs "\ls -Fl | \egrep /$ | less"
+
+# R the way I want it (bad idea?)
+
+alias R "cd /home/user/R; \R --no-restore-data --save"
