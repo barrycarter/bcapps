@@ -37,9 +37,11 @@ fit = lm(c(1,2,3) ~ poly(c(4,5,6), degree=2));
 
 fit = lm(data[,1] ~ poly(data["index"][,1], 1));
 
-fit2 = splinefun(data[,-1]);
-
 fit = lm(data[,1] ~ poly(data["index"][,1], 3));
+
+fit4 = lm(data[,1] ~ poly(data["index"][,1], 4));
+
+
 
 
 plot(fitted(fit))
@@ -72,17 +74,23 @@ fit = lm(c(4,5,6) ~ poly(c(1,2,3),1, raw=TRUE))
 
 # given set of coefficients, return polynomial
 
-f = function(arr) {
+arr2func = function(arr) {
   g = function(x) {
-    tot = arr[1];
-    tot = tot+arr[2]*x;
-    tot = tot+arr[3]*x^2
+    tot = 0;
+    for (i in c(1:length(arr))) {tot = tot + arr[i]*x^(i-1);}
     return(tot);
- }
+  }
  return(g);
 }
 
-g = function(arr, x) {
- tot = 0;
- tot 
+arr2func(fit$coefficients);
+
+max(abs(fit$residuals));
+
+
+> curve(arr2func(fit$coefficients)(x), -1, 1, col = 'purple', add = TRUE);
+
+> plot(function(x){return(x^2)}, -1, 1)
+
+matlab vs r vs julia vs python
 

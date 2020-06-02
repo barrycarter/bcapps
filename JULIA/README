@@ -1,0 +1,17 @@
+[3*a + b for a in 1:10, b in 1:10]
+
+import Pkg; Pkg.add("Plots")
+
+julia> for i=1:2 for j=2:4 println(i*j) end end
+
+julia> g = x -> x+2
+
+f(x,y) = 2x+y
+
+import CSV
+
+mars = CSV.read("/tmp/mars.txt")
+
+Pkg.add("GLM")
+Pkg.add("DataFrames")
+
