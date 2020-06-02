@@ -1,6 +1,19 @@
 [3*a + b for a in 1:10, b in 1:10]
 
-import Pkg; Pkg.add("Plots")
+import Pkg;
+Pkg.add("Plots"); Pkg.add("CSV"); Pkg.add("GLM"); Pkg.add("DataFrames");
+Pkg.add("Polynomials");
+
+import Pkg, Plots, CSV, GLM, DataFrames, Polynomials;
+
+mars = CSV.read("/tmp/mars2.txt", header = false);
+
+decs = mars[!,1];
+
+
+
+
+
 
 julia> for i=1:2 for j=2:4 println(i*j) end end
 
@@ -10,8 +23,5 @@ f(x,y) = 2x+y
 
 import CSV
 
-mars = CSV.read("/tmp/mars.txt")
 
-Pkg.add("GLM")
-Pkg.add("DataFrames")
 

@@ -53,7 +53,9 @@ source /home/user/BCPRIV/aliases.txt
 # NOTE: /var/lib usually doesnt contain these types of libraries
 # removing /old from list, was a bad idea
 
-setenv LD_LIBRARY_PATH /lib64:/usr/local/lib:/usr/lib:/lib
+# note: /lib MUST come before /lib64 to avoid fucking Julia over
+
+setenv LD_LIBRARY_PATH /lib:/lib64:/usr/local/lib:/usr/lib
 
 # the only postgresql database I have/use is "main"
 
