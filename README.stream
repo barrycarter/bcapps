@@ -2,7 +2,9 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 1 Jun 2020, primarily for my reference
+Stuff I plan to stream 3 Jun 2020, primarily for my reference
+
+itrf93: either remove from kernel file (create new kernel file) and let default occur OR use 4 instead of 499 OR J2000 and do transform myself
 
 big data = ra or dec of mars (cause it has retrograde)
 

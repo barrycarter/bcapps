@@ -31,7 +31,10 @@ xset b off
 # stickly digital xclock in lower right hand corner
 # TODO: nanoseconds (%N doesn't work after -strftime)
 
-xclock -norender -font -misc-fixed-bold-r-normal--14-130-75-75-c-70-iso8859-1 -padding 0 -digital -update 1 -strftime '%a %d %b %Y %H:%M:%S' -geometry 170x19+1430+881 &
+# as of 3 Jun 2020, this doesn't come up automatically, only as part
+# of startup-after-sshfs.sh
+
+# xclock -norender -font -misc-fixed-bold-r-normal--14-130-75-75-c-70-iso8859-1 -padding 0 -digital -update 1 -strftime '%a %d %b %Y %H:%M:%S' -geometry 170x19+1430+881 &
 
 # The exec below replaces the xinit process (which is no longer
 # necessary after the above) with the fvwm2 window manager-- I think

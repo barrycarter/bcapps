@@ -2,13 +2,59 @@
 
 import Pkg;
 Pkg.add("Plots"); Pkg.add("CSV"); Pkg.add("GLM"); Pkg.add("DataFrames");
-Pkg.add("Polynomials");
+Pkg.add("Polynomials"); Pkg.add("StatsBase");
 
-import Pkg, Plots, CSV, GLM, DataFrames, Polynomials;
+import Pkg, Plots, CSV, GLM, DataFrames, Polynomials, StatsBase;
 
 mars = CSV.read("/tmp/mars2.txt", header = false);
 
-decs = mars[!,1];
+decs = mars[:,1];
+
+function f(e,n) 2*(e-1)/(n-1)-1 end
+
+# count = range(1, length(decs), step=1);
+
+count = range(-1, 1, step=2/(length(decs)-1));
+
+t1347 = Polynomials.fit(count, decs, 2);
+
+Plots.plot!(t1347, -1, 1)
+
+t1358 = Polynomials.fit(count, decs, 4);
+
+t1402 = Polynomials.fit(count, decs, 10)
+
+Plots.plot(count, decs, label = false)
+Plots.plot!(t1358, -1, 1, label = false)
+
+map(t1358, count) - decs
+
+map(t1358, count) - decs
+
+maximum(map(abs, map(t1358, count) - decs))
+
+maximum(map(abs, map(t1402, count) - decs))
+
+maximum(map(abs, map(t1347, count) - decs))
+
+# work below for mars cent
+
+import Pkg, Plots, CSV, GLM, DataFrames, Polynomials, StatsBase;
+
+marscent = CSV.read("/tmp/marscent2.txt", header = false);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
