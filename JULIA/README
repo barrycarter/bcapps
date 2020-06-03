@@ -10,6 +10,20 @@ mars = CSV.read("/tmp/mars2.txt", header = false);
 
 decs = mars[:,1];
 
+count = range(-1, 1, step=2/(length(decs)-1));
+
+t1355 = Polynomials.fit(count, decs, 25);
+
+Plots.plot(decs);
+
+Plots.plot(count, decs)
+
+t1352 = Polynomials.fit(count, decs, 3);
+
+Plots.plot!(t1352, -1, 1)
+
+
+
 function f(e,n) 2*(e-1)/(n-1)-1 end
 
 # count = range(1, length(decs), step=1);

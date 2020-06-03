@@ -4,6 +4,18 @@ NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, part
 
 Stuff I plan to stream 3 Jun 2020, primarily for my reference
 
+maybe look at how poly interp works using maxima
+
+WORKING:
+
+bc-any-dump --start=1609459200 --end=1640995140 --delta=86400 --id=499 --frame=ECLIPJ2000
+
+bc-any-dump-2 --start=946684800 --end=2114380800 --delta=86400 --id=499 --frame=ECLIPJ2000
+
+
+
+bc-any-dump-2 --start=946684800 --end=4102444740 --delta=3600 --id=499 --frame=ECLIPJ2000 >! /tmp/marscent.txt
+
 itrf93: either remove from kernel file (create new kernel file) and let default occur OR use 4 instead of 499 OR J2000 and do transform myself
 
 big data = ra or dec of mars (cause it has retrograde)

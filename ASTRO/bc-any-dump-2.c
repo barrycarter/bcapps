@@ -12,6 +12,9 @@
 // --lat: the latitude (for altaz)
 // --frame: J2000, ECLIPJ2000, EQEQDATE, ECLIPDATE, any other frame OR "ALTAZ"
 
+// TODO: computing all frames for all times doesn't work, some frames
+// are time limited
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
