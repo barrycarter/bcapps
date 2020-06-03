@@ -12,7 +12,19 @@ decs = mars[:,1];
 
 count = range(-1, 1, step=2/(length(decs)-1));
 
-t1355 = Polynomials.fit(count, decs, 25);
+t1355 = Polynomials.fit(count, decs, 5);
+
+function splitArray(arr, n)
+
+   len = length(arr);
+   clen = floor(len/n);
+
+end
+
+
+# t1355 = Polynomials.fit(count, decs, 10);
+
+
 
 Plots.plot(decs);
 
