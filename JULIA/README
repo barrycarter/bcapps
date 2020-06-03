@@ -19,18 +19,16 @@ function splitArray(arr, n)
    ret = [];
    len = length(arr);
    clen = floor(len/n);
-   st = convert(Int, 1);
-
-print("ALHPA ",arr[st],"\n")
+   st = 1;
 
    while st < len
 
       en = convert(Int, st + clen - 1)
       if en > len en = len end
-      print(st,en)
-print("ALHPA ",arr[st],"\n")
+      print("START ",st,"\n", "END ", en, "\n")
+
       push!(ret, arr[st:en])
-      st = st + clen
+      st = convert(Int, st + clen)
    end
 
    ret
