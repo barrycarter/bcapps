@@ -2,7 +2,19 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 3 Jun 2020, primarily for my reference
+Stuff I plan to stream 4 Jun 2020, primarily for my reference
+
+could i be doing something else?
+
+TODO: look at Julia system images (command line option) to see if I can load faster
+
+what are julia macros and can @less (not just less()) help w/ paging issues?
+
+julia --project=/home/user/JULIA --load=/home/user/BCGIT/bclib.jl -i 
+
+include("/home/user/BCGIT/bclib.jl")
+
+julia -i ~/BCGIT/bclib.jl
 
 maybe look at how poly interp works using maxima
 

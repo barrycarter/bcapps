@@ -9,3 +9,5 @@ bind d
 bind ^d
 # and have no idea what "digraph" means
 bind ^v
+# turn on utf
+utf8 on

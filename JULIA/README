@@ -25,8 +25,6 @@ function splitArray(arr, n)
 
       en = convert(Int, st + clen - 1)
       if en > len en = len end
-      print("START ",st,"\n", "END ", en, "\n")
-
       push!(ret, arr[st:en])
       st = convert(Int, st + clen)
    end
@@ -34,6 +32,28 @@ function splitArray(arr, n)
    ret
 
 end
+
+function list2NormalPoly(arr, deg)
+
+   count = range(-1, 1, step=2/(length(arr)-1));
+   poly = Polynomials.fit(count, arr, deg);
+   map(poly, count) - arr
+
+end
+
+t1437 = splitArray(decs, 99);
+
+t1445 = map(x -> list2NormalPoly(x, 3), t1437)
+
+
+
+
+
+
+
+
+
+
 
 
 # t1355 = Polynomials.fit(count, decs, 10);
