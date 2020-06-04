@@ -1,0 +1,16 @@
+(* how does regression work? *)
+
+f(x) := sum(a(i)*x^i, i, 0, 2);
+
+
+max(makelist(abs(f(x[j])-y[j]), j, 1, 10));
+
+max(makelist((f(x[j])-y[j])^2, j, 1, 10));
+
+ssd : sum((f(x[j])-y[j])^2, j, 1, 10);
+
+
+
+
+
+
