@@ -14,14 +14,6 @@ count = range(-1, 1, step=2/(length(decs)-1));
 
 t1355 = Polynomials.fit(count, decs, 5);
 
-function list2NormalPoly(obj)
-   dict = Dict();
-   dict["count"] = range(-1, 1, step=2/(length(obj["arr"])-1));
-   dict["poly"] = Polynomials.fit(dict["count"], obj["arr"], obj["deg"]);
-   dict["residuals"] = map(dict["poly"], dict["count"]) - obj["arr"];
-   dict;
-end
-
 t1437 = splitArray(decs, 99);
 
 t1445 = map(x -> list2NormalPoly(x, 3), t1437)
@@ -83,24 +75,6 @@ maximum(map(abs, map(t1347, count) - decs))
 import Pkg, Plots, CSV, GLM, DataFrames, Polynomials, StatsBase;
 
 marscent = CSV.read("/tmp/marscent2.txt", header = false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 julia> for i=1:2 for j=2:4 println(i*j) end end
 

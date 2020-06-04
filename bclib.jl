@@ -1,29 +1,51 @@
 import Pkg, Plots, CSV, GLM, DataFrames, Polynomials, StatsBase;
 
+#== list2NormalPoly(obj)
 
-#== splitArray(arr, n)
+Given an array obj.arr and a degree obj.deg, return the polynomial
+poly of degree deg that best fits the array, treating the domain as
+[-1, 1] (inclusive), the residuals (residuals), the remapped domain
+(count), and the maxium absolute residual (maxres)
 
-Splits arr into n equal sized pieces plus 1 extra piece that is smaller
-
-Returns an array of arrays
+Sample usage: list2NormalPoly(Dict("deg" => 2, "arr" => [1,2,3]))
 
 =#
 
-function splitArray(arr, n)
+function list2NormalPoly(obj)
+   dict = Dict();
+   dict["count"] = range(-1, 1, step=2/(length(obj["arr"])-1));
+   dict["poly"] = Polynomials.fit(dict["count"], obj["arr"], obj["deg"]);
+   dict["residuals"] = map(dict["poly"], dict["count"]) - obj["arr"];
+   dict["maxres"] = maximum(map(abs, dict["residuals"]));
+   dict;
+end
 
-   ret = [];
-   len = length(arr);
-   clen = floor(len/n);
+#== splitArray(obj)
+
+Splits obj.arr into obj.n equal sized pieces plus 1 extra piece (if
+needed) that is smaller
+
+Returns an array of arrays and the length of each subarray
+
+=#
+
+function splitArray(obj)
+
+   dict = Dict();
+   dict["arrarr"] = [];
+   len = length(obj["arr"]);
+   clen = dict["pieceLength"] = floor(len/obj["n"]);
    st = 1;
 
-   while st < len
+   while st <= len
       en = convert(Int, st + clen - 1)
       if en > len en = len end
-      push!(ret, arr[st:en])
+      push!(dict["arrarr"], obj["arr"][st:en])
       st = convert(Int, st + clen)
    end
 
-   ret
+   dict;
+   
 end
 
 
