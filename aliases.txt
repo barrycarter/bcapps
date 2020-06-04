@@ -322,6 +322,10 @@ alias math2 "perl -0777 -ple 's%^(.*?)<formulas>%%s; s%</formulas>.*%%s' \!* | t
 
 alias maxima2 "perl -0777 -ple 's%^(.*?)<formulas>%%s; s%</formulas>.*%%s' \!* | tee /tmp/maximastart.mac; rmaxima --init=/tmp/maximastart"
 
+# same for julia
+
+alias julia2 "perl -0777 -ple 's%^(.*?)<formulas>%%s; s%</formulas>.*%%s' \!* | tee /tmp/juliastart.jl; julia -i /tmp/juliastart.jl"
+
 # the -i is probably a bad idea (but at least I'm not tweaking the now
 # deprecated GREP_OPTIONS); also, it overrides aliases in
 # /etc/profile.d/colorgrep.csh
