@@ -22,8 +22,8 @@ end
 
 #== splitArray(obj)
 
-Splits obj.arr into obj.n equal sized pieces plus 1 extra piece (if
-needed) that is smaller
+Splits obj.arr into obj.n equal sized pieces plus extra pieces (if
+needed) that may be smaller
 
 Returns an array of arrays and the length of each subarray
 
