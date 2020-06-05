@@ -8,6 +8,10 @@ could i be doing something else? (yes)
 
 ra today to break it
 
+TODO: format same way as solar ra and dec (and moon?)
+
+TODO: tight spacing on VM
+
 TODO: look at Julia system images (command line option) to see if I can load faster
 
 what are julia macros and can @less (not just less()) help w/ paging issues?

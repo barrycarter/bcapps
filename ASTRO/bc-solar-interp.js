@@ -1,3 +1,5 @@
+# units are microradians
+
 let solarDecInterp = 
 {minX: 1420070453, maxX: 1735689591, intLength: 604800, 
  numPts: 523, intOrder: 4, coeffs: 
