@@ -11,3 +11,5 @@ bind ^d
 bind ^v
 # turn on utf
 utf8 on
+# hardstatus to show stuff at bottom of screen
+hardstatus
