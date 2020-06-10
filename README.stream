@@ -2,11 +2,15 @@ Current stream description: ???
 
 NO LONGER ACCURATE: Figuring out how to calculate solar and lunar eclipses, partly in order to solve https://astronomy.stackexchange.com/questions/34426/how-long-do-solar-eclipses-last-on-metis and https://astronomy.stackexchange.com/questions/34048/how-often-are-there-lunar-eclipses-on-jupiter/34051
 
-Stuff I plan to stream 5 Jun 2020, primarily for my reference
+Stuff I plan to stream 10 Jun 2020, primarily for my reference
+
+GAAN square (or something)
 
 could i be doing something else? (yes)
 
 ra today to break it
+
+TODO: interval is [0,1] not [-1, 1]
 
 TODO: format same way as solar ra and dec (and moon?)
 

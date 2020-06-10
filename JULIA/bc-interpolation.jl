@@ -10,25 +10,18 @@ marsDec = CSV.read(`bzcat /home/user/20200604/mars-dec-per-hour.txt.bz2`, header
 
 marsRA = CSV.read(`bzcat /home/user/20200604/mars-ra-per-hour.txt.bz2`, header = false);
 
-decs = marsDec[:,1];
+decs = marsDec[:,1]/180*pi*10^6;
 
-ras = marsRA[:,1];
+ras = marsRA[:,1]/180*pi*10^6;
 
 ranew = [ras[1]];
 
 for i in 2:length(ras)
  delta = ras[i] - ras[i-1]
- if delta > 180 delta -= 360 end
- if delta < -180 delta += 360 end
+ if delta > pi*10^6 delta -= 2*pi*10^6 end
+ if delta < -pi*10^6 delta += 2*pi*10^6 end
  push!(ranew, ranew[i-1] + delta)
 end
-
-</formulas>
-
-TODO: fix docs to say obj["key"], not obj.key, since latter will not
-work in Julia
-
-TODO: format same way as solar ra and dec (and moon?)
 
 #=
 
@@ -52,7 +45,24 @@ function maxResidual(obj)
 
 end
 
+</formulas>
+
+TODO: fix docs to say obj["key"], not obj.key, since latter will not
+work in Julia
+
+TODO: format same way as solar ra and dec (and moon?)
+
+NOTE: desired accuracy: 12 microradians
+
+360/262144/2*pi/180*10^6
+
+
 maxResidual(Dict("arr" => ranew, "n" => 5, "deg" => 2))
+
+julia> t1443 = maxResidual(Dict("arr" => ranew, "n" => 2000, "deg" => 4))["polys"][4]["poly"]
+
+print(t1443.coeffs)
+
 
 
 
