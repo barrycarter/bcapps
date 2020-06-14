@@ -13,6 +13,7 @@ libnotify-devel
 
 # system tools
 
+system-config-printer
 taskjuggler
 meld
 
