@@ -71,6 +71,10 @@ Style "*Studio*" Sticky
 # below added 27 Aug 2019 (for Slack)
 Style "*Slack*" Sticky
 
+# below added 16 Jun 2020 (for SkyPE)
+
+Style "*Skype*" Sticky
+
 # if a window names itself "sticky", this makes it sticky
 Style "*sticky*" NoTitle, NoHandles, Sticky
 

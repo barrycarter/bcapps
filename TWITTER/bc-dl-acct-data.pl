@@ -83,6 +83,8 @@ for $i (split(/\n/, $out)) {
 
   # specific to directory/site
 
+  debug("FILE: $i");
+
   unless (
 	  $i=~m%/(GOOGLE)/(.*?)\-(\d{8}T\d{6})Z.zip$% ||
 	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
@@ -114,6 +116,8 @@ for $i (split(/\n/, $out)) {
   }
 
   $latest{"$site:$acct"} = max($latest{"$site:$acct"}, $date);
+
+  debug("SETTING LATEST $site:$acct TO ", $latest{"$site:$acct"});
 }
 
 for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
@@ -123,7 +127,7 @@ for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
   $site=~s/:.*$//;
 
 
-  debug("I: $i");
+  debug("I: $i, LATEST: $latest{$i}");
 
   # because $extra is local, don't really need else below
 
