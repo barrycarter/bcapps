@@ -41,8 +41,10 @@ bc-negate.pl "fgrep X-Status: /home/barrycarter/mail/SPAMMAN  | fgrep F"
 
 # ping digitalocean server, both by name and by IP address
 
-check_ping -H terramapadventure.com -w 3000,80% -c 5000,100% -p 5
-check_ping -H 167.99.95.147 -w 3000,80% -c 5000,100% -p 5
+# both deleted 18 Jun 2020
+# check_ping -H terramapadventure.com -w 3000,80% -c 5000,100% -p 5
+# check_ping -H 167.99.95.147 -w 3000,80% -c 5000,100% -p 5
+
 
 
 
