@@ -1,0 +1,10 @@
+# a pipeless version of Makefile.bulk to prevent memory hangs
+
+# creating all files all directories remains the same
+
+# converted file lists on all drives I recognize
+converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
+
+afad.txt: ${converted}
+	cpulimit -l 10 sort --parallel=1 ${converted} > afad.txt
+

@@ -67,12 +67,13 @@ MARK
 # connetions outside my LAN
 sub dump_remote {
   local(*A);
+  # as of 19 Jun 2020 bcinfo3 no longer exists
   # TODO: keep backup copies(?)
   my($str) = << "MARK";
 # ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo4 'mysqldump --skip-extended-insert=yes databases wordpress requests' > $dir/bcinfo3-wordpress-requests.txt.new; mv -f $dir/bcinfo3-wordpress-requests.txt $dir/bcinfo3-wordpress-requests.txt.old;  mv -f $dir/bcinfo3-wordpress-requests.txt.new $dir/bcinfo3-wordpress-requests.txt
-ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump --skip-extended-insert=yes --databases wordpress requests' > $dir/bcinfo3-wordpress-requests.txt.new; mv -f $dir/bcinfo3-wordpress-requests.txt $dir/bcinfo3-wordpress-requests.txt.old;  mv -f $dir/bcinfo3-wordpress-requests.txt.new $dir/bcinfo3-wordpress-requests.txt
-rsync -trlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfo3:/sites/DB/requests.db $dir/bcinfo3-requests.db
-rsync -trlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfo3:/sites/DB/gocomics-dump.txt.bz2 $dir/bcinfo3-gocomics-dump.txt.bz2
+# ssh -i /home/barrycarter/.ssh/id_rsa.bc root\@bcinfo3 'mysqldump --skip-extended-insert=yes --databases wordpress requests' > $dir/bcinfo3-wordpress-requests.txt.new; mv -f $dir/bcinfo3-wordpress-requests.txt $dir/bcinfo3-wordpress-requests.txt.old;  mv -f $dir/bcinfo3-wordpress-requests.txt.new $dir/bcinfo3-wordpress-requests.txt
+# rsync -trlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfo3:/sites/DB/requests.db $dir/bcinfo3-requests.db
+# rsync -trlzo -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root\@bcinfo3:/sites/DB/gocomics-dump.txt.bz2 $dir/bcinfo3-gocomics-dump.txt.bz2
 # rsync "root\@bcmac:/Users/*/*" "root\@bcmac:/Users/*/.*" bcmac/
 MARK
 ;

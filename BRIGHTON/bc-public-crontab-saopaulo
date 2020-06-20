@@ -95,7 +95,9 @@ XWIDTH=1600
 
 # Reminder: replace bcinfo3.barrycarter.info with your own machine(s)
 
-*/5 * * * * rsync -e "ssh -i /home/user/.ssh/id_rsa.bc" -Pqaz "root@bcinfo3.barrycarter.info:/root/ERR/*.err" "root@bcinfo3.barrycarter.info:/home/user/ERR/*.err" /home/user/ERR/
+# machine gone 19 Jun 2020
+
+# */5 * * * * rsync -e "ssh -i /home/user/.ssh/id_rsa.bc" -Pqaz "root@bcinfo3.barrycarter.info:/root/ERR/*.err" "root@bcinfo3.barrycarter.info:/home/user/ERR/*.err" /home/user/ERR/
 
 # Reminds me to walkaround every 20m or so (pomodoro method?)
 # devnulling annoying "gtk-message" stderr
