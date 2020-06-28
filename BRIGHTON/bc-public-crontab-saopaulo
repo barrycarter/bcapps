@@ -204,7 +204,9 @@ XWIDTH=1600
 
 # and from bcinfo3
 
-49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -qaz "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
+# gone 25 Jun 2020
+
+# 49 8 * * * rsync -e 'ssh -i /home/user/.ssh/id_rsa.bc' -qaz "root@bcinfo3.barrycarter.info:/var/log/lighttpd/*" /home/user/html/weblogs/bcinfo3/
 
 # check that the correct procs are running and not running
 # --debug turned on briefly 25 Aug 2017; removed 7 Oct 2017
