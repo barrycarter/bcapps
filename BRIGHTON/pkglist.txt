@@ -13,6 +13,7 @@ libnotify-devel
 
 # system tools
 
+gutenprint-cups
 system-config-printer
 taskjuggler
 meld
@@ -52,6 +53,7 @@ yum-plugin-copr
 yum-utils
 epel-release
 curlftpfs
+lftp
 dirsplit
 usbutils
 grive2
@@ -223,6 +225,7 @@ calendar
 
 # programming languages (or related)
 
+coffee-script-common.noarch
 glibc-devel
 ghc-compiler
 protobuf
