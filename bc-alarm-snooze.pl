@@ -33,7 +33,7 @@ my($msg) = join(" ", @ARGV);
 
 # flipping 0m and DONE so hitting space won't kill program
 
-my(@times) = ("0m", "DONE", "1m", "2m", "3m", "4m", "5m", "6m", "7m", 
+my(@times) = ("0m", "DONE", "1m", "2m", "3m", "4m", "5m", "6m", "7m", "10m",
 	      "15m", "30m", "45m", "1h", "90m", "2h", "4h", "8h");
 
 my(@buttons);

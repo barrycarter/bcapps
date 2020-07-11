@@ -104,3 +104,6 @@ TODO: all emails in BC-WP-.... should follow pattern
 
 TODO: all claim numbers in medical db should be unique
 
+TODO: for ebay purchases, refnum should be item number, item number
+must appear in comments, comments must contain phrase "this charge
+will appear on your credit card as [x]", and the merchant must match x
