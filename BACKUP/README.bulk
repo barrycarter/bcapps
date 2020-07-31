@@ -9,6 +9,7 @@ cd /root/massback-bulk
 
 # this generates the list of backed up files from tar toc
 # pipe below to shell
+
 \ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {
  print "bc-tar2exclude.pl $_ > $_.exclude"}'
 

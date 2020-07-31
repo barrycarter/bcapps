@@ -496,6 +496,11 @@ google-chrome
 # below required for google chrome
 lsb
 
+# below for later versions of chrome
+
+vulkan
+liberation-fonts
+
 # networking and telephony
 telnet
 squid

@@ -19,6 +19,8 @@
 
 # TODO: make this restart failed daemons
 
+# TODO: write out process list so I can see what weird stuff happens
+
 require "/usr/local/lib/bclib.pl";
 
 # default file is for my server

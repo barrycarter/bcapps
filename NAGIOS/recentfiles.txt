@@ -21,6 +21,7 @@
 600 600 "/home/user/.getmail/oldmail-imap.*[^0-9]"
 
 # Confirm my emacs buffer file is current
+# running save-context will fix this if it fails
 600 1200 "~/.emacs_????"
 
 # Confirm that dump scripts have recently created reverse sorted text

@@ -62,7 +62,8 @@ xset b off
 firefox -P olddefault &
 # firefox -P Second &
 /root/build/firefox/firefox -P Second &
-firefox -P Three &
+# as of <= 30 Jul 2020, I no longer use this
+# firefox -P Three &
 
 # stickly digital xclock in lower right hand corner
 # TODO: nanoseconds (%N doesn't work after -strftime)

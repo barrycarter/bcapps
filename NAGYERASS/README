@@ -107,3 +107,7 @@ TODO: all claim numbers in medical db should be unique
 TODO: for ebay purchases, refnum should be item number, item number
 must appear in comments, comments must contain phrase "this charge
 will appear on your credit card as [x]", and the merchant must match x
+
+TODO: in my EDABIT and SKYFIELD folders, there should be no 'new' messages
+
+TODO: refnums in the db should not have newlines

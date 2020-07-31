@@ -23,19 +23,21 @@ $zip->read($file);
 # TODO: make below an option (or test multiple), three ways they are
 # doing it now
 
-my($data) = $zip->memberNamed("data/account.js");
-# my($data) = $zip->memberNamed("data/js/user_details.js");
-# my($data) = $zip->memberNamed("account.js");
+my($data);
+
+for $i ("data/account.js", "data/js/user_details.js", "account.js") {
+  $data = $zip->memberNamed($i);
+  if ($data) {last;}
+};
 
 my($mtime) = strftime("%Y%m%d.%H%M%S", gmtime($data->lastModTime()));
 my($contents) = $data->contents();
 
 # find username in contents, die if none
 
-# unless ($contents=~s%"screen_name" : "(.*?)"%%) {die "NO USERNAME";}
-unless ($contents=~s%"username" : "(.*?)"%%) {die "NO USERNAME";}
+unless ($contents=~s%("screen_name"|"username") : "(.*?)"%%) {die "NO USERNAME";}
 
-my($sn) = $1;
+my($sn) = $2;
 
 # print the recommended action
 

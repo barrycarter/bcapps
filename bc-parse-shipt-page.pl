@@ -24,6 +24,8 @@ while ($data=~s%<li.*?>(.*?)</li>%%) {
   $oz = toOz($oz);
   $price =~s/\$//;
 
+  debug("PRICE: $price, OZ: $oz, PROD: $prod");
+
   my($priceperlb) = sprintf("%.2f", 16*$price/$oz);
 
   print join("\t", $priceperlb, $prod, $price, $oz),"\n";

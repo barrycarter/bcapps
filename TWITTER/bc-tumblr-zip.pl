@@ -12,23 +12,25 @@ my($file) = @ARGV;
 my($zip) = Archive::Zip->new();
 $zip->read($file);
 
+# check two files for data
+
+my($data) = $zip->memberNamed("Tumblr/User Data 1/data.json");
+
+unless ($data) {$data = $zip->memberNamed("payload-0.json");}
+
 # find data/js/user_details.js, mtime, and contents (for username)
 
-# my($data) = $zip->memberNamed("Tumblr/User Data 1/data.json");
-
-# changed 18 Jun 2020
-
-my($data) = $zip->memberNamed("payload-0.json");
 my($mtime) = strftime("%Y%m%d.%H%M%S", gmtime($data->lastModTime()));
 
 my($contents) = $data->contents();
 my($all) = JSON::from_json($contents);
 
-# changed 18 Jun 2020
-# my($email) = $all->{email};
+my($email);
 
-debug(var_dump("XX", $all->[0]));
-
-my($email) = $all->[0]->{data}->{email};
+if (ref($all) eq "HASH") {
+  $email = $all->{email};
+} else {
+  $email = $all->[0]->{data}->{email};
+}
 
 print "ln -s $file $email-$mtime.zip\n";

@@ -58,3 +58,12 @@
 
 # moved CDRs from SSD to lobos
 "/mnt/lobos/CDR/" "/CDR/"
+
+# after dropping dropbox (no pun intended)
+"/mnt/villa/user/DROPBOX-OLD-ACCOUNTS/" "/mnt/villa/user/DROPBOX/"
+
+# same with facebook
+"/mnt/villa/user/FACEBOOK-OLD-ACCOUNTS/" "/mnt/villa/user/FACEBOOK/"
+
+
+
