@@ -235,6 +235,7 @@ protobuf-c-devel
 protobuf-c-debuginfo
 protobuf-static
 rust
+cargo
 monodevelop-devel
 python34-jupyter-core
 python34-jupyroot

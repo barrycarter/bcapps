@@ -300,7 +300,7 @@ alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
 # 9 Jun 2019: stopit2 is a bit more aggressive
 
-alias stopit2 "sudo killall -STOP find bzip2 bc-format2altformat bc-unix-dump sort"
+alias stopit2 "sudo killall -STOP find bzip2 bc-format2altformat bc-unix-dump sort join"
 
 # stopnet stops network intensive processes (bda = USUS bulk downloader)
 
