@@ -300,7 +300,15 @@ alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 
 # 9 Jun 2019: stopit2 is a bit more aggressive
 
-alias stopit2 "sudo killall -STOP find bzip2 bc-format2altformat bc-unix-dump sort join"
+# 8 Aug 2020: turns out "pgrep bc-format2altfo" works where as "pgrep
+# bc-format2altfor" doesn't, even if there is a running
+# bc-format2altformat process, so editing below (this appears to be a
+# 15 character limit on process name?)
+
+# quoting "man pgrep": The process name used for matching is limited
+# to the 15 characters
+
+alias stopit2 "sudo killall -STOP find bzip2 bc-format2altfo bc-unix-dump sort join"
 
 # stopnet stops network intensive processes (bda = USUS bulk downloader)
 
