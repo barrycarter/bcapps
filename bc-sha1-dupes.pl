@@ -23,9 +23,11 @@ for $i (sort keys %match) {
   # if only 1, no dupes
   unless ($#files) {next;}
 
-  debug("BASEFILE: $files[0]");
+  debug("BASEFILE: $files[0] of and $files[1]");
+
+#  print "echo $files[0]\n";
 
   # print out all but the first
-  for $j (1..$#files) {print "$files[$j]\n";}
+  for $j (1..$#files) {print "$files[$j]\0";}
 
 }
