@@ -18,16 +18,16 @@ while (<>) {
 
 for $i (sort keys %match) {
   # all files for this sha1
-  @files = sort keys %{$match{$i}};
+  @files = sort {length($a) <=> length($b)} keys %{$match{$i}};
 
   # if only 1, no dupes
   unless ($#files) {next;}
 
   debug("BASEFILE: $files[0] of and $files[1]");
 
-#  print "echo $files[0]\n";
+  print "echo \"$files[0]\"\n";
 
   # print out all but the first
-  for $j (1..$#files) {print "$files[$j]\0";}
+  for $j (1..$#files) {print "rm \"$files[$j]\"\n";}
 
 }
