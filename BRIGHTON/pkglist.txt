@@ -6,6 +6,8 @@
 efibootmgr
 
 # libraries
+libnova
+libnova-devel
 libcxx
 gstreamer-devel
 unique-devel

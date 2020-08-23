@@ -111,3 +111,8 @@ will appear on your credit card as [x]", and the merchant must match x
 TODO: in my EDABIT and SKYFIELD folders, there should be no 'new' messages
 
 TODO: refnums in the db should not have newlines
+
+TODO: all items in db marked "recognized" should also have a non empty
+"category" field
+
+

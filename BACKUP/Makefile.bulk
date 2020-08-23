@@ -1,3 +1,5 @@
+# TODO: cut down on pipes to limit CPU usage?
+
 # I am assuming the converted files are up-to-date; in theory could
 # check them against the *-files.txt files but don't want to rerun
 # portions of bc-unix-dump.pl unnecessarily
