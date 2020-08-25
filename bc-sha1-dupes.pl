@@ -17,17 +17,26 @@ while (<>) {
 }
 
 for $i (sort keys %match) {
+
   # all files for this sha1
   @files = sort {length($a) <=> length($b)} keys %{$match{$i}};
 
   # if only 1, no dupes
   unless ($#files) {next;}
 
-  debug("BASEFILE: $files[0] of and $files[1]");
+  # this slows things down a bit
+  my($size) = -s $files[0];
+
+  if ($size < 100000) {next;}
+
+  debug("$size BASEFILE: $files[0] of and $files[1]");
 
   print "echo \"$files[0]\"\n";
 
   # print out all but the first
-  for $j (1..$#files) {print "rm \"$files[$j]\"\n";}
+  for $j (1..$#files) {
+    print "rm \"$files[$j]\"\n";
+    print "ln -s \"$files[0]\" \"$files[$j]\"\n";
+  }
 
 }
