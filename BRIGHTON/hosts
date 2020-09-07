@@ -25,7 +25,10 @@
 192.168.0.6 ted.local.lan
 
 # this is the github server which I need to refer to as "bc.github"
-192.30.253.122 bc.github
+# ip changed before 7 Sep 2020
+
+# 192.30.253.122 bc.github
+140.82.114.3 bc.github
 
 # Mario's Pizza (local) uses liquidcommon.com for their delivery
 # service, but the monkeys at liquidcommon.com fucked up their DNS so

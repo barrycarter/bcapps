@@ -26,3 +26,9 @@ DINK/map.dat
 yamc.db
 # ignore node_modules
 node_modules
+
+# 7 Sep 2020: I somehow got this into git at one point, but this 156M
+# file is apparently too big now, temporarily excluding it
+
+
+GEOLOCATION/RAW/parjoblog.txt.bz2
