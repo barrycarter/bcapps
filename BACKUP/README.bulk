@@ -47,9 +47,15 @@ nice +19 gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
 
 bc-waitpid.pl `pgrep -f $passphrase` &
 
+nice +19 gpg --batch --passphrase $passphrase -d idrive-$DATE.gpg|
+  nice +19 tar xvf - --to-command="sha1sum"|perl -pne 's/\-\n//' >!
+  idrive-$DATE-sha1sums.txt &
+
+bc-waitpid.pl `pgrep -f $passphrase` &
+
 # copy plaintext TOC to /root/massback-bulk
 
-cp idrive-$DATE.toc /root/massback-bulk
+cp idrive-$DATE.toc idrive-$DATE-sha1sums.txt /root/massback-bulk
 
 # keep encrypted copy local to upload to idrive
 

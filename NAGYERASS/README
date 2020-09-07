@@ -117,4 +117,13 @@ TODO: all items in db marked "recognized" should also have a non empty
 
 TODO: make sure price I pay "per pill" for medical items is consistent-- in other words, fewer pills = lower price
 
+TODO: there should be no late fees on any of my statements
+
+TODO: consistent naming of files, both in terms of biller name and in
+terms of date (use closing date consistently when available, not "bill
+due on" date)
+
+TODO: all postmates orders should have delivery time as well
+
+TODO: for all tests, attempt auto-recovery where possible
 

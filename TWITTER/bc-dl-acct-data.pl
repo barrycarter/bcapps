@@ -26,7 +26,8 @@ my(%extra) = (
 # TODO: this is serious overkill, most aren't even backups
 
 my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE", "INSTAGRAM", 
-	     "DISCORD", "TUMBLR/BACKUPS", "DROPBOX", "IFTTT", "FREECODECAMP");
+	     "DISCORD", "TUMBLR/BACKUPS", "DROPBOX", "IFTTT", 
+	     "FREECODECAMP", "DOORDASH");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # hash to keep latest save for each account
