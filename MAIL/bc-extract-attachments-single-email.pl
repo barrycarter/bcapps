@@ -1,6 +1,6 @@
 #!/bin/perl
 
-# Given a file containing a single email, extract the attachment(s0
+# Given a file containing a single email, extract the attachments
 
 # TODO: use header information to timestamp created files (but use
 # mimeexplode as subprocess)

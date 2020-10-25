@@ -5,6 +5,9 @@
 # expenses), this program tells me how much I am spending on various
 # things, my cash flow, etc.
 
+# bc-budget-2.pl is a copy of bc-budget.pl that uses an SQL view to
+# get most (but not all) of its information
+
 # This program gets most of its info from command line options
 
 # --income=amount: income per month
@@ -21,17 +24,148 @@
 # to another, categories that I no longer use + expect no future
 # charges for, etc)
 
-# --exclbank=bank1,bank2,bank3,...: exclude these banks from consideration
+# --exclacct=acct1,acct2,acct3,...: exclude these accounts from consideration
 
-# --exclcard=card1,card2,card3,...: exclude these credit card from
-# consideration
-
-# --start=date: how far back to go when making calculations (default =
-# look at all categorized transactions)
-
-# NOTE: this program intentionally excludes interest
+# --days=n: how far back to go when making calculations (default = 365)
 
 require "/usr/local/lib/bclib.pl";
+
+defaults("days=365");
+
+# convert options that are list values to hashes
+
+my(%exclacct) = list2hash(split(/\,/,$globopts{exclacct}));
+my(%exclcat) = list2hash(split(/\,/,$globopts{exclcat}));
+
+# the current time
+
+my($now) = time();
+
+# get all transactions from this view
+
+my(@res) = mysqlhashlist("SELECT * FROM bc_budget_view ORDER BY date DESC", 
+			 "test", "user");
+
+# ignore the first empty result
+shift(@res);
+
+# get per diem totals for category, and keep track of what things are
+# categories
+
+my(%perDiemTotal, %isCategory, %acctTotal, $grandTotal);
+
+for $i (@res) {
+
+  # if this account is excluded, we ignore it entirely
+
+  if ($exclacct{$i->{account}}) {next;}
+
+  # count all transactions for non-excluded accounts to get acctTotal
+  # and grandTotal (= liquid net worth) (this includes positive
+  # amounts and excluded categories)
+
+  $acctTotal{$i->{account}} += $i->{amount};
+  $grandTotal += $i->{amount};
+
+  # age of transaction (but never less than 1 to avoid div by 0 or negative)
+  my($daysago) = max(1,floor(($now - str2time($i->{date}))/86400));
+
+  # if transaction is significantly old, do nothing else
+  if ($daysago > $globopts{days}) {next;}
+
+  # is this transaction interesting to us?
+  unless (isValidTransaction($i)) {next;}
+
+  debug("VALIDCAT: $i->{category}");
+
+  # record that this is a category
+  $isCategory{$i->{category}} = 1;
+
+  debug("DAYSAGO: $daysago");
+
+  $perDiemTotal{$daysago}{$i->{category}} += $i->{amount};
+
+}
+
+for $i (sort keys %acctTotal) {
+
+  # round off value
+  $acctTotal{$i} = round2($acctTotal{$i}, 2);
+
+  print "$i $acctTotal{$i}\n";
+}
+
+
+die "TESTING";
+
+# cumulative totals
+
+my(%cumTotal);
+
+# go through all days, all categories, even those without transactions
+
+for $i (1..max(keys(%perDiemTotal))) {
+
+  for $j (sort keys %isCategory) {
+    $cumTotal{$j} += $perDiemTotal{$i}{$j};
+
+    my($avg) = $cumTotal{$j}/$i*$DAYSPERMONTH;
+
+    print "$i $j $avg\n";
+
+  }
+
+  debug("GAMMA");
+  debug(unfold(\%cumTotal));
+
+}
+
+
+die "TESTING";
+
+debug("BETA");
+
+debug(max(keys(%perDiemTotal)));
+
+debug(keys %perDiemTotal);
+
+debug(unfold(\%perDiemTotal));
+
+# program specific subroutine to determine if transaction is valid
+
+sub isValidTransaction {
+
+  my($hashref) = @_;
+
+  # bad category
+  if ($exclcat{$hashref->{category}}) {return 0;}
+
+  # TODO: reconsider this
+  # positive amount
+
+  if ($hashref->{amount} > 0) {return 0;}
+
+#  debug("FOO: $hashref->{account}");
+
+  # TODO: everything
+  return 1;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+die "TESTING";
 
 # if no start date set, set it to unix 0 time
 
@@ -51,7 +185,7 @@ my($maxdays) = floor(($now - str2time($globopts{start}))/86400 + 1);
 
 unless ($globopts{start} eq "1970-01-01") {
   # TODO: print this elsewhere
-  print "MAXDAYS: $maxdays\n";
+#  print "MAXDAYS: $maxdays\n";
 }
 
 # convert options that are list values to hashes
@@ -177,21 +311,11 @@ MARK
 
 my(@res) = mysqlhashlist($query, "test", "user");
 
-# TODO: below is probably bad
-
-# because @res uses mysql row numbers, $res[0] is empty
-
-shift(@res);
-
 # TODO: if --start isn't set, find the oldest day and use that
 
 my(%catperday);
 
-my(%isCat);
-
 for $i (@res) {
-
-  debug("I: $i");
 
   # TODO: there are many many reasons to not count a transaction, add
   # them below
@@ -199,35 +323,26 @@ for $i (@res) {
   # categories I ignore
   if ($exclcat{$i->{category}}) {next;}
 
-  # don't include positive amounts (TODO: maybe allow later)
-  if ($i->{amount} > 0) {next;}
-
-  # number of days ago for this transaction
-  my($daysago) = floor(($now - str2time($i->{date}))/86400);
-
-  debug("DAYS AGO: $i->{category}, $i->{date}, $daysago");
-
-  # to avoid division by 0
-  if ($daysago == 0) {$daysago = 1;}
-
-  debug("GAMMA: $daysago $maxdays");
-
-  # TODO: if past maxdays, exit loop
-
-#  if ($daysago > $maxdays) {last;}
-
-  debug("RUNNING HERE");
-
-  # note this is a category
-  $isCat{$i->{category}} = 1;
-
   # categories that I treat as fixed
   if ($fixed{$i->{category}}) {next;}
+
+  # don't include positive amounts (TODO: maybe allow later)
+  if ($i->{amount} > 0) {next;}
 
   # find high value transactions which I perhaps should exclude or something
   if ($i->{amount} < -500) {
     debug("HIGH VALUE:", unfold($i));
   }
+
+  # number of days ago for this transaction
+  my($daysago) = floor(($now - str2time($i->{date}))/86400);
+
+  # to avoid division by 0
+  if ($daysago == 0) {$daysago = 1;}
+
+  # TODO: in theory, could just break out of loop here (since sorted)
+
+  if ($daysago > $maxdays) {next;}
 
 #  print "$daysago $i->{category} $i->{amount}\n";
   debug("ALPHA: $daysago $i->{category} $i->{amount}");
@@ -245,27 +360,9 @@ for $i (@res) {
 
 my($incomePerDay) = $globopts{income}/$DAYSPERMONTH;
 
-my $cumTotal, $avg, %totalByCat;
+my $cumTotal, $avg;
 
-# for $i (sort {$a <=> $b} keys %totalSpending) {
-
-for $i (1..$maxdays) {
-
-  # spending per category
-
-#  for $j (keys %{$catperday{$i}}) {
-
-  for $j (sort keys %isCat) {
-
-    $totalByCat{$j} +=  $catperday{$i}{$j};
-
-    my($avgCat) = $totalByCat{$j}/$i*$DAYSPERMONTH;
-
-    print "$i $j $totalByCat{$j} $avgCat\n";
-
-    debug("ALPHA KEYS: $i, $j, $catperday{$i}{$j}, $totalByCat{$j} $avgCat");
-
-  }
+for $i (sort {$a <=> $b} keys %totalSpending) {
 
   $cumTotal += $totalSpending{$i};
 

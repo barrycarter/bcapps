@@ -4949,6 +4949,8 @@ list of hashes, one for each row
 
 NOTE: return array first index is 1, not 0
 
+TODO: above can be confusing, fix it
+
 TODO: add error checking
 
 =cut
@@ -4970,6 +4972,7 @@ sub mysqlhashlist {
 
   # go through results
   for $i (split(/\n/,$out)) {
+
     # new row
     if ($i=~/^\*+\s*(\d+)\. row\s*\*+$/) {$row = $1; $res[$row]={}; next;}
     unless ($i=~/^\s*(.*?):\s*(.*)/) {debug("IGNORING: $_"); next;}

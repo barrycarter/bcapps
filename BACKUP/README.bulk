@@ -24,6 +24,7 @@ cp /home/user/BCGIT/BACKUP/Makefile.bulk Makefile
 # cp exclusions-commented.txt from a previous backup or make wont work
 
 # run make (-j by alias), no need to waitpid since bc-chunk-backup2 xmessages
+
 nice +19 make -j &
 
 echo look over big-by-*
@@ -46,6 +47,8 @@ nice +19 gpg --batch --passphrase PUT_PHRASE_HERE -d idrive-$DATE.gpg|
   nice +19 tar --full-time --utc -tvf - >! idrive-$DATE.toc &
 
 bc-waitpid.pl `pgrep -f $passphrase` &
+
+# now sha1sums
 
 nice +19 gpg --batch --passphrase $passphrase -d idrive-$DATE.gpg|
   nice +19 tar xvf - --to-command="sha1sum"|perl -pne 's/\-\n//' >!

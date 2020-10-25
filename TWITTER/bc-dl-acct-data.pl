@@ -19,15 +19,18 @@ my($now) = time();
 
 my(%extra) = (
  "facebook" => "(dl activity log + dta log)",
- "twitter" => "(update notifications)"
+ "twitter" => "(update notifications)",
+ "ifttt" => "new 3 app limitation"
 );
 
 # find all files in dirs where I backup stuff
 # TODO: this is serious overkill, most aren't even backups
 
+# TODO: amazon is the only one I haven't handled as of 10/24/2020
+
 my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE", "INSTAGRAM", 
 	     "DISCORD", "TUMBLR/BACKUPS", "DROPBOX", "IFTTT", 
-	     "FREECODECAMP", "DOORDASH");
+	     "FREECODECAMP", "DOORDASH", "AMAZON");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # hash to keep latest save for each account
@@ -90,7 +93,8 @@ for $i (split(/\n/, $out)) {
 	  $i=~m%/(GOOGLE)/(.*?)\-(\d{8}T\d{6})Z.zip$% ||
 	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
 	  $i=~m%/(INSTAGRAM)/(.*?)_(\d{8})\.zip$% ||
-	  $i=~m%/(DROPBOX)/dropbox\-(.*?)\-(\d{8})\.zip$%
+	  $i=~m%/(DROPBOX)/dropbox\-(.*?)\-(\d{8})\.zip$% ||
+	  $i=~m%/(IFTTT|FREECODECAMP|DOORDASH)/(.*?)\-(\d{8})\.(json|zip)$%
 	 ) {
     debug("IGNORING: $i");
     next;

@@ -5,16 +5,11 @@
 # done for longest) and lets me mark when I'm working on a task and
 # when I've finished
 
-# 3 Oct 2020: not using Unix mtime as task last done time, inaccurate
-# and problematic
+# extended version finds task that is furthest behind based on how
+# often they are supposed to run, and can also auto run tasks (for
+# nagyerass)
 
 # Usage: $0 (list|start/begin|stop/fail|end/finish) [task]
-
-# TODO: all task "aging" so some tasks can be older and still ok
-
-# TODO: this may be combinable with nagyerass stuff
-
-# TODO: log what I do
 
 # --directory: the directory where the tasks are located
 
@@ -102,6 +97,16 @@ my(%timestamps);
 
 if ($action=~/^list$/i) {
 
+  # TODO: this could theoretically break if there were enough tasks
+
+  my(@files) = glob("*.task");
+
+  for $i (@files) {
+    debug($i, find_last_run($i));
+  }
+
+  die "TESTING";
+
   ($out, $err, $res) = cache_command2("find . -maxdepth 1 -iname '*.task' -printf \'%T\@ %f\n\'");
 
   # first we get the timestamps
@@ -154,3 +159,39 @@ if ($action=~/^list$/i) {
 }
 
 die("$action: not understood");
+
+# specific to this program only, find last run time of task, using log
+# file if available, mtime if not
+
+sub find_last_run {
+
+  my($task) = @_;
+
+  # if $task happens to end in .task remove the .task
+
+  $task=~s/\.task$//s;
+
+  # if the task file doesn't exist, return -1
+
+  unless (-f "$task.task") {
+    warn "NO TASK FILE: $task";
+    return -1;
+  }
+
+  # use log file (if it doesnt exist, this still does the right thing)
+
+  my($out, $err, $res) = cache_command2("tac $task.log | grep -m 1 END");
+
+  if ($out) {return [split(/\s+/, $out)]->[0];}
+
+  # if no log file, use mtime
+
+  my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)=stat("$task.task");
+
+  return $mtime;
+}
+
+
+
+
+

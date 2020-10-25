@@ -5,18 +5,24 @@
 # a text string
 
 # Options:
+#
 # --overwrite: overwrite output file (only for testing!)
+# --zombie: use program knowing it doesnt work
 
-die "DO NOT USE; Perl 32767 char regexp error breaks this program";
+# TODO: MAYBE make zombie a global option in bclib.pl
 
 require "/usr/local/lib/bclib.pl";
+
+unless ($globopts{zombie}) {
+  die "DO NOT USE; Perl 32767 char regexp error breaks this program";
+}
 
 (($file) = shift) || die("Usage: $0 filename");
 
 $outfile = "$file.extracted";
 
 # during testing only
-$globopts{debug} = 1;
+# $globopts{debug} = 1;
 
 # in test mode, delete the attachment I'm having trouble with, forcing
 # prg to re-create it
@@ -53,7 +59,7 @@ while (<A>) {
 handle_attachments(@msg);
 
 # during testing only
-system("bc-check-extract-attachments.pl --debug $file");
+# system("bc-check-extract-attachments.pl --debug $file");
 
 # sample MIME line:
 # MDAwOTg2IDY1NTM1IGYNCjAwMDAwMDA5ODcgNjU1MzUgZg0KMDAwMDAwMDk4OCA2NTUzNSBmDQow
@@ -74,7 +80,7 @@ sub handle_attachments {
 sub handle_attachment {
   my($attach, $hashref) = @_;
 
-  debug("ATTACHMENT",$attach);
+#  debug("ATTACHMENT",$attach);
 
   # ignore tiny attachments
   if (length($attach)<10000) {return $attach;}

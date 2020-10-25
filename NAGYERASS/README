@@ -70,7 +70,7 @@ TODO: see also ../NAGIOS/TODO and perhaps merge here
 
 TODO: categories in bankstatements, cashstatements,
 credcardstatements2 should be from a fixed list, and some should not
-be used after a given date
+be used after a given date; there should also be no or few categories that only have a small number of entries
 
 TODO: any entries that have order number (such as shipt purchases)
 should have unique ones
@@ -126,4 +126,18 @@ due on" date)
 TODO: all postmates orders should have delivery time as well
 
 TODO: for all tests, attempt auto-recovery where possible
+
+TODO: web log files that aren't rotated should start on a consistent date
+
+TODO: for a given merchant, order numbers, transaction ids (aka FIT
+ids), and dates should all increase in same way
+
+TODO: for recoll indexing, make sure recent documents have been indexed
+
+TODO: NS tests for all domains (both that IP is resolving correctly
+and name server itself is set properly)
+
+TODO: for tables where i have a non null balance column, the
+calculated balance should equal the actual balance
+
 

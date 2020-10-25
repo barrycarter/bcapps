@@ -281,7 +281,7 @@ alias date+ "/home/barrycarter/BCGIT/bc-date-plus.pl"
 alias commodoreplay "\rm ~/temp.zip; \cp \!* ~/temp.zip; x64 ~/temp.zip&"
 
 # opens a window with a given name
-alias window "xterm -geometry 80x53 +sb -bg gray45 -bd gray45 -T \!* -n \!* &"
+alias window "xterm -font 9x15 -geometry 80x53 +sb -bg gray45 -bd gray45 -T \!* -n \!* &"
 
 # scans into current directory
 # TODO: maybe rename this for saopaulo?
@@ -296,7 +296,8 @@ alias scanit "bc-scan-pic-brighton.pl"
 
 # 16 Jan 2018: changed mind about qbittorrent
 
-alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
+# alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
+alias stopit "bc-stopit.pl recollindex zpaq rcltar tesseract"
 
 # 9 Jun 2019: stopit2 is a bit more aggressive
 
@@ -308,11 +309,16 @@ alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
 # quoting "man pgrep": The process name used for matching is limited
 # to the 15 characters
 
-alias stopit2 "sudo killall -STOP find bzip2 bc-format2altfo bc-unix-dump sort join"
+# 17 Oct 2020: it turns out "killall" has a different matching scheme
+# that pgrep/pkill so modifying below
+
+# alias stopit2 "sudo killall -STOP find bzip2 bc-format2altfo bc-unix-dump sort join"
+alias stopit2 "bc-stopit.pl find bzip2 bc-format2altfo bc-unix-dump sort join"
 
 # stopnet stops network intensive processes (bda = USUS bulk downloader)
 
-alias stopnet "sudo killall -STOP bda youtube-dl qbittorrent wget curl idevs; \pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
+# alias stopnet "sudo killall -STOP bda youtube-dl qbittorrent wget curl idevs; \pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
+alias stopnet "bc-stopit.pl bda youtube-dl qbittorrent wget curl idevs; \pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
 
 # bc-daemon-checker will restart stopped processes if the system is
 # idle, but this allows me to restart them when I want

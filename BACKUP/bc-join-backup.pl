@@ -14,7 +14,12 @@ while (<>) {
   my($canon, $mtime, $origname, $size, $backtime) = split(/\0/, $_);
 
   # if the backup time is more recent, do nothing
-  if ($backtime >= $mtime) {next;}
+  if ($backtime >= $mtime) {
+    my($err) = $_;
+    $err=~s/\0/,/g;
+    debug("IGNORING: $err");
+    next;
+  }
 
   # in all other cases, print for bc-chunk-backup2.pl
   # note that bc-chunk-backup2.pl will ignore mtime

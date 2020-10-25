@@ -435,6 +435,7 @@ pangox-compat
 # once again, specific version to meet dependency
 pangox-compat-0.0.2-2.el7.i686
 Xorg
+xorg-x11-server-Xephyr
 acroread
 calibre
 xorg-x11-apps
@@ -691,6 +692,9 @@ xemacs-packages-extra
 nano
 dos2unix
 evince
+zathura
+zathura-plugins-all
+qpdfview
 fbreader
 
 # spreadsheets/graphing programs/etc

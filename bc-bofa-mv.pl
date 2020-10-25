@@ -214,6 +214,8 @@ sub handle_paypal {
 
   if ($all=~/Statement period:\n?.*?\-\s*(.*)$/im) {
     $date = $1;
+  } elsif ($all=~/Statement period:?\n*PayPal Account ID\n*.*?\-\s*(.*)$/im) {
+    $date = $1;
   } else {
     warnlocal("CANNOT PARSE PAYPAL DATE");
     return;
@@ -222,6 +224,14 @@ sub handle_paypal {
   # because I have multiple accounts now...
   if ($all=~/Email \(PayPal Account ID\): (.*?)$/im) {
     $email = $1;
+
+
+#  } elsif ($all=~/\n+(.*?\@\.*?\n\..*?)\n+/is) {
+  } elsif ($all=~/\n+([^\n]*?\@.*?\n.*?\n)/is) {
+    $email = $1;
+    $email=~s/\n//sg;
+    debug("EMAIL: $email");
+
   } else {
     warnlocal("CANNOT PARSE EMAIL ADDR");
     return;
