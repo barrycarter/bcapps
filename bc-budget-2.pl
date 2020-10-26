@@ -96,17 +96,21 @@ for $i (@res) {
   $grandTotal += $i->{amount};
 
   # age of transaction (but never less than 1 to avoid div by 0 or negative)
+
   my($daysago) = max(1,floor(($now - str2time($i->{date}))/86400));
 
   # if transaction is significantly old, do nothing else
+
   if ($daysago > $globopts{days}) {next;}
 
   # is this transaction interesting to us?
+
   unless (isValidTransaction($i)) {next;}
 
   debug("VALIDCAT: $i->{category}");
 
   # record that this is a category
+
   $isCategory{$i->{category}} = 1;
 
   debug("DAYSAGO: $daysago");
@@ -120,9 +124,11 @@ for $i (@res) {
 for $i (sort keys %acctTotal) {
 
   # round off value
+
   $acctTotal{$i} = round2($acctTotal{$i}, 2);
 
   # TODO: dont really skip here
+
   if ($acctTotal{$i} == 0) {next;}
 
   print "$i $acctTotal{$i}\n";
@@ -152,9 +158,15 @@ for $i (1..max(keys(%perDiemTotal))) {
 
     my($avg) = $cumTotal{$j}/$i*$DAYSPERMONTH;
 
+    $bulkTotal += $perDiemTotal{$i}{$j};
+
     print "$i $j $avg\n";
 
   }
+
+  my($avgTotal) = $bulkTotal/$i;
+
+  print "AVGTOTAL: $avgTotal\n";
 
   debug("GAMMA");
   debug(unfold(\%cumTotal));
