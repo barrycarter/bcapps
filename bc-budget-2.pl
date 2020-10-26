@@ -8,16 +8,25 @@
 # bc-budget-2.pl is a copy of bc-budget.pl that uses an SQL view to
 # get most (but not all) of its information
 
+# NOTE: for values that are essentially hashes, Im adopting the ffmpeg
+# paradigm of using colons, not equal signs, to separate keys from
+# values
+
 # This program gets most of its info from command line options
 
 # --income=amount: income per month
 
-# --fixed=cat1=val1,cat2=val2,cat3=val3: treat category spending as
+# --fixed=cat1:val1,cat2:val2,cat3:val3: treat category spending as
 # fixed per month
 
-# --extra=name1=amt1,name2=amt2,name3=amt3,...: extra money I have (or
+# --extra=name1:amt1,name2:amt2,name3:amt3,...: extra money I have (or
 # owe if negative) that doesn't appear in my databases (the names are
 # cosmetic ways of tagging these amounts)
+
+# --bankrename=bank1:newname,bank2:newname,... : when seeing bank1 or
+# bank2, rename them to newname. This is useful when a bank account
+# changes numbers and allows you to treat both accounts as a single
+# account; it also allows for "vanity" names for banks
 
 # --exclcat=cat1,cat2,cat3,...: exclude categories from consideration (eg,
 # refunded transactions, transactions that move money from one account
@@ -36,6 +45,17 @@ defaults("days=365");
 
 my(%exclacct) = list2hash(split(/\,/,$globopts{exclacct}));
 my(%exclcat) = list2hash(split(/\,/,$globopts{exclcat}));
+
+# read options that are hashes (as hashes)
+
+# this hideous code splits globopts{fixed} using commas and colons,
+# resulting in a list that Perl will auto-convert to a hash when
+# assigned to a hash (TODO: should I avoid language-specific hacks
+# like this?)
+
+my(%fixed) = split(/[\,|\:]\s*/, $globopts{fixed});
+my(%bankrename) = split(/[\,|\:]\s*/, $globopts{bankrename});
+my(%extra) = split(/[\,|\=]\s*/, $globopts{extra});
 
 # the current time
 
@@ -59,6 +79,10 @@ for $i (@res) {
   # if this account is excluded, we ignore it entirely
 
   if ($exclacct{$i->{account}}) {next;}
+
+  # rename bank if needed
+
+  if($bankrename{$i->{account}}) {$i->{account} = $bankrename{$i->{account}};}
 
   # count all transactions for non-excluded accounts to get acctTotal
   # and grandTotal (= liquid net worth) (this includes positive
@@ -91,6 +115,9 @@ for $i (sort keys %acctTotal) {
 
   # round off value
   $acctTotal{$i} = round2($acctTotal{$i}, 2);
+
+  # TODO: dont really skip here
+  if ($acctTotal{$i} == 0) {next;}
 
   print "$i $acctTotal{$i}\n";
 }
@@ -194,16 +221,10 @@ my(%exclbank) = list2hash(split(/\,/,$globopts{exclbank}));
 my(%exclcat) = list2hash(split(/\,/,$globopts{exclcat}));
 my(%exclcard) = list2hash(split(/\,/,$globopts{exclcard}));
 
-# this hideous code splits globopts{fixed} using commas and equals,
-# resulting in a list that Perl will auto-convert to a hash when
-# assigned to a hash (TODO: should I avoid language-specific hacks
-# like this?)
-
 my(%fixed) = split(/[\,|\=]\s*/, $globopts{fixed});
 
 # same for extra
 
-my(%extra) = split(/[\,|\=]\s*/, $globopts{extra});
 
 # compute total fixed spending
 

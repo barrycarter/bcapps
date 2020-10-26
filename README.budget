@@ -1,0 +1,35 @@
+This "README" document for bc-budget-2.pl explains why I wrote it, and
+why it became so complicated. I'm not sure it will be helpful to me
+and almost definitely not helpful to anyone else. But I'm bored.
+
+Goal: figure out how much money I have, how much I get monthly, and
+how much money I spend monthly, the last separated into categories
+
+Why this is hard:
+
+  - the easiest way would be to look at all transactions for the last
+  month or last year (and divide by 12)
+
+  - Why not ALL transactions?
+
+    - Some transactions just transfer money between banks, brokerage
+    accounts, credit cards, etc. For example, when I pay a credit
+    card, it transfers money from my bank to my credit card, and, when
+    I use an ATM (or purchase coins from the US Mint), it transfers
+    money from my bank to cash/currency/coinage. Transactions such as
+    these shouldn't count as "spending money". Additionally, some
+    banks and brokerage accounts aren't in the `transactions` view, so
+    the numbers wouldn't balance.
+
+    - There are some bank accounts and credit cards I haven't used in
+    years, and I don't want to include those transactions because they
+    don't reflect my current spending. Of course, I could just ignore
+    old transactions, but, for some of these cards/banks I haven't
+    entered all transactions into the tables that create the
+    `transactions` view, so the numbers wouldn't balance.
+
+    - Some transactions have been refunded, and it would be pointless
+    to count the refunded amount (or the refund itself) as a valid
+    transaction
+
+  - Why not just look at a month or a year and divide by 12?
