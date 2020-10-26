@@ -12,6 +12,10 @@
 # paradigm of using colons, not equal signs, to separate keys from
 # values
 
+# NOTE TO SELF: cash total is dodgy since I dont record all
+# transactions and didnt record initial cash back to the beginning of
+# time
+
 # This program gets most of its info from command line options
 
 # --income=amount: income per month
@@ -111,6 +115,8 @@ for $i (@res) {
 
 }
 
+# TODO: don't actually print these here
+
 for $i (sort keys %acctTotal) {
 
   # round off value
@@ -122,8 +128,8 @@ for $i (sort keys %acctTotal) {
   print "$i $acctTotal{$i}\n";
 }
 
+print "GRANDTOTA: $grandTotal\n";
 
-die "TESTING";
 
 # cumulative totals
 
@@ -131,9 +137,17 @@ my(%cumTotal);
 
 # go through all days, all categories, even those without transactions
 
+my($bulkTotal);
+
 for $i (1..max(keys(%perDiemTotal))) {
 
   for $j (sort keys %isCategory) {
+
+    # if this is a fixed value category, tweak $perDiemTotal
+    # TODO: there are definitely better ways to do this
+
+    if ($fixed{$j}) {$perDiemTotal{$i}{$j} = $fixed{$j}/$DAYSPERMONTH;}
+
     $cumTotal{$j} += $perDiemTotal{$i}{$j};
 
     my($avg) = $cumTotal{$j}/$i*$DAYSPERMONTH;
@@ -174,7 +188,6 @@ sub isValidTransaction {
 
 #  debug("FOO: $hashref->{account}");
 
-  # TODO: everything
   return 1;
 
 }
