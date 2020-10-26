@@ -141,7 +141,9 @@ alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 
 # alias bcgit "pushd .; cd ~/BCGIT; git add .; git commit; git pull -v; git push  remotes master; popd"
 
-alias bcgit "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v && git push  remotes master; popd"
+# alias bcgit "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v && git push  remotes master; popd"
+
+alias bcgit "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v && git push origin master; popd"
 
 # this is for github pages https://barrycarter.github.io/pages/
 alias bcgitpages "pushd .; cd ~/BCGIT-PAGES/pages; git add .; git commit; git pull -v; git push origin master; popd"
