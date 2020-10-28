@@ -1,0 +1,12 @@
+# this is a sample of how an extended tasklist should look like; it's
+# basically a list of hashes separated by double newlines and the
+# keys/values are separated with an ampersand with optionally a single
+# newline, and the keys are separated from the values using an equal
+# sign
+
+# Fields that are meaningful to bc-tasklist-extended.pl:
+#
+#   - frequency: how frequently should I run this task (seconds)
+#   - name: simple name of this task, also used for log files
+#   - cmd: if given, the command to run when this task is performed
+#   - description: if given, the long description of the task

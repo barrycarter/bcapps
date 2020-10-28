@@ -1,5 +1,7 @@
 #!/bin/perl
 
+# TODO: insure names are unique
+
 # A trivial "task list" that looks at a directory and lists files
 # (matching *.task) oldest to newest (oldest = task that hasn't been
 # done for longest) and lets me mark when I'm working on a task and

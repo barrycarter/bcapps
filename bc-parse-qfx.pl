@@ -5,6 +5,9 @@
 
 # --rename: just rename/copy file, do nothing else
 
+# --print1: this is a one off to help me figure out stuff after
+# Citibank uses duplicated FITID's, the bastards
+
 require "/usr/local/lib/bclib.pl";
 require "/home/user/bc-private.pl";
 
@@ -53,6 +56,13 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
 
   $trans{MEMO}=~s/\'//g;
 
+  # if just printing stuff, do it here
+
+  if ($globopts{print1}) {
+    print "$trans{FITID} $trans{MEMO} $trans{TRNAMT}\n";
+    next;
+  };
+
   # query (credcardstatements2 is new version w/ good indicies, etc)
   push(@queries,
 "INSERT IGNORE INTO credcardstatements2
@@ -60,6 +70,8 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
  ('$ofx{ACCTID}', $trans{TRNAMT}, '$trans{TRNTYPE}', '$trans{DTPOSTED}',
  '$trans{FITID}', '$trans{MEMO}')");
 }
+
+if ($globopts{print1}) {exit(0);}
 
 # this is probably overkill
 # open(A,"|mysql test");
