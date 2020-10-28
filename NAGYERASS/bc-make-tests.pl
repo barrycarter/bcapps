@@ -11,7 +11,22 @@ my($all, $fname) = cmdfile();
 while ($all=~s%<test>(.*?)</test>%%s) {
 
   my($test) = $1;
+
+  # create hash from test
+
+  my(%hash) = map(split(/\=/, $_), split(/\n/, $test));
+
+  # see if there is a $$ in any of the keys
+
+  for $i (keys %hash) {
+    debug("$i -> $hash{$i}");
+  }
+
+#  debug("HASH", %hash);
+
   my($glob) = 0;
+
+  debug("TEST: $test");
 
   unless ($test=~m/^\$\$.*?\$\$\s*\=\s*.*$/m) {
     print "<test>$test</test>\n\n";
