@@ -14,7 +14,16 @@ while ($all=~s%<test>(.*?)</test>%%s) {
 
   # create hash from test
 
-  my(%hash) = map(split(/\=/, $_), split(/\n/, $test));
+  my(%hash) = ();
+
+  my(@pairs) = split(/\n/, $test);
+
+  for $i (@pairs) {
+    debug("LINE: $i");
+  }
+
+
+#  my(%hash) = map(split(/\=/, $_));
 
   # see if there is a $$ in any of the keys
 
