@@ -140,4 +140,11 @@ and name server itself is set properly)
 TODO: for tables where i have a non null balance column, the
 calculated balance should equal the actual balance
 
+TODO: confirm /mnt/drive/drive-files.txt are fairly recent and large enough, should be created daily
+
+TODO: confirm mounts.txt (or equivalent) is accurate representation of
+drives that are actually mounted in both directions (ie, there
+shouldn't be drives mounted that aren't in mounts.txt except for
+special cases)
+
 
