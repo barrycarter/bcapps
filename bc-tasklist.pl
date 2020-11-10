@@ -140,7 +140,8 @@ if ($action=~/^list$/i) {
     debug("TIME NOW: $time");
 
     my($data) = read_file("$task.task");
-    chomp($data);
+
+    $data=~s/\s+$//sg;
 
     # TODO: list in progress on top or something?
     my($inprog) = (-f "$task.task.new")?" (IN PROGRESS) ":"";

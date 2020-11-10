@@ -864,6 +864,9 @@ jekyll
 # I don't actually use this but want to look at source code
 wordpress
 
+# finance
+gnucash
+
 # TODO: update list2sh or whatever to quote package names for * stuff
 
 # TODO: maybe look over what I have man pages for?
