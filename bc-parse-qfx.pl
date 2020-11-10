@@ -5,6 +5,9 @@
 
 # --rename: just rename/copy file, do nothing else
 
+# --memoname: show the memo field vs the name field to see if I
+# should've been using name instead of memo
+
 # --print1: this is a one off to help me figure out stuff after
 # Citibank uses duplicated FITID's, the bastards
 
@@ -63,6 +66,13 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
     next;
   };
 
+  # if just printing name vs memo, do it here
+
+  if ($globopts{memoname}) {
+    print "MEMO: $trans{MEMO}\nNAME: $trans{NAME}\n";
+    next;
+  }
+
   # query (credcardstatements2 is new version w/ good indicies, etc)
   push(@queries,
 "INSERT IGNORE INTO credcardstatements2
@@ -71,7 +81,7 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
  '$trans{FITID}', '$trans{MEMO}')");
 }
 
-if ($globopts{print1}) {exit(0);}
+if ($globopts{print1} || $globopts{memoname}) {exit(0);}
 
 # this is probably overkill
 # open(A,"|mysql test");
