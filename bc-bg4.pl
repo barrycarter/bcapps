@@ -168,7 +168,8 @@ for $i (glob("/home/barrycarter/ERR/*.inf")) {
 
 # TODO: order these better (ie, more automatically)
 
-@zones = ( "Pago Pago", "Pacific/Pago_Pago", "PT", "US/Pacific", "MT",
+@zones = ( "Pago Pago", "Pacific/Pago_Pago", "HST", "Pacific/Honolulu",
+"PT", "US/Pacific", "MT",
 "US/Mountain", "CT", "US/Central", "ET", "US/Eastern", "GMT", "GMT",
 "Lagos", "Africa/Lagos", "Milan", "Europe/Rome", "Cairo", "Africa/Cairo",
 "Delhi", "Asia/Kolkata", "Jakarta" => "Asia/Jakarta",

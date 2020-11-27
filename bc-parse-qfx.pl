@@ -41,7 +41,9 @@ if ($globopts{rename}) {
 
 # this is a hack just for me -- one of my credit cards is handled differently
 
-if ($private{notcredit}{$ofx{ACCTID}}) {
+# but its ok for memo vs name
+
+if ($private{notcredit}{$ofx{ACCTID}} && !$globopts{memoname}) {
   die "Can't use this program on that account";
 }
 
@@ -58,6 +60,7 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   unless ($trans{MEMO}=~s/^$ofx{ACCTID}: //) {$trans{MEMO}=$trans{NAME};}
 
   $trans{MEMO}=~s/\'//g;
+  $trans{NAME}=~s/\'//g;
 
   # if just printing stuff, do it here
 
@@ -68,7 +71,7 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
 
   # if just printing name vs memo, do it here
 
-  if ($globopts{memoname}) {
+  if ($globopts{memoname} && $trans{MEMO} ne $trans{NAME}) {
     print "MEMO: $trans{MEMO}\nNAME: $trans{NAME}\n";
     next;
   }

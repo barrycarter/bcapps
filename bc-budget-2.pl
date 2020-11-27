@@ -5,6 +5,8 @@
 # expenses), this program tells me how much I am spending on various
 # things, my cash flow, etc.
 
+# TODO: add available credit from credit card
+
 # bc-budget-2.pl is a copy of bc-budget.pl that uses an SQL view to
 # get most (but not all) of its information
 
