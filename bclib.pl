@@ -3147,6 +3147,12 @@ sub run_nagios_test {
 
   my($res) = system("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
 
+  # TODO: make below work
+
+#  my($out, $err, $res) = cache_command2("/home/barrycarter/BCGIT/NAGIOS/bc-nagios-test.pl");
+
+#  debug("OUT: $out, ERR: $err, RES: $res");
+
   # TODO: make below part optional
   # force instant check as well
   $now = time();

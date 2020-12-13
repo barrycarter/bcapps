@@ -147,4 +147,13 @@ drives that are actually mounted in both directions (ie, there
 shouldn't be drives mounted that aren't in mounts.txt except for
 special cases)
 
+TODO: for amazon gift card total in db, running total should never be
+negative since I can't use gift money I don't have (similar for any
+other place that does "gift card balance" as opposed to generic gift
+cards)
+
+TODO: refnums should rarely be duplicated (excluding NULLs)
+
+TODO: refnums should appear in comments field of entry
+
 
