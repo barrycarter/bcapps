@@ -59,3 +59,9 @@ issue until ~2017
 "Quadrantids (120/hr)" and "Moon-Antares: 2.1<B0> S" same issue;
 latter won't be a problem until 2022, which is suspicious actually
 
+Presidential inauguration
+
+electoral college votes
+
+ratification of electoral college votes
+

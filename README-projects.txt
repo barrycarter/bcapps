@@ -1049,3 +1049,8 @@ https://astronomy.stackexchange.com/questions/27914/tables-of-aphelion-perihelio
 (and similar, but these should already exist somewhere?)
 
 TODO: magnitude computations (Lambertian and almost +1 if normalized)
+
+TODO: fuse filesystem that treats multiple files as single longer file (useful for sites with individual file size limits but not file size limits?)
+
+TODO: client-side javascript wiki
+
