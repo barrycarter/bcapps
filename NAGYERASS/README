@@ -158,3 +158,5 @@ TODO: refnums should appear in comments field of entry
 
 TODO: zip files in GOOGLE takeout should be recentish (no more than 2 months per account)
 
+TODO: make sure per-minute XWD files are fairly recent (ie, there should be ~1440 for the previous day)
+

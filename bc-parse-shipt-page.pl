@@ -18,11 +18,12 @@ while ($data=~s%<li.*?>(.*?)</li>%%) {
 
   unless (@list) {next;}
 
-  debug("LIST", @list);
+  debug("<LIST>", @list, "</LIST>");
 
-  my($price, $oz, $prod) = @list;
+#  my($price, $oz, $prod) = @list;
+  my($price, $prod, $oz) = @list;
   $oz = toOz($oz);
-  $price =~s/\$//;
+  $price =~s/^.*?\$//;
 
   debug("PRICE: $price, OZ: $oz, PROD: $prod");
 
