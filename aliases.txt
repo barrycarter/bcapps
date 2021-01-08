@@ -456,3 +456,25 @@ alias dirs "\ls -Fl | \egrep /$ | less"
 # R the way I want it (bad idea?)
 
 alias R "cd /home/user/R; \R --no-restore-data --save"
+
+# use the most recent version of python
+
+alias python python36
+alias pip pip-3.6
+alias pydoc pydoc3.6
+
+# renpy
+
+alias renpy /root/build/renpy-7.4.0-sdk/renpy.sh
+
+# mount a zip file under /mnt/zip/
+
+alias zipmount "mkdirhier /mnt/zip/\!*; fuse-zip \!* /mnt/zip/\!*"
+
+# unmount everything under /mnt/zip
+
+# TODO: for some reason "sudo find" fails if dir is not owned by root hmmm
+
+alias unzipmount "find /mnt/zip -type d | xargs -n 1 sudo umount"
+
+alias screenshot "echo grab in 2 seconds; sleep 2; screengrab &"
