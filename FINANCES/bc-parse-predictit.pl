@@ -46,7 +46,7 @@ while (<>) {
 
   $risk = fixval_local($risk);
 
-  print "INSERT INTO predictit (date, buysell, yesno, market, contract, shares, price, profitloss, fees, risk, creditdebit, url, hash)\n";
+  print "INSERT IGNORE INTO predictit (date, buysell, yesno, market, contract, shares, price, profitloss, fees, risk, creditdebit, url, hash)\n";
 
   print "VALUES ('$date', '$bs', '$yn', '$market', '$contract', '$shares', '$price', '$profitloss', '$fees', '$risk', '$creditdebit', '$url', '$hash');\n";
 
