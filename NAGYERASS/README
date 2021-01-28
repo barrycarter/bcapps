@@ -52,7 +52,7 @@ that receipt numbers are in numerical order by date)
 TODO: make sure claim numbers in medical database are unique (and in
 order of date?)
 
-TODO: alert if my Ally bank balance falls below $15K, where Ally gives
+DONE: alert if my Ally bank balance falls below $15K, where Ally gives
 me a much lower interest rate
 
 TODO: don't run tests if CPU it too low
@@ -63,7 +63,7 @@ TODO: fix-it scripts when something goes wrong
 
 TODO: REMINDER: can write tests even before nagyerass goes into production
 
-TODO: installed cron file should never be empty (+ should be certain
+DONE: installed cron file should never be empty (+ should be certain
 min size?)
 
 TODO: see also ../NAGIOS/TODO and perhaps merge here
@@ -164,3 +164,7 @@ TODO: warn myself when credit card is about to expire
 
 TODO: in Firefox, bookmarks with specific tags should also have other
 tags that are synonyms for example
+
+TODO: sort -nc on some files including "DOING" should work
+
+TODO: consider adding mrtg or similar logging in addition to just tests
