@@ -200,7 +200,14 @@ sub bc_git {
   my($dir) = @_;
   chdir($dir)||die("Can't change to $dir");
   my($out,$err,$res) = cache_command2("git diff --exit-code .");
-  return $res;
+
+  # NOTE: returning $res here doesn't work because Perl multiplies res by 256
+  # TODO: could check for high return values from test in main call
+  # TODO: consider $res>>8 (which I already use for raw Unix commands)
+
+  # TODO: does Unix ignore exit status 256, 512, etc? Only 8 bits allowed?
+
+  if ($res > 0) {return 2;}
 }
 
 =item bc_check_file_of_files_age($file)

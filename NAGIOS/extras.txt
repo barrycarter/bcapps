@@ -1,3 +1,7 @@
+# NOTE TO SELF: THESE TESTS ARE PUBLICLY VISIBLE!!!
+
+# use /home/barrycarter/extra-nagios-commands.txt for private tests
+
 # commands to run regularly for nagios
 
 # confirms my energy monitoring device's local webserver is running

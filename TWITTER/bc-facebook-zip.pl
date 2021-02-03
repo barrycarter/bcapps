@@ -32,7 +32,16 @@ my($sn) = $1;
 
 # print the recommended action
 
-print "ln -s '$file' $sn-$mtime.zip\n";
+# print "ln -s '$file' $sn-$mtime.zip\n";
+
+warn("CODE HAS RECENTLY CHANGED, DO SANITY CHECK");
+
+if (-f "$sn-$mtime.zip") {
+  print "$sn-$mtime.zip already exists\n";
+  exit(-1);
+}
+
+print "mv '$file' $sn-$mtime.zip\n";
 
 debug("DATA: $data", $data->lastModTime(), $data->contents());
 

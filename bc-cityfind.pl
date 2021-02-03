@@ -14,6 +14,8 @@
 # TODO: consider adding xyz coords those these are of course redundant
 # (and not in the db, so maybe a bad idea)
 
+# TODO: include county (admin2 area)?
+
 require "/usr/local/lib/bclib.pl";
 
 # search path for geonames2.db
