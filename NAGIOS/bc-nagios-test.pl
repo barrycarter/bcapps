@@ -194,6 +194,8 @@ with a chdir, but I couldn't get it working like that. Note the '.'
 can NOT be changed to another directory, the meaning and results are
 quire different.
 
+Note that "git status" does NOT work here, it always returns 0
+
 =cut
 
 sub bc_git {
