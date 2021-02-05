@@ -44,6 +44,14 @@ while (<>) {
 
   $creditdebit = fixval_local($creditdebit);
 
+  # screwed up commas, this is an attempt to fix
+
+  debug("CREDITDEBIT: $creditdebit");
+
+  if ($creditdebit=~/,/) {
+    warn("BAD: $hash, CREDITDEBIT: $creditdebit");
+  }
+
   $risk = fixval_local($risk);
 
   print "INSERT IGNORE INTO predictit (date, buysell, yesno, market, contract, shares, price, profitloss, fees, risk, creditdebit, url, hash)\n";
@@ -57,6 +65,8 @@ while (<>) {
 sub fixval_local {
 
   my($num) = @_;
+
+  $num=~s/,//g;
 
   $num=~s/\$//g;
 
