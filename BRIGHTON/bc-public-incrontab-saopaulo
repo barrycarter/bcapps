@@ -9,6 +9,9 @@ MAILTO=daemon
 # TODO: consider auto-image-hashing anything that gets added here
 /home/user/VLC/ IN_CREATE env DISPLAY=:0.0 feh -F -d --draw-tinted -K . -G $@/$#
 
+# same thing for screenshots
+/home/user/SCANS/XWD IN_CREATE env DISPLAY=:0.0 feh -F -d --draw-tinted -K . -G $@/$#
+
 # if I myself change, re incrontab me (doesn't always work)
 
 /home/user/BCGIT/BRIGHTON/bc-public-incrontab-saopaulo IN_MODIFY incrontab $@
