@@ -171,8 +171,5 @@ TODO: consider adding mrtg or similar logging in addition to just tests
 
 TODO: test to see if new transactions with older dates show up... those are ones I could miss
 
-TODO: hater vs heart (British comedian, David something)
+TODO: ensure /var/spool/incron/user is more recent than ~/BCGIT/BRIGHTON/bc-public-incrontab-saopaulo and private version of that file if I ever create one
 
-TODO: chaste vs cheats (British comedian, David something)
-
-TODO: interactable vs intractable
