@@ -51,6 +51,12 @@
 # temp down (even after moving to /backups/)
 # 129600 259200 "/usr/local/etc/backups/files/bcunix-*.txt /usr/local/etc/backups/files/bcinfo3-*.[tb][xz][t2]"
 
+# bcinfo3 long gone, but restoring test for bcunix (with correct
+# directory, which may have been issue in the first place) on 14 Feb
+# 2021
+
+129600 259200 "/usr/local/etc/backups/bcunix-*.txt"
+
 # arvixe (hosts bcinfo4 + my blog) should backup my blogs regularly,
 # so this file should be less than two days old
 
