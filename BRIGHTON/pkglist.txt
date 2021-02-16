@@ -13,6 +13,9 @@ gstreamer-devel
 unique-devel
 libnotify-devel
 
+
+translate-shell
+
 # system tools
 
 gutenprint-cups
@@ -275,6 +278,7 @@ mono-core
 # python-devel
 # python3-devel
 # confirmed later this one is OK
+
 python34
 android
 perl
