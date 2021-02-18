@@ -173,3 +173,8 @@ TODO: test to see if new transactions with older dates show up... those are ones
 
 TODO: ensure /var/spool/incron/user is more recent than ~/BCGIT/BRIGHTON/bc-public-incrontab-saopaulo and private version of that file if I ever create one
 
+TODO: consider date-vs-oid check for transactions in various tables--
+this won't be 100% (transactions aren't added in exact date order) but
+serious outliers could indicate I entered a bad date
+
+TODO: all amazon invoices should be downloaded
