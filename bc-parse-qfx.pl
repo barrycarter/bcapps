@@ -62,6 +62,17 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   $trans{MEMO}=~s/\'//g;
   $trans{NAME}=~s/\'//g;
 
+  # special case: Bank of the West uses the same FITID (incorrectly?) 
+  # when a transaction has been refunded, but I want both transactions
+  # in the db which requires separate FITIDs; so, if the FITID is one
+  # of the special ones (based on BCPRIV), it gets a special REFUND
+  # hyphen after it (the refund is identified because it has a
+  # positive value)
+
+  if ($private{refunded}{$trans{FITID}} && $trans{TRNAMT} > 0) {
+    $trans{FITID} = "$trans{FITID}-REFUND";
+  }
+
   # if just printing stuff, do it here
 
   if ($globopts{print1}) {
