@@ -16,8 +16,7 @@
 check_disk -v -c 10 -u GB /mnt/villa
 check_disk -v -c 10 -u GB /mnt/lobos
 
-# temporary change to 9.5 on 28 Feb 2021
-check_disk -v -c 9.5 -u GB /mnt/kemptown/
+check_disk -v -c 10 -u GB /mnt/kemptown/
 
 
 check_disk -v -c 10 -u GB /mnt/extdrive5/
