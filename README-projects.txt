@@ -1036,6 +1036,8 @@ TODO: write up these mini-ideas
   some project
 
 
+TODO: library of well known sha1sums for various distributions etc (perhaps as shortcut to backing up apps and important files)
+
 TODO: add line splitting question and prime number question
 
 TODO: order these
