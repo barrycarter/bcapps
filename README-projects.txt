@@ -1056,3 +1056,4 @@ TODO: fuse filesystem that treats multiple files as single longer file (useful f
 
 TODO: client-side javascript wiki
 
+TODO: overlay antipodal map

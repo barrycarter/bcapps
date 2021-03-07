@@ -145,6 +145,10 @@ alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 
 alias bcgit "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v && git push origin master; popd"
 
+# minor change to add advisory diff
+
+alias bcgit "pushd .; cd ~/BCGIT; git add . && git diff --cached --color=always | less -r && git commit && git pull -v && git push origin master; popd"
+
 # this is for github pages https://barrycarter.github.io/pages/
 alias bcgitpages "pushd .; cd ~/BCGIT-PAGES/pages; git add .; git commit; git pull -v; git push origin master; popd"
 
@@ -478,3 +482,12 @@ alias zipmount "mkdirhier /mnt/zip/\!*; fuse-zip \!* /mnt/zip/\!*"
 alias unzipmount "find /mnt/zip -type d | xargs -n 1 sudo umount"
 
 alias screenshot "echo grab in 2 seconds; sleep 2; screengrab &"
+
+# firefox84
+
+alias firefox84 "/root/build/firefox84/firefox/firefox &"
+
+# random high pri items from bg to do list
+
+alias bgtodo "grep HIGH: ~/BCPRIV/bgtodolist.txt | sort -R | head | less"
+
