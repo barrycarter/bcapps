@@ -9,6 +9,8 @@ require "$bclib{home}/bc-private.pl";
 
 if ($globopts{test}) {$age=3600;} else {$age=-1;}
 
+# get the raw data in a single call
+
 my($out, $err, $res) = cache_command2("curl 'https://api.openweathermap.org/data/2.5/onecall?lat=$bclib{latitude}&lon=$bclib{longitude}&appid=$bclib{openweathermap}{appid}&units=imperial'", "age=$age");
 
 my($json) = JSON::from_json($out);
@@ -18,7 +20,7 @@ my($json) = JSON::from_json($out);
 my($timestr) = strftime("@ %Y%m%d.%H%M%S", localtime($json->{current}->{dt}));
 
 my($weather) = sprintf("%s (%d%)/%0.1fF/%0.1fF/%d% (%0.1fF)", 
- $json->{current}->{weather}[0]->{description},
+ fix_weather($json->{current}->{weather}[0]->{description}),
   $json->{current}->{clouds},
  $json->{current}->{temp},
  $json->{current}->{feels_like},
@@ -30,9 +32,9 @@ my($baro)=sprintf("%0.2fin", $json->{current}->{pressure}/33.863886666667);
 
 my($wind) = windinfo();
 
-# print("$timestr\n$weather\n$wind ($baro)\n");
+my($fore) = get_forecasts();
 
-debug(get_forecasts());
+write_file_new("$timestr\n$weather\n$wind ($baro)\n$fore\n", "$bclib{home}/ERR/forecast.inf");
 
 sub windinfo {
   my($dir, $speed, $gust, $unit) = 
@@ -83,7 +85,7 @@ sub fix_weather {
 
   my(%hash) = (
 	       "clear sky" => "CLR", "overcast clouds" => "OVC",
-	       "light" => "LT", "snow" => "SN"
+	       "light" => "LT", "snow" => "SN", "broken clouds" => "BKN"
 	       );
 
   for $i (keys %hash) {
@@ -98,3 +100,5 @@ sub fix_weather {
 # TODO: personal weather station(s) [direct from HTML?] [existing prog?]
 
 # TODO: add some comments
+
+# TODO: compare to bc-get-weather-2.pl which I consider to be better written

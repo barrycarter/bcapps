@@ -91,7 +91,11 @@ XWIDTH=1600
 
 # turned off 6 Mar 2021 as AERIS MAY have discontinued free service, but looking into it (otherwise, creates too many cron errors)
 
+# resumed with openweathermap.org API on 7 Mar 2021
+
 # */5 * * * * /home/user/BCGIT/WEATHER/bc-get-weather-2.pl
+
+*/5 * * * * /home/user/BCGIT/WEATHER/bc-get-weather-openweathermap.pl
 
 # copy over error messages from bcinfo3.barrycarter.info, which uses the same
 # ~/ERR/*.err protocol
