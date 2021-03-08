@@ -13,7 +13,21 @@ my($out, $err, $res) = cache_command2("curl 'https://api.openweathermap.org/data
 
 my($json) = JSON::from_json($out);
 
-debug($json);
+# compute timestr
+
+my($timestr) = strftime("@ %Y%m%d.%H%M%S", localtime($json->{current}->{dt}));
+
+my($weather) = sprintf("%s/%0.1fF/%0.1fF/%d% (%0.1fF)\n", 
+ $json->{current}->{weather}[0]->{description},
+ $json->{current}->{temp},
+ $json->{current}->{feels_like},
+ $json->{current}->{humidity},
+ $json->{current}->{dew_point}
+);
+
+print("$timestr\n$weather");
+
+
 
 
 
