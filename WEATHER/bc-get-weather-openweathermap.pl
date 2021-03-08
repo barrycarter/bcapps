@@ -85,7 +85,8 @@ sub fix_weather {
 
   my(%hash) = (
 	       "clear sky" => "CLR", "overcast clouds" => "OVC",
-	       "light" => "LT", "snow" => "SN", "broken clouds" => "BKN"
+	       "light" => "LT", "snow" => "SN", "broken clouds" => "BKN",
+	       "rain" => "RN"
 	       );
 
   for $i (keys %hash) {
