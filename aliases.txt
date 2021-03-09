@@ -329,7 +329,7 @@ alias stopnet "bc-stopit.pl bda youtube-dl qbittorrent wget curl idevs; \pkill -
 # bc-daemon-checker will restart stopped processes if the system is
 # idle, but this allows me to restart them when I want
 
-alias startit "sudo killall -CONT recollindex zpaq rcltar tesseract"
+alias startit "echo consider using bc-restart-stopped-tasks.pl; sudo killall -CONT recollindex zpaq rcltar tesseract"
 
 alias startnet "sudo killall -CONT qbittorrent wget curl idevs; \pkill -CONT -f tumblr_backup; xmessage consider resuming firefox and other downloads&"
 

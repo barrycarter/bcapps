@@ -4,6 +4,8 @@
 
 # TODO: add computer conventions? other conventions?
 
+# TODO: add International Women's Day (8 Mar)?
+
 require "/usr/local/lib/bclib.pl";
 
 # experimental one off print of second wednesday each month
