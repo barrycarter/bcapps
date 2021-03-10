@@ -184,3 +184,12 @@ pattern (eg, the directory I use to store voicemails)-- check that
 this is actually true
 
 TODO: for sites where data is updated, there should be some test that confirms data is recent, not just that page exists
+
+TODO: if a video directory has .srt, .vtt, .json, .info, .description
+or similar files, confirm there is a video file (eg, .mp4) associated
+with them (see ~/MP4/MUSIC/runme.tcsh for an example)
+
+TODO: getmail should run as user not root-- generically, bc-daemon-checker.pl can check processes are running as who they should run as?
+
+
+
