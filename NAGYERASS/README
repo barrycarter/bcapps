@@ -191,5 +191,7 @@ with them (see ~/MP4/MUSIC/runme.tcsh for an example)
 
 TODO: getmail should run as user not root-- generically, bc-daemon-checker.pl can check processes are running as who they should run as?
 
+TODO: in ~/annoytab.d/*.txt there should be no dupe lines except the empty line and maybe commented lines
+
 
 
