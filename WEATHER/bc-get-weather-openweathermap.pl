@@ -87,7 +87,7 @@ sub fix_weather {
 	       "clear sky" => "CLR", "overcast clouds" => "OVC",
 	       "light" => "LT", "snow" => "SN", "broken clouds" => "BKN",
 	       "rain" => "RN", "scattered clouds" => "SCT",
-	       "few clouds" => "FEW"
+	       "few clouds" => "FEW", "and" => "+"
 	       );
 
   for $i (keys %hash) {
