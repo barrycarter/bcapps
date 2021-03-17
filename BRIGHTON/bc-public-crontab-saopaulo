@@ -320,6 +320,12 @@ XWIDTH=1600
 
 # 25 3 * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | perl -nle 'print "python tumblr_backup.py --save-audio --save-video -i $_"' | sh; date
 
+# restored 17 Mar 2021, using version with my own API key, and only
+# one per hour (randomly) to avoid tumblr API usage limits (may
+# increase number downloaded per hour later)
+
+10 * * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | head -1 | perl -nle 'print "python2 tumblr_backup_with_my_key.py --save-audio --save-video -i $_"' | sh; date
+
 # cleanup tmp files daily
 
 27 2 * * * sudo tmpwatch 2d /tmp /var/tmp /mnt/kemptown/tmp
