@@ -193,5 +193,4 @@ TODO: getmail should run as user not root-- generically, bc-daemon-checker.pl ca
 
 TODO: in ~/annoytab.d/*.txt there should be no dupe lines except the empty line and maybe commented lines
 
-
-
+TODO: for amazon invoices, the card mentioned in the invoice should match the card mentioned in the database/table (nontrivial)
