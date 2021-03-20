@@ -324,7 +324,7 @@ XWIDTH=1600
 # one per hour (randomly) to avoid tumblr API usage limits (may
 # increase number downloaded per hour later)
 
-10 * * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | head -10 | perl -nle 'print "python2 tumblr_backup_with_my_key.py --save-audio --save-video -i $_"' | sh; date
+10 * * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | head -25 | perl -nle 'print "python2 tumblr_backup_with_my_key.py --save-audio --save-video -i $_"' | sh; date
 
 # cleanup tmp files daily
 
