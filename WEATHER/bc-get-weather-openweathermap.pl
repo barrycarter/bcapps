@@ -13,6 +13,11 @@ if ($globopts{test}) {$age=3600;} else {$age=-1;}
 
 my($out, $err, $res) = cache_command2("curl 'https://api.openweathermap.org/data/2.5/onecall?lat=$bclib{latitude}&lon=$bclib{longitude}&appid=$bclib{openweathermap}{appid}&units=imperial'", "age=$age");
 
+# I may want to evalute output for further parsing, so write it to a temp file
+
+my($now) = stardate();
+write_file($out, "/var/tmp/openweathermap/$now.json");
+
 my($json) = JSON::from_json($out);
 
 # compute timestr
