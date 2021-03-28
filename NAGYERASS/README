@@ -181,7 +181,11 @@ TODO: all amazon invoices should be downloaded
 
 TODO: some directories should only have files matching a certain
 pattern (eg, the directory I use to store voicemails)-- check that
-this is actually true
+this is actually true. Examples:
+
+  - directory of Twitch profiles: all files end in Twitch.html or Twitch_files
+
+  - directory of recorded calls/faxes: files should end in .amr, .gsm, etc
 
 TODO: for sites where data is updated, there should be some test that confirms data is recent, not just that page exists
 
@@ -194,3 +198,4 @@ TODO: getmail should run as user not root-- generically, bc-daemon-checker.pl ca
 TODO: in ~/annoytab.d/*.txt there should be no dupe lines except the empty line and maybe commented lines
 
 TODO: for amazon invoices, the card mentioned in the invoice should match the card mentioned in the database/table (nontrivial)
+
