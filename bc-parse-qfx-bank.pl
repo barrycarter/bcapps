@@ -41,6 +41,13 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   # TODO: ugly hack to trim newlines, should do above
   for $i (keys %trans) {$trans{$i}=trim($trans{$i});}
 
+  # for some accounts, I have the same FITID across 2 accounts (which
+  # is probably ok); as a hack, I add the acct number to the FITID in
+  # these cases since bankstatments requires a unique value for
+  # unique_id (except when NULL)
+
+  if ($private{useacctfit}{$ofx{ACCTID}}) {$trans{FITID} .= "-$ofx{ACCTID}";}
+
   $trans{DTPOSTED}=~s/^(\d{4})(\d{2})(\d{2}).*$/$1-$2-$3/;
   unless ($trans{MEMO}=~s/^$ofx{ACCTID}: //) {$trans{MEMO}=$trans{NAME};}
 
