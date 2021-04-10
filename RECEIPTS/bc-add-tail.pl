@@ -23,7 +23,7 @@ while (<A>) {
   # if the line ends in a number, add it and print the line
   # things like 5*100 count as numbers
 
-  unless (/([\-\d\*]+)$/) {next;}
+  unless (/([\-\.\d\*]+)$/) {next;}
 
   $tot += eval($1);
 
