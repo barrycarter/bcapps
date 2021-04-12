@@ -14,11 +14,17 @@
 require "/usr/local/lib/bclib.pl";
 require "/home/user/bc-private.pl";
 
+# TODO: this program incorrectly assumes only one DTASOF tag; there
+# can me multiple-- the one I actually want is inside LEDGERBAL (not
+# AVAILBAL for example)
+
 ($all,$name) = cmdfile();
 
 for $i ("ACCTID","DTSERVER","DTSTART","DTEND","DTASOF") {
   $all=~s%<$i>(.*?)<%<$i>$1</$i>\n<%is;
 }
+
+debug("ALPHA", $all, "/ALPHA");
 
 # hash data that is fixed for entire file (not per-transaction)
 $regex = "acctid|dtserver|dtstart|dtend|dtasof";
@@ -96,6 +102,16 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
 }
 
 if ($globopts{print1} || $globopts{memoname}) {exit(0);}
+
+# try to get ledgerbal (note that dtasof is already used above)
+
+  debug("ALL: $all");
+
+if ($all=~s%<ledgerbal>[^<>]*<balamt>([^<>]+)<%%is) {
+  debug("FILE: $name, BALANCE: $1");
+}
+
+debug("ALL: $all");
 
 # this is probably overkill
 # open(A,"|mysql test");
