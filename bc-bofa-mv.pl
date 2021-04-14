@@ -11,6 +11,8 @@ require "/usr/local/lib/bclib.pl";
 for $i (@ARGV) {
   debug("I: $i");
 
+  unless (-f $i) {warnlocal("$i does not exist"); next;}
+
   # for some, it might be possible to get directly from PDF
   my($pdf) = read_file($i);
 
@@ -55,8 +57,7 @@ for $i (@ARGV) {
   } elsif ($all=~/SmartSummaryRx/) {
     $fname = handle_humana_ssrx($all);
   } elsif ($all=~/Citi Priority Account/) {
-    warnlocal("contains multiple accounts, does not work well with this program");
-    next;
+    $fname = handle_citi_priority($all);
   } else {
     warnlocal("Cannot rename: $i");
     next;
@@ -86,6 +87,26 @@ for $i (@ARGV) {
   $target{$fname} = 1;
   # otherwise, advise move
   print "mv -i $i $fname\n";
+
+}
+
+sub handle_citi_priority {
+
+  debug("handle_citi_priority");
+  my($all) = @_;
+
+  unless ($all=~/Citi Priority Account\s*(\d+)/s) {return;}
+  my($acct) = $1;
+
+  debug("BETA");
+
+  unless ($all=~/\- (January|February|March|April|May|June|July|August|September|October|November|December) (\d+\, \d+)/s) {return;}
+  my($date) = str2time("$1 $2");
+
+  debug("GAMMA");
+
+  debug("DELTA", strftime("citi-priority-$acct-%m-%d-%Y.pdf", localtime($date)));
+  return strftime("citi-priority-$acct-%m-%d-%Y.pdf", localtime($date));
 
 }
 
