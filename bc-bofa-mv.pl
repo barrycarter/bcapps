@@ -54,6 +54,9 @@ for $i (@ARGV) {
     $fname = handle_humana_ss($all);
   } elsif ($all=~/SmartSummaryRx/) {
     $fname = handle_humana_ssrx($all);
+  } elsif ($all=~/Citi Priority Account/) {
+    warnlocal("contains multiple accounts, does not work well with this program");
+    next;
   } else {
     warnlocal("Cannot rename: $i");
     next;

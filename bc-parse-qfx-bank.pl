@@ -53,6 +53,14 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
 
   $trans{MEMO}=~s/\'//g;
 
+  # as part of their hatred for their customers, Citibank somehow
+  # managed to assign two FITIDs to the same transaction; this ignores
+  # the duplicate FITID (note to self: the FITID in the LATER QFX file
+  # is canonical)
+
+  if ($private{badfitid}{$trans{FITID}}) {next;}
+
+
   # query (credcardstatements2 is new version w/ good indicies, etc)
   push(@queries,
 "INSERT IGNORE INTO bankstatements
