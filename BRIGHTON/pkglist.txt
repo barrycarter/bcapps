@@ -409,6 +409,7 @@ imlib2-devel
 feh
 xv
 xpdf
+pdftk
 xsane
 # the two packages below ARE different!
 sane-backends
