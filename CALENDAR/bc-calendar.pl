@@ -22,6 +22,8 @@ defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant&
 
 # TODO: https://www.timeanddate.com/holidays/fun/ (but are these "fake"?)
 
+# TODO: add Pentecost?
+
 # font heights and widths for fly
 # TODO: put in bclib.pl?
 
