@@ -4,9 +4,13 @@
 # curl -LO https://open.spotify.com/embed/playlist/5J9Si4NGjdbyJZorMmNoH6
 # ), parses it
 
+# NOTE: ls ?????????????????????? will list these
+
 require "/usr/local/lib/bclib.pl";
 
 my($all, $fname) = cmdfile();
+
+debug("PROCESSING: $fname");
 
 # debug("ALL: $all");
 
@@ -38,7 +42,14 @@ for $i (@{$data->{tracks}->{items}}) {
 
   my($sha) = $1;
 
-  # artists is a list
+  # at this moment, we're only interested in symlinking files...
+
+  unless (-f $sha) {
+    warn("NO SUCH FILE: $sha");
+    next;
+  }
+
+  # artists is a list so CSV it
 
   my(@artists) = ();
 
@@ -46,7 +57,22 @@ for $i (@{$data->{tracks}->{items}}) {
     push(@artists, $j->{name});
   }
 
-  debug("$name, $sha", @artists);
+  my($artists) = join(", ", @artists);
+
+  # suggest symlink name
+
+  my($sname) = "$artists - $name.mp3";
+
+  # change true quotes to apostrophes and slashes to dashes
+
+  $sname=~s/\"/'/g;
+  $sname=~s/\//-/g;
+
+#  debug("$sname, $sha");
+
+  # print command to symlink
+
+  print "ln -s $sha \"$sname\"\n";
 
 #  debug("<TRACK>", dump_var("xx", $i), "</TRACK>");
 }
