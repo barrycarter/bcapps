@@ -16,7 +16,7 @@ require "/home/user/bc-private.pl";
 
 # TODO: this program incorrectly assumes only one DTASOF tag; there
 # can me multiple-- the one I actually want is inside LEDGERBAL (not
-# AVAILBAL for example)
+# AVAILBAL for example) [see FINANCES/bc-parse-ledgerbal.pl]
 
 ($all,$name) = cmdfile();
 
