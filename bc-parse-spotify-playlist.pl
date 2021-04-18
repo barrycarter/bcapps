@@ -20,4 +20,37 @@ my($json) = $1;
 
 $json=~s/%([0-9a-f][0-9a-f])/chr(hex($1))/iseg;
 
-debug("JSON: $json");
+$data = JSON::from_json($json);
+
+# go through list of tracks
+
+for $i (@{$data->{tracks}->{items}}) {
+
+  # capture fields we want
+
+  my($name) = $i->{track}{name};
+
+  my($url) = $i->{track}{preview_url};
+
+  # find sha1sum from url
+
+  $url=~s%/mp3-preview/([0-9a-f]+)\?%%i;
+
+  my($sha) = $1;
+
+  # artists is a list
+
+  my(@artists) = ();
+
+  for $j (@{$i->{track}->{artists}}) {
+    push(@artists, $j->{name});
+  }
+
+  debug("$name, $sha", @artists);
+
+#  debug("<TRACK>", dump_var("xx", $i), "</TRACK>");
+}
+
+# debug(dump_var("xx", $data));
+
+# debug("JSON: $json");
