@@ -8,7 +8,7 @@ require "/usr/local/lib/bclib.pl";
 
 my($all, $fname) = cmdfile();
 
-debug("ALL: $all");
+# debug("ALL: $all");
 
 unless ($all=~s%<script id="resource" type="application/json">\s*(.*?)\s*</script>%%) {
   die "COULD NOT FIND JSON RESOURCE SECTION";
@@ -16,4 +16,8 @@ unless ($all=~s%<script id="resource" type="application/json">\s*(.*?)\s*</scrip
 
 my($json) = $1;
 
-debug($json);
+# the JSON here is %-escape, fix that below
+
+$json=~s/%([0-9a-f][0-9a-f])/chr(hex($1))/iseg;
+
+debug("JSON: $json");
