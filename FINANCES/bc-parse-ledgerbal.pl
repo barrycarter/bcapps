@@ -10,25 +10,25 @@ debug("FILENAME: $name");
 
 # the acctid tag doesn't necessarily have an end tag, ledgerbal always does
 
-unless ($all=~s%<acctid>(.*?)<%%is) {die "NO ACCTID";}
+unless ($all=~s%<acctid>(.*?)<%%is) {die "$name: NO ACCTID";}
 
 my($acctid) = $1;
 
 # last 4 digits only
 
 unless ($acctid=~s%^.*(\d{4})\s*$%$1%s) {
-  die("BAD ACCTID: $acctid");
+  die("$name: BAD ACCTID: $acctid");
 }
 
-unless ($all=~s%(<ledgerbal>.*?</ledgerbal>)%%is) {die "NO LEDGERBAL";}
+unless ($all=~s%(<ledgerbal>.*?</ledgerbal>)%%is) {die "$name: NO LEDGERBAL";}
 
 my($ledger) = $1;
 
-unless ($ledger=~s%<balamt>(.*?)<%<%is) {die "NO BALAMT";}
+unless ($ledger=~s%<balamt>(.*?)<%<%is) {die "$name: NO BALAMT";}
 
 my($balamt) = trim($1);
 
-unless ($ledger=~s%<dtasof>(.*?)<%%is) {die "NO DTASOF";}
+unless ($ledger=~s%<dtasof>(.*?)<%%is) {die "$name: NO DTASOF";}
 
 my($dtasof) = trim($1);
 
