@@ -329,6 +329,10 @@ XWIDTH=1600
 
 10 * * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | head -25 | perl -nle 'print "python2 tumblr_backup_with_my_key.py --save-audio --save-video -i $_"' | sh; date
 
+# nightly, parse all QFX files for ledgerbalances and update db
+
+45 1 * * * date; find /home/user/QFX -follow -maxdepth 1 -iname '*.qfx' | parallel -j 1 /home/user/BCGIT/FINANCES/bc-parse-ledgerbal.pl | mysql test; date
+
 # cleanup tmp files daily
 
 27 2 * * * sudo tmpwatch 2d /tmp /var/tmp /mnt/kemptown/tmp
