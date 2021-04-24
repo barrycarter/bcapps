@@ -102,8 +102,6 @@ orders), should also be unique
 
 TODO: all emails in BC-WP-.... should follow pattern
 
-TODO: all claim numbers in medical db should be unique
-
 TODO: for ebay purchases, refnum should be item number, item number
 must appear in comments, comments must contain phrase "this charge
 will appear on your credit card as [x]", and the merchant must match x
@@ -163,7 +161,7 @@ TODO: make sure per-minute XWD files are fairly recent (ie, there should be ~144
 TODO: warn myself when credit card is about to expire
 
 TODO: in Firefox, bookmarks with specific tags should also have other
-tags that are synonyms for example
+tags that are synonyms (for example)
 
 TODO: sort -nc on some files including "DOING" should work
 
@@ -187,6 +185,11 @@ this is actually true. Examples:
 
   - directory of recorded calls/faxes: files should end in .amr, .gsm, etc
 
+  - directory of Medical records: files should match names of medical
+  providers or special cases
+
+  - directory of SCANS: no medical record scans, since these would belong in MEdical records (this is a higher level of pattern matching where a given pattern could theoretically be in two directories, but I have canonically decided it must be in one not the other)
+
 TODO: for sites where data is updated, there should be some test that confirms data is recent, not just that page exists
 
 TODO: if a video directory has .srt, .vtt, .json, .info, .description
@@ -199,3 +202,7 @@ TODO: in ~/annoytab.d/*.txt there should be no dupe lines except the empty line 
 
 TODO: for amazon invoices, the card mentioned in the invoice should match the card mentioned in the database/table (nontrivial)
 
+TODO: for tables that contain monetary amounts (but are not part of
+bc_budget_view, such as my medical purchases table) make sure the
+monetary events match bc_budget_view so that all payments are
+reflected
