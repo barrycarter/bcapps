@@ -46,6 +46,8 @@ for $i (@all) {
 # to avoid certain repeats
 my(%seen);
 
+# TODO: Oscars?
+
 # TODO: add "Friday the 13th"?
 
 # TODO: add other birthdays, incl Pres Trump?
