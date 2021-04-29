@@ -479,7 +479,9 @@ alias zipmount "mkdirhier /mnt/zip/\!*; fuse-zip \!* /mnt/zip/\!*"
 
 # TODO: for some reason "sudo find" fails if dir is not owned by root hmmm
 
-alias unzipmount "find /mnt/zip -type d | xargs -n 1 sudo umount"
+# this now also removes empty directories
+
+alias unzipmount "find /mnt/zip -type d | xargs -n 1 sudo umount; find /mnt/zip -mindepth 1 -depth -type d | xargs rmdir"
 
 alias screenshot "echo grab in 2 seconds; sleep 2; screengrab &"
 
