@@ -82,7 +82,7 @@ while ($all=~s%<STMTTRN>(.*?)</STMTTRN>%%is) {
   # if just printing stuff, do it here
 
   if ($globopts{print1}) {
-    print "$trans{FITID} $trans{MEMO} $trans{TRNAMT}\n";
+    print "$trans{FITID} $trans{DTPOSTED} $trans{MEMO} $trans{TRNAMT}\n";
     next;
   };
 
