@@ -206,3 +206,6 @@ TODO: for tables that contain monetary amounts (but are not part of
 bc_budget_view, such as my medical purchases table) make sure the
 monetary events match bc_budget_view so that all payments are
 reflected
+
+TODO: for tables that should be updated frequently, confirm at least n rows have a time stamp less than m days old
+
