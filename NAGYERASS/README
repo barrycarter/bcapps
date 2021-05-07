@@ -200,6 +200,8 @@ TODO: getmail should run as user not root-- generically, bc-daemon-checker.pl ca
 
 TODO: in ~/annoytab.d/*.txt there should be no dupe lines except the empty line and maybe commented lines
 
+TODO: in ~/annoytab.d/*.txt none of the files should be empty and there should be at least one future event (otherwise .txt file is obsolete)
+
 TODO: for amazon invoices, the card mentioned in the invoice should match the card mentioned in the database/table (nontrivial)
 
 TODO: for tables that contain monetary amounts (but are not part of
@@ -208,4 +210,14 @@ monetary events match bc_budget_view so that all payments are
 reflected
 
 TODO: for tables that should be updated frequently, confirm at least n rows have a time stamp less than m days old
+
+TODO: current web log files should have fairly recent accesses
+
+TODO: all ATM withdrawals should show up as positive amounts in cashstatements (in general, any TRANSFER category transactions should have a counterbalancing TRANSFER transaction)
+
+TODO: all transactions in cash/bank/creditcard statements should be marked RECOGNIZED except for noted exceptions
+
+TODO: rewrite bc_nagios_file_size to use greater than less than and equal to AND to read from list of files, not hardcoded files in bc-services.cfg
+
+TODO: any local URL tests should also have free external monitoring (eg, montastic) tests as well
 
