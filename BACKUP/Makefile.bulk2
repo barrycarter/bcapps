@@ -1,0 +1,84 @@
+# On 8 May 2021, totally rewrote this to stop using pipes since that
+# means CPU has to keep multiple large files open at once
+
+# TODO: maybe use alternate temp directory for sort
+
+# converted file lists on all drives I recognize
+
+converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
+
+# limit sort memory, but to a high number
+
+afad.txt: ${converted}
+	sort -S 64G ${converted} > afad.txt
+
+# everything previously backed up on idrive, sorted by time, two steps
+
+previouslydone.txt:
+	sort -S 64G -t '\0' -k2nr /root/massback-bulk/*.exclude > previouslydone.txt
+
+previouslydone.txt.srt: previouslydone.txt
+	sort -S 64G -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
+
+# remove previouslydone files from afad.txt and sort (two steps)
+
+backup1.txt: afad.txt previouslydone.txt.srt
+	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt > backup1.txt
+
+backup0.txt: backup1.txt
+	sort -S 64G -t '\0' -k2nr backup1.txt > backup0.txt
+
+
+# | cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr > backup0.txt
+# COMMENTED OUT # 
+
+
+
+# COMMENTED OUT # 	cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr /root/massback-bulk/*.exclude | cpulimit -l 10 sort --parallel=1 -t '\0' -k1,1 -u > previouslydone.txt.srt
+# COMMENTED OUT # 
+
+
+
+
+
+
+
+# COMMENTED OUT # # TODO: cut down on pipes to limit CPU usage?
+# COMMENTED OUT # 
+# COMMENTED OUT # # I am assuming the converted files are up-to-date; in theory could
+# COMMENTED OUT # # check them against the *-files.txt files but don't want to rerun
+# COMMENTED OUT # # portions of bc-unix-dump.pl unnecessarily
+# COMMENTED OUT # 
+# COMMENTED OUT # # converted file lists on all drives I recognize
+# COMMENTED OUT # converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
+# COMMENTED OUT # 
+# COMMENTED OUT # # filelist.txt is the end product of all this
+# COMMENTED OUT # all: filelist.txt
+# COMMENTED OUT # 
+# COMMENTED OUT # # afad = all files, all directories
+# COMMENTED OUT # 
+# COMMENTED OUT # afad.txt: ${converted}
+# COMMENTED OUT # 	cpulimit -l 10 sort --parallel=1 ${converted} > afad.txt
+# COMMENTED OUT # 
+# COMMENTED OUT # # everything previously backed up, sorted
+# COMMENTED OUT # # TODO: assuming the *.exclude files are up-to-date, but should check for that
+# COMMENTED OUT # 
+# COMMENTED OUT # previouslydone.txt.srt:
+# COMMENTED OUT # 	cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr /root/massback-bulk/*.exclude | cpulimit -l 10 sort --parallel=1 -t '\0' -k1,1 -u > previouslydone.txt.srt
+# COMMENTED OUT # 
+# COMMENTED OUT # # the files bc-chunk-backup2 uses to determine what to back up
+# COMMENTED OUT # 
+# COMMENTED OUT # backup0.txt: afad.txt previouslydone.txt.srt
+# COMMENTED OUT # 	cpulimit -l 10 join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr > backup0.txt
+# COMMENTED OUT # 
+# COMMENTED OUT # # create exclusions egrep file from annotated file
+# COMMENTED OUT # exclusions.txt: exclusions-commented.txt
+# COMMENTED OUT # 	egrep -v '^\#|^ *$$' exclusions-commented.txt | perl -pnle 's/\$$/\0/' > exclusions.txt
+# COMMENTED OUT # 
+# COMMENTED OUT # # bc-chunk-backup2 creates statlist.txt and filelist.txt
+# COMMENTED OUT # # 100G restored to 10G on 5/8/18 as I resume non-hd backups
+# COMMENTED OUT # # I run bc-chunk-backup2 repeatedly, so it has a higher CPU limit
+# COMMENTED OUT # # same w/ bc-join-backup.pl
+# COMMENTED OUT # filelist.txt: exclusions.txt backup0.txt
+# COMMENTED OUT # 	cpulimit -l 10 egrep -avf exclusions.txt backup0.txt | cpulimit -l 100 bc-join-backup.pl | cpulimit -l 100 bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
+# COMMENTED OUT # 
