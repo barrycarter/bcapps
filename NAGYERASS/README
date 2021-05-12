@@ -202,6 +202,8 @@ TODO: in ~/annoytab.d/*.txt there should be no dupe lines except the empty line 
 
 TODO: in ~/annoytab.d/*.txt none of the files should be empty and there should be at least one future event (otherwise .txt file is obsolete)
 
+TODO: in ~/annoytab.d/*.txt check that I haven't accidentally typed 2020 when I meant to type 2021 (number of items over a year old should be limited)
+
 TODO: for amazon invoices, the card mentioned in the invoice should match the card mentioned in the database/table (nontrivial)
 
 TODO: for tables that contain monetary amounts (but are not part of

@@ -327,7 +327,9 @@ XWIDTH=1600
 # stopped 13 Apr 2021 due to bandwidth issues (TODO: move this to
 # private so I can turn it off and on w/o affecting git?), resotred 18 Apr 2021
 
-10 * * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | head -25 | perl -nle 'print "python2 tumblr_backup_with_my_key.py --save-audio --save-video -i $_"' | sh; date
+# moved to private on 12 May 2021
+
+# 10 * * * * date; cd /home/user/TUMBLR; egrep -v '^#|^$' ~/my-tumblr-blogs.txt | sort -R | head -25 | perl -nle 'print "python2 tumblr_backup_with_my_key.py --save-audio --save-video -i $_"' | sh; date
 
 # nightly, parse all QFX files for ledgerbalances and update db
 
