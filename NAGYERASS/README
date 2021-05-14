@@ -225,4 +225,5 @@ TODO: any local URL tests should also have free external monitoring (eg, montast
 
 TODO: all Amazon order descriptions should have "shipping speed" and "condition" and "sold by" with some exceptions based on date and other factors
 
+TODO: confirm mail folders I'm not using are empty (which doesn't necessarily mean 0 size because of the weird "DON'T DELETE THIS MESSAGE -- FOLDER INTERNAL DATA" message
 
