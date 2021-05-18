@@ -9,11 +9,12 @@ require "/usr/local/lib/bclib.pl";
 
 # this is testing only, each test in this file is fully qualified
 
-my($tests) = read_file("/tmp/nagtest.txt");
+my($tests, $fname) = cmdfile();
 
 while ($tests=~s%<test>(.*?)</test>%%s) {
 
   my($test) = $1;
+  debug("TEST: $test");
 
   # test should not contain $$
 
@@ -24,13 +25,21 @@ while ($tests=~s%<test>(.*?)</test>%%s) {
   my(%hash) = ();
 
   for $i (split(/\n/, $test)) {
+
+    # ignore comments
+    if ($i=~/^\#/) {next;}
+
+    # TODO: ignoring blank lines though I shoudlnt have to
+    if ($i=~/^\s*$/) {next;}
+
+    debug("I: $i");
     unless ($i=~s/^(.*?)\=(.*)$//) {
       die("BAD LINE: $i");
     }
     $hash{$1} = $2;
   }
 
-  debug("HASH", %hash);
+  run_test(\%hash);
 }
 
 =item run_test
@@ -44,6 +53,8 @@ sub run_test {
 
   my($hashref) = @_;
   my(%hash) = %$hashref;
+
+  debug("HASH", %hash);
 
 
 
