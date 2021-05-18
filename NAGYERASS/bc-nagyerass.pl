@@ -7,6 +7,53 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# this is testing only, each test in this file is fully qualified
+
+my($tests) = read_file("/tmp/nagtest.txt");
+
+while ($tests=~s%<test>(.*?)</test>%%s) {
+
+  my($test) = $1;
+
+  # test should not contain $$
+
+  if ($test=~/\$\$/) {
+    die("BAD TEST: $test");
+  }
+
+  my(%hash) = ();
+
+  for $i (split(/\n/, $test)) {
+    unless ($i=~s/^(.*?)\=(.*)$//) {
+      die("BAD LINE: $i");
+    }
+    $hash{$1} = $2;
+  }
+
+  debug("HASH", %hash);
+}
+
+=item run_test
+
+Given a hash that looks like a test, run the test, log it, and write
+to ~/ERR as necessary
+
+=cut
+
+sub run_test {
+
+  my($hashref) = @_;
+  my(%hash) = %$hashref;
+
+
+
+}
+
+
+die "TESTING";
+
+
+
 parse_nagyerass_cfg(read_file("nagyerass.cfg"));
 
 
