@@ -47,6 +47,8 @@ while ($tests=~s%<test>(.*?)</test>%%s) {
 Given a hash that looks like a test, run the test, log it, and write
 to ~/ERR as necessary
 
+TODO: should also be able to run tests by name
+
 =cut
 
 sub run_test {
