@@ -301,9 +301,10 @@ alias scanit "bc-scan-pic-brighton.pl"
 # stop it when things are going haywire
 
 # 16 Jan 2018: changed mind about qbittorrent
+# 22 May 2021: added ffmpeg
 
 # alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
-alias stopit "bc-stopit.pl recollindex zpaq rcltar tesseract"
+alias stopit "bc-stopit.pl recollindex zpaq rcltar tesseract ffmpeg"
 
 # 9 Jun 2019: stopit2 is a bit more aggressive
 
