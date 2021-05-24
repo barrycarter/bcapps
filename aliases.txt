@@ -494,3 +494,7 @@ alias firefox84 "/root/build/firefox84/firefox/firefox &"
 
 alias bgtodo "grep HIGH: ~/BCPRIV/bgtodolist.txt | sort -R | head | less"
 
+# this kills outright (doesn't just stop) processes that firefox
+# creates that sometimes run away
+
+alias killweb "sudo killall Web Priv file:"
