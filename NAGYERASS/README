@@ -40,7 +40,7 @@ TODO: test that drives are mounted correctly: ie, /mnt/villa and
 file lists to multiple drives (maybe use blkid and program I wrote?)
 
 TODO: if qbittorrent is running there should be a process waiting for
-it to "end" since I need to know if it crashes
+it to "end" since I need to know if it crashes (I CAN update saopaulo-procs.txt to make sure it's running, not sure that's a good idea)
 
 TODO: check recent changes to calendar.txt to see if I mention 2018 or
 otherwise add a date that seems unreasonable
@@ -55,7 +55,7 @@ order of date?)
 DONE: alert if my Ally bank balance falls below $15K, where Ally gives
 me a much lower interest rate
 
-TODO: don't run tests if CPU it too low
+TODO: don't run tests if CPU it too high
 
 TODO: getmail log recency (existing perl script)
 
@@ -68,7 +68,7 @@ min size?)
 
 TODO: see also ../NAGIOS/TODO and perhaps merge here
 
-TODO: categories in bankstatements, cashstatements,
+DONE: categories in bankstatements, cashstatements,
 credcardstatements2 should be from a fixed list, and some should not
 be used after a given date; there should also be no or few categories that only have a small number of entries
 
