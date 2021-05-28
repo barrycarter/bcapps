@@ -27,7 +27,7 @@ while (<>) {
   if (/^\#/ || /^\s*$/) {next;}
 
   # TODO: make this path to firefox canonical
-  my($out,$err,$res) = cache_command2("/bin/firefox $profile --new-tab '$_'");
+  my($out,$err,$res) = cache_command2("/bin/firefox $profile --new-tab \"$_\"");
 
   if ($globopts{stdin}) {
 
