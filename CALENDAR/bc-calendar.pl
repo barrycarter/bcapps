@@ -16,6 +16,8 @@ defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant&
 
 # TODO: add emmys/grammys/oscars to calendar
 
+# TODO: add world cup of soccer?
+
 # TODO: add melbourne cup?
 
 # TODO: add Canadian Thanksgiving (== Columbus Day?)
