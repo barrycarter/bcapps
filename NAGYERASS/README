@@ -72,7 +72,7 @@ DONE: categories in bankstatements, cashstatements,
 credcardstatements2 should be from a fixed list, and some should not
 be used after a given date; there should also be no or few categories that only have a small number of entries
 
-TODO: any entries that have order number (such as shipt purchases)
+DONE: any entries that have order number (such as shipt purchases)
 should have unique ones
 
 TODO: saved-messages should never contain certain types of messages,
@@ -83,7 +83,7 @@ occur only once a month (including rent/mortgage/etc)
 
 TODO: all refnum for instacard should be exactly five letters long in db
 
-TODO: git status
+TODO: git status (for multiple gits)
 
 TODO: twitch streams in email, on youtube and downloaded should
 roughly match in terms of time, number, length, etc
