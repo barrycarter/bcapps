@@ -1,3 +1,16 @@
+# when i download youtube files with subtitles, it creates a large
+# number of files; this cruft puts one video with its subtitles into
+# each directory; this is also the first time I use tcsh's if/then
+# feature so I can use selected entries in this file
+
+if $argv[1] == "youtubeclean" then
+
+ls *.mp4 | perl -nle 's/\.mp4//; print "echo $_; mkdir $_; mv $_?* $_"'
+
+endif
+
+exit;
+
 # xdotool commands to mark multiple discord servers as read
 # can't make it an alias due to funky quoting
 
