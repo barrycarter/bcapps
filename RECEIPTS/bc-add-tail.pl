@@ -33,7 +33,9 @@ while (<A>) {
 
   $tot += $val;
 
-  print "$tot: $_ ($val) [$count]\n\n";
+  my($pval) = $count-$globopts{n}-1;
+
+  print "$tot: $_ ($val) [$pval]\n\n";
 
 }
 
