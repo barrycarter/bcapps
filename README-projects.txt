@@ -1057,3 +1057,7 @@ TODO: fuse filesystem that treats multiple files as single longer file (useful f
 TODO: client-side javascript wiki
 
 TODO: overlay antipodal map
+
+TODO: for a great circle between A and B, there are two points C and D
+that form the north and south poles if the great circle is the
+equator-- formula or something to find these points

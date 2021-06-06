@@ -20,14 +20,20 @@ open(A, "tail -n $globopts{n} $file|");
 
 while (<A>) {
 
+  chomp;
+
+  $count++;
+
   # if the line ends in a number, add it and print the line
   # things like 5*100 count as numbers
 
   unless (/([\-\.\d\*]+)$/) {next;}
 
-  $tot += eval($1);
+  my($val) = eval($1);
 
-  print "$tot: $_\n";
+  $tot += $val;
+
+  print "$tot: $_ ($val) [$count]\n\n";
 
 }
 
