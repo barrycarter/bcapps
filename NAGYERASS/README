@@ -150,9 +150,9 @@ negative since I can't use gift money I don't have (similar for any
 other place that does "gift card balance" as opposed to generic gift
 cards)
 
-TODO: refnums should rarely be duplicated (excluding NULLs)
+TODO: refnums should rarely be duplicated (excluding NULLs) (mostly done)
 
-TODO: refnums should appear in comments field of entry
+TODO: refnums should appear in comments field of entry (mostly done)
 
 TODO: zip files in GOOGLE takeout should be recentish (no more than 2 months per account)
 
