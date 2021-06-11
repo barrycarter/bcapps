@@ -10,21 +10,11 @@
 # nojd - don't print julian date
 # nounix - don't print Unix date
 
+# NOTE: most TODOs belong in bc-imp-dates.pl NOT in this file
+
 require "/usr/local/lib/bclib.pl";
 
 defaults("xsize=800&ysize=600&weeks=7&font1=tiny&eventsize=small&datesize=giant&monthsize=medium&moonstampfont=medium&moonstampcolor=255,0,0");
-
-# TODO: add emmys/grammys/oscars to calendar
-
-# TODO: add world cup of soccer?
-
-# TODO: add melbourne cup?
-
-# TODO: add Canadian Thanksgiving (== Columbus Day?)
-
-# TODO: https://www.timeanddate.com/holidays/fun/ (but are these "fake"?)
-
-# TODO: add Pentecost?
 
 # font heights and widths for fly
 # TODO: put in bclib.pl?

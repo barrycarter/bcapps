@@ -2,10 +2,6 @@
 
 # Computes well known "important" dates [assuming no major schedule changes]
 
-# TODO: add computer conventions? other conventions?
-
-# TODO: add International Women's Day (8 Mar)?
-
 require "/usr/local/lib/bclib.pl";
 
 # experimental one off print of second wednesday each month
@@ -72,6 +68,22 @@ my(%seen);
 
 # TODO: other New Years?, Diwali, more Islamic holidays
 
+# TODO: add computer conventions? other conventions?
+
+# TODO: add International Women's Day (8 Mar)?
+
+# TODO: add emmys/grammys/oscars to calendar
+
+# TODO: add world cup of soccer?
+
+# TODO: add melbourne cup?
+
+# TODO: add Canadian Thanksgiving (== Columbus Day?)
+
+# TODO: https://www.timeanddate.com/holidays/fun/ (but are these "fake"?)
+
+# TODO: add Pentecost?
+
 %fixed = (
 	  "New Years Day" => "0101",
 	  "Valentine's Day" => "0214",
@@ -111,9 +123,9 @@ my(%seen);
 	  "All Saints Day" => "1101",
 	  "All Souls Day" => "1102",
 	  "St Peter/Paul Day" => "0629",
-	  "QE II Birthday" => "0421",
+	  "QE II (1926)" => "0421",
 #	  "UN Children's Day" => "1120",
-	  "JFK Birthday" => "0529",
+	  "JFK (1917)" => "0529",
 	  "Guy Fawke's Day" => "1105",
 	  "Running of Bulls" => "0707",
 	  "Pi Day" => "0314",
