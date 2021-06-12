@@ -103,7 +103,7 @@ my(%seen);
 	  "Bosses' Day" => "1016",
 	  "New Year's Eve" => "1231",
 	  "Pearl Harbor Day" => "1207",
-	  "Susan B Anthony" => "0215",
+	  "Susan B Anthony (1820)" => "0215",
 	  "Flag Day" => "0614",
 	  "Bastille Day" => "0714",
 	  "Poetry Day" => "0321",
