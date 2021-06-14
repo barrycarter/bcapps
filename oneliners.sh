@@ -1,3 +1,5 @@
+# NOTE: despite the .sh extension this is a tcsh file (sigh)
+
 # when i download youtube files with subtitles, it creates a large
 # number of files; this cruft puts one video with its subtitles into
 # each directory; this is also the first time I use tcsh's if/then
@@ -495,6 +497,3 @@ exit;
 perl -le 'use POSIX; for $i (0..60) {$now=time()-$i*86400; print strftime("%Y%m%d",localtime($now))}'
 
 exit;
-
-
-
