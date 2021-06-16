@@ -223,11 +223,17 @@ open(A,"/home/user/BCPRIV/bgtodolist.txt");
 my($yval) = 0;
 
 while (<A>) {
-  $yval += 15;
+#  $yval += 15;
   # this is left justified, which means it won't work for arb files, sigh
   # TODO: could look at longest line in file
-  $xval = $width - length($_)*9;
-  push(@fly, "string $red,$xval,$yval,$regfont,$_");
+#  $xval = $width - length($_)*9;
+#  push(@fly, "string $red,$xval,$yval,$regfont,$_");
+
+  # temporarily using tiny font and different color for bg to do list
+
+  $xval = $width - length($_)*5;
+  $yval += 8;
+  push(@fly, "string 128,128,0,$xval,$yval,tiny,$_");
 }
 
 close(A);
