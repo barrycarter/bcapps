@@ -158,7 +158,7 @@ TODO: zip files in GOOGLE takeout should be recentish (no more than 2 months per
 
 TODO: make sure per-minute XWD files are fairly recent (ie, there should be ~1440 for the previous day)
 
-TODO: warn myself when credit card is about to expire
+DONE: warn myself when credit card is about to expire
 
 TODO: in Firefox, bookmarks with specific tags should also have other
 tags that are synonyms (for example)
