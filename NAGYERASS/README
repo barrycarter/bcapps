@@ -233,3 +233,11 @@ grocery, DOORDASH = restaurant, and so on)
 TODO: check for common mispellings in files I use most often (eg, differnet for different)
 
 TODO: some mail folders should never have emails from certain senders or to certain receipients
+
+TODO: directories that I no longer use should not have any recent files (which would indicate I accidentally used an obsolete program) (eg, mail annotation directories)
+
+TODO: make sure I have contiguous bank and creditcard statements and
+that they are name consistently (some anamolies do exist and must be
+fixed) (eg, wells-fargo-bank-2021-05-18.pdf should be wells-fargo-bank-20210518.pdf)
+
+
