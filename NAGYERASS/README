@@ -242,3 +242,5 @@ fixed) (eg, wells-fargo-bank-2021-05-18.pdf should be wells-fargo-bank-20210518.
 
 TODO: credcardstatements and credcardstatements2 should be distinct since i union them for bc_budget_view (this can also be handled by prohibiting two transactions to have the same date, amount, and card except where allowed)
 
+TODO: alert if nearing credit card limit on any card (banks alert me
+too, but this can be a doublecheck/earlier warning/etc)
