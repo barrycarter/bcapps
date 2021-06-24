@@ -244,3 +244,9 @@ TODO: credcardstatements and credcardstatements2 should be distinct since i unio
 
 TODO: alert if nearing credit card limit on any card (banks alert me
 too, but this can be a doublecheck/earlier warning/etc)
+
+TODO: most transactions should have comments, recurring transactions exempted
+
+TODO: some fields in some tables in some dbs should be from a set of
+limited values (different values -> typo or something)
+
