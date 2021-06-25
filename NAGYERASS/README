@@ -250,3 +250,7 @@ TODO: most transactions should have comments, recurring transactions exempted
 TODO: some fields in some tables in some dbs should be from a set of
 limited values (different values -> typo or something)
 
+TODO: in some cases, creating half-ass/incomplete solutions so should
+review 'done' items to make sure they are really done
+
+
