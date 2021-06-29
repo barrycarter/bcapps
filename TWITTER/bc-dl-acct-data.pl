@@ -147,7 +147,11 @@ for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
 
   if ($now - $latest{$i} < 365.2425/12*2*86400) {next;}
 
-  print stardate($latest{$i})," $i $extra{$site} $extra\n";
+  # 29 Jun 2021: want to change pws across the board + cleanup spacing
+
+  my($line) = stardate($latest{$i}) . " $i $extra{$site} $extra (CHANGE PASSWORD)";
+  $line=~s/\s+/ /g;
+  print "$line\n";
 }
 
 for $i (@errors) {print "ERROR: $i\n";}

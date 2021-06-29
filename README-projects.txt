@@ -175,6 +175,10 @@ program (or writing one) that does basic correlation analysis.
 Of course, the actual formula between some of these data may be far
 from linear, so additional "correlation" functions may be needed.
 
+Can also use weather data to determine when "summer" starts and ends
+for various locations, for example: summer begins 45 days on either
+side of highest high maybe?
+
 This "mass correlation" project could be used to answer questions like:
 
 https://earthscience.stackexchange.com/questions/18151/deserts-and-humidity
