@@ -257,4 +257,8 @@ limited values (different values -> typo or something)
 TODO: in some cases, creating half-ass/incomplete solutions so should
 review 'done' items to make sure they are really done
 
+TODO: make sure files download completely by looking for </html> tag (for HTML files for example), "grep -L" may help
+
+TODO: if I have meta pages of receipts or orders, make sure every order/receipt mentioned in the meta page also exists as a separate file
+
 
