@@ -261,4 +261,6 @@ TODO: make sure files download completely by looking for </html> tag (for HTML f
 
 TODO: if I have meta pages of receipts or orders, make sure every order/receipt mentioned in the meta page also exists as a separate file
 
+TODO: when I mark an item as 'recognized', I normally include a confirmation that the total of items i listed is correct-- perhaps make this a check
+
 
