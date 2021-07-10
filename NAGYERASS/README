@@ -263,4 +263,4 @@ TODO: if I have meta pages of receipts or orders, make sure every order/receipt 
 
 TODO: when I mark an item as 'recognized', I normally include a confirmation that the total of items i listed is correct-- perhaps make this a check
 
-
+TODO: if amount colon value appears in comments field should match amount (eg, Amount: $123.45 means amount of transaction should be 123.45 as well)
