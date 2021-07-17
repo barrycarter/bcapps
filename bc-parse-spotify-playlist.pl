@@ -1,5 +1,8 @@
 #!/bin/perl
 
+# --nocheck: don't check to see if the sha1 file exist before printing
+# link command
+
 # given a spotify playlist (eg, the output of:
 # curl -LO https://open.spotify.com/embed/playlist/5J9Si4NGjdbyJZorMmNoH6
 # ), parses it
@@ -26,9 +29,32 @@ $json=~s/%([0-9a-f][0-9a-f])/chr(hex($1))/iseg;
 
 $data = JSON::from_json($json);
 
+# the list of tracks:
+
+my @tracks = @{$data->{tracks}->{items}};
+
+# if there's only one "track" it's the whole object, point track to
+# whole object
+
+unless (@tracks) {
+  $data->{track} = $data;
+  @tracks = ($data);
+}
+
+debug(@tracks);
+
+# debug(dump_var("xx", $data));
+
 # go through list of tracks
 
-for $i (@{$data->{tracks}->{items}}) {
+# for $i (@{$data->{tracks}->{items}}) {
+
+for $i (@tracks) {
+
+
+  # HACK: do NOT attempt to var_dump this variable, it's recursive
+
+#  debug(var_dump("i", $i));
 
   # capture fields we want
 
@@ -44,7 +70,7 @@ for $i (@{$data->{tracks}->{items}}) {
 
   # at this moment, we're only interested in symlinking files...
 
-  unless (-f $sha) {
+  unless (-f $sha || $globopts{nocheck}) {
     warn("NO SUCH FILE: $sha");
     next;
   }

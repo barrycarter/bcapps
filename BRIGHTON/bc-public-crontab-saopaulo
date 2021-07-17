@@ -339,6 +339,11 @@ XWIDTH=1600
 
 27 2 * * * sudo tmpwatch 2d /tmp /var/tmp /mnt/kemptown/tmp
 
+# because /var/tmp/openweathermap files are constantly accesses, they
+# have to be cleaned in a special way
+
+28 2 * * * sudo find /var/tmp/openweathermap -type f -mtime +2 | xargs sudo rm
+
 # nightly, dump ALL firefox bookmarks w/ relevant information to home dir file
 
 # newer versions of firefox require newer version of sqlite3, but I
