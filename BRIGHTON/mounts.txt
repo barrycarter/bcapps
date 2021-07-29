@@ -18,7 +18,10 @@
 
 # /mnt/extdrive2 extdrive2
 
-/mnt/extdrive5 extdrive5
+# alas, poor extdrive5, I knew him Horatio (died late Jul 2021)
+# /mnt/extdrive5 extdrive5
+
+/mnt/paulista paulista
 
 # swap drive
 /dev/shm swap
