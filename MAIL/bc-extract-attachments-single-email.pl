@@ -8,9 +8,9 @@
 # TODO: if called w/ multiple args, self-invoke xargs -n 1 (danger?) 
 # (with null sep just in case spaces in filenames?)
 
-die "Abandoned; see mimeexplode";
-
 require "/usr/local/lib/bclib.pl";
+
+unless ($globopts{zombie}) {die "Abandoned; see mimeexplode";}
 
 my($data, $name) = cmdfile();
 

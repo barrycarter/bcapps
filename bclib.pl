@@ -145,6 +145,7 @@ $bclib{options_supported} = << "MARK";
 --xmessage: pop up xmessage when program ends
 --bgend: write to background image when program ends
 --nodetach: don't detach from the terminal even if program normally would
+--zombie: run program even if its marked obsolete (DANGEROUS!)
 --help: show help on program, don't run it
 MARK
 ;
