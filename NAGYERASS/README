@@ -267,3 +267,12 @@ TODO: if amount colon value appears in comments field should match amount (eg, A
 
 TODO: all amounts in bc_budget_view should be equivalent to their value rounded to two places (no fractional pennies)
 
+TODO: if category is REFUND or REFUNDED, the sign (plus/minus) should
+match, but this is still tricky because a refund from a credit card
+overage means they charge me the amount they're sending me
+
+TODO: the amounts of REFUND and REFUNDED *should* be equal but with exceptions
+
+TODO: all transactions should have categories (this is also an issue for my budgeting program)
+
+
