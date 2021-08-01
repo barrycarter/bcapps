@@ -275,4 +275,5 @@ TODO: the amounts of REFUND and REFUNDED *should* be equal but with exceptions
 
 TODO: all transactions should have categories (this is also an issue for my budgeting program)
 
+TODO: CCPAY is when I pay a credit card and PAYMENT is the payment showing on the card itself-- these should cross connect
 
