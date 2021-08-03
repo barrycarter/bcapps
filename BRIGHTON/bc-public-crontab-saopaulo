@@ -400,3 +400,8 @@ XWIDTH=1600
 # odd behavior from X11 may be fixed by this
 
 * * * * * xrandr --size 1600x900
+
+# added 02 Aug 2021 to help compute network traffic usage (of just
+# this machine, but this is pretty much the only one i use)
+
+16 * * * * ifconfig -a

@@ -277,3 +277,5 @@ TODO: all transactions should have categories (this is also an issue for my budg
 
 TODO: CCPAY is when I pay a credit card and PAYMENT is the payment showing on the card itself-- these should cross connect
 
+TODO: if comments in a transaction indicate total, this total must match the amount field
+
