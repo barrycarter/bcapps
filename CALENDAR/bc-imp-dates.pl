@@ -4,6 +4,12 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# TODO: there MAY be an error where real Easter is displayed as
+# Passover and Good Friday is ignored, possibly because I try to
+# ignore the Orthodox versions of those holidays
+
+# TODO: all birthdays should consistently be "person name (year of birth)"
+
 # experimental one off print of second wednesday each month
 
 for $i ("2017".."2029") {
@@ -41,6 +47,20 @@ for $i (@all) {
 
 # to avoid certain repeats
 my(%seen);
+
+# TODO: CONSIDER 2014_Holidays_and_Special_Awareness_Days_GenEd.* in this directory, but be careful, this may be purely promotional
+
+# TODO: https://www.congress.gov/congressional-record/congressional-record-index/114th-congress/2nd-session/special-days-and-holidays/234037
+
+# TODO: https://nationaldaycalendar.com/calendar-at-a-glance/
+
+# TODO: see also README
+
+# TODO: May Day?
+
+# TODO: google has sports calendars that may be useful
+
+# TODO: cyber monday
 
 # TODO: Oscars?
 

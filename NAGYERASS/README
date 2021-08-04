@@ -165,6 +165,9 @@ tags that are synonyms (for example)
 
 TODO: sort -nc on some files including "DOING" should work
 
+TODO: sort -nc on SECTIONS of some files should work, excluding blank
+lines (use bc-section-*.pl?)
+
 TODO: consider adding mrtg or similar logging in addition to just tests
 
 TODO: test to see if new transactions with older dates show up... those are ones I could miss
