@@ -282,3 +282,5 @@ TODO: CCPAY is when I pay a credit card and PAYMENT is the payment showing on th
 
 TODO: if comments in a transaction indicate total, this total must match the amount field
 
+TODO: lines in certain files and sections of files should match a specific pattern
+
