@@ -5,6 +5,7 @@
 # timestamped file in emacs
 
 # --section: the section to extract
+# --stdout: print the section to STDOUT, don't write it to file
 
 require "/usr/local/lib/bclib.pl";
 
@@ -23,6 +24,11 @@ my($section) = $globopts{section};
 $data=~m%<$section[^>]*>(.*?)<\/$globopts{section}>%s||die("No section $section");
 
 my($list) = $1;
+
+if ($globopts{stdout}) {
+  print $list;
+  exit(0);
+}
 
 my($stardate) = stardate(time());
 

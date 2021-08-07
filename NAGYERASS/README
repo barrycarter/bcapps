@@ -266,7 +266,7 @@ TODO: if I have meta pages of receipts or orders, make sure every order/receipt 
 
 TODO: when I mark an item as 'recognized', I normally include a confirmation that the total of items i listed is correct-- perhaps make this a check
 
-TODO: if amount colon value appears in comments field should match amount (eg, Amount: $123.45 means amount of transaction should be 123.45 as well)
+TODO: if amount colon value appears in comments field should match amount (eg, Amount: $123.45 means amount of transaction should be 123.45 as well) GLUE TODO: if comments in a transaction indicate total, this total must match the amount field
 
 TODO: all amounts in bc_budget_view should be equivalent to their value rounded to two places (no fractional pennies)
 
@@ -276,11 +276,9 @@ overage means they charge me the amount they're sending me
 
 TODO: the amounts of REFUND and REFUNDED *should* be equal but with exceptions
 
-TODO: all transactions should have categories (this is also an issue for my budgeting program)
+DONE: all transactions should have categories (this is also an issue for my budgeting program)
 
 TODO: CCPAY is when I pay a credit card and PAYMENT is the payment showing on the card itself-- these should cross connect
-
-TODO: if comments in a transaction indicate total, this total must match the amount field
 
 TODO: lines in certain files and sections of files should match a specific pattern
 
