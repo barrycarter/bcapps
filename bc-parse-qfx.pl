@@ -50,7 +50,7 @@ if ($globopts{rename}) {
 # but its ok for memo vs name
 
 if ($private{notcredit}{$ofx{ACCTID}} && !$globopts{memoname} && !$globopts{print1}) {
-  die "Can't use this program on that account";
+  die "Can't use this program on that account: $ofx{ACCTID}";
 }
 
 # transactions
