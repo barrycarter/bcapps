@@ -280,6 +280,14 @@ DONE: all transactions should have categories (this is also an issue for my budg
 
 TODO: CCPAY is when I pay a credit card and PAYMENT is the payment showing on the card itself-- these should cross connect
 
-TODO: lines in certain files and sections of files should match a specific pattern
+TODO: lines in certain files and sections of files should match a specific pattern (eg, section where I record gmail space usage is "^timestamp account literal-using number literal-GB literal-of number literal-GB$")
 
 TODO: in acct2name table, status must be OBSOLETE or LIVE
+
+TODO: i have a mail folder for "less important" NEXTDOOR emails-- this
+folder should never contain subjects "replied to your", "commented on
+your", "reacted to your", "private message", etc
+
+TODO: when I link one directory inside another, I sometimes want to
+ensure all first level subdirectories are also linked individually
+(eg, MP4), create a test for this

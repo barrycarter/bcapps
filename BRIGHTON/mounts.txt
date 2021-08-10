@@ -19,7 +19,10 @@
 # /mnt/extdrive2 extdrive2
 
 # alas, poor extdrive5, I knew him Horatio (died late Jul 2021)
-# /mnt/extdrive5 extdrive5
+
+# restore temporarily as a test (mounted off block file on paulista)
+
+/mnt/extdrive5 extdrive5
 
 /mnt/paulista paulista
 
