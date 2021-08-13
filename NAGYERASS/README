@@ -52,6 +52,8 @@ that receipt numbers are in numerical order by date)
 TODO: make sure claim numbers in medical database are unique (and in
 order of date?)
 
+TODO: make sure order numbers in medical database are unique except in special cases
+
 DONE: alert if my Ally bank balance falls below $15K, where Ally gives
 me a much lower interest rate
 
@@ -100,7 +102,7 @@ TODO: doordash order numbers (and others?) should be in numerical
 order by date (if not, I've probably confused two otherwise identical
 orders), should also be unique
 
-TODO: all emails in BC-WP-.... should follow pattern
+TODO: all emails in BC-WP-.... should follow pattern, same with many other folders, especially automatically generated ones, and this pattern matching could apply to To/From/Subject/etc
 
 TODO: for ebay purchases, refnum should be item number, item number
 must appear in comments, comments must contain phrase "this charge
