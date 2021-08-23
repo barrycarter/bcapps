@@ -135,9 +135,9 @@ sub bc_extras {
     debug("I: $i");
     for $j (split(/\n/, read_file($i))) {
       if ($j=~/^\#/ || $j=~/^\s*$/) {next;}
-      debug("RUNNING: $j");
+      debug("", "RUNNING: $j");
       my($out,$err,$res) = cache_command2($j);
-      debug("STDOUT: $out");
+      debug("STDOUT: $out", "STDERR: $stderr");
       if ($res) {
 	debug("TEST FAILED");
 	$count++;
