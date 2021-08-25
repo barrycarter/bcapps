@@ -21,8 +21,9 @@
 # alas, poor extdrive5, I knew him Horatio (died late Jul 2021)
 
 # restore temporarily as a test (mounted off block file on paulista)
+# removed permanently 25 Aug 2021 (not even an fs)
 
-/mnt/extdrive5 extdrive5
+# /mnt/extdrive5 extdrive5
 
 /mnt/paulista paulista
 
