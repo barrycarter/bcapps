@@ -18,6 +18,8 @@ translate-shell
 
 # system tools
 
+xvkbd
+autokey
 gutenprint-cups
 system-config-printer
 taskjuggler
