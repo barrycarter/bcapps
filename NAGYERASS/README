@@ -295,3 +295,5 @@ your", "reacted to your", "private message", etc
 TODO: when I link one directory inside another, I sometimes want to
 ensure all first level subdirectories are also linked individually
 (eg, MP4), create a test for this
+
+TODO: some mailboxes should have fairly recent messages even if they don't get checked by getmail (in particular, folders that receive emails due to filters on getmail primary INBOX)
