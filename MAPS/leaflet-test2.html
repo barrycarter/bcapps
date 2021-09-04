@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="leaflet.css" />
+<script src="leaflet.js"></script>
+<style>html,body, #map {height:100%;}</style>
+<div id="map"></div>
+
+<script>
+
+function foo(z,x,y) {
+console.log("ZYX",z,x,y);
+}
+
+
+var map = L.map('map').setView([0, 0], 4);
+
+// can i use javascript code as the tilelayeR?
+
+// L.tileLayer(
+// 'data:text/html,<script>alert()</script>',
+// {opacity: 1}).
+// addTo(map);
+
+L.tileLayer(
+'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+ {opacity: 1}).
+addTo(map);
+
+</script>

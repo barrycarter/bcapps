@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="leaflet.css" />
+<script src="leaflet.js"></script>
+<style>html,body, #map {height:100%;}</style>
+<div id="map"></div>
+
+<script>
+
+// function foo(z,x,y) {console.log("ZYX",z,x,y);}
+
+function foo(z,x,y) {return `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`;}
+
+var map = L.map('map').setView([0, 0], 4);
+
+// L.tileLayer(
+// 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//  {opacity: 1}).
+// addTo(map);
+
+var layer = L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+layer.createTile = foo
+
+layer.addTo(map);
+
+console.log(layer);
+
+</script>
