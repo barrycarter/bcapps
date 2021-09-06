@@ -299,3 +299,5 @@ ensure all first level subdirectories are also linked individually
 TODO: some mailboxes should have fairly recent messages even if they don't get checked by getmail (in particular, folders that receive emails due to filters on getmail primary INBOX)
 
 TODO: for tasklists, make sure I complete at least one task per day per list except where permitted
+
+TODO: /usr/local/etc/backups/ files should be fairly recent (daily backups of important files)
