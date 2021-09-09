@@ -486,9 +486,11 @@ alias unzipmount "find /mnt/zip -type d | xargs -n 1 sudo umount; find /mnt/zip 
 
 alias screenshot "echo grab in 2 seconds; sleep 2; screengrab &"
 
-# firefox84
+# firefox84 and others
 
-alias firefox84 "/root/build/firefox84/firefox/firefox &"
+alias firefox84 "/root/build/firefox84/firefox/firefox \!* &"
+
+alias firefox91 "/root/build/firefox91/firefox/firefox \!* &"
 
 # random high pri items from bg to do list
 
