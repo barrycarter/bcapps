@@ -1,3 +1,64 @@
+# On 18 Sep 2021, rewriting for the following improvements:
+#
+#   - avoid large pipes which reside in memory
+#   - create list of excluded files
+#   - separate out fgrep and egrep exclusions
+#   - perhaps better commenting/formatting
+#   - if sort creates large files maybe changed /tmp dir to be safe?...
+#   - or use memory limited sort?
+#
+# Files that must exist: fgrep-commented.txt egrep-commented.txt
+
+# Below, NUL means \0 the null character ASCII 0
+
+
+# the "commented" files may have comments or blank lines in them; this
+# removes them and creates the "pure" versions
+
+fgrep-pure.txt:
+	egrep -v '^\#|^ *$$' fgrep-commented.txt > fgrep-pure.txt
+egrep-pure.txt:
+	egrep -v '^\#|^ *$$' egrep-commented.txt > egrep-pure.txt
+
+
+
+# find all the files I've previously backed up:
+#
+#  - the format of *.exclude is: filename NUL timestamp (thus -t '\0')
+#
+#  - Some files are backed up multiple times (if they change) and I
+#  want to find the most recent backups first (thus -k2nr)
+#
+#  - This command doesn't delete duplicates but another one does
+#
+#  - don't use more than 64G of memory sort (-S 64G)
+#
+# 
+
+previouslydone.txt:
+	sort -S 64G -t '\0' -k2nr /root/massback-bulk/*.exclude > previouslydone.txt
+
+
+
+# find the most recent backup for each file in previouslydone.txt
+#
+#  - I couldn't find options to uniq to make this work
+
+previouslydone.txt.srt: previouslydone.txt
+	sort -S 64G -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
+
+
+# afad.txt is all files and directories (full path) with format:
+#
+# filename NUL mtime NUL canon-filename NUL size
+#
+# where "canon-filename" is the canonized filenames: if I backup a
+# file/directory in one location and then move it, the program that
+# creates afad.txt tells me where it was backed up originally
+
+
+
+
 # On 8 May 2021, totally rewrote this to stop using pipes since that
 # means CPU has to keep multiple large files open at once
 
@@ -13,9 +74,6 @@ afad.txt: ${converted}
 	sort -S 64G ${converted} > afad.txt
 
 # everything previously backed up on idrive, sorted by time, two steps
-
-previouslydone.txt:
-	sort -S 64G -t '\0' -k2nr /root/massback-bulk/*.exclude > previouslydone.txt
 
 previouslydone.txt.srt: previouslydone.txt
 	sort -S 64G -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
