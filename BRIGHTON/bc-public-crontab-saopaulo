@@ -342,7 +342,7 @@ XWIDTH=1600
 # because /var/tmp/openweathermap files are constantly accesses, they
 # have to be cleaned in a special way
 
-28 2 * * * sudo find /var/tmp/openweathermap -type f -mtime +2 | xargs sudo rm
+28 2 * * * sudo find /var/tmp/openweathermap -type f -mtime +2 | xargs --no-run-if-empty sudo rm
 
 # nightly, dump ALL firefox bookmarks w/ relevant information to home dir file
 
