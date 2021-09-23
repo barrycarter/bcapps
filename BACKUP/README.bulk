@@ -19,9 +19,10 @@ cd /root/massback-bulk
 setenv DATE `date +%Y%m%d.%H%M%S`
 mkdir /root/massbacks/$DATE
 cd /root/massbacks/$DATE
-cp /home/user/BCGIT/BACKUP/Makefile.bulk Makefile
+cp /home/user/BCGIT/BACKUP/Makefile.bulk2 Makefile
 
-# cp exclusions-commented.txt from a previous backup or make wont work
+# cp egrep-commented.txt and fgrep-commented.txt from a previous
+# backup or make wont work
 
 # run make (-j by alias), no need to waitpid since bc-chunk-backup2 xmessages
 

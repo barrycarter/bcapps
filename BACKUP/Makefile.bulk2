@@ -1,4 +1,4 @@
-# On 18 Sep 2021, rewriting for the following improvements:
+# On 18 Sep 2021, rewriting for the following goals:
 #
 #   - avoid large pipes which reside in memory
 #   - create list of excluded files
@@ -12,15 +12,23 @@
 # Below, NUL means \0 the null character ASCII 0
 
 
+# the final target
+
+all: filelist.txt
+
+# some variables in case we want to change things up
+
+nice = nice -n 19
+sortoptions = -S 8G
+
 # the "commented" files may have comments or blank lines in them; this
 # removes them and creates the "pure" versions
 
-fgrep-pure.txt:
-	egrep -v '^\#|^ *$$' fgrep-commented.txt > fgrep-pure.txt
-egrep-pure.txt:
-	egrep -v '^\#|^ *$$' egrep-commented.txt > egrep-pure.txt
+fgrep-pure.txt: Makefile fgrep-commented.txt
+	egrep -v '^\#|^ *$$' fgrep-commented.txt | perl -nle 'print "\0$$_\0"' > fgrep-pure.txt
 
-
+egrep-pure.txt: Makefile egrep-commented.txt
+	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "\0$$_\0"' > egrep-pure.txt
 
 # find all the files I've previously backed up:
 #
@@ -31,21 +39,22 @@ egrep-pure.txt:
 #
 #  - This command doesn't delete duplicates but another one does
 #
-#  - don't use more than 64G of memory sort (-S 64G)
+#  - don't use more than 8G of memory sort (-S 8G)
 #
 # 
 
-previouslydone.txt:
-	sort -S 64G -t '\0' -k2nr /root/massback-bulk/*.exclude > previouslydone.txt
-
-
+previouslydone.txt: Makefile
+	$(nice) sort $(sortoptions) -t '\0' -k2nr /root/massback-bulk/*.exclude > previouslydone.txt
 
 # find the most recent backup for each file in previouslydone.txt
 #
-#  - I couldn't find options to uniq to make this work
+#  - I couldn't find options to uniq to make this work without having
+#  to go through a second sort, so I do the below
 
 previouslydone.txt.srt: previouslydone.txt
-	sort -S 64G -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
+	$(nice) sort $(sortoptions) -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
+
+
 
 
 # afad.txt is all files and directories (full path) with format:
@@ -56,9 +65,6 @@ previouslydone.txt.srt: previouslydone.txt
 # file/directory in one location and then move it, the program that
 # creates afad.txt tells me where it was backed up originally
 
-
-
-
 # On 8 May 2021, totally rewrote this to stop using pipes since that
 # means CPU has to keep multiple large files open at once
 
@@ -68,75 +74,33 @@ previouslydone.txt.srt: previouslydone.txt
 
 converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
 
-# limit sort memory, but to a high number
+afad.txt: $(converted) Makefile
+	$(nice) sort $(sortoptions) $(converted) > afad.txt
 
-afad.txt: ${converted}
-	sort -S 64G ${converted} > afad.txt
+# all files through the egrep filter
 
-# everything previously backed up on idrive, sorted by time, two steps
+afad-minus-egrep.txt: egrep-pure.txt afad.txt Makefile
+	$(nice) egrep -avf egrep-pure.txt afad.txt > afad-minus-egrep.txt
 
-previouslydone.txt.srt: previouslydone.txt
-	sort -S 64G -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
+# files excluded by egrep
 
-# remove previouslydone files from afad.txt and sort (two steps)
+excluded-by-egrep.txt: Makefile egrep-pure.txt afad.txt
+	$(nice) egrep -af egrep-pure.txt afad.txt > excluded-by-egrep.txt
 
-backup1.txt: afad.txt previouslydone.txt.srt
-	join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt > backup1.txt
+# and then by fgrep
 
-backup0.txt: backup1.txt
-	sort -S 64G -t '\0' -k2nr backup1.txt > backup0.txt
+afad-minus-egrep-fgrep.txt: Makefile fgrep-pure.txt afad-minus-egrep.txt
+	$(nice) fgrep -avf fgrep-pure.txt afad-minus-egrep.txt > afad-minus-egrep-fgrep.txt
 
+# files excluded by fgrep
 
-# | cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr > backup0.txt
-# COMMENTED OUT # 
+excluded-by-fgrep.txt: Makefile fgrep-pure.txt afad-minus-egrep.txt
+	fgrep -af fgrep-pure.txt afad-minus-egrep.txt > excluded-by-fgrep.txt
 
+# and then exclude previously excluded files
 
+afad-minus-egrep-fgrep-previous-backup.txt: Makefile afad-minus-egrep-fgrep.txt previouslydone.txt.srt
+	$(nice) join --check-order -a 1 -t '\0' afad-minus-egrep-fgrep.txt previouslydone.txt.srt | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-minus-egrep-fgrep-previous-backup.txt
 
-# COMMENTED OUT # 	cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr /root/massback-bulk/*.exclude | cpulimit -l 10 sort --parallel=1 -t '\0' -k1,1 -u > previouslydone.txt.srt
-# COMMENTED OUT # 
-
-
-
-
-
-
-
-# COMMENTED OUT # # TODO: cut down on pipes to limit CPU usage?
-# COMMENTED OUT # 
-# COMMENTED OUT # # I am assuming the converted files are up-to-date; in theory could
-# COMMENTED OUT # # check them against the *-files.txt files but don't want to rerun
-# COMMENTED OUT # # portions of bc-unix-dump.pl unnecessarily
-# COMMENTED OUT # 
-# COMMENTED OUT # # converted file lists on all drives I recognize
-# COMMENTED OUT # converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
-# COMMENTED OUT # 
-# COMMENTED OUT # # filelist.txt is the end product of all this
-# COMMENTED OUT # all: filelist.txt
-# COMMENTED OUT # 
-# COMMENTED OUT # # afad = all files, all directories
-# COMMENTED OUT # 
-# COMMENTED OUT # afad.txt: ${converted}
-# COMMENTED OUT # 	cpulimit -l 10 sort --parallel=1 ${converted} > afad.txt
-# COMMENTED OUT # 
-# COMMENTED OUT # # everything previously backed up, sorted
-# COMMENTED OUT # # TODO: assuming the *.exclude files are up-to-date, but should check for that
-# COMMENTED OUT # 
-# COMMENTED OUT # previouslydone.txt.srt:
-# COMMENTED OUT # 	cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr /root/massback-bulk/*.exclude | cpulimit -l 10 sort --parallel=1 -t '\0' -k1,1 -u > previouslydone.txt.srt
-# COMMENTED OUT # 
-# COMMENTED OUT # # the files bc-chunk-backup2 uses to determine what to back up
-# COMMENTED OUT # 
-# COMMENTED OUT # backup0.txt: afad.txt previouslydone.txt.srt
-# COMMENTED OUT # 	cpulimit -l 10 join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | cpulimit -l 10 sort --parallel=1 -t '\0' -k2nr > backup0.txt
-# COMMENTED OUT # 
-# COMMENTED OUT # # create exclusions egrep file from annotated file
-# COMMENTED OUT # exclusions.txt: exclusions-commented.txt
-# COMMENTED OUT # 	egrep -v '^\#|^ *$$' exclusions-commented.txt | perl -pnle 's/\$$/\0/' > exclusions.txt
-# COMMENTED OUT # 
-# COMMENTED OUT # # bc-chunk-backup2 creates statlist.txt and filelist.txt
-# COMMENTED OUT # # 100G restored to 10G on 5/8/18 as I resume non-hd backups
-# COMMENTED OUT # # I run bc-chunk-backup2 repeatedly, so it has a higher CPU limit
-# COMMENTED OUT # # same w/ bc-join-backup.pl
-# COMMENTED OUT # filelist.txt: exclusions.txt backup0.txt
-# COMMENTED OUT # 	cpulimit -l 10 egrep -avf exclusions.txt backup0.txt | cpulimit -l 100 bc-join-backup.pl | cpulimit -l 100 bc-chunk-backup2.pl --checkfile --limit=10,000,000,000 --debug
-# COMMENTED OUT # 
+filelist.txt: afad-minus-egrep-fgrep-previous-backup.txt
+	bc-chunk-backup3.pl --debug afad-minus-egrep-fgrep-previous-backup.txt
