@@ -54,9 +54,6 @@ previouslydone.txt: Makefile
 previouslydone.txt.srt: previouslydone.txt
 	$(nice) sort $(sortoptions) -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
 
-
-
-
 # afad.txt is all files and directories (full path) with format:
 #
 # filename NUL mtime NUL canon-filename NUL size
@@ -77,15 +74,20 @@ converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt
 afad.txt: $(converted) Makefile
 	$(nice) sort $(sortoptions) $(converted) > afad.txt
 
+# all files and directories minus those already backed up
+
+afad-not-yet-backed-up.txt: Makefile afad.txt previouslydone.txt.srt
+	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-not-yet-backed-up.txt
+
 # all files through the egrep filter
 
-afad-minus-egrep.txt: egrep-pure.txt afad.txt Makefile
-	$(nice) egrep -avf egrep-pure.txt afad.txt > afad-minus-egrep.txt
+afad-minus-egrep.txt: egrep-pure.txt afad-not-yet-backed-up.txt Makefile
+	$(nice) egrep -avf egrep-pure.txt afad-not-yet-backed-up.txt > afad-minus-egrep.txt
 
 # files excluded by egrep
 
-excluded-by-egrep.txt: Makefile egrep-pure.txt afad.txt
-	$(nice) egrep -af egrep-pure.txt afad.txt > excluded-by-egrep.txt
+excluded-by-egrep.txt: Makefile egrep-pure.txt afad-not-yet-backed-up.txt
+	$(nice) egrep -af egrep-pure.txt afad-not-yet-backed-up.txt > excluded-by-egrep.txt
 
 # and then by fgrep
 
@@ -99,8 +101,8 @@ excluded-by-fgrep.txt: Makefile fgrep-pure.txt afad-minus-egrep.txt
 
 # and then exclude previously excluded files
 
-afad-minus-egrep-fgrep-previous-backup.txt: Makefile afad-minus-egrep-fgrep.txt previouslydone.txt.srt
-	$(nice) join --check-order -a 1 -t '\0' afad-minus-egrep-fgrep.txt previouslydone.txt.srt | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-minus-egrep-fgrep-previous-backup.txt
+# afad-minus-egrep-fgrep-previous-backup.txt: Makefile afad-minus-egrep-fgrep.txt previouslydone.txt.srt
+#	$(nice) join --check-order -a 1 -t '\0' afad-minus-egrep-fgrep.txt previouslydone.txt.srt | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-minus-egrep-fgrep-previous-backup.txt
 
-filelist.txt: afad-minus-egrep-fgrep-previous-backup.txt
-	bc-chunk-backup3.pl --debug afad-minus-egrep-fgrep-previous-backup.txt
+filelist.txt: afad-minus-egrep-fgrep.txt
+	bc-chunk-backup3.pl --debug afad-minus-egrep-fgrep.txt
