@@ -92,7 +92,7 @@ roughly match in terms of time, number, length, etc
 
 TODO: i should have PDF version of all doordash receipts [doordash receipt files names do not match refnums, wow!]
 
-TODO: /usr/local/etc/tasks/ and subdirs should have no .new files
+TODO: /usr/local/etc/tasks/ and subdirs should have no .new files (or .txt or so on)
 
 TODO: in the ~/TODAY directory, there should be no files from the future (or older than 19-whatever)
 
@@ -303,3 +303,4 @@ TODO: for tasklists, make sure I complete at least one task per day per list exc
 TODO: /usr/local/etc/backups/ files should be fairly recent (daily backups of important files)
 
 TODO: xrefnum should cross check
+

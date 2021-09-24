@@ -14,7 +14,7 @@
 
 # the final target
 
-all: filelist.txt
+all: filelist.txt excluded-by-egrep.txt excluded-by-fgrep.txt
 
 # some variables in case we want to change things up
 
