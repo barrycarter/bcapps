@@ -216,6 +216,7 @@ zpaq
 idevsutil_linux
 
 # time and date tools
+rktime
 gcal
 rclock
 ical
@@ -690,6 +691,7 @@ device-mapper-libs
 libvirt
 
 # editors + text utilities
+figlet
 texlive
 lyx
 emacs
@@ -881,3 +883,4 @@ gnucash
 
 # TODO: "yum update" may help install some sources that require higher
 # versions of packages
+

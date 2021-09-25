@@ -10,7 +10,7 @@ require "$bclib{home}/bc-private.pl";
 # rewriting 27 Feb 2015 for a single file
 # see README for file format
 
-defaults("limit=25000000000&xmessage=1");
+defaults("limit=25,000,000,000&xmessage=1");
 $limit = $globopts{limit};
 
 # lets me use commas
@@ -28,7 +28,7 @@ while (<>) {
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
   if ($tot>=$limit) {last;}
 
-  my($name, $mtime, $oname, $size) = split(/\0/, $_);
+  my($oname, $mtime, $name, $size) = split(/\0/, $_);
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
