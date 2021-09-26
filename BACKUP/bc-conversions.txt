@@ -68,3 +68,7 @@
 # moving my twitch recordings
 
 "/mnt/lobos/TWITCH-MINE/" "/mnt/kemptown/TWITCH-MINE/"
+
+# moved where I do massbacks
+
+"/mnt/villa/massbacks/" "/mnt/paulists/massbacks/"

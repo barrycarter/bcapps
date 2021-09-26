@@ -150,8 +150,8 @@ sub handle_humana_ssrx {
 sub handle_bluebird {
   my($all) = @_;
 
-  $all=~/Card Number Ending in\s*\-\s*(\d+)$/m||warnlocal("BAD CARD#");;
-  my($num) = $1;
+  $all=~/Card( Number)? Ending in\s*\-\s*(\d+)$/m||warnlocal("BAD CARD#");
+  my($num) = $2;
 
   $all=~m%Statement Period \d{2}/\d{2}/\d{4} through (\d{2})/(\d{2})/(\d{4})$%m || warnlocal("BAD DATE");
 
