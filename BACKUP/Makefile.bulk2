@@ -105,4 +105,4 @@ excluded-by-fgrep.txt: Makefile fgrep-pure.txt afad-minus-egrep.txt
 #	$(nice) join --check-order -a 1 -t '\0' afad-minus-egrep-fgrep.txt previouslydone.txt.srt | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-minus-egrep-fgrep-previous-backup.txt
 
 filelist.txt: afad-minus-egrep-fgrep.txt
-	bc-chunk-backup3.pl --limit=10,000,000,000 --debug afad-minus-egrep-fgrep.txt
+	bc-chunk-backup3.pl --checkfile --limit=10,000,000,000 --debug afad-minus-egrep-fgrep.txt
