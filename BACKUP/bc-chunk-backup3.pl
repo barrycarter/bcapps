@@ -20,6 +20,7 @@ my($tot, $count);
 
 open(A,">filelist.txt");
 open(B,">statlist.txt");
+open(C,">doesnotexist.txt");
 
 while (<>) {
   chomp;
@@ -33,6 +34,7 @@ while (<>) {
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
   if ($globopts{checkfile} && !(-f $name)) {
+    print C "$name\n";
     warn("NOSUCHFILE: $name");
     next;
   }
@@ -60,7 +62,7 @@ debug("Used $count files to meet total, earliest ts: $mtime ($ptime)");
 # $count = 0;
 # while (<>) {if (++$count%100000==0) {debug("IGNORE COUNT: $count");}}
 
-close(A); close(B);
+close(A); close(B); close(C);
 
 # TODO: restore this
 # do this so we're not waiting on egrep

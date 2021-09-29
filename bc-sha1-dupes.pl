@@ -10,6 +10,8 @@
 
 require "/usr/local/lib/bclib.pl";
 
+warn "Ignoring files less than 100K bytes";
+
 while (<>) {
   m/^(.*?)\s+(.*?)$/;
   ($sha, $file) = ($1, $2);
