@@ -145,9 +145,9 @@ alias xephem "pushd .; cd /usr/local/xephem; \xephem & popd"
 
 alias bcgit "pushd .; cd ~/BCGIT; git add . && git commit && git pull -v && git push origin master; popd"
 
-# minor change to add advisory diff
+# minor change to add advisory diff (1 Oct 2021: added new/old repo)
 
-alias bcgit "pushd .; cd ~/BCGIT; git add . && git diff --cached --color=always | less -r && git commit && git pull -v && git push origin master; popd"
+alias bcgit "pushd .; cd ~/BCGIT; git add . && git diff --cached --color=always | less -r && git commit && git pull -v && git push origin master && git push origin2 master; popd"
 
 # this is for github pages https://barrycarter.github.io/pages/
 alias bcgitpages "pushd .; cd ~/BCGIT-PAGES/pages; git add .; git commit; git pull -v; git push origin master; popd"

@@ -27,8 +27,10 @@
 # this is the github server which I need to refer to as "bc.github"
 # ip changed before 7 Sep 2020
 
+# same for bc2.github
+
 # 192.30.253.122 bc.github
-140.82.114.3 bc.github
+140.82.114.3 bc.github bc2.github
 
 # Mario's Pizza (local) uses liquidcommon.com for their delivery
 # service, but the monkeys at liquidcommon.com fucked up their DNS so
