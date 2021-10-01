@@ -304,3 +304,4 @@ TODO: /usr/local/etc/backups/ files should be fairly recent (daily backups of im
 
 TODO: xrefnum should cross check
 
+TODO: in pw.txt should use full domain names as first field ("github.com" not just "github")
