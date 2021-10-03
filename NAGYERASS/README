@@ -305,3 +305,8 @@ TODO: /usr/local/etc/backups/ files should be fairly recent (daily backups of im
 TODO: xrefnum should cross check
 
 TODO: in pw.txt should use full domain names as first field ("github.com" not just "github")
+
+TODO: shipt order comments should mention which store I ordered from
+(eg, Target, Smith's, Dollar Store, etc) since shipt does not
+otherwise indicate this
+
