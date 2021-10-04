@@ -1,3 +1,26 @@
+Title: Weighted spherical polygonal Voronoi diagrams
+
+What points are 3 times closer to Missouri than to Kansas?
+
+Answering this question requires creating Voronoi diagrams on a
+sphere, where the "points" are actually polygons. Additionally,
+instead of simple equidistancing, we are using weighted
+distance. Wowsers!
+
+Note this project subsumes some of the other Voronoi projects below.
+
+====================================================================
+
+Title: Break this massive ugly git into smaller more correct gits
+
+My laziness led me to create everything I did in one git, which is now
+a huge mess. I should work on breaking out projects (and figuring out
+which ones are actually git worthy) and uploading them
+separately. This will automatically subsume the "fix git comments"
+project as well
+
+====================================================================
+
 Title: Redraw "states" to be Voronoi areas of largest metro areas
 
 Description: Attempts to answer
