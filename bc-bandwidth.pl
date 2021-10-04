@@ -17,6 +17,14 @@ my($oprx) = 99575773347;
 my($optx) = 34708223531;
 my($opdate) = str2time("Thu Sep 30 18:16:01 MDT 2021");
 
+# this is Comcast's limit on free bandwidth
+
+my($bwlimit) = 1229*10**9;
+
+# currently assuming 31 days for all months, perhaps adjust later
+
+my($days) = 31;
+
 debug("OP: $oprx, $optx, $opdate");
 
 ######## end config here ########
@@ -48,4 +56,20 @@ debug($rx, $tx);
 
 my($total) = $rx + $tx;
 
+my($optotal) = $oprx + $optx;
+
+my($used) = $total-$optotal;
+
+my($time) = $now-$opdate;
+
+# how much I would use in a month at this rate
+
+my($proj) = $used/$time*86400*$days;
+
+# print out how it compares to allowed usage, but also print out total
+# usage for month to date
+
+printf("Used: %0.2f GB\nProj: %0.2f%%\nCur: %0.2f%%\n", $used/10**9, $proj/$bwlimit*100, $used/$bwlimit*100);
+
+# TODO: add error alert if projected > 95%
 
