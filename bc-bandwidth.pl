@@ -13,9 +13,19 @@ my($iface) = "enp11s0";
 # TODO: I'm not sure what Xfinity considers "start of month" so
 # fudging with tese values for now
 
-my($oprx) = 99575773347;
-my($optx) = 34708223531;
-my($opdate) = str2time("Thu Sep 30 18:16:01 MDT 2021");
+# my($oprx) = 99575773347;
+# my($optx) = 34708223531;
+# my($opdate) = str2time("Thu Sep 30 18:16:01 MDT 2021");
+
+# my($oprx) = 100558729688;
+# my($optx) = 34791512372;
+# my($opdate) = str2time("Fri Oct  1 00:16:01 MDT 2021");
+
+# this is most accurate for some weird reason
+
+my($oprx) = 106819023137;
+my($optx) = 37568752594;
+my($opdate) = str2time("Fri Oct  1 08:16:02 MDT 2021");
 
 # this is Comcast's limit on free bandwidth
 
@@ -69,7 +79,7 @@ my($proj) = $used/$time*86400*$days;
 # print out how it compares to allowed usage, but also print out total
 # usage for month to date
 
-printf("Used: %0.2f GB\nProj: %0.2f%%\nCur: %0.2f%%\n", $used/10**9, $proj/$bwlimit*100, $used/$bwlimit*100);
+printf("Used: %0.2f GB (of %0.2f GB) in %0.2f days\nProj: %0.2f%%\nCur: %0.2f%%\n", $used/10**9, $bwlimit/10**9, ($now-$opdate)/86400, $proj/$bwlimit*100, $used/$bwlimit*100);
 
 # TODO: add error alert if projected > 95%
 
