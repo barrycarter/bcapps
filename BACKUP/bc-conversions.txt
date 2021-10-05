@@ -6,11 +6,10 @@
 # compression
 # 21 Jan 2018: hardening the dot and adding end-of-file marker
 
-"\.bz2$" ""
-"\.gz$" ""
-"\.tbz$" ".tar"
-"\.tgz$" ".tar"
-
+# "\.bz2$" ""
+# "\.gz$" ""
+".tbz" "\.tar$"
+".tgz" "\.tar$"
 
 # 12 Mar 2018: restarting backups, so commenting out all conversions
 # below (the ones above are still needed)
@@ -71,4 +70,4 @@
 
 # moved where I do massbacks
 
-"/mnt/villa/massbacks/" "/mnt/paulists/massbacks/"
+"/mnt/villa/massbacks/" "/mnt/paulista/massbacks/"
