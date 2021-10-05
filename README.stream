@@ -1,4 +1,4 @@
-Title: Weighted Spherical Polygonal Voronoi diagrams (Javascript)
+Title: Weighted Spherical Polygonal Voronoi diagrams (using Javascript and repl.it)
 
 Problem Example: Which points are 3 times to closer Illinois than they are
 to Iowa? In other words, find set of points P such that:
@@ -24,6 +24,10 @@ The general solution to this problem should solve a host of similar problems.
 Issues:
 
   - I don't know Javascript
+
+  - I don't know repl.it
+
+  - I don't know how to program
 
   - I don't know geography
 
