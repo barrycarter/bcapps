@@ -57,8 +57,8 @@ previouslydone.txt.srt: previouslydone.txt
 # from previouslydone.txt.srt create alternate names for files that
 # have also been backed up in theory
 
-previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile
-	$(nice) bc-prevdone2moredone.pl | sort -u > previouslydone.txt.srt.dupes
+previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile /home/user/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
+	$(nice) bc-prevdone2moredone.pl | sort $(sortoptions) -u > previouslydone.txt.srt.dupes
 
 # afad.txt is all files and directories (full path) with format:
 #
@@ -112,3 +112,8 @@ excluded-by-fgrep.txt: Makefile fgrep-pure.txt afad-minus-egrep.txt
 
 filelist.txt: afad-minus-egrep-fgrep.txt
 	bc-chunk-backup3.pl --checkfile --limit=10,000,000,000 --debug afad-minus-egrep-fgrep.txt
+
+# this creates filelist.txt faster, shows all files, but doesnt check if file exists
+
+filelistfast.txt: afad-minus-egrep-fgrep.txt
+	bc-chunk-backup3.pl --limit=10,000,000,000,000,000,00 --debug afad-minus-egrep-fgrep.txt
