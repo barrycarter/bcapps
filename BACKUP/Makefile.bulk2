@@ -54,6 +54,12 @@ previouslydone.txt: Makefile
 previouslydone.txt.srt: previouslydone.txt
 	$(nice) sort $(sortoptions) -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
 
+# from previouslydone.txt.srt create alternate names for files that
+# have also been backed up in theory
+
+previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile
+	$(nice) bc-prevdone2moredone.pl > previouslydone.txt.srt.dupes
+
 # afad.txt is all files and directories (full path) with format:
 #
 # filename NUL mtime NUL canon-filename NUL size
@@ -76,8 +82,8 @@ afad.txt: $(converted) Makefile
 
 # all files and directories minus those already backed up
 
-afad-not-yet-backed-up.txt: Makefile afad.txt previouslydone.txt.srt
-	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-not-yet-backed-up.txt
+afad-not-yet-backed-up.txt: Makefile afad.txt previouslydone.txt.srt.dupes
+	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt.dupes | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-not-yet-backed-up.txt
 
 # all files through the egrep filter
 

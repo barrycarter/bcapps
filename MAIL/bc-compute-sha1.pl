@@ -12,7 +12,7 @@ open(A,$fname)||die("Can't open $fname, $!");
 
 while (!eof(A)) {
   ($head, $body) = next_email_fh(A);
-  print sha1_hex($body),"\n";
+  print md5_hex($body),"\n";
 }
 
 
