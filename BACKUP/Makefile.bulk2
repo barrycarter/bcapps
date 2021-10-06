@@ -28,7 +28,7 @@ fgrep-pure.txt: Makefile fgrep-commented.txt
 	egrep -v '^\#|^ *$$' fgrep-commented.txt | perl -nle 'print "\0$$_\0"' > fgrep-pure.txt
 
 egrep-pure.txt: Makefile egrep-commented.txt
-	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "\0$$_\0"' > egrep-pure.txt
+	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "^$$_\0"' > egrep-pure.txt
 
 # find all the files I've previously backed up:
 #
@@ -62,28 +62,33 @@ previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile /home/user/BCGIT/B
 
 # afad.txt is all files and directories (full path) with format:
 #
-# filename NUL mtime NUL canon-filename NUL size
-#
-# where "canon-filename" is the canonized filenames: if I backup a
-# file/directory in one location and then move it, the program that
-# creates afad.txt tells me where it was backed up originally
+# filename NUL mtime NUL size
 
-# On 8 May 2021, totally rewrote this to stop using pipes since that
-# means CPU has to keep multiple large files open at once
+# as of 6 Oct 2021, alternate filenames are handled by
+# prevdone2moredone, so we can get afad.txt directly from "raw"
+# filelists
 
 # TODO: maybe use alternate temp directory for sort
 
-# converted file lists on all drives I recognize
+# file lists on all drives I recognize
 
-converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-converted.txt"')
+converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt | perl -anle 'print "$$F[0]/$$F[1]-files.txt"')
+
+# the $$F[0]=~s/\..*// removes fractions from timestamps
+# $F[4] is file type (directories excluded)
+
+# unhappy about piped sort below-- if this does bad things, consider
+# breaking into afad.txt and afad.txt.srt
 
 afad.txt: $(converted) Makefile
-	$(nice) sort $(sortoptions) $(converted) > afad.txt
+	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; unless ($$F[4]=~/^d$$/) {print "$$_\0$$F[0]\0$$F[1]"}' $(converted) | sort $(sortoptions) > afad.txt
+
+#	$(nice) sort $(sortoptions) $(converted) > afad.txt
 
 # all files and directories minus those already backed up
 
 afad-not-yet-backed-up.txt: Makefile afad.txt previouslydone.txt.srt.dupes
-	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt.dupes | perl -F'\0' -anle 'unless ($$F[1] eq $$F[4]) {print $$_}' > afad-not-yet-backed-up.txt
+	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt.dupes | perl -F'\0' -anle 'unless ($$F[1] eq $$F[3]) {print $$_}' > afad-not-yet-backed-up.txt
 
 # all files through the egrep filter
 

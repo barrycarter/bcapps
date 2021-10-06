@@ -8,8 +8,9 @@
 
 # "\.bz2$" ""
 # "\.gz$" ""
-".tbz" "\.tar$"
-".tgz" "\.tar$"
+
+".tbz" ".tar$"
+".tgz" ".tar$"
 
 # 12 Mar 2018: restarting backups, so commenting out all conversions
 # below (the ones above are still needed)
