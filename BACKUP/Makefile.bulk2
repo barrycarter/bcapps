@@ -58,7 +58,7 @@ previouslydone.txt.srt: previouslydone.txt
 # have also been backed up in theory
 
 previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile
-	$(nice) bc-prevdone2moredone.pl > previouslydone.txt.srt.dupes
+	$(nice) bc-prevdone2moredone.pl | sort -u > previouslydone.txt.srt.dupes
 
 # afad.txt is all files and directories (full path) with format:
 #
