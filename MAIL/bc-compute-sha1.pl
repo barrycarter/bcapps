@@ -6,11 +6,13 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# my($fname) = @ARGV;
+my($fname) = @ARGV;
 
-# open(A,$fname)||die("Can't open $fname, $!");
+open(A,$fname)||die("Can't open $fname, $!");
 
-($head, $body) = next_email_fh("");
+while (!eof(A)) {
+  ($head, $body) = next_email_fh(A);
+  print sha1_hex($body),"\n";
+}
 
-debug("HEAD", $head, "BODY", $body);
 
