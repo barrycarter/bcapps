@@ -38,8 +38,6 @@ while (<A>) {
   # always print out the original, gz, bz2
 
   print "$file\0$time\n";
-  print "$file.gz\0$time\n";
-  print "$file.bz2\0$time\n";
 
   # loop through regex
 

@@ -6,11 +6,14 @@
 # compression
 # 21 Jan 2018: hardening the dot and adding end-of-file marker
 
-# "\.bz2$" ""
-# "\.gz$" ""
+# always add .gz and .bz2 to all files
+".bz2" "$"
+".gz" "$"
 
 ".tbz" ".tar$"
 ".tgz" ".tar$"
+".tar" ".tbz$"
+".tar" ".tgz$"
 
 # 12 Mar 2018: restarting backups, so commenting out all conversions
 # below (the ones above are still needed)
