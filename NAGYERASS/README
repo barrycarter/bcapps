@@ -310,3 +310,20 @@ TODO: shipt order comments should mention which store I ordered from
 (eg, Target, Smith's, Dollar Store, etc) since shipt does not
 otherwise indicate this
 
+TODO: all shipt orders after certain date must have file in receipts (~/SCANS/RECEIPTS/shipt-order-number-store.html)
+
+TODO: all target/shipt orders should have the target order number (different from the shipt order number) in the db comments and in the html receipt
+
+TODO: all amazon orders that have both "subscribe" and "save" in comments should also have "auto-delivered:" (with some exceptions) [there are known errors here]
+
+TODO: all amazon orders should have "arrived [date]" except really old ones where I didn't track arrival
+
+TODO: move some daily-tests.tcsh to nagyerass dir (the ones that dont reveal private info) to show how its done
+
+TODO: rewards points table should never have more than one entry per month per card-- this rule may also apply to certain types of bills (when capped with an amount total)
+
+
+
+
+
+
