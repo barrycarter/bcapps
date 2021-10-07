@@ -57,8 +57,10 @@ previouslydone.txt.srt: previouslydone.txt
 # from previouslydone.txt.srt create alternate names for files that
 # have also been backed up in theory
 
+# TODO: shouldnt need cat here
+
 previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
-	$(nice) bc-prevdone2moredone.pl | sort $(sortoptions) -u > previouslydone.txt.srt.dupes
+	$(nice) cat previouslydone.txt.srt | bc-prevdone2moredone.pl | sort $(sortoptions) -u > previouslydone.txt.srt.dupes
 
 # afad.txt is all files and directories (full path) with format:
 #
