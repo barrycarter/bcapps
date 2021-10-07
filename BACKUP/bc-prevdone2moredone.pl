@@ -43,12 +43,11 @@ while (<A>) {
 
   for $j (@regex) {
     
-    # dont change $file directly
-    my($x) = $file;
+    # we now run the files through EACH regex, one at a time (order matters)
 
-    if ($x=~s/$j->[0]/$j->[1]/) {
-      debug("NEW: $file -> $x");
-      print "$x\0$time\n";
+    if ($file=~s/$j->[0]/$j->[1]/) {
+      debug("NEW: $file");
+      print "$file\0$time\n";
     }
   }
 }
