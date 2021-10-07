@@ -6,31 +6,27 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# read list of conversions in format: '"X" "Y"' where X (in quotes) is
-# where the file was originally backed up and Y (in quotes) is where
-# we pretend the file was also backedup; multiple Y's are allowed for
-# one X
+# read a list of regex substitutions in the format '"X" "Y"' where
+# regex Y is changed to string X (not sure why I thought I needed
+# hashes here); X is the current location of the file and Y is the old
+# location of the file (where it was when it was backed up)
 
-# in these files, order is "Y" "X", but we build hash from X to Y
 
-my(@converts) = `egrep -hv '^ *\$|^#' $bclib{githome}/BACKUP/bc-conversions.txt $bclib{home}/bc-conversions-private.txt`;
+my(@converts) = `egrep -hv '^ *\$|^#' $bclib{githome}/BACKUP/bc-conversions.txt $bclib{home}/BCPRIV/bc-conversions-private.txt`;
+
+my(@regex);
 
 for $i (@converts) {
     unless ($i=~/^\"(.*?)\" \"(.*?)\"$/) {die "BAD LINE: $_";}
 
-    # this is intentionally backwords
-    my($key, $val) = ($2, $1);
+    # push the from to (in that order to list of @regex
 
-    # hard dollar signs to nuls
-    $key=~s/\$/\0/;
-
-    $pretend{$key}=$val;
-
+    push(@regex, [$2, $1]);
   }
 
-for $i (sort keys %pretend) {debug("$i -> $pretend{$i}");}
+debug(@regex);
 
-# now read previouslydone.txt.srt and create version with fake backup locations
+# now read previouslydone.txt.srt and create version with fake backup locations (in other words, backup locations for where the files are now)
 
 open(A,"previouslydone.txt.srt")||die("Can't open previouslydone.txt.srt, $!");
 
@@ -45,14 +41,14 @@ while (<A>) {
   print "$file.gz\0$time\n";
   print "$file.bz2\0$time\n";
 
-  # loop through %pretend
+  # loop through regex
 
-  for $j (keys %pretend) {
-
-    # dont change $_ directly
+  for $j (@regex) {
+    
+    # dont change $file directly
     my($x) = $file;
 
-    if ($x=~s/$j/$pretend{$j}/) {
+    if ($x=~s/$j->[0]/$j->[1]/) {
       debug("NEW: $file -> $x");
       print "$x\0$time\n";
     }
