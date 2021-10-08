@@ -48,17 +48,24 @@ while (<>) {
   # always print out the original, gz, bz2
 
   print "$file\0$time\n";
+  print "$file.gz\0$time\n";
+  print "$file.bz2\0$time\n";
 
   # store the original filename since we have to run it through two lists
   my($origfile) = $file;
 
+  # because .gz and .bz2 extensions must occur "at same time" can't
+  # softcode them, must hardcode
+
   # loop through regex
 
   for $j (@pubregex) {
-    # we now run the files through EACH regex, one at a time (order matters)
+
     if ($file=~s/$j->[0]/$j->[1]/) {
       debug("$j->[0] -> $j->[1]");
       print "$file\0$time\n";
+      print "$file.gz\0$time\n";
+      print "$file.bz2\0$time\n";
     }
   }
 
@@ -67,10 +74,12 @@ while (<>) {
   debug("NOW PRIV");
 
   for $j (@privregex) {
-    # we now run the files through EACH regex, one at a time (order matters)
+
     if ($file=~s/$j->[0]/$j->[1]/) {
-      debug("$j->[0] -> $j->[1]");
+      debug("$j->[0] -> $j->[1]"); 
       print "$file\0$time\n";
+      print "$file.gz\0$time\n";
+      print "$file.bz2\0$time\n";
     }
   }
 }

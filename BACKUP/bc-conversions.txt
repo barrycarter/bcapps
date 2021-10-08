@@ -73,6 +73,6 @@
 ".tar" ".tbz$"
 ".tar" ".tgz$"
 
-# always add .gz and .bz2 to all files (at the very very end)
-".bz2" "$"
-".gz" "$"
+# always add .gz and .bz2 to all files (at the very very end) [later hardcoded]
+# ".bz2" "$"
+# ".gz" "$"
