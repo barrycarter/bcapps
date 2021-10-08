@@ -16,6 +16,11 @@
 
 all: filelist.txt excluded-by-egrep.txt excluded-by-fgrep.txt
 
+# and clean
+
+clean:
+	rm afad-minus-egrep.txt previouslydone.txt.srt.dupes afad-not-yet-backed-up.txt egrep-pure.txt excluded-by-egrep.txt excluded-by-fgrep.txt big-by-dir.txt big-by-file.txt statlist.txt filelist.txt doesnotexist.txt afad-minus-egrep-fgrep.txt afad.txt previouslydone.txt.srt previouslydone.txt fgrep-pure.txt
+
 # some variables in case we want to change things up
 
 nice = nice -n 19

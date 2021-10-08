@@ -45,17 +45,14 @@ while (<>) {
   chomp();
   my($file, $time) = split(/\0/, $_);
 
+  $origfile = $file;
+
   # always print out the original, gz, bz2
-
-  print "$file\0$time\n";
-  print "$file.gz\0$time\n";
-  print "$file.bz2\0$time\n";
-
-  # store the original filename since we have to run it through two lists
-  my($origfile) = $file;
 
   # because .gz and .bz2 extensions must occur "at same time" can't
   # softcode them, must hardcode
+
+  local_printfile($file, $time);
 
   # loop through regex
 
@@ -63,9 +60,7 @@ while (<>) {
 
     if ($file=~s/$j->[0]/$j->[1]/) {
       debug("$j->[0] -> $j->[1]");
-      print "$file\0$time\n";
-      print "$file.gz\0$time\n";
-      print "$file.bz2\0$time\n";
+      local_printfile($file, $time); 
     }
   }
 
@@ -77,12 +72,32 @@ while (<>) {
 
     if ($file=~s/$j->[0]/$j->[1]/) {
       debug("$j->[0] -> $j->[1]"); 
-      print "$file\0$time\n";
-      print "$file.gz\0$time\n";
-      print "$file.bz2\0$time\n";
+      local_printfile($file, $time); 
     }
   }
 }
 
 # TODO: use egrep to do this efficiently perhaps (but try going through all first?)
 
+# given a file and a time, print out file with time and also file.gz
+# and file.bz2 and if file ends in tbz/tgz/tar, all three of those as
+# well (putting here to avoid redundant code)
+
+sub local_printfile {
+
+  my($file, $time) = @_;
+
+  # the compressed versions
+
+  print "$file\0$time\n";
+  print "$file.gz\0$time\n";
+  print "$file.bz2\0$time\n";
+
+  # the tar bizarreness
+
+  if ($file=~s/\.(tar|tgz|tbz)$//) {
+      print "$file.tar\0$time\n";
+      print "$file.tgz\0$time\n";
+      print "$file.tbz\0$time\n";
+    }
+}

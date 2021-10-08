@@ -65,7 +65,7 @@
 
 # moved where I do massbacks
 
-"/mnt/villa/massbacks/" "/mnt/paulista/massbacks/"
+"/mnt/paulista/massbacks/" "/mnt/villa/massbacks/"
 
 # tar translations come after all the directory moving stuff
 ".tbz" ".tar$"
