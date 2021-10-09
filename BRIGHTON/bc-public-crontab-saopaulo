@@ -402,12 +402,15 @@ XWIDTH=1600
 * * * * * xrandr --size 1600x900
 
 # added 02 Aug 2021 to help compute network traffic usage (of just
-# this machine, but this is pretty much the only one i use)
+# this machine, but this is pretty much the only one i use) (removed 9 Oct 2021 after I get bc-bandwidth.pl going)
 
-16 * * * * ifconfig -a
+# 16 * * * * ifconfig -a
 
 # added 25 Aug 2021 to make sure I'm not not getting mail (double negative)
 
 # was not sure it would work quite like this, but it did
 
-1 3 * * * bc-getmail-log-check.pl  ~/getmail-*
+# tweaked 9 Oct 2021 to not check bzip2 files
+
+1 12 * * * ls ~/getmail-* | egrep -v '.bz2$' | xargs bc-getmail-log-check.pl
+
