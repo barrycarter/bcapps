@@ -126,7 +126,7 @@ handled directly in nagios.
 =cut
 
 sub bc_extras {
-  my(@files) = @_;
+  my(@files, $comment) = @_;
 
   # NOTE: we intentionally dont stop on first error
   my($count);
@@ -135,6 +135,41 @@ sub bc_extras {
     debug("I: $i");
     for $j (split(/\n/, read_file($i))) {
       if ($j=~/^\#/ || $j=~/^\s*$/) {next;}
+
+      # allow for commented regions in XML-y style
+
+      if ($j=~/^<\/(.*?)>$/) {
+
+	if ($comment eq $1) {
+	  debug("ending comment region $comment");
+	  $comment = "";
+	} else {
+	  debug("end comment does not match current comment (no nesting)");
+	  print "BAD COMMENTS!\n";
+	  return 2;
+	}
+
+	# we do not run end of comment
+	next;
+      }
+
+      if ($j=~/^<(.*?)>$/) {
+	$comment = $1;
+
+	# this SHOULD never happen
+
+	if ($comment=~/^\//) {
+	  debug("starting comment should not start with /");
+	  return 2;
+	}
+
+	debug("entering comment region $comment");
+      }
+
+      # if comment is set, ignore line
+
+      if ($comment) {debug("INSIDE COMMENT: $j"); next;}
+
       debug("", "RUNNING: $j");
       my($out,$err,$res) = cache_command2($j);
       debug("STDOUT: $out", "STDERR: $stderr");

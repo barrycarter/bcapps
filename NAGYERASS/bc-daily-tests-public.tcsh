@@ -1,13 +1,15 @@
-# The ": << HERE" format is not really for multiline comments, but it works
+# tcsh does NOT understand XML, but this file, despite its extension,
+# is ready by bc_extras() subroutine in Perl, which does understand
+# these fake XMLy comments
 
-: << HEADER
+<header>
 
 A list of tests I am making public on the off chance they might help
 someone
 
-HEADER
+</header>
 
-: << PASSWORD
+<password>
 
 My pw.txt holds my passwords and the first field represents where the
 password is used (except for empty lines, comments, lines starting
@@ -26,7 +28,7 @@ with the marker "OBSOLETE"). It must be one of the following:
 
 The last part of the pipe confirms there are no results (ie, no non-compliant strings)
 
-PASSWORD
+</password>
 
 egrep -v '^$|^#|^OBSOLETE:' ~/pw.txt | perl -anle 'unless ($F[0]=~m/\.(com|net|gov|org|tv|io|edu|us|it|de|hu|uk|biz|fm|to|se|ch|im|ca|co|info|lan|club|space)(\W|$)/ || $F[0]=~m/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?/ || $F[0]=~/\"|\[/) {print $_}' | perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY"; exit 2;} else {exit 0;}' 
 
