@@ -48,8 +48,8 @@ egrep-pure.txt: Makefile egrep-commented.txt
 #
 # 
 
-previouslydone.txt: Makefile
-	$(nice) sort $(sortoptions) -t '\0' -k2nr /root/massback-bulk/*.exclude | perl -nle 'print "\0$$_"' > previouslydone.txt
+previouslydone.txt: Makefile /root/massback-bulk/*.exclude
+	$(nice) sort $(sortoptions) -t '\0' -k2nr /root/massback-bulk/*.exclude > previouslydone.txt
 
 # find the most recent backup for each file in previouslydone.txt
 #
@@ -57,7 +57,7 @@ previouslydone.txt: Makefile
 #  to go through a second sort, so I do the below
 
 previouslydone.txt.srt: previouslydone.txt
-	$(nice) sort $(sortoptions) -t '\0' -k2,2 -u previouslydone.txt > previouslydone.txt.srt
+	$(nice) sort $(sortoptions) -t '\0' -k1,1 -u previouslydone.txt > previouslydone.txt.srt
 
 # from previouslydone.txt.srt create alternate names for files that
 # have also been backed up in theory
@@ -69,7 +69,7 @@ previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile /home/user/BCGIT/B
 
 # afad.txt is all files and directories (full path) with format:
 #
-# NUL filename NUL mtime NUL size
+# filename NUL mtime NUL size
 
 # as of 6 Oct 2021, alternate filenames are handled by
 # prevdone2moredone, so we can get afad.txt directly from "raw"
@@ -88,9 +88,7 @@ converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt
 # breaking into afad.txt and afad.txt.srt
 
 afad.txt: $(converted) Makefile
-	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; unless ($$F[4]=~/^d$$/) {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | sort $(sortoptions) > afad.txt
-
-#	$(nice) sort $(sortoptions) $(converted) > afad.txt
+	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "$$_\0$$F[0]\0$$F[1]"}' $(converted) | sort $(sortoptions) > afad.txt
 
 # all files and directories minus those already backed up
 
