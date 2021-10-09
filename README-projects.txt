@@ -1090,3 +1090,8 @@ that form the north and south poles if the great circle is the
 equator-- formula or something to find these points
 
 TODO: f(f(x)) = x^2 + 1 (using linear algebra)
+
+TODO: add existing completed projects I want to separate out into
+their own gits
+
+

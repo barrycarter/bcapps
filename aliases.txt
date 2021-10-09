@@ -502,3 +502,7 @@ alias bgtodo "grep HIGH: ~/BCPRIV/bgtodolist.txt | sort -R | head | less"
 # note that killall does not work for this, must use pkill
 
 alias killweb "sudo pkill Web; sudo pkill Priv; sudo pkill file:"
+
+# emacs in read only mode  (the --eval thing MUST come before filename(s))
+
+alias emacsro "emacs --eval '(setq buffer-read-only t)' \!* &"
