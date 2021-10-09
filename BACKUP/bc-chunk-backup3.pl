@@ -29,7 +29,7 @@ while (<>) {
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
   if ($tot>=$limit) {last;}
 
-  my($name, $mtime, $size) = split(/\0/, $_);
+  my($null, $name, $mtime, $size) = split(/\0/, $_);
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs

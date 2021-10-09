@@ -33,7 +33,7 @@ fgrep-pure.txt: Makefile fgrep-commented.txt
 	egrep -v '^\#|^ *$$' fgrep-commented.txt | perl -nle 'print "\0$$_\0"' > fgrep-pure.txt
 
 egrep-pure.txt: Makefile egrep-commented.txt
-	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "^$$_\0"' > egrep-pure.txt
+	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "\0$$_\0"' > egrep-pure.txt
 
 # find all the files I've previously backed up:
 #
@@ -93,7 +93,7 @@ afad.txt: $(converted) Makefile
 # all files and directories minus those already backed up
 
 afad-not-yet-backed-up.txt: Makefile afad.txt previouslydone.txt.srt.dupes
-	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt.dupes | perl -F'\0' -anle 'unless ($$F[2] eq $$F[4]) {print $$_}' > afad-not-yet-backed-up.txt
+	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt.dupes | perl -F'\0' -anle 'unless ($$F[1] eq $$F[3]) {print "\0$$_"}' > afad-not-yet-backed-up.txt
 
 # all files through the egrep filter
 
