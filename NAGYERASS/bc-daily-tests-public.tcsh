@@ -32,10 +32,15 @@ The last part of the pipe confirms there are no results (ie, no non-compliant st
 
 egrep -v '^$|^#|^OBSOLETE:' ~/pw.txt | perl -anle 'unless ($F[0]=~m/\.(com|net|gov|org|tv|io|edu|us|it|de|hu|uk|biz|fm|to|se|ch|im|ca|co|info|lan|club|space)(\W|$)/ || $F[0]=~m/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?/ || $F[0]=~/\"|\[/) {print $_}' | perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY"; exit 2;} else {exit 0;}' 
 
+<tcsh>
 
+None of my .tcsh scripts should have "then:" which means "then run the
+null command", because I mean simply "then" in these cases; in theory, could create a test like this for .sh files, but some of the ones other people create DO have "then:" correctly AND many of my .sh files are really tcsh files (which is bad for another reason)
 
+The perl -f is necessary because I don't want complaints when files don't exist (and I pipe the stderr to the stdout with |& to catch other errors).
 
+Of course, this script itself (which isn't a tcsh file but ends in .tcsh) is an exception
 
+</tcsh>
 
-
-
+bc-rev-search.pl .tcsh | perl -nle 'if (-f $_) {print $_}' | fgrep -v bc-daily-tests-public.tcsh | xargs grep then: |& perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY: $_"; exit 2;} else {exit 0;}'

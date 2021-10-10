@@ -324,7 +324,11 @@ TODO: rewards points table should never have more than one entry per month per c
 
 TODO: all messages in saved-messages-yyyy should have year yyyy
 
+TODO: shipt receipt does not tell me directly which store a given order comes from -- can use some methods to determine-- a good check would be some products are only available at some stores (store branded products), check these to confirm no errors
 
+TODO: I sometimes obtain the "target order number" from a shipt receipt, and may have added these manually at one point and automatically at another: ensure that no comments field has this text/number twice
+
+TODO: shipt receipts may indicate target order number by phrases such as "TRANSACTION NUMBER:" and possibly others-- make sure I catch all these
 
 
 
