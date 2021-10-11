@@ -17,7 +17,30 @@ My laziness led me to create everything I did in one git, which is now
 a huge mess. I should work on breaking out projects (and figuring out
 which ones are actually git worthy) and uploading them
 separately. This will automatically subsume the "fix git comments"
-project as well
+project as well.
+
+TODO: in all cases, check to see if projects exist on github already
+
+TODO: in all cases, make sure these are finished projects, not planned
+
+Projects worth re-gitting:
+
+compute planetary brightness, quasi-fit to known data
+
+list of conjunctions, including venus transits, venus-jupiter-regulus conjunctions (and other conjunctions involving fixed stars, not just planets)
+
+when planets change "houses" astrologically
+
+when planets change constellations astronomically
+
+official names and abbreviations of timezones (windows-fixed.txt)
+
+Projects NOT worth re-gitting:
+
+
+Projects I've reviewed but am not sure about re-gitting:
+
+
 
 ====================================================================
 
@@ -1090,8 +1113,5 @@ that form the north and south poles if the great circle is the
 equator-- formula or something to find these points
 
 TODO: f(f(x)) = x^2 + 1 (using linear algebra)
-
-TODO: add existing completed projects I want to separate out into
-their own gits
 
 

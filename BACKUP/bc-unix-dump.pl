@@ -63,9 +63,11 @@ print A "Ending rev: ",time(),"\n";
 # this is unnecessary, but harmless: create the "converted" version of
 # these files for backup purposes
 
-print A "Starting converted: ",time(),"\n";
-($out, $err, $res) = cache_command2("$bclib{githome}/BACKUP/bc-format2altformat2.pl $name-files.txt > $name-converted.txt");
-print A "Ending converted: ",time(),"\n";
+# as of 10 Oct 2021, this is no longer needed
+
+# print A "Starting converted: ",time(),"\n";
+# ($out, $err, $res) = cache_command2("$bclib{githome}/BACKUP/bc-format2altformat2.pl $name-files.txt > $name-converted.txt");
+# print A "Ending converted: ",time(),"\n";
 
 # log file close and move
 

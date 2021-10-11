@@ -93,7 +93,7 @@ afad.txt: $(converted) Makefile
 # all files and directories minus those already backed up
 
 afad-not-yet-backed-up.txt: Makefile afad.txt previouslydone.txt.srt.dupes
-	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt.dupes | perl -F'\0' -anle 'unless ($$F[1] eq $$F[3]) {print "\0$$_"}' > afad-not-yet-backed-up.txt
+	$(nice) join --check-order -a 1 -t '\0' afad.txt previouslydone.txt.srt.dupes | perl -F'\0' -anle 'print STDERR "GOT: $$_"; unless ($$F[1] eq $$F[3]) {print STDERR "MATCH FOUND"; print "\0$$_"}' > afad-not-yet-backed-up.txt
 
 # all files through the egrep filter
 
