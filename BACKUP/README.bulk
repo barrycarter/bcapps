@@ -10,8 +10,11 @@ cd /root/massback-bulk
 # this generates the list of backed up files from tar toc
 # pipe below to shell
 
+# the sort below is unnecessary, since I sort to create
+# previouslydone.txt.srt.dupes anyway
+
 \ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {
- print "bc-tar2exclude.pl $_ > $_.exclude"}'
+ print "bc-tar2exclude.pl $_ | sort > $_.exclude"}'
 
 # do this once to timestamp the backup, create a directory for this
 # backup, and copy the Makefile to this directory

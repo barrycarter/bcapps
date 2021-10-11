@@ -2,24 +2,13 @@
 
 # converts files into "tar tv --utc" format into backup-compatible
 # exclusion filse with lines like:
-# file\0mtime
+# file<TAB>mtime
+
+# the newer version does NOT use conversions, those are all handled at
+# the "dupes" level; it also won't work if filenames have tabs in
+# them, but thats just plain weird
 
 require "/usr/local/lib/bclib.pl";
-
-# read list of conversions
-open(A,"egrep -hv '^ *\$|^#' $bclib{githome}/BACKUP/bc-conversions.txt $bclib{home}/bc-conversions-private.txt|");
-
-my(%convert);
-
-while (<A>) {
-  chomp;
-  unless (/^\"(.*?)\" \"(.*?)\"$/) {die "BAD LINE: $_";}
-  $convert{$1} = $2;
-
-}
-
-# we're going to use convert a lot, no need to compute keys repeatedly
-my(@keys) = keys %convert;
 
 while (<>) {
   chomp;
@@ -28,12 +17,12 @@ while (<>) {
 
   $name = "/$name";
 
-  for $i (@keys) {$name=~s/$i/$convert{$i}/;}
-
   # convert \xxx to octal character
 
   $name=~s/\\(\d+)/chr(oct($1))/seg;
 
   $mtime = str2time("$date $time UTC");
-  print "$name\0$mtime\n";
+  print "$name\t$mtime\n";
 }
+
+# output should be sorted so I can use "sort -mu" when combining
