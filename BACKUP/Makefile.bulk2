@@ -64,7 +64,7 @@ previouslydone.txt.srt: Makefile /root/massback-bulk/*.exclude
 
 # TODO: need to change format of files-to-backup.txt to match prevdone
 files-to-backup.txt: Makefile $(converted) egrep-pure.txt fgrep-pure.txt
-		$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | tee file0.txt | egrep -avf egrep-pure.txt | tee file1.txt | fgrep -avf fgrep-pure.txt | tee file2.txt | perl -F'\0' -anle 'print "$$F[1]\t$$F[2]\0$$F[3]"' > files-to-backup.txt
+		$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -F'\0' -anle 'print "$$F[1]\t$$F[2]\0$$F[3]"' | $(nice) sort $(sortoptions) > files-to-backup.txt
 
 # sort $(sortoptions) > afad.txt
 
