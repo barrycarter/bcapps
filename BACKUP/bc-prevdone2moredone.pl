@@ -43,7 +43,7 @@ for $i (@privconvert) {
 while (<>) {
 
   chomp();
-  my($file, $time) = split(/\0/, $_);
+  my($file, $time) = split(/\t/, $_);
 
   $origfile = $file;
 
@@ -91,16 +91,16 @@ sub local_printfile {
 
   # for some reason I have 140K+ files that are .gz.bz2
 
-  print "$file\0$time\n";
-  print "$file.gz\0$time\n";
-  print "$file.bz2\0$time\n";
-  print "$file.gz.bz2\0$time\n";
+  print "$file\t$time\n";
+  print "$file.gz\t$time\n";
+  print "$file.bz2\t$time\n";
+  print "$file.gz.bz2\t$time\n";
 
   # the tar bizarreness
 
   if ($file=~s/\.(tar|tgz|tbz)$//) {
-      print "$file.tar\0$time\n";
-      print "$file.tgz\0$time\n";
-      print "$file.tbz\0$time\n";
+      print "$file.tar\t$time\n";
+      print "$file.tgz\t$time\n";
+      print "$file.tbz\t$time\n";
     }
 }
