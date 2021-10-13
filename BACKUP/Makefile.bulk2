@@ -83,7 +83,7 @@ files-to-backup.txt: Makefile $(converted) egrep-pure.txt fgrep-pure.txt
 # TODO: shouldnt need cat here
 
 previouslydone.txt.srt.dupes: previouslydone.txt.srt Makefile /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
-	$(nice) cat previouslydone.txt.srt | bc-prevdone2moredone.pl | sort $(sortoptions) -u > previouslydone.txt.srt.dupes
+	$(nice) bc-prevdone2moredone.pl previouslydone.txt.srt | sort $(sortoptions) -u > previouslydone.txt.srt.dupes
 
 # afad.txt is all files and directories (full path) with format:
 #
@@ -105,8 +105,16 @@ converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt
 # unhappy about piped sort below-- if this does bad things, consider
 # breaking into afad.txt and afad.txt.srt
 
-afad.txt: $(converted) Makefile
-	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "$$_\t$$F[0]\0$$F[1]"}' $(converted) | sort $(sortoptions) > afad.txt
+afad-minus-egrep-fgrep.txt: $(converted) Makefile
+	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' | tee afad-minus-egrep-fgrep.txt | perl -pnle 's/\0[^\0]*$$//' > afad-name-date-only.txt
+
+afad.txt.srt: afad.txt
+	$(nice) sort $(sortoptions) afad.txt > afad.txt.srt
+
+afad-name-date-only.txt.srt:
+	$(nice) sort $(sortoptions) afad-name-date-only.txt > afad-name-date-only.txt.srt
+
+# sort $(sortoptions) > afad.txt
 
 # all files and directories minus those already backed up
 
@@ -131,8 +139,8 @@ excluded-by-egrep.txt: Makefile egrep-pure.txt afad-not-yet-backed-up.txt
 
 # and then by fgrep
 
-afad-minus-egrep-fgrep.txt: Makefile fgrep-pure.txt afad-minus-egrep.txt
-	$(nice) fgrep -avf fgrep-pure.txt afad-minus-egrep.txt > afad-minus-egrep-fgrep.txt
+# afad-minus-egrep-fgrep.txt: Makefile fgrep-pure.txt afad-minus-egrep.txt
+#	$(nice) fgrep -avf fgrep-pure.txt afad-minus-egrep.txt > afad-minus-egrep-fgrep.txt
 
 # files excluded by fgrep
 

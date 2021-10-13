@@ -22,7 +22,7 @@ while (<>) {
   $name=~s/\\(\d+)/chr(oct($1))/seg;
 
   $mtime = str2time("$date $time UTC");
-  print "$name\t$mtime\n";
+  print "$name\0$mtime\n";
 }
 
 # output should be sorted so I can use "sort -mu" when combining

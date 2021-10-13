@@ -4,38 +4,23 @@
 # left for the month
 
 require "/usr/local/lib/bclib.pl";
+require "/home/barrycarter/BCPRIV/bc-private.pl";
 
-# TODO: these variables, representing the network interface and last
-# measured bandwidth and date, should be customizable (eg, in BCPRIV)
+# these variables are not private- since xfinity doesnt break out RX
+# and TX (and I don't really need to either, replacing with $opxfer)
 
-my($iface) = "enp11s0";
+my($iface) = $private{iface};
+my($optotal) = $private{bandwidth};
+my($opdate) = $private{bwtime};
 
-# TODO: I'm not sure what Xfinity considers "start of month" so
-# fudging with tese values for now
-
-# my($oprx) = 99575773347;
-# my($optx) = 34708223531;
-# my($opdate) = str2time("Thu Sep 30 18:16:01 MDT 2021");
-
-# my($oprx) = 100558729688;
-# my($optx) = 34791512372;
-# my($opdate) = str2time("Fri Oct  1 00:16:01 MDT 2021");
-
-# this is most accurate for some weird reason
-
-my($oprx) = 106819023137;
-my($optx) = 37568752594;
-my($opdate) = str2time("Fri Oct  1 08:16:02 MDT 2021");
-
-# this is Comcast's limit on free bandwidth
+# this is Comcast's limit on free bandwidth (TODO: put in priv?)
 
 my($bwlimit) = 1229*10**9;
 
 # currently assuming 31 days for all months, perhaps adjust later
+# TODO: make this more accurate
 
 my($days) = 31;
-
-debug("OP: $oprx, $optx, $opdate");
 
 ######## end config here ########
 
@@ -62,11 +47,7 @@ unless ($details=~/TX packets \d+\s+bytes\s+(\d+)/) {
 
 $tx = $1;
 
-debug($rx, $tx);
-
 my($total) = $rx + $tx;
-
-my($optotal) = $oprx + $optx;
 
 my($used) = $total-$optotal;
 
