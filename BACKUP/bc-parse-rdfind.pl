@@ -1,13 +1,18 @@
 #!/bin/perl
 
-# this is a oneoff program
+# this was intended as a oneoff program, but really isnt anymore
+
+# Options:
+
+# --samenametest=1: if I'm going to delete one of two files, the
+# filenames (excluding path) must match (defaults to true)
 
 # I tried to run rdfind as below:
 # sudo rdfind -dryrun true -removeidentinode false -makesymlinks true dir1 dir2
 # to free up disk space, but ran into issues. This program addresses
 # those issues, which are given in comments
 
-# by "output of above" I mean the "fix-xxx-advistory.txt" or whatever
+# by "output of above" I mean the "fix-xxx-advisory.txt" or whatever
 # the STDOUT is of above, not the results.txt file it creates
 
 # to make things even more efficient, results.txt.srt is generated as:
@@ -35,7 +40,7 @@ require "/usr/local/lib/bclib.pl";
 require "/home/user/bc-private.pl";
 
 # can take a while to run, so alert
-defaults("xmessage=1");
+defaults("xmessage=1&samenametest=1");
 
 # for permissions purposes (ugly!)
 if ($>) {die("Must be root");}
@@ -87,6 +92,8 @@ while (<A>) {
 #  debug("ASSIGNING $name to size $size");
 
   $size{$name} = $size;
+
+  debug("size{$name} -> $size");
 }
 
 my($bytes);
@@ -116,14 +123,14 @@ while (<>) {
   # <h>"my bad".. get it?</h>
   my($bad) = 0;
 
-#  debug("ALPHA",@f);
+  debug("ALPHA",@f);
 
   for $i (@f) {
 
-#    debug("BETA: $i, $size{$i}");
+    debug("BETA: $i, $size{$i}");
 
     # recsize = size as recorded by results.txt.srt above
-#    debug("FILE: $i, RECSIZE: $size{$i}");
+    debug("FILE: $i, RECSIZE: $size{$i}");
 
     # if recorded file size less than min, skip (this covers
     # nonpositive file size, even if lower isnt set)
@@ -133,7 +140,7 @@ while (<>) {
       $bad=1; last;
     }
 
-#    debug("GAMMA: $i");
+    debug("GAMMA: $i");
 
     # TODO: should this be somewhere else?
     unless ($i=~/[ -~]/) {
@@ -149,11 +156,15 @@ while (<>) {
 
   if ($bad) {next;}
 
+  debug("FETA: $_, $i");
+
   # recorded file sizes should agree
   unless ($size{$f[0]} == $size{$f[1]}) {
     debug("Recorded file sizes differ: $_");
     next;
   }
+
+  debug("GETA: $_, $i");
 
   # my restriction: the filename itself must match (because otherwise
   # you get all sorts of weird random links)
@@ -169,9 +180,11 @@ while (<>) {
     next;
   }
 
-  # unless names are equal move on
-#  warn "EQUAL NAME TEST TURNED OFF!";
-  unless ($n1 eq $n2) {next;}
+  # unless names are equal move on unless option allows it
+
+  unless (($n1 eq $n2) || !$globopts{samenametest}) {next;}
+
+  debug("HETA: $_, $i");
 
   # do the expensive lstat tests now
   unless (sep_but_equal(@f)) {
@@ -179,11 +192,16 @@ while (<>) {
     next;
   }
 
+
+  debug("DELTA: $i");
+
   # TODO: there is no test than the file sizes are equal to the
   # recorded file sizes, but maybe there should be
 
   # TODO: add personal filters here re what I do and dont want to remove
   choose_file(@f);
+
+  debug("EPSILON: $i");
 
   # this uses recorded file size, not actual, hmmm
   $bytes+= $size{$f[0]};
@@ -307,6 +325,8 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  if (renames(@files)) {return;}
 
   if (oldshit(@files)) {return;}
 
@@ -940,3 +960,23 @@ sub oldshit {
     }
   }
 }
+
+# renamed a bunch of files so I could bunzip2 to them without
+# collission-- this deletes the renamed versions when equal
+
+sub renames {
+  my(@files) = @_;
+
+  debug("RENAMES:", @files);
+
+  # the one that isn't renamed wins
+  for $i (0,1) {
+    if ($files[$i]=~m%\-renamed$% &&
+	!($files[1-$i]=~m%\-renamed$%)) {
+      print qq%sudo rm "$files[$i]"\n%;
+      print qq%echo keeping "$files[1-$i]"\n%;
+      return 1;
+    }
+  }
+}
+

@@ -51,8 +51,8 @@ egrep-pure.txt: Makefile egrep-commented.txt
 #
 # 
 
-previouslydone.txt.srt: Makefile /root/massback-bulk/*.exclude
-	$(nice) sort $(sortoptions) -mu /root/massback-bulk/*.exclude > previouslydone.txt.srt
+previouslydone.txt.dupes.srt: Makefile /root/massback-bulk/*.exclude
+	$(nice) sort $(sortoptions) -mu /root/massback-bulk/*.exclude | bc-prevdone2moredone.pl | sort $(sortoptions) -u > previouslydone.txt.dupes.srt
 
 # thinking that piping maybe *wasn't* my problem, get a list of files
 # with mtime and size, after egreping and fgreping out ones I don't
@@ -106,7 +106,9 @@ converted=$(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.txt
 # breaking into afad.txt and afad.txt.srt
 
 afad-minus-egrep-fgrep.txt: $(converted) Makefile
-	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' | tee afad-minus-egrep-fgrep.txt | perl -pnle 's/\0[^\0]*$$//' > afad-name-date-only.txt
+	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' | sort $(sortoptions) > afad-minus-egrep-fgrep.txt
+
+# | perl -pnle 's/\0[^\0]*$$//' > afad-name-date-only.txt
 
 afad.txt.srt: afad.txt
 	$(nice) sort $(sortoptions) afad.txt > afad.txt.srt
@@ -159,3 +161,26 @@ filelist.txt: afad-minus-egrep-fgrep.txt
 
 filelistfast.txt: afad-minus-egrep-fgrep.txt
 	bc-chunk-backup3.pl --limit=10,000,000,000,000,000,00 --debug afad-minus-egrep-fgrep.txt
+
+######## dangerous /dev/shm experimentation
+
+/dev/shm/back1: $(converted) Makefile
+	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) > /dev/shm/back1
+
+###### and piecewise again
+
+part1: $(converted) Makefile
+	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > part1
+
+part2: part1
+	$(nice) sort $(sortoptions) part1 -o part2
+
+part3: Makefile /root/massback-bulk/*.exclude
+	$(nice) sort $(sortoptions) -mu /root/massback-bulk/*.exclude > part3
+
+part4: part3
+	$(nice) bc-prevdone2moredone.pl part3 > part4
+
+part5: part4
+	$(nice) sort $(sortoptions) -u part4 -o part5
+

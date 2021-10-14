@@ -21,7 +21,13 @@ my($section) = $globopts{section};
 
 # $data=~m%<$section[^>]%;
 
-$data=~m%<$section[^>]*>(.*?)<\/$globopts{section}>%s||die("No section $section");
+# 14 Oct 2021: if section has any other key/vals in header, there must
+# be at least one space between the section name and those key/vals
+# (caused glitch on 14 Oct 2021)
+
+# TODO: had to remove key/val section entirely, fix
+
+$data=~m%<$section>(.*?)<\/$globopts{section}>%s||die("No section $section");
 
 my($list) = $1;
 
