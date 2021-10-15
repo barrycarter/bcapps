@@ -44,3 +44,14 @@ Of course, this script itself (which isn't a tcsh file but ends in .tcsh) is an 
 </tcsh>
 
 bc-rev-search.pl .tcsh | perl -nle 'if (-f $_) {print $_}' | fgrep -v bc-daily-tests-public.tcsh | xargs grep then: |& perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY: $_"; exit 2;} else {exit 0;}'
+
+<tello>
+
+I force myself to annotate any bills (not credits) from tello, my cell
+phone service provider, but allow myself a one month grace period to
+do so
+
+</tello>
+
+check_mysql_query -d test -c 0:0 -q "SELECT COUNT(*) FROM bc_budget_view WHERE description RLIKE 'tello' AND date <= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND LENGTH(IFNULL(comments,'')) < 300 AND amount < 0"
+
