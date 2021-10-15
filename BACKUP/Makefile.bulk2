@@ -19,7 +19,7 @@ all: filelist.txt excluded-by-egrep.txt excluded-by-fgrep.txt
 # and clean
 
 clean:
-	rm afad-minus-egrep.txt previouslydone.txt.srt.dupes afad-not-yet-backed-up.txt egrep-pure.txt excluded-by-egrep.txt excluded-by-fgrep.txt big-by-dir.txt big-by-file.txt statlist.txt filelist.txt doesnotexist.txt afad-minus-egrep-fgrep.txt afad.txt previouslydone.txt.srt previouslydone.txt fgrep-pure.txt
+	rm afad-minus-egrep.txt previouslydone.txt.srt.dupes afad-not-yet-backed-up.txt egrep-pure.txt excluded-by-egrep.txt excluded-by-fgrep.txt big-by-dir.txt big-by-file.txt statlist.txt filelist.txt doesnotexist.txt afad-minus-egrep-fgrep.txt afad.txt previouslydone.txt.srt previouslydone.txt fgrep-pure.txt part[1234567] egrep-semi-pure.txt *~
 
 # some variables in case we want to change things up
 
@@ -35,8 +35,10 @@ fgrep-pure.txt: Makefile fgrep-commented.txt
 # the "commented" egrep file may have comments or blank lines in them; this
 # removes them and creates the "pure" version
 
+# egrep-semi-pure.txt lets me test regex against big by dir
+
 egrep-pure.txt: Makefile egrep-commented.txt
-	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "^\0$$_\0"' > egrep-pure.txt
+	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "^\0$$_\0"' > egrep-pure.txt; egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print " $$_\$$"' > egrep-semi-pure.txt; 
 
 # find all the files I've previously backed up:
 #
@@ -169,11 +171,14 @@ filelistfast.txt: afad-minus-egrep-fgrep.txt
 
 ###### and piecewise again
 
-part1: $(converted) Makefile
+part1: $(converted) Makefile egrep-pure.txt fgrep-pure.txt
 	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > part1
 
+# the -u here shouldn't be necessary because each file should appear
+# only once (but things get f'd up sometimes)
+
 part2: part1
-	$(nice) sort $(sortoptions) part1 -o part2
+	$(nice) sort $(sortoptions) -u part1 -o part2
 
 part3: Makefile /root/massback-bulk/*.exclude
 	$(nice) sort $(sortoptions) -mu /root/massback-bulk/*.exclude > part3
@@ -184,3 +189,14 @@ part4: part3
 part5: part4
 	$(nice) sort $(sortoptions) -u part4 -o part5
 
+part6: part2 part5
+	perl -pnle 's/\0[^\0]*$$//' part2 | comm -23 - part5 > part6
+
+statlist.txt: part6 part2
+	join -t '\0' -o '2.1 2.2 2.3' part6 part2 | bc-chunk-backup3.pl --limit=10,000,000,000,000,000,000 --debug
+
+big-by-dir.txt: statlist.txt
+	bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt
+
+big-by-file.txt: statlist.txt
+	sort -k1nr statlist.txt > big-by-file.txt
