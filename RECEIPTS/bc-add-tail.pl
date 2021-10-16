@@ -24,10 +24,10 @@ while (<A>) {
 
   $count++;
 
-  # if the line ends in a number, add it and print the line
-  # things like 5*100 count as numbers
+  # if the line ends in a number (with preceding spaces), add it and
+  # print the line things like 5*100 count as numbers
 
-  unless (/([\-\.\d\*]+)$/) {next;}
+  unless (/\s+([\-\.\d\*]+)$/) {next;}
 
   my($val) = eval($1);
 
