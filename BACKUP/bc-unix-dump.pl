@@ -25,7 +25,7 @@ print A "Starting dump: ",time(),"\n";
 # ugly hack to avoid //
 if ($dir eq "/") {$dir="";}
 
-my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@ %s %i %m %y %g %u %D %p\n\" >> $name-files.txt.new");
+my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@ %s %i %m %y %g %u %D %p\\0\n\" >> $name-files.txt.new");
 
 print A "Dump ends: ",time(),"\n";
 
@@ -43,6 +43,10 @@ while (<B>) {
   debug("BETA: $_");
   chomp;
   s%^.*?\/%/%;
+
+  # if this line doesnt end with NUL skip it (problem)
+  unless (s%\0$%%) {next;}
+
   debug("ALPHA: $_");
   # must assign to scalar, grumble
   # and can't even do my($rev) = , because that's list context
