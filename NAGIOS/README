@@ -24,6 +24,9 @@ The following command shows Internet outages to report to Comcast/Xfinity:
 
 sudo tac /var/nagios/nagios.log | fgrep -i 'google;DOWN;HARD' | less
 
+sudo fgrep -i 'google;DOWN;HARD' /var/nagios/nagios.log 
+ /var/nagios/archives/*.log | less
+
 (there aren't many, but the 5 minute check interval means 50 minutes
 of outages before this kicks in)
 
