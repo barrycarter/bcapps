@@ -55,3 +55,14 @@ do so
 
 check_mysql_query -d test -c 0:0 -q "SELECT COUNT(*) FROM bc_budget_view WHERE description RLIKE 'tello' AND date <= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND LENGTH(IFNULL(comments,'')) < 300 AND amount < 0"
 
+<gmailspace>
+
+I have a section in THE_FILE that tells me how much space each of my
+google accounts is using (noted down manually); this insanely
+pointless test confirms these lines all have the same format:
+
+yyyymmdd.hhmmss account_name_possibly_with_@_sign "using" (numerical) GB of 15 GB
+
+</gmailspace>
+
+bc-section-checklist.pl --stdout --section=gmailspace ~/THE_FILE | egrep -v '^$|^20[0-2][0-9][0-1][0-9][0-3][0-9]\.[0-2][0-9][0-5][0-9][0-5][0-9] [0-9a-z\.\@]+ using [0-9\.]+ GB of 15 GB$' |& perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY: $_"; exit 2;} else {exit 0;}'
