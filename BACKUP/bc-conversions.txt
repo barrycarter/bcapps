@@ -48,10 +48,13 @@
 # "/mnt/extdrive5/FROMBRIGHTON/mnt/extdrive7/root/VirtualBox VMs/" "/root/VirtualBox VMs/"
 
 # moved VirtualBox VMs from /mnt/villa to /mnt/lobos to free up space
-"/mnt/lobos/VirtualBox VMs/" "/mnt/villa/VirtualBox VMs/"
+
+# later: all of lobos moved to paulista as lobos starts to fail
+
+"/mnt/paulista/lobos/VirtualBox VMs/" "/mnt/villa/VirtualBox VMs/"
 
 # moved CDRs from SSD to lobos
-"/mnt/lobos/CDR/" "/CDR/"
+"/mnt/paulista/lobos/CDR/" "/CDR/"
 
 # after dropping dropbox (no pun intended)
 "/mnt/villa/user/DROPBOX-OLD-ACCOUNTS/" "/mnt/villa/user/DROPBOX/"
@@ -61,7 +64,7 @@
 
 # moving my twitch recordings
 
-"/mnt/lobos/TWITCH-MINE/" "/mnt/kemptown/TWITCH-MINE/"
+"/mnt/paulista/lobos/TWITCH-MINE/" "/mnt/kemptown/TWITCH-MINE/"
 
 # moved where I do massbacks
 
