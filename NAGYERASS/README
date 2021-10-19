@@ -335,3 +335,5 @@ TODO: any '$' in any Makefile should either be followed by parenthesis or anothe
 TODO: javascript files cannot use '#' as comment, so any instances of '#' as first character in my code are bad UNLESS they are '#!' for node or similar; a possible test (but hideous and takes forever and is limited to git-controlled directories; searching for ALL .js files takes "forever"):
 
 bc-rev-search.pl /.git | perl -nle 's/\.git$//; if (-d $_) {print "find \"$_\" -type f -iname \47*.js\47"}' | sh | xargs egrep '^#[^\!]'
+
+TODO: any place where I list gmail accounts (eg, gmailspace section) make sure they are not misspelled (ie, match a list of known good accounts)

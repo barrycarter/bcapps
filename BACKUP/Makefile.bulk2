@@ -175,7 +175,7 @@ filelistfast.txt: afad-minus-egrep-fgrep.txt
 # fgrep files that don't need to be backedup
 
 allfiles-minus-egrep-fgrep.txt: $(converted) Makefile egrep-pure.txt fgrep-pure.txt
-	$(nice) bc-filelist4backup.pl $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt > allfiles-minus-egrep-fgrep.txt
+	$(nice) bc-filelist4backup.pl $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > allfiles-minus-egrep-fgrep.txt
 
 # the -u here shouldn't be necessary because each file should appear
 # only once (but things get f'd up sometimes)
