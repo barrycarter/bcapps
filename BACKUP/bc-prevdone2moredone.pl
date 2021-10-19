@@ -20,17 +20,17 @@ my(@pubregex, @privregex);
 
 for $i (@pubconvert) {
   unless ($i=~/^\"(.*?)\" \"(.*?)\"$/) {die "BAD LINE: $_";}
-  
+
   # push the from to (in that order to list of @regex
-  
+
   push(@pubregex, [$2, $1]);
 }
 
 for $i (@privconvert) {
   unless ($i=~/^\"(.*?)\" \"(.*?)\"$/) {die "BAD LINE: $_";}
-  
+
   # push the from to (in that order to list of @regex
-  
+
   push(@privregex, [$2, $1]);
 }
 
@@ -91,16 +91,16 @@ sub local_printfile {
 
   # for some reason I have 140K+ files that are .gz.bz2
 
-  print "$file\0$time\n";
-  print "$file.gz\0$time\n";
-  print "$file.bz2\0$time\n";
-  print "$file.gz.bz2\0$time\n";
+  print "\0$file\0$time\n";
+  print "\0$file.gz\0$time\n";
+  print "\0$file.bz2\0$time\n";
+  print "\0$file.gz.bz2\0$time\n";
 
   # the tar bizarreness
 
   if ($file=~s/\.(tar|tgz|tbz)$//) {
-      print "$file.tar\0$time\n";
-      print "$file.tgz\0$time\n";
-      print "$file.tbz\0$time\n";
+      print "\0$file.tar\0$time\n";
+      print "\0$file.tgz\0$time\n";
+      print "\0$file.tbz\0$time\n";
     }
 }

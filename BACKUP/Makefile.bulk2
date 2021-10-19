@@ -171,17 +171,29 @@ filelistfast.txt: afad-minus-egrep-fgrep.txt
 
 ###### and piecewise again
 
-part1: $(converted) Makefile egrep-pure.txt fgrep-pure.txt
-	$(nice) perl -anle 's%.*?/%/%; $$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "\0$$_\0$$F[0]\0$$F[1]"}' $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > part1
+# this is a list of allfiles on my drives excluding those in egrep and
+# fgrep files that don't need to be backedup
+
+allfiles-minus-egrep-fgrep.txt: $(converted) Makefile egrep-pure.txt fgrep-pure.txt
+	$(nice) bc-filelist4backup.pl $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt > allfiles-minus-egrep-fgrep.txt
 
 # the -u here shouldn't be necessary because each file should appear
 # only once (but things get f'd up sometimes)
 
-part2: part1
-	$(nice) sort $(sortoptions) -u part1 -o part2
+allfiles-minus-egrep-fgrep.txt.srt: allfiles-minus-egrep-fgrep.txt
+	$(nice) sort $(sortoptions) -u allfiles-minus-egrep-fgrep.txt -o allfiles-minus-egrep-fgrep.txt.srt
 
-part3: Makefile /root/massback-bulk/*.exclude
-	$(nice) sort $(sortoptions) -mu /root/massback-bulk/*.exclude > part3
+# all files previously backed up, with original backup names and then dupes
+
+previouslydone.dupes.txt: Makefile /root/massback-bulk/*.exclude
+	$(nice) bc-prevdone2moredone.pl /root/massback-bulk/*.exclude > previouslydone.dupes.txt
+
+previouslydone.dupes.txt.srt: previouslydone.dupes.txt
+	$(nice) sort $(sortoptions) -u previouslydone.dupes.txt -o previouslydone.dupes.txt.srt
+
+# perl -F'\0' -anle 'print "\0$F[1]\0$F[2]"' allfiles-minus-egrep-fgrep.txt.srt | comm -23 - previouslydone.dupes.txt.srt > temp0.txt &
+
+
 
 part4: part3
 	$(nice) bc-prevdone2moredone.pl part3 > part4
