@@ -337,3 +337,5 @@ TODO: javascript files cannot use '#' as comment, so any instances of '#' as fir
 bc-rev-search.pl /.git | perl -nle 's/\.git$//; if (-d $_) {print "find \"$_\" -type f -iname \47*.js\47"}' | sh | xargs egrep '^#[^\!]'
 
 TODO: any place where I list gmail accounts (eg, gmailspace section) make sure they are not misspelled (ie, match a list of known good accounts)
+
+TODO: could ask test that google space usage is nowhere near limit?

@@ -33,7 +33,8 @@ setenv QTINC $QTDIR/include
 setenv QTLIB $QTDIR/lib
 
 # less preferences (and make it default pager)
-setenv LESS -eiMu
+# -f = open binary files without prompting
+setenv LESS -eiMuf
 setenv PAGER less
 
 # avoid overwriting when possible

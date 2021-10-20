@@ -191,6 +191,16 @@ previouslydone.dupes.txt: Makefile /root/massback-bulk/*.exclude /home/user/BCGI
 previouslydone.dupes.txt.srt: previouslydone.dupes.txt
 	$(nice) sort $(sortoptions) -u previouslydone.dupes.txt -o previouslydone.dupes.txt.srt
 
+# the reversed files don't really contribute to backup but make it
+# easier to seach for files by ending part/path instead of full name
+# (including time for reference); rev does not handle nulls well
+
+previouslydone.dupes.rev: previouslydone.dupes.txt
+	perl -F'\0' -anle 'print "$F[1]\t$F[0]"' previouslydone.dupes.txt | rev > previouslydone.dupes.rev
+
+previouslydone.dupes.rev.srt: previouslydone.dupes.rev
+	$(nice) sort $(sortoptions) previouslydone.dupes.rev -o previouslydone.dupes.rev.srt
+
 filestobackup.txt: previouslydone.dupes.txt.srt allfiles-minus-egrep-fgrep.txt.srt
 	perl -F'\0' -anle 'print "$F[0]\0$F[1]"' allfiles-minus-egrep-fgrep.txt.srt | comm -23 - previouslydone.dupes.txt.srt > filestobackup.txt
 
