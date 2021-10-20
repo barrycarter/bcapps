@@ -63,6 +63,20 @@ pointless test confirms these lines all have the same format:
 
 yyyymmdd.hhmmss account_name_possibly_with_@_sign "using" (numerical) GB of 15 GB
 
+and then prints out the "account_name_possibly_with_@_sign" field and compares it to a list of known good gmail accounts from pw.txt
+
 </gmailspace>
 
-bc-section-checklist.pl --stdout --section=gmailspace ~/THE_FILE | egrep -v '^$|^20[0-2][0-9][0-1][0-9][0-3][0-9]\.[0-2][0-9][0-5][0-9][0-5][0-9] [0-9a-z\.\@]+ using [0-9\.]+ GB of 15 GB$' |& perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY: $_"; exit 2;} else {exit 0;}'
+egrep '^gmail.com ' ~/pw.txt | perl -anle 'print $F[1]' >! /tmp/allgoogle.txt; bc-section-checklist.pl --stdout --section=gmailspace ~/THE_FILE | egrep -v '^$' | perl -anle 'unless (/^20[0-2][0-9][0-1][0-9][0-3][0-9]\.[0-2][0-9][0-5][0-9][0-5][0-9] ([0-9a-z\.\@]+) using [0-9\.]+ GB of 15 GB$/) {die "BAD LINE: $_"} else {print "$1"}' | fgrep -xvf /tmp/allgoogle.txt |& perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY: $_"; exit 2;} else {exit 0;}'
+
+<pwrepeats>
+
+This will test if I have repeated passwords in pw.txt but isn't working at the moment:
+
+egrep -v '^#|^$|^OBSOLETE: ' ~/pw.txt | perl -anle 'print $F[2]' | sort | uniq -d | fgrep -f - ~/pw.txt | egrep -v '^#|^$|^OBSOLETE' | less
+
+egrep -v '^#|^$|^OBSOLETE: |^\"' ~/pw.txt | perl -anle 'print $F[2]' | sort | uniq -d | egrep -v '^\[|barry' | fgrep -v '[secure' | tee /tmp/output.txt | fgrep -f - ~/pw.txt | egrep -v '^#|^$|^OBSOLETE' | less
+
+TODO: do check lines that start with quotation marks, mark and exclude accounts that no longer appear to work
+
+</pwrepeats>

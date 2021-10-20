@@ -51,6 +51,8 @@
 
 # later: all of lobos moved to paulista as lobos starts to fail
 
+"/mnt/paulista/lobos/" "/mnt/lobos/"
+
 "/mnt/paulista/lobos/VirtualBox VMs/" "/mnt/villa/VirtualBox VMs/"
 
 # moved CDRs from SSD to lobos

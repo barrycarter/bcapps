@@ -5,7 +5,9 @@
 /mnt/villa villa
 
 # as of 19 Oct 2021, lobos is dying and may or may not be restored
-# /mnt/lobos lobos
+# resotred later same day
+
+/mnt/lobos lobos
 
 
 # kemptown recovered from brighton 11/24/2017ish
