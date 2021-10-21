@@ -3,6 +3,7 @@
 # version 3 uses the format for afad-minus-egrep-fgrep-previous-backup.txt
 
 # --checkfile: check that each file actually exists (slow)
+# --limit=25,000,000,000: limit to this many bytes total
 
 require "/usr/local/lib/bclib.pl";
 require "$bclib{home}/bc-private.pl";
