@@ -8,13 +8,26 @@ require "/usr/local/lib/bclib.pl";
 
 my($phrase, $file) = @ARGV;
 
-my($rev) = reverse($phrase);
+# note that `my($rev) = reverse($phrase)` won't work because $rev is
+# treated in a list context, wow!
+
+$phrase = reverse($phrase);
+
+debug("REV: $rev");
 
 # TODO: at some point cache_command should use the correct
 # multi-argument syntax for system
 
-my($out, $err, $res) = cache_command2("bc-sgrep.pl $rev $file");
+debug("COMMAND: bc-sgrep.pl $phrase $file");
 
-debug("OUT: $out");
+my($out, $err, $res) = cache_command2("bc-sgrep.pl $phrase $file");
+
+$out = reverse($out);
+
+print $out;
+
+# TODO: this should be able to give multiple results when needed
+
+
 
 
