@@ -185,8 +185,8 @@ allfiles-minus-egrep-fgrep.txt.srt: allfiles-minus-egrep-fgrep.txt
 
 # all files previously backed up, with original backup names and then dupes
 
-previouslydone.dupes.txt: Makefile /root/massback-bulk/*.exclude /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
-	$(nice) bc-prevdone2moredone.pl /root/massback-bulk/*.exclude > previouslydone.dupes.txt
+previouslydone.dupes.txt: Makefile /root/massback-bulk/*.toc /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
+	$(nice) bc-tar2exclude.pl /root/massback-bulk/*.toc | bc-prevdone2moredone.pl /root/massback-bulk/*.exclude > previouslydone.dupes.txt
 
 previouslydone.dupes.txt.srt: previouslydone.dupes.txt
 	$(nice) sort $(sortoptions) -u previouslydone.dupes.txt -o previouslydone.dupes.txt.srt
@@ -196,22 +196,28 @@ previouslydone.dupes.txt.srt: previouslydone.dupes.txt
 # (including time for reference); rev does not handle nulls well
 
 previouslydone.dupes.rev: previouslydone.dupes.txt
-	perl -F'\0' -anle 'print "$F[1]\t$F[0]"' previouslydone.dupes.txt | rev > previouslydone.dupes.rev
+	perl -F'\0' -anle 'print "$$F[1]\t$$F[0]"' previouslydone.dupes.txt | perl -nle 'chomp; print join("", reverse(split(//, $_)))' > previouslydone.dupes.rev
 
 previouslydone.dupes.rev.srt: previouslydone.dupes.rev
 	$(nice) sort $(sortoptions) previouslydone.dupes.rev -o previouslydone.dupes.rev.srt
 
-filestobackup.txt: previouslydone.dupes.txt.srt allfiles-minus-egrep-fgrep.txt.srt
-	perl -F'\0' -anle 'print "$F[0]\0$F[1]"' allfiles-minus-egrep-fgrep.txt.srt | comm -23 - previouslydone.dupes.txt.srt > filestobackup.txt
+# TODO: can probably combine filestobackup.txt and filestobackup-plus.txt
 
-filestobackup-plus.txt: filestobackup.txt allfiles-minus-egrep-fgrep.txt.srt
-	perl -pnle 's/\0.*//' filestobackup.txt | join -t '\0' - allfiles-minus-egrep-fgrep.txt.srt > filestobackup-plus.txt
-
-	
+filestobackup-plus.txt: previouslydone.dupes.txt.srt allfiles-minus-egrep-fgrep.txt.srt
+	perl -F'\0' -anle 'print "$$F[0]\0$$F[1]"' allfiles-minus-egrep-fgrep.txt.srt | comm -23 - previouslydone.dupes.txt.srt | perl -pnle 's/\0.*//' | join -t '\0' - allfiles-minus-egrep-fgrep.txt.srt > filestobackup-plus.txt
 
 # perl -F'\0' -anle 'print "\0$F[1]\0$F[2]"' allfiles-minus-egrep-fgrep.txt.srt | comm -23 - previouslydone.dupes.txt.srt > temp0.txt &
 
+# this command will confirm there are no $ that are not followed by $ or paren:
 
+# egrep -v '^$|^#' Makefile | egrep '[^\$]\$[^\$\(]
+
+# the below is a conversion to make doubling the dollar signs
+
+# below not working, not sure why
+
+check: Makefile
+	egrep -v '^$$|^#' Makefile | egrep '[^\$$]\$$[^\$$\(]'
 
 part4: part3
 	$(nice) bc-prevdone2moredone.pl part3 > part4
