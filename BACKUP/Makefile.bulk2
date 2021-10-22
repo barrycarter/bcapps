@@ -34,6 +34,18 @@ sortoptions = -S 8G
 
 #<!--------- START COMMENT ---------!>
 
+# a list of all files on the drive, then sorted
+
+#<!--------- END COMMENT ---------!>
+
+allfiles.txt: $(converted) Makefile
+	$(nice) bc-filelist4backup.pl $(converted) > allfiles.txt
+
+allfiles.txt.srt: allfiles.txt
+	$(nice) sort $(sortoptions) -u allfiles.txt -o allfiles.txt.srt
+
+#<!--------- START COMMENT ---------!>
+
 # a list of all files currently on the drive, excluding those I don't
 # want to backup, then sorted so that I can use it with comm
 
@@ -50,10 +62,16 @@ allfiles-minus-egrep-fgrep.txt.srt: allfiles-minus-egrep-fgrep.txt
 
 #<!--------- START COMMENT ---------!>
 
-# a list of all files I've backed up plus their new locations, then
-# sorted so I can use it with comm
+# a list of all files I've backed up, then sorted by filename and
+# date, and then find latest backup for each, then add dupes
 
 #<!--------- END COMMENT ---------!>
+
+previouslydone.txt: Makefile /root/massback-bulk/*.toc
+	$(nice) bc-tar2exclude.pl /root/massback-bulk/*.toc > previouslydone.txt
+
+previouslydone.txt.srt: previouslydone.txt
+	$(nice) sort $(sortoptions) -k1,2nr -u previouslydone.txt -o previouslydone.txt.srt
 
 previouslydone.dupes.txt: Makefile /root/massback-bulk/*.toc /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
 	$(nice) bc-tar2exclude.pl /root/massback-bulk/*.toc | bc-prevdone2moredone.pl /root/massback-bulk/*.exclude > previouslydone.dupes.txt
