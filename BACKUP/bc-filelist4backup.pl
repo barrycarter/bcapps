@@ -17,19 +17,22 @@
 
 require "/usr/local/lib/bclib.pl";
 
+my($count);
+
 while (<>) {
 
   chomp;
 
-  # bad lines don't end in null because file has white space in it
+  if (++$count%1000000==0) {debug("$count files");}
 
-  unless (s/\0$//) {
-    warn("BAD LINE: $_");
-    next;
-  }
+  # filename and tail now bracked by nulls
 
-  my($mtime, $size, $inode, $perm, $type, $group, $user, $dev, $name) = 
-    split(/\s+/, $_, 9);
+  unless (s/\0(.*?)\0(.*?)\0$//) {next;}
+
+  my($name, $tail) = ($1, $2);
+
+  my($mtime, $size, $inode, $perm, $type, $group, $user, $dev) = 
+    split(/\s+/, $_);
 
   # we ignore everything that's not a real file, but it's not an error
 
@@ -40,7 +43,9 @@ while (<>) {
 
   $mtime=~s/\..*//;
 
-  print "\0$name\0$mtime\0$size\n";
+  # TODO: eventually want to include $tail below
+
+  print "$name\0$mtime\0$size\n";
 }
 
 

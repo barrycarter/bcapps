@@ -38,8 +38,8 @@ sortoptions = -S 8G
 
 #<!--------- END COMMENT ---------!>
 
-allfiles.txt: $(converted) Makefile
-	$(nice) bc-filelist4backup.pl $(converted) > allfiles.txt
+allfiles.txt: $(converted)
+	$(nice) bc-filelist4backup.pl --debug $(converted) > allfiles.txt
 
 allfiles.txt.srt: allfiles.txt
 	$(nice) sort $(sortoptions) -u allfiles.txt -o allfiles.txt.srt
@@ -51,7 +51,7 @@ allfiles.txt.srt: allfiles.txt
 
 #<!--------- END COMMENT ---------!>
 
-allfiles-minus-egrep-fgrep.txt: $(converted) Makefile egrep-pure.txt fgrep-pure.txt
+allfiles-minus-egrep-fgrep.txt: $(converted) egrep-pure.txt fgrep-pure.txt
 	$(nice) bc-filelist4backup.pl $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > allfiles-minus-egrep-fgrep.txt
 
 # the -u here shouldn't be necessary because each file should appear
@@ -70,13 +70,13 @@ allfiles-minus-egrep-fgrep.txt.srt: allfiles-minus-egrep-fgrep.txt
 
 #<!--------- END COMMENT ---------!>
 
-previouslydone.txt.srt: Makefile /root/massback-bulk/*.toc
+previouslydone.txt.srt: /root/massback-bulk/*.toc
 	$(nice) sort $(sortoptions) -k6 -k4r,5r -u /root/massback-bulk/*.toc -o previouslydone.txt.srt
 
 previouslydone.txt.srt.unq: previouslydone.txt.srt
 	$(nice) sort $(sortoptions) -k6 -u previouslydone.txt.srt -o previouslydone.txt.srt.unq
 
-previouslydone.dupes.txt: Makefile previouslydone.txt.srt.unq /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
+previouslydone.dupes.txt: previouslydone.txt.srt.unq /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
 	$(nice) bc-tar2exclude.pl previouslydone.txt.srt.unq | bc-prevdone2moredone.pl > previouslydone.dupes.txt
 
 previouslydone.dupes.txt.srt: previouslydone.dupes.txt
@@ -97,8 +97,8 @@ previouslydone.dupes.txt.srt: previouslydone.dupes.txt
 
 #<!--------- END COMMENT ---------!>
 
-filestobackup-plus.txt: previouslydone.dupes.txt.srt allfiles-minus-egrep-fgrep.txt.srt
-	perl -F'\0' -anle 'print "$$F[0]\0$$F[1]"' allfiles-minus-egrep-fgrep.txt.srt | comm -23 - previouslydone.dupes.txt.srt | perl -pnle 's/\0.*//' | join -t '\0' - allfiles-minus-egrep-fgrep.txt.srt > filestobackup-plus.txt
+filestobackup-plus.txt: previouslydone.dupes.txt.srt allfiles.txt.srt
+	perl -F'\0' -anle 'print "$$F[0]\0$$F[1]"' allfiles.txt.srt | comm -23 - previouslydone.dupes.txt.srt | perl -pnle 's/\0.*//' | join -t '\0' - allfiles-minus-egrep-fgrep.txt.srt > filestobackup-plus.txt
 
 filestobackup-plus.txt.srt: filestobackup-plus.txt
 	$(nice) sort $(sortoptions) -t '\0' -k2nr filestobackup-plus.txt -o filestobackup-plus.txt.srt
@@ -135,10 +135,10 @@ big-by-file.txt: statlist.txt
 
 #<!--------- END COMMENT ---------!>
 
-fgrep-pure.txt: Makefile fgrep-commented.txt
+fgrep-pure.txt: fgrep-commented.txt
 	egrep '^/' fgrep-commented.txt | perl -nle 'print "\0$$_\0"' > fgrep-pure.txt
 
-egrep-pure.txt: Makefile egrep-commented.txt
+egrep-pure.txt: egrep-commented.txt
 	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "^\0$$_\0"' > egrep-pure.txt
 
 #<!--------- START COMMENT ---------!>
@@ -187,7 +187,7 @@ clean:
 #<!--------- END COMMENT ---------!>
 
 
-excluded-by-egrep.txt: Makefile egrep-pure.txt $(converted)
+excluded-by-egrep.txt: egrep-pure.txt $(converted)
 	$(nice) bc-filelist4backup.pl $(converted) | egrep -af egrep-pure.txt > excluded-by-egrep.txt
 
 # using perl to reverse lines, rev freaks on multi-byte caracters
