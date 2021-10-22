@@ -65,16 +65,19 @@ allfiles-minus-egrep-fgrep.txt.srt: allfiles-minus-egrep-fgrep.txt
 # a list of all files I've backed up, then sorted by filename and
 # date, and then find latest backup for each, then add dupes
 
+# Note that -k6 sorts from field 6 to the end of the line so spaces in
+# filenames are handled ok
+
 #<!--------- END COMMENT ---------!>
 
-previouslydone.txt: Makefile /root/massback-bulk/*.toc
-	$(nice) bc-tar2exclude.pl /root/massback-bulk/*.toc > previouslydone.txt
+previouslydone.txt.srt: Makefile /root/massback-bulk/*.toc
+	$(nice) sort $(sortoptions) -k6 -k4r,5r -u /root/massback-bulk/*.toc -o previouslydone.txt.srt
 
-previouslydone.txt.srt: previouslydone.txt
-	$(nice) sort $(sortoptions) -k1,2nr -u previouslydone.txt -o previouslydone.txt.srt
+previouslydone.txt.srt.unq: previouslydone.txt.srt
+	$(nice) sort $(sortoptions) -k6 -u previouslydone.txt.srt -o previouslydone.txt.srt.unq
 
-previouslydone.dupes.txt: Makefile /root/massback-bulk/*.toc /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
-	$(nice) bc-tar2exclude.pl /root/massback-bulk/*.toc | bc-prevdone2moredone.pl /root/massback-bulk/*.exclude > previouslydone.dupes.txt
+previouslydone.dupes.txt: Makefile previouslydone.txt.srt.unq /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
+	$(nice) bc-tar2exclude.pl previouslydone.txt.srt.unq | bc-prevdone2moredone.pl > previouslydone.dupes.txt
 
 previouslydone.dupes.txt.srt: previouslydone.dupes.txt
 	$(nice) sort $(sortoptions) -u previouslydone.dupes.txt -o previouslydone.dupes.txt.srt

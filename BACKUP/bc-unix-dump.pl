@@ -25,7 +25,11 @@ print A "Starting dump: ",time(),"\n";
 # ugly hack to avoid //
 if ($dir eq "/") {$dir="";}
 
-my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@ %s %i %m %y %g %u %D %p\\0\n\" >> $name-files.txt.new");
+# 22 Oct 2021: bracketing the file name with nulls makes it much
+# easier to find files with spaces in them-- adding just last part of
+# filename should help with backups
+
+my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@ %s %i %m %y %g %u %D \\0%p\\0%f\\0\n\" >> $name-files.txt.new");
 
 print A "Dump ends: ",time(),"\n";
 
