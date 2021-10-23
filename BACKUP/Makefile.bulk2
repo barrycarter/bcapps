@@ -30,7 +30,7 @@ converted = $(shell egrep -v '^\#|^$$' /home/barrycarter/BCGIT/BRIGHTON/mounts.t
 
 nice = nice -n 19
 
-sortoptions = -S 8G
+sortoptions = -S 1G
 
 #<!--------- START COMMENT ---------!>
 
@@ -51,8 +51,13 @@ allfiles.txt.srt: allfiles.txt
 
 #<!--------- END COMMENT ---------!>
 
-allfiles-minus-egrep-fgrep.txt: $(converted) egrep-pure.txt fgrep-pure.txt
-	$(nice) bc-filelist4backup.pl $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > allfiles-minus-egrep-fgrep.txt
+filestobackup-minus-egrep-fgrep.txt: filestobackup-plus.txt egrep-pure.txt fgrep-pure.txt
+	$(nice) perl -nle 'print "\0$$_"' filestobackup-plus.txt | egrep -avf egrep-pure.txt - | fgrep -avf fgrep-pure.txt - > filestobackup-minus-egrep-fgrep.txt
+
+filestobackup-minus-egrep-fgrep.txt.srt: filestobackup-minus-egrep-fgrep.txt
+	sort -t '\0' -k3nr filestobackup-minus-egrep-fgrep.txt -o filestobackup-minus-egrep-fgrep.txt.srt
+
+# bc-filelist4backup.pl $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > allfiles-minus-egrep-fgrep.txt
 
 # the -u here shouldn't be necessary because each file should appear
 # only once (but things get f'd up sometimes)
@@ -97,8 +102,10 @@ previouslydone.dupes.txt.srt: previouslydone.dupes.txt
 
 #<!--------- END COMMENT ---------!>
 
+# filestobackup-plus.txt should already be sorted
+
 filestobackup-plus.txt: previouslydone.dupes.txt.srt allfiles.txt.srt
-	perl -F'\0' -anle 'print "$$F[0]\0$$F[1]"' allfiles.txt.srt | comm -23 - previouslydone.dupes.txt.srt | perl -pnle 's/\0.*//' | join -t '\0' - allfiles-minus-egrep-fgrep.txt.srt > filestobackup-plus.txt
+	perl -F'\0' -anle 'print "$$F[0]\0$$F[1]"' allfiles.txt.srt | comm -23 - previouslydone.dupes.txt.srt | join -t '\0' - allfiles.txt.srt > filestobackup-plus.txt
 
 filestobackup-plus.txt.srt: filestobackup-plus.txt
 	$(nice) sort $(sortoptions) -t '\0' -k2nr filestobackup-plus.txt -o filestobackup-plus.txt.srt
@@ -115,8 +122,8 @@ filestobackup-plus.txt.srt: filestobackup-plus.txt
 
 # TODO: have a flip switch for limit (10GB is normal, infinity for testing)
 
-statlist.txt: filestobackup-plus.txt.srt
-	bc-chunk-backup3.pl --limit=999999999999999999 filestobackup-plus.txt.srt
+statlist.txt: filestobackup-minus-egrep-fgrep.txt.srt
+	bc-chunk-backup3.pl --debug --limit=999999999999999999 filestobackup-minus-egrep-fgrep.txt.srt
 
 big-by-dir.txt: statlist.txt
 	bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt
