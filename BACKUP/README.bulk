@@ -90,6 +90,8 @@ bc-waitpid.pl idevs &
 
 # remove files we longer need
 
+make clean
+rm -f previouslydone.txt.srt* allfiles.txt* idrive-$DATE.gpg idrive-$DATE.toc
 rm -f backup0.txt afad.txt previouslydone.txt.srt previouslydone.txt &
 rm -f afad-not-yet-backed-up.txt excluded-by-egrep.txt &
 rm -f previouslydone.txt.srt.dupes &
