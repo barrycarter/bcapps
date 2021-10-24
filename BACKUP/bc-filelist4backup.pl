@@ -45,7 +45,7 @@ while (<>) {
 
   # TODO: eventually want to include $tail below
 
-  print "$name\0$mtime\0$size\n";
+  print "$name\0$tail\0$mtime\0$size\n";
 }
 
 

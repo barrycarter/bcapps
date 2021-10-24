@@ -29,7 +29,9 @@ if ($dir eq "/") {$dir="";}
 # easier to find files with spaces in them-- adding just last part of
 # filename should help with backups
 
-my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@ %s %i %m %y %g %u %D \\0%p\\0%f\\0\n\" >> $name-files.txt.new");
+# my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@\t%s\t%i\t%m\t%y\t%g\t%u\t%D\t%p\t%f\tEOL\n\" >> $name-files.txt.new");
+
+my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%TY-%Tm-%Td %TH:%TM:%TS\t%s\t%i\t%m\t%y\t%g\t%u\t%D\t%p\t%f\tEOL\n\" >> $name-files.txt.new");
 
 print A "Dump ends: ",time(),"\n";
 
