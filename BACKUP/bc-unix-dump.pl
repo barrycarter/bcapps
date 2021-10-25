@@ -1,5 +1,7 @@
 #!/bin/perl
 
+# TODO: comments are no longer accurate since I change code so fast
+
 # Normalizes the bcunix-dump.sh and similar files for Unix machines
 # dumps filelist of given Unix drive and creates other useful-to-me files
 
@@ -7,6 +9,10 @@
 # drive is down (can always get from backups, but not the same)
 
 require "/usr/local/lib/bclib.pl";
+
+# have find use UTC
+
+$ENV{TZ} = "";
 
 # $name is just anything to identify the drive, eg, "bcunix"
 my($dir,$name)=(@ARGV);
@@ -46,12 +52,14 @@ open(B,"$name-files.txt");
 open(C,"|sort > $name-files-rev.txt.new");
 
 while (<B>) {
-  debug("BETA: $_");
+
   chomp;
   s%^.*?\/%/%;
 
-  # if this line doesnt end with NUL skip it (problem)
-  unless (s%\0$%%) {next;}
+  debug("GAMMA: $_");
+
+  # if this line doesnt end with EOL skip it (problem)
+  unless (s/\t(.*?)\tEOL$//) {warn("BAD LINE: $_"); next;}
 
   debug("ALPHA: $_");
   # must assign to scalar, grumble
