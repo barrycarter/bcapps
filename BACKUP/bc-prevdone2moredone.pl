@@ -6,6 +6,49 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# although I can't entirely get rid of the regex stuff, following
+# symlinks might work a lot better and catch many/most of the cases
+
+# Usage: $0 file file2
+#
+# where:
+#
+# file1 is "mtime filename" for files already backedup
+#
+# file2 is realpath run on the filenames IN THE SAME ORDER as they
+# appear in file1 (doing them individually is too slow, though I might
+# try it at first)
+
+while (<>) {
+
+  chomp;
+  my($name) = substr($_, 20);
+#  debug("NAME: $name");
+
+  if (readlink($name)) {
+    debug("$name -> " . readlink($name));
+  }
+
+}
+
+
+
+# TODO: check name matching
+
+
+
+
+
+
+
+
+
+
+
+
+die "TESTING";
+
+
 # read a list of regex substitutions in the format '"X" "Y"' where
 # regex Y is changed to string X (not sure why I thought I needed
 # hashes here); X is the current location of the file and Y is the old
