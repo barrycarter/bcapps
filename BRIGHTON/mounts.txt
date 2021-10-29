@@ -7,7 +7,7 @@
 # as of 19 Oct 2021, lobos is dying and may or may not be restored
 # resotred later same day
 
-/mnt/lobos lobos
+/mnt/lobos2 lobos
 
 
 # kemptown recovered from brighton 11/24/2017ish

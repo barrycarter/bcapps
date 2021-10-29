@@ -19,16 +19,21 @@ require "/usr/local/lib/bclib.pl";
 # appear in file1 (doing them individually is too slow, though I might
 # try it at first)
 
-while (<>) {
+open(A, $ARGV[0])||die("Can't open $ARGV[0], $!");
+open(B, $ARGV[1])||die("Can't open $ARGV[1], $!");
 
-  chomp;
-  my($name) = substr($_, 20);
-#  debug("NAME: $name");
+# TODO: every so often, check that the tails match
 
-  if (readlink($name)) {
-    debug("$name -> " . readlink($name));
-  }
+# NOTE: the Unix utility "paste" could almost do this
 
+# TODO: consider grepping out "realpath: error"
+
+while (<A>) {
+  my $link = <B>;
+#  print substr($_, 0, 20),$link;
+
+  # temp for testing
+  print $_,$link;
 }
 
 
