@@ -25,12 +25,12 @@ print A $all;
 
 close(A);
 
-$all=~s/\0/\n/g;
+my(@targets) = `/bin/cat /tmp/bcrc.txt`;
 
-open(A, "|paste -d '\t' - /tmp/bcrc.txt");
 
-print A $all;
-
-close(A);
+for $i (0..$#targets) {
+  if ($targets[$i]=~/^realpath: /) {$targets[$i] = "$ARGV[$i]\n";}
+  print "$ARGV[$i]\t$targets[$i]";
+}
 
 # TODO: add checks that files are equal length, handle special cases, etc

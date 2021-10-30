@@ -1,0 +1,37 @@
+#!/bin/perl
+
+# Similar to bc-bofa-mv.pl: given the text version of a PDF credit
+# card statement, determine rewards point information
+
+require "/usr/local/lib/bclib.pl";
+
+# TODO: input to this program is a txt file, not a pdf file
+
+# these variables are global
+
+my($data, $fname) = cmdfile();
+
+# debug("DATA: $data");
+
+if ($data=~/capitalone/) {
+  parse_capital_one();
+}
+
+sub parse_capital_one {
+
+#  $data=~m%Rewards Balance as of\s*(\d{2}/\d{2}/\d{4}).*?([\d,]+)\s*Previous Balance\s*([\d,]*)\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)%is;
+
+  # search for multiple formats
+  my($found) = 0;
+
+  if ($data=~m%Rewards Balance as of\s*(\d{2}/\d{2}/\d{4}).*?([\d,]+)\s*Previous Balance\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)\s*([\d,]+)%is) {
+    $found = 1;
+  } elsif ($data=~m%([\d,]+)\s*Rewards as of: (\d{2}/\d{2}/\d{4}).*?Previous Balance\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)\s*([\d,]+)%is) {
+    $found = 1;
+  } else {
+    $found = 0;
+  }
+
+  debug("X: $fname $1, $2 $3 $4 $5");
+
+}
