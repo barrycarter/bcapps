@@ -1,0 +1,34 @@
+#!/bin/perl
+
+# because realpath takes so long to run (well, at least on 90M files),
+# create a cache that is hopefully faster
+
+# input: a list of null separated filenames on the STDIN (this program expects to run from xargs -0)
+
+# output: same filenames followed by null and their current path on
+# the disk (if no path on disk, "realpath" is considered to be the
+# filename itself)
+
+require "/usr/local/lib/bclib.pl";
+
+my($all) = <STDIN>;
+
+debug("ALL: $all");
+
+# TODO: better tempfile naming
+
+open(A, "|xargs -0 realpath > /tmp/bcrc.txt");
+
+print A $all;
+
+close(A);
+
+$all=~s/\0/\n/g;
+
+open(A, "|paste -d '\t' - /tmp/bcrc.txt");
+
+print A $all;
+
+close(A);
+
+
