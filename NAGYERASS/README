@@ -341,3 +341,7 @@ TODO: any place where I list gmail accounts (eg, gmailspace section) make sure t
 TODO: could add test that google space usage is nowhere near limit?
 
 TODO: all passwords in pw.txt should be different
+
+TODO: all transactions in bc_budget_view should be from a fixed set of
+accounts, perhaps further limited by date
+
