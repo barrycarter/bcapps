@@ -24,7 +24,7 @@ if ($data=~/capitalone/) {
 
 sub parse_capital_one {
 
-#  $data=~m%Rewards Balance as of\s*(\d{2}/\d{2}/\d{4}).*?([\d,]+)\s*Previous Balance\s*([\d,]*)\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)%is;
+  if ($data=~/We are unable to provide your Rewards Summary/) {return;}
 
   # search for multiple formats
   my($found) = 0;
@@ -32,7 +32,10 @@ sub parse_capital_one {
   # patterns
 
   my(@pats) = (
-	       "Rewards Balance as of $datepat(.*)\$"
+	       "Rewards Balance as of $datepat .*? $commanum Previous Balance Earned Redeemed $commanum $commanum $commanum",
+	       "Rewards Balance .*? Previous Balance Earned This Period Redeemed This Period $commanum $commanum $commanum",
+	       "Rewards as of: $datepat Rewards Balance .* $commanum Previous Balance Earned This Period Redeemed this period $commanum $commanum $commanum",
+	       "$commanum Rewards as of: $datepat .* Previous Balance Earned This Period Redeemed this period $commanum $commanum $commanum"
 	       );
 
   for $i (@pats) {
@@ -45,11 +48,15 @@ sub parse_capital_one {
     debug("LOOKING AT: $i");
 
     if ($data=~m%$i%) {
-      debug("GOT: $1 $2 $3");
+      debug("GOT: $fname $1 $2 $3 $4 $5");
+      $found = 1;
       break;
     }
   }
 
+  unless ($found) {
+    debug("NO PATTERN IN: $data");
+  }
 
 
 
