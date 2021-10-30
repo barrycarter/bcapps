@@ -17,7 +17,7 @@ debug("ALL: $all");
 
 # TODO: better tempfile naming
 
-open(A, "|xargs -0 realpath > /tmp/bcrc.txt");
+open(A, "|xargs -0 realpath 2>&1 &> /tmp/bcrc.txt");
 
 print A $all;
 
