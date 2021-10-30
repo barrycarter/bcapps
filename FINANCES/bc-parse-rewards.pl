@@ -11,6 +11,10 @@ require "/usr/local/lib/bclib.pl";
 
 my($data, $fname) = cmdfile();
 
+# popular regular expressions
+
+my($datepat) = "(\\d{2}/\\d{2}/\\d{4})";
+
 # debug("DATA: $data");
 
 if ($data=~/capitalone/) {
@@ -24,13 +28,38 @@ sub parse_capital_one {
   # search for multiple formats
   my($found) = 0;
 
-  if ($data=~m%Rewards Balance as of\s*(\d{2}/\d{2}/\d{4}).*?([\d,]+)\s*Previous Balance\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)\s*([\d,]+)%is) {
-    $found = 1;
-  } elsif ($data=~m%([\d,]+)\s*Rewards as of: (\d{2}/\d{2}/\d{4}).*?Previous Balance\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)\s*([\d,]+)%is) {
-    $found = 1;
-  } else {
-    $found = 0;
+  # patterns
+
+  my(@pats) = (
+	       $datepat, 
+	       "Rewards Balance as of $datepat .*?"
+	       );
+
+  for $i (@pats) {
+
+    # harden spaces + turn into regex
+
+    $i=~s/ /\\s/g;
+    $i = qr/$i/;
+
+    debug("LOOKING AT: $i");
+
+    if ($data=~m%$i%isx) {
+      debug("GOT: $1 $2 $3");
+      break;
+    }
   }
+
+
+
+
+#  if ($data=~m%Rewards\s*Balance\s*as\s*of\s* (\d{2}/\d{2}/\d{4}) .*?([\d,]+)\s*Previous\s*Balance\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)\s*([\d,]+)%isx) {
+#    $found = 1;
+#  } elsif ($data=~m%([\d,]+)\s*Rewards as of: (\d{2}/\d{2}/\d{4}).*?Previous Balance\s*Earned\s*Redeemed\s*([\d,]+)\s*([\d,]+)\s*([\d,]+)%is) {
+#    $found = 1;
+#  } else {
+#    $found = 0;
+#  }
 
   debug("X: $fname $1, $2 $3 $4 $5");
 
