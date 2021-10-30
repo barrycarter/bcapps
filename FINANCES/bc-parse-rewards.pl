@@ -14,6 +14,7 @@ my($data, $fname) = cmdfile();
 # popular regular expressions
 
 my($datepat) = "(\\d{2}/\\d{2}/\\d{4})";
+my($commanum) = "([\\d,]+)";
 
 # debug("DATA: $data");
 
@@ -31,20 +32,19 @@ sub parse_capital_one {
   # patterns
 
   my(@pats) = (
-	       $datepat, 
-	       "Rewards Balance as of $datepat .*?"
+	       "Rewards Balance as of $datepat(.*)\$"
 	       );
 
   for $i (@pats) {
 
     # harden spaces + turn into regex
 
-    $i=~s/ /\\s/g;
-    $i = qr/$i/;
+    $i=~s/ /\\s*/g;
+    $i = qr/$i/s;
 
     debug("LOOKING AT: $i");
 
-    if ($data=~m%$i%isx) {
+    if ($data=~m%$i%) {
       debug("GOT: $1 $2 $3");
       break;
     }
