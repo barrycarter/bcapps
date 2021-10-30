@@ -11,9 +11,11 @@
 
 require "/usr/local/lib/bclib.pl";
 
-my($all) = <STDIN>;
+my($all) = join("\0", @ARGV);
 
-debug("ALL: $all");
+# debug("ALL: $all");
+
+debug("CALLED WITH $#ARGV+1 args");
 
 # TODO: better tempfile naming
 
@@ -31,4 +33,4 @@ print A $all;
 
 close(A);
 
-
+# TODO: add checks that files are equal length, handle special cases, etc
