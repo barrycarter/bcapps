@@ -24,6 +24,8 @@ if ($data=~/capitalone/) {
 
 sub parse_capital_one {
 
+  # TODO: need card number pulled from txt file
+
   if ($data=~/We are unable to provide your Rewards Summary/) {return;}
 
   # search for multiple formats
