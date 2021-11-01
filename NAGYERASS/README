@@ -243,7 +243,12 @@ grocery, DOORDASH = restaurant, and so on)
 
 TODO: check for common mispellings in files I use most often (eg, differnet for different)
 
-TODO: some mail folders should never have emails from certain senders or to certain receipients (n progress)
+TODO: some mail folders should never have emails from certain senders
+or to certain receipients (in progress) (or certain subjects, etc)--
+this is sort of the complement of the other task: some folders can
+only have specific content, other folders can have everything EXCEPT
+prohibited content (specific case: "your email to x" is what I use for
+autoreplies and autoreplies are treated especially)
 
 TODO: directories that I no longer use should not have any recent files (which would indicate I accidentally used an obsolete program) (eg, mail annotation directories)
 
@@ -345,3 +350,4 @@ TODO: all passwords in pw.txt should be different
 TODO: all transactions in bc_budget_view should be from a fixed set of
 accounts, perhaps further limited by date
 
+TODO: crosscheck myaccounts.txt and pw.txt (probably should actually just combine these)
