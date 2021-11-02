@@ -61,14 +61,18 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 1;
-warn "Temporarily looking at ALL files for XWD";
+my($lower) = 1e7;
+
+warn("make limit lower later");
+# warn "Temporarily looking at ALL files for XWD";
 
 # warn("Temproarily lowering LOWER for special case");
 # cutting to bone?
 # $lower = 10000;
 
 open(A,"results.txt.srt")||die("Can't open results.txt.srt, $!");
+
+my($count);
 
 while (<A>) {
 
@@ -93,7 +97,9 @@ while (<A>) {
 
   $size{$name} = $size;
 
-  debug("size{$name} -> $size");
+  if (++$count%10000 == 0) {
+    debug("size{$name} -> $size");
+  }
 }
 
 my($bytes);
