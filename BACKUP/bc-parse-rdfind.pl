@@ -332,11 +332,16 @@ sub choose_file {
 
   debug("FILES", @files);
 
+  if (dvd_trumps_all(@files)) {return;}
+
+  if (mp4vstorrents(@files)) {return;}
+
+
+return;
+
   if (renames(@files)) {return;}
 
   if (oldshit(@files)) {return;}
-
-return;
 
   if (erotica(@files)) {return;}
 
@@ -882,13 +887,13 @@ sub tumblr_fix {
 
 }
 
-# MP4 trumps DELUGE-TORRENTS
+# MP4 trumps DELUGE-TORRENTS (including MP4-ON-diskname)
 
 sub mp4vstorrents {
   my(@files) = @_;
 
   for $i (0,1) {
-    if ($files[$i]=~m%/MP4/% &&
+    if ($files[$i]=~m%/MP4[A-Z\-]+/% &&
 	$files[1-$i]=~m%/DELUGE\-TORRENTS/%) {
       print qq%sudo rm "$files[1-$i]"\n%;
       print qq%echo keeping "$files[$i]"\n%;

@@ -24,7 +24,7 @@ my($out, $err, $res) = cache_command2("bc-sgrep.pl $phrase $file");
 
 $out = reverse($out);
 
-print $out;
+print "$out\n";
 
 # TODO: this should be able to give multiple results when needed
 
