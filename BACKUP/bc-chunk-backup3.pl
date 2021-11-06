@@ -30,7 +30,7 @@ while (<>) {
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
   if ($tot>=$limit) {last;}
 
-  my($null, $name, $mtime, $mtime2, $size) = split(/\0/, $_);
+  my($name, $mtime, $size) = split(/\t/, $_);
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
@@ -45,6 +45,9 @@ while (<>) {
   # TODO: if $size is small (indicating symlink or pointlessness,
   # don't add to this list) [256 = max length of filename and thus of
   # symlink?]
+
+  # to keep mtime as one field
+  $mtime=~s/\s+/T/g;
 
   # NOTE: to avoid problems w/ filesizes > $limit, we add to chunk
   # first and THEN check for overage
@@ -67,7 +70,8 @@ close(A); close(B); close(C);
 
 # TODO: restore this
 # do this so we're not waiting on egrep
-# open(A,"|parallel -j 2");
-# print A "bc-total-bytes.pl statlist.txt | sort -nr >! big-by-dir.txt\n";
-# print A "sort -k1nr statlist.txt >! big-by-file.txt\n";
-# close(A);
+
+open(A,"|parallel -j 2");
+print A "bc-total-bytes.pl statlist.txt | sort -nr >! big-by-dir.txt\n";
+print A "sort -k1nr statlist.txt >! big-by-file.txt\n";
+close(A);

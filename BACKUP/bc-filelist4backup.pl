@@ -17,9 +17,42 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# write symlinks, dirs, and others to special files
+
+open(A, ">links.txt")||die("Can't open links.txt, $!");
+open(B, ">dirs.txt")||die("Can't open dirs.txt, $!");;
+open(C, ">others.txt")||die("Can't open others.txt, $!");;
+
 my($count);
 
 while (<>) {
+
+  my($time, $size, $inode, $perms, $type, $gid, $uid, $devno, $name,
+  $path, $eol) = split(/\t/, $_);
+
+  # if last field isn't EOL, warn and ignore
+
+  unless ($eol eq "EOL") {
+    warn("BAD LINE: $_");
+    next;
+  }
+
+  # remove fractional part from mtime
+
+  $time=~s/\..*//;
+
+  # TODO: remove this hack after I switch to "+" by default
+
+  $time=~s/ /+/;
+
+  # for the most common case regular file, print mtime name and size
+
+  if ($type eq "f") {
+    print "$time $name\t$size\n";
+    next;
+  }
+
+  die "ABANDONED";
 
   chomp;
 
