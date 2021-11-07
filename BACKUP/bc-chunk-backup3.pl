@@ -11,7 +11,7 @@ require "$bclib{home}/bc-private.pl";
 # rewriting 27 Feb 2015 for a single file
 # see README for file format
 
-defaults("limit=25,000,000,000&xmessage=1");
+defaults("limit=10,000,000,000&xmessage=1");
 $limit = $globopts{limit};
 
 # lets me use commas
@@ -30,7 +30,7 @@ while (<>) {
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
   if ($tot>=$limit) {last;}
 
-  my($name, $mtime, $size) = split(/\t/, $_);
+  my($mtime, $name, $size) = split(/\0/, $_);
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
@@ -46,8 +46,8 @@ while (<>) {
   # don't add to this list) [256 = max length of filename and thus of
   # symlink?]
 
-  # to keep mtime as one field
-  $mtime=~s/\s+/T/g;
+  # to keep mtime as one field (later implicit in bc-unix-dump.pl)
+#  $mtime=~s/\s+/T/g;
 
   # NOTE: to avoid problems w/ filesizes > $limit, we add to chunk
   # first and THEN check for overage

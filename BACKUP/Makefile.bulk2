@@ -1,20 +1,36 @@
 # On 18 Sep 2021, rewriting for the following goals:
 #
-#   - avoid large pipes which reside in memory
-#   - create list of excluded files
-#   - separate out fgrep and egrep exclusions
-#   - perhaps better commenting/formatting
-#   - if sort creates large files maybe changed /tmp dir to be safe?...
-#   - or use memory limited sort?
+
+#   - avoid large pipes which reside in memory (it turns out this is
+#   ok if the pipes "move" fast enough this isn't an issue-- it IS an
+#   issue for sort (which has to wait for all its input before
+#   sorting) but using "-S 1G" helps
 #
-# Files that must exist: fgrep-commented.txt egrep-commented.txt
+#   TODO: create list of excluded files
+#
+#   DONE: separate out fgrep and egrep exclusions
+#
+#   TODO: perhaps better commenting/formatting [low pri]
+#
+#   TODO: (maybe) if sort creates large files maybe changed /tmp dir
+#   to be safe? (except I think /tmp is actually faster than USB tmp
+#   dirs)
+#
+#   DONE: or use memory limited sort?
+
+# Files that must exist:
+#
+#  - fgrep-commented.txt
+#  - egrep-commented.txt
+#  - realpaths.cache
+#  - realpaths.cache.d (directory)
 
 # the very top line (first target) is what's made by default, so set
-# it to "all" below
-
-default: all
+# it to what we need below
 
 # Below, NUL means \0 the null character ASCII 0
+
+default: tobackup.oneshot
 
 #<!--------- START COMMENT ---------!>
 
@@ -34,111 +50,123 @@ sortoptions = -S 1G
 
 #<!--------- START COMMENT ---------!>
 
-# a list of all files on the drive, then sorted
+# A list of all files previously backed up in one ugly pipe (note that
+# "oneshot" here means I do it all at once, not that I'm only doing it
+# one time). Steps (in pipe order):
+
+#  - egrep: remove symlinks (which for some reason start with h, which
+#  could mean hard link, except that hard links are indistinguisable
+#  from regular files, but whatever) from backed up files because they
+#  do weird things
+
+# TODO: figure out what 'h' really means
+
+#  - perl: replace things like \001 in file backup lists with the
+#  octal character equivalent, since that's how current filelist is
+#  printed; then print the date and filename, adding a "+" between
+#  yyyy-mm-dd and hh:mm:ss to match find's "+" format
+
+#  - sort: sort by filename and then by date-- this groups all backups
+#  of a given file together, in reverse date order
+
+#  - uniq: get the latest backup for each file (in theory, we don't
+#  need the last backup and could use all backups, but this reduced
+#  the load on the join)
+
+#  - join: convert the list of backed-up files to where the files
+#  currently are using realpath.cache (and similar files) that list
+#  "old-location TAB new-location"; if the realpath.cache doesn't have
+#  an entry for a given file, assume the file is still in the same
+#  place it was backed up
+
+# TODO: the join above could use "perl -f" or similar to see if the
+# file's target location still exists (regardless of whether it's
+# moved or in its original location), but this could be timeconsuming
+
+#  - perl: use the output of join to print file's new location
+#  depending on whether join found a match for the filename
+
+#  - sort: sort the file by mtime since we plan to join it to another file
 
 #<!--------- END COMMENT ---------!>
 
-allfiles.txt: $(converted)
-	$(nice) bc-filelist4backup.pl --debug $(converted) > allfiles.txt
-
-allfiles.txt.srt: allfiles.txt
-	$(nice) sort $(sortoptions) -u allfiles.txt -o allfiles.txt.srt
-
-#<!--------- START COMMENT ---------!>
-
-# a list of all files currently on the drive, excluding those I don't
-# want to backup, then sorted so that I can use it with comm
-
-#<!--------- END COMMENT ---------!>
-
-filestobackup-minus-egrep-fgrep.txt: filestobackup-plus.txt egrep-pure.txt fgrep-pure.txt
-	$(nice) perl -nle 'print "\0$$_"' filestobackup-plus.txt | egrep -avf egrep-pure.txt - | fgrep -avf fgrep-pure.txt - > filestobackup-minus-egrep-fgrep.txt
-
-filestobackup-minus-egrep-fgrep.txt.srt: filestobackup-minus-egrep-fgrep.txt
-	sort -t '\0' -k3nr filestobackup-minus-egrep-fgrep.txt -o filestobackup-minus-egrep-fgrep.txt.srt
-
-# bc-filelist4backup.pl $(converted) | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | perl -pnle 's/^\0//' > allfiles-minus-egrep-fgrep.txt
-
-# the -u here shouldn't be necessary because each file should appear
-# only once (but things get f'd up sometimes)
-
-allfiles-minus-egrep-fgrep.txt.srt: allfiles-minus-egrep-fgrep.txt
-	$(nice) sort $(sortoptions) -u allfiles-minus-egrep-fgrep.txt -o allfiles-minus-egrep-fgrep.txt.srt
-
-#<!--------- START COMMENT ---------!>
-
-# a list of all files I've backed up, then sorted by filename and
-# date, and then find latest backup for each, then add dupes
-
-# Note that -k6 sorts from field 6 to the end of the line so spaces in
-# filenames are handled ok
-
-#<!--------- END COMMENT ---------!>
-
-previouslydone.txt.srt: /root/massback-bulk/*.toc
-	$(nice) sort $(sortoptions) -k6 -k4r,5r -u /root/massback-bulk/*.toc -o previouslydone.txt.srt
-
-previouslydone.txt.srt.unq: previouslydone.txt.srt
-	$(nice) sort $(sortoptions) -k6 -u previouslydone.txt.srt -o previouslydone.txt.srt.unq
-
-previouslydone.dupes.txt: previouslydone.txt.srt.unq /home/user/BCGIT/BACKUP/bc-conversions.txt /home/user/bc-conversions-private.txt
-	$(nice) bc-tar2exclude.pl previouslydone.txt.srt.unq | bc-prevdone2moredone.pl > previouslydone.dupes.txt
-
-previouslydone.dupes.txt.srt: previouslydone.dupes.txt
-	$(nice) sort $(sortoptions) -u previouslydone.dupes.txt -o previouslydone.dupes.txt.srt
-
-#<!--------- START COMMENT ---------!>
-
-# the list of files to backup, meaning those that are:
-
-#   - on the disk currently
-#   - not excluded from backup
-#   - have not been backed up under either their current or old names
-
-# then rejoined so the final result includes "name \0 mtime \0 size"
-# and then sorted by date so newest files get backed up first (that
-# sounds odd, but makes sense because more recent files are generally
-# more important)
-
-#<!--------- END COMMENT ---------!>
-
-# filestobackup-plus.txt should already be sorted
-
-filestobackup-plus.txt: previouslydone.dupes.txt.srt allfiles.txt.srt
-	perl -F'\0' -anle 'print "$$F[0]\0$$F[1]"' allfiles.txt.srt | comm -23 - previouslydone.dupes.txt.srt | join -t '\0' - allfiles.txt.srt > filestobackup-plus.txt
-
-filestobackup-plus.txt.srt: filestobackup-plus.txt
-	$(nice) sort $(sortoptions) -t '\0' -k2nr filestobackup-plus.txt -o filestobackup-plus.txt.srt
+previouslydone.oneshot: /mnt/villa/massback-bulk/*.toc realpaths.cache.post
+	$(nice) egrep -hv '^h' /mnt/villa/massback-bulk/*.toc | perl -nle '@F=split(/\s+/, $$_, 6); $$F[5]=~s/\\(\d{3})/chr(oct($$1))/eg; print "$$F[3]+$$F[4]\t/$$F[5]"' | sort $(sortoptions) -k2 -k1r | uniq -f1 | join -e '*' -a 1 -t '	' -1 2 -2 1 -o '1.1 2.2 0' - realpaths.cache.post | perl -F'\t' -anle 'if ($$F[1] eq "*") {print "$$F[0] $$F[2]"} else {print "$$F[0] $$F[1]"}' | sort $(sortoptions) -o previouslydone.oneshot
 
 
 #<!--------- START COMMENT ---------!>
 
-# create filelist.txt (created by same program which creates
-# statlist.txt and thus not listed below) in a form that can be sent
-# directly to tar, and use statlist.txt to determine which files and
-# directories use the most space, useful for trimming
+# A list of all files on my hard drives (note that "oneshot" here
+# means I do it all at once, not that I'm only doing it one
+# time). Steps (in pipe order):
+
+# NOTE: I could theoretically fgrep/egrep out files I don't want to
+# backup at a fairly early stage, but I change the fgrep and egrep
+# files frequently, so I want to have that as a separate step
+
+#  - perl: remove fractional part of timestamp, determine that this is
+#  a true file (not a directory, symlink, or something else), then
+#  print in "mtime SPACE filename TAB size" format. I must keep mtime
+#  and filename in same field (meaning no tab between them) because I
+#  need to join on them against previouslydone.oneshot and join
+#  doesn't allow multi-field joining. I will need size eventually, but
+#  putting it in a seperate field (using TAB) lets me "carry it along"
+#  without harming anything.
+
+#  - sort: sort the results by mtime and filename (and technically
+#  size) because join requires sorted files
+
+#  - join: determine which files are on disk, but have never been
+#  backed up with their current mtime (if they're backed up with a
+#  different mtime, past or future, they still need to be backed up
+#  again), thus generating the list of unbacked up files.
+
 
 #<!--------- END COMMENT ---------!>
 
-# TODO: have a flip switch for limit (10GB is normal, infinity for testing)
+ondisk.oneshot: $(converted) previouslydone.oneshot
+	perl -F"\t" -anle '$$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "$$F[0] $$F[8]\t$$F[1]"}' $(converted) | sort $(sortoptions) | join -v 1 -t '	' - previouslydone.oneshot > ondisk.oneshot
 
-statlist.txt: filestobackup-minus-egrep-fgrep.txt.srt
-	bc-chunk-backup3.pl --debug --limit=999999999999999999 filestobackup-minus-egrep-fgrep.txt.srt
+#<!--------- START COMMENT ---------!>
 
-big-by-dir.txt: statlist.txt
-	bc-total-bytes.pl statlist.txt | sort -nr > big-by-dir.txt
+# The list of files that have never been backed up, minus the files I
+# don't want to backup. Steps (in pipe order):
 
-big-by-file.txt: statlist.txt
-	sort -k1nr statlist.txt > big-by-file.txt
+#  - perl: replace the tabs in ondisk.oneshot with nuls, so the
+#  filename will be bracketed by nulls. As below, the fgrep-pure.txt
+#  and egrep-pure.txt files are also bracketed by nulls, so filenames
+#  have to match the patterns "exactly" with no leftover; this is a
+#  hack way of doing grep's -x option when there are additional fields
+
+#  - egrep: remove files matching the egrep-pure.txt file
+
+#  - fgrep: remove files matching the fgrep-pure.txt file
+
+#  - tac: from the previous commands, ondisk.oneshot is in mtime
+#  order; I prefer to backup most recent files first, so tac reverses
+#  this order
+
+#  - bc-chunk-backup3.pl: counts up files until 10GB and creates
+#  files.txt (for tarring) and big-by-dir.txt and big-by-file.txt (to
+#  help figure out which files slipped through the fgrep and egrep)
+
+#<!--------- END COMMENT ---------!>
+
+tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
+	perl -pnle 's/\t/\0/g; s/(\S+)\s/$$1\0/' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
+
 
 #<!--------- START COMMENT ---------!>
 
 # Convert the commented versions of the fgrep and egrep files to the
-# pure versions (by removing blank lines and comments)
+# pure versions (by removing blank lines and comments and bracketing
+# patterns with nulls)
 
 # fgrep lines must be complete paths (since we are doing full line
 # matching) and thus must start with '/'; any line that doesn't is
-# probably an error
+# probably an error (this doesn't apply to the egrep file because
+# lines, at least in theory, could start with ".*" or similar, though
+# they probably shouldn't)
 
 #<!--------- END COMMENT ---------!>
 
@@ -148,66 +176,30 @@ fgrep-pure.txt: fgrep-commented.txt
 egrep-pure.txt: egrep-commented.txt
 	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "^\0$$_\0"' > egrep-pure.txt
 
-#<!--------- START COMMENT ---------!>
 
-# the final target is filelist.txt (but using statlist.txt since
-# filelist.txt is implicit) but including big-by-file.txt and
-# big-by-dir.txt because I want them too
-
-# clean removes all files created by this Makefile and emacs droppings
-
-#<!--------- END COMMENT ---------!>
-
-all: statlist.txt big-by-file.txt big-by-dir.txt
-
-clean:
-	rm allfiles-minus-egrep-fgrep.txt* previouslydone.dupes.* filestobackup-plus.txt* filelist.txt statlist.txt big-by-dir.txt big-by-file.txt *-pure.txt *~ doesnotexist.txt
 
 #<!--------- START COMMENT ---------!>
 
 # TODO: perhaps add 'tee' to create intermediate files for debugging
-
-# TODO: filtering previous backups to just find the most recent
-# version of each backup would make previouslydone.dupes.txt a bit
-# smaller
+# (using some clever Make options to be able to turn it off and on?)
 
 # TODO: maybe use alternate temp directory for sort
 
-# TODO: could filelist.txt be made directly from statlist.txt?
+# TODO: perhaps create excluded-by-grep.txt that lists which files
+# were excluded by my greps
 
-#<!--------- END COMMENT ---------!>
-
-#<!--------- START COMMENT ---------!>
-
-# Helpful but unnecessary targets:
-
-#   - excluded-by-egrep.txt: files excluded by egrep
-
-#   - excluded-by-fgrep.txt not needed, full lines in file already
-
-#   - previouslydone.dupes.rev.srt: list of backed up files, reversed, to
-#   make it easier to find files by knowing just the lat part of their
-#   filename
-
-#   - check: confirm Makefile doesn't have any $F[1] type stuff (because $s are special to make and must be escaped with another $)
-
-#<!--------- END COMMENT ---------!>
-
-
-excluded-by-egrep.txt: egrep-pure.txt $(converted)
-	$(nice) bc-filelist4backup.pl $(converted) | egrep -af egrep-pure.txt > excluded-by-egrep.txt
-
-# using perl to reverse lines, rev freaks on multi-byte caracters
-
-previouslydone.dupes.rev: previouslydone.dupes.txt
-	perl -F'\0' -anle 'print "$$F[1]\t$$F[0]"' previouslydone.dupes.txt | perl -nle 'chomp; print join("", reverse(split(//, $_)))' > previouslydone.dupes.rev
-
-previouslydone.dupes.rev.srt: previouslydone.dupes.rev
-	$(nice) sort $(sortoptions) previouslydone.dupes.rev -o previouslydone.dupes.rev.srt
+# TODO: (maybe) confirm Makefile doesn't have any $F[1] type stuff (because $s are special to make and must be escaped with another $); we could also check that the base files for the Makefile exist
 
 # this command will confirm there are no $ that are not followed by $ or paren:
 # egrep -v '^$|^#' Makefile | egrep '[^\$]\$[^\$\(]
-# and below is how it must be written in Makefile
+# and below is how it must be written in Makefile (currently not used)
 
-check: Makefile
-	egrep -v '^$$|^#' Makefile | egrep '[^\$$]\$$[^\$$\(]'
+# TODO: maybe rewrite "clean" but maybe not
+
+#check: Makefile
+#	egrep -v '^$$|^#' Makefile | egrep '[^\$$]\$$[^\$$\(]'
+
+#clean:
+#	rm allfiles-minus-egrep-fgrep.txt* previouslydone.dupes.* filestobackup-plus.txt* filelist.txt statlist.txt big-by-dir.txt big-by-file.txt *-pure.txt *~ doesnotexist.txt
+
+#<!--------- END COMMENT ---------!>
