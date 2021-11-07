@@ -30,7 +30,7 @@ while (<>) {
   if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
   if ($tot>=$limit) {last;}
 
-  my($mtime, $name, $size) = split(/\0/, $_);
+  my($name, $mtime, $size) = split(/\0/, $_);
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
@@ -72,6 +72,6 @@ close(A); close(B); close(C);
 # do this so we're not waiting on egrep
 
 open(A,"|parallel -j 2");
-print A "bc-total-bytes.pl statlist.txt | sort -nr >! big-by-dir.txt\n";
-print A "sort -k1nr statlist.txt >! big-by-file.txt\n";
+print A "bc-total-bytes.pl statlist.txt | sort -nr >| big-by-dir.txt\n";
+print A "sort -k1nr statlist.txt >| big-by-file.txt\n";
 close(A);

@@ -7,14 +7,7 @@
 
 cd /root/massback-bulk
 
-# this generates the list of backed up files from tar toc
-# pipe below to shell
-
-# the sort below is unnecessary, since I sort to create
-# previouslydone.txt.srt.dupes anyway
-
-\ls idrive*.toc | perl -nle 'unless (-s "$_.exclude") {
- print "bc-tar2exclude.pl $_ | sort > $_.exclude"}'
+# .exclude files no longer necessary
 
 # do this once to timestamp the backup, create a directory for this
 # backup, and copy the Makefile to this directory
@@ -88,7 +81,7 @@ perl ~user/bin/IDrive_for_Linux/scripts/Backup_Script.pl
 
 bc-waitpid.pl idevs &
 
-# remove files we longer need
+# remove files we longer need (TODO: need to change this part)
 
 make clean
 rm -f previouslydone.txt.srt* allfiles.txt* idrive-$DATE.gpg idrive-$DATE.toc

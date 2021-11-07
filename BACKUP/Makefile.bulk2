@@ -22,8 +22,7 @@
 #
 #  - fgrep-commented.txt
 #  - egrep-commented.txt
-#  - realpaths.cache
-#  - realpaths.cache.d (directory)
+#  - links.d (must contain at least one file, but can be an empty file)
 
 # the very top line (first target) is what's made by default, so set
 # it to what we need below
@@ -74,10 +73,10 @@ sortoptions = -S 1G
 #  the load on the join)
 
 #  - join: convert the list of backed-up files to where the files
-#  currently are using realpath.cache (and similar files) that list
-#  "old-location TAB new-location"; if the realpath.cache doesn't have
-#  an entry for a given file, assume the file is still in the same
-#  place it was backed up
+#  currently are using the files in links.d that list "old-location
+#  TAB new-location"; if the links.d files don't have an entry for
+#  a given file, assume the file is still in the same place it was
+#  backed up
 
 # TODO: the join above could use "perl -f" or similar to see if the
 # file's target location still exists (regardless of whether it's
@@ -90,8 +89,8 @@ sortoptions = -S 1G
 
 #<!--------- END COMMENT ---------!>
 
-previouslydone.oneshot: /mnt/villa/massback-bulk/*.toc realpaths.cache.post
-	$(nice) egrep -hv '^h' /mnt/villa/massback-bulk/*.toc | perl -nle '@F=split(/\s+/, $$_, 6); $$F[5]=~s/\\(\d{3})/chr(oct($$1))/eg; print "$$F[3]+$$F[4]\t/$$F[5]"' | sort $(sortoptions) -k2 -k1r | uniq -f1 | join -e '*' -a 1 -t '	' -1 2 -2 1 -o '1.1 2.2 0' - realpaths.cache.post | perl -F'\t' -anle 'if ($$F[1] eq "*") {print "$$F[0] $$F[2]"} else {print "$$F[0] $$F[1]"}' | sort $(sortoptions) -o previouslydone.oneshot
+previouslydone.oneshot: /mnt/villa/massback-bulk/*.toc links.txt
+	$(nice) egrep -hv '^h' /mnt/villa/massback-bulk/*.toc | perl -nle '@F=split(/\s+/, $$_, 6); $$F[5]=~s/\\(\d{3})/chr(oct($$1))/eg; print "$$F[3]+$$F[4]\t/$$F[5]"' | sort $(sortoptions) -k2 -k1r | uniq -f1 | join -e '*' -a 1 -t '	' -1 2 -2 1 -o '1.1 2.2 0' - links.txt | perl -F'\t' -anle 'if ($$F[1] eq "*") {print "$$F[0] $$F[2]"} else {print "$$F[0] $$F[1]"}' | sort $(sortoptions) -o previouslydone.oneshot
 
 
 #<!--------- START COMMENT ---------!>
@@ -153,7 +152,7 @@ ondisk.oneshot: $(converted) previouslydone.oneshot
 #<!--------- END COMMENT ---------!>
 
 tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
-	perl -pnle 's/\t/\0/g; s/(\S+)\s/$$1\0/' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
+	perl -F'\t' -anle 'print "\0$$F[1]\0$$F[0]\0$$F[2]"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
 
 
 #<!--------- START COMMENT ---------!>
@@ -176,7 +175,16 @@ fgrep-pure.txt: fgrep-commented.txt
 egrep-pure.txt: egrep-commented.txt
 	egrep -v '^\#|^ *$$' egrep-commented.txt | perl -nle 'print "^\0$$_\0"' > egrep-pure.txt
 
+#<!--------- START COMMENT ---------!>
 
+# the links.d/*-links.txt files all give "old-location TAB
+# new-location"; this command combines them into a single sorted file
+# for join purposes
+
+#<!--------- END COMMENT ---------!>
+
+links.txt: links.d/*-links.txt
+	sort ($sortoptions) -u links.d/*-links.txt > links.txt
 
 #<!--------- START COMMENT ---------!>
 
