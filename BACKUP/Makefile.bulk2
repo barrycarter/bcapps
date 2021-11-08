@@ -152,8 +152,7 @@ ondisk.oneshot: $(converted) previouslydone.oneshot
 #<!--------- END COMMENT ---------!>
 
 tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
-	perl -F'\t' -anle 'print "\0$$F[1]\0$$F[0]\0$$F[2]"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
-
+	perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
 
 #<!--------- START COMMENT ---------!>
 
@@ -184,7 +183,7 @@ egrep-pure.txt: egrep-commented.txt
 #<!--------- END COMMENT ---------!>
 
 links.txt: links.d/*-links.txt
-	sort ($sortoptions) -u links.d/*-links.txt > links.txt
+	sort $(sortoptions) -u links.d/*-links.txt > links.txt
 
 #<!--------- START COMMENT ---------!>
 

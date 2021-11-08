@@ -17,7 +17,7 @@ $limit = $globopts{limit};
 # lets me use commas
 $limit =~s/,//g;
 
-my($tot, $count);
+my($tot, $count, $null, $name, $mtime, $size);
 
 open(A,">filelist.txt");
 open(B,">statlist.txt");
@@ -27,10 +27,10 @@ while (<>) {
   chomp;
 
   my($orig) = $_;
-  if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot");}
+  if (++$count%10000==0) {debug("COUNT: $count, BYTES: $tot, MTIME: $mtime");}
   if ($tot>=$limit) {last;}
 
-  my($name, $mtime, $size) = split(/\0/, $_);
+  ($null, $name, $mtime, $size) = split(/\0/, $_);
 
   # this slows things down a lot, but it useful when I've been making
   # changes to the fs
@@ -55,11 +55,7 @@ while (<>) {
   print B "$size $mtime $name\n";
 }
 
-# can't assign and do "my" at same time, will be treated as list
-my($ptime);
-$ptime = localtime($mtime);
-
-debug("Used $count files to meet total, earliest ts: $mtime ($ptime)");
+debug("Used $count files to meet total, earliest ts: $mtime");
 
 # below is just to avoid "egrep: writing output: Broken pipe" errors
 # TODO: is this the best way to handle those errors

@@ -17,8 +17,7 @@ mkdir /root/massbacks/$DATE
 cd /root/massbacks/$DATE
 cp /home/user/BCGIT/BACKUP/Makefile.bulk2 Makefile
 
-# cp egrep-commented.txt and fgrep-commented.txt from a previous
-# backup or make wont work
+# copy/create necessary files as noted in Makefile
 
 # run make (-j by alias), no need to waitpid since bc-chunk-backup2 xmessages
 
@@ -83,12 +82,7 @@ bc-waitpid.pl idevs &
 
 # remove files we longer need (TODO: need to change this part)
 
-make clean
-rm -f previouslydone.txt.srt* allfiles.txt* idrive-$DATE.gpg idrive-$DATE.toc
-rm -f backup0.txt afad.txt previouslydone.txt.srt previouslydone.txt &
-rm -f afad-not-yet-backed-up.txt excluded-by-egrep.txt &
-rm -f previouslydone.txt.srt.dupes &
-rm -f idrive-$DATE.gpg idrive-$DATE.toc* &
+rm -f previouslydone.oneshot ondisk.oneshot idrive-$DATE.gpg
 
 # do weekly backup if necessary
 
