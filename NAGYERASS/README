@@ -351,3 +351,5 @@ TODO: all transactions in bc_budget_view should be from a fixed set of
 accounts, perhaps further limited by date
 
 TODO: crosscheck myaccounts.txt and pw.txt (probably should actually just combine these)
+
+TODO: many transactions marked "recognized=YES" should have nonblank comments section, there are known errors here

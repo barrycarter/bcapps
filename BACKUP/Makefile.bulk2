@@ -1,6 +1,8 @@
 # On 18 Sep 2021, rewriting for the following goals:
 #
 
+# TODO: make sure all sort use $sortoptions and maybe also $nice
+
 #   - avoid large pipes which reside in memory (it turns out this is
 #   ok if the pipes "move" fast enough this isn't an issue-- it IS an
 #   issue for sort (which has to wait for all its input before
@@ -124,7 +126,7 @@ previouslydone.oneshot: /mnt/villa/massback-bulk/*.toc links.txt
 #<!--------- END COMMENT ---------!>
 
 ondisk.oneshot: $(converted) previouslydone.oneshot
-	perl -F"\t" -anle '$$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "$$F[0] $$F[8]\t$$F[1]"}' $(converted) | sort $(sortoptions) | join -v 1 -t '	' - previouslydone.oneshot > ondisk.oneshot
+	$(nice) perl -F"\t" -anle '$$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "$$F[0] $$F[8]\t$$F[1]"}' $(converted) | sort $(sortoptions) | join -v 1 -t '	' - previouslydone.oneshot > ondisk.oneshot
 
 #<!--------- START COMMENT ---------!>
 
@@ -152,7 +154,7 @@ ondisk.oneshot: $(converted) previouslydone.oneshot
 #<!--------- END COMMENT ---------!>
 
 tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
-	perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
+	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
 
 #<!--------- START COMMENT ---------!>
 
@@ -183,7 +185,7 @@ egrep-pure.txt: egrep-commented.txt
 #<!--------- END COMMENT ---------!>
 
 links.txt: links.d/*-links.txt
-	sort $(sortoptions) -u links.d/*-links.txt > links.txt
+	$(nice) sort $(sortoptions) -u links.d/*-links.txt > links.txt
 
 #<!--------- START COMMENT ---------!>
 

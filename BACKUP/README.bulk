@@ -3,12 +3,6 @@
 # drive), so use older versions of this file to see notes for the 5TB
 # backup
 
-# make sure the exclude files are up to date (from oneliners.sh)
-
-cd /root/massback-bulk
-
-# .exclude files no longer necessary
-
 # do this once to timestamp the backup, create a directory for this
 # backup, and copy the Makefile to this directory
 
