@@ -10,9 +10,13 @@ int main (int argc, char **argv) {
 
   char str[1000000];
 
-  while (scanf("%s", str) > 0) {
-    printf("STRING: %s\n", str);
+  while (!feof(stdin)) {
+    fgets(str, 100000, stdin);
+
+    // the -2 here is to avoid the ending newline
+
+    for (int i=strlen(str)-2; i>=0; i--) {printf("%c", str[i]);}
+
+    printf("\n");
   }
-
 }
-
