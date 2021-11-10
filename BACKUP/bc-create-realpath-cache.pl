@@ -29,8 +29,19 @@ my(@targets) = `/bin/cat /tmp/bcrc.txt`;
 
 
 for $i (0..$#targets) {
-  if ($targets[$i]=~/^realpath: /) {$targets[$i] = "$ARGV[$i]\n";}
-  print "$ARGV[$i]\t$targets[$i]";
+
+  # don't print on error, new backup program automatically assumes
+  # missing = original path
+
+  if ($targets[$i]=~/^realpath: /) {next;}
+
+  chomp($targets[$i]);
+
+#  debug("*$ARGV[$i]*, *$targets[$i]*");
+
+  unless ($ARGV[$i] eq $targets[$i]) {
+    print "$ARGV[$i]\t$targets[$i]\n";
+  }
 }
 
 # TODO: add checks that files are equal length, handle special cases, etc
