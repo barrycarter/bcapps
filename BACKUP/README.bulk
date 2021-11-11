@@ -11,7 +11,9 @@ mkdir /root/massbacks/$DATE
 cd /root/massbacks/$DATE
 cp /home/user/BCGIT/BACKUP/Makefile.bulk2 Makefile
 
-# copy/create necessary files as noted in Makefile
+# copy/create necessary files as noted in Makefile, including:
+
+ln -s /mnt/villa/massback-bulk/links.d .
 
 # run make (-j by alias), no need to waitpid since bc-chunk-backup2 xmessages
 
