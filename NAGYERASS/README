@@ -325,7 +325,7 @@ TODO: all amazon orders should have "arrived [date]" except really old ones wher
 
 TODO: move some daily-tests.tcsh to nagyerass dir (the ones that dont reveal private info) to show how its done (have moved some, need to move more)
 
-TODO: rewards points table should never have more than one entry per month per card-- this rule may also apply to certain types of bills (when capped with an amount total)
+TODO: rewards points table should never have more than one positive amount entry per month per card-- this rule may also apply to certain types of bills (when capped with an amount total)
 
 TODO: all messages in saved-messages-yyyy should have year yyyy
 
@@ -353,3 +353,7 @@ accounts, perhaps further limited by date
 TODO: crosscheck myaccounts.txt and pw.txt (probably should actually just combine these)
 
 TODO: many transactions marked "recognized=YES" should have nonblank comments section, there are known errors here
+
+TODO: rewards points uses in rewards_points table should correspond
+with how much I redeem them for at a 1c per 1.25 rewards points for
+newer transactions and 1c per 1 point for older ones

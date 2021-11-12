@@ -33,8 +33,9 @@ while (<>) {
   ($null, $name, $mtime, $size) = split(/\0/, $_);
 
   # this slows things down a lot, but it useful when I've been making
-  # changes to the fs
-  if ($globopts{checkfile} && !(-f $name)) {
+  # changes to the fs (symlinks dont count either)
+
+  if ($globopts{checkfile} && (!(-f $name) || (-l $name))) {
     print C "$name\n";
     warn("NOSUCHFILE: $name");
     next;

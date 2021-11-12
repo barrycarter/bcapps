@@ -182,10 +182,14 @@ egrep-pure.txt: egrep-commented.txt
 # new-location"; this command combines them into a single sorted file
 # for join purposes
 
+# the "-k 1b,1" is required by join-- if not used, funny characters
+# will break join even though "sort -c" (without "-k 1b,1") reports no
+# errors (had to remove the -u because the ,1 limits -u to first field)
+
 #<!--------- END COMMENT ---------!>
 
 links.txt: links.d/*-links.txt
-	$(nice) sort $(sortoptions) -u links.d/*-links.txt > links.txt
+	$(nice) sort $(sortoptions) -t '	' -k 1b,1 links.d/*-links.txt > links.txt
 
 #<!--------- START COMMENT ---------!>
 
