@@ -92,7 +92,7 @@ sortoptions = -S 1G
 #<!--------- END COMMENT ---------!>
 
 previouslydone.oneshot: /mnt/villa/massback-bulk/*.toc links.txt
-	$(nice) egrep -hv '^h' /mnt/villa/massback-bulk/*.toc | perl -nle '@F=split(/\s+/, $$_, 6); $$F[5]=~s/\\(\d{3})/chr(oct($$1))/eg; print "$$F[3]+$$F[4]\t/$$F[5]"' | sort $(sortoptions) -k2 -k1r | uniq -f1 | join -e '*' -a 1 -t '	' -1 2 -2 1 -o '1.1 2.2 0' - links.txt | perl -F'\t' -anle 'if ($$F[1] eq "*") {print "$$F[0] $$F[2]"} else {print "$$F[0] $$F[1]"}' | sort $(sortoptions) -o previouslydone.oneshot
+	$(nice) egrep -hv '^h' /mnt/villa/massback-bulk/*.toc | perl -nle '@F=split(/\s+/, $$_, 6); $$F[5]=~s/\\(\d{3})/chr(oct($$1))/eg; print "$$F[3]+$$F[4]\t/$$F[5]"' | sort -t '	' $(sortoptions) -k2b,2 -k1r | uniq -f1 | join -e '*' -a 1 -t '	' -1 2 -2 1 -o '1.1 2.2 0' - links.txt | perl -F'\t' -anle 'if ($$F[1] eq "*") {print "$$F[0] $$F[2]"} else {print "$$F[0] $$F[1]"}' | sort $(sortoptions) -k1b,1 -o previouslydone.oneshot
 
 
 #<!--------- START COMMENT ---------!>
@@ -126,7 +126,7 @@ previouslydone.oneshot: /mnt/villa/massback-bulk/*.toc links.txt
 #<!--------- END COMMENT ---------!>
 
 ondisk.oneshot: $(converted) previouslydone.oneshot
-	$(nice) perl -F"\t" -anle '$$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "$$F[0] $$F[8]\t$$F[1]"}' $(converted) | sort $(sortoptions) | join -v 1 -t '	' - previouslydone.oneshot > ondisk.oneshot
+	$(nice) perl -F"\t" -anle '$$F[0]=~s/\..*//; if ($$F[4] eq "f") {print "$$F[0] $$F[8]\t$$F[1]"}' $(converted) | sort -t '	' $(sortoptions) -k 1b,1 | join -v 1 -t '	' - previouslydone.oneshot > ondisk.oneshot
 
 #<!--------- START COMMENT ---------!>
 
