@@ -61,7 +61,7 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 1e7;
+my($lower) = 0;
 
 warn("make limit lower later");
 # warn "Temporarily looking at ALL files for XWD";
@@ -331,6 +331,8 @@ sub choose_file {
   my(@files) = @_;
 
   debug("FILES", @files);
+
+  if (dullon_vs_old_name(@files)) {return;}
 
   if (dvd_trumps_all(@files)) {return;}
 
@@ -991,3 +993,21 @@ sub renames {
   }
 }
 
+# if a file is both in /mnt/villa/DULLON/ (the temporary name I used
+# for my old machine) and the machines correct name, symlink to the
+# correct name version
+
+sub dullon_vs_old_name {
+
+  my(@files) = @_;
+
+  for $i (0,1) {
+     if  (($files[$i]=~m%/mnt/villa/DULLON/%) && $files[1-$i]=~m%/mnt/paulista/lobos/$private{mdrive}/%) {
+       debug("CONDITION HIT");
+       print qq%sudo rm "$files[$i]"\n%;
+       print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+       print qq%echo keeping "$files[1-$i]"\n%;
+       return 1;
+    }
+  }
+}

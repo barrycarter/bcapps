@@ -31,7 +31,7 @@
 
 # Below, NUL means \0 the null character ASCII 0
 
-default: tobackup.oneshot
+default: tobackup.oneshot excluded-by-egrep.txt excluded-by-fgrep.txt
 
 #<!--------- START COMMENT ---------!>
 
@@ -40,6 +40,10 @@ default: tobackup.oneshot
 # nice: the nice level we run at
 
 # sortoptions: sort options to limit memory use
+
+# chunkopts: sent via command line, eg 'chunkopts="--debug
+# --checkfile"' to run bc-chunk-backup3.pl with options when
+# finalizing backup
 
 #<!--------- END COMMENT ---------!>
 
@@ -154,7 +158,7 @@ ondisk.oneshot: $(converted) previouslydone.oneshot
 #<!--------- END COMMENT ---------!>
 
 tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
-	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl
+	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl $(chunkopts)
 
 #<!--------- START COMMENT ---------!>
 
@@ -216,3 +220,16 @@ links.txt: links.d/*-links.txt
 #	rm allfiles-minus-egrep-fgrep.txt* previouslydone.dupes.* filestobackup-plus.txt* filelist.txt statlist.txt big-by-dir.txt big-by-file.txt *-pure.txt *~ doesnotexist.txt
 
 #<!--------- END COMMENT ---------!>
+
+#<!--------- START COMMENT ---------!>
+
+# Files that aren't strictly necessary, but can be useful to see what
+# files are excluded and how
+
+#<!--------- END COMMENT ---------!>
+
+excluded-by-egrep.txt: egrep-pure.txt ondisk.oneshot
+	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -af egrep-pure.txt > excluded-by-egrep.txt
+
+excluded-by-fgrep.txt: fgrep-pure.txt ondisk.oneshot
+	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | fgrep -af fgrep-pure.txt > excluded-by-fgrep.txt
