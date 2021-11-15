@@ -997,12 +997,15 @@ sub renames {
 # for my old machine) and the machines correct name, symlink to the
 # correct name version
 
+# loosened condition later: if one on /DULLON/ and other one not, DULLON loses
+
 sub dullon_vs_old_name {
 
   my(@files) = @_;
 
   for $i (0,1) {
-     if  (($files[$i]=~m%/mnt/villa/DULLON/%) && $files[1-$i]=~m%/mnt/paulista/lobos/$private{mdrive}/%) {
+     if  ($files[$i]=~m%/DULLON/% &&
+	  !($files[1-$i]=~m%/DULLON/%)) {
        debug("CONDITION HIT");
        print qq%sudo rm "$files[$i]"\n%;
        print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
