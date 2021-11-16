@@ -1003,6 +1003,19 @@ sub dullon_vs_old_name {
 
   my(@files) = @_;
 
+  # same test for dullon-root
+
+  for $i (0,1) {
+     if  ($files[$i]=~m%/dullon-root/% &&
+	  !($files[1-$i]=~m%/dullon-root/%)) {
+       debug("CONDITION HIT");
+       print qq%sudo rm "$files[$i]"\n%;
+       print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+       print qq%echo keeping "$files[1-$i]"\n%;
+       return 1;
+    }
+  }
+
   for $i (0,1) {
      if  ($files[$i]=~m%/DULLON/% &&
 	  !($files[1-$i]=~m%/DULLON/%)) {
