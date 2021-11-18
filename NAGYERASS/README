@@ -357,3 +357,5 @@ TODO: many transactions marked "recognized=YES" should have nonblank comments se
 TODO: rewards points uses in rewards_points table should correspond
 with how much I redeem them for at a 1c per 1.25 rewards points for
 newer transactions and 1c per 1 point for older ones
+
+TODO: the sorted reverse filename files I create (for easy reverse lookup) should be about as long as the regular filename list (the version of "rev" I use does weird things sometimes, wrote my own version that I may want to use instead) and BOTH should roughly match "df -i"
