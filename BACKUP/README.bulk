@@ -14,8 +14,13 @@ cp /home/user/BCGIT/BACKUP/Makefile.bulk2 Makefile
 # copy/create necessary files as noted in Makefile, including:
 
 ln -s /mnt/villa/massback-bulk/links.d .
+ln -s /mnt/villa/massback-bulk/exclusions.d/* .
 
 # look over *-commented.txt files particularly at "TEMPORARY" exclusions
+
+# also look at: excluded files that no longer exist (and thus don't
+# need to be excluded), consider moving files around on real hd to
+# more canonical locations
 
 # consider using "chunkopts=" below if desired
 

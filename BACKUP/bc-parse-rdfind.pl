@@ -7,6 +7,8 @@
 # --samenametest=1: if I'm going to delete one of two files, the
 # filenames (excluding path) must match (defaults to true)
 
+# --lower: don't look at files smaller than this many bytes
+
 # I tried to run rdfind as below:
 # sudo rdfind -dryrun true -removeidentinode false -makesymlinks true dir1 dir2
 # to free up disk space, but ran into issues. This program addresses
@@ -61,9 +63,9 @@ if ($>) {die("Must be root");}
 # files below this size are ignored
 # TODO: this should almost definitely be an option
 
-my($lower) = 0;
+my($lower) = $globopts{lower};
 
-warn("make limit lower later");
+# warn("make limit lower later");
 # warn "Temporarily looking at ALL files for XWD";
 
 # warn("Temproarily lowering LOWER for special case");
@@ -129,14 +131,14 @@ while (<>) {
   # <h>"my bad".. get it?</h>
   my($bad) = 0;
 
-  debug("ALPHA",@f);
+#  debug("ALPHA",@f);
 
   for $i (@f) {
 
-    debug("BETA: $i, $size{$i}");
+#    debug("BETA: $i, $size{$i}");
 
     # recsize = size as recorded by results.txt.srt above
-    debug("FILE: $i, RECSIZE: $size{$i}");
+#    debug("FILE: $i, RECSIZE: $size{$i}");
 
     # if recorded file size less than min, skip (this covers
     # nonpositive file size, even if lower isnt set)
@@ -146,7 +148,7 @@ while (<>) {
       $bad=1; last;
     }
 
-    debug("GAMMA: $i");
+#    debug("GAMMA: $i");
 
     # TODO: should this be somewhere else?
     unless ($i=~/[ -~]/) {
@@ -162,7 +164,7 @@ while (<>) {
 
   if ($bad) {next;}
 
-  debug("FETA: $_, $i");
+#  debug("FETA: $_, $i");
 
   # recorded file sizes should agree
   unless ($size{$f[0]} == $size{$f[1]}) {
@@ -170,7 +172,7 @@ while (<>) {
     next;
   }
 
-  debug("GETA: $_, $i");
+#  debug("GETA: $_, $i");
 
   # my restriction: the filename itself must match (because otherwise
   # you get all sorts of weird random links)
@@ -190,7 +192,7 @@ while (<>) {
 
   unless (($n1 eq $n2) || !$globopts{samenametest}) {next;}
 
-  debug("HETA: $_, $i");
+#  debug("HETA: $_, $i");
 
   # do the expensive lstat tests now
   unless (sep_but_equal(@f)) {
@@ -199,7 +201,7 @@ while (<>) {
   }
 
 
-  debug("DELTA: $i");
+#  debug("DELTA: $i");
 
   # TODO: there is no test than the file sizes are equal to the
   # recorded file sizes, but maybe there should be
@@ -207,7 +209,7 @@ while (<>) {
   # TODO: add personal filters here re what I do and dont want to remove
   choose_file(@f);
 
-  debug("EPSILON: $i");
+#  debug("EPSILON: $i");
 
   # this uses recorded file size, not actual, hmmm
   $bytes+= $size{$f[0]};
@@ -1008,7 +1010,6 @@ sub dullon_vs_old_name {
   for $i (0,1) {
      if  ($files[$i]=~m%/dullon-root/% &&
 	  !($files[1-$i]=~m%/dullon-root/%)) {
-       debug("CONDITION HIT");
        print qq%sudo rm "$files[$i]"\n%;
        print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
        print qq%echo keeping "$files[1-$i]"\n%;
@@ -1019,7 +1020,6 @@ sub dullon_vs_old_name {
   for $i (0,1) {
      if  ($files[$i]=~m%/DULLON/% &&
 	  !($files[1-$i]=~m%/DULLON/%)) {
-       debug("CONDITION HIT");
        print qq%sudo rm "$files[$i]"\n%;
        print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
        print qq%echo keeping "$files[1-$i]"\n%;
