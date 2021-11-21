@@ -506,3 +506,12 @@ alias killweb "sudo pkill Web; sudo pkill Priv; sudo pkill file:"
 # emacs in read only mode  (the --eval thing MUST come before filename(s))
 
 alias emacsro "emacs --eval '(setq buffer-read-only t)' \!* &"
+
+# I apparently no longer have j2d to convert between Julian and
+# regular times, so creating these aliases
+
+# TODO: need stardate conversions too
+
+alias jd2unix "bc-call-func.pl jd2unix \!* jd2unix"
+alias unix2jd "bc-call-func.pl jd2unix \!* unix2jd"
+
