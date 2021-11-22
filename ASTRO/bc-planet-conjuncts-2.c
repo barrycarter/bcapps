@@ -8,7 +8,6 @@
 #include "SpiceUsr.h"
 #include "SpiceZfc.h"
 #include "SpiceZpr.h"
-#define MAXSEP 0.10471975511965977462
 #define MAXWIN 1000000
 
 // these are "globally" scoped
@@ -130,6 +129,7 @@ int main (int argc, char **argv) {
   printf("CONJUNCTIONS FOR %f degrees, planets: %d %d %d %d %d %d\n",r2d(MAXSEP),(int)planets[1],(int)planets[2],(int)planets[3],(int)planets[4],(int)planets[5],(int)planets[6]);
 
 
+  // TODO: make this an option
   wninsd_c(unix2et(0),unix2et(2147483647),&cnfine);
   //  wninsd_c (-479695089600.+86400*468, 479386728000., &cnfine);
 
