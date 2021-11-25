@@ -15,6 +15,8 @@ bc-run-nya-test.pl: This program will do the following:
 
   - print to ~/ERR the results of the test
 
+TODO: don't use FUNC, just use bc-call-func.pl
+
 TODO: make it an error for test results to be too old
 
 TODO: maybe create second file from metafile (in private location) to
