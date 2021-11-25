@@ -359,3 +359,5 @@ with how much I redeem them for at a 1c per 1.25 rewards points for
 newer transactions and 1c per 1 point for older ones
 
 TODO: the sorted reverse filename files I create (for easy reverse lookup) should be about as long as the regular filename list (the version of "rev" I use does weird things sometimes, wrote my own version that I may want to use instead) and BOTH should roughly match "df -i"
+
+TODO: comments in bc_budget_view should generally not contain square brackets [like this] since that could mean I forgot to enter a form value; however, there are many exceptions
