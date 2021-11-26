@@ -14,6 +14,8 @@ my($logdir) = "/usr/local/etc/nagyerass";
 
 my($errdir) = "/home/user/ERR";
 
+my($out, $err, $res, $snow);
+
 dodie('chdir("/usr/local/etc/nagyerass")');
 
 my(%hash);
@@ -36,14 +38,48 @@ while (<>) {
 
 unless ($hash{name}) {fail("No anonymous tests!");}
 
-# TODO: confirm test isnt already running
+# TODO: confirm test isnt already running by looking at last line of log file
 
-my($lock) = mylock("nagyerass-$hash{name}", "lock");
+# TODO: could use fuser or mylock here too
 
-unless ($lock) {fail("Could not get lock: nagyerass-$hash{name}");}
+# its ok for there to be no log file, but, if there is...
 
+if (-f "$logdir/$hash{name}.log") {
+  ($out, $err, $res) = cache_command2("tail -n 1 $logdir/$hash{name}.log");
 
+  if ($res) {fail("Could not open log file");}
+  
+  unless ($out=~/END$/) {fail("$hash{name}: Previous run not finished");}
 
+}
+
+# we now log the start of this test (putting $hash{name} here is redundant)
+
+$snow = stardate();
+
+append_file("$snow $hash{name} START", "$logdir/$hash{name}.log");
+
+# finally, we are ready to actually run the test
+
+($out, $err, $res) = cache_command2($hash{cmd});
+
+# report the result
+
+$snow = stardate();
+
+append_file("$snow $hash{name} RESULT: $out", "$logdir/$hash{name}.log");
+
+$snow = stardate();
+
+append_file("$snow $hash{name} END", "$logdir/$hash{name}.log");
+
+if ($res) {fail("Status: $res");}
+
+# if success, wipe out ERR file
+
+write_file("", "$errdir/$hash{name}.err.new");
+
+mv_after_diff("$errdir/$hash{name}.err");
 
 sub fail {
 
@@ -53,17 +89,7 @@ sub fail {
 
   # this subroutine handles fails of many kinds
 
+  mv_after_diff("$errdir/$hash{name}.err");
+
 }
-
-debug(%hash)
-
-
-
-# slurp mode (nah)
-
-# local($/);
-
-# my($all) = <>;
-
-# debug("ALL: $all");
 
