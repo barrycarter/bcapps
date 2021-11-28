@@ -24,7 +24,7 @@ handle $$ cleanly
 
 TODO: test may contain subtests
 
-TODO: include private tests
+TODO: include private tests [now listed in ~/BCPRIV/private-README.nagyerass]
 
 TODO: import existing nagios tests
 
@@ -365,3 +365,5 @@ TODO: the sorted reverse filename files I create (for easy reverse lookup) shoul
 TODO: comments in bc_budget_view should generally not contain square brackets [like this] since that could mean I forgot to enter a form value; however, there are many exceptions
 
 TODO: do the reverse of check_mounts and make sure all connected drives are actually listed in mounts.txt
+
+TODO: if a file has numbers in its name representing a reference number of some sort, make sure the file itself has that reference number also
