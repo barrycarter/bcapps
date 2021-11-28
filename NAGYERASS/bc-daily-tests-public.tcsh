@@ -80,3 +80,19 @@ egrep -v '^#|^$|^OBSOLETE: |^\"' ~/pw.txt | perl -anle 'print $F[2]' | sort | un
 TODO: do check lines that start with quotation marks, mark and exclude accounts that no longer appear to work
 
 </pwrepeats>
+
+<checkimages>
+
+When I add a check to bankstatements (which shows in bc_budget_view),
+I include an indication of where in /home/user/SCANS/CHECKS/ the check
+image appears, sometimes as a wildcard. However, I sometimes move
+images around, breaking the reference; the below confirms all the
+check images referenced are still there; the "NO SUCH FILE" catches
+cases where the check image *isn't* a wildcard
+
+</checkimages>
+
+mysql --column-names=FALSE -B test -e "SELECT comments FROM bc_budget_view WHERE comments RLIKE 'image' \G" | grep image | perl -nle 's/\s+$//; unless (/^Image: (.*)$/) {die("BAD IMAGE: $_")}; @glob = glob("/home/user/SCANS/CHECKS/$1"); if ($#glob < 0) {die "BAD GLOB: $1";} for $i (@glob) {unless (-f $i) {die "NO SUCH FILE: $i"}}'
+
+
+
