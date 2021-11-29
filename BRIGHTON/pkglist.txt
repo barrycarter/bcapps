@@ -404,6 +404,7 @@ xpaint
 gif2asc
 ImageMagick
 ImageMagick-devel
+ImageMagick-doc
 # below is required for feh when compiling
 imlib
 imlib2

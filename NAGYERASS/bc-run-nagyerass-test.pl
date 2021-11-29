@@ -22,6 +22,10 @@ my(%hash);
 
 while (<>) {
 
+  # ignore comments
+
+  if (m%^#%) {next;}
+
   # all lines in the test itself should be key=val
 
   unless (m%^(.*?)\=(.*)$%) {fail("non key/val line found: $_");}
@@ -85,11 +89,15 @@ sub fail {
 
   my($str) = @_;
 
-  die($str);
+  # write to log file and errfile
 
-  # this subroutine handles fails of many kinds
+  append_file("$snow $hash{name} FAIL: $str", "$logdir/$hash{name}.log");
+
+  write_file("nagyerass.$hash{name}.$str", "$errdir/$hash{name}.err.new");
 
   mv_after_diff("$errdir/$hash{name}.err");
+
+  exit(2);
 
 }
 

@@ -14,33 +14,61 @@ my($tests, $fname) = cmdfile();
 while ($tests=~s%<test>(.*?)</test>%%s) {
 
   my($test) = $1;
-  debug("TEST: $test");
+
+  $count++;
+
+  # TODO: not this (use intermediary file?)
+
+  open(A, "|/home/user/BCGIT/NAGYERASS/bc-run-nagyerass-test.pl --debug");
+  print A $test;
+  close(A);
+
+  write_file($test, "/var/tmp/nagyerass/test-$count.txt");
+
+}
+
+die("END HERE");
+
+
+
+#  write_file($test, "/var/tmp/nagyerass
+
+#  debug("TEST: $test");
 
   # test should not contain $$
 
-  if ($test=~/\$\$/) {
-    die("BAD TEST: $test");
-  }
+#   if ($test=~/\$\$/) {
+#     warn("BAD TEST: $test");
+#     next;
+#   }
 
-  my(%hash) = ();
+#   # for the moment, tests should not contain FUNC either
 
-  for $i (split(/\n/, $test)) {
+#   if ($test=~/FUNC/) {
+#     warn("BAD TEST: $test");
+#     next;
+#   }
 
-    # ignore comments
-    if ($i=~/^\#/) {next;}
 
-    # TODO: ignoring blank lines though I shoudlnt have to
-    if ($i=~/^\s*$/) {next;}
+# #  debug("TEST: $test");
 
-    debug("I: $i");
-    unless ($i=~s/^(.*?)\=(.*)$//) {
-      die("BAD LINE: $i");
-    }
-    $hash{$1} = $2;
-  }
+#   for $i (split(/\n/, $test)) {
 
-  run_test(\%hash);
-}
+#     # ignore comments
+#     if ($i=~/^\#/) {next;}
+
+#     # TODO: ignoring blank lines though I shoudlnt have to
+#     if ($i=~/^\s*$/) {next;}
+
+#     debug("I: $i");
+#     unless ($i=~s/^(.*?)\=(.*)$//) {
+#       die("BAD LINE: $i");
+#     }
+#     $hash{$1} = $2;
+#   }
+
+#   run_test(\%hash);
+# }
 
 =item run_test
 
@@ -63,7 +91,7 @@ sub run_test {
 }
 
 
-die "TESTING";
+# die "TESTING";
 
 
 
