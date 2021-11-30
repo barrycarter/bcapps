@@ -11,7 +11,8 @@ int main (int argc, char **argv) {
   char str[1000000];
 
   while (!feof(stdin)) {
-    fgets(str, 100000, stdin);
+
+    if (fgets(str, 100000, stdin) == NULL) {continue;}
 
     // the -2 here is to avoid the ending newline
 
