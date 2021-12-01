@@ -31,7 +31,7 @@
 
 # Below, NUL means \0 the null character ASCII 0
 
-default: tobackup.oneshot excluded-by-egrep.txt excluded-by-fgrep.txt
+default: tobackup.oneshot excluded-by-egrep.txt excluded-by-fgrep.txt excluded-by-weekly.txt
 
 #<!--------- START COMMENT ---------!>
 
@@ -158,7 +158,7 @@ ondisk.oneshot: $(converted) previouslydone.oneshot
 #<!--------- END COMMENT ---------!>
 
 tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
-	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | tac | bc-chunk-backup3.pl $(chunkopts)
+	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | egrep -avf egrep-pure.txt | fgrep -avf fgrep-pure.txt | fgrep -avf weekly-pure.txt | tac | bc-chunk-backup3.pl $(chunkopts)
 
 #<!--------- START COMMENT ---------!>
 
@@ -172,7 +172,24 @@ tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
 # lines, at least in theory, could start with ".*" or similar, though
 # they probably shouldn't)
 
+# weekly-pure.txt is a list of files backed up weekly that I don't
+# need to backup on these incremental backups. The steps to create it
+
+#  - perl: look for all lines that have a "/" in them and delete
+#  everything up to that "/"; in other words, print just filename,
+#  bracketed by nulls
+
+#  - ls: find all files matching latest*.list, the toc for my weekly
+#  backups, sorted by most recent first
+
+#  - head: find the most recent weekly backup file
+
+#  - sort: unnecessary sort to put these in order
+
 #<!--------- END COMMENT ---------!>
+
+weekly-pure.txt: /mnt/villa/massback-bulk/latest-????????.list
+	perl -nle 'if (s%^.*?/%/%) {print "\0$$_\0"}' `ls -t /mnt/villa/massback-bulk/latest-????????.list | head -1` | sort > weekly-pure.txt
 
 fgrep-pure.txt: fgrep-commented.txt
 	egrep '^/' fgrep-commented.txt | perl -nle 'print "\0$$_\0"' > fgrep-pure.txt
@@ -233,3 +250,6 @@ excluded-by-egrep.txt: egrep-pure.txt ondisk.oneshot
 
 excluded-by-fgrep.txt: fgrep-pure.txt ondisk.oneshot
 	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | fgrep -af fgrep-pure.txt > excluded-by-fgrep.txt
+
+excluded-by-weekly.txt: weekly-pure.txt ondisk.oneshot
+	$(nice) perl -nle '/(\S+)\s+(.*?)\t(.*)$$/; print "\0$$2\0$$1\0$$3\0"' ondisk.oneshot | fgrep -af weekly-pure.txt > excluded-by-weekly.txt
