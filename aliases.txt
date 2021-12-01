@@ -8,6 +8,7 @@
 # alias diediedie "sudo pkill -9 convert; sudo pkill -9 xwd; sudo pkill -9 curl; sudo pkill -9 grep; sudo pkill -9 sshfs; sudo pkill -9 find; sudo pkill -9 bc-xwd.pl; sudo pkill -9 bc-elec-snap.pl"
 
 # nagios status from status.dat (very kludgey)
+
 alias nagstat "egrep 'host_name|plugin_output|current_state|(host|service)status|service_description|check_command' /var/nagios/status.dat | grep -v 'long_plugin_output'"
 
 # cleanup nagios status files that are older than last nagios invocation
@@ -25,7 +26,8 @@ alias nagcheck "grep host_name /var/nagios/status.dat | sort | uniq | cut -d= -f
 # <h>who needs /etc/init.d anyway!</h>
 # this fails if nagios isn't running already; pkill nagios && nagios
 # would've been a better option
-alias nagstart "echo restarting nagios...; sudo rm /home/barrycarter/ERR/nagios.*.err; sudo pkill nagios; sudo nice -19 nagios -d /home/barrycarter/BCGIT/NAGIOS/nagios.cfg; sleep 5; nagcheck"
+
+alias nagstart "echo restarting nagios...; sudo rm /home/barrycarter/ERR/nagios.*.err; sudo pkill nagios; sudo nice -19 nagios -d /home/barrycarter/BCGIT/NAGIOS/nagios.cfg; bc-waitfile2.pl /var/nagios/status.dat; nagcheck"
 
 # volume
 alias volume "amixer set 'Master Front' \!*"
