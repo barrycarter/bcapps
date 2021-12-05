@@ -334,14 +334,16 @@ sub choose_file {
 
   debug("FILES", @files);
 
+  if (ungpg(@files)) {return;}
+
+return;
+
   if (dullon_vs_old_name(@files)) {return;}
 
   if (dvd_trumps_all(@files)) {return;}
 
   if (mp4vstorrents(@files)) {return;}
 
-
-return;
 
   if (renames(@files)) {return;}
 
@@ -1025,5 +1027,22 @@ sub dullon_vs_old_name {
        print qq%echo keeping "$files[1-$i]"\n%;
        return 1;
     }
+  }
+}
+
+# if both in UNGPG, alphabetically later one (meaning the more recent one) wins
+
+sub ungpg {
+
+  my(@files) = @_;
+
+  if  ($files[0]=~m%/UNGPG/% && $files[1]=~m%/UNGPG/%) {
+
+    my(@ord) = sort(@files);
+
+    print qq%sudo rm "$files[0]"\n%;
+    print qq%sudo ln -s "$files[1]" "$files[0]"\n%;
+    print qq%echo keeping "$files[1]"\n%;
+    return 1;
   }
 }
