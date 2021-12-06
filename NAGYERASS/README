@@ -369,3 +369,5 @@ TODO: do the reverse of check_mounts and make sure all connected drives are actu
 TODO: if a file has numbers in its name representing a reference number of some sort, make sure the file itself has that reference number also
 
 TODO: certain transactions in bc_budget_view should match predetermined template
+
+TODO: some mail folders should only have messages between given dates (no earlier than x, no later than y)

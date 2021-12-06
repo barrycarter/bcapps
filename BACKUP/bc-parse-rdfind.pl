@@ -334,9 +334,11 @@ sub choose_file {
 
   debug("FILES", @files);
 
-  if (ungpg(@files)) {return;}
+  if (ungpg2(@files)) {return;}
 
 return;
+
+  if (ungpg(@files)) {return;}
 
   if (dullon_vs_old_name(@files)) {return;}
 
@@ -1046,3 +1048,22 @@ sub ungpg {
     return 1;
   }
 }
+
+# if one in UNGPG and other not, UNGPG loses
+
+sub ungpg2 {
+
+  my(@files) = @_;
+
+  for $i (0,1) {
+     if  ($files[$i]=~m%/UNGPG/% &&
+	  !($files[1-$i]=~m%/UNGPG/%)) {
+       print qq%sudo rm "$files[$i]"\n%;
+       print qq%sudo ln -s "$files[1-$i]" "$files[$i]"\n%;
+       print qq%echo keeping "$files[1-$i]"\n%;
+       return 1;
+    }
+   }
+}
+
+
