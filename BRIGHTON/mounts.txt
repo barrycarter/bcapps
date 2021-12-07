@@ -40,3 +40,7 @@
 /home home
 
 # not listing /boot or /boot/efi
+
+# new drive
+
+/mnt/liberdade liberdade
