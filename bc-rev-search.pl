@@ -38,5 +38,9 @@ push(@rev, "/mnt/villa/user/20190715/extdrive5-files-rev.txt.srt");
 for $i (@rev) {
   # TODO: also search for $phrase.bz2 (reversed) and so on?
   debug("LOOKING AT: $i");
-  system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' $i | rev");
+
+  # changed to use bc-reverse to avoid "Invalid or incomplete
+  # multibyte or wide character" error
+
+  system("/home/barrycarter/BCGIT/bc-sgrep.pl '$phrase' $i | bc-reverse");
 }
