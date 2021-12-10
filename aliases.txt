@@ -517,3 +517,8 @@ alias emacsro "emacs --eval '(setq buffer-read-only t)' \!* &"
 alias jd2unix "bc-call-func.pl jd2unix \!* jd2unix"
 alias unix2jd "bc-call-func.pl jd2unix \!* unix2jd"
 
+# the quikbak location of a given file
+
+# TODO: check to see if file actually exists
+
+alias quikbakfind 'echo /usr/local/etc/quikbak`realpath \!*`.quikbak'
