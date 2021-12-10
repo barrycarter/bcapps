@@ -3,6 +3,9 @@
 # given a list of placenames on the command line, attempts to find the
 # canonical place name for each
 
+# --all: give all results for each code, not just first/biggest result
+# (this option may not be working properly)
+
 # requires (and is really just a thin wrapper around) the
 # geonames/geonames.db at:
 # http://geonames.db.94y.info/
@@ -52,6 +55,7 @@ ATTACH DATABASE '$db' AS geonames;
 
 SELECT m.orig AS cityq, gn1.geonameid, 
  gn1.asciiname AS city,
+ an1.name AS city_alt,
  gn5.asciiname AS state,
  gn6.asciiname AS country,
  gn1.population, gn1.latitude/((1<<24)-1.)*180. AS latitude,
@@ -92,7 +96,7 @@ for $i (@res) {
   %hash = %{$i};
 
   # ignore dupes
-  if ($seen{$hash{cityq}}) {next;}
+  if ($seen{$hash{cityq}} && !$globopts{all}) {next;}
   $seen{$hash{cityq}} = 1;
 
   print "<response>\n";
