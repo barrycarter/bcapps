@@ -42,7 +42,7 @@ require "/usr/local/lib/bclib.pl";
 require "/home/user/bc-private.pl";
 
 # can take a while to run, so alert
-defaults("xmessage=1&samenametest=1");
+defaults("xmessage=1&samenametest=1&lower=0");
 
 # for permissions purposes (ugly!)
 if ($>) {die("Must be root");}
@@ -334,9 +334,11 @@ sub choose_file {
 
   debug("FILES", @files);
 
-  if (ungpg2(@files)) {return;}
+  if (tumblr_fix(@files)) {return;}
 
 return;
+
+  if (ungpg2(@files)) {return;}
 
   if (ungpg(@files)) {return;}
 
@@ -345,7 +347,6 @@ return;
   if (dvd_trumps_all(@files)) {return;}
 
   if (mp4vstorrents(@files)) {return;}
-
 
   if (renames(@files)) {return;}
 
@@ -357,7 +358,6 @@ return;
 #  if (weathercanon(@files)) {return;}
 
 #  if (dvd_trumps_all(@files)) {return;}
-#  if (tumblr_fix(@files)) {return;}
 #  if (mp4vstorrents(@files)) {return;}
 #  if (xwdcanon(@files)) {return;}
 
@@ -881,9 +881,11 @@ sub tumblr_fix {
   # also, neither file can be a .txt file OR be in /OLD/
 
   # some files are references as //mnt/villa/... grumble
+
+  # to be even more sure, must be in a media subdir
   if (
-      $files[0]=~m%^/+mnt/villa/user/TUMBLR/% &&
-      $files[1]=~m%^/+mnt/villa/user/TUMBLR/% &&
+      $files[0]=~m%^/+mnt/villa/user/TUMBLR/.*?/media/% &&
+      $files[1]=~m%^/+mnt/villa/user/TUMBLR/.*?/media/% &&
       !($files[0]=~m%(/OLD/|\.txt)%) &&
       !($files[1]=~m%(/OLD/|\.txt)%)
      ) {
