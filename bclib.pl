@@ -4597,7 +4597,10 @@ sub find_attached_scanners {
 
 Move $source.new to $source and $source to $source.old; however, if
 $source.new and $source are already identical (per cmp), do
-nothing. $options currently unused.
+nothing. $options:
+
+ nocmp = don't compare to see if files are equal, always overwrite
+ (useful when timestamps are important)
 
 TODO: add rm=1 option to remove .new file in case of equality (but
 safer to keep it around "just in case")
@@ -4611,14 +4614,21 @@ TODO: all for arbitrary source/target files, now just source.new?
 
 sub mv_after_diff {
   my($source, $options) = @_;
-  my($out,$err,$res) = cache_command2("cmp \"$source\" \"$source.new\" 1> /tmp/cmp.out 2> /tmp/cmp.err", "nocache=1");
+
+  my(%opts) = parse_form($options);
+
+  my($out,$err,$res);
+
+  unless ($opts{nocmp}) {
+    ($out,$err,$res) = cache_command2("cmp \"$source\" \"$source.new\" 1> /tmp/cmp.out 2> /tmp/cmp.err", "nocache=1");
     debug("OUT: $out, ERR: $err, RES: $res");
     unless ($res) {
       debug("$source and $source.new already identical");
       return;
     }
+  }
 
-  debug("$source and $source.new different, overwriting");
+  debug("$source and $source.new different or nocmp=1, overwriting");
   system("mv \"$source\" \"$source.old\"; mv \"$source.new\" \"$source\"");
 }
 
