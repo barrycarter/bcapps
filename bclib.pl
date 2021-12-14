@@ -43,6 +43,9 @@ $bclib{githome} = "/home/user/BCGIT";
 $bclib{home} = "/home/user";
 $bclib{extdrive} = "/mnt/extdrive";
 
+# where I keep private information that my code can use
+$bclib{privdir} = "/home/user/BCPRIV";
+
 # TODO: sort of bad to call this "abbrev" in global lib
 our(%ABBREV)=("BC" => lc("Patches"),
 	 "BL" => lc("Blowing"),

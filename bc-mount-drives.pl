@@ -10,7 +10,7 @@ require "/usr/local/lib/bclib.pl";
 my(%id2mp,%dev2id);
 
 # read the blkids.txt file (private) of my drives
-for $i (split(/\n/,read_file("$bclib{home}/blkids.txt"))) {
+for $i (split(/\n/,read_file("$bclib{privdir}/blkids.txt"))) {
   if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
   $i=~/^(.*?)\s+(.*)$/||die("BAD LINE: $i");
   $id2mp{$1}=$2;
