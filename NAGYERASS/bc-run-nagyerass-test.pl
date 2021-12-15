@@ -42,8 +42,6 @@ while (<>) {
 
 unless ($hash{name}) {fail("No anonymous tests!");}
 
-# TODO: confirm test isnt already running by looking at last line of log file
-
 # TODO: could use fuser or mylock here too
 
 # its ok for there to be no log file, but, if there is...
@@ -83,7 +81,7 @@ if ($res) {fail("Status: $res");}
 
 write_file("", "$errdir/$hash{name}.err.new");
 
-mv_after_diff("$errdir/$hash{name}.err");
+mv_after_diff("$errdir/$hash{name}.err", "nocmp=1");
 
 sub fail {
 
@@ -95,7 +93,7 @@ sub fail {
 
   write_file("nagyerass.$hash{name}.$str", "$errdir/$hash{name}.err.new");
 
-  mv_after_diff("$errdir/$hash{name}.err");
+  mv_after_diff("$errdir/$hash{name}.err", "nocmp=1");
 
   exit(2);
 
