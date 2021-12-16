@@ -19,9 +19,9 @@ for $i (`egrep -v '^#|^\$' $bclib{githome}/BRIGHTON/mounts.txt`) {
   print A << "MARK";
 
 <test>
-name=check_disk_space_$name
-freq=600
-cmd=check_disk -u GB -v -c 10 $mtpt
+<name>check_disk_space_$name</name>
+<freq>600</freq>
+<cmd>check_disk -u GB -v -c 10 $mtpt</cmd>
 </test>
 
 MARK
@@ -44,9 +44,9 @@ for $i (`egrep -v '^#|^\$' $bclib{home}/BCPRIV/mydomains.txt`) {
   print B << "MARK";
 
 <test>
-name=check_domain_exp_$i
-freq=86400
-cmd = bc-call-func.pl domainexp $i
+<name>check_domain_exp_$i</name>
+<freq>86400</freq>
+<cmd>bc-call-func.pl domainexp $i</cmd>
 </test>
 
 MARK

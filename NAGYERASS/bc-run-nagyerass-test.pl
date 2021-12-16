@@ -6,29 +6,28 @@
 
 require "/usr/local/lib/bclib.pl";
 
-# if this directory doesn't exist, we don't even bother with a regular error
+warn("temporarily debugging everything");
+defaults("debug=1");
 
-# TODO: is above wise?
-
-my($logdir) = "/usr/local/etc/nagyerass";
-
+my($logdir) = "/usr/local/etc/nagyerass/logs";
 my($errdir) = "/home/user/ERR";
-
 my($out, $err, $res, $snow);
+
+# if this directory doesn't exist, we don't even bother with a regular error
+# TODO: is above wise?
 
 dodie('chdir("/usr/local/etc/nagyerass")');
 
+# slurp the stdin or file
+
+local $/;
+my($stdin) = <STDIN>;
+
+# grab xml tags
+
 my(%hash);
 
-while (<>) {
-
-  # ignore comments
-
-  if (m%^#%) {next;}
-
-  # all lines in the test itself should be key=val
-
-  unless (m%^(.*?)\=(.*)$%) {fail("non key/val line found: $_");}
+while ($stdin=~s%<(.*?)>(.*?)</\1>%%) {
 
   my($key, $val) = ($1, $2);
 
@@ -36,6 +35,12 @@ while (<>) {
 
   $hash{$key} = $val;
 
+}
+
+# if anything left, bad
+
+unless ($stdin=~/^\s*$/) {
+  fail("leftover: $stdin");
 }
 
 # we use name for many things
@@ -59,7 +64,7 @@ if (-f "$logdir/$hash{name}.log") {
 
 $snow = stardate();
 
-append_file("$snow $hash{name} START", "$logdir/$hash{name}.log");
+append_file("$snow $hash{name} START\n", "$logdir/$hash{name}.log");
 
 # finally, we are ready to actually run the test
 
@@ -69,13 +74,19 @@ append_file("$snow $hash{name} START", "$logdir/$hash{name}.log");
 
 $snow = stardate();
 
-append_file("$snow $hash{name} RESULT: $out", "$logdir/$hash{name}.log");
+# chomp variables since I add newlines myself
+
+chomp($out, $err, $res);
+
+append_file("OUT: $out\nERR: $err\nRES: $res\n", "$logdir/$hash{name}.log");
 
 $snow = stardate();
 
-append_file("$snow $hash{name} END", "$logdir/$hash{name}.log");
+append_file("$snow $hash{name} END\n", "$logdir/$hash{name}.log");
 
-if ($res) {fail("Status: $res");}
+# TODO: allow tests to set their own failmsg
+
+if ($res) {fail("failed");}
 
 # if success, wipe out ERR file
 
@@ -87,11 +98,13 @@ sub fail {
 
   my($str) = @_;
 
+  debug("FAILING:", @_);
+
   # write to log file and errfile
 
-  append_file("$snow $hash{name} FAIL: $str", "$logdir/$hash{name}.log");
+  append_file("$snow $hash{name} FAIL: $str\n", "$logdir/$hash{name}.log");
 
-  write_file("nagyerass.$hash{name}.$str", "$errdir/$hash{name}.err.new");
+  write_file("nagyerass.$hash{name}.$str\n", "$errdir/$hash{name}.err.new");
 
   mv_after_diff("$errdir/$hash{name}.err", "nocmp=1");
 
