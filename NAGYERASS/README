@@ -371,3 +371,7 @@ TODO: if a file has numbers in its name representing a reference number of some 
 TODO: certain transactions in bc_budget_view should match predetermined template
 
 TODO: some mail folders should only have messages between given dates (no earlier than x, no later than y)
+
+TODO: no email message should have certain status combinations (such as "junk" and "important") at the same time
+
+TODO: entries in some files (such as my-tumblr-blogs) should be uniq

@@ -334,17 +334,17 @@ sub choose_file {
 
   debug("FILES", @files);
 
-  if (tumblr_fix(@files)) {return;}
+  if (dvd_trumps_all(@files)) {return;}
 
 return;
+
+  if (tumblr_fix(@files)) {return;}
 
   if (ungpg2(@files)) {return;}
 
   if (ungpg(@files)) {return;}
 
   if (dullon_vs_old_name(@files)) {return;}
-
-  if (dvd_trumps_all(@files)) {return;}
 
   if (mp4vstorrents(@files)) {return;}
 
