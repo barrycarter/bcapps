@@ -231,7 +231,7 @@ sub handle_paypal {
   my($all) = @_;
   my($date, $email);
 
-  warn("this no longer appears to work, use with caution");
+#  warn("this no longer appears to work, use with caution");
 
   debug("ALL HERE: $all");
 
