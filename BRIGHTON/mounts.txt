@@ -14,7 +14,11 @@
 # temporarily disabled 9 Jan 2018 (restored 11 Jan 2018, fixed)
 # temp disabled 12 Apr 2018 as I move this drive contents to lobos
 # restored 13 Apr 2018
+
+# temorarily removed 18 Dec 2021, acting up, fine 19 Dec 2021
+
 /mnt/kemptown kemptown
+
 / saopaulo
 
 # usb drives
