@@ -24,3 +24,4 @@ systemctl mask alsa-state
 systemctl enable dnsmasq
 systemctl enable httpd
 systemctl enable tor
+systemctl enable smartd

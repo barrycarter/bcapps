@@ -44,7 +44,8 @@ write_file_new($out, "/tmp/pslist.txt");
 # TODO: move this to conf file too?
 
 my(%use2nd) = list2hash("/usr/bin/perl", "python", "/bin/perl",
-"/usr/bin/python", "/bin/sh", "-csh", "sh", "perl", "cpulimit", "java");
+"/usr/bin/python", "/bin/sh", "-csh", "sh", "perl", "cpulimit", "java",
+"/bin/bash");
 
 @procs = split(/\n/,$out);
 shift(@procs); # ignore header line
