@@ -327,7 +327,12 @@ alias stopit2 "bc-stopit.pl find bzip2 bc-format2altfo bc-unix-dump sort join"
 # stopnet stops network intensive processes (bda = USUS bulk downloader)
 
 # alias stopnet "sudo killall -STOP bda youtube-dl qbittorrent wget curl idevs; \pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
-alias stopnet "bc-stopit.pl bda youtube-dl qbittorrent wget curl idevs; \pkill -STOP -f tumblr_backup; xmessage consider pausing firefox and other downloads and make sure tumblr backup stopped&"
+
+# made this direct kill again on 12/20/21 since the added line
+# xmessage creates messes things up (but also removed xmessage so
+# pointless?
+
+alias stopnet "echo this version actually kills processes; echo; echo remember to check firefox downloads; echo; echo bda youtube-dl qbittorrent wget curl idevs | xargs -n 1 -t pkill -STOP; \pkill -STOP -f tumblr_backup"
 
 # bc-daemon-checker will restart stopped processes if the system is
 # idle, but this allows me to restart them when I want
