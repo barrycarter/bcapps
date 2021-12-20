@@ -43,9 +43,14 @@
 
 # --days=n: how far back to go when making calculations (default = 365)
 
+# --ignore=n: ignore the past n days (I dont check my accounts daily,
+# so data for the last 14 or so days could be incomplete, making it
+# look like I spend less money than I actually do)
+
 require "/usr/local/lib/bclib.pl";
 
-defaults("days=365");
+# 1 year period ending two weeks ago
+defaults("days=379&ignore=14");
 
 # convert options that are list values to hashes
 
@@ -63,9 +68,13 @@ my(%fixed) = split(/[\,|\:]\s*/, $globopts{fixed});
 my(%bankrename) = split(/[\,|\:]\s*/, $globopts{bankrename});
 my(%extra) = split(/[\,|\=]\s*/, $globopts{extra});
 
-# the current time
+# the "current" time (last day were not ignoring)
 
-my($now) = time();
+# TODO: this should probably round to the nearest day or something
+# (but since the db only keeps values to the day level, this may not
+# be an issue)
+
+my($now) = time()-$globopts{days}*86400;
 
 # get all transactions from this view
 
@@ -82,19 +91,21 @@ my(%perDiemTotal, %isCategory, %acctTotal, $grandTotal);
 
 for $i (@res) {
 
-  # if this account is excluded, we ignore it entirely
+  # added new fields to bc_budget_view (by creating new tables and
+  # redefining the view), so I can tell if account is live/obsolete
+  # and combine account numbers into a single name
 
-  if ($exclacct{$i->{account}}) {next;}
+  # if this account is obsolete, we ignore it entirely
 
-  # rename bank if needed
-
-  if($bankrename{$i->{account}}) {$i->{account} = $bankrename{$i->{account}};}
+  if ($i->{status} eq "OBSOLETE") {next;}
 
   # count all transactions for non-excluded accounts to get acctTotal
   # and grandTotal (= liquid net worth) (this includes positive
   # amounts and excluded categories)
 
-  $acctTotal{$i->{account}} += $i->{amount};
+  # $i->{name} combines account number changes, replacing "account"
+
+  $acctTotal{$i->{name}} += $i->{amount};
   $grandTotal += $i->{amount};
 
   # age of transaction (but never less than 1 to avoid div by 0 or negative)
@@ -102,8 +113,9 @@ for $i (@res) {
   my($daysago) = max(1,floor(($now - str2time($i->{date}))/86400));
 
   # if transaction is significantly old, do nothing else
+  # or too new
 
-  if ($daysago > $globopts{days}) {next;}
+  if ($daysago > $globopts{days} || $daysago < $globopts{ignore}) {next;}
 
   # is this transaction interesting to us?
 
@@ -199,8 +211,6 @@ sub isValidTransaction {
   # positive amount
 
   if ($hashref->{amount} > 0) {return 0;}
-
-#  debug("FOO: $hashref->{account}");
 
   return 1;
 
