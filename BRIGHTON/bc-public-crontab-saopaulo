@@ -372,6 +372,10 @@ XWIDTH=1600
 
 # */5 * * * * sensors; hddtemp
 
+# once a day, dump smartctl data for all(?) drives
+
+39 1 * * * ls /dev/sd? | xargs -n 1 sudo smartctl -x
+
 # "subliminally" pop up a message every 7 minutes or so (but 11m gap
 # at turn of hour); using 7m schedule to avoid interfering w/ GUAWA
 

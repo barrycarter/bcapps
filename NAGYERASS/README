@@ -382,3 +382,5 @@ TODO: any file that uses yyyymmdd format for dates and isn't auto-timestamped/cr
 
 TODO: when I list a credit card in orgin.txt (my manifest of where I keep things), credit cards should have CVV included or note that there is no CVV (some work in 20210920 for more)
 
+TODO: use smartctl to confirm no drive is near failing(?)
+
