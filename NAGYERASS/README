@@ -156,6 +156,8 @@ cards)
 
 TODO: refnums should rarely be duplicated (excluding NULLs) (mostly done)
 
+TODO: for cases where refnums are legitimately duplicated, make sure they're not triplicated
+
 TODO: refnums should appear in comments field of entry (mostly done)
 
 TODO: zip files in GOOGLE takeout should be recentish (no more than 2 months per account)
