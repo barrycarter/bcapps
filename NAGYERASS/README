@@ -236,7 +236,7 @@ TODO: rewrite bc_nagios_file_size to use greater than less than and equal to AND
 
 TODO: any local URL tests should also have free external monitoring (eg, montastic) tests as well
 
-TODO: all Amazon order descriptions should have "shipping speed" and "condition" and "sold by" with some exceptions based on date and other factors
+TODO: all Amazon order descriptions should have "shipping speed" and "condition" and "sold by" and "shipped to" with some exceptions based on date and other factors
 
 TODO: all shipt/doordash and maybe more should have date and time in comments
 
