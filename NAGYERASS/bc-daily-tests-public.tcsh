@@ -88,11 +88,13 @@ I include an indication of where in /home/user/SCANS/CHECKS/ the check
 image appears, sometimes as a wildcard. However, I sometimes move
 images around, breaking the reference; the below confirms all the
 check images referenced are still there; the "NO SUCH FILE" catches
-cases where the check image *isn't* a wildcard
+cases where the check image *isn't* a wildcard; added colon on
+12/27/21 because there is an entry that has "image" in comments for an
+unrelated reason
 
 </checkimages>
 
-mysql --column-names=FALSE -B test -e "SELECT comments FROM bc_budget_view WHERE comments RLIKE 'image' \G" | grep image | perl -nle 's/\s+$//; unless (/^Image: (.*)$/) {die("BAD IMAGE: $_")}; @glob = glob("/home/user/SCANS/CHECKS/$1"); if ($#glob < 0) {die "BAD GLOB: $1";} for $i (@glob) {unless (-f $i) {die "NO SUCH FILE: $i"}}'
+mysql --column-names=FALSE -B test -e "SELECT comments FROM bc_budget_view WHERE comments RLIKE 'image:' \G" | grep image | perl -nle 's/\s+$//; unless (/^Image: (.*)$/) {die("BAD IMAGE: $_")}; @glob = glob("/home/user/SCANS/CHECKS/$1"); if ($#glob < 0) {die "BAD GLOB: $1";} for $i (@glob) {unless (-f $i) {die "NO SUCH FILE: $i"}}'
 
 
 
