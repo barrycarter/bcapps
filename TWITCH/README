@@ -1,0 +1,29 @@
+See also ../README-projects.txt
+
+Some ideas to possibly stream in the future and other Twitch thoughts:
+
+  - let viewers donate to third party without going through me
+
+  - create viewer-visible overlay (in JS) of a map or something that lets viewers interact with my stream (like some quiz games, etc do)
+
+  - look into existing viewer-visible overlays, such as quiz program(s) or websites like quizkit.io, and perhaps run quizzes
+
+  - create Twitch extensions (is this the same thing as above)
+
+  - look into restream.io for multistreaming and thinks like dlive.tv and trovo.tv
+
+  - as with my github, consider editing my existing twitch videos to make them more useful: https://www.youtube.com/watch?v=sNDnPPhtrdI&list=PLnIb1yAxbDpggEqaSAnohgmO8KQDHpnNc
+
+  - consider creating captioned screenshots of my existing videos and posting them (with captions also in text) on github pages 
+
+  - realtime multi-language speech to text? (webcaptioner.com)?
+
+  - stream Atari 2600 (emulator) or other very old games (DOS, NES, SNES, etc)
+
+  - stream text adventure games (not just aidungeon)
+
+
+
+
+
+

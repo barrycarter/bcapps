@@ -1,3 +1,9 @@
+see also TWITCH/README
+
+see also any/all TODO files in various directories
+
+====================================================================
+
 Title: Weighted spherical polygonal Voronoi diagrams
 
 What points are 3 times closer to Missouri than to Kansas?
@@ -573,6 +579,8 @@ My stack question on the subject: https://unix.stackexchange.com/questions/22791
 
 Title: Better ad blocker: download ads but don't display them
 
+NOTE: ublock may already be doing this
+
 URL: none
 
 Description: Sites can detect ad blockers, so create a new one that
@@ -1114,4 +1122,4 @@ equator-- formula or something to find these points
 
 TODO: f(f(x)) = x^2 + 1 (using linear algebra)
 
-
+TODO: leaflet starmap where zooming in gives you fainter stars, in theory up to the billion limit of GAIA2 (but someone might already be doing that)

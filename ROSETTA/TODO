@@ -3,4 +3,5 @@ TODO: change arccos to acos for Javascript and some other languages
 TODO: consider creating a list of changes (like arccos to acos) for
 each langauge intead of oneoffing each time
 
+TODO: according to a note I had elsewhere: results for HADecLat2azEl for ruby and python are far enough from correct values to be worrisome (still small, but larger than they should be); however, this note may be obsolete so double check
 
