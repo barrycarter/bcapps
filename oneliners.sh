@@ -139,7 +139,7 @@ exit;
 
 # as of 2017 cal, I think I already have everything I want, so this just confirms gcal isnt spitting out anything new
 
-gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2017 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/20140726/nocal.txt | sort | uniq > gcal.txt
+gcal -u @/home/barrycarter/BCGIT/ASTRO/gcal-options.txt 2017 | perl -nle '/^(.*?)\s{2,}[\+\-]\s+(\d{8})/||warn("BAD: $_"); my($e,$d)=($1,$2); $e=~s/\s*\(.*?\)\s*$//; $e=~s/\47//g; $e=~s/\s*Day\s*/ /; print "$d $e"' | egrep -vf /home/barrycarter/20220102/nocal.txt | sort | uniq > gcal.txt
 
 perl -anle 'print $F[0]' gcal.txt | sort -n | uniq > gcal-dates.txt
 
