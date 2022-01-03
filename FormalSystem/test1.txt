@@ -20,7 +20,7 @@ Rule(father)
   Conclusion
     father(X,Y)
 
-# this is incorrect: as stated, could include case X=Y
+# this is incorrect: as stated, could include case X=Z
 
 Rule(sibling)
   Premise
