@@ -1,20 +1,20 @@
 # F(X,Y) is read "X's F is Y"
 
-Rule(child)
+Rule (Child)
   Premise
     parent(X,Y)
   Conclusion
     child(Y,X)
 
-Rule(mother)
-  Premise
+Rule(Mother)
+  Premises
     female(X)
     parent(X,Y)
   Conclusion
     mother(X,Y)
 
-Rule(father)
-  Premise
+Rule(Father)
+  Premises
     male(X)
     parent(X,Y)
   Conclusion
@@ -22,8 +22,8 @@ Rule(father)
 
 # this is incorrect: as stated, could include case X=Z
 
-Rule(sibling)
-  Premise
+Rule (Sibling)
+  Premises
     mother(X,Y)
     mother(Z,Y)
     father(X,W)
@@ -31,22 +31,22 @@ Rule(sibling)
   Conclusion
     sibling(X,Y)
 
-Rule(sister)
-  Premise
+Rule (Sister)
+  Premises
     sibling(X,Y)
     female(Y)
   Conclusion
     sister(X,Y)
 
-Rule(brother)
-  Premise
+Rule (Brother)
+  Premises
     sibling(X,Y)
     male(Y)
   Conclusion
     brother(X,Y)
 
-Rule(uncle)
-  Premise
+Rule (Uncle)
+  Premises
     parent(X,Y)
     brother(Y,Z)
   Conclusion
