@@ -30,7 +30,7 @@ my(%extra) = (
 
 my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE", "INSTAGRAM", 
 	     "DISCORD", "TUMBLR/BACKUPS", "DROPBOX", "IFTTT", 
-	     "FREECODECAMP", "DOORDASH", "AMAZON");
+	     "FREECODECAMP", "DOORDASH", "AMAZON", "YAHOO");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # hash to keep latest save for each account
@@ -91,7 +91,7 @@ for $i (split(/\n/, $out)) {
 
   unless (
 	  $i=~m%/(GOOGLE)/(.*?)\-(\d{8}T\d{6})Z.zip$% ||
-	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
+	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS|YAHOO)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
 	  $i=~m%/(INSTAGRAM)/(.*?)_(\d{8})\.zip$% ||
 	  $i=~m%/(DROPBOX)/dropbox\-(.*?)\-(\d{8})\.zip$% ||
 	  $i=~m%/(IFTTT|FREECODECAMP|DOORDASH)/(.*?)\-(\d{8})\.(json|zip)$%
