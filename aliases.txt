@@ -491,7 +491,11 @@ alias zipmount "mkdirhier /mnt/zip/\!*; fuse-zip \!* /mnt/zip/\!*"
 
 # this now also removes empty directories
 
-alias unzipmount "find /mnt/zip -type d | xargs -n 1 sudo umount; find /mnt/zip -mindepth 1 -depth -type d | xargs rmdir"
+# alias unzipmount "find /mnt/zip -type d | xargs -n 1 sudo umount; find /mnt/zip -mindepth 1 -depth -type d | xargs rmdir"
+
+# corrected for spaces in dirs on 1/8/22
+
+alias unzipmount "find /mnt/zip -type d -print0| xargs -0 -r -n 1 sudo umount; find /mnt/zip -mindepth 1 -depth -type d -print0 | xargs -r -0 rmdir"
 
 alias screenshot "echo grab in 2 seconds; sleep 2; screengrab &"
 
