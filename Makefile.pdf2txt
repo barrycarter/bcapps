@@ -1,3 +1,7 @@
+# can also use this shell script:
+
+# find . -iname '*.pdf' | perl -nle 'unless (-f "$_.txt") {print "pdftotext \"$_\" - > \"$_.txt\""}'
+
 # converts all PDFs to text
 imageOBJS=$(shell echo *.pdf | perl -pnle 's/\.pdf/.pdf.txt/isg')
 all: $(imageOBJS)

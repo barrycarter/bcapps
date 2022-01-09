@@ -1123,3 +1123,6 @@ equator-- formula or something to find these points
 TODO: f(f(x)) = x^2 + 1 (using linear algebra)
 
 TODO: leaflet starmap where zooming in gives you fainter stars, in theory up to the billion limit of GAIA2 (but someone might already be doing that)
+
+TODO: get xclock to display fractional seconds (which may require tweaking strftime or xclock.c)
+
