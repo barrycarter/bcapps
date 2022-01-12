@@ -74,7 +74,7 @@ my(%extra) = split(/[\,|\=]\s*/, $globopts{extra});
 # (but since the db only keeps values to the day level, this may not
 # be an issue)
 
-my($now) = time()-$globopts{days}*86400;
+my($now) = time()-$globopts{ignore}*86400;
 
 # get all transactions from this view
 
@@ -87,7 +87,7 @@ shift(@res);
 # get per diem totals for category, and keep track of what things are
 # categories
 
-my(%perDiemTotal, %isCategory, %acctTotal, $grandTotal);
+my(%perDiemTotal, %isCategory, %acctTotal, %date, $grandTotal);
 
 for $i (@res) {
 
@@ -111,6 +111,10 @@ for $i (@res) {
   # age of transaction (but never less than 1 to avoid div by 0 or negative)
 
   my($daysago) = max(1,floor(($now - str2time($i->{date}))/86400));
+
+  # record what day it was this many days ago
+
+  $date{$daysago} = $i->{date};
 
   # if transaction is significantly old, do nothing else
   # or too new
@@ -174,11 +178,11 @@ for $i (1..max(keys(%perDiemTotal))) {
 
     $bulkTotal += $perDiemTotal{$i}{$j};
 
-    print "$i $j $avg\n";
+    print "$date{$i} $i $j $avg ($perDiemTotal{$i}{$j})\n";
 
   }
 
-  my($avgTotal) = $bulkTotal/$i;
+  my($avgTotal) = $bulkTotal/$i*$DAYSPERMONTH;
 
   print "AVGTOTAL: $avgTotal\n";
 
