@@ -1126,3 +1126,7 @@ TODO: leaflet starmap where zooming in gives you fainter stars, in theory up to 
 
 TODO: get xclock to display fractional seconds (which may require tweaking strftime or xclock.c)
 
+TODO: dynamic scale OSM
+
+TODO: OSM move tiles w/ reshaping
+
