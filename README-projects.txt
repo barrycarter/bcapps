@@ -1130,3 +1130,5 @@ TODO: dynamic scale OSM
 
 TODO: OSM move tiles w/ reshaping
 
+TODO: use DFQs to compute planetary and other planet moons position without using prepackaged BSP files
+
