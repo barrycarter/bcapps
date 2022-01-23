@@ -388,5 +388,4 @@ TODO: use smartctl to confirm no drive is near failing(?)
 
 TODO: maybe use sensors to see if CPU is about to fail, but pretty sure things will be bad enough then that I don't need a test
 
-
-
+TODO: in ~/annoytab.d/*, there should be few events in the far future, excluding automatically scheduled events
