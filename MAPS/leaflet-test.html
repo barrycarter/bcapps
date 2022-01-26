@@ -11,10 +11,15 @@
 
 // var crs = L.Proj.CRS('EPSG:32663', '');
 
+function f(x,y,z) {
+console.log("hello");
+}
+
 var map = L.map('map').setView([0, 0], 4);
 
 L.tileLayer(
-'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+// 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+ 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABmJLR0QA/QAAAABJ5y+TAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAABAAAAAQDHlV/tAAAADUlEQVQI12P4x8jwHwAE/wH/HIW4QgAAACV0RVh0Y3JlYXRlLWRhdGUAMjAxMS0wNS0yN1QyMTo1MzoxOS0wNjowMBW9NicAAAAldEVYdG1vZGlmeS1kYXRlADIwMTEtMDUtMjdUMjE6NTM6MTktMDY6MDBKDEATAAAAAElFTkSuQmCC',
  {opacity: 1}).
 addTo(map);
 
