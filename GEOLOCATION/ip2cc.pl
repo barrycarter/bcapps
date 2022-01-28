@@ -6,13 +6,16 @@ chdir("/home/barrycarter/BCGIT/GEOLOCATION");
 
 open(A,">ip2cc.txt");
 
+# TODO: below does NOT work ripencc, since server is ripe.net
+# (European bastards)
+
 # go through each registry
 for $i ("afrinic", "apnic", "arin", "lacnic", "ripencc") {
-  $url = "ftp://ftp.arin.net/pub/stats/$i/delegated-$i-latest";
+  $url = "ftp://ftp.$i.net/pub/stats/$i/delegated-$i-extended-latest";
   ($out, $err, $res) = cache_command("curl -O $url","age=86400");
 
   # for each line
-  for $j (split(/\n/,read_file("delegated-$i-latest"))) {
+  for $j (split(/\n/,read_file("delegated-$i-extended-latest"))) {
     ($registry, $country, $type, $start, $number, $date, $x) = 
       split(/\|/, $j);
 
