@@ -380,7 +380,7 @@ TODO: entries in some files (such as my-tumblr-blogs) should be uniq
 
 TODO: most of my "text" files should never had a literal tab in them (obvious exceptions include Makefiles and other files where tab is meaningful)
 
-TODO: any file that uses yyyymmdd format for dates and isn't auto-timestamped/created (such as my daily reminders) should only have dates that make sense, no 20220230 for example
+TODO: any file that uses yyyymmdd format for dates and isn't auto-timestamped/created (such as my daily reminders) should only have dates that make sense, no 20220230 for example (also for things like 20170025 in .annoytab)
 
 TODO: when I list a credit card in orgin.txt (my manifest of where I keep things), credit cards should have CVV included or note that there is no CVV (some work in 20210920 for more)
 

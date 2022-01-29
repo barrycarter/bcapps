@@ -1088,7 +1088,7 @@ TODO: write up these mini-ideas
 
   - triangle dissection/shapes in general
 
-  - game on real world map ('YAMC'/'terramapadventure')
+  - game on real world map ('YAMC'/'terramapadventure') [geogigagrid and G1GG are possible other names]
 
   - most files in my git that are not answers to questions relate to
   some project
