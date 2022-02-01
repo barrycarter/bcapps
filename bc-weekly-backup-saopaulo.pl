@@ -66,7 +66,7 @@ mysqldump --skip-extended-insert=yes --skip-lock-tables information_schema > $di
 mysqldump --skip-extended-insert=yes test > $dir/bcunix-mysql-test.txt.new; mv -f $dir/bcunix-mysql-test.txt $dir/bcunix-mysql-test.txt.old; mv -f $dir/bcunix-mysql-test.txt.new $dir/bcunix-mysql-test.txt
 rpm -qai > $dir/bcunix-rpmqai.txt.new; mv -f $dir/bcunix-rpmqai.txt $dir/bcunix-rpmqai.txt.old;  mv -f $dir/bcunix-rpmqai.txt.new $dir/bcunix-rpmqai.txt
 yum list > $dir/yumlist.txt.new; mv -f yumlist.txt yumlist.txt.old; mv -f yumlist.txt.new yumlist.txt
-sudo -u user pg_dumpall -l main > $dir/bcunix-pg-backup.txt.new; mv -f $dir/bcunix-pg-backup.txt $dir/bcunix-pg-backup.txt.old; mv -f $dir/bcunix-pg-backup.txt.new $dir/bcunix-pg-backup.txt
+sudo -u postgres pg_dumpall -l main > $dir/bcunix-pg-backup.txt.new; mv -f $dir/bcunix-pg-backup.txt $dir/bcunix-pg-backup.txt.old; mv -f $dir/bcunix-pg-backup.txt.new $dir/bcunix-pg-backup.txt
 MARK
 ;
   debug("STR: $str");
