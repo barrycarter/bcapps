@@ -92,6 +92,10 @@ bc-waitpid.pl idevs &
 
 rm -f previouslydone.oneshot ondisk.oneshot idrive-$DATE.gpg links.txt
 
+# I should really be able to keep track of this myself
+
+touch THIS.BACKUP.IS.COMPLETE
+
 # do weekly backup if necessary
 
 grep -h 'weekly backup' ~user/annoytab.d/*.txt
