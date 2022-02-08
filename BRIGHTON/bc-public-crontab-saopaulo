@@ -418,3 +418,8 @@ XWIDTH=1600
 
 1 12 * * * ls ~/getmail-* | egrep -v '.bz2$' | xargs bc-getmail-log-check.pl
 
+# to help calibrate bc-bandwidth.pl, run ifconfig at start of month (I
+# think Xfinity actually starts month at 0000 UTC but this should be
+# at least somewhat helpful) [also running bc-bandwidth.pl just for fun]
+
+0 0 1 * * ifconfig -a; bc-bandwidth.pl
