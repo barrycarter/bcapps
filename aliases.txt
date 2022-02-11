@@ -533,3 +533,7 @@ alias unix2jd "bc-call-func.pl jd2unix \!* unix2jd"
 # TODO: check to see if file actually exists
 
 alias quikbakfind 'echo /usr/local/etc/quikbak`realpath \!*`.quikbak'
+
+# logs me into f96.info (will edit later)
+
+alias f96 "screen -t F96 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@f96"
