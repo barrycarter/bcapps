@@ -354,11 +354,44 @@ cpan Crypt::LE
 
 : above fails
 
-: using https://gethttpsforfree.com/
+: using https://gethttpsforfree.com/ (letsencrypt)
 
-openssl genrsa 4096 > account.key
+# the steps below are a bit slower and more detailed than the ones at
+# https://gethttpsforfree.com/ for clarity
 
-openssl rsa -in account.key -pubout
+# only overwrite when I'm sure I want to
+
+set noclobber
+
+# using an env variable lets me do this for multiple domains easily
+
+setenv domain terramapadventure.com
+
+# generate private key (which implicitly creates public key)
+
+openssl genrsa 4096 > $domain.key
+
+# optional to see public key
+
+openssl rsa -in $domain.key -pubout
+
+# create a CSR by gluing conf file with SAN section I create + running openssl
+
+cp /etc/pki/tls/openssl.cnf $domain.csr.in
+
+printf "\n[SAN]\nsubjectAltName=DNS:$domain,DNS:*.$domain" >> $domain.csr.in
+
+openssl req -new -sha256 -key $domain.key -subj "/" -reqexts SAN 
+ -config $domain.csr.in > $domain.csr
+
+
+
+
+
+
+
+
+
 
 openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <
 (cat /etc/pki/tls/openssl.cnf <
