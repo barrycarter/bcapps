@@ -372,6 +372,8 @@ TODO: if a file has numbers in its name representing a reference number of some 
 
 TODO: certain transactions in bc_budget_view should match predetermined template
 
+TODO: certain transactions in rewards_points should match predetermined template including template:xxxxrewards (where xxxx is the last 4 of one of my credit cards and thus doesn't appear here)
+
 TODO: some mail folders should only have messages between given dates (no earlier than x, no later than y)
 
 TODO: no email message should have certain status combinations (such as "junk" and "important") at the same time
