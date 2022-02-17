@@ -735,7 +735,10 @@ sub bc_check_domain_exp {
     chomp($i);
     # caching here is important, hitting the whois server too many
     # times results in timeouts
-    my($out,$err,$res) = cache_command2("whois $i", "age=7200");
+
+    # TODO: if /usr/local/etc/whois doesnt exist, this breaks
+
+    my($out,$err,$res) = cache_command2("whois $i", "age=7200&cachefile=/usr/local/etc/whois/$i");
     # no expiration date?
     unless ($out=~/^\s*(Expiration Date|Expires on|Domain Expiration Date|Registrar Expiration Date|Registrar Registration Expiration Date|Registry Expiry Date):\s*(.*?)$/m) {
       print "ERR: No expiration date found: $i\n";
