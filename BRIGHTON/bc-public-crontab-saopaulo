@@ -423,3 +423,7 @@ XWIDTH=1600
 # at least somewhat helpful) [also running bc-bandwidth.pl just for fun]
 
 0 0 1 * * ifconfig -a; bc-bandwidth.pl
+
+# I've set up f96 as a fake open relay that actually stores email instead of sending it anywhere-- this rsyncs that (and some other stuff) hourly
+
+12 * * * * rsync -Pavz -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root@f96:/home/user /home/user/RSYNC/F96/
