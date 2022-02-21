@@ -63,6 +63,8 @@ TODO: don't run tests if CPU it too high
 
 TODO: getmail log recency (existing perl script)
 
+TODO: getmail one of last 10 lines should be "0 messages (0 bytes) retrieved, 0 skipped" to confirm I am caught up and checking mail [or tac and find last line that does have this?] (ie, tac and nl) or last time?
+
 TODO: fix-it scripts when something goes wrong
 
 TODO: REMINDER: can write tests even before nagyerass goes into production
