@@ -23,14 +23,30 @@ warn("TESTING gibibyte");
 
 my($bwlimit) = 1229*$gig;
 
-# currently assuming 31 days for all months, perhaps adjust later
-# TODO: make this more accurate
-
-my($days) = 31;
-
 ######## end config here ########
 
 my($now) = time();
+
+# this is ugly... 
+
+# first, find info on current date/time
+
+my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime($now);
+
+# create time for noon on first day of next month, subtract one day,
+# and suck out day number
+
+# if month is 12, advance year too
+
+if (++$mon>12) {$year++; $mon-=12;}
+
+my(@ltime) = gmtime(mktime(0, 0, 12, 1, $mon, $year)-86400);
+
+# cheating because we know ltime[3] is what we want
+
+my($days) = $ltime[3];
+
+debug("DAYS THIS MONTH: $days");
 
 my($out, $err, $res) = cache_command2("ifconfig", "age=60");
 
