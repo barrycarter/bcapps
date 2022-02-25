@@ -57,6 +57,8 @@ check_mysql_query -d test -c 0:0 -q "SELECT COUNT(*) FROM bc_budget_view WHERE d
 
 <gmailspace>
 
+TODO: this test may not be working properly
+
 I have a section in THE_FILE that tells me how much space each of my
 google accounts is using (noted down manually); this insanely
 pointless test confirms these lines all have the same format:
