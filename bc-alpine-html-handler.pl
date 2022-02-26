@@ -8,6 +8,15 @@
 # the firefox which helped, but didnt solve the problem; this script
 # waits for %s to exist before opening firefox
 
+require "/usr/local/lib/bclib.pl";
+
 my($url) = @ARGV;
 
-xmessage("GOT $url");
+xmessage("GOT $url", 1);
+
+# this is what I did previously, if it doesnt work, I will tweak it
+
+my($out, $err, $res) = cache_command('/bin/firefox --new-tab file://$url');
+
+
+
