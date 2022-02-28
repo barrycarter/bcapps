@@ -12,11 +12,17 @@ require "/usr/local/lib/bclib.pl";
 
 my($url) = @ARGV;
 
-xmessage("GOT $url", 1);
+# xmessage("GOT $url", 1);
+
+# copy $url since alpine kills it once this script exists
+
+# TODO: don't use constant file name here
+
+my($out, $err, $res) = cache_command("cp $url /tmp/bahhp.html");
 
 # this is what I did previously, if it doesnt work, I will tweak it
 
-my($out, $err, $res) = cache_command('/bin/firefox --new-tab file://$url');
+($out, $err, $res) = cache_command("/bin/firefox --new-tab file:///tmp/bahhp.html");
 
 
 
