@@ -400,3 +400,6 @@ TODO: when I list "DOORDASH (artificial for gift card/credit)" as merchant, shou
 
 TODO: all DOORDASH orders in db should include time from receipt
 
+TODO: ~/ERR/*.err files should be relatively recent, to confirm tests are run regularly (also *.inf)
+
+

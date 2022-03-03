@@ -1,90 +1,43 @@
 #!/bin/perl
 
-# given a URL on the command line that's an RSS feed of
-# uptimerobot.com, do pretty much what bc-montastic.pl does
+# given an API key on the command line that works with uptimerobot.com:
+
+# https://api.uptimerobot.com/v2/getMonitors?api_key=[argument]
+
+# report errors to ~/ERR/
 
 # TODO: if result file is empty or doesnt have any status, that's an error
 
-# -nocurl: dont actually query montastic API (useful for testing)
+# -nocurl: dont actually query uptimerobot API (useful for testing)
 
 require "/usr/local/lib/bclib.pl";
 
 dodie('chdir("/var/tmp/uptimerobot")');
 
-unless ($#ARGV == 0) {die("Usage: $0 url");}
+my(@errors);
+
+unless ($#ARGV == 0) {die("Usage: $0 apikey");}
 
 # TODO: caching is really only for testing
 
-my($out, $err, $res) = cache_command("curl -L $ARGV[0] | tee feed.txt", "age=3600");
+# NOTE: uptimerobot requires a POST even if you're not posting anything
 
-debug("OUT: $out");
+my($out, $err, $res) = cache_command("curl -X POST -L \47https://api.uptimerobot.com/v2/getMonitors?api_key=$ARGV[0]\47 | tee api-results.txt", "age=3600");
 
-# go through each item in the RSS feed
+# TODO: annoyingly, the API doesn't return a "time of test"
 
-# TODO: make sure results are recent
+my($json) = JSON::from_json($out);
 
-my(%status);
+debug(var_dump("json", $json));
 
-while ($out=~s%<item>(.*?)</item>%%s) {
+for $i (@{$json->{monitors}}) {
 
-  my($data) = $1;
+  # per https://uptimerobot.com/api/ 2 means up
 
-  my(%hash) = ();
-
-  while ($data=~s%<(.*?)>(.*?)</\1>%%s) {$hash{$1} = $2;}
-
-  unless ($hash{title}=~s%(.*?) is (UP|DOWN)%%) {
-    push(@errors, "Test neither up nor down");
-    next;
+  unless ($i->{status} == 2) {
+    push(@errors, "nagios.uptimerobot.$i->{friendly_name} down");
   }
 
-  my($test, $status) = ($1, $2);
-
-  # if I already have a status, ignore this one, newest at top
-
-  if ($status{$test}) {next;}
-
-  # otherwise set status and report error if down
-
-
 }
 
-die "TESTING";
-
-# format of this file, each line is "username:password", # starts comments
-for $i (split(/\n/,read_file("$ENV{HOME}/montastic.txt"))) {
-  if ($i=~/^\#/ || $i=~/^\s*$/) {next;}
-  ($user,$pass) = split(":",$i);
-  push(@cmds, "curl -s -H 'Accept: application/xml' -u $user:$pass https://www.montastic.com/checkpoints/index > output-$user.new; mv -f output-$user output-$user.old; mv -f output-$user.new output-$user");
-  push(@files, "output-$user");
-}
-
-write_file(join("\n",@cmds)."\n", "commands.txt");
-
-unless ($globopts{nocurl}) {system("parallel -j 20 < commands.txt");}
-
-for $j (@files) {
-  # look at results
-  $all = read_file($j);
-
-  while ($all=~s%<checkpoint>(.*?)</checkpoint>%%is) {
-    $res = $1;
-
-    # ignore turned off monitors
-    if ($res=~m%<is-monitoring-enabled type="boolean">false</is-monitoring-enabled>%) {next;}
-
-    # ignore good results
-    if ($res=~m%<status type="integer">1</status>%) {next;}
-
-    # offending URL
-    $res=~m%<url>(.*?)</url>%isg;
-    my($url) = $1;
-
-    # error!
-    $user = $j;
-    $user=~s/^output\-//;
-    push(@errors, "$url [$user]");
-  }
-}
-
-write_file_new(join("\n",@errors)."\n", "/home/barrycarter/ERR/montastic.err");
+write_file_new(join("\n",@errors)."\n", "/home/barrycarter/ERR/uptimerobot.err");

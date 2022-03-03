@@ -127,7 +127,9 @@ XWIDTH=1600
 # below) are staggered to avoid excessive system load a specific
 # minute
 
-11,41 * * * * /home/user/BCGIT/bc-montastic.pl
+# moved to extras.txt on 3/3/22
+
+# 11,41 * * * * /home/user/BCGIT/bc-montastic.pl
 
 # Update calendar (for background image) hourly
 

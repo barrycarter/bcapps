@@ -51,3 +51,12 @@ bc-negate.pl "fgrep X-Status: /home/barrycarter/mail/SPAMMAN  | fgrep F"
 # both deleted 18 Jun 2020
 # check_ping -H terramapadventure.com -w 3000,80% -c 5000,100% -p 5
 # check_ping -H 167.99.95.147 -w 3000,80% -c 5000,100% -p 5
+
+
+# moving montastic (and now uptimerobot) testing here instead of crontab
+
+# uptimerobot.com moved to private version of this file since it
+# requires api key as parameter
+
+/home/user/BCGIT/bc-montastic.pl
+
