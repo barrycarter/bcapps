@@ -28,6 +28,8 @@ for $j (@files) {
   # look at results
   $all = read_file($j);
 
+  debug("LOOKING AT: $j, content is: $all");
+
   while ($all=~s%<checkpoint>(.*?)</checkpoint>%%is) {
     $res = $1;
 
@@ -36,6 +38,8 @@ for $j (@files) {
 
     # ignore good results
     if ($res=~m%<status type="integer">1</status>%) {next;}
+
+    debug("BAD: $res");
 
     # offending URL
     $res=~m%<url>(.*?)</url>%isg;
