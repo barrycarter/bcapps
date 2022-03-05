@@ -428,4 +428,4 @@ XWIDTH=1600
 
 # I've set up f96 as a fake open relay that actually stores email instead of sending it anywhere-- this rsyncs that (and some other stuff) hourly
 
-12 * * * * rsync -Pavz -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root@f96:/home/user /home/user/RSYNC/F96/
+12 * * * * rsync -Paz -e 'ssh -i /home/barrycarter/.ssh/id_rsa.bc' root@f96:/home/user /home/user/RSYNC/F96/
