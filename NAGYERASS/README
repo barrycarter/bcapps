@@ -402,4 +402,4 @@ TODO: all DOORDASH orders in db should include time from receipt
 
 TODO: ~/ERR/*.err files should be relatively recent, to confirm tests are run regularly (also *.inf)
 
-
+TODO: text version of PDF files for bank/creditcard statements should have name that matches date in text file (and other information)-- in other words, bc-bofa-mv.pl should be expanded and allowed to confirm certain files are correctly named
