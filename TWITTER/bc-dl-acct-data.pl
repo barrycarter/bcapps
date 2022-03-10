@@ -4,7 +4,7 @@
 # account I haven't downloaded for the longest time so I can keep
 # downloads in rotation
 
-# TODO: does NOT include creditkarma, creditsesame, nextdoor, tumblr,
+# TODO: does NOT include creditkarma, creditsesame, nextdoor,
 # stackexchange, or others
 
 require "/usr/local/lib/bclib.pl";
@@ -30,7 +30,7 @@ my(%extra) = (
 
 my(@dirs) = ("LINKEDIN", "TWITTER", "FACEBOOK", "GOOGLE", "INSTAGRAM", 
 	     "DISCORD", "TUMBLR/BACKUPS", "DROPBOX", "IFTTT", 
-	     "FREECODECAMP", "DOORDASH", "AMAZON", "YAHOO");
+	     "FREECODECAMP", "DOORDASH", "AMAZON", "YAHOO", "FETLIFE/BACKUPS");
 my($dirspec) = join(" ",map($_ = "$bclib{home}/$_", @dirs));
 
 # hash to keep latest save for each account
@@ -91,7 +91,7 @@ for $i (split(/\n/, $out)) {
 
   unless (
 	  $i=~m%/(GOOGLE)/(.*?)\-(\d{8}T\d{6})Z.zip$% ||
-	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS|YAHOO)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
+	  $i=~m%/(LINKEDIN|TWITTER|FACEBOOK|DISCORD|TUMBLR/BACKUPS|YAHOO|FETLIFE/BACKUPS)/(.*?)\-(\d{8}\.\d{6})\.zip$% ||
 	  $i=~m%/(INSTAGRAM)/(.*?)_(\d{8})\.zip$% ||
 	  $i=~m%/(DROPBOX)/dropbox\-(.*?)\-(\d{8})\.zip$% ||
 	  $i=~m%/(IFTTT|FREECODECAMP|DOORDASH)/(.*?)\-(\d{8})\.(json|zip)$%
@@ -105,8 +105,9 @@ for $i (split(/\n/, $out)) {
   # ignore raw forms of google and linkedin outputs
   if ($acct=~/^complete_linkedindataexport/ || $acct eq "takeout") {next;}
 
-  # special case for tumblr
+  # special case for tumblr and fetlife
   if ($site eq "tumblr/backups") {$site = "tumblr";}
+  if ($site eq "fetlife/backups") {$site = "fetlife";}
 
   # convert "stardate" to form that makes str2time happy
   $date=~s/(\d{4})(\d{2})(\d{2})\.(\d{2})(\d{2})(\d{2})/$1-$2-$3 $4:$5:$6/;
