@@ -22,7 +22,7 @@ unless ($#ARGV == 0) {die("Usage: $0 apikey");}
 
 # NOTE: uptimerobot requires a POST even if you're not posting anything
 
-my($out, $err, $res) = cache_command("curl -X POST -L \47https://api.uptimerobot.com/v2/getMonitors?api_key=$ARGV[0]\47 | tee api-results.txt", "age=3600");
+my($out, $err, $res) = cache_command("curl -X POST -L \47https://api.uptimerobot.com/v2/getMonitors?api_key=$ARGV[0]\47 | tee api-results-$ARGV[0].txt", "age=3600");
 
 # TODO: annoyingly, the API doesn't return a "time of test"
 
@@ -40,4 +40,5 @@ for $i (@{$json->{monitors}}) {
 
 }
 
-write_file_new(join("\n",@errors)."\n", "/home/barrycarter/ERR/uptimerobot.err");
+write_file_new(join("\n",@errors)."\n", "/home/user/ERR/uptimerobot-$ARGV[0].err");
+
