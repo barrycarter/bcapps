@@ -128,6 +128,10 @@ handled directly in nagios.
 sub bc_extras {
   my(@files, $comment) = @_;
 
+  # write to its own err file (testing)
+#  local(*A);
+#  open(A, "> /home/user/ERR/extratests.err.new");
+
   # NOTE: we intentionally dont stop on first error
   my($count);
 
@@ -146,6 +150,7 @@ sub bc_extras {
 	} else {
 	  debug("end comment does not match current comment (no nesting)");
 	  print "BAD COMMENTS!\n";
+#	  print A "nagios.extras.badcomments\n";
 	  return 2;
 	}
 
@@ -160,6 +165,7 @@ sub bc_extras {
 
 	if ($comment=~/^\//) {
 	  debug("starting comment should not start with /");
+#	  print A "nagios.extras.badcommentstart\n";
 	  return 2;
 	}
 
@@ -175,6 +181,7 @@ sub bc_extras {
       debug("STDOUT: $out", "STDERR: $stderr");
       if ($res) {
 	debug("TEST FAILED");
+#	print A "nagios.extras.fail.",substr($j, 80),"\n";
 	$count++;
       }
     }
