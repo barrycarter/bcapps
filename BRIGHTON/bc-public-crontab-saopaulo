@@ -436,6 +436,5 @@ XWIDTH=1600
 # this command, running monthly, keeps them updated without having to
 # pull from yum
 
-50 4 13 * * update-ca-trust
-
+50 4 15 * * sudo update-ca-trust
 

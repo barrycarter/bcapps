@@ -406,3 +406,4 @@ TODO: text version of PDF files for bank/creditcard statements should have name 
 
 TODO: make sure none of domain certs are close to expiring (using openssl)
 
+TODO: all disks in mounts.txt should have check_disk tests

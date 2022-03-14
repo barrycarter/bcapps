@@ -21,6 +21,11 @@ check_disk -v -c 10 -u GB /mnt/kemptown/
 
 check_disk -v -c 10 -u GB /mnt/extdrive5/
 
+# added 14 Mar 2022, shouldve added earlier
+
+check_disk -v -c 10 -u GB /mnt/paulista
+check_disk -v -c 10 -u GB /mnt/liberdade
+
 # RAM disk
 check_disk -v -c 10 -u GB /dev/shm
 
