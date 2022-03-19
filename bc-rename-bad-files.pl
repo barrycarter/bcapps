@@ -31,7 +31,7 @@ while (<>) {
 
   if ($nname=~s/[^ -~]/_/g) {$changed=1;}
 
-#  if ($nname=~s/[\s\(\)]/_/g) {$changed=1;}
+  if ($nname=~s/[\s\(\)]/_/g) {$changed=1;}
 
   if ($changed && !(-f $nname)) {
     print qq%mv -i "$_" "$nname"\n%;

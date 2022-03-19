@@ -171,9 +171,13 @@ XWIDTH=1600
 # the moment:
 # http://stackoverflow.com/questions/20086062/make-recoll-index-sqlite-files)
 
-# TODO: compress these after quikbak? (do I care?)
+# TODO: compress these after quikbak? (do I care?), could also delete copies of sqlite3 dbs I create
 
-20 6 * * *  find /home/user/.mozilla/firefox/ -iname '*.sqlite' | perl -nle 'print "echo $_; sqlite3 $_ .dump 1> $_.dump; /home/user/BCGIT/bc-quikbak.pl $_.dump"' | sh
+# replaced 3/19/22 to avoid db locking failure
+
+# 20 6 * * *  find /home/user/.mozilla/firefox/ -iname '*.sqlite' | perl -nle 'print "echo $_; sqlite3 $_ .dump 1> $_.dump; /home/user/BCGIT/bc-quikbak.pl $_.dump"' | sh
+
+20 6 * * * date; find /home/user/.mozilla -iname '*.sqlite' | perl -nle '$x=$_;s%/%_%g;$_="/usr/local/etc/backups/$_"; print "cp -f \"$x\" \"$_\"\nsqlite3 $_ .dump 1> $_.dump\n/home/user/BCGIT/bc-quikbak.pl $_.dump"'; date; ls /usr/local/etc/backups/*places.sqlite | xargs -IXXX -n 1 /root/build/sage-8.2/local/bin/sqlite3 XXX "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u >! /home/user/all-firefox-bookmarks.txt; date
 
 # and the ones in my home dir (which end in .db), excluding geonames
 
@@ -352,7 +356,9 @@ XWIDTH=1600
 # still need to keep old version, thus
 # /root/build/sage-8.2/local/bin/sqlite3 kludge below
 
-57 1 * * * date; ls /home/user/.mozilla/firefox/*/places.sqlite | xargs -IXXX -n 1 /root/build/sage-8.2/local/bin/sqlite3 XXX "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u >! /home/user/all-firefox-bookmarks.txt; date
+# glued into backup of sqlite dbs above
+
+# 57 1 * * * date; ls /home/user/.mozilla/firefox/*/places.sqlite | xargs -IXXX -n 1 /root/build/sage-8.2/local/bin/sqlite3 XXX "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u >! /home/user/all-firefox-bookmarks.txt; date
 
 # just for fun, dump TED estimate of bill to CRON hourly
 # dropped 4 Apr 2019 as TED stops working and I play flat util bill anyway
