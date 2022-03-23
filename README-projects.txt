@@ -1132,3 +1132,4 @@ TODO: OSM move tiles w/ reshaping
 
 TODO: use DFQs to compute planetary and other planet moons position without using prepackaged BSP files
 
+TODO: miniproject: people sometimes enter arguments on the command line and other times via pipeline into stdin-- write a perl subroutine that uses ARGV when present and stdin when not-- of course, it would only apply to some programs not all, and it obviously wouldnt apply to programs that use both stdin and command line args
