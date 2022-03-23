@@ -516,7 +516,7 @@ t = RandomReal[{0,1}, 50];
 minrand[t_] := Min[Table[ColorDistance[Hue[t[[i]]], Hue[t[[j]]]], 
  {i, 1, Length[t]-1}, {j, i+1, Length[t]}]]
 
-t2126 = Table[RandomReal[{0,1}, 50], {i, 1, 1000}];
+t2126 = Table[RandomReal[{0,1}, 16], {i, 1, 1000}];
 
 t2126 = Table[RandomReal[{0,3/4}, 50], {i, 1, 1000}];
 
@@ -524,7 +524,7 @@ t2128 = Table[{i, minrand[i]}, {i, t2126}];
 
 Max[Transpose[t2128][[2]]]
 
-t2129 = Select[t2128, #[[2]] > 0.007907-10^-6 &]
+t2129 = Select[t2128, #[[2]] > Max[Transpose[t2128][[2]]] -10^-6 &]
 
 Grid[Map[Hue,Sort[t2129[[1,1]]]]]                                      
 
@@ -778,6 +778,75 @@ printify[list_] := StringJoin[Map[ToString,Take[list,5]], ""] <> "/" <>
 
 answer = Sort[Table[{i[[2]], printify[i[[1]]]}, {i, t1527}]]
 
+(* on 3/23/2022, random RGB not just hue *)
+
+t1452 := Table[RGBColor[RandomReal[], RandomReal[], RandomReal[]], {i, 1, 50}];
+
+Grid[t1452]
+
+(* given a list of colors, find the minimal distance *)
+
+mindist[h_] := Min[Table[ColorDistance[h[[i]],h[[j]]], {i, 1, Length[h]},
+{j, 1, i-1}]]
+
+t1453 = t1452
+
+(* how about random colors sorted by ... something *)
+
+Clear[color]
+
+color[x_] = Hue[x]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color]
+
+color[x_] := color[x] = Hue[RandomReal[], RandomReal[], RandomReal[]]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color, Contours ->
+16, ContourLines -> False]
+
+n=16;
+
+colors = Table[Hue[i], {i, 0, 1, 1/n}]
+
+colors = 
+Sort[colors, ColorDistance[#1, Hue[1,0,0]] < ColorDistance[#2, Hue[1,0,0]] &]
+
+
+
+Clear[color]
+
+color[x_] := colors[[Floor[x*n+1]]]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color, Contours -> n,
+ContourLines -> False]
+
+(* maybe LAB color? *)
+
+n=64;
+
+colors = Table[LABColor[i, RandomReal[], RandomReal[]], {i, 0, 1, 1/n}]
+
+colors = Table[LUVColor[i, RandomReal[], RandomReal[]], {i, 0, 1, 1/n}]
+
+Clear[color]
+
+color[x_] := colors[[Floor[x*n+1]]]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color, Contours -> n,
+ContourLines -> False]
+
+n=16;
+
+colors0 = Sort[Table[RandomReal[1, 3], {i, 1, n}]]
+
+colors = Table[Hue[i], {i, colors0}]
+
+Clear[color]
+
+color[x_] := colors[[Floor[x*n+1]]]
+
+ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color, Contours -> n,
+ContourLines -> False]
 
 
 
