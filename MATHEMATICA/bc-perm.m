@@ -795,7 +795,7 @@ t1453 = t1452
 
 Clear[color]
 
-color[x_] = Hue[x]
+color[x_] := Hue[RandomRea[1,3]]
 
 ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color]
 
@@ -804,9 +804,9 @@ color[x_] := color[x] = Hue[RandomReal[], RandomReal[], RandomReal[]]
 ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color, Contours ->
 16, ContourLines -> False]
 
-n=16;
+n=64;
 
-colors = Table[Hue[i], {i, 0, 1, 1/n}]
+colors = Table[Hue[RandomReal[1,3]], {i, 0, 1, 1/n}]
 
 colors = 
 Sort[colors, ColorDistance[#1, Hue[1,0,0]] < ColorDistance[#2, Hue[1,0,0]] &]
