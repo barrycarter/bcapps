@@ -848,7 +848,20 @@ color[x_] := colors[[Floor[x*n+1]]]
 ContourPlot[x, {x,0,1},{y,0,1}, ColorFunction -> color, Contours -> n,
 ContourLines -> False]
 
+(* using shades, since sequential color maps are generally short *)
 
+t1748 = Flatten[Table[Hue[x,y,1], {x, 0, 7/8, 1/16}, {y, 1, 1, 0}]];
 
+color[x_] := t1748[[Floor[x*Length[t1748]+1]]]
+
+t1748 = Flatten[
+Table[RGBColor[r,g,b], {r, 0, 1, 1/2}, {g, 0, 1, 1/2}, {b, 0, 1, 1/2}]
+];
+
+ContourPlot[x, {x,0,1-.0001},{y,0,1-.0001}, ColorFunction -> color, Contours ->
+Length[t1748], ContourLines -> False]
+
+ContourPlot[x, {x,0,1-.0001},{y,0,1-.0001}, 
+ ColorFunction -> ColorData["Rainbow"], Contours -> 64, ContourLines -> False]
 
 
