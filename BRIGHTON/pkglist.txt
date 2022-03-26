@@ -856,6 +856,8 @@ man-pages
 mod_ldap
 
 # Torrent
+aria2
+rhash
 deluge
 qbittorrent
 qbittorrent-nox
