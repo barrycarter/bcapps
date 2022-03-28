@@ -20,9 +20,10 @@ unless ($#ARGV == 0) {die("Usage: $0 apikey");}
 
 # TODO: caching is really only for testing
 
-# NOTE: uptimerobot requires a POST even if you're not posting anything
+# per https://uptimerobot.com/api/ adding some optional parameters as
+# of 27 Mar 2022
 
-my($out, $err, $res) = cache_command("curl -X POST -L \47https://api.uptimerobot.com/v2/getMonitors?api_key=$ARGV[0]\47 | tee api-results-$ARGV[0].txt", "age=3600");
+my($out, $err, $res) = cache_command("curl -X POST -L -d \47all_time_uptime_ratio=1&all_time_uptime_durations=1&logs=1&response_times=1&alert_contacts=1&mwindows=1&ssl=1&custom_http_headers=1&custom_http_statuses=1&timezone=1&api_key=$ARGV[0]\47 https://api.uptimerobot.com/v2/getMonitors | tee api-results-$ARGV[0].txt", "age=3600");
 
 # TODO: annoyingly, the API doesn't return a "time of test"
 

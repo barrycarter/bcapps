@@ -407,3 +407,6 @@ TODO: text version of PDF files for bank/creditcard statements should have name 
 TODO: make sure none of domain certs are close to expiring (using openssl)
 
 TODO: all disks in mounts.txt should have check_disk tests
+
+TODO: i sometimes cut and paste lines with "GLUE" (meaning two things are to be considered as one thing) into completed tasks and others, but the timestamp after GLUE could be interpreted as a separate event; confirm this doesn't happen
+

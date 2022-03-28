@@ -1,0 +1,28 @@
+# the entry below means:
+
+# domain=barrycarter.info: we are creating tests for this domain
+
+# mx=gmr-smtp-in.l.google.com: one of the MX records for
+# barrycarter.info must include the string "gmr-smtp-in.l.google.com"
+
+# submx=submail.barrycarter.info: one of the MX records for
+# *.barrycarter.info must include the string
+# "submail.barrycarter.info" where '*' is any subdomain
+
+# a=137.184.87.128: the DNS A record for barrycarter.info must match
+# this string (usually a full IP address)
+
+# suba=137.184.87.128: the DNS a record for *.barrycarter.info must
+# match this string where '*' is any subdomain except www
+
+# phrase=foo: the phrase "foo" must appear in the both the http and
+# https versions of barrycarter.info
+
+# subphrase=blah: the phrase "blah" must appear in the both the http and https versions of *.barrycarter.info where '*' is any subdomain except www
+
+# TODO: perhaps create www specific tests
+
+
+domain=barrycarter.info&mx=gmr-smtp-in.l.google.com&submx=submail.barrycarter.info&a=137.184.87.128&suba=137.184.87.128&phrase=foo&subphrase=blah
+
+
