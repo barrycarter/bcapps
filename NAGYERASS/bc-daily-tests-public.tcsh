@@ -69,7 +69,7 @@ and then prints out the "account_name_possibly_with_@_sign" field and compares i
 
 </gmailspace>
 
-egrep '^gmail.com ' ~/pw.txt | perl -anle 'print $F[1]' >! /tmp/allgoogle.txt; bc-section-checklist.pl --stdout --section=gmailspace ~/THE_FILE | egrep -v '^$' | perl -anle 'unless (/^20[0-2][0-9][0-1][0-9][0-3][0-9]\.[0-2][0-9][0-5][0-9][0-5][0-9] ([0-9a-z\.\@]+) using [0-9\.]+ GB of 15 GB\s*$/) {warn "BAD LINE: $_"} else {print "$1"}' |& fgrep -xvf /tmp/allgoogle.txt |& perl -0777 -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY: $_"; exit 2;} else {exit 0;}'
+egrep '^gmail.com ' ~/pw.txt | perl -anle 'print $F[1]' >! /tmp/allgoogle.txt; bc-section-checklist.pl --stdout --section=gmailspace ~/THE_FILE | egrep -v '^$' | perl -anle 'unless (/^20[0-2][0-9][0-1][0-9][0-3][0-9]\.[0-2][0-9][0-5][0-9][0-5][0-9] ([0-9a-z\.\@]+) using [0-9\.]+ GB of 15 GB\s*$/) {warn "BAD LINE: $_"} else {print "$1"}' |& fgrep -xvf /tmp/allgoogle.txt |& perl -0777 -nle 'unless (/^\s*$/) {print "STDIN NOT EMPTY: $_"; exit 2;} else {exit 0;}'
 
 <pwrepeats>
 
