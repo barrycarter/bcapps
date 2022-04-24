@@ -18,6 +18,9 @@ translate-shell
 
 # system tools
 
+patchelf
+chrpath
+protonvpn-cli
 xvkbd
 autokey
 gutenprint-cups
@@ -233,6 +236,10 @@ calendar
 # https://www.monodevelop.com/download/#fndtn-download-lin-centos
 
 # programming languages (or related)
+
+python-jinja2
+python2-distro
+python36-distro
 
 coffee-script-common.noarch
 glibc-devel

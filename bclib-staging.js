@@ -4,6 +4,8 @@
 
 // the Earth's average radius (https://en.wikipedia.org/wiki/Earth_radius#Global_average_radii), in km
 
+const Pi = Math.PI;
+
 bclib = {
   earthRadius: 6371.0088,
   MERCATOR_LAT_LIMIT: 85.0511,
@@ -153,8 +155,8 @@ z: the zoom level
 function lngLatDistZ2Tiles(obj) {
 
   // determine the north and south tiles
-  obj.nlat = obj.clat + obj.dist/(Pi*earthRadius)*180;
-  obj.slat = obj.clat - obj.dist/(Pi*earthRadius)*180;
+  obj.nlat = obj.clat + obj.dist/(Pi*bclib.earthRadius)*180;
+  obj.slat = obj.clat - obj.dist/(Pi*bclib.earthRadius)*180;
 
   obj.ntile = lngLat2Tile({z: obj.z, lat: obj.nlat, lng: obj.clng, projection: obj.projection});
   obj.stile = lngLat2Tile({z: obj.z, lat: obj.slat, lng: obj.clng, projection: obj.projection});

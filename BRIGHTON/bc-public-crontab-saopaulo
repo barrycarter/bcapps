@@ -444,3 +444,6 @@ XWIDTH=1600
 
 50 4 15 * * sudo update-ca-trust
 
+# added 24 Apr 2022 as I use NordVPN and want to see if IPs rotate
+
+21 * * * * curl -s checkip.dyndns.org:8245

@@ -1,0 +1,10 @@
+# generic stream notes for when I resume streaming in 2022
+
+goals for 2022-04-22:
+
+  - Python libraryish for OSM slippytile math
+
+  - Use existing JS lib (my own) to paint "fake" slippytiles for debugging
+
+  - use TIFF lib and previous work to create actual image (map)
+
