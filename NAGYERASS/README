@@ -410,3 +410,23 @@ TODO: all disks in mounts.txt should have check_disk tests
 
 TODO: i sometimes cut and paste lines with "GLUE" (meaning two things are to be considered as one thing) into completed tasks and others, but the timestamp after GLUE could be interpreted as a separate event; confirm this doesn't happen
 
+TODO: all orders with description "SHIPT* TIP xxxxxxx" should have:
+
+  - refnum and xrefnum set to xxxxxxx
+
+  - recognized set to YES
+
+  - comments set to "see refnum xxxxxxx for details"
+
+  - other refnum xxxxxxx should exist in table
+
+  - category set to GROCERY
+
+  - tip amount should be consistent %age of other refnum
+
+TODO: in general, if two rows share a refnum, they should be of the same category OR one should be a REFUND of some sort
+
+TODO: shipt transactions can have refnums that are shared, but no more
+than twice
+
+

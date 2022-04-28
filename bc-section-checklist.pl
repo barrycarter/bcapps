@@ -56,6 +56,15 @@ exit;
 }
 
 my($section) = $globopts{section};
+my($list);
+
+# allow section to be broke up into multiple chunks
+
+while ($data=~s%<$section>(.*?)<\/$section>%%s) {
+  $list .= $1;
+}
+
+unless ($list) {die("No section $section");}
 
 # $data=~m%<$section[^>]%;
 
@@ -65,9 +74,9 @@ my($section) = $globopts{section};
 
 # TODO: had to remove key/val section entirely, fix
 
-$data=~m%<$section>(.*?)<\/$globopts{section}>%s||die("No section $section");
+# $data=~m%<$section>(.*?)<\/$globopts{section}>%s||die("No section $section");
 
-my($list) = $1;
+# my($list) = $1;
 
 if ($globopts{stdout}) {
   print $list;
