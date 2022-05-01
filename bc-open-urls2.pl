@@ -12,6 +12,9 @@
 
 require "/usr/local/lib/bclib.pl";
 
+# I relink this as needed
+my($binary) = "/home/user/bin/firefox";
+
 # add string to connect to specific profile if requested
 
 my($profile);
@@ -27,7 +30,7 @@ while (<>) {
   if (/^\#/ || /^\s*$/) {next;}
 
   # TODO: make this path to firefox canonical
-  my($out,$err,$res) = cache_command2("/bin/firefox $profile --new-tab \"$_\"");
+  my($out,$err,$res) = cache_command2("$binary $profile --new-tab \"$_\"");
 
   if ($globopts{stdin}) {
 

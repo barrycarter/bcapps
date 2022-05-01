@@ -59,9 +59,9 @@ xset b off
 # them manually...
 
 # startup three firefoxes with different profiles
-firefox -P olddefault &
+# firefox -P olddefault &
 # firefox -P Second &
-/root/build/firefox/firefox -P Second &
+/root/build/firefox99/firefox -P Second &
 # as of <= 30 Jul 2020, I no longer use this
 # firefox -P Three &
 

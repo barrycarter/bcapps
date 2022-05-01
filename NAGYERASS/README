@@ -429,4 +429,4 @@ TODO: in general, if two rows share a refnum, they should be of the same categor
 TODO: shipt transactions can have refnums that are shared, but no more
 than twice
 
-
+TODO: comments in bc_budget_view should not match a category name (almost certainly means I put category in wrong place)

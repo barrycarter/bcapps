@@ -22,7 +22,7 @@ my($out, $err, $res) = cache_command("cp $url /tmp/bahhp.html");
 
 # this is what I did previously, if it doesnt work, I will tweak it
 
-($out, $err, $res) = cache_command("/bin/firefox --new-tab file:///tmp/bahhp.html");
+($out, $err, $res) = cache_command("/home/user/bin/firefox --new-tab file:///tmp/bahhp.html");
 
 
 
