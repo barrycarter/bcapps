@@ -537,3 +537,11 @@ alias quikbakfind 'echo /usr/local/etc/quikbak`realpath \!*`.quikbak'
 # logs me into f96.info (will edit later)
 
 alias f96 "screen -t F96 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@f96"
+
+# restart VPN with a random US UDP NordVPN (doesn't work, backticks make it hard encoded)
+
+# alias revpn "sudo pkill openvpn && sudo openvpn --config `ls /etc/openvpn/server/ovpn_udp/us* | sort -R | head -1` --config /home/user/BCGIT/BRIGHTON/bc-openvpn.cfg --auth-user-pass /home/user/BCPRIV/nordvpn.txt&"
+
+# alias revpn "sudo pkill openvpn; ls /etc/openvpn/server/ovpn_udp/us* | sort -R | head -1 | xargs sudo openvpn --config /home/user/BCGIT/BRIGHTON/bc-openvpn.cfg --auth-user-pass /home/user/BCPRIV/nordvpn.txt &"
+
+alias revpn "/home/user/BCGIT/bc-revpn.pl"
