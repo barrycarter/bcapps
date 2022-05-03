@@ -184,6 +184,8 @@ util-linux
 coreutils
 cups
 grep
+ack
+the_silver_searcher
 expect
 findutils
 gawk
@@ -314,6 +316,10 @@ bash
 psh
 
 # VNC/rdesktop clients/servers
+
+# freerdp fails
+# freerdp
+
 tigervnc
 tigervnc-server
 rdesktop

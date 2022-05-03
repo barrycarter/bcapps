@@ -33,6 +33,12 @@ while (<>) {
 
   if ($nname=~s/[\s\(\)]/_/g) {$changed=1;}
 
+  while (-f $nname && $changed) {
+    warn("$nname exists, adding a .1 to it");
+    $nname .= ".1";
+  }
+
+
   if ($changed && !(-f $nname)) {
     print qq%mv -i "$_" "$nname"\n%;
   }

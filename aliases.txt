@@ -545,3 +545,5 @@ alias f96 "screen -t F96 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@f96"
 # alias revpn "sudo pkill openvpn; ls /etc/openvpn/server/ovpn_udp/us* | sort -R | head -1 | xargs sudo openvpn --config /home/user/BCGIT/BRIGHTON/bc-openvpn.cfg --auth-user-pass /home/user/BCPRIV/nordvpn.txt &"
 
 alias revpn "/home/user/BCGIT/bc-revpn.pl"
+
+alias unvpn "sudo pkill openvpn && sudo cp -f /etc/resolv.conf.normal /etc/resolv.conf && bc-alarm-snooze.pl vpn is off &"
