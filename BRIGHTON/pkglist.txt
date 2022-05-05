@@ -485,6 +485,7 @@ obs-studio
 vcdimager
 lsdvd
 ffmpeg
+mkvtoolnix
 ffmpeg-devel
 mencoder
 mplayer
