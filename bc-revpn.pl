@@ -9,4 +9,4 @@ chomp($server);
 
 print STDERR $server;
 
-system("sudo cp -f /etc/resolv.conf.nordvpn /etc/resolv.conf; sudo pkill openvpn; sudo openvpn --config $server --config /home/user/BCGIT/BRIGHTON/bc-openvpn.cfg --auth-nocache --auth-user-pass /home/user/BCPRIV/nordvpn.txt&");
+system("sudo cp -f /etc/resolv.conf.nordvpn /etc/resolv.conf; sudo pkill openvpn; sudo openvpn --log-append /home/user/log/nordvpn.log --config $server --config /home/user/BCGIT/BRIGHTON/bc-openvpn.cfg --auth-nocache --auth-user-pass /home/user/BCPRIV/nordvpn.txt&");
