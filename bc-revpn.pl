@@ -5,6 +5,11 @@
 # random server (UDP US)
 
 my($server) = `ls /etc/openvpn/surfshark/us*.prod.surfshark.com_udp.ovpn | sort -R | head -1`;
+
+# trying TCP briefly, then no
+
+# my($server) = `ls /etc/openvpn/surfshark/us*.prod.surfshark.com_tcp.ovpn | sort -R | head -1`;
+
 chomp($server);
 
 print STDERR $server;

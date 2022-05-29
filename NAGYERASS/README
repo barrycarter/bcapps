@@ -434,3 +434,13 @@ TODO: comments in bc_budget_view should not match a category name (almost certai
 TODO: make sure fixed payments or rarely-changing payments are actually identical for past x time where x updated when I know for a fact payment has changed
 
 TODO: rewards_points entries should include reference filename when adding points
+
+TODO: when i dl google archives in multipart only one part gets the symlinked per bc-google-zip.pl but other parts should too
+
+TODO: all redemptions in rewards_points should have cash value field set
+
+TODO: all point redemptions in bc_budget_view should have
+corresponding entry in rewards_points (via xrefnum)
+
+
+
