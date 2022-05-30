@@ -4,6 +4,9 @@
 # account I haven't downloaded for the longest time so I can keep
 # downloads in rotation
 
+# --showall: show latest backup for all accounts, even those less than
+# 2 months old and those that are "archived"
+
 # TODO: does NOT include creditkarma, creditsesame, nextdoor,
 # stackexchange, or others
 
@@ -142,11 +145,11 @@ for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
   if ($comments{$i}) {$extra .= "($comments{$i})";}
 
   # experimental
-  if ($archive{$i}) {next;}
+  if ($archive{$i} && !$globopts{showall}) {next;}
 
   # this is two months
 
-  if ($now - $latest{$i} < 365.2425/12*2*86400) {next;}
+  if (($now - $latest{$i} < 365.2425/12*2*86400) && !$globopts{showall}){next;}
 
   # 29 Jun 2021: want to change pws across the board + cleanup spacing
 
