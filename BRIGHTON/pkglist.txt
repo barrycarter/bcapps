@@ -243,6 +243,8 @@ python-jinja2
 python2-distro
 python36-distro
 
+jq
+
 coffee-script-common.noarch
 glibc-devel
 ghc-compiler
