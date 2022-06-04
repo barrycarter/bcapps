@@ -442,5 +442,6 @@ TODO: all redemptions in rewards_points should have cash value field set
 TODO: all point redemptions in bc_budget_view should have
 corresponding entry in rewards_points (via xrefnum)
 
+TODO: no shipt tip entry should have a matching grocery entry that has the word tip in it, ie no double tipping
 
 
