@@ -85,7 +85,7 @@ TODO: saved-messages should never contain certain types of messages,
 such as uptimerobot notifications
 
 TODO: confirm that fixed monthly payments are actually constant and
-occur only once a month (including rent/mortgage/etc)
+occur only once a month (including rent/mortgage/etc), and match the fixed value I am assuming for them (eg, in the bc-budget.pl alias)
 
 TODO: all refnum for instacard should be exactly five letters long in db
 
@@ -444,4 +444,7 @@ corresponding entry in rewards_points (via xrefnum)
 
 TODO: no shipt tip entry should have a matching grocery entry that has the word tip in it, ie no double tipping
 
+TODO: all instacart orders should have receipt url which is different from order URL
+
+TODO: all shipt ordered should mention person who delivered and time of delivery and any other information included in email or online receipts
 
