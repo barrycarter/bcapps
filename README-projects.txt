@@ -4,6 +4,58 @@ see also any/all TODO files in various directories
 
 ====================================================================
 
+Title: Hyperlocalized data
+
+This project will attempt to provide highly localized information
+using open source data. A lot of free data is provided at the 30
+arcsecond level, which effectively divides the world into 43200 points
+of longitude and 21600 points of latitude, providing a total of
+`43200*21600` or 933,120,000 grid points, which is close to a billion
+or one gig (thus the project name).
+
+Thirty of seconds of arc equates to approximately 1 km of longitude at
+the equator and 1 km of latitude anywhere. Thus, each grid area is 1
+km^2 or less.
+
+For a given area, the project hopes to provide the following information:
+
+  - Elevation (SRTM)
+
+  - Climate (Koeppen-Geiger)
+
+  - Landuse and landcover (ESACCI)
+
+  - Solar energy availability
+
+  - Ethnicity data (GREG)
+
+  - Population count and density data (GPW)
+
+  - Administrative data (gadm)
+
+  - Animal habitat data (IUCN)
+
+  - computed data such as average time of noon, earliest/latest
+  sunrise/sunset/dawn/dusk/etc, coastal distance, and so on
+
+  - postal code
+
+  - area code
+
+  - voting district (at city, county, state, national levels)
+
+I have sources for all of this information, but it's general in a
+format that's not useful for localization.
+
+The challenge will be to store, retrieve, and map this information
+efficiently, leveraging existing APIs when possible.
+
+The first iteration is focused on providing semi-permenant data and
+isn't interested in real time data such as weather or traffic,
+although this may be added later.
+
+====================================================================
+
 Title: Weighted spherical polygonal Voronoi diagrams
 
 What points are 3 times closer to Missouri than to Kansas?
