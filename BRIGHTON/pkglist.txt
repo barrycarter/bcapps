@@ -369,6 +369,8 @@ libarchive-devel
 fvwm
 
 # utilities
+ncdu
+tree
 aspell
 # apparently no longer ships w/ English, grumble
 aspell-en

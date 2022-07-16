@@ -62,5 +62,7 @@
 # www.bankofamerica.com not resolving properly pretending same IP as
 # bankofamerica.com
 
-171.161.148.150 www.bankofamerica.com
+# removed 7/16/22, this makes it worse
+
+# 171.161.148.150 www.bankofamerica.com
 
