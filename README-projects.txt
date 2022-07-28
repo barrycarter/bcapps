@@ -35,6 +35,10 @@ For a given area, the project hopes to provide the following information:
 
   - Animal habitat data (IUCN)
 
+  - Timezone (Natural Earth)
+
+  - Other Natural Earth data that isn't in OSM or another source
+
   - computed data such as average time of noon, earliest/latest
   sunrise/sunset/dawn/dusk/etc, coastal distance, and so on
 
@@ -44,7 +48,9 @@ For a given area, the project hopes to provide the following information:
 
   - voting district (at city, county, state, national levels)
 
-I have sources for all of this information, but it's general in a
+  - neighborhood name 
+
+I have sources for most of this information, but it's general in a
 format that's not useful for localization.
 
 The challenge will be to store, retrieve, and map this information
@@ -53,6 +59,10 @@ efficiently, leveraging existing APIs when possible.
 The first iteration is focused on providing semi-permenant data and
 isn't interested in real time data such as weather or traffic,
 although this may be added later.
+
+Data we will generally NOT want:
+
+  - list of addresses, streets, individual names
 
 ====================================================================
 
