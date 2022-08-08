@@ -1170,7 +1170,7 @@ https://astronomy.stackexchange.com/questions/27468/table-of-dates-for-planet-re
 https://astronomy.stackexchange.com/questions/27914/tables-of-aphelion-perihelion-dates-for-other-planets/27955#27955
 (and similar, but these should already exist somewhere?)
 
-TODO: magnitude computations (Lambertian and almost +1 if normalized)
+TODO: magnitude computations (Lambertian and almost +1 if normalized), add to CSPICE if possible
 
 TODO: fuse filesystem that treats multiple files as single longer file (useful for sites with individual file size limits but not file size limits?)
 
@@ -1195,3 +1195,5 @@ TODO: OSM move tiles w/ reshaping
 TODO: use DFQs to compute planetary and other planet moons position without using prepackaged BSP files
 
 TODO: miniproject: people sometimes enter arguments on the command line and other times via pipeline into stdin-- write a perl subroutine that uses ARGV when present and stdin when not-- of course, it would only apply to some programs not all, and it obviously wouldnt apply to programs that use both stdin and command line args
+
+TODO: more aggressively look to see if people have already done these things
