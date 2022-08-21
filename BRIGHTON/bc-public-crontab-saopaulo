@@ -177,7 +177,7 @@ XWIDTH=1600
 
 # 20 6 * * *  find /home/user/.mozilla/firefox/ -iname '*.sqlite' | perl -nle 'print "echo $_; sqlite3 $_ .dump 1> $_.dump; /home/user/BCGIT/bc-quikbak.pl $_.dump"' | sh
 
-20 6 * * * date; find /home/user/.mozilla -iname '*.sqlite' | perl -nle '$x=$_;s%/%_%g;$_="/usr/local/etc/backups/$_"; print "cp -f \"$x\" \"$_\"\nsqlite3 $_ .dump 1> $_.dump\n/home/user/BCGIT/bc-quikbak.pl $_.dump"'; date; ls /usr/local/etc/backups/*places.sqlite | xargs -IXXX -n 1 /root/build/sage-8.2/local/bin/sqlite3 XXX "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u >! /home/user/all-firefox-bookmarks.txt; date
+20 6 * * * date; find /home/user/.mozilla -iname '*.sqlite' | perl -nle '$x=$_;s\%/\%_\%g;$_="/usr/local/etc/backups/$_"; print "cp -f \"$x\" \"$_\"\nsqlite3 $_ .dump 1> $_.dump\n/home/user/BCGIT/bc-quikbak.pl $_.dump"'; date; ls /usr/local/etc/backups/*places.sqlite | xargs -IXXX -n 1 /root/build/sage-8.2/local/bin/sqlite3 XXX "SELECT mb1.title AS t1, mb2.title AS t2, mp.url, mp.title AS t3 FROM moz_bookmarks mb1 JOIN moz_bookmarks mb2 ON (mb1.id = mb2.parent) JOIN moz_places mp ON (mb2.fk = mp.id);" |sort -u >! /home/user/all-firefox-bookmarks.txt; date
 
 # and the ones in my home dir (which end in .db), excluding geonames
 
