@@ -202,7 +202,17 @@ sub do_connect {
   debug("(RE)CONNECTING to $ip");
   close(A);
   # could "use Socket" here but this is cooler?
-  open(A,"echo 'user READONLY pass -1' | ncat -w 10 $ip 23 |") || warn("FAIL: Error, $!");
+
+#  open(A,"echo 'user READONLY pass -1' | ncat -w 10 $ip 23 |") || warn("FAIL: Error, $!");
+
+open(A,"| ncat -w 10 $ip 23 |") || warn("FAIL: Error, $!");
+
+# wait for initial response (as of 9/6/22 required)
+
+sleep(1);
+
+  print A "user READONLY pass -1\n";
+
   debug("A opened");
   # unblock socket just in case we get disconnected
   fcntl(A,F_SETFL,O_NONBLOCK|O_NDELAY);
