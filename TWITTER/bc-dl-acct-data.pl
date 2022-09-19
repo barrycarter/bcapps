@@ -149,7 +149,10 @@ for $i (sort {$latest{$b} <=> $latest{$a}} keys %latest) {
 
   # this is two months
 
-  if (($now - $latest{$i} < 365.2425/12*2*86400) && !$globopts{showall}){next;}
+#  if (($now - $latest{$i} < 365.2425/12*2*86400) && !$globopts{showall}){next;}
+
+  warn("temporarily using 3 months");
+  if (($now - $latest{$i} < 365.2425/12*3*86400) && !$globopts{showall}){next;}
 
   # 29 Jun 2021: want to change pws across the board + cleanup spacing
 
