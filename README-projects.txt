@@ -50,6 +50,8 @@ For a given area, the project hopes to provide the following information:
 
   - neighborhood name 
 
+  - number of lane miles (roads)
+
 I have sources for most of this information, but it's general in a
 format that's not useful for localization.
 
