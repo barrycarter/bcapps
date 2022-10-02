@@ -28,9 +28,11 @@ with the marker "OBSOLETE"). It must be one of the following:
 
 The last part of the pipe confirms there are no results (ie, no non-compliant strings)
 
+01 Oct 2022: added ".world" for schoolhouse.world
+
 </password>
 
-egrep -v '^$|^#|^OBSOLETE:' ~/pw.txt | perl -anle 'unless ($F[0]=~m/\.(com|net|gov|org|tv|io|edu|us|it|de|hu|uk|biz|fm|to|se|ch|im|ca|co|info|lan|club|space)(\W|$)/ || $F[0]=~m/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?/ || $F[0]=~/\"|\[/) {print $_}' | perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY"; exit 2;} else {exit 0;}' 
+egrep -v '^$|^#|^OBSOLETE:' ~/pw.txt | perl -anle 'unless ($F[0]=~m/\.(com|net|gov|org|tv|io|edu|us|it|de|hu|uk|biz|fm|to|se|ch|im|ca|co|info|lan|club|space|world)(\W|$)/ || $F[0]=~m/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d{1,5})?/ || $F[0]=~/\"|\[/) {print $_}' | perl -nle 'if (length($_)>=0) {print "STDIN NOT EMPTY"; exit 2;} else {exit 0;}' 
 
 <tcsh>
 
