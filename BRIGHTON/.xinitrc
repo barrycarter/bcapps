@@ -61,7 +61,7 @@ xset b off
 # startup three firefoxes with different profiles
 # firefox -P olddefault &
 # firefox -P Second &
-/root/build/firefox99/firefox -P Second &
+/root/build/firefox99/firefox -P Second >&! /tmp/firefoxstdouterr.txt &
 # as of <= 30 Jul 2020, I no longer use this
 # firefox -P Three &
 

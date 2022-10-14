@@ -8,6 +8,8 @@
 # the firefox which helped, but didnt solve the problem; this script
 # waits for %s to exist before opening firefox
 
+# --profile: bring up this specific profile in firefox
+
 require "/usr/local/lib/bclib.pl";
 
 my($url) = @ARGV;
@@ -22,7 +24,9 @@ my($out, $err, $res) = cache_command("cp $url /tmp/bahhp.html");
 
 # this is what I did previously, if it doesnt work, I will tweak it
 
-($out, $err, $res) = cache_command("/home/user/bin/firefox --new-tab file:///tmp/bahhp.html");
+if ($globopts{profile}) {$extra = "-P $globopts{profile}";}
+
+($out, $err, $res) = cache_command("/home/user/bin/firefox $extra --new-tab file:///tmp/bahhp.html");
 
 
 
