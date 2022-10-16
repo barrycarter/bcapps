@@ -21,19 +21,19 @@ For a given area, the project hopes to provide the following information:
 
   - Elevation (SRTM)
 
-  - Climate (Koeppen-Geiger)
+  - Climate (Koeppen-Geiger) (http://koeppen-geiger.vu-wien.ac.at/)
 
-  - Landuse and landcover (ESACCI)
+  - Landuse and landcover (ESACCI) (https://www.esa-landcover-cci.org/)
 
   - Solar energy availability
 
-  - Ethnicity data (GREG)
+  - Ethnicity data (GREG) (https://icr.ethz.ch/data/greg/)
 
-  - Population count and density data (GPW)
+  - Population count and density data (GPW) (https://sedac.ciesin.columbia.edu/data/collection/gpw-v4)
 
-  - Administrative data (gadm)
+  - Administrative data (gadm) (https://gadm.org/)
 
-  - Animal habitat data (IUCN)
+  - Animal habitat data (IUCN) (https://www.iucnredlist.org/)
 
   - Timezone (Natural Earth)
 
