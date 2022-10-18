@@ -736,7 +736,7 @@ sub bc_check_domain_exp {
 
   # TODO: generalize this a bit... but per domain testing would be ugly,
   # since nagios would need 1 test per domain = bad?
-  my(@domains) = `egrep -v '^#|^ *\$' /home/barrycarter/mydomains.txt`;
+  my(@domains) = `egrep -v '^#|^ *\$' /home/barrycarter/mydomains.txt | fgrep -v 'renew=auto'`;
   my($now) = time();
   for $i (@domains) {
     chomp($i);
