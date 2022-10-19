@@ -1,5 +1,29 @@
 #!/bin/python3
 
+# function to add two vars
+
+def add(x,y): return x+y
+
+# works as expected
+
+print(add(4,2))
+
+# store original function in variable
+
+add2 = add
+
+# redefine add to call add2
+
+def add(x,y):
+    print("PROGRAM HOOK: add() called")
+    return(add2(x,y))
+
+print(add(4,2))
+
+exit()
+
+
+
 class Temperature:
 
     def __init__(self, **kwargs):
