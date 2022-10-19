@@ -54,6 +54,8 @@ for ($i = $tstart; $i <= $tend; $i += 86400) {
 
   $total += $cpi{$year}[$month];
 
+  debug("CPI: $cpi{$year}[$month]");
+
   debug("YEAR: $year, MONTH: $month");
 
   debug("I: $i");
