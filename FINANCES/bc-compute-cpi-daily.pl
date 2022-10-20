@@ -35,21 +35,30 @@ for $i (split(/\n/, $data)) {
 
 # find 1st full month after start date
 
+# $nextyear/$prevyear below means "year of previous/next month" which
+# could be confusing
+
 my(%start) = %{date2hash($start)};
 
-my($nextmonth, $year) = ($start{truemonth}+1, $start{fullyear});
+my($nextmonth, $nextyear) = ($start{truemonth}+1, $start{fullyear});
 
-if ($nextmonth > 12) {$nextmonth = 1; $year++;}
-
-my($next) = str2time("$year-$nextmonth-01 00:00:00");
+if ($nextmonth > 12) {$nextmonth = 1; $nextyear++;}
 
 # find 1st full month before end date
 
 my(%end) = %{date2hash($end)};
 
-my($prevmonth, $year) = ($end{truemonth}-1, $end{fullyear});
+my($prevmonth, $prevyear) = ($end{truemonth}-1, $end{fullyear});
 
-if ($prevmonth < 1) {$prevmonth = 12; $year--;}
+if ($prevmonth < 1) {$prevmonth = 12; $prevyear--;}
+
+
+
+
+debug($nextmonth, $nextyear,$prevmonth,$prevyear);
+
+
+
 
 my($prev) = str2time("$year-$prevmonth-01 00:00:00");
 
