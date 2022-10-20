@@ -37,8 +37,6 @@ for $i (split(/\n/, $data)) {
 
 my(%start) = %{date2hash($start)};
 
-for $i (keys %start) {debug("I: $i -> $start{$i}");}
-
 my($nextmonth, $year) = ($start{truemonth}+1, $start{fullyear});
 
 if ($nextmonth > 12) {$nextmonth = 1; $year++;}
@@ -47,9 +45,16 @@ my($next) = str2time("$year-$nextmonth-01 00:00:00");
 
 # find 1st full month before end date
 
+my(%end) = %{date2hash($end)};
+
+my($prevmonth, $year) = ($end{truemonth}-1, $end{fullyear});
+
+if ($prevmonth < 1) {$prevmonth = 12; $year--;}
+
+my($prev) = str2time("$year-$prevmonth-01 00:00:00");
 
 
-debug("NEXT: $next, $nextmonth, $year");
+debug("NEXT: $prev to $next");
 
 debug(keys %start);
 
