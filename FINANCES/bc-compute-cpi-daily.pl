@@ -5,111 +5,106 @@
 
 # TODO: this seems really ugly, try to tighten
 
+use 5.010;
 require "/usr/local/lib/bclib.pl";
 
 my($start,$end) = @ARGV;
 
 # read in the data
 
-my($data) = read_file("$bclib{githome}/FINANCES/inflation.txt");
-
-my(%cpi);
-
-# store max cpi and use for CPI not yet released
-
-my($max);
-
-for $i (split(/\n/, $data)) {
-
-  my(@data) = csv($i);
-
-  # this sets cpi(year) to the entire array, including the year
-  # itself, but thats ok because I want January to be the [1] element,
-  # not the [0] element
-
-  $cpi{$data[0]} = \@data;
-
-  $max = max($max, @data[1..$#data]);
-
-}
-
 # find 1st full month after start date
-
-# $nextyear/$prevyear below means "year of previous/next month" which
-# could be confusing
 
 my(%start) = %{date2hash($start)};
 
-my($nextmonth, $nextyear) = ($start{truemonth}+1, $start{fullyear});
+my($startmonth, $startyear) = ($start{truemonth}+1, $start{fullyear});
 
-if ($nextmonth > 12) {$nextmonth = 1; $nextyear++;}
+if ($startmonth > 12) {$startmonth = 1; $startyear++;}
 
 # find 1st full month before end date
 
 my(%end) = %{date2hash($end)};
 
-my($prevmonth, $prevyear) = ($end{truemonth}-1, $end{fullyear});
+my($endmonth, $endyear) = ($end{truemonth}-1, $end{fullyear});
 
-if ($prevmonth < 1) {$prevmonth = 12; $prevyear--;}
+if ($endmonth < 1) {$endmonth = 12; $endyear--;}
 
+# using *100 is a bit of a hack
 
+# months with 30 days as hash
 
+%shortMonth = list2hash(4, 6, 9, 11);
 
-debug($nextmonth, $nextyear,$prevmonth,$prevyear);
+# keep track of total
 
+my($total) = 0;
 
+# we use startmonth/startyear as our iterator variables
 
+while ($startyear*100+$startmonth <= $endyear*100+$endmonth) {
 
-my($prev) = str2time("$year-$prevmonth-01 00:00:00");
+  # number of days
 
+  my($daysInMonth) = 31;
 
-debug("NEXT: $prev to $next");
+  if ($shortMonth{$startmonth}) {$daysInMonth = 30;}
 
-debug(keys %start);
+  # don't need 100/400 year formula, inside 1901-2099
 
-debug("MAX: $max");
+  if ($startmonth == 2) {$daysInMonth = 28 + ($startyear%4?0:1)}
 
-die "TESTING";
+  # add for month
 
-debug(%cpi);
+  my($cpi) = getCPI($startyear, $startmonth);
 
-# convert dates to Unix timestamps
+  $total += $daysInMonth*$cpi;
 
-my($tstart) = datestar($start);
-my($tend) = datestar($end);
+  debug("$startyear / $startmonth/ $daysInMonth / $cpi");
 
-debug("T: $tstart, $tend");
+  # iteration step
 
-# TODO: error checking
+  if (++$startmonth > 12) {$startyear++; $startmonth = 1;}
 
-# TODO: this is hideous, no need to go day by day should use multiplication
-
-my($total);
-
-for ($i = $tstart; $i <= $tend; $i += 86400) {
-
-  # TODO: converting back and forth between stardate seems odd
-
-  my($date) = stardate($i);
-
-  # find year and month for CPI
-
-  $date=~m%^(\d{4})(\d{2})%;
-
-  my($year, $month) = ($1, $2);
-
-  $total += $cpi{$year}[$month];
-
-  debug("CPI: $cpi{$year}[$month]");
-
-  debug("YEAR: $year, MONTH: $month");
-
-  debug("I: $i");
 }
 
-debug("TOTAL $total");
+debug("TOTAL: $total");
 
-# given a Unix timestamp, return localtime as hash
+# get the CPI for given year/month, overriding with max if NA
+
+sub getCPI {
+
+  my($year, $month) = @_;
+
+  state $cpi, $max;
+
+  # load if undefined
+
+  unless ($cpi) {
+
+    debug("LOADING CPI (should happen at most once)");
+
+    for $i (split(/\n/, read_file("$bclib{githome}/FINANCES/inflation.txt"))) {
+
+      # this sets cpi(year) to the entire array, including the year
+      # itself, but thats ok because I want January to be the [1] element,
+      # not the [0] element
+
+      my(@data) = csv($i);
+
+      $cpi->{$data[0]} = \@data;
+
+      $max = max($max, @data[1..$#data]);
+
+      debug("MAX SET TO: $max");
+    }
+  }
+
+  my($retval) = $cpi->{$year}[$month];
+
+  debug("RETVAL: *$retval*");
+
+  if (!blank($retval)) {return $retval;} else {return $max;}
+
+}
 
 sub date2hash {
 
