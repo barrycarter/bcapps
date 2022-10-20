@@ -1,7 +1,9 @@
 #!/bin/perl
 
 # simple script that uses inflation.txt to determine value of $1 daily
-# inflation adjusted between two given stardates on command line
+# inflation adjusted between two given unix timestamps on command line
+
+# TODO: this seems really ugly, try to tighten
 
 require "/usr/local/lib/bclib.pl";
 
@@ -13,6 +15,10 @@ my($data) = read_file("$bclib{githome}/FINANCES/inflation.txt");
 
 my(%cpi);
 
+# store max cpi and use for CPI not yet released
+
+my($max);
+
 for $i (split(/\n/, $data)) {
 
   my(@data) = csv($i);
@@ -23,7 +29,33 @@ for $i (split(/\n/, $data)) {
 
   $cpi{$data[0]} = \@data;
 
+  $max = max($max, @data[1..$#data]);
+
 }
+
+# find 1st full month after start date
+
+my(%start) = %{date2hash($start)};
+
+for $i (keys %start) {debug("I: $i -> $start{$i}");}
+
+my($nextmonth, $year) = ($start{truemonth}+1, $start{fullyear});
+
+if ($nextmonth > 12) {$nextmonth = 1; $year++;}
+
+my($next) = str2time("$year-$nextmonth-01 00:00:00");
+
+# find 1st full month before end date
+
+
+
+debug("NEXT: $next, $nextmonth, $year");
+
+debug(keys %start);
+
+debug("MAX: $max");
+
+die "TESTING";
 
 debug(%cpi);
 
@@ -62,3 +94,24 @@ for ($i = $tstart; $i <= $tend; $i += 86400) {
 }
 
 debug("TOTAL $total");
+
+# given a Unix timestamp, return localtime as hash
+
+sub date2hash {
+
+  my($time) = @_;
+
+  my(%hash);
+
+  my(@l) = localtime($time);
+  
+  for $i ("sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst") {
+    $hash{$i} = shift(@l);
+  }
+
+  # add useful
+  $hash{fullyear} = $hash{year} + 1900;
+  $hash{truemonth} = $hash{mon} + 1;
+
+  return \%hash;
+}
