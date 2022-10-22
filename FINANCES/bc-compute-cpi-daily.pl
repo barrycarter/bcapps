@@ -10,11 +10,45 @@ require "/usr/local/lib/bclib.pl";
 
 my($start,$end) = @ARGV;
 
-# read in the data
+
+
+# THIS IS A HACK WAY OF DOING THINGS AS A TEST SIGH
+
+my(%hackstart) = %{date2hash($start)};
+
+my($hackbase) = getCPI($hackstart{fullyear}, $hackstart{truemonth});
+
+debug("BASE: $hackbase");
+
+my($hacktotal);
+
+for ($hacktime = $start; $hacktime <= $end; $hacktime += 86400) {
+
+  my(%hash) = %{date2hash($hacktime)};
+
+  $hacktotal += getCPI($hash{fullyear}, $hash{truemonth})/$hackbase;
+
+  debug("$hash{fullyear}-$hash{truemonth}-$hash{mday}: $hacktotal");
+
+}
+
+print "HACKTOTAL: $hacktotal\n";
 
 # find 1st full month after start date
 
 my(%start) = %{date2hash($start)};
+
+# before we increment startmonth, find total CPI + base value
+
+my($basecpi) = getCPI($start{fullyear}, $start{truemonth});
+
+my($days) = daysInMonth($start{fullyear}, $start{truemonth}) - $start{mday} + 1;
+
+# initalize total
+
+my($total) = $days*$basecpi;
+
+debug("ALPHA: $basecpi / $start{fullyear} / $start{truemonth} / $start{mday} / $days / $total");
 
 my($startmonth, $startyear) = ($start{truemonth}+1, $start{fullyear});
 
@@ -24,13 +58,13 @@ if ($startmonth > 12) {$startmonth = 1; $startyear++;}
 
 my(%end) = %{date2hash($end)};
 
+# CPI for end month itself
+
+$total += $end{mday}*getCPI($end{fullyear}, $end{truemonth});
+
 my($endmonth, $endyear) = ($end{truemonth}-1, $end{fullyear});
 
 if ($endmonth < 1) {$endmonth = 12; $endyear--;}
-
-# keep track of total
-
-my($total) = 0;
 
 # we use startmonth/startyear as our iterator variables
 
@@ -56,7 +90,11 @@ while ($startyear*100+$startmonth <= $endyear*100+$endmonth) {
 
 }
 
-debug("TOTAL: $total");
+debug("TOTAL: $total/$basecpi");
+
+$total /= $basecpi;
+
+print "TOTAL: $total\n";
 
 # get the CPI for given year/month, overriding with max if NA
 
@@ -90,7 +128,7 @@ sub getCPI {
 
   my($retval) = $cpi->{$year}[$month];
 
-  debug("RETVAL: *$retval*");
+  debug("RETVAL: $year $month -> *$retval*");
 
   if (!blank($retval)) {return $retval;} else {return $max;}
 
