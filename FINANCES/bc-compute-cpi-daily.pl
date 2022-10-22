@@ -28,29 +28,19 @@ my($endmonth, $endyear) = ($end{truemonth}-1, $end{fullyear});
 
 if ($endmonth < 1) {$endmonth = 12; $endyear--;}
 
-# using *100 is a bit of a hack
-
-# months with 30 days as hash
-
-%shortMonth = list2hash(4, 6, 9, 11);
-
 # keep track of total
 
 my($total) = 0;
 
 # we use startmonth/startyear as our iterator variables
 
+# using *100 is a bit of a hack
+
 while ($startyear*100+$startmonth <= $endyear*100+$endmonth) {
 
   # number of days
 
-  my($daysInMonth) = 31;
-
-  if ($shortMonth{$startmonth}) {$daysInMonth = 30;}
-
-  # don't need 100/400 year formula, inside 1901-2099
-
-  if ($startmonth == 2) {$daysInMonth = 28 + ($startyear%4?0:1)}
+  my($daysInMonth) = daysInMonth($startyear, $startmonth);
 
   # add for month
 
@@ -94,7 +84,7 @@ sub getCPI {
 
       $max = max($max, @data[1..$#data]);
 
-      debug("MAX SET TO: $max");
+#      debug("MAX SET TO: $max");
     }
   }
 
@@ -123,4 +113,22 @@ sub date2hash {
   $hash{truemonth} = $hash{mon} + 1;
 
   return \%hash;
+}
+
+sub daysInMonth {
+
+  my($year, $month) = @_;
+
+  if ($month=~/^(4|6|9|11)$/) {return 30;}
+
+  if ($month=~/^(1|3|5|7|8|10|12)$/) {return 31;}
+
+  unless ($month eq "2") {
+    warn("INVALID MONTH");
+    return;
+  }
+
+  if (($year%4 == 0 && $year%100 != 0)|| $year%400 == 0) {return 29;}
+
+  return 28;
 }
