@@ -28,7 +28,7 @@ for ($hacktime = $start; $hacktime <= $end; $hacktime += 86400) {
 
   $hacktotal += getCPI($hash{fullyear}, $hash{truemonth})/$hackbase;
 
-  debug("$hash{fullyear}-$hash{truemonth}-$hash{mday}: $hacktotal");
+  debug("HACK: $hash{fullyear}-$hash{truemonth}-$hash{mday}: $hacktotal");
 
 }
 
