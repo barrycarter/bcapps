@@ -12,3 +12,11 @@ perl -F, -anle 'sub BEGIN {$tot=1;} if ($F[3] > 0 && $F[1] > $F[3]) {$tot*=$F[1]
 
 endif
 
+# allow short selling
+
+if $argv[1] == 3 then
+
+perl -F, -anle 'if ($F[3] > 0) {$tot+=abs(log($F[1])-log($F[3])); print exp($tot)}' ~/Downloads/HistoricalData_1666778668871.csv
+
+endif
+
