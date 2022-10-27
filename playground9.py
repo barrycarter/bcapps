@@ -1,5 +1,19 @@
 #!/bin/python3
 
+i = 0
+j = 0
+
+while (i == 0):
+    j = j + 1
+    print(j)
+    if (j > 10):
+        i = 1
+
+
+
+exit()
+
+
 # function to add two vars
 
 def add(x,y): return x+y
