@@ -19,38 +19,38 @@ km^2 or less.
 
 For a given area, the project hopes to provide the following information:
 
-  - Elevation (SRTM)
+  - Elevation (SRTM) (raster)
 
-  - Climate (Koeppen-Geiger) (http://koeppen-geiger.vu-wien.ac.at/)
+  - Climate (Koeppen-Geiger) (http://koeppen-geiger.vu-wien.ac.at/) (raster)
 
-  - Landuse and landcover (ESACCI) (https://www.esa-landcover-cci.org/)
+  - Landuse and landcover (ESACCI) (https://www.esa-landcover-cci.org/) (raster)
 
-  - Solar energy availability
+  - Solar energy availability (raster)
 
-  - Ethnicity data (GREG) (https://icr.ethz.ch/data/greg/)
+  - Ethnicity data (GREG) (https://icr.ethz.ch/data/greg/) (vector)
 
-  - Population count and density data (GPW) (https://sedac.ciesin.columbia.edu/data/collection/gpw-v4)
+  - Population count and density data (GPW) (https://sedac.ciesin.columbia.edu/data/collection/gpw-v4) (raster)
 
-  - Administrative data (gadm) (https://gadm.org/)
+  - Administrative data (gadm) (https://gadm.org/) (vector)
 
-  - Animal habitat data (IUCN) (https://www.iucnredlist.org/)
+  - Animal habitat data (IUCN) (https://www.iucnredlist.org/) (raster)
 
-  - Timezone (Natural Earth)
+  - Timezone (Natural Earth) (vector)
 
-  - Other Natural Earth data that isn't in OSM or another source
+  - Other Natural Earth data that isn't in OSM or another source (mostly vector)
 
   - computed data such as average time of noon, earliest/latest
-  sunrise/sunset/dawn/dusk/etc, coastal distance, and so on
+  sunrise/sunset/dawn/dusk/etc, coastal distance, and so on (raster)
 
-  - postal code
+  - postal code (vector)
 
-  - area code
+  - area code (vector)
 
-  - voting district (at city, county, state, national levels)
+  - voting district (at city, county, state, national levels) (vector)
 
-  - neighborhood name 
+  - neighborhood name (vector)
 
-  - number of lane miles (roads)
+  - number of lane miles (roads) (raster)
 
 I have sources for most of this information, but it's general in a
 format that's not useful for localization.
