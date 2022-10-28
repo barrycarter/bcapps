@@ -1,0 +1,54 @@
+(*
+
+WRITEUP:
+
+Let p be the (unknown) probability that coin comes up heads.
+
+After n flips, the binomial distribution clearly tells us the probability of more than 1/2 heads is: `1 - BetaRegularized[1 - p, n/2, 1 + n/2]` where `BetaRegularized` is the well known regularized incomplete beta function with two parameters:
+
+https://reference.wolfram.com/language/ref/BetaRegularized.html
+
+(see https://github.com/barrycarter/bcapps/tree/master/REDDIT/yfmk0y.txt for how I used Mathematica to compute all of this)
+
+For convenience, let's call that f[n,p]. For any pair of flips, there are exactly 4 distinct possibilities:
+
+  - You guess heads (f[n,p]) and heads comes up (p), you win $1
+
+  - You guess heads (f[n,p]) and tails comes up (1-p), you lose $1
+
+  - You guess tails (1-f[n,p]) and heads comes up (p), you lose $1
+
+  - You guess tails (1-f[n,p]) and tails comes up (1-p), you win $1
+
+So your gain function is:
+
+f[n,p]*p*1 + 
+
+P(x>=0.5) requires 
+
+IGNORING 50/50
+
+
+*)
+
+
+
+(* the math *)
+
+(* 
+
+The chance of n/2 or more heads is 1-CDF[BinomialDistribution[n,p]][n/2]
+
+We simplify knowing n > 0 and pretending in is even, yielding
+
+1 - BetaRegularized[1 - p, n/2, 1 + n/2]
+
+
+*)
+
+f[n_, p_] = Simplify[1-CDF[BinomialDistribution[n,p]][n/2], 
+{n>0, Mod[n,2] == 0}]
+
+
+
+`z > (1/2 - n*p)/Sqrt[-(n*(-1 + p)*p)]` (using Mathematica's InputForm since I can't seem to get LaTeX working here)
