@@ -2,6 +2,39 @@
 
 WRITEUP:
 
+Let s[n, k, m] represent the probability you're in the state where:
+
+  - there have been n tosses total
+
+  - there have been k heads
+
+  - you have m money
+
+Possibilities for the next state:
+
+  - if k > n/2 you choose heads. Then:
+
+    - heads comes up (p) putting you in state s[n+1, k+1, m+1]
+
+    - tails comes up (1-p) putting you in state s[n+1, k, m-1]
+
+ - if k < n/2 you choose tails. Then:
+
+    - heads comes up (p) putting you in state s[n+1, k+1, m-1]
+
+    - tails comes up (1-p) putting you in state s[n+1, k, m+1]
+
+ - if k = n/2 you enter one of the two conditions above randomly
+
+iter[n_, k_, m_] := If[
+ k > n/2, p*s[n+1, k+1, m+1] + (1-p)*s[n+1, k, m-1],
+ If[k < n/2, p*s[n+1, k+1, m-1] + (1-p)*s[n+1, k, m+1],
+    1/2*(p*s[n+1, k+1, m+1] + (1-p)*s[n+1, k, m-1]) +
+    1/2*(p*s[n+1, k+1, m-1] + (1-p)*s[n+1, k, m+1])]]
+
+
+
+
 Let p be the (unknown) probability that coin comes up heads.
 
 After n flips, the binomial distribution clearly tells us the probability of more than 1/2 heads is: `1 - BetaRegularized[1 - p, n/2, 1 + n/2]` where `BetaRegularized` is the well known regularized incomplete beta function with two parameters:
