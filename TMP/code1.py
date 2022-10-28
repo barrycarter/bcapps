@@ -2,8 +2,11 @@ import shapefile
 
 sf = shapefile.Reader("/tmp/ne_10m_admin_0_countries.shp")
 
-for i in (sf.shapes()):
-    print(i)
+print(len(sf.shapes()))
+
+for i in range(0, len(sf.shapes())-2):
+    for j in range(i+1, len(sf.shapes())-1):
+        print(sf.shapes()[i],sf.shapes()[j])
 
 exit(0)
 
