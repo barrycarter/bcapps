@@ -1,0 +1,336 @@
+country1,country2,border_length_in_meters
+Italy,Vatican,427.195941418038
+Gibraltar,Spain,1765.24970391806
+Azerbaijan,Turkey,7631.68956428401
+France,Monaco,9536.63067813061
+Cyprus U.N. Buffer Zone,Dhekelia,9992.75784200159
+Saint-Martin,Sint Maarten,10020.3831435915
+Egypt,Palestine,12338.1502248379
+Croatia,Montenegro,17911.211626283
+China,Hong Kong,18010.9613651928
+Morocco,Spain,21492.8141932571
+Cuba,US Naval Base Guantanamo Bay,25160.2224497951
+Austria,Liechtenstein,27080.1248167283
+Italy,San Marino,29309.417704083
+Dem. Rep. Korea,Russian Federation,31453.8431395548
+Liechtenstein,Switzerland,32143.2231871629
+Armenia,Iran,35361.6630087533
+Algeria,Western Sahara,41667.552518703
+Akrotiri,Cyprus,43974.5000863672
+Cyprus,Dhekelia,44375.6323820678
+Dhekelia,Northern Cyprus,44576.6473103309
+Andorra,France,45868.3534917844
+Andorra,Spain,50739.4031923416
+France,Luxembourg,50772.7993891502
+Qatar,Saudi Arabia,53310.512591655
+Denmark,Germany,55948.8313575647
+Kosovo,Montenegro,58488.1563026658
+Djibouti,Somaliland,64227.0924310118
+Pakistan,Siachen Glacier,64352.3179705518
+Hungary,Slovenia,67920.4249720555
+Macedonia,Serbia,74718.6446217996
+India,Siachen Glacier,80586.6514951093
+Austria,Slovakia,81866.3607421335
+Afghanistan,China,84119.3447960887
+Chad,Nigeria,85174.5298280228
+Slovakia,Ukraine,87029.7671973879
+Lithuania,Poland,87473.0102167081
+Israel,Syria,89445.1477407633
+Hungary,Ukraine,97725.5274116584
+Albania,Kosovo,97726.771473678
+Israel,Lebanon,98401.4043247878
+China,Siachen Glacier,101889.540434845
+Germany,Luxembourg,102487.772794234
+eSwatini,Mozambique,108211.756209866
+Belgium,Luxembourg,109998.272299958
+Jordan,Palestine,111574.268738276
+Djibouti,Eritrea,111747.511867341
+Belgium,Germany,115335.045136642
+Burkina Faso,Togo,128635.958185013
+Hungary,Serbia,131694.530756185
+Kosovo,Macedonia,132708.762251017
+Belarus,Latvia,135863.405075038
+Afghanistan,Uzbekistan,136742.658362575
+Austria,Switzerland,137323.894341889
+Rwanda,Uganda,138964.587943216
+Montenegro,Serbia,140023.891813099
+Bulgaria,Macedonia,141957.623774202
+Cyprus U.N. Buffer Zone,Northern Cyprus,146272.305974182
+Belize,Mexico,153989.688649442
+El Salvador,Guatemala,156544.749644044
+Albania,Macedonia,156699.444406082
+Albania,Montenegro,159003.169467922
+Armenia,Georgia,159676.449095298
+Chile,Peru,161604.960782778
+Cyprus,Cyprus U.N. Buffer Zone,162775.494299341
+Norway,Russian Federation,165097.813165816
+Angola,Republic of the Congo,173497.156412209
+Greece,Turkey,180025.460405191
+Cameroon,Equatorial Guinea,180355.029010258
+Iraq,Jordan,180427.30218042
+Bangladesh,Myanmar,183031.72686073
+Italy,Slovenia,183478.65742494
+Bulgaria,Turkey,197478.088558323
+Lithuania,Russian Federation,200494.586475869
+Iraq,Kuwait,200777.445955088
+Democratic Republic of the Congo,Rwanda,202963.045721733
+Egypt,Israel,203606.96065458
+Dem. Rep. Korea,Republic of Korea,203885.156225708
+Czech Republic,Slovakia,205809.576325045
+Poland,Russian Federation,206228.509853152
+Bosnia and Herzegovina,Montenegro,206526.958098066
+Indonesia,Timor-Leste,208370.126655336
+Latvia,Russian Federation,212930.242348333
+Greece,Macedonia,213641.504179889
+Rwanda,Tanzania,216859.947827859
+South Africa,Zimbabwe,218301.213884967
+Burundi,Democratic Republic of the Congo,218740.13839903
+Albania,Greece,220749.853733215
+Kuwait,Saudi Arabia,220803.445701946
+Guatemala,Honduras,222649.657574624
+Namibia,Zambia,224941.554863809
+Croatia,Serbia,227746.257273777
+Lao PDR,Myanmar,229065.730578029
+Benin,Niger,232538.6068497
+Georgia,Turkey,235727.844278482
+Austria,Slovenia,242076.580500821
+Liberia,Sierra Leone,247173.982422611
+Belize,Guatemala,249453.822729363
+Cameroon,Gabon,251069.205228778
+Germany,Switzerland,253664.063841663
+Estonia,Latvia,256044.561309562
+Croatia,Hungary,257961.020683458
+Armenia,Turkey,258765.203092767
+Dominican Republic,Haiti,260887.791891994
+Burundi,Rwanda,263435.927996117
+Kosovo,Serbia,270434.967795723
+Austria,Hungary,272207.55306828
+Colombia,Panama,272683.133600875
+Azerbaijan,Russian Federation,277689.511937449
+Estonia,Russian Federation,283848.40984664
+Benin,Burkina Faso,284739.356839382
+Costa Rica,Panama,285262.267467088
+Baikonur Cosmodrome,Kazakhstan,285957.210862271
+Costa Rica,Nicaragua,288912.808631994
+Oman,Yemen,290185.930216534
+Bosnia and Herzegovina,Serbia,290568.327197934
+Iraq,Turkey,291016.948170445
+Lebanon,Syria,291573.067398009
+Israel,Jordan,293719.398783495
+Bulgaria,Serbia,298742.946244806
+Guinea,Senegal,299909.811031719
+Azerbaijan,Georgia,302561.332372552
+Argentina,Uruguay,302766.727081804
+Kenya,South Sudan,306786.921612191
+Equatorial Guinea,Gabon,308393.078918036
+El Salvador,Honduras,318813.964298388
+Tanzania,Zambia,321062.048700251
+Djibouti,Ethiopia,328624.788290901
+Austria,Italy,329713.439351402
+Austria,Czech Republic,336070.087284489
+Guinea-Bissau,Senegal,337227.975086218
+Belarus,Poland,340086.826736931
+Jordan,Syria,342460.241625826
+Libya,Niger,346383.075681743
+Israel,Palestine,346519.67932151
+Guinea,Guinea-Bissau,351033.718998131
+China,Pakistan,351411.572248634
+Hungary,Romania,359195.812402612
+China,Lao PDR,361516.165342842
+Belgium,Netherlands,361799.316808677
+Brazil,Suriname,366362.419036282
+Ireland,United Kingdom,370082.865653818
+France,Germany,373219.489713259
+Kazakhstan,Turkmenistan,373273.10934604
+Libya,Sudan,380929.000836529
+Tanzania,Uganda,386543.187580857
+Central African Republic,Sudan,387226.970819202
+Germany,Poland,390386.199203439
+Somalia,Somaliland,391328.302650767
+Brunei Darussalam,Malaysia,399124.638344567
+Mali,Senegal,400968.215979091
+France,Italy,403131.938008049
+China,Tajikistan,403692.709592206
+Bulgaria,Greece,406256.249832796
+Poland,Slovakia,407973.114558998
+Poland,Ukraine,412459.84541612
+Burundi,Tanzania,413504.270613534
+Croatia,Slovenia,418221.051135351
+France,Suriname,420428.139772582
+Mozambique,Zambia,422256.689399263
+Central African Republic,Republic of the Congo,426353.498069405
+Moldova,Romania,426466.892055167
+eSwatini,South Africa,428383.396365625
+Bhutan,China,430139.182634305
+Cambodia,Lao PDR,431912.586717351
+Malaysia,Thailand,432924.505296808
+Latvia,Lithuania,435255.446078992
+South Sudan,Uganda,435972.407131693
+Iran,Turkey,440510.356005153
+Libya,Tunisia,449767.656508883
+Malawi,Tanzania,452338.746508907
+Saudi Arabia,United Arab Emirates,457115.761410435
+Romania,Serbia,458802.959074752
+France,Switzerland,460267.429619898
+Algeria,Mauritania,461962.73956864
+Belgium,France,463471.008582921
+Guinea,Liberia,464670.913501763
+Cameroon,Republic of the Congo,471780.747150868
+Democratic Republic of the Congo,Tanzania,473766.83848044
+Germany,Netherlands,476916.687479001
+Belarus,Lithuania,481904.452002127
+Finland,Sweden,483125.842135701
+Hungary,Slovakia,483818.931255998
+Mozambique,South Africa,494292.453665335
+Côte d'Ivoire,Mali,495851.633546801
+Burkina Faso,Côte d'Ivoire,510290.036016335
+Romania,Ukraine,515830.697523396
+Brazil,France,516708.158845808
+Colombia,Ecuador,520940.083857779
+Burkina Faso,Ghana,537134.035484491
+Côte d'Ivoire,Guinea,561670.215077679
+Côte d'Ivoire,Liberia,565544.12929004
+Oman,United Arab Emirates,567314.509343251
+France,Spain,567695.508075031
+Bulgaria,Romania,583907.181126798
+Azerbaijan,Iran,585532.987242148
+Czech Republic,Germany,587567.573268275
+Bhutan,India,590078.909239897
+Eritrea,Sudan,593294.207331453
+Italy,Switzerland,595991.971734576
+Democratic Republic of the Congo,South Sudan,597914.564971379
+Iraq,Syria,598883.708646087
+Czech Republic,Poland,599293.243548746
+Burkina Faso,Niger,599979.639229652
+Côte d'Ivoire,Ghana,602273.442401722
+Benin,Togo,621845.630804053
+Guyana,Venezuela,622310.566781663
+Guinea,Sierra Leone,627665.278816494
+Austria,Germany,653130.14416275
+Guyana,Suriname,656052.544586191
+Oman,Saudi Arabia,656888.575724469
+Cambodia,Thailand,663404.730143864
+Finland,Norway,678279.974377942
+Kenya,Somalia,684844.564454753
+Georgia,Russian Federation,705053.300939653
+Central African Republic,South Sudan,708569.761969583
+Ethiopia,Sudan,712716.656791928
+Argentina,Bolivia,715205.285188988
+Zambia,Zimbabwe,716419.543555896
+Mauritania,Senegal,720803.60940924
+Afghanistan,Turkmenistan,722946.787033961
+Mozambique,Tanzania,724757.268841663
+Democratic Republic of the Congo,Uganda,727157.336917466
+Jordan,Saudi Arabia,727762.158713403
+Senegal,The Gambia,730987.49559468
+Benin,Nigeria,735741.565865767
+Bolivia,Paraguay,742525.623655527
+Kenya,Uganda,746034.571428106
+Indonesia,Papua New Guinea,748627.999252667
+Armenia,Azerbaijan,753905.352630887
+Ethiopia,Somaliland,760771.002669957
+Kenya,Tanzania,762067.38993315
+Honduras,Nicaragua,765929.60536497
+Botswana,Zimbabwe,772131.580015362
+Syria,Turkey,775565.507091672
+Lesotho,South Africa,784230.298969859
+Cameroon,Central African Republic,788306.56598063
+Ethiopia,Kenya,788388.539153606
+Brazil,Uruguay,793091.852131617
+Bosnia and Herzegovina,Croatia,798983.158469337
+Malawi,Zambia,802687.776486311
+Iraq,Saudi Arabia,812734.720922842
+Iran,Pakistan,816589.904180071
+Bolivia,Chile,825646.1994228
+Kyrgyzstan,Tajikistan,837556.370899446
+China,Kyrgyzstan,838713.689078848
+Mali,Niger,842504.559749496
+Ghana,Togo,851739.829579271
+Guinea,Mali,855950.076157007
+Ethiopia,Somalia,857527.60092773
+Belarus,Ukraine,861521.290162026
+Afghanistan,Iran,866217.349303974
+Ethiopia,South Sudan,882094.799231252
+Eritrea,Ethiopia,892309.477661903
+Guatemala,Mexico,894810.797224761
+Moldova,Ukraine,897979.646334054
+Algeria,Tunisia,916019.895532494
+Belarus,Russian Federation,919555.024783467
+Namibia,South Africa,940371.781132079
+Algeria,Niger,952215.613760087
+Bolivia,Peru,953569.117156349
+Iran,Turkmenistan,957634.833696157
+Algeria,Libya,963859.589152823
+Cambodia,Vietnam,966695.776928053
+Argentina,Brazil,985250.701752257
+China,Dem. Rep. Korea,1004920.40757863
+Kazakhstan,Kyrgyzstan,1017132.71209998
+Cameroon,Chad,1023348.71659092
+China,Vietnam,1048991.78843977
+Kyrgyzstan,Uzbekistan,1049344.04520232
+Chad,Libya,1051231.00982621
+Portugal,Spain,1064468.12192117
+Angola,Zambia,1079530.13655658
+Brazil,Guyana,1079640.59393807
+Brazil,Paraguay,1097320.6934356
+Egypt,Libya,1098366.73215893
+China,Nepal,1111759.93542212
+Tajikistan,Uzbekistan,1119926.99526587
+Chad,Niger,1165092.95395772
+Afghanistan,Tajikistan,1170156.98336322
+Central African Republic,Chad,1171358.88577785
+Mozambique,Zimbabwe,1190705.61926265
+Burkina Faso,Mali,1211866.62630906
+Colombia,Peru,1220401.37369586
+Saudi Arabia,Yemen,1222831.61901679
+Finland,Russian Federation,1225505.86145689
+Algeria,Mali,1266104.42362253
+India,Myanmar,1268031.83865798
+Egypt,Sudan,1273069.66269536
+Ecuador,Peru,1291135.08269328
+Chad,Sudan,1291819.08792037
+Iran,Iraq,1310177.96616466
+Angola,Namibia,1331551.3231008
+Morocco,Western Sahara,1332462.99482265
+Botswana,Namibia,1363801.16347149
+Brazil,Colombia,1396899.23953421
+Niger,Nigeria,1447414.00651609
+Central African Republic,Democratic Republic of the Congo,1453240.32168718
+Malawi,Mozambique,1460934.4402627
+Democratic Republic of the Congo,Republic of the Congo,1468174.02047307
+India,Nepal,1483926.3023839
+Indonesia,Malaysia,1494841.98974446
+China,Kazakhstan,1503271.78672501
+Mauritania,Western Sahara,1537652.89198994
+Algeria,Morocco,1550630.99269057
+Cameroon,Nigeria,1584570.5559175
+Norway,Sweden,1594538.16413758
+Turkmenistan,Uzbekistan,1595976.53086169
+Brazil,Venezuela,1601942.95529805
+Botswana,South Africa,1615277.88997669
+Lao PDR,Thailand,1616420.13122947
+Argentina,Paraguay,1644683.11477213
+Russian Federation,Ukraine,1670415.35144138
+Gabon,Republic of the Congo,1672038.44871361
+China,Myanmar,1699342.34172352
+Lao PDR,Vietnam,1749681.02209791
+Brazil,Peru,1800027.99921953
+Myanmar,Thailand,1832225.23690807
+South Sudan,Sudan,1891667.0384969
+Democratic Republic of the Congo,Zambia,2034904.15359608
+Colombia,Venezuela,2111086.62678802
+Mali,Mauritania,2168887.83261682
+Kazakhstan,Uzbekistan,2183283.5314128
+China,India,2203741.41472294
+Afghanistan,Pakistan,2244687.44519451
+Angola,Democratic Republic of the Congo,2303219.62244392
+Bangladesh,India,2383041.40858078
+Mexico,United States,2641152.63654887
+India,Pakistan,2657138.62325943
+Bolivia,Brazil,2664440.87691117
+Mongolia,Russian Federation,2913028.72936006
+China,Russian Federation,3544426.86152653
+China,Mongolia,4377764.08398686
+Argentina,Chile,5032390.27778149
+Kazakhstan,Russian Federation,6657568.93224451
+Canada,United States,7928262.16463933

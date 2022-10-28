@@ -1,0 +1,19 @@
+Ran on command line and piped to postgis:
+
+shp2pgsql -d -G ne_10m_admin_0_countries.shp
+
+Then these in PostGIS:
+
+CREATE INDEX ne_10m_admin_0_countries_index ON 
+ne_10m_admin_0_countries USING GIST(geog); 
+
+DELETE FROM ne_10m_admin_0_countries WHERE name_long = 'Antarctica'; 
+
+SELECT a.name_long, b.name_long, ST_LENGTH(ST_INTERSECTION(a.geog, b.geog))
+FROM ne_10m_admin_0_countries a JOIN ne_10m_admin_0_countries b ON
+a.name_long NOT IN ('Antarctica') AND
+a.name_long < b.name_long WHERE ST_LENGTH(ST_INTERSECTION(a.geog, b.geog)) > 0
+;
+
+some cleanup w/ Perl to get borders-out.txt
+ 
