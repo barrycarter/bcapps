@@ -571,3 +571,40 @@ const getCircularReplacer = () => {
 	return value;
       };
     };
+
+
+/**
+
+Converts a latitude and longitude to a slippy tile or an equirectangular tile
+
+z: tile zoom value
+lat: the latitude
+lng: tile longitude
+
+projection: if 1, Mercator project, otherwise equirectangular project
+
+*/
+
+function lngLat2Tile(obj) {
+
+  // set defaults
+
+  obj = mergeHashes(obj, str2hash("projection=0"));
+
+  // true for both projections
+  let x = (obj.lng+180)/360*2**obj.z;
+
+  // for equirectangular
+  if (obj.projection == 0) {
+    return {z: obj.z, x: x, y: (90-obj.lat)/180*2**obj.z};
+  }
+
+  // for Mercator
+  // TODO: I copied this from somewhere else and am NOT happy about it
+
+  // for Mercator (http://mathworld.wolfram.com/MercatorProjection.html)
+
+  let lat_rad = obj.lat/180*Math.PI;
+  let y = 2**obj.z*(-Math.log(Math.tan(lat_rad) + 1/Math.cos(lat_rad))/2/Math.PI+1/2);
+  return {z: obj.z, x: x, y: y};
+}

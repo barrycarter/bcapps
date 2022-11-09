@@ -1,12 +1,9 @@
 <link rel="stylesheet" href="MAPS/leaflet.css" />
 <script src="MAPS/leaflet.js"></script>
-<script src="MAPS/turf.min.js"></script>
 <script src="bclib.js"></script>
 <script src="bclib-staging.js"></script>
-<script src="MAPS/perspective-transform.min.js"></script>
-<script src="MAPS/proj4-compressed.js"></script>
-<script src="MAPS/proj4leaflet.js"></script>
 <script src="MAPS/bc-osmtilecache.js"></script>
+<script src="MAPS/turf.min.js"></script>
 
 <style>html,body, #map {height:100%;}</style>
 
@@ -50,15 +47,22 @@ Buffer: <input type="checkbox" id="buffer" value="false">
 
 lngLatDistZ2Tiles({clat: 80, clng: 0, dist: 4000, z: 3});
 
-die_is_not();
+// die_is_not();
 
 console.log(createFakeSlippyTile({z: 0, x: 0, y: 0}));
 
+// let map = L.map('map', {crs: L.CRS.EPSG9839});
+
+// let map = L.map('map', {crs: L.CRS.Simple});
+
+let map = L.map('map')
+
+map.fitBounds([[-90, -180], [90, 180]]);
 
 
-die_really_early();
+// die_really_early();
 
-let map = L.map('map', {crs: L.CRS.Simple});
+// let map = L.map('map', {crs: L.CRS.Simple});
 
 // can I create an image and draw it on the leaflet map using imageoverlay?
 
@@ -79,12 +83,17 @@ let png2 = canvas314.toDataURL("image/png");
 
 console.log(png2);
 
-L.imageOverlay(png2, 0, 0).addTo(map);
+// L.imageOverlay(png2, 0, 0).addTo(map);
 
-die_testing_here();
+// die_testing_here();
 
-// let map = L.map('map', {crs: L.CRS.EPSG9839});
-map.fitBounds([[-90, -180], [90, 180]]);
+// map.fitBounds([[-90, -180], [90, 180]]);
+
+// map.fitBounds([[-85, -180], [85, 180]]);
+
+
+
+
 map.on('zoomend', redraw_map);
 
 // TODO: on move, dont need to erase existing stuff
@@ -111,7 +120,7 @@ ctx.fillRect(100,100,250,100);
 
 ctx.drawImage(im, 0, 0);
 
-die_ha();
+// die_ha();
 
 //console.log("TESTING");
 
