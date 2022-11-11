@@ -1178,7 +1178,7 @@ TODO: fuse filesystem that treats multiple files as single longer file (useful f
 
 TODO: client-side javascript wiki
 
-TODO: overlay antipodal map
+TODO: overlay antipodal map (good for beginners)
 
 TODO: for a great circle between A and B, there are two points C and D
 that form the north and south poles if the great circle is the
@@ -1199,3 +1199,5 @@ TODO: use DFQs to compute planetary and other planet moons position without usin
 TODO: miniproject: people sometimes enter arguments on the command line and other times via pipeline into stdin-- write a perl subroutine that uses ARGV when present and stdin when not-- of course, it would only apply to some programs not all, and it obviously wouldnt apply to programs that use both stdin and command line args
 
 TODO: more aggressively look to see if people have already done these things
+
+TODO: overlay UTM grid on openstreetmaps (good for beginners)
