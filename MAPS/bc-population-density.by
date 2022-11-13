@@ -1,4 +1,4 @@
-#!/usr/local/bin/bython
+#!/usr/local/bin/bython -k
 
 import sys
 import os
@@ -23,33 +23,25 @@ px: the pixel value inside the x tile (rounded)
 py: the pixel value inside the y tile (rounded)
 
 """
-   # TODO: this should be a lib value
+  obj['x'] = (obj['lng']+180)/360*2**obj['z'];
 
-   degree = pi/180
+  # The line below does a lot:
+  #   - converts latitude to radians
+  #   - computes the inverse Gudermannian function
+  #   - normalizes the function to go from 0 to 1
+  #   - reverse the function to match y increasing = south per OSM
+  #   - multiplies by 2^zoomlevel to find the tile number
 
-   obj['x'] = (obj['lng']+180)/360*2**obj['z'];
+  obj['y'] = 2**obj['z']*(1/2-log(tan(obj['lat']*pi/180) + 1/cos(obj['lat']*pi/180))/2/pi);
 
-    # The line below does a lot:
-    #   - converts latitude to radians
-    #   - computes the inverse Gudermannian function
-    #   - normalizes the function to go from 0 to 1
-    #   - reverse the function to match y increasing = south per OSM
-    #   - multiplies by 2^zoomlevel to find the tile number
+  # now the pixel values
 
-    obj['y'] = 2**obj['z']*(1/2-log(tan(obj['lat']*degree) + 1/cos(obj['lat']*degree))/2/pi);
+  obj['px'] = round((obj['x'] - floor(obj['x']))*256)
+  obj['py'] = round((obj['y'] - floor(obj['y']))*256)
+  obj['x'] = floor(obj['x'])
+  obj['y'] = floor(obj['y'])
 
-
-#  let lat_rad = obj.lat/180*Math.PI;
-#  let y = 2**obj.z*(-Math.log(Math.tan(lat_rad) + 1/Math.cos(lat_rad))/2/Math.PI+1/2);
-#  return {z: obj.z, x: x, y: y};
-# }
-# print(obj)
-
-# kwargs['x'] = (kwargs['lng']+180)/360*2**kwargs['z']; 
-
-return obj;
-
-
+  return obj;
 }
 
 # testing lngLat2Tile
