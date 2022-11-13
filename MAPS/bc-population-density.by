@@ -4,28 +4,57 @@ import sys
 import os
 import rasterio
 import xarray
+from math import *
 
-def lngLat2Tile(**kwargs) {
+def lngLat2Tile(**obj) {
 """
-Converts a latitude and longitude to a Mercator-projected slippy tile
+Converts a latitude and longitude to a Mercator-projected slippy tile. Input:
 
 z: tile zoom value
 lat: the latitude
 lng: tile longitude
+
+Output:
+
+x: the tile's x value
+y: the tile's y value
+
+px: the pixel value inside the x tile (rounded)
+py: the pixel value inside the y tile (rounded)
+
 """
+   # TODO: this should be a lib value
 
-print(kwargs)
+   degree = pi/180
 
-kwargs['x'] = (kwargs['lng']+180)/360*2**kwargs['z']; 
+   obj['x'] = (obj['lng']+180)/360*2**obj['z'];
 
-return kwargs;
+    # The line below does a lot:
+    #   - converts latitude to radians
+    #   - computes the inverse Gudermannian function
+    #   - normalizes the function to go from 0 to 1
+    #   - reverse the function to match y increasing = south per OSM
+    #   - multiplies by 2^zoomlevel to find the tile number
+
+    obj['y'] = 2**obj['z']*(1/2-log(tan(obj['lat']*degree) + 1/cos(obj['lat']*degree))/2/pi);
+
+
+#  let lat_rad = obj.lat/180*Math.PI;
+#  let y = 2**obj.z*(-Math.log(Math.tan(lat_rad) + 1/Math.cos(lat_rad))/2/Math.PI+1/2);
+#  return {z: obj.z, x: x, y: y};
+# }
+# print(obj)
+
+# kwargs['x'] = (kwargs['lng']+180)/360*2**kwargs['z']; 
+
+return obj;
 
 
 }
 
 # testing lngLat2Tile
 
-print(lngLat2Tile(lng=-20, z=4));
+print(lngLat2Tile(lng=-20, z=4, lat=50));
 
 # TODO: create a library to canonize bclib(home) and stuff
 
