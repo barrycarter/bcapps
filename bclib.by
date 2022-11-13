@@ -57,4 +57,8 @@ If exclude=x is set, exclude keys that start with x
      }
 }
 
+def die(str) {
+    print(str)
+    exit(-1)
+}
 

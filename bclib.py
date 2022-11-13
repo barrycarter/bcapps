@@ -57,5 +57,9 @@ def debug0(**obj):
     
 
 
+def die(str):
+    print(str)
+    exit(-1)
+
 
 
