@@ -32,3 +32,7 @@ node_modules
 
 
 GEOLOCATION/RAW/parjoblog.txt.bz2
+
+# weird bython stuff
+
+MAPS/__pycache__

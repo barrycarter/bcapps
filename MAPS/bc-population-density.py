@@ -7,29 +7,22 @@ import xarray
 from math import *
 from bclib import *
 
-# testing lngLat2Tile
-
-print(lngLat2Tile(lng=-20, z=4, lat=50))
-
-# TODO: create a library to canonize bclib(home) and stuff
+# TODO: create a library (done) and canonize bclib(home) and stuff
 
 fname = "/home/user/NOBACKUP/EARTHDATA/POPULATION/gpw_v4_population_count_rev11_2020_30_sec.tif"
 
-# uncomment this to show you can load 100G+ files without putting them in memory
+pt = xarray.open_rasterio(fname)
 
-fname = "/home/user/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/srtm1.tif"
-
-# pt = xarray.open_rasterio(fname)
-
-# print(pt)
+print(pt)
 
 print("I has done a compile")
 
-# TODO: put these functions into a library
+# since our data is 43200x21600 we start with level 8 tiles -- this
+# will be imperfect
 
-# NOTE: I'm following the same style I use in ../bclib.js in terms of
-# named parameters and objects
+debug0(object=pt)
 
-def add(x,y):return x+y
+
+
 
 

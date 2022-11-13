@@ -1,3 +1,6 @@
+# NOTE: I'm following the same style I use in ../bclib.js in terms of
+# named parameters and objects
+
 from math import *
 
 def lngLat2Tile(**obj):
@@ -36,6 +39,23 @@ def lngLat2Tile(**obj):
     obj['y'] = floor(obj['y'])
     
     return obj
+
+
+def debug0(**obj):
+    
+    """
+    Given an object "object", print keys and values using 'dir'
+    
+    If exclude=x is set, exclude keys that start with x
+    """
+    
+    for i in dir(obj['object']):
+        if (obj.get('exclude') and i.find(obj.get('exclude')) == 0):
+            continue
+        
+        print(i,' -> ',getattr(obj['object'],i))
+    
+
 
 
 
