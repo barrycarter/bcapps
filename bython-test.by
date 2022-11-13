@@ -1,0 +1,5 @@
+#!/usr/local/bin/bython
+
+# Bython: making Python suck slightly less (but not a lot less)
+
+for i in range(10) {print(i);}

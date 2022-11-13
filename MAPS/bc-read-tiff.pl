@@ -7,7 +7,7 @@ use Image::GeoTIFF::Tiled;
 
 # this is a 100GB tiff!
 
-my($tiff) = "$bclib{home}/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/SRTM1-TIFFS/elevation.tif";
+my($tiff) = "$bclib{home}/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/srtm1.tif";
 
 my $t = Image::GeoTIFF::Tiled->new($tiff);
  
