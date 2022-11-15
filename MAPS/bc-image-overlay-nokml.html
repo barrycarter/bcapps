@@ -25,19 +25,27 @@ for (i of location.search.replace("?","").split("&")) {
 
 // set default values (copied from bc-image-overlay-nokml.pl)
 
-opts = mergeHashes(opts, str2hash("center=0,0&zoom=2&maptypeid=HYBRID&s=-90&n=90&e=180&w=-180&keypos=LEFT_BOTTOM&opacity=0.5&rotateControl=true&scaleControl=true&overviewMapControl=true"));
+// removed since OSM doesn't have them: maptypeid
 
-var map = L.map('map').setView([0, 0], 4);
+// change n and s to +-85 to avoid odd Merctaor stretching
+
+opts = mergeHashes(opts, str2hash("center=0,0&zoom=2&s=-85&n=85&e=180&w=-180&keypos=LEFT_BOTTOM&opacity=0.5&rotateControl=true&scaleControl=true&overviewMapControl=true"));
+
+var map = L.map('map').setView(opts["center"].split(","), opts["zoom"]);
 
 var layer = L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+if (opts["url"]) {
+
+  L.imageOverlay(opts["url"], [ [opts["s"], opts["w"]], [opts["n"], opts["e"]]]).addTo(map);
+
+}
 
 layer.addTo(map);
 
 console.log("ALPHA", opts);
 
 // set the view based on the opts
-
-
 
 // console.log("ALPHA", location.search.replace("?","").split("&"));
 
