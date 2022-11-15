@@ -426,7 +426,7 @@ description of where they are using OSM API
 
 ====================================================================
 
-Title: JavaScript showing travel between stars
+Title: JavaScript showing travel between stars (GOOD BEGINNER PROJECT)
 
 Description: Using a list of stars whose three-dimensional positions
 are known (which is NOT GAIA2, since the parallaxes (and thus the
@@ -1178,7 +1178,7 @@ TODO: fuse filesystem that treats multiple files as single longer file (useful f
 
 TODO: client-side javascript wiki
 
-TODO: overlay antipodal map (good for beginners)
+TODO: overlay antipodal map (GOOD BEGINNER PROJECT)
 
 TODO: for a great circle between A and B, there are two points C and D
 that form the north and south poles if the great circle is the
@@ -1200,4 +1200,4 @@ TODO: miniproject: people sometimes enter arguments on the command line and othe
 
 TODO: more aggressively look to see if people have already done these things
 
-TODO: overlay UTM grid on openstreetmaps (good for beginners)
+TODO: overlay UTM grid on openstreetmaps (GOOD BEGINNER PROJECT)
