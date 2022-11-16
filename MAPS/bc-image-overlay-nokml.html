@@ -1,3 +1,5 @@
+<!-- see bcgit-pages version for more up to date stuff -->
+
 <link rel="stylesheet" href="leaflet.css" />
 <script src="leaflet.js"></script>
 <script src="../bclib.js"></script>
@@ -37,7 +39,7 @@ var layer = L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
 if (opts["url"]) {
 
-  L.imageOverlay(opts["url"], [ [opts["s"], opts["w"]], [opts["n"], opts["e"]]]).addTo(map);
+  L.imageOverlay(opts["url"], [[opts["s"], opts["w"]],[opts["n"], opts["e"]]], {opacity:opts["opacity"]}).addTo(map);
 
 }
 
