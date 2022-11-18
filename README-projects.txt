@@ -588,6 +588,10 @@ URL: https://github.com/barrycarter/bcapps/tree/master/MAPS/README
 
 Title: Generate passwords from answers to questions w/o storing password
 
+[GOOD BEGINNER PROJECT]
+
+Note: it might be easier to use crypt here (JavaScript)
+
 Description: For any given site, user creates a list of questions, and
 the answers to those questions, joined with semicolons (or whatever)
 is SHA1 hashed and the hash is converted to a password, perhaps with
@@ -1192,7 +1196,7 @@ TODO: get xclock to display fractional seconds (which may require tweaking strft
 
 TODO: dynamic scale OSM
 
-TODO: OSM move tiles w/ reshaping
+TODO: OSM move tiles w/ reshaping (GOOD BEGINNER PROJECT)
 
 TODO: use DFQs to compute planetary and other planet moons position without using prepackaged BSP files
 
@@ -1201,3 +1205,5 @@ TODO: miniproject: people sometimes enter arguments on the command line and othe
 TODO: more aggressively look to see if people have already done these things
 
 TODO: overlay UTM grid on openstreetmaps (GOOD BEGINNER PROJECT)
+
+TODO: express a large quantity of money (in US currency) as a height, a mass/weight, a cube, compare to gold/silver/dimaonds/drugs/bitcoin/etc (fixed values) (GOOD BEGINNER PROJECT) https://www.reddit.com/r/theydidthemath/comments/yyjxd8/request_in_light_of_the_latest_twitter_events_how/ is the inspiration (general units conversions project) (dl large lists of lengths/masses/etc from wikidata)
