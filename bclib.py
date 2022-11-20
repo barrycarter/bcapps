@@ -2,6 +2,7 @@
 # named parameters and objects
 
 from math import *
+import sys
 
 def lngLat2Tile(**obj):
     """
@@ -33,8 +34,8 @@ def lngLat2Tile(**obj):
     
     # now the pixel values
     
-    obj['px'] = round((obj['x'] - floor(obj['x']))*256)
-    obj['py'] = round((obj['y'] - floor(obj['y']))*256)
+    obj['px'] = floor((obj['x'] - floor(obj['x']))*256)
+    obj['py'] = floor((obj['y'] - floor(obj['y']))*256)
     obj['x'] = floor(obj['x'])
     obj['y'] = floor(obj['y'])
     
@@ -60,6 +61,10 @@ def debug0(**obj):
 def die(str):
     print(str)
     exit(-1)
+
+
+def warn(str):
+    print(str, file=sys.stderr)
 
 
 
