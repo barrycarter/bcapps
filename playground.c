@@ -9,7 +9,7 @@ int main (int argc, char **argv) {
     printf("X: %d, COUNT: %lu\n", x, count);
     for (y=-1000; y<=1000; y++) {
       for (z=-1000; z<=1000; z++) {
-	if (2*x - 3*y > 5*z) {count++;}
+	if (2*x - 3*y >= 5*z) {count++;}
       }
     }
   }
