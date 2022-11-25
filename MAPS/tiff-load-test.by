@@ -1,0 +1,36 @@
+#!/usr/local/bin/bython -k
+
+import sys
+import os
+import xarray
+from bclib import *
+
+# minimal test to see which commands do and don't load the entire TIFF into memory
+
+fname = "/home/user/NOBACKUP/EARTHDATA/ELEVATION/SRTM1/srtm1.tif";
+
+# test1 does NOT load into memory, test2 does
+
+def test1() {
+
+  pt = xarray.open_rasterio(fname)
+
+  for i in range(len(pt[0])) {
+    for j in range(len(pt[0][i])) {
+      print(i,j,float(pt[0][i][j]));
+    }
+  }
+}
+
+
+def test2() {
+
+  pt = xarray.open_rasterio(fname)
+  pt[0] = list(pt[0])
+
+  for i in range(len(pt[0])) {
+    for j in range(len(pt[0][i])) {
+      print(i,j,float(pt[0][i][j]));
+    }
+  }
+}
