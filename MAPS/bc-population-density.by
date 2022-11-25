@@ -11,11 +11,21 @@ fname = "/home/user/NOBACKUP/EARTHDATA/POPULATION/gpw_v4_population_count_rev11_
 
 # this is the tiny one for easy testing
 
+# going thru smaller file below wo preloading:
+# 49.101u 1.880s 0:49.61 102.7%   0+0k 0+8io 0pf+0w
+
+# with preloading:
+# 27.542u 1.883s 0:28.01 105.0%   0+0k 0+8io 0pf+0w
+
+# so, yes, preloading is faster when memory permits
+
 fname = "/home/user/NOBACKUP/EARTHDATA/POPULATION/gpw_v4_population_count_rev11_2020_1_deg.tif"
 
 pt = xarray.open_rasterio(fname)
 
 nodataval = pt.nodatavals[0];
+
+# pt[0] = list(pt[0]);
 
 for i in range(len(pt[0])) {
   for j in range(len(pt[0][i])) {

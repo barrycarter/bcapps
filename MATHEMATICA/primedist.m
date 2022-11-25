@@ -51,3 +51,61 @@ result of t0337 tally:
  {125, 1}, {129, 1}, {135, 1}, {139, 1}, {143, 1}}
 
 *)
+
+(* primes this high use probabilistic prime testing with PrimeQ *)
+
+t1053 = Table[NextPrime[10^25, i], {i, 1, 10000}];
+
+t1054 = Table[t1053[[i-1]] + t1053[[i]], {i, 2, Length[t1053]}];
+
+t1058 = NextPrime[10^25, Table[i, {i, 1, 100000}]];
+
+t1059 = Table[t1058[[i-1]] + t1058[[i]], {i, 2, Length[t1058]}];
+
+t1100 = Map[PrimeQ, t1059+1];
+
+t1101 = Map[PrimeQ, t1059-1];
+
+Length[Select[t1100, # &]]
+
+Length[Select[t1101, # &]]
+
+(* 
+
+Assuming no twin primes, the above shows 4057 + 4025 or 8082 are primes
+
+*)
+
+t1105 = NextPrime[10^100, Table[i, {i, 1, 10000}]];
+
+t1106 = Table[t1105[[i-1]] + t1105[[i]], {i, 2, Length[t1105]}];
+
+t1107 = Map[PrimeQ, t1106+1];
+
+t1108 = Map[PrimeQ, t1106-1];
+
+Length[Select[t1107, #&]]
+
+Length[Select[t1108, #&]]
+
+(* generic module *)
+
+nearPrimes[n_] := Module[{s1, s2, s3},
+ s1 = NextPrime[Floor[n], Table[i, {i, 1, 1000}]];
+ s2 = Table[s1[[i]] + s1[[i-1]], {i, 2, Length[s1]}];
+ s3 = Select[s2, PrimeQ[#-1] || PrimeQ[#+1] &];
+ Return[Length[s3]/1000];
+];
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+
