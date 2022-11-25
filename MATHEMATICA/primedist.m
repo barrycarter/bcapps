@@ -90,12 +90,27 @@ Length[Select[t1108, #&]]
 
 (* generic module *)
 
-nearPrimes[n_] := Module[{s1, s2, s3},
- s1 = NextPrime[Floor[n], Table[i, {i, 1, 1000}]];
+nearPrimes[n_, k_:1000] := Module[{s1, s2, s3},
+ s1 = NextPrime[Floor[n], Table[i, {i, 1, k}]];
  s2 = Table[s1[[i]] + s1[[i-1]], {i, 2, Length[s1]}];
  s3 = Select[s2, PrimeQ[#-1] || PrimeQ[#+1] &];
- Return[Length[s3]/1000];
+ Return[Length[s3]/k];
 ];
+
+Table[{k, nearPrimes[10^k]}, {k, 0, 100, 0.5}]
+
+nearPrimesP[n_, k_:1000] := Module[{s1, s2, s3},
+ Print[n];
+ s1 = NextPrime[Floor[n], Table[i, {i, 1, k}]];
+ s2 = Table[s1[[i]] + s1[[i-1]], {i, 2, Length[s1]}];
+ s3 = Select[s2, PrimeQ[#-1] || PrimeQ[#+1] &];
+ Return[Length[s3]/k];
+];
+
+Plot[nearPrimesP[10^n], {n, 0, 100}]
+
+
+
 
 
 
