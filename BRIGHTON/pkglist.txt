@@ -402,6 +402,10 @@ libmpg123-devel
 
 marble
 
+# webp whee
+libwebp-devel
+libwebp-tools
+
 # qgis needs QScintilla for some plugins
 qscintilla-devel
 qscintilla-python
