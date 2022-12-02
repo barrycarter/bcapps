@@ -1207,3 +1207,7 @@ TODO: more aggressively look to see if people have already done these things
 TODO: overlay UTM grid on openstreetmaps (GOOD BEGINNER PROJECT)
 
 TODO: express a large quantity of money (in US currency) as a height, a mass/weight, a cube, compare to gold/silver/dimaonds/drugs/bitcoin/etc (fixed values) (GOOD BEGINNER PROJECT) https://www.reddit.com/r/theydidthemath/comments/yyjxd8/request_in_light_of_the_latest_twitter_events_how/ is the inspiration (general units conversions project) (dl large lists of lengths/masses/etc from wikidata)
+
+TODO: compute when summer/etc really begin by looking at the highest running average of temperature over 3 months-- varies per region and could make a good map
+
+
