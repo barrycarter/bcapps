@@ -450,3 +450,8 @@ TODO: all shipt ordered should mention person who delivered and time of delivery
 
 TODO: comments in mysql should have no true backslashes
 
+TODO: if there's a _files directory in a directory, the html for that _files directory (or its compressed form) should be there as well
+
+TODO: /tmp should probably never have a _files subdirectory
+
+TODO: all files in top level of ~/REDDIT should have the word 'reddit' in them
