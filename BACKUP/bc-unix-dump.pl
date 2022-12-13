@@ -37,7 +37,7 @@ if ($dir eq "/") {$dir="";}
 
 # my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T@\t%s\t%i\t%m\t%y\t%g\t%u\t%D\t%p\t%f\tEOL\n\" >> $name-files.txt.new");
 
-my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T+\t%s\t%i\t%m\t%y\t%g\t%u\t%D\t%p\t%f\tEOL\n\" >> $name-files.txt.new");
+my($out,$err,$res) = cache_command2("find $dir/ -xdev -noleaf -warn -printf \"%T+\t%s\t%i\t%m\t%y\t%g\t%u\t%D\t%p\t%f\t%A@\t%T@\tEOL\n\" >> $name-files.txt.new");
 
 print A "Dump ends: ",time(),"\n";
 

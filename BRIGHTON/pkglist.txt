@@ -873,6 +873,7 @@ perl-utf8
 
 # documentation
 man-pages
+tldr
 
 # Apache mods
 mod_ldap

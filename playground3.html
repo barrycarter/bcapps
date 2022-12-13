@@ -1,0 +1,99 @@
+Create javascript and HTML that plots points and allows the user to drag the points to change values
+
+
+
+<html>
+<body>
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+  <script>
+    // Get the canvas element from the HTML
+    let canvas = document.getElementById('myCanvas');
+    // Get the 2D context for drawing on the canvas
+    let ctx = canvas.getContext('2d');
+    
+    // Create an array of points
+    let points = [
+      { x: 10, y: 10 },
+      { x: 20, y: 20 },
+      { x: 30, y: 30 },
+      { x: 40, y: 40 }
+    ];
+    
+    // Function to draw the points on the canvas
+    function drawPoints() {
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+      // Loop through the points and draw each one
+      ctx.fillStyle = '#000000';
+      points.forEach(point => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+    }
+    
+    // Draw the points initially
+    drawPoints();
+    
+    // Function to handle the mouse down event
+    function handleMouseDown(evt) {
+      // Get the mouse position
+      let mouseX = evt.clientX - canvas.getBoundingClientRect().left;
+      let mouseY = evt.clientY - canvas.getBoundingClientRect().top;
+    
+      // Find the closest point to the mouse position
+      let minDist = Infinity;
+      let closestPoint;
+      points.forEach(point => {
+        let dist = Math.hypot(point.x - mouseX, point.y - mouseY);
+        if (dist < minDist) {
+          minDist = dist;
+          closestPoint = point;
+        }
+      });
+      
+      // Check if the mouse is close enough to a point
+      if (minDist < 5) {
+        // Set a flag so we know the mouse is down
+        mouseDown = true;
+        // Store the closest point
+        currentPoint = closestPoint;
+      }
+    }
+    
+    // Function to handle the mouse move event
+    function handleMouseMove(evt) {
+      // Check if the mouse is down
+      if (mouseDown) {
+        // Get the mouse position
+        let mouseX = evt.clientX - canvas.getBoundingClientRect().left;
+        let mouseY = evt.clientY - canvas.getBoundingClientRect().top;
+      
+        // Update the position of the current point
+        currentPoint.x = mouseX;
+        currentPoint.y = mouseY;
+      
+        // Redraw the points
+        drawPoints();
+      }
+    }
+    
+    // Function to handle the mouse up event
+    function handleMouseUp() {
+      // Reset the flag
+      mouseDown = false;
+    }
+    
+    // Add the event listeners
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+    
+    // Variables to track the current state
+    let mouseDown = false;
+    let currentPoint;
+  </script>
+</body>
+</html>
+
