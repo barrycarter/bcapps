@@ -45,6 +45,6 @@
 
 # not listing /boot or /boot/efi
 
-# new drive
+# new drive, temp removed 20221213.063616
 
-/mnt/liberdade liberdade
+# /mnt/liberdade liberdade
