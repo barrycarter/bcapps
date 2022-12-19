@@ -378,6 +378,7 @@ aspell-en
 # audio and sound
 # TODO: voice recognition
 # TODO: Dragon Naturally free version for Linux?
+espeak
 timidity++
 ears
 festival
