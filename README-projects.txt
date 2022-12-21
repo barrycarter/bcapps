@@ -1212,4 +1212,9 @@ TODO: express a large quantity of money (in US currency) as a height, a mass/wei
 
 TODO: compute when summer/etc really begin by looking at the highest running average of temperature over 3 months-- varies per region and could make a good map
 
+TODO: explore how Leaflet reprojects maps by reprojecting a simple "flat" graph in various ways (GOOD BEGINNER PROJECT)
+
+TODO: use function to imagemagick's perspective to tweak map corners using projection and see how close we get to real projection
+
+
 

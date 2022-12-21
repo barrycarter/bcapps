@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenLayers with OpenStreetMap</title>
+  <script src="unpkg/ol.js"></script>
+  <script src="proj4-compressed.js"></script>
+  <style>
+    #map {
+      width: 600px;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+
+/*
+    var map = new ol.Map({
+      target: 'map',
+    });
+
+    var osmLayer = new ol.layer.Tile({
+      source: new ol.source.OSM()
+    });
+
+    map.addLayer(osmLayer);
+
+    map.setView(new ol.View({
+      center: ol.proj.fromLonLat([-0.1275, 51.507222]),
+      zoom: 10
+    }));
+*/
+
+/*
+var source = new ol.source.XYZ({
+  projection: 'EPSG:32662',
+  url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
+});
+
+var layer = new ol.layer.Tile({
+  source: source
+});
+
+var map = new ol.Map({
+  layers: [layer],
+  target: 'map',
+  view: new ol.View({
+    center: ol.proj.fromLonLat([0, 0]),
+    zoom: 2
+  })
+});
+*/
+
+/*
+// Create a projection object for the EPSG:54004 projection
+var projection = ol.proj.get('EPSG:54004');
+
+console.log(projection);
+
+// Set the projection's extent to the whole world
+projection.setExtent([-180, -90, 180, 90]);
+
+var source = new ol.source.XYZ({
+  projection: projection,  // Use the EPSG:54004 projection
+  url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
+});
+
+var layer = new ol.layer.Tile({
+  source: source
+});
+
+var map = new ol.Map({
+  layers: [layer],
+  target: 'map',
+  view: new ol.View({
+    center: ol.proj.fromLonLat([0, 0]),
+    zoom: 2
+  })
+});
+*/
+
+// Define the projection's properties
+var projection = new ol.proj.Projection({
+  code: 'custom-projection',
+  units: 'm',
+  extent: [-180, -90, 180, 90],
+  global: true
+});
+
+// Add the projection to the list of supported projections
+ol.proj.addProjection(projection);
+
+// Use the projection in a tile layer
+var layer = new ol.layer.Tile({
+  source: new ol.source.XYZ({
+    projection: projection,
+    url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
+  })
+});
+
+var map = new ol.Map({
+  layers: [layer],
+  target: 'map',
+  view: new ol.View({
+    center: ol.proj.fromLonLat([0, 0]),
+    zoom: 2
+  })
+});
+
+
+</script>
+</body>
+</html>

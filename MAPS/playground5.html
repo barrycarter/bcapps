@@ -1,0 +1,25 @@
+<head>
+<link rel="stylesheet" href="leaflet.css" />
+
+<script src="leaflet.js"></script>
+
+<script src="proj4-compressed.js"></script>
+
+<script src="proj4leaflet.js"></script>
+
+</head>
+
+<div id="map" style="width:1600px; height:900px;"></div>
+
+<script>
+
+var projection = new L.Proj.CRS('EPSG:3395', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs', {resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625, 0.03125], origin: [0, 0]});
+
+var map = L.map('map', {crs: L.CRS.Simple}).setView([180,90], 4);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {crs: L.CRS.Simple}).addTo(map)
+
+</script>
+
+
+
