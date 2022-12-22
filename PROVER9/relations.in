@@ -1,0 +1,93 @@
+% F(X,Y) is read "X's F is Y"
+
+
+
+formulas(usable).
+
+child(x,y) <-> parent(y,x).
+
+mother(x,y) <-> female(y) & parent(x,y).
+
+father(x,y) <-> male(x) & parent(x,y).
+
+% this is incorrect: as stated, could include case x=z
+
+sibling(x,z) <-> exists y exists w mother(x,y) & mother(z,y) & father(x,w) & father(z,w) & x != z.
+
+sister(x,y) <-> sibling(x,y) & female(y).
+
+brother(x,y) <-> sibling(x,y) & male(y).
+
+uncle(x,z) <-> exists y parent(x,y) & brother(y,z).
+
+aunt(x,z) <-> exists y parent(x,y) & sister(y,z).
+
+niece(x,y) <-> exists z sibling(x,z) & daughter(z,y).
+
+nephew(x,y) <-> exists z sibling(x,z) & son(z,y).
+
+daughter(x,y) <-> child(x,y) & female(y).
+
+son(x,y) <-> child(x,y) & male(y).
+
+grandparent(x,y) <-> exists z parent(x,z) & parent(z,y).
+
+grandchild(x,y) <-> exists z child(x,z) & child(z,y).
+
+cousin(x,y) <-> exists z grandparent(x,z) & grandparent(y,z) & -sibling(x,y) & x!=y.
+
+end_of_list.
+
+
+
+
+formulas(goals).
+
+% niece(x,y) -> exists z grandparent(y,z) & parent(x,z).
+
+% niece(x,y) -> exists z mother(y,z).
+
+% (aunt(x,y) | uncle(x,y)) & grandchild(y,z) & female(z) -> niece(x,z).
+
+% aunt(x,y) & daughter(y,z) & daughter(z,w) -> niece(x,w).
+
+% uncle(x,z) & sister(z,w) -> aunt(x,w).
+
+% uncle(x,z) & brother(z,w) -> uncle(x,w).
+
+% grandchild(x,y) <-> grandparent(y,x).
+
+% child(z,x) & child(x,y) -> grandparent(y,z).
+
+%% below can't be proven in either direction (not enough info)
+
+-(cousin(x,y) & cousin(x,z) -> sibling(y,z)).
+
+% -cousin(x,x).
+
+% cousin(x,y) -> cousin(y,x).
+
+% -uncle(x,x).
+
+% sister(x,y) -> x != y.
+
+% sibling(x,y) -> sister(x,y) | brother(x,y).
+
+% -brother(x,x).
+
+% uncle(x,y) & sister(x,z) -> uncle(z,y).
+
+% uncle(x,y) & (sister(x,z) | brother(x,z)) -> uncle(z,y).
+
+% uncle(x,y) -> male(y).
+
+% sibling(y,x) -> sibling(x,y).
+
+% mother(y,x) -> female(x).
+
+% child(x,y) & female(x) -> mother(y,x).
+
+% mother(x,y) -> female(y).
+
+end_of_list.
+
