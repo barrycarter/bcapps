@@ -1,0 +1,55 @@
+<!-- The HTML for the input boxes -->
+<label for="celsius">Celsius:</label>
+<input type="number" id="celsius" min="-273.15">
+<br>
+<label for="fahrenheit">Fahrenheit:</label>
+<input type="number" id="fahrenheit" min="-459.67">
+<br>
+<label for="rankine">Rankine:</label>
+<input type="number" id="rankine" min="0">
+<br>
+<label for="kelvin">Kelvin:</label>
+<input type="number" id="kelvin" min="0">
+
+<!-- The JavaScript code for the conversion function -->
+<script>
+  // Select the input boxes
+  const celsiusInput = document.querySelector('#celsius');
+  const fahrenheitInput = document.querySelector('#fahrenheit');
+  const rankineInput = document.querySelector('#rankine');
+  const kelvinInput = document.querySelector('#kelvin');
+
+  // Add an event listener to each input box that will run the conversion function when the value is changed
+  celsiusInput.addEventListener('input', convertTemperatures);
+  fahrenheitInput.addEventListener('input', convertTemperatures);
+  rankineInput.addEventListener('input', convertTemperatures);
+  kelvinInput.addEventListener('input', convertTemperatures);
+
+  // Define the conversion function
+  function convertTemperatures() {
+    // Get the value of the input that was changed
+    const celsius = celsiusInput.value;
+    const fahrenheit = fahrenheitInput.value;
+    const rankine = rankineInput.value;
+    const kelvin = kelvinInput.value;
+
+    // Convert the temperature to the other scales and update the corresponding input boxes
+    if (celsius) {
+      fahrenheitInput.value = celsius * 9/5 + 32;
+      rankineInput.value = (celsius + 273.15) * 9/5;
+      kelvinInput.value = celsius + 273.15;
+    } else if (fahrenheit) {
+      celsiusInput.value = (fahrenheit - 32) * 5/9;
+      rankineInput.value = (fahrenheit + 459.67) * 5/9;
+      kelvinInput.value = (fahrenheit + 459.67) * 5/9;
+    } else if (rankine) {
+      celsiusInput.value = (rankine - 491.67) * 5/9;
+      fahrenheitInput.value = rankine - 459.67;
+      kelvinInput.value = rankine * 5/9;
+    } else if (kelvin) {
+      celsiusInput.value = kelvin - 273.15;
+      fahrenheitInput.value = (kelvin - 273.15) * 9/5 + 32;
+      rankineInput.value = kelvin * 9/5;
+    }
+  }
+</script>
