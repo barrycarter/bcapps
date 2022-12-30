@@ -11,7 +11,7 @@ using open source data. A lot of free data is provided at the 30
 arcsecond level, which effectively divides the world into 43200 points
 of longitude and 21600 points of latitude, providing a total of
 `43200*21600` or 933,120,000 grid points, which is close to a billion
-or one gig (thus the project name).
+or one gig (thus the project's old name, geogigagrid).
 
 Thirty of seconds of arc equates to approximately 1 km of longitude at
 the equator and 1 km of latitude anywhere. Thus, each grid area is 1
@@ -19,7 +19,7 @@ km^2 or less.
 
 For a given area, the project hopes to provide the following information:
 
-  - Elevation (SRTM) (raster)
+  - Elevation (SRTM) (raster) (https://www.usgs.gov/centers/eros/science/usgs-eros-archive-digital-elevation-shuttle-radar-topography-mission-srtm-1)
 
   - Climate (Koeppen-Geiger) (http://koeppen-geiger.vu-wien.ac.at/) (raster)
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Voronoi Diagram</title>
+    <!-- Include the D3.js library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <script>
+
+      alert("hello");
+
+      // Define the points for the two polygons
+      const points = [
+        // points for the first polygon
+        [10, 10],
+        [20, 10],
+        [20, 20],
+        [10, 20],
+        // points for the second polygon
+        [30, 30],
+        [40, 30],
+        [40, 40],
+        [30, 40]
+      ];
+
+
+      // Compute the Voronoi diagram
+      const voronoi = d3.voronoi().polygons(points);
+
+      // Create an SVG element to hold the Voronoi diagram
+      const svg = d3.select("body")
+        .append("svg")
+          .attr("width", 500)
+          .attr("height", 500);
+
+      // Add the Voronoi cells to the SVG element
+      svg.selectAll("path")
+        .data(voronoi)
+       

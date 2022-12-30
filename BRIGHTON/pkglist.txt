@@ -905,6 +905,9 @@ wordpress
 # finance
 gnucash
 
+# required for insomnia?
+mesa-libgbm
+
 # TODO: update list2sh or whatever to quote package names for * stuff
 
 # TODO: maybe look over what I have man pages for?

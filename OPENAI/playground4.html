@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Voronoi Diagram</title>
+    <!-- Include the D3.js library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <script>
+      // Define the points for the three cities
+      const points = [
+        // coordinates for the first city
+        [50, 50],
+        // coordinates for the second city
+        [150, 150],
+        // coordinates for the third city
+        [250, 50]
+      ];
+
+      // Compute the Voronoi diagram
+      const voronoi = d3.voronoi().polygons(points);
+
+      // Create an SVG element to hold the Voronoi diagram
+      const svg = d3.select("body")
+        .append("svg")
+          .attr("width", 500)
+          .attr("height", 500);
+
+      // Add the Voronoi cells to the SVG element
+      svg.selectAll("path")
+        .data(voronoi)
+        .enter().append("path")
+          .attr("d", (d) => d ? "M" + d.join("L") + "Z" : null)
+          .attr("stroke", "black")
+          .attr("fill", "none");
+
+      // Add the points for the three cities to the SVG element
+      svg.selectAll("circle")
+        .data(points)
+        .enter().append("circle")
+          .attr("cx", (d) => d[0])
+          .attr("cy", (d) => d[1])
+          .attr("r", 3)
+          .attr("fill", "red");
+    </script>
+  </body>
+</html>

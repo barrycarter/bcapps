@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Voronoi Diagram</title>
+    <!-- Include the d3-delaunay library -->
+    <script src="d3-delaunay.js"></script>
+
+  </head>
+  <body>
+    <script>
+import {Delaunay} from "https://cdn.skypack.dev/d3-delaunay@6";
+      // First, create the Delaunay object and pass it the points for the two polygons
+      const points = [
+        // points for the first polygon
+        [10, 10],
+        [20, 10],
+        [20, 20],
+        [10, 20],
+        // points for the second polygon
+        [30, 30],
+        [40, 30],
+        [40, 40],
+        [30, 40]
+      ];
+      const delaunay = Delaunay.from(points);
+
+      // Next, create an SVG element to hold the Voronoi diagram
+      const svg = d3.create("svg")
+        .attr("width", 500)
+        .attr("height", 500);
+
+      // Use the Delaunay object to compute the Voronoi diagram
+      const voronoi = delaunay.voronoi([0, 0, 500, 500]);
+
+      // Add the Voronoi cells to the SVG element
+      svg.selectAll("path")
+        .data(voronoi.cellPolygons())
+        .join("path")
+          .attr("d", (d) => "M" + d.join("L") + "Z")
+          .attr("stroke", "black")
+          .attr("fill", "none");
+
+      // Add the points for the two polygons to the SVG element
+      svg.selectAll("circle")
+        .data(points)
+        .join("circle")
+          .attr("cx", (d) => d[0])
+          .attr("cy", (d) => d[1])
+          .attr("r", 3)
+          .attr("fill", "red");
+
+      // Append the SVG element to the body of the page
+      document.body.appendChild(svg.node());
+    </script>
+  </body>
+</html>

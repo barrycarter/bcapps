@@ -104,7 +104,7 @@ TODO: all doordash/postmates/etc orders should have refnum field nonempty
 
 TODO: doordash order numbers (and others?) should be in numerical
 order by date (if not, I've probably confused two otherwise identical
-orders), should also be unique
+orders), should also be unique, and also date inside comments should align (sort with) charge date, roughly speaking
 
 TODO: all emails in BC-WP-.... should follow pattern, same with many other folders, especially automatically generated ones, and this pattern matching could apply to To/From/Subject/etc
 
@@ -457,3 +457,5 @@ TODO: /tmp should probably never have a _files subdirectory
 TODO: all files in top level of ~/REDDIT should have the word 'reddit' in them
 
 TODO: doordash entries should match "download your data" from doordash
+
+TODO: /var/log/mariadb/mysql-bin.* should not grow too large (if they do, I should bzip2 the ones not in use)

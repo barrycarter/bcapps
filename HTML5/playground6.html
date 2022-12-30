@@ -1,0 +1,18 @@
+<!-- Include the noUiSlider library -->
+<script src="https://cdn.jsdelivr.net/npm/nouislider@13.1.5/distribute/nouislider.min.js"></script>
+
+<!-- Create a container element for the slider -->
+<div id="slider" style="width: 300px; height: 50px;"></div>
+
+<!-- Initialize the slider with JavaScript -->
+<script>
+  var slider = document.getElementById('slider');
+
+  noUiSlider.create(slider, {
+    start: [20, 80],
+    range: {
+      'min': 0,
+      'max': 100
+    }
+  });
+</script>
