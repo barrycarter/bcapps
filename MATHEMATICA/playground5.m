@@ -1,5 +1,7 @@
 (*
 
+https://www.reddit.com/r/askmath/comments/101g861/
+
 If a binary event on an infinite population is p likely to occur and
 you take n samples, what is the probability that taking another sample
 will give you a mean within 2 standard deviations of the first sample?
