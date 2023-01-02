@@ -1,0 +1,31 @@
+<script src="shp.js"></script>
+
+<script>
+
+console.log("PRE")
+
+/*
+fetch('test.zip')
+  .then(response => response.blob())
+  .then(data => data.arrayBuffer())
+  .then(data => console.log(shp(data)))
+  ;
+*/
+
+
+shp("test.zip").then(r => console.log(r));
+
+console.log("EST")
+
+/*
+
+fetch('ne_10m_time_zones.json')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); // logs the JSON data
+  });
+
+*/
+
+
+</script>
