@@ -64,7 +64,5 @@ def die(str):
 
 
 def warn(str):
-    print(str, file=sys.stderr)
-
-
+    sys.stderr.write(str)
 
