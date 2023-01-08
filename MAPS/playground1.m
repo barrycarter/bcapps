@@ -92,17 +92,89 @@ t1740[x_] := Polygon[Map[t1279, x[[1,1]]]]
 
 t1741 = Map[t1740, geom[[1,1]]];
 
+(* restart on 2023-01-07 to do this short and quick, with smaller shapefile *)
+
+sf = Import["/mnt/zip/gadm41_FRA_shp.zip/gadm41_FRA_0.shp", "Data"];
+
+geom = "Geometry" /. sf;
+
+(* we now remove the geoposition stuff, leaving these as polygons *)
+
+geom2 = geom[[1,1]] /. GeoPosition[x_] -> x;
+
+(* we could Graphics[geom2] to see France *)
+
+(* just the points *)
+
+geom4 = Partition[Flatten[
+geom2 /. Line[x_] -> x /. FilledCurve[x_] -> x /. Polygon[x_] -> x
+],2];
+
+geom5 = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, geom4];
+
+df = RegionDistance[Point[geom5]];
+
+ContourPlot[df[sph2xyz[lng*Degree, lat*Degree, 1]], {lng, -180, 180},
+ {lat, -90, 90}]
+
+ContourPlot[df[sph2xyz[lng*Degree, lat*Degree, 1]], {lng, -180, 180},
+ {lat, -90, 90}, ColorFunction -> Hue, Contours -> 64]
 
 
 
+geom4 = Partition[Flatten[geom2 /. 
+ {Polygon[x_] -> x, Line[x_] -> x, FilledCurve[x_] -> x, Line[x_] -> x,
+ Line[x_] -> x}], 2];
+
+(* 3d polygons now *)
+
+geom3 = geom2[[1,1]] /. {lat_, lng_} -> sph2xyz[lng*Degree, lat*Degree, 1];
 
 
+(* same thing w USA *)
+
+sf = Import["/mnt/zip/gadm41_USA_shp.zip/gadm41_USA_0.shp", "Data"];
+
+geom = "Geometry" /. sf;
+
+geom4 = Partition[Flatten[
+geom[[1,1]] /. GeoPosition[x_] -> x /. Line[x_] -> x /. FilledCurve[x_] -> x 
+ /. Polygon[x_] -> x],2];
+
+(* just as a test *)
+
+Graphics[Point[geom4]]
+
+(* test worked *)
+
+geom5 = Map[sph2xyz[#[[2]]*Degree, #[[1]]*Degree, 1] &, geom4];
+
+(* more test *)
+
+Graphics3D[Point[geom5]]
+
+(* more test slow, but worked *)
+
+df = RegionDistance[Point[geom5]];
+
+ContourPlot[df[sph2xyz[lng*Degree, lat*Degree, 1]], {lng, -180, 180},
+ {lat, -90, 90}, ColorFunction -> Hue, Contours -> 64]
+
+(* note that "Graphics[geom]" does work *)
+
+t1503 = Rasterize[Graphics[geom]];
+
+t1511 = SignedRegionDistance[Point[geom5]];
+
+ContourPlot[t1511[sph2xyz[lng*Degree, lat*Degree, 1]], {lng, -180, 180},
+ {lat, -90, 90}, ColorFunction -> Hue, Contours -> 64]
+
+(* this is true: RegionQ[Point[geom[[1]]]] *)
 
 
+(* but not a constant region, so this fails *)
 
-
- 
-
+t1626 = RegionDistance[Point[geom[[1]]]]
 
 
 
