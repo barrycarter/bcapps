@@ -13,12 +13,19 @@ $UnitSystem = "Metric";
 
 (* keep files around just in case I need them again *)
 
-showit := Module[{file},
+showit2 := Module[{file},
  file = "/tmp/math"<>ToString[RunThrough["date +%Y%m%d%H%M%S", ""]]<>".gif";
  Export[file ,%, ImageSize -> {800, 600}];
  Run["display -update 1 "<>file<>"&"];
  Return[file];
 ];
+
+(* replaced showit 20230109.061916 and renamed older one to showit2 *)
+
+showit := Module[{file}, file = StringJoin["/tmp/math", 
+       ToString[RunThrough["date +%Y%m%d%H%M%S", ""]], ".png"]; 
+     Export[file, %]; 
+     Run[StringJoin["feh -g 1024x768 ", file, "&"]]; Return[file]; ]
 
 (* another mathematica "fix" that breaks things *)
 Unprotect[PlotJoined]
