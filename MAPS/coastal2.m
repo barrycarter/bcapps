@@ -30,6 +30,14 @@ pts = Table[{colats[[i]] * colngs[[j]], colats[[i]]*silngs[[j]], silats[[i]]},
 
 litPixels = Position[ImageData[boundary], 1];
 
+t0517 = VoronoiMesh[litPixels, ImageSize -> {1600,900}]
+
+MeshCells[t0517, 0][[5]]
+
+MeshCoordinates[t0517][[5]]
+
+
+
 litPixels3D = Table[pts[[i[[1]],i[[2]]]], {i, litPixels}];
 
 regionDistance = RegionDistance[Point[litPixels3D]];
