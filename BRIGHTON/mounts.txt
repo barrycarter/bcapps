@@ -47,5 +47,6 @@
 
 # new drive, temp removed 20221213.063616
 # replaced 20221222.030314
+# not working (new one) 20230115.190948
 
-/mnt/liberdade liberdade
+# /mnt/liberdade liberdade
