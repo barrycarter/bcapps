@@ -547,3 +547,7 @@ alias f96 "screen -t F96 ssh -i /home/barrycarter/.ssh/id_rsa.bc -tt root@f96"
 alias revpn "/home/user/BCGIT/bc-revpn.pl"
 
 alias unvpn "sudo pkill openvpn && sudo cp -f /etc/resolv.conf.normal /etc/resolv.conf && bc-alarm-snooze.pl vpn is off &"
+
+# quickly view a shp file without opening qgis
+
+alias shpview "gdal_rasterize -burn 255 -ts 1600 900 -ot Byte \!*  -of bmp /tmp/temp.bmp && feh /tmp/temp.bmp &"
