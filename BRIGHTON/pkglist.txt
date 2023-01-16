@@ -242,6 +242,8 @@ calendar
 python-jinja2
 python2-distro
 python36-distro
+python-virtualenv
+opencv-python
 
 jq
 
