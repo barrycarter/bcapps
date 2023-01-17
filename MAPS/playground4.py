@@ -14,6 +14,8 @@ from bclib import *
 
 # gdal_rasterize -burn 255 -where "sr_adm0_a3 = 'USA'" -ts 18000 9000 -ot Byte ~/NOBACKUP/EARTHDATA/NATURALEARTH/10m_cultural/ne_10m_admin_0_scale_rank_minor_islands.shp -of bmp -te -180 -90 180 90 /tmp/temp.bmp
 
+# TODO: add caching
+
 # im = Image.open("/tmp/temp.bmp")
 
 im = cv2.imread("/tmp/temp.bmp", -1)
