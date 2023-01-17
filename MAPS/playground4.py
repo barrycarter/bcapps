@@ -10,28 +10,31 @@ from math import *
 from PIL import Image, ImageFilter
 from bclib import *
 
+# Note: ~/BCGIT/tmp/ is ignored by git but is just an easy place to keep files and symbolic links
+
 # raster created by:
 
-# gdal_rasterize -burn 255 -where "sr_adm0_a3 = 'USA'" -ts 18000 9000 -ot Byte ~/NOBACKUP/EARTHDATA/NATURALEARTH/10m_cultural/ne_10m_admin_0_scale_rank_minor_islands.shp -of bmp -te -180 -90 180 90 /tmp/temp.bmp
+# gdal_rasterize -burn 255 -where "sr_adm0_a3 = 'USA'" -ts 18000 9000 -ot Byte ~/BCGIT/tmp/ne_10m_admin_0_scale_rank_minor_islands.shp -of bmp -te -180 -90 180 90 ~/BCGIT/tmp/usa-raster.bmp
 
-# TODO: add caching
 
-# im = Image.open("/tmp/temp.bmp")
+# this program-specific subroutine finds the edges/shorelines of the
+# raster map; params is currently unused
 
-im = cv2.imread("/tmp/temp.bmp", -1)
+def find_edges(**params):
 
-im = Image.open("/tmp/temp.bmp")
-edges = im.filter(ImageFilter.FIND_EDGES)
+  # TODO: check if this file already exists
 
-edges.save("/tmp/output.png")
+  # NOTE: PIL's ImageFilter works WAY better than Canny, etc, not sure
+  # why people like those other methods better, since they are less
+  # accurate (I found out after hours of wasting time with them)
 
-# kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2,2))
 
-# edges = cv2.morphologyEx(im, cv2.MORPH_GRADIENT, kernel)
+  # open the bmp image, find edges, save it to new file
 
-# edges = cv2.Canny(im, 0, 255)
+  im = Image.open("~/BCGIT/tmp/usa-raster.bmp")
+  edges = im.filter(ImageFilter.FIND_EDGES)
+  edges.save("~/BCGIT/tmp/usa-border.png")
 
-# cv2.imwrite("/tmp/output.png", edges)
 
 exit(0)
 
