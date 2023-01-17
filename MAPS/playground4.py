@@ -2,79 +2,97 @@
 
 # playground4 attempts to replicate what I did in Mathematica
 
+import os
 import cv2
-from osgeo import gdal, ogr, osr
-from geopy.distance import *
-import numpy as np
-from math import *
+import numpy
+import pickle
+
+# TODO: how can I use just `import PIL` here?
+
 from PIL import Image, ImageFilter
-from bclib import *
 
-# Note: ~/BCGIT/tmp/ is ignored by git but is just an easy place to keep files and symbolic links
-
-# raster created by:
-
-# gdal_rasterize -burn 255 -where "sr_adm0_a3 = 'USA'" -ts 18000 9000 -ot Byte ~/BCGIT/tmp/ne_10m_admin_0_scale_rank_minor_islands.shp -of bmp -te -180 -90 180 90 ~/BCGIT/tmp/usa-raster.bmp
-
+# from osgeo import gdal, ogr, osr
+# from geopy.distance import *
+# from math import *
+# from PIL import Image, ImageFilter
+# from bclib import *
 
 # this program-specific subroutine finds the edges/shorelines of the
 # raster map; params is currently unused
 
 def find_edges(**params):
 
-  # TODO: check if this file already exists
+  # TODO: maybe check more than just file exists
+
+  if os.path.exists("/home/user/BCGIT/tmp/usa-border.png"):
+      return
 
   # NOTE: PIL's ImageFilter works WAY better than Canny, etc, not sure
   # why people like those other methods better, since they are less
   # accurate (I found out after hours of wasting time with them)
 
-
   # open the bmp image, find edges, save it to new file
 
-  im = Image.open("~/BCGIT/tmp/usa-raster.bmp")
+  im = Image.open("/home/user/BCGIT/tmp/usa-raster.bmp")
   edges = im.filter(ImageFilter.FIND_EDGES)
-  edges.save("~/BCGIT/tmp/usa-border.png")
+  edges.save("/home/user/BCGIT/tmp/usa-border.png")
+
+# convert a monochrome (not greyscale) image in a file to list of 2D
+# "lit" pixels
+
+def image2litPixels(file):
+
+  im = Image.open(file)
+  pixels = numpy.array(im)
+  return numpy.where(pixels != 0)
+
+############ MAIN CODE STARTS HERE ############
+
+# Note: /home/user/BCGIT/tmp/ is ignored by git but is just an easy place to keep files and symbolic links
+
+# TODO: since gdal_rasterize is itself written in Python, I could
+# theoretically do the below directly in code, without having to call
+# gdal_rasterize
+
+# raster created by:
+
+# gdal_rasterize -burn 255 -where "sr_adm0_a3 = 'USA'" -ts 18000 9000 -ot Byte ~/BCGIT/tmp/ne_10m_admin_0_scale_rank_minor_islands.shp -of bmp -te -180 -90 180 90 ~/BCGIT/tmp/usa-raster.bmp
+
+# 1 degree transfers to this many pixels (fixed for now, based on gdal_rasterize command above, but may change later)
+
+factor = 5
+
+find_edges()
+
+# compute border and store to file if not already there
+# TODO: should this be a function?
+
+if not os.path.exists("/home/user/BCGIT/tmp/border-pixels.txt"):
+
+  lit = image2litPixels("/home/user/BCGIT/tmp/usa-border.png")
+
+  # pickle
+
+  f = open('/home/user/BCGIT/tmp/border-pixels.txt', 'wb')
+
+  pickle.dump(lit, f)
+
+  f.close()
+
+# unpickle
+
+lit = pickle.load(open('/home/user/BCGIT/tmp/border-pixels.txt', 'rb'))
+
+# the x and y values of lit pixels (in this order)
+
+y, x = lit
+
+# project latitude and longitude to 3 dimensions
 
 
-exit(0)
-
-# kernel = np.ones((2, 2), np.uint8)
-
-cv2.imwrite("/tmp/output.png", edges)
-
-exit(0)
-
-cntrs = cv2.findContours(im, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-
-print(np.shape(cntrs))
-
-print(cntrs[1])
-
-# im2 = cv2.cvtColor(im, cv2.CV_32SC1)
-
-# print(im2.dtype)
-
-# val, im2 = cv2.threshold(im, 0.5, 1, cv2.THRESH_BINARY)
-
-# print(im[100][200])
 
 
-# print("VAL",val)
-
-# cv2.imshow('image', im2)
-
-# cv2.waitKey(0)
-
-# this is (9000, 18000, 3)
-
-# print(np.shape(im))
-
-
-# cv2.imshow('image', im2)
-
-exit(0)
-
-# print(im2)
+print(x)
 
 exit(0)
 
