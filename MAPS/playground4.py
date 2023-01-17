@@ -37,8 +37,28 @@ def find_edges(**params):
   edges = im.filter(ImageFilter.FIND_EDGES)
   edges.save("/home/user/BCGIT/tmp/usa-border.png")
 
-# convert a monochrome (not greyscale) image in a file to list of 2D
-# "lit" pixels
+# convert grid of 2D pixels to 3D and pickle unless already pickled
+# TODO: currently uses global `factor` which is probably bad
+
+def pixelGrid3D():
+
+  # create lat and lng list for middle of each pixel (in radians)
+
+  lats = numpy.linspace(-90+1/factor/2, 90-1/factor/2, 180*factor, endpoint=True)*np.pi/180
+  lngs = numpy.linspace(-180+1/factor/2, 180-1/factor/2, 360*factor, endpoint=True)*np.pi/180
+
+mylats, mylons = np.meshgrid(latitudes, longitudes)
+
+mylats = mylats.flatten()
+mylons = mylons.flatten()
+
+print(len(mylats))
+
+x = np.cos(mylats)*np.cos(mylons)
+y = np.cos(mylats)*np.sin(mylons)
+z = np.sin(mylats)
+
+
 
 def image2litPixels(file):
 
@@ -113,20 +133,6 @@ print(contour)
 exit(0)
 
 # sph2xyz fast?
-
-latitudes = np.linspace(-90, 90, 5400, endpoint=True) * np.pi / 180
-longitudes = np.linspace(-180, 180, 10800, endpoint=True) * np.pi / 180
-
-mylats, mylons = np.meshgrid(latitudes, longitudes)
-
-mylats = mylats.flatten()
-mylons = mylons.flatten()
-
-print(len(mylats))
-
-x = np.cos(mylats)*np.cos(mylons)
-y = np.cos(mylats)*np.sin(mylons)
-z = np.sin(mylats)
 
 print(len(x))
 
