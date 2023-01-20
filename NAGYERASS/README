@@ -297,6 +297,8 @@ TODO: CCPAY is when I pay a credit card and PAYMENT is the payment showing on th
 
 TODO: lines in certain files and sections of files should match a specific pattern (eg, section where I record gmail space usage is "^timestamp account literal-using number literal-GB literal-of number literal-GB$")
 
+TODO: portions of lines in certain files and sections should be unique and/or sorted (excluding blanks)
+
 TODO: in acct2name table, status must be OBSOLETE or LIVE
 
 TODO: i have a mail folder for "less important" NEXTDOOR emails-- this
