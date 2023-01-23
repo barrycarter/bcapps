@@ -910,6 +910,10 @@ gnucash
 # required for insomnia?
 mesa-libgbm
 
+python2-tqdm
+python36-tqdm
+
+
 # TODO: update list2sh or whatever to quote package names for * stuff
 
 # TODO: maybe look over what I have man pages for?
