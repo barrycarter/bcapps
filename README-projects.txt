@@ -1216,5 +1216,6 @@ TODO: explore how Leaflet reprojects maps by reprojecting a simple "flat" graph 
 
 TODO: use function to imagemagick's perspective to tweak map corners using projection and see how close we get to real projection
 
+TODO: greasemonkey(?) script that blocks/marks google/etc results to sites that require login/registration/paywall
 
-
+TODO: greasemonkey(?) script that blocks/marks youtube/etc videos I've already seen
