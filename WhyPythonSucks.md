@@ -31,7 +31,9 @@
 
   - changing the value of a variable changes its id/pointer:
 
-a = 2; id(a); a = 3; id(a)
+a = 314159; id(a); a = 271828; id(a)
+
+yields "25325328" and "25325304" (your results will vary, but the concept holds)
 
   - functions must be defined before use, unlike in other languages where the interpreter is smart enough to sort/order the definitions correctly; particularly painful if two functions depend on each other
 
