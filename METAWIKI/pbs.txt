@@ -711,7 +711,7 @@ MULTIREF [[title::Toby's "death"]] [[notes:=[[Stephan Pastis]] fires [[Toby (tur
 2005-05-10 [[character::Goat+Zebra+Rat+Skippy (human)]] [[Skippy (human)::profession::student+coffee stirrer]]
 2005-05-11 [[character::Rat+James Thornton (human)+Spiro (human)]] [[Spiro (human)::profession::speed bump+student]]
 2005-05-13 [[character::Larry+Larry's sibling (crocodile)+[[deaths::[[Larry::mother::Larry's mother (crocodile)]]]]]]
-2005-05-13,2005-12-11,2012-09-04 [[character::Larry's mother (crocodile)]]
+2005-05-13,2005-12-11,2012-09-04 [[character::Larry&\#39;s mother (crocodile)]]
 2005-05-15 [[character::Larry+Zebra]] [[cameo::{{wp|Charles Darwin}}]]
 2005-05-16 [[character::Pig+Six-Inch Susie (human)]] [[Six-Inch Susie (human)::subspecies::mini]]
 2005-05-19 [[deaths::[[Larry::uncle::Tim (crocodile)]]]]
