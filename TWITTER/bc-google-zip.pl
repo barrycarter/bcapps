@@ -13,7 +13,9 @@ $ENV{TZ} = "UTC";
 
 my($file) = @ARGV;
 
-unless ($file=~/takeout\-(\d{8}T\d{6}Z)\-\d+\.zip/) {
+# as of 20230203.085455 allowing hyphens at end since sometimes seconds match (wow!)
+
+unless ($file=~/takeout\-(\d{8}T\d{6}Z)\-\d+(\-\d+)?\.zip/) {
   die("INVALID FILENAME: $file");
 }
 
