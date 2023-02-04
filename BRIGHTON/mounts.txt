@@ -49,4 +49,7 @@
 # replaced 20221222.030314
 # not working (new one) 20230115.190948
 
-# /mnt/liberdade liberdade
+# both drives working again 20230203.161650
+
+/mnt/liberdade liberdade
+/mnt/ipanema ipanema
