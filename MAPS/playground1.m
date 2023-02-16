@@ -171,7 +171,6 @@ ContourPlot[t1511[sph2xyz[lng*Degree, lat*Degree, 1]], {lng, -180, 180},
 
 (* this is true: RegionQ[Point[geom[[1]]]] *)
 
-
 (* but not a constant region, so this fails *)
 
 t1626 = RegionDistance[Point[geom[[1]]]]
