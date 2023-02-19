@@ -1210,7 +1210,12 @@ TODO: just a whole bunch of crazy computed maps (Equation of Time, nearness to c
 
 TODO: express a large quantity of money (in US currency) as a height, a mass/weight, a cube, compare to gold/silver/dimaonds/drugs/bitcoin/etc (fixed values) (GOOD BEGINNER PROJECT) https://www.reddit.com/r/theydidthemath/comments/yyjxd8/request_in_light_of_the_latest_twitter_events_how/ is the inspiration (general units conversions project) (dl large lists of lengths/masses/etc from wikidata)
 
-TODO: compute when summer/etc really begin by looking at the highest running average of temperature over 3 months-- varies per region and could make a good map
+TODO: compute when summer/etc really begin by looking at the highest running average of temperature over 3 months-- varies per region and could make a good map ftp://ftp.ncei.noaa.gov/pub/data/asos-onemin/ (note to self: ~/NOBACKUP/ASOS/): comment on reddit https://www.reddit.com/r/learnpython/comments/116d39n/starting_a_new_python_project/:
+
+If you're into big data and weather, you could look at ftp://ftp.ncei.noaa.gov/pub/data/asos-onemin/ which has per-minute temperatures for various locations for several years. You could then average those data for each minute and find the average coldest/hottest 91.5 day running average and determine the "true" time of summer and winter for those locations, and potentially graph it on a map to see how different times of the year are hotter/colder for different places.
+
+Of course, there's a lot more you can do with this data (find the rainiest/windiest/dryest/wettest time of year on average), so that's just one suggestion
+
 
 TODO: explore how Leaflet reprojects maps by reprojecting a simple "flat" graph in various ways (GOOD BEGINNER PROJECT)
 
@@ -1219,3 +1224,4 @@ TODO: use function to imagemagick's perspective to tweak map corners using proje
 TODO: greasemonkey(?) script that blocks/marks google/etc results to sites that require login/registration/paywall
 
 TODO: greasemonkey(?) script that blocks/marks youtube/etc videos I've already seen
+
