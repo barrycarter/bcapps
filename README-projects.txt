@@ -1225,3 +1225,6 @@ TODO: greasemonkey(?) script that blocks/marks google/etc results to sites that 
 
 TODO: greasemonkey(?) script that blocks/marks youtube/etc videos I've already seen
 
+TODO: weighted voronoi diagram showing how far the sun's "sphere of influence" exists, also allowing for cases where the gravity between small objects would exceed the sun's (https://www.reddit.com/r/AskPhysics/comments/11dcb9i/does_gravity_have_a_max_range/)
+
+
