@@ -1230,3 +1230,5 @@ TODO: weighted voronoi diagram showing how far the sun's "sphere of influence" e
 TODO: use multi color patterns (eg, stripes) to represent more distinct values on maps/graphs
 
 TODO: find min distance between two geoentities (eg, USA vs Europe) or max distance within given entity (eg, continental USA)
+
+TODO: collatz conjecture with random very large numbers
