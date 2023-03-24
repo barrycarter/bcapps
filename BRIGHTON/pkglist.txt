@@ -501,6 +501,8 @@ ffmpeg-devel
 mencoder
 mplayer
 vlc
+# below failed
+# mpv
 recordmydesktop
 mjpegtools
 youtube-dl
