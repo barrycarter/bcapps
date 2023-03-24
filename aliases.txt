@@ -473,9 +473,10 @@ alias R "cd /home/user/R; \R --no-restore-data --save"
 
 # use the most recent version of python
 
-alias python python36
-alias pip pip-3.6
-alias pydoc pydoc3.6
+# undoing these so I can use venv
+# alias python python36
+# alias pip pip-3.6
+# alias pydoc pydoc3.6
 
 # renpy
 
