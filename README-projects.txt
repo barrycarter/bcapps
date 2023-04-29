@@ -39,6 +39,8 @@ For a given area, the project hopes to provide the following information:
 
   - Other Natural Earth data that isn't in OSM or another source (mostly vector)
 
+  - Mineral deposits (https://www.usgs.gov/centers/gggsc/science/usmin-mineral-deposit-database)
+
   - computed data such as average time of noon, earliest/latest
   sunrise/sunset/dawn/dusk/etc, coastal distance, and so on (raster)
 
