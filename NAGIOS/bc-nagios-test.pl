@@ -725,9 +725,9 @@ sub fix_resolv {
 
 =item bc_check_domain_exp()
 
-Checks whether any of my domains are within 44 days of expiration (nagios).
+Checks whether any of my domains are within 24 days of expiration (nagios).
 
-(was 60 days, but my autorenewing domains reregister 45 days before exp)
+(was 60 days, but my autorenewing domains reregister 45 days before exp, later 24 days because google auto-renew waits longer)
 
 =cut
 
@@ -756,14 +756,14 @@ sub bc_check_domain_exp {
     my($date) = $2;
     $date=~s/\s*$//isg;
     my($exp) = (str2time($date)-$now)/86400;
-    if ($exp<44) {
-      printf("ERR: $i expires in %d < 44 days\n",$exp);
+    if ($exp<24) {
+      printf("ERR: $i expires in %d < 24 days\n",$exp);
       return 2;
     }
-    printf("OK: $i expires in %d > 44 days\n",$exp);
+    printf("OK: $i expires in %d > 24 days\n",$exp);
   }
 
-  print "All domains expire > 44 days\n";
+  print "All domains expire > 24 days\n";
   return 0;
 }
 
