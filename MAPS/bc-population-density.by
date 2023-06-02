@@ -29,6 +29,8 @@ nodataval = pt.nodatavals[0];
 
 for i in range(len(pt[0])) {
   for j in range(len(pt[0][i])) {
+
+
     print(i,j,float(pt[0][i][j]));
   }
 }

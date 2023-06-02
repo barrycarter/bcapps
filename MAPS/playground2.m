@@ -279,23 +279,6 @@ nation2ThreeD[x_] := Module[{pos, poly, image, lit, litPts},
  Return[Region[Point[litPts]]];
 ];
 
-(* the second version below does NOT require declaring all points
-ahead of time and memoizes trig functions itself *)
-
-nation2ThreeD2[x_] := Module[{pos, poly, image, lit, litPts},
- cos[x_] := cos[x] = Cos[x];
- sin[x_] := sin[x] = Sin[x];
- pos = Position[names, x];
- poly = Part[polygons, Flatten[pos]];
- image = Binarize[Graphics[{AbsolutePointSize[1], poly}, 
-  PlotRange -> {{-180, 180}, {-90, 90}}, ImageSize -> imagesize],
-0.9999999999999999];
- lit = Position[ImageData[image], 0];
- litPts = Table[{cos[lons[[i[[2]]]]]*cos[lats[[i[[1]]]]], 
-  sin[lons[[i[[2]]]]]*cos[lats[[i[[1]]]]], sin[lats[[i[[1]]]]]}, {i, lit}];
- Return[Region[Point[litPts]]];
-];
-
 aus = nation2ThreeD["AUS"];
 
 usa = nation2ThreeD["USA"];
