@@ -19,6 +19,8 @@ f3[n_, k_] = k/(72-n-k)
 
 (* base conditions *)
 
+(* a(n,k) = chances you have n unique cards, k non-unique cards, no dupes *)
+
 a[0,0] = 1
 
 a[-1, k_] = 0
