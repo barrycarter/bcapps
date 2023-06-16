@@ -29,4 +29,8 @@ a[n_, -1] = 0
 
 a[n_, k_] := a[n,k] = a[n-1,k]*f1[n-1,k] + a[n,k-1]*f2[n, k-1]
 
+(* total *)
+
+Total[Table[a[n,10-n],{n,0,10}]]
+
 
