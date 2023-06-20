@@ -47,7 +47,7 @@ where the year ran from 1989-2012, the month ran from 01-12 and the
 date ran for 01-31. Of course, you'll get errors for nonexistent dates
 like 2003-02-30, etc, but that's not a big deal.
 
-For Dilbert, the stripids are: <a href='http://wordpress.barrycarter.org/wp-content/uploads/2012/02/stripids.txt'>here</a>.
+For Dilbert, the stripids are: <a href="http://wordpress.barrycarter.org/wp-content/uploads/2012/02/stripids.txt">here</a>.
 </li>
 
 <li>Now, login to the Dilbert site normally, and use Firebug (or
