@@ -15,10 +15,14 @@ set ignoreeof
 # moved /usr/local/bin before /usr/bin and /bin so I can use ruby2.4
 # (= mistake?)
 
+# added grass paths later
+
 set path = (/usr/local/bin /bin /usr/bin /sbin /usr/sbin /usr/local/sbin \
            /home/user/BCGIT /home/user/BCGIT/*/ \
            /home/user/bin /home/user/PERL /usr/lib64/nagios/plugins/ \
-           /home/user/SPICE/SPICE64/cspice/exe/)
+           /home/user/SPICE/SPICE64/cspice/exe/ /usr/local/grass-7.4.1/bin \
+           /usr/local/grass-7.4.1/scripts /mnt/villa/user/.grass7/addons/bin \
+           /mnt/villa/user/.grass7/addons/scripts)
 
 # for QT to work properly
 
@@ -118,3 +122,8 @@ set notify
 
 setenv XWIDTH 1600
 setenv XHEIGHT 900
+
+# add GRASS commands to default manpath
+
+setenv MANPATH /usr/man:/usr/share/man:/usr/local/man:/usr/local/share/man:/usr/X11R6/man:/opt/man:/usr/local/grass-7.4.1/docs/man
+
