@@ -23,7 +23,7 @@ For a given area, the project hopes to provide the following information:
 
   - Climate (Koeppen-Geiger) (http://koeppen-geiger.vu-wien.ac.at/) (raster)
 
-  - Landuse and landcover (ESACCI) (https://www.esa-landcover-cci.org/) (raster)
+  - Landuse and landcover (ESACCI) (https://www.esa-landcover-cci.org/ and https://globalmaps.github.io/glcnmo.html) (raster)
 
   - Solar energy availability (raster)
 
@@ -1231,6 +1231,17 @@ TODO: weighted voronoi diagram showing how far the sun's "sphere of influence" e
 
 TODO: use multi color patterns (eg, stripes) to represent more distinct values on maps/graphs
 
+TODO: find set of n colors with greatest minimum visual distance
+
+TODO: find digraph of colors that touch in a given image and recolor with minimal colors (4-color theorem or something)-- do this with Voronoi maps to avoid having 50+ colors some of which are similar
+
+TODO: what is distribution of max(a1, (a1+a2)/2, (a1+a2+a3)/3, ...) where each ai is normally distributed (or whatever)
+
 TODO: find min distance between two geoentities (eg, USA vs Europe) or max distance within given entity (eg, continental USA)
 
 TODO: collatz conjecture with random very large numbers
+
+TODO: OK, here's something that would actually help me personally: when I search on services like instacart and shopify, they give me results from several stores, but not prices. I think this is a contractual obligation and not a technical issue. I'd love to have something that scrapes the prices of the item I want so I can buy it cheaply.
+
+Same for doordash: visit a bunch of restaurant pages "scroll all the way down" (because they provide content on-demand), and return results for a given search if any
+
