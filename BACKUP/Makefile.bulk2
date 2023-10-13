@@ -189,7 +189,7 @@ tobackup.oneshot: ondisk.oneshot fgrep-pure.txt egrep-pure.txt
 #<!--------- END COMMENT ---------!>
 
 weekly-pure.txt: /mnt/villa/massback-bulk/latest-????????.list
-	perl -nle 'if (s%^.*?/%/%) {print "\0$$_\0"}' `ls -t /mnt/villa/massback-bulk/latest-????????.list | head -1` | sort > weekly-pure.txt
+	perl -nle 'if (s%^.*? /%/%) {print "\0$$_\0"}' `ls -t /mnt/villa/massback-bulk/latest-????????.list | head -1` | sort > weekly-pure.txt
 
 fgrep-pure.txt: fgrep-commented.txt
 	egrep '^/' fgrep-commented.txt | perl -nle 'print "\0$$_\0"' > fgrep-pure.txt
