@@ -35,6 +35,7 @@ echo look over big-by-*
 # once the filelist looks ok, tar it and encrypt it
 
 # NOTE: $passphrase must be set to passphrase
+# NOTE TO SELF: as of 20231015.081753 using newer password
 
  (nice +19 tar -T filelist.txt -cvf - | 
  nice +19 gpg --batch --passphrase $passphrase -c -o  idrive-$DATE.gpg) >& 
