@@ -142,7 +142,9 @@ XWIDTH=1600
 # added --nosid --nounix --nojd 1/29/20, never fixed prog to print
 # these nicely at new resolution
 
-17 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=800 --eventsize=giant --font1=giant --datesize=giant --monthsize=small --moonstampfont=small --moonstampcolor=0,255,0 --nosid --nounix --nojd
+# moved calendar to 1st minute so it wont be wrong for first 17 minutes of each given day
+
+1 * * * * /home/user/BCGIT/CALENDAR/bc-calendar.pl --xsize=1250 --ysize=800 --eventsize=giant --font1=giant --datesize=giant --monthsize=small --moonstampfont=small --moonstampcolor=0,255,0 --nosid --nounix --nojd
 
 # Obtain my Capital One credit card transactions in the "middle of the night"
 # disabled 27 Mar 2018: hasn't worked for ages
@@ -378,7 +380,11 @@ XWIDTH=1600
 
 # as of 10/10/19, everything seems fine for a long time, so disabling this
 
-# */5 * * * * sensors; hddtemp
+# restored 20230927.200009 as things go bad again
+
+# reduced to 5m at 20230929.050214
+
+*/5 * * * * sensors; hddtemp
 
 # once a day, dump smartctl data for all(?) drives
 
@@ -447,3 +453,7 @@ XWIDTH=1600
 # added 24 Apr 2022 as I use NordVPN and want to see if IPs rotate
 
 21 * * * * curl -s checkip.dyndns.org:8245
+
+# added 30 Nov 2023 as one off to figure out most active subreddits
+
+* * * * * curl -H 'User-Agent: Fauxzilla' -o /home/user/20231130/reddit.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'https://www.reddit.com/r/all/new.rss?limit=5000'
