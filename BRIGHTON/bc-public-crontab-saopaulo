@@ -455,5 +455,6 @@ XWIDTH=1600
 21 * * * * curl -s checkip.dyndns.org:8245
 
 # added 30 Nov 2023 as one off to figure out most active subreddits
+# stopped 20231207.204018
 
-* * * * * curl -H 'User-Agent: Fauxzilla' -o /home/user/20231130/reddit.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'https://www.reddit.com/r/all/new.rss?limit=5000'
+# * * * * * curl -H 'User-Agent: Fauxzilla' -o /home/user/20231130/reddit.`/bin/date +\%Y\%m\%d.\%H\%M\%S.\%N` 'https://www.reddit.com/r/all/new.rss?limit=5000'
