@@ -1,0 +1,13 @@
+https://www.reddit.com/r/askmath/comments/18ejjjb/probabilities_with_selecting_a_six_sided_die_from/
+
+Thanks to /u/vendric's comment, I looked closer at Mathematica's OrderDistribution function (https://reference.wolfram.com/language/ref/OrderDistribution.html) and it turns out it can compute the nth highest (or lowest) of q observations. You can use Mathematica for free with cloud.wolfram.com free tier. 
+ 
+I cheated a bit and computed the kth lowest of n rolls (instead of the nth lowest of q rolls) by doing `CDF[OrderDistribution[{DiscreteUniformDistribution[{1,6}], n}, k]][x]` to get `BetaRegularized[Floor[x]/6, k, 1 - k + n]` (https://reference.wolfram.com/language/ref/BetaRegularized.html and https://en.wikipedia.org/wiki/Beta_function). The PDF is slightly uglier.
+ 
+I'm guessing most languages have a library to compute the Beta function directly.
+
+Just for fun, I created maxdierolls.csv in https://github.com/barrycarter/bcapps/tree/master/ONEOFF/ that shows the results for 1 <= k <= n <= 100
+
+That file gives the probability of getting 1 through 6 (p1 through p6) if you look at the kth lowest of n die rolls. In particular, k=1 is the lowest die roll and k=n is the highest die roll.
+
+You can use this file to check your results, OR, since I'm sometimes wrong myself, check MY results. If anyone is willing to do a few Monte Carlo simulations to confirm my results, I'd appreciate it
