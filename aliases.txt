@@ -306,9 +306,10 @@ alias scanit "bc-scan-pic-brighton.pl"
 
 # 16 Jan 2018: changed mind about qbittorrent
 # 22 May 2021: added ffmpeg
+# 20231222.043811: added xz
 
 # alias stopit "sudo killall -STOP recollindex zpaq rcltar tesseract"
-alias stopit "bc-stopit.pl recollindex zpaq rcltar tesseract ffmpeg"
+alias stopit "bc-stopit.pl recollindex zpaq rcltar tesseract ffmpeg xz"
 
 # 9 Jun 2019: stopit2 is a bit more aggressive
 
@@ -505,6 +506,8 @@ alias screenshot "echo grab in 2 seconds; sleep 2; screengrab &"
 alias firefox84 "/root/build/firefox84/firefox/firefox \!* &"
 
 alias firefox91 "/root/build/firefox91/firefox/firefox \!* &"
+
+alias firefox123 "/root/build/firefox123/firefox/firefox \!* &"
 
 # random high pri items from bg to do list
 
