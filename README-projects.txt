@@ -1247,3 +1247,6 @@ Same for doordash: visit a bunch of restaurant pages "scroll all the way down" (
 
 TODO: great circle derivation from calculus of variations
 
+TODO: cartograms in python (cartopy? scapetoad?)
+
+TODO: largest spherical rectangle/square fitting inside USA (eg)
