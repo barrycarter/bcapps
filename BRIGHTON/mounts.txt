@@ -51,5 +51,7 @@
 
 # both drives working again 20230203.161650
 
-/mnt/liberdade liberdade
 /mnt/ipanema ipanema
+
+# temporary removal 20240103.052805
+# /mnt/liberdade liberdade

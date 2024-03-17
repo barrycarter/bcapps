@@ -403,6 +403,10 @@ libmpg123-devel
 # graphics/images incl scanning and fonts
 # some of these may be installed by a groupinstall
 
+eog
+gthumb
+
+
 marble
 
 # webp whee
@@ -519,6 +523,9 @@ mutt
 alpine
 getmail
 sendmail
+clamav
+
+# IMPORTANT: later removed /etc/cron.d/clamav-update manually
 
 # browsers
 ddgr

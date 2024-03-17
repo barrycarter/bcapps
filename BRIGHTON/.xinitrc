@@ -8,8 +8,15 @@
 # suggests it's nontrivial
 
 # TODO: make sure this is the right rate
+
 # xrandr --size 1024x768 --rate 60
 xrandr --size 1600x900
+
+# CentOS defaults to emulate 3button off for some weird reason; this fixes it
+# TODO: this seems kludgey, especially if I change mouses/trackballs
+
+xinput set-prop "Logitech USB Trackball" "Evdev Middle Button Emulation" 1
+
 
 # bg image won't render properly unless I do this
 # /home/user/BCGIT/CALENDAR/bc-calendar.pl
@@ -22,10 +29,6 @@ rm /usr/local/etc/locks/bc-walkaround.pl
 
 # TODO: consider running bc-walkaround right at start as a "just
 # started X" thing
-
-# CentOS defaults to emulate 3button off for some weird reason; this fixes it
-# TODO: this seems kludgey, especially if I change mouses/trackballs
-xinput set-prop "Logitech USB Trackball" "Evdev Middle Button Emulation" 1
 
 # and might as well do this too (but only after fixing screen size)
 # /home/user/BCGIT/bc-bg2.pl
@@ -73,8 +76,9 @@ xset b off
 # this not working
 xclock -norender -font -misc-fixed-bold-r-normal--14-130-75-75-c-70-iso8859-1 -padding 0 -digital -update 1 -strftime '%a %d %b %Y %H:%M:%S' -geometry 170x19+1430+881 &
 
-# pidgin
-gaim -n &
+# pidgin (dropped 20230715.091112)
+
+# gaim -n &
 
 # I run screen multiply (using "screen -m") and this brings up two
 # xterms to run those screens in

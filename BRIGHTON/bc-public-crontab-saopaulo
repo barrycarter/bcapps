@@ -382,9 +382,9 @@ XWIDTH=1600
 
 # restored 20230927.200009 as things go bad again
 
-# reduced to 5m at 20230929.050214
+# reduced to 5m at 20230929.050214, removed 20231210.153700
 
-*/5 * * * * sensors; hddtemp
+# */5 * * * * sensors; hddtemp
 
 # once a day, dump smartctl data for all(?) drives
 
