@@ -143,7 +143,6 @@ my(%seen);
 	  "All Saints Day" => "1101",
 	  "All Souls Day" => "1102",
 	  "St Peter/Paul Day" => "0629",
-	  "QE II (1926)" => "0421",
 #	  "UN Children's Day" => "1120",
 	  "JFK (1917)" => "0529",
 	  "Guy Fawke's Day" => "1105",

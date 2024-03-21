@@ -30,7 +30,8 @@ August 20 - [for 2017]
 00000420 Adolf Hitler (1889)
 00000215 Susan B Anthony (1820)
 00000718 Nelson Mandela (1918)
-00000421 Queen Elizabeth II (1926)
+# 00000421 Queen Elizabeth II (1926)
+00001114 King Charles III (1948)
 00000529 JFK (1917)
 
 # TODO: could move all events in bc-imp-dates.pl to here
